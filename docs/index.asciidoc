@@ -1,0 +1,21 @@
+[[logstash-reference]]
+= Reference
+
+:version: 1.2.0
+:branch:  1.2
+:jdk:     1.7.0_60
+
+include::static/getting-started-with-logstash.asciidoc[]
+
+include::static/example-add-a-new-filter.asciidoc[]
+
+include::static/command-line-flags.asciidoc[]
+
+include::static/configuration.asciidoc[]
+
+include::static/contrib-plugins.asciidoc[]
+
+include::static/extending-logstash.asciidoc[]
+
+
+
