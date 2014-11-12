@@ -1,8 +1,8 @@
 [[logstash-reference]]
 = Reference
 
-:version: 1.2.0
-:branch:  1.2
+:logstash_version: 1.5
+:elasticsearch_version: 1.4.0
 :jdk:     1.7.0_60
 
 include::static/getting-started-with-logstash.asciidoc[]
