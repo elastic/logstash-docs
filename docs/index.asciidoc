@@ -15,7 +15,9 @@ include::static/configuration.asciidoc[]
 
 include::static/contrib-plugins.asciidoc[]
 
-include::static/extending-logstash.asciidoc[]
+include::static/contributing-to-logstash.asciidoc[]
 
-
-
+include::plugins/inputs.asciidoc[]
+include::plugins/outputs.asciidoc[]
+include::plugins/filters.asciidoc[]
+include::plugins/codecs.asciidoc[]
