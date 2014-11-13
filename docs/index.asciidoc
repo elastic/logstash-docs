@@ -13,8 +13,6 @@ include::static/command-line-flags.asciidoc[]
 
 include::static/configuration.asciidoc[]
 
-include::static/contrib-plugins.asciidoc[]
-
 include::static/contributing-to-logstash.asciidoc[]
 
 include::plugins/inputs.asciidoc[]
