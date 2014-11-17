@@ -1,0 +1,331 @@
+[[plugins-filters-elapsed]]
+=== elapsed
+
+elapsed filter
+
+This filter tracks a pair of start/end events and calculates the elapsed
+time between them.
+The elapsed filter tracks a pair of start/end events and uses their
+timestamps to calculate the elapsed time between them.
+
+The filter has been developed to track the execution time of processes and
+other long tasks.
+
+The configuration looks like this:
+[source,ruby]
+    filter {
+      elapsed {
+        start_tag => "start event tag"
+        end_tag => "end event tag"
+        unique_id_field => "id field name"
+        timeout => seconds
+        new_event_on_match => true/false
+      }
+    }
+
+The events managed by this filter must have some particular properties.
+The event describing the start of the task (the "start event") must contain
+a tag equal to `start_tag`. On the other side, the event describing the end
+of the task (the "end event") must contain a tag equal to `end_tag`. Both
+these two kinds of event need to own an ID field which identify uniquely that
+particular task. The name of this field is stored in `unique_id_field`.
+
+You can use a Grok filter to prepare the events for the elapsed filter.
+An example of configuration can be:
+[source,ruby]
+    filter {
+      grok {
+        match => ["message", "%{TIMESTAMP_ISO8601} START id: (?<task_id>.*)"]
+        add_tag => [ "taskStarted" ]
+      }
+
+      grok {
+        match => ["message", "%{TIMESTAMP_ISO8601} END id: (?<task_id>.*)"]
+        add_tag => [ "taskTerminated"]
+      }
+
+      elapsed {
+        start_tag => "taskStarted"
+        end_tag => "taskTerminated"
+        unique_id_field => "task_id"
+      }
+    }
+
+The elapsed filter collects all the "start events". If two, or more, "start
+events" have the same ID, only the first one is recorded, the others are
+discarded.
+
+When an "end event" matching a previously collected "start event" is
+received, there is a match. The configuration property `new_event_on_match`
+tells where to insert the elapsed information: they can be added to the
+"end event" or a new "match event" can be created. Both events store the
+following information:
+
+* the tags `elapsed` and `elapsed.match`
+* the field `elapsed.time` with the difference, in seconds, between
+  the two events timestamps
+* an ID filed with the task ID
+* the field `elapsed.timestamp_start` with the timestamp of the start event
+
+If the "end event" does not arrive before "timeout" seconds, the
+"start event" is discarded and an "expired event" is generated. This event
+contains:
+
+* the tags `elapsed` and `elapsed.expired_error`
+* a field called `elapsed.time` with the age, in seconds, of the
+  "start event"
+* an ID filed with the task ID
+* the field `elapsed.timestamp_start` with the timestamp of the "start event"
+
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+elapsed {
+    end_tag => ... 
+    start_tag => ... 
+    unique_id_field => ... 
+}
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-filters-elapsed-add_field>> |<<hash,hash>>|No|`{}`
+| <<plugins-filters-elapsed-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-elapsed-end_tag>> |<<string,string>>|Yes|
+| <<plugins-filters-elapsed-new_event_on_match>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-elapsed-periodic_flush>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-elapsed-remove_field>> |<<array,array>>|No|`[]`
+| <<plugins-filters-elapsed-remove_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-elapsed-start_tag>> |<<string,string>>|Yes|
+| <<plugins-filters-elapsed-timeout>> |<<number,number>>|No|`1800`
+| <<plugins-filters-elapsed-unique_id_field>> |<<string,string>>|Yes|
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-filters-elapsed-add_field]]
+===== `add_field` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+If this filter is successful, add any arbitrary fields to this event.
+Field names can be dynamic and include parts of the event using the `%{field}`.
+
+Example:
+[source,ruby]
+    filter {
+      elapsed {
+        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
+      }
+    }
+[source,ruby]
+    # You can also add multiple fields at once:
+    filter {
+      elapsed {
+        add_field => {
+          "foo_%{somefield}" => "Hello world, from %{host}"
+          "new_field" => "new_static_value"
+        }
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would add field `foo_hello` if it is present, with the
+value above and the `%{host}` piece replaced with that value from the
+event. The second example would also add a hardcoded field.
+
+[[plugins-filters-elapsed-add_tag]]
+===== `add_tag` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, add arbitrary tags to the event.
+Tags can be dynamic and include parts of the event using the `%{field}`
+syntax.
+
+Example:
+[source,ruby]
+    filter {
+      elapsed {
+        add_tag => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also add multiple tags at once:
+    filter {
+      elapsed {
+        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
+
+[[plugins-filters-elapsed-end_tag]]
+===== `end_tag` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The name of the tag identifying the "end event"
+
+[[plugins-filters-elapsed-exclude_tags]]
+===== `exclude_tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events without all/any (controlled by `exclude_any` config
+option) of these tags.
+Optional.
+
+[[plugins-filters-elapsed-new_event_on_match]]
+===== `new_event_on_match` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+This property manage what to do when an "end event" matches a "start event".
+If it's set to `false` (default value), the elapsed information are added
+to the "end event"; if it's set to `true` a new "match event" is created.
+
+[[plugins-filters-elapsed-periodic_flush]]
+===== `periodic_flush` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Call the filter flush method at regular interval.
+Optional.
+
+[[plugins-filters-elapsed-remove_field]]
+===== `remove_field` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, remove arbitrary fields from this event.
+Fields names can be dynamic and include parts of the event using the %{field}
+Example:
+[source,ruby]
+    filter {
+      elapsed {
+        remove_field => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also remove multiple fields at once:
+    filter {
+      elapsed {
+        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would remove the field with name `foo_hello` if it is present. The second
+example would remove an additional, non-dynamic field.
+
+[[plugins-filters-elapsed-remove_tag]]
+===== `remove_tag` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, remove arbitrary tags from the event.
+Tags can be dynamic and include parts of the event using the `%{field}`
+syntax.
+
+Example:
+[source,ruby]
+    filter {
+      elapsed {
+        remove_tag => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also remove multiple tags at once:
+    filter {
+      elapsed {
+        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would remove the tag `foo_hello` if it is present. The second example
+would remove a sad, unwanted tag as well.
+
+[[plugins-filters-elapsed-start_tag]]
+===== `start_tag` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The name of the tag identifying the "start event"
+
+[[plugins-filters-elapsed-tags]]
+===== `tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Optional.
+
+[[plugins-filters-elapsed-timeout]]
+===== `timeout` 
+
+  * Value type is <<number,number>>
+  * Default value is `1800`
+
+The amount of seconds after an "end event" can be considered lost.
+The corresponding "start event" is discarded and an "expired event"
+is generated. The default value is 30 minutes (1800 seconds).
+
+[[plugins-filters-elapsed-type]]
+===== `type`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
+`exclude_fields`) must be met in order for the event to be handled by the filter.
+The type to act on. If a type is given, then this filter will only
+act on messages with the same type. See any input plugin's "type"
+attribute for more.
+Optional.
+
+[[plugins-filters-elapsed-unique_id_field]]
+===== `unique_id_field` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The name of the field containing the task ID.
+This value must uniquely identify the task in the system, otherwise
+it's impossible to match the couple of events.
+

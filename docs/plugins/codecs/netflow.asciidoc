@@ -1,0 +1,84 @@
+[[plugins-codecs-netflow]]
+=== netflow
+
+The "netflow" codec is for decoding Netflow v5/v9 flows.
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+netflow {
+  }
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-codecs-netflow-cache_ttl>> |<<number,number>>|No|`4000`
+| <<plugins-codecs-netflow-definitions>> |a valid filesystem path|No|
+| <<plugins-codecs-netflow-target>> |<<string,string>>|No|`"netflow"`
+| <<plugins-codecs-netflow-versions>> |<<array,array>>|No|`[5, 9]`
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-codecs-netflow-cache_ttl]]
+===== `cache_ttl` 
+
+  * Value type is <<number,number>>
+  * Default value is `4000`
+
+Netflow v9 template cache TTL (minutes)
+
+[[plugins-codecs-netflow-definitions]]
+===== `definitions` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+Override YAML file containing Netflow field definitions
+
+Each Netflow field is defined like so:
+
+   ---
+   id:
+   - default length in bytes
+   - :name
+   id:
+   - :uintN or :ip4_addr or :ip6_addr or :mac_addr or :string
+   - :name
+   id:
+   - :skip
+
+See <https://github.com/logstash/logstash/tree/v2.0.0.dev/lib/logstash/codecs/netflow/netflow.yaml> for the base set.
+
+[[plugins-codecs-netflow-target]]
+===== `target` 
+
+  * Value type is <<string,string>>
+  * Default value is `"netflow"`
+
+Specify into what field you want the Netflow data.
+
+[[plugins-codecs-netflow-versions]]
+===== `versions` 
+
+  * Value type is <<array,array>>
+  * Default value is `[5, 9]`
+
+Specify which Netflow versions you will accept.
+

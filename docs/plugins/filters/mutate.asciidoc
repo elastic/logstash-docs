@@ -1,0 +1,436 @@
+[[plugins-filters-mutate]]
+=== mutate
+
+The mutate filter allows you to perform general mutations on fields. You
+can rename, remove, replace, and modify fields in your events.
+
+TODO(sissel): Support regexp replacements like `String#gsub` ?
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+mutate {
+}
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-filters-mutate-add_field>> |<<hash,hash>>|No|`{}`
+| <<plugins-filters-mutate-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-mutate-convert>> |<<hash,hash>>|No|
+| <<plugins-filters-mutate-gsub>> |<<array,array>>|No|
+| <<plugins-filters-mutate-join>> |<<hash,hash>>|No|
+| <<plugins-filters-mutate-lowercase>> |<<array,array>>|No|
+| <<plugins-filters-mutate-merge>> |<<hash,hash>>|No|
+| <<plugins-filters-mutate-periodic_flush>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-mutate-remove_field>> |<<array,array>>|No|`[]`
+| <<plugins-filters-mutate-remove_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-mutate-rename>> |<<hash,hash>>|No|
+| <<plugins-filters-mutate-replace>> |<<hash,hash>>|No|
+| <<plugins-filters-mutate-split>> |<<hash,hash>>|No|
+| <<plugins-filters-mutate-strip>> |<<array,array>>|No|
+| <<plugins-filters-mutate-update>> |<<hash,hash>>|No|
+| <<plugins-filters-mutate-uppercase>> |<<array,array>>|No|
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-filters-mutate-add_field]]
+===== `add_field` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+If this filter is successful, add any arbitrary fields to this event.
+Field names can be dynamic and include parts of the event using the `%{field}`.
+
+Example:
+[source,ruby]
+    filter {
+      mutate {
+        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
+      }
+    }
+[source,ruby]
+    # You can also add multiple fields at once:
+    filter {
+      mutate {
+        add_field => {
+          "foo_%{somefield}" => "Hello world, from %{host}"
+          "new_field" => "new_static_value"
+        }
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would add field `foo_hello` if it is present, with the
+value above and the `%{host}` piece replaced with that value from the
+event. The second example would also add a hardcoded field.
+
+[[plugins-filters-mutate-add_tag]]
+===== `add_tag` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, add arbitrary tags to the event.
+Tags can be dynamic and include parts of the event using the `%{field}`
+syntax.
+
+Example:
+[source,ruby]
+    filter {
+      mutate {
+        add_tag => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also add multiple tags at once:
+    filter {
+      mutate {
+        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
+
+[[plugins-filters-mutate-convert]]
+===== `convert` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+Convert a field's value to a different type, like turning a string to an
+integer. If the field value is an array, all members will be converted.
+If the field is a hash, no action will be taken.
+
+Valid conversion targets are: integer, float, string.
+
+Example:
+[source,ruby]
+    filter {
+      mutate {
+        convert => { "fieldname" => "integer" }
+      }
+    }
+
+[[plugins-filters-mutate-exclude_tags]]
+===== `exclude_tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events without all/any (controlled by `exclude_any` config
+option) of these tags.
+Optional.
+
+[[plugins-filters-mutate-gsub]]
+===== `gsub` 
+
+  * Value type is <<array,array>>
+  * There is no default value for this setting.
+
+Convert a string field by applying a regular expression and a replacement.
+If the field is not a string, no action will be taken.
+
+This configuration takes an array consisting of 3 elements per
+field/substitution.
+
+Be aware of escaping any backslash in the config file.
+
+Example:
+[source,ruby]
+    filter {
+      mutate {
+        gsub => [
+          # replace all forward slashes with underscore
+          "fieldname", "/", "_",
+
+          # replace backslashes, question marks, hashes, and minuses with
+          # dot
+          "fieldname2", "[\\?#-]", "."
+        ]
+      }
+    }
+
+
+[[plugins-filters-mutate-join]]
+===== `join` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+Join an array with a separator character. Does nothing on non-array fields.
+
+Example:
+[source,ruby]
+   filter {
+     mutate {
+       join => { "fieldname" => "," }
+     }
+   }
+
+[[plugins-filters-mutate-lowercase]]
+===== `lowercase` 
+
+  * Value type is <<array,array>>
+  * There is no default value for this setting.
+
+Convert a string to its lowercase equivalent.
+
+Example:
+[source,ruby]
+    filter {
+      mutate {
+        lowercase => [ "fieldname" ]
+      }
+    }
+
+[[plugins-filters-mutate-merge]]
+===== `merge` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+Merge two fields of arrays or hashes.
+String fields will be automatically be converted into an array, so:
+==========================
+  `array` + `string` will work
+  `string` + `string` will result in an 2 entry array in `dest_field`
+  `array` and `hash` will not work
+==========================
+Example:
+[source,ruby]
+    filter {
+      mutate {
+         merge => { "dest_field" => "added_field" }
+      }
+    }
+
+[[plugins-filters-mutate-periodic_flush]]
+===== `periodic_flush` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Call the filter flush method at regular interval.
+Optional.
+
+[[plugins-filters-mutate-remove]]
+===== `remove`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * There is no default value for this setting.
+
+Remove one or more fields.
+
+Example:
+[source,ruby]
+    filter {
+      mutate {
+        remove => [ "client" ]  # Removes the 'client' field
+      }
+    }
+
+This option is deprecated, instead use `remove_field` option available in all
+filters.
+
+[[plugins-filters-mutate-remove_field]]
+===== `remove_field` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, remove arbitrary fields from this event.
+Fields names can be dynamic and include parts of the event using the %{field}
+Example:
+[source,ruby]
+    filter {
+      mutate {
+        remove_field => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also remove multiple fields at once:
+    filter {
+      mutate {
+        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would remove the field with name `foo_hello` if it is present. The second
+example would remove an additional, non-dynamic field.
+
+[[plugins-filters-mutate-remove_tag]]
+===== `remove_tag` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, remove arbitrary tags from the event.
+Tags can be dynamic and include parts of the event using the `%{field}`
+syntax.
+
+Example:
+[source,ruby]
+    filter {
+      mutate {
+        remove_tag => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also remove multiple tags at once:
+    filter {
+      mutate {
+        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would remove the tag `foo_hello` if it is present. The second example
+would remove a sad, unwanted tag as well.
+
+[[plugins-filters-mutate-rename]]
+===== `rename` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+Rename one or more fields.
+
+Example:
+[source,ruby]
+    filter {
+      mutate {
+        # Renames the 'HOSTORIP' field to 'client_ip'
+        rename => { "HOSTORIP" => "client_ip" }
+      }
+    }
+
+[[plugins-filters-mutate-replace]]
+===== `replace` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+Replace a field with a new value. The new value can include %{foo} strings
+to help you build a new value from other parts of the event.
+
+Example:
+[source,ruby]
+    filter {
+      mutate {
+        replace => { "message" => "%{source_host}: My new message" }
+      }
+    }
+
+[[plugins-filters-mutate-split]]
+===== `split` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+Split a field to an array using a separator character. Only works on string
+fields.
+
+Example:
+[source,ruby]
+    filter {
+      mutate {
+         split => { "fieldname" => "," }
+      }
+    }
+
+[[plugins-filters-mutate-strip]]
+===== `strip` 
+
+  * Value type is <<array,array>>
+  * There is no default value for this setting.
+
+Strip whitespace from field. NOTE: this only works on leading and trailing whitespace.
+
+Example:
+[source,ruby]
+    filter {
+      mutate {
+         strip => ["field1", "field2"]
+      }
+    }
+
+[[plugins-filters-mutate-tags]]
+===== `tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Optional.
+
+[[plugins-filters-mutate-type]]
+===== `type`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
+`exclude_fields`) must be met in order for the event to be handled by the filter.
+The type to act on. If a type is given, then this filter will only
+act on messages with the same type. See any input plugin's "type"
+attribute for more.
+Optional.
+
+[[plugins-filters-mutate-update]]
+===== `update` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+Update an existing field with a new value. If the field does not exist,
+then no action will be taken.
+
+Example:
+[source,ruby]
+    filter {
+      mutate {
+        update => { "sample" => "My new message" }
+      }
+    }
+
+[[plugins-filters-mutate-uppercase]]
+===== `uppercase` 
+
+  * Value type is <<array,array>>
+  * There is no default value for this setting.
+
+Convert a string to its uppercase equivalent.
+
+Example:
+[source,ruby]
+    filter {
+      mutate {
+        uppercase => [ "fieldname" ]
+      }
+    }
+

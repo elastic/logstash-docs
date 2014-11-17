@@ -1,0 +1,183 @@
+[[plugins-outputs-ganglia]]
+=== ganglia
+
+This output allows you to pull metrics from your logs and ship them to
+ganglia's gmond. This is heavily based on the graphite output.
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+ganglia {
+    metric => ... 
+    value => ... 
+}
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-outputs-ganglia-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-outputs-ganglia-group>> |<<string,string>>|No|`""`
+| <<plugins-outputs-ganglia-host>> |<<string,string>>|No|`"localhost"`
+| <<plugins-outputs-ganglia-lifetime>> |<<number,number>>|No|`300`
+| <<plugins-outputs-ganglia-max_interval>> |<<number,number>>|No|`60`
+| <<plugins-outputs-ganglia-metric>> |<<string,string>>|Yes|
+| <<plugins-outputs-ganglia-metric_type>> |<<string,string>>, one of `["string", "int8", "uint8", "int16", "uint16", "int32", "uint32", "float", "double"]`|No|`"uint8"`
+| <<plugins-outputs-ganglia-port>> |<<number,number>>|No|`8649`
+| <<plugins-outputs-ganglia-slope>> |<<string,string>>, one of `["zero", "positive", "negative", "both", "unspecified"]`|No|`"both"`
+| <<plugins-outputs-ganglia-units>> |<<string,string>>|No|`""`
+| <<plugins-outputs-ganglia-value>> |<<string,string>>|Yes|
+| <<plugins-outputs-ganglia-workers>> |<<number,number>>|No|`1`
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-outputs-ganglia-codec]]
+===== `codec` 
+
+  * Value type is <<codec,codec>>
+  * Default value is `"plain"`
+
+The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
+
+[[plugins-outputs-ganglia-exclude_tags]]
+===== `exclude_tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events without any of these tags. Note this check is additional to type and tags.
+
+[[plugins-outputs-ganglia-group]]
+===== `group` 
+
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+Metric group
+
+[[plugins-outputs-ganglia-host]]
+===== `host` 
+
+  * Value type is <<string,string>>
+  * Default value is `"localhost"`
+
+The address of the ganglia server.
+
+[[plugins-outputs-ganglia-lifetime]]
+===== `lifetime` 
+
+  * Value type is <<number,number>>
+  * Default value is `300`
+
+Lifetime in seconds of this metric
+
+[[plugins-outputs-ganglia-max_interval]]
+===== `max_interval` 
+
+  * Value type is <<number,number>>
+  * Default value is `60`
+
+Maximum time in seconds between gmetric calls for this metric.
+
+[[plugins-outputs-ganglia-metric]]
+===== `metric` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The metric to use. This supports dynamic strings like `%{host}`
+
+[[plugins-outputs-ganglia-metric_type]]
+===== `metric_type` 
+
+  * Value can be any of: `string`, `int8`, `uint8`, `int16`, `uint16`, `int32`, `uint32`, `float`, `double`
+  * Default value is `"uint8"`
+
+The type of value for this metric.
+
+[[plugins-outputs-ganglia-port]]
+===== `port` 
+
+  * Value type is <<number,number>>
+  * Default value is `8649`
+
+The port to connect on your ganglia server.
+
+[[plugins-outputs-ganglia-slope]]
+===== `slope` 
+
+  * Value can be any of: `zero`, `positive`, `negative`, `both`, `unspecified`
+  * Default value is `"both"`
+
+Metric slope, represents metric behavior
+
+[[plugins-outputs-ganglia-tags]]
+===== `tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events with all of these tags.  Note that if you specify
+a type, the event must also match that type.
+Optional.
+
+[[plugins-outputs-ganglia-type]]
+===== `type`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+The type to act on. If a type is given, then this output will only
+act on messages with the same type. See any input plugin's `type`
+attribute for more.
+Optional.
+
+[[plugins-outputs-ganglia-units]]
+===== `units` 
+
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+Gmetric units for metric, such as "kb/sec" or "ms" or whatever unit
+this metric uses.
+
+[[plugins-outputs-ganglia-value]]
+===== `value` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The value to use. This supports dynamic strings like `%{bytes}`
+It will be coerced to a floating point value. Values which cannot be
+coerced will zero (0)
+
+[[plugins-outputs-ganglia-workers]]
+===== `workers` 
+
+  * Value type is <<number,number>>
+  * Default value is `1`
+
+The number of workers to use for this output.
+Note that this setting may not be useful for all outputs.
+

@@ -1,0 +1,275 @@
+[[plugins-filters-sleep]]
+=== sleep
+
+Sleep a given amount of time. This will cause logstash
+to stall for the given amount of time. This is useful
+for rate limiting, etc.
+
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+sleep {
+}
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-filters-sleep-add_field>> |<<hash,hash>>|No|`{}`
+| <<plugins-filters-sleep-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-sleep-every>> |<<string,string>>|No|`1`
+| <<plugins-filters-sleep-periodic_flush>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-sleep-remove_field>> |<<array,array>>|No|`[]`
+| <<plugins-filters-sleep-remove_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-sleep-replay>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-sleep-time>> |<<string,string>>|No|
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-filters-sleep-add_field]]
+===== `add_field` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+If this filter is successful, add any arbitrary fields to this event.
+Field names can be dynamic and include parts of the event using the `%{field}`.
+
+Example:
+[source,ruby]
+    filter {
+      sleep {
+        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
+      }
+    }
+[source,ruby]
+    # You can also add multiple fields at once:
+    filter {
+      sleep {
+        add_field => {
+          "foo_%{somefield}" => "Hello world, from %{host}"
+          "new_field" => "new_static_value"
+        }
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would add field `foo_hello` if it is present, with the
+value above and the `%{host}` piece replaced with that value from the
+event. The second example would also add a hardcoded field.
+
+[[plugins-filters-sleep-add_tag]]
+===== `add_tag` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, add arbitrary tags to the event.
+Tags can be dynamic and include parts of the event using the `%{field}`
+syntax.
+
+Example:
+[source,ruby]
+    filter {
+      sleep {
+        add_tag => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also add multiple tags at once:
+    filter {
+      sleep {
+        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
+
+[[plugins-filters-sleep-every]]
+===== `every` 
+
+  * Value type is <<string,string>>
+  * Default value is `1`
+
+Sleep on every N'th. This option is ignored in replay mode.
+
+Example:
+[source,ruby]
+    filter {
+      sleep {
+        time => "1"   # Sleep 1 second
+        every => 10   # on every 10th event
+      }
+    }
+
+[[plugins-filters-sleep-exclude_tags]]
+===== `exclude_tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events without all/any (controlled by `exclude_any` config
+option) of these tags.
+Optional.
+
+[[plugins-filters-sleep-periodic_flush]]
+===== `periodic_flush` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Call the filter flush method at regular interval.
+Optional.
+
+[[plugins-filters-sleep-remove_field]]
+===== `remove_field` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, remove arbitrary fields from this event.
+Fields names can be dynamic and include parts of the event using the %{field}
+Example:
+[source,ruby]
+    filter {
+      sleep {
+        remove_field => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also remove multiple fields at once:
+    filter {
+      sleep {
+        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would remove the field with name `foo_hello` if it is present. The second
+example would remove an additional, non-dynamic field.
+
+[[plugins-filters-sleep-remove_tag]]
+===== `remove_tag` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, remove arbitrary tags from the event.
+Tags can be dynamic and include parts of the event using the `%{field}`
+syntax.
+
+Example:
+[source,ruby]
+    filter {
+      sleep {
+        remove_tag => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also remove multiple tags at once:
+    filter {
+      sleep {
+        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would remove the tag `foo_hello` if it is present. The second example
+would remove a sad, unwanted tag as well.
+
+[[plugins-filters-sleep-replay]]
+===== `replay` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Enable replay mode.
+
+Replay mode tries to sleep based on timestamps in each event.
+
+The amount of time to sleep is computed by subtracting the
+previous event's timestamp from the current event's timestamp.
+This helps you replay events in the same timeline as original.
+
+If you specify a `time` setting as well, this filter will
+use the `time` value as a speed modifier. For example,
+a `time` value of 2 will replay at double speed, while a
+value of 0.25 will replay at 1/4th speed.
+
+For example:
+[source,ruby]
+    filter {
+      sleep {
+        time => 2
+        replay => true
+      }
+    }
+
+The above will sleep in such a way that it will perform
+replay 2-times faster than the original time speed.
+
+[[plugins-filters-sleep-tags]]
+===== `tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Optional.
+
+[[plugins-filters-sleep-time]]
+===== `time` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The length of time to sleep, in seconds, for every event.
+
+This can be a number (eg, 0.5), or a string (eg, `%{foo}`)
+The second form (string with a field value) is useful if
+you have an attribute of your event that you want to use
+to indicate the amount of time to sleep.
+
+Example:
+[source,ruby]
+    filter {
+      sleep {
+        # Sleep 1 second for every event.
+        time => "1"
+      }
+    }
+
+[[plugins-filters-sleep-type]]
+===== `type`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
+`exclude_fields`) must be met in order for the event to be handled by the filter.
+The type to act on. If a type is given, then this filter will only
+act on messages with the same type. See any input plugin's "type"
+attribute for more.
+Optional.
+

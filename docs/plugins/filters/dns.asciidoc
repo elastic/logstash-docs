@@ -1,0 +1,269 @@
+[[plugins-filters-dns]]
+=== dns
+
+DNS Filter
+
+This filter will resolve any IP addresses from a field of your choosing.
+
+The DNS filter performs a lookup (either an A record/CNAME record lookup
+or a reverse lookup at the PTR record) on records specified under the
+`reverse` and `resolve` arrays.
+
+The config should look like this:
+[source,ruby]
+    filter {
+      dns {
+        type => 'type'
+        reverse => [ "source_host", "field_with_address" ]
+        resolve => [ "field_with_fqdn" ]
+        action => "replace"
+      }
+    }
+
+Caveats: at the moment, there's no way to tune the timeout with the `resolv`
+core library.  It does seem to be fixed in here: http://redmine.ruby-lang.org/issues/5100
+but isn't currently in JRuby.
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+dns {
+}
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-filters-dns-action>> |<<string,string>>, one of `["append", "replace"]`|No|`"append"`
+| <<plugins-filters-dns-add_field>> |<<hash,hash>>|No|`{}`
+| <<plugins-filters-dns-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-dns-nameserver>> |<<string,string>>|No|
+| <<plugins-filters-dns-periodic_flush>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-dns-remove_field>> |<<array,array>>|No|`[]`
+| <<plugins-filters-dns-remove_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-dns-resolve>> |<<array,array>>|No|
+| <<plugins-filters-dns-reverse>> |<<array,array>>|No|
+| <<plugins-filters-dns-timeout>> |<<number,number>>|No|`2`
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-filters-dns-action]]
+===== `action` 
+
+  * Value can be any of: `append`, `replace`
+  * Default value is `"append"`
+
+Determine what action to do: append or replace the values in the fields
+specified under `reverse` and `resolve`.
+
+[[plugins-filters-dns-add_field]]
+===== `add_field` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+If this filter is successful, add any arbitrary fields to this event.
+Field names can be dynamic and include parts of the event using the `%{field}`.
+
+Example:
+[source,ruby]
+    filter {
+      dns {
+        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
+      }
+    }
+[source,ruby]
+    # You can also add multiple fields at once:
+    filter {
+      dns {
+        add_field => {
+          "foo_%{somefield}" => "Hello world, from %{host}"
+          "new_field" => "new_static_value"
+        }
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would add field `foo_hello` if it is present, with the
+value above and the `%{host}` piece replaced with that value from the
+event. The second example would also add a hardcoded field.
+
+[[plugins-filters-dns-add_tag]]
+===== `add_tag` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, add arbitrary tags to the event.
+Tags can be dynamic and include parts of the event using the `%{field}`
+syntax.
+
+Example:
+[source,ruby]
+    filter {
+      dns {
+        add_tag => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also add multiple tags at once:
+    filter {
+      dns {
+        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
+
+[[plugins-filters-dns-exclude_tags]]
+===== `exclude_tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events without all/any (controlled by `exclude_any` config
+option) of these tags.
+Optional.
+
+[[plugins-filters-dns-nameserver]]
+===== `nameserver` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Use custom nameserver.
+
+[[plugins-filters-dns-periodic_flush]]
+===== `periodic_flush` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Call the filter flush method at regular interval.
+Optional.
+
+[[plugins-filters-dns-remove_field]]
+===== `remove_field` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, remove arbitrary fields from this event.
+Fields names can be dynamic and include parts of the event using the %{field}
+Example:
+[source,ruby]
+    filter {
+      dns {
+        remove_field => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also remove multiple fields at once:
+    filter {
+      dns {
+        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would remove the field with name `foo_hello` if it is present. The second
+example would remove an additional, non-dynamic field.
+
+[[plugins-filters-dns-remove_tag]]
+===== `remove_tag` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, remove arbitrary tags from the event.
+Tags can be dynamic and include parts of the event using the `%{field}`
+syntax.
+
+Example:
+[source,ruby]
+    filter {
+      dns {
+        remove_tag => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also remove multiple tags at once:
+    filter {
+      dns {
+        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would remove the tag `foo_hello` if it is present. The second example
+would remove a sad, unwanted tag as well.
+
+[[plugins-filters-dns-resolve]]
+===== `resolve` 
+
+  * Value type is <<array,array>>
+  * There is no default value for this setting.
+
+Forward resolve one or more fields.
+
+[[plugins-filters-dns-reverse]]
+===== `reverse` 
+
+  * Value type is <<array,array>>
+  * There is no default value for this setting.
+
+Reverse resolve one or more fields.
+
+[[plugins-filters-dns-tags]]
+===== `tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Optional.
+
+[[plugins-filters-dns-timeout]]
+===== `timeout` 
+
+  * Value type is <<number,number>>
+  * Default value is `2`
+
+TODO(sissel): make `action` required? This was always the intent, but it
+due to a typo it was never enforced. Thus the default behavior in past
+versions was `append` by accident.
+`resolv` calls will be wrapped in a timeout instance
+
+[[plugins-filters-dns-type]]
+===== `type`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
+`exclude_fields`) must be met in order for the event to be handled by the filter.
+The type to act on. If a type is given, then this filter will only
+act on messages with the same type. See any input plugin's "type"
+attribute for more.
+Optional.
+

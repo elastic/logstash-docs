@@ -1,0 +1,279 @@
+[[plugins-filters-xml]]
+=== xml
+
+XML filter. Takes a field that contains XML and expands it into
+an actual datastructure.
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+xml {
+    source => ... 
+}
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-filters-xml-add_field>> |<<hash,hash>>|No|`{}`
+| <<plugins-filters-xml-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-xml-periodic_flush>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-xml-remove_field>> |<<array,array>>|No|`[]`
+| <<plugins-filters-xml-remove_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-xml-source>> |<<string,string>>|Yes|
+| <<plugins-filters-xml-store_xml>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-xml-target>> |<<string,string>>|No|
+| <<plugins-filters-xml-xpath>> |<<hash,hash>>|No|`{}`
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-filters-xml-add_field]]
+===== `add_field` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+If this filter is successful, add any arbitrary fields to this event.
+Field names can be dynamic and include parts of the event using the `%{field}`.
+
+Example:
+[source,ruby]
+    filter {
+      xml {
+        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
+      }
+    }
+[source,ruby]
+    # You can also add multiple fields at once:
+    filter {
+      xml {
+        add_field => {
+          "foo_%{somefield}" => "Hello world, from %{host}"
+          "new_field" => "new_static_value"
+        }
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would add field `foo_hello` if it is present, with the
+value above and the `%{host}` piece replaced with that value from the
+event. The second example would also add a hardcoded field.
+
+[[plugins-filters-xml-add_tag]]
+===== `add_tag` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, add arbitrary tags to the event.
+Tags can be dynamic and include parts of the event using the `%{field}`
+syntax.
+
+Example:
+[source,ruby]
+    filter {
+      xml {
+        add_tag => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also add multiple tags at once:
+    filter {
+      xml {
+        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
+
+[[plugins-filters-xml-exclude_tags]]
+===== `exclude_tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events without all/any (controlled by `exclude_any` config
+option) of these tags.
+Optional.
+
+[[plugins-filters-xml-periodic_flush]]
+===== `periodic_flush` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Call the filter flush method at regular interval.
+Optional.
+
+[[plugins-filters-xml-remove_field]]
+===== `remove_field` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, remove arbitrary fields from this event.
+Fields names can be dynamic and include parts of the event using the %{field}
+Example:
+[source,ruby]
+    filter {
+      xml {
+        remove_field => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also remove multiple fields at once:
+    filter {
+      xml {
+        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would remove the field with name `foo_hello` if it is present. The second
+example would remove an additional, non-dynamic field.
+
+[[plugins-filters-xml-remove_tag]]
+===== `remove_tag` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, remove arbitrary tags from the event.
+Tags can be dynamic and include parts of the event using the `%{field}`
+syntax.
+
+Example:
+[source,ruby]
+    filter {
+      xml {
+        remove_tag => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also remove multiple tags at once:
+    filter {
+      xml {
+        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would remove the tag `foo_hello` if it is present. The second example
+would remove a sad, unwanted tag as well.
+
+[[plugins-filters-xml-source]]
+===== `source` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Config for xml to hash is:
+[source,ruby]
+    source => source_field
+
+For example, if you have the whole xml document in your message field:
+[source,ruby]
+    filter {
+      xml {
+        source => "message"
+      }
+    }
+
+The above would parse the xml from the message field
+
+[[plugins-filters-xml-store_xml]]
+===== `store_xml` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+By default the filter will store the whole parsed xml in the destination
+field as described above. Setting this to false will prevent that.
+
+[[plugins-filters-xml-tags]]
+===== `tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Optional.
+
+[[plugins-filters-xml-target]]
+===== `target` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Define target for placing the data
+
+for example if you want the data to be put in the 'doc' field:
+[source,ruby]
+    filter {
+      xml {
+        target => "doc"
+      }
+    }
+
+XML in the value of the source field will be expanded into a
+datastructure in the `target` field.
+Note: if the `target` field already exists, it will be overridden
+Required
+
+[[plugins-filters-xml-type]]
+===== `type`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
+`exclude_fields`) must be met in order for the event to be handled by the filter.
+The type to act on. If a type is given, then this filter will only
+act on messages with the same type. See any input plugin's "type"
+attribute for more.
+Optional.
+
+[[plugins-filters-xml-xpath]]
+===== `xpath` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+xpath will additionally select string values (.to_s on whatever is selected)
+from parsed XML (using each source field defined using the method above)
+and place those values in the destination fields. Configuration:
+[source,ruby]
+xpath => [ "xpath-syntax", "destination-field" ]
+
+Values returned by XPath parsring from xpath-synatx will be put in the
+destination field. Multiple values returned will be pushed onto the
+destination field as an array. As such, multiple matches across
+multiple source fields will produce duplicate entries in the field
+
+More on xpath: http://www.w3schools.com/xpath/
+
+The xpath functions are particularly powerful:
+http://www.w3schools.com/xpath/xpath_functions.asp
+
+

@@ -1,0 +1,239 @@
+[[plugins-outputs-influxdb]]
+=== influxdb
+
+This output lets you output Metrics to InfluxDB
+
+The configuration here attempts to be as friendly as possible
+and minimize the need for multiple definitions to write to
+multiple series and still be efficient
+
+the InfluxDB API let's you do some semblance of bulk operation
+per http call but each call is database-specific
+
+You can learn more at http://influxdb.com[InfluxDB homepage]
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+influxdb {
+    data_points => ... 
+    host => ... 
+    password => ... 
+    user => ... 
+}
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-outputs-influxdb-allow_time_override>> |<<boolean,boolean>>|No|`false`
+| <<plugins-outputs-influxdb-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-outputs-influxdb-coerce_values>> |<<hash,hash>>|No|`{}`
+| <<plugins-outputs-influxdb-data_points>> |<<hash,hash>>|Yes|`{}`
+| <<plugins-outputs-influxdb-db>> |<<string,string>>|No|`"stats"`
+| <<plugins-outputs-influxdb-flush_size>> |<<number,number>>|No|`100`
+| <<plugins-outputs-influxdb-host>> |<<string,string>>|Yes|
+| <<plugins-outputs-influxdb-idle_flush_time>> |<<number,number>>|No|`1`
+| <<plugins-outputs-influxdb-password>> |<<password,password>>|Yes|`nil`
+| <<plugins-outputs-influxdb-port>> |<<number,number>>|No|`8086`
+| <<plugins-outputs-influxdb-series>> |<<string,string>>|No|`"logstash"`
+| <<plugins-outputs-influxdb-time_precision>> |<<string,string>>, one of `["m", "s", "u"]`|No|`"s"`
+| <<plugins-outputs-influxdb-user>> |<<string,string>>|Yes|`nil`
+| <<plugins-outputs-influxdb-workers>> |<<number,number>>|No|`1`
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-outputs-influxdb-allow_time_override]]
+===== `allow_time_override` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Allow the override of the `time` column in the event?
+
+By default any column with a name of `time` will be ignored and the time will
+be determined by the value of `@timestamp`.
+
+Setting this to `true` allows you to explicitly set the `time` column yourself
+
+Note: **`time` must be an epoch value in either seconds, milliseconds or microseconds**
+
+[[plugins-outputs-influxdb-codec]]
+===== `codec` 
+
+  * Value type is <<codec,codec>>
+  * Default value is `"plain"`
+
+The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
+
+[[plugins-outputs-influxdb-coerce_values]]
+===== `coerce_values` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+Allow value coercion
+
+this will attempt to convert data point values to the appropriate type before posting
+otherwise sprintf-filtered numeric values could get sent as strings
+format is `{'column_name' => 'datatype'}`
+
+currently supported datatypes are `integer` and `float`
+
+
+[[plugins-outputs-influxdb-data_points]]
+===== `data_points` 
+
+  * This is a required setting.
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+Hash of key/value pairs representing data points to send to the named database
+Example: `{'column1' => 'value1', 'column2' => 'value2'}`
+
+Events for the same series will be batched together where possible
+Both keys and values support sprintf formatting
+
+[[plugins-outputs-influxdb-db]]
+===== `db` 
+
+  * Value type is <<string,string>>
+  * Default value is `"stats"`
+
+The database to write
+
+[[plugins-outputs-influxdb-exclude_tags]]
+===== `exclude_tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events without any of these tags. Note this check is additional to type and tags.
+
+[[plugins-outputs-influxdb-flush_size]]
+===== `flush_size` 
+
+  * Value type is <<number,number>>
+  * Default value is `100`
+
+This setting controls how many events will be buffered before sending a batch
+of events. Note that these are only batched for the same series
+
+[[plugins-outputs-influxdb-host]]
+===== `host` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The hostname or IP address to reach your InfluxDB instance
+
+[[plugins-outputs-influxdb-idle_flush_time]]
+===== `idle_flush_time` 
+
+  * Value type is <<number,number>>
+  * Default value is `1`
+
+The amount of time since last flush before a flush is forced.
+
+This setting helps ensure slow event rates don't get stuck in Logstash.
+For example, if your `flush_size` is 100, and you have received 10 events,
+and it has been more than `idle_flush_time` seconds since the last flush,
+logstash will flush those 10 events automatically.
+
+This helps keep both fast and slow log streams moving along in
+near-real-time.
+
+[[plugins-outputs-influxdb-password]]
+===== `password` 
+
+  * This is a required setting.
+  * Value type is <<password,password>>
+  * Default value is `nil`
+
+The password for the user who access to the named database
+
+[[plugins-outputs-influxdb-port]]
+===== `port` 
+
+  * Value type is <<number,number>>
+  * Default value is `8086`
+
+The port for InfluxDB
+
+[[plugins-outputs-influxdb-series]]
+===== `series` 
+
+  * Value type is <<string,string>>
+  * Default value is `"logstash"`
+
+Series name - supports sprintf formatting
+
+[[plugins-outputs-influxdb-tags]]
+===== `tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events with all of these tags.  Note that if you specify
+a type, the event must also match that type.
+Optional.
+
+[[plugins-outputs-influxdb-time_precision]]
+===== `time_precision` 
+
+  * Value can be any of: `m`, `s`, `u`
+  * Default value is `"s"`
+
+Set the level of precision of `time`
+
+only useful when overriding the time value
+
+[[plugins-outputs-influxdb-type]]
+===== `type`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+The type to act on. If a type is given, then this output will only
+act on messages with the same type. See any input plugin's `type`
+attribute for more.
+Optional.
+
+[[plugins-outputs-influxdb-user]]
+===== `user` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * Default value is `nil`
+
+The user who has access to the named database
+
+[[plugins-outputs-influxdb-workers]]
+===== `workers` 
+
+  * Value type is <<number,number>>
+  * Default value is `1`
+
+The number of workers to use for this output.
+Note that this setting may not be useful for all outputs.
+

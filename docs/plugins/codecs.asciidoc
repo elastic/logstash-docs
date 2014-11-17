@@ -1,0 +1,79 @@
+[[codec-plugins]]
+== Codec plugins
+
+The plugins in this section change the data representation of an input or output in Logstash.
+
+The following codec plugins are available:
+
+<<plugins-codecs-letters-c, c>>
+<<plugins-codecs-letters-d, d>>
+<<plugins-codecs-letters-e, e>>
+<<plugins-codecs-letters-g, g>>
+<<plugins-codecs-letters-j, j>>
+<<plugins-codecs-letters-l, l>>
+<<plugins-codecs-letters-m, m>>
+<<plugins-codecs-letters-n, n>>
+<<plugins-codecs-letters-o, o>>
+<<plugins-codecs-letters-p, p>>
+<<plugins-codecs-letters-r, r>>
+<<plugins-codecs-letters-s, s>>
+
+[cols="asciidoc,asciidoc,asciidoc"]
+|=======================================================================
+|[[plugins-codecs-letters-c]] 
+* <<plugins-codecs-cloudfront,cloudfront>>
+* <<plugins-codecs-cloudtrail,cloudtrail>>
+* <<plugins-codecs-collectd,collectd>>
+|[[plugins-codecs-letters-d]] 
+* <<plugins-codecs-dots,dots>>
+|[[plugins-codecs-letters-e]] 
+* <<plugins-codecs-edn_lines,edn_lines>>
+* <<plugins-codecs-edn,edn>>
+* <<plugins-codecs-es_bulk,es_bulk>>
+|[[plugins-codecs-letters-g]] 
+* <<plugins-codecs-graphite,graphite>>
+* <<plugins-codecs-gzip_lines,gzip_lines>>
+|[[plugins-codecs-letters-j]] 
+* <<plugins-codecs-json,json>>
+* <<plugins-codecs-json_lines,json_lines>>
+|[[plugins-codecs-letters-l]] 
+* <<plugins-codecs-line,line>>
+|[[plugins-codecs-letters-m]] 
+* <<plugins-codecs-multiline,multiline>>
+* <<plugins-codecs-msgpack,msgpack>>
+|[[plugins-codecs-letters-n]] 
+* <<plugins-codecs-netflow,netflow>>
+|[[plugins-codecs-letters-o]] 
+* <<plugins-codecs-oldlogstashjson,oldlogstashjson>>
+|[[plugins-codecs-letters-p]] 
+* <<plugins-codecs-plain,plain>>
+|[[plugins-codecs-letters-r]] 
+* <<plugins-codecs-rubydebug,rubydebug>>
+|[[plugins-codecs-letters-s]] 
+* <<plugins-codecs-s3_plain,s3_plain>>
+* <<plugins-codecs-spool,spool>>
+|&nbsp; 
+|&nbsp; 
+|&nbsp; 
+|=======================================================================
+
+include::codecs/cloudfront.asciidoc[]
+include::codecs/cloudtrail.asciidoc[]
+include::codecs/collectd.asciidoc[]
+include::codecs/dots.asciidoc[]
+include::codecs/edn_lines.asciidoc[]
+include::codecs/edn.asciidoc[]
+include::codecs/es_bulk.asciidoc[]
+include::codecs/graphite.asciidoc[]
+include::codecs/gzip_lines.asciidoc[]
+include::codecs/json.asciidoc[]
+include::codecs/json_lines.asciidoc[]
+include::codecs/line.asciidoc[]
+include::codecs/multiline.asciidoc[]
+include::codecs/msgpack.asciidoc[]
+include::codecs/netflow.asciidoc[]
+include::codecs/oldlogstashjson.asciidoc[]
+include::codecs/plain.asciidoc[]
+include::codecs/rubydebug.asciidoc[]
+include::codecs/s3_plain.asciidoc[]
+include::codecs/spool.asciidoc[]

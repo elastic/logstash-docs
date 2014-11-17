@@ -1,0 +1,166 @@
+[[output-plugins]]
+== Output plugins
+
+Output plugins manage the final disposition of event data.
+
+The following output plugins are available:
+
+<<plugins-outputs-letters-b, b>>
+<<plugins-outputs-letters-c, c>>
+<<plugins-outputs-letters-d, d>>
+<<plugins-outputs-letters-e, e>>
+<<plugins-outputs-letters-f, f>>
+<<plugins-outputs-letters-g, g>>
+<<plugins-outputs-letters-h, h>>
+<<plugins-outputs-letters-i, i>>
+<<plugins-outputs-letters-j, j>>
+<<plugins-outputs-letters-k, k>>
+<<plugins-outputs-letters-l, l>>
+<<plugins-outputs-letters-m, m>>
+<<plugins-outputs-letters-n, n>>
+<<plugins-outputs-letters-o, o>>
+<<plugins-outputs-letters-p, p>>
+<<plugins-outputs-letters-r, r>>
+<<plugins-outputs-letters-s, s>>
+<<plugins-outputs-letters-t, t>>
+<<plugins-outputs-letters-u, u>>
+<<plugins-outputs-letters-w, w>>
+<<plugins-outputs-letters-x, x>>
+<<plugins-outputs-letters-z, z>>
+
+[cols="asciidoc,asciidoc,asciidoc"]
+|=======================================================================
+|[[plugins-outputs-letters-b]] 
+* <<plugins-outputs-boundary,boundary>>
+|[[plugins-outputs-letters-c]] 
+* <<plugins-outputs-csv,csv>>
+* <<plugins-outputs-circonus,circonus>>
+* <<plugins-outputs-cloudwatch,cloudwatch>>
+|[[plugins-outputs-letters-d]] 
+* <<plugins-outputs-datadog,datadog>>
+* <<plugins-outputs-datadog_metrics,datadog_metrics>>
+|[[plugins-outputs-letters-e]] 
+* <<plugins-outputs-elasticsearch,elasticsearch>>
+* <<plugins-outputs-email,email>>
+* <<plugins-outputs-exec,exec>>
+|[[plugins-outputs-letters-f]] 
+* <<plugins-outputs-file,file>>
+|[[plugins-outputs-letters-g]] 
+* <<plugins-outputs-graphtastic,graphtastic>>
+* <<plugins-outputs-ganglia,ganglia>>
+* <<plugins-outputs-graphite,graphite>>
+* <<plugins-outputs-google_bigquery,google_bigquery>>
+* <<plugins-outputs-google_cloud_storage,google_cloud_storage>>
+* <<plugins-outputs-gelf,gelf>>
+|[[plugins-outputs-letters-h]] 
+* <<plugins-outputs-http,http>>
+* <<plugins-outputs-hipchat,hipchat>>
+|[[plugins-outputs-letters-i]] 
+* <<plugins-outputs-irc,irc>>
+* <<plugins-outputs-influxdb,influxdb>>
+|[[plugins-outputs-letters-j]] 
+* <<plugins-outputs-jira,jira>>
+* <<plugins-outputs-juggernaut,juggernaut>>
+|[[plugins-outputs-letters-k]] 
+* <<plugins-outputs-kafka,kafka>>
+|[[plugins-outputs-letters-l]] 
+* <<plugins-outputs-loggly,loggly>>
+* <<plugins-outputs-librato,librato>>
+* <<plugins-outputs-lumberjack,lumberjack>>
+|[[plugins-outputs-letters-m]] 
+* <<plugins-outputs-mongodb,mongodb>>
+* <<plugins-outputs-metriccatcher,metriccatcher>>
+|[[plugins-outputs-letters-n]] 
+* <<plugins-outputs-nagios,nagios>>
+* <<plugins-outputs-nagios_nsca,nagios_nsca>>
+* <<plugins-outputs-null,null>>
+|[[plugins-outputs-letters-o]] 
+* <<plugins-outputs-opentsdb,opentsdb>>
+|[[plugins-outputs-letters-p]] 
+* <<plugins-outputs-pagerduty,pagerduty>>
+* <<plugins-outputs-pipe,pipe>>
+|[[plugins-outputs-letters-r]] 
+* <<plugins-outputs-rackspace,rackspace>>
+* <<plugins-outputs-riak,riak>>
+* <<plugins-outputs-riemann,riemann>>
+* <<plugins-outputs-redis,redis>>
+* <<plugins-outputs-redmine,redmine>>
+* <<plugins-outputs-rabbitmq,rabbitmq>>
+|[[plugins-outputs-letters-s]] 
+* <<plugins-outputs-solr_http,solr_http>>
+* <<plugins-outputs-sns,sns>>
+* <<plugins-outputs-syslog,syslog>>
+* <<plugins-outputs-stomp,stomp>>
+* <<plugins-outputs-statsd,statsd>>
+* <<plugins-outputs-stdout,stdout>>
+* <<plugins-outputs-sqs,sqs>>
+* <<plugins-outputs-s3,s3>>
+|[[plugins-outputs-letters-t]] 
+* <<plugins-outputs-tcp,tcp>>
+|[[plugins-outputs-letters-u]] 
+* <<plugins-outputs-udp,udp>>
+|[[plugins-outputs-letters-w]] 
+* <<plugins-outputs-websocket,websocket>>
+|[[plugins-outputs-letters-x]] 
+* <<plugins-outputs-xmpp,xmpp>>
+|[[plugins-outputs-letters-z]] 
+* <<plugins-outputs-zabbix,zabbix>>
+* <<plugins-outputs-zeromq,zeromq>>
+|&nbsp; 
+|&nbsp; 
+|=======================================================================
+
+include::outputs/boundary.asciidoc[]
+include::outputs/csv.asciidoc[]
+include::outputs/circonus.asciidoc[]
+include::outputs/cloudwatch.asciidoc[]
+include::outputs/datadog.asciidoc[]
+include::outputs/datadog_metrics.asciidoc[]
+include::outputs/elasticsearch.asciidoc[]
+include::outputs/email.asciidoc[]
+include::outputs/exec.asciidoc[]
+include::outputs/file.asciidoc[]
+include::outputs/graphtastic.asciidoc[]
+include::outputs/ganglia.asciidoc[]
+include::outputs/graphite.asciidoc[]
+include::outputs/google_bigquery.asciidoc[]
+include::outputs/google_cloud_storage.asciidoc[]
+include::outputs/gelf.asciidoc[]
+include::outputs/http.asciidoc[]
+include::outputs/hipchat.asciidoc[]
+include::outputs/irc.asciidoc[]
+include::outputs/influxdb.asciidoc[]
+include::outputs/jira.asciidoc[]
+include::outputs/juggernaut.asciidoc[]
+include::outputs/kafka.asciidoc[]
+include::outputs/loggly.asciidoc[]
+include::outputs/librato.asciidoc[]
+include::outputs/lumberjack.asciidoc[]
+include::outputs/mongodb.asciidoc[]
+include::outputs/metriccatcher.asciidoc[]
+include::outputs/nagios.asciidoc[]
+include::outputs/nagios_nsca.asciidoc[]
+include::outputs/null.asciidoc[]
+include::outputs/opentsdb.asciidoc[]
+include::outputs/pagerduty.asciidoc[]
+include::outputs/pipe.asciidoc[]
+include::outputs/rackspace.asciidoc[]
+include::outputs/riak.asciidoc[]
+include::outputs/riemann.asciidoc[]
+include::outputs/redis.asciidoc[]
+include::outputs/redmine.asciidoc[]
+include::outputs/rabbitmq.asciidoc[]
+include::outputs/solr_http.asciidoc[]
+include::outputs/sns.asciidoc[]
+include::outputs/syslog.asciidoc[]
+include::outputs/stomp.asciidoc[]
+include::outputs/statsd.asciidoc[]
+include::outputs/stdout.asciidoc[]
+include::outputs/sqs.asciidoc[]
+include::outputs/s3.asciidoc[]
+include::outputs/tcp.asciidoc[]
+include::outputs/udp.asciidoc[]
+include::outputs/websocket.asciidoc[]
+include::outputs/xmpp.asciidoc[]
+include::outputs/zabbix.asciidoc[]
+include::outputs/zeromq.asciidoc[]

@@ -1,0 +1,45 @@
+[[plugins-codecs-rubydebug]]
+=== rubydebug
+
+The rubydebug codec will output your Logstash event data using
+the Ruby Awesome Print library.
+
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+rubydebug {
+  }
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-codecs-rubydebug-metadata>> |<<boolean,boolean>>|No|`false`
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-codecs-rubydebug-metadata]]
+===== `metadata` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Should the event's metadata be included?
+

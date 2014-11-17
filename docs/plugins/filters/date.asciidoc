@@ -1,0 +1,299 @@
+[[plugins-filters-date]]
+=== date
+
+The date filter is used for parsing dates from fields, and then using that
+date or timestamp as the logstash timestamp for the event.
+
+For example, syslog events usually have timestamps like this:
+[source,ruby]
+    "Apr 17 09:32:01"
+
+You would use the date format `MMM dd HH:mm:ss` to parse this.
+
+The date filter is especially important for sorting events and for
+backfilling old data. If you don't get the date correct in your
+event, then searching for them later will likely sort out of order.
+
+In the absence of this filter, logstash will choose a timestamp based on the
+first time it sees the event (at input time), if the timestamp is not already
+set in the event. For example, with file input, the timestamp is set to the
+time of each read.
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+date {
+}
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-filters-date-add_field>> |<<hash,hash>>|No|`{}`
+| <<plugins-filters-date-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-date-locale>> |<<string,string>>|No|
+| <<plugins-filters-date-match>> |<<array,array>>|No|`[]`
+| <<plugins-filters-date-periodic_flush>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-date-remove_field>> |<<array,array>>|No|`[]`
+| <<plugins-filters-date-remove_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-date-target>> |<<string,string>>|No|`"@timestamp"`
+| <<plugins-filters-date-timezone>> |<<string,string>>|No|
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-filters-date-add_field]]
+===== `add_field` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+If this filter is successful, add any arbitrary fields to this event.
+Field names can be dynamic and include parts of the event using the `%{field}`.
+
+Example:
+[source,ruby]
+    filter {
+      date {
+        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
+      }
+    }
+[source,ruby]
+    # You can also add multiple fields at once:
+    filter {
+      date {
+        add_field => {
+          "foo_%{somefield}" => "Hello world, from %{host}"
+          "new_field" => "new_static_value"
+        }
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would add field `foo_hello` if it is present, with the
+value above and the `%{host}` piece replaced with that value from the
+event. The second example would also add a hardcoded field.
+
+[[plugins-filters-date-add_tag]]
+===== `add_tag` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, add arbitrary tags to the event.
+Tags can be dynamic and include parts of the event using the `%{field}`
+syntax.
+
+Example:
+[source,ruby]
+    filter {
+      date {
+        add_tag => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also add multiple tags at once:
+    filter {
+      date {
+        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
+
+[[plugins-filters-date-exclude_tags]]
+===== `exclude_tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events without all/any (controlled by `exclude_any` config
+option) of these tags.
+Optional.
+
+[[plugins-filters-date-locale]]
+===== `locale` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Specify a locale to be used for date parsing using either IETF-BCP47 or POSIX language tag.
+Simple examples are `en`,`en-US` for BCP47 or `en_US` for POSIX.
+If not specified, the platform default will be used.
+
+The locale is mostly necessary to be set for parsing month names (pattern with `MMM`) and
+weekday names (pattern with `EEE`).
+
+
+[[plugins-filters-date-match]]
+===== `match` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+The date formats allowed are anything allowed by Joda-Time (java time
+library). You can see the docs for this format here:
+
+http://joda-time.sourceforge.net/apidocs/org/joda/time/format/DateTimeFormat.html[joda.time.format.DateTimeFormat]
+
+An array with field name first, and format patterns following, `[ field,
+formats... ]`
+
+If your time field has multiple possible formats, you can do this:
+[source,ruby]
+    match => [ "logdate", "MMM dd YYY HH:mm:ss",
+              "MMM  d YYY HH:mm:ss", "ISO8601" ]
+
+The above will match a syslog (rfc3164) or `iso8601` timestamp.
+
+There are a few special exceptions. The following format literals exist
+to help you save time and ensure correctness of date parsing.
+
+* `ISO8601` - should parse any valid ISO8601 timestamp, such as
+  `2011-04-19T03:44:01.103Z`
+* `UNIX` - will parse unix time in seconds since epoch
+* `UNIX_MS` - will parse unix time in milliseconds since epoch
+* `TAI64N` - will parse tai64n time values
+
+For example, if you have a field `logdate`, with a value that looks like
+`Aug 13 2010 00:03:44`, you would use this configuration:
+[source,ruby]
+    filter {
+      date {
+        match => [ "logdate", "MMM dd YYYY HH:mm:ss" ]
+      }
+    }
+
+If your field is nested in your structure, you can use the nested
+syntax `[foo][bar]` to match its value. For more information, please refer to
+http://logstash.net/docs/latest/configuration#fieldreferences
+
+[[plugins-filters-date-periodic_flush]]
+===== `periodic_flush` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Call the filter flush method at regular interval.
+Optional.
+
+[[plugins-filters-date-remove_field]]
+===== `remove_field` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, remove arbitrary fields from this event.
+Fields names can be dynamic and include parts of the event using the %{field}
+Example:
+[source,ruby]
+    filter {
+      date {
+        remove_field => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also remove multiple fields at once:
+    filter {
+      date {
+        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would remove the field with name `foo_hello` if it is present. The second
+example would remove an additional, non-dynamic field.
+
+[[plugins-filters-date-remove_tag]]
+===== `remove_tag` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, remove arbitrary tags from the event.
+Tags can be dynamic and include parts of the event using the `%{field}`
+syntax.
+
+Example:
+[source,ruby]
+    filter {
+      date {
+        remove_tag => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also remove multiple tags at once:
+    filter {
+      date {
+        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would remove the tag `foo_hello` if it is present. The second example
+would remove a sad, unwanted tag as well.
+
+[[plugins-filters-date-tags]]
+===== `tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Optional.
+
+[[plugins-filters-date-target]]
+===== `target` 
+
+  * Value type is <<string,string>>
+  * Default value is `"@timestamp"`
+
+Store the matching timestamp into the given target field.  If not provided,
+default to updating the `@timestamp` field of the event.
+
+[[plugins-filters-date-timezone]]
+===== `timezone` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Specify a time zone canonical ID to be used for date parsing.
+The valid IDs are listed on the http://joda-time.sourceforge.net/timezones.html[Joda.org available time zones page].
+This is useful in case the time zone cannot be extracted from the value,
+and is not the platform default.
+If this is not specified the platform default will be used.
+Canonical ID is good as it takes care of daylight saving time for you
+For example, `America/Los_Angeles` or `Europe/France` are valid IDs.
+
+[[plugins-filters-date-type]]
+===== `type`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
+`exclude_fields`) must be met in order for the event to be handled by the filter.
+The type to act on. If a type is given, then this filter will only
+act on messages with the same type. See any input plugin's "type"
+attribute for more.
+Optional.
+
