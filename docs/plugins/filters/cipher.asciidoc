@@ -1,0 +1,340 @@
+[[plugins-filters-cipher]]
+=== cipher
+
+This filter parses a source and apply a cipher or decipher before
+storing it in the target.
+
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+cipher {
+    algorithm => ... 
+    mode => ... 
+}
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-filters-cipher-add_field>> |<<hash,hash>>|No|`{}`
+| <<plugins-filters-cipher-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-cipher-algorithm>> |<<string,string>>|Yes|
+| <<plugins-filters-cipher-base64>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-cipher-cipher_padding>> |<<string,string>>|No|
+| <<plugins-filters-cipher-iv>> |<<string,string>>|No|
+| <<plugins-filters-cipher-key>> |<<string,string>>|No|
+| <<plugins-filters-cipher-key_pad>> |<<,>>|No|`"\u0000"`
+| <<plugins-filters-cipher-key_size>> |<<number,number>>|No|`32`
+| <<plugins-filters-cipher-mode>> |<<string,string>>|Yes|
+| <<plugins-filters-cipher-periodic_flush>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-cipher-remove_field>> |<<array,array>>|No|`[]`
+| <<plugins-filters-cipher-remove_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-cipher-source>> |<<string,string>>|No|`"message"`
+| <<plugins-filters-cipher-target>> |<<string,string>>|No|`"message"`
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-filters-cipher-add_field]]
+===== `add_field` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+If this filter is successful, add any arbitrary fields to this event.
+Field names can be dynamic and include parts of the event using the `%{field}`.
+
+Example:
+[source,ruby]
+    filter {
+      cipher {
+        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
+      }
+    }
+[source,ruby]
+    # You can also add multiple fields at once:
+    filter {
+      cipher {
+        add_field => {
+          "foo_%{somefield}" => "Hello world, from %{host}"
+          "new_field" => "new_static_value"
+        }
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would add field `foo_hello` if it is present, with the
+value above and the `%{host}` piece replaced with that value from the
+event. The second example would also add a hardcoded field.
+
+[[plugins-filters-cipher-add_tag]]
+===== `add_tag` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, add arbitrary tags to the event.
+Tags can be dynamic and include parts of the event using the `%{field}`
+syntax.
+
+Example:
+[source,ruby]
+    filter {
+      cipher {
+        add_tag => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also add multiple tags at once:
+    filter {
+      cipher {
+        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
+
+[[plugins-filters-cipher-algorithm]]
+===== `algorithm` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The cipher algorythm
+
+A list of supported algorithms can be obtained by
+[source,ruby]
+    puts OpenSSL::Cipher.ciphers
+
+[[plugins-filters-cipher-base64]]
+===== `base64` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Do we have to perform a `base64` decode or encode?
+
+If we are decrypting, `base64` decode will be done before.
+If we are encrypting, `base64` will be done after.
+
+
+[[plugins-filters-cipher-cipher_padding]]
+===== `cipher_padding` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Cypher padding to use. Enables or disables padding. 
+
+By default encryption operations are padded using standard block padding 
+and the padding is checked and removed when decrypting. If the pad 
+parameter is zero then no padding is performed, the total amount of data 
+encrypted or decrypted must then be a multiple of the block size or an 
+error will occur.
+
+See EVP_CIPHER_CTX_set_padding for further information.
+
+We are using Openssl jRuby which uses default padding to PKCS5Padding
+If you want to change it, set this parameter. If you want to disable
+it, Set this parameter to 0
+[source,ruby]
+    filter { cipher { padding => 0 }}
+
+[[plugins-filters-cipher-exclude_tags]]
+===== `exclude_tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events without all/any (controlled by `exclude_any` config
+option) of these tags.
+Optional.
+
+[[plugins-filters-cipher-iv]]
+===== `iv` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The initialization vector to use
+
+The cipher modes CBC, CFB, OFB and CTR all need an "initialization
+vector", or short, IV. ECB mode is the only mode that does not require
+an IV, but there is almost no legitimate use case for this mode
+because of the fact that it does not sufficiently hide plaintext patterns.
+
+[[plugins-filters-cipher-key]]
+===== `key` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The key to use
+
+[[plugins-filters-cipher-key_pad]]
+===== `key_pad` 
+
+  <li> Value type is <<string,string>>
+  * Default value is `"\u0000"`
+
+The character used to pad the key
+
+[[plugins-filters-cipher-key_size]]
+===== `key_size` 
+
+  * Value type is <<number,number>>
+  * Default value is `32`
+
+The key size to pad
+
+It depends of the cipher algorythm.I your key don't need
+padding, don't set this parameter
+
+Example, for AES-256, we must have 32 char long key
+[source,ruby]
+    filter { cipher { key_size => 32 }
+
+
+[[plugins-filters-cipher-mode]]
+===== `mode` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Encrypting or decrypting some data
+
+Valid values are encrypt or decrypt
+
+[[plugins-filters-cipher-periodic_flush]]
+===== `periodic_flush` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Call the filter flush method at regular interval.
+Optional.
+
+[[plugins-filters-cipher-remove_field]]
+===== `remove_field` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, remove arbitrary fields from this event.
+Fields names can be dynamic and include parts of the event using the %{field}
+Example:
+[source,ruby]
+    filter {
+      cipher {
+        remove_field => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also remove multiple fields at once:
+    filter {
+      cipher {
+        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would remove the field with name `foo_hello` if it is present. The second
+example would remove an additional, non-dynamic field.
+
+[[plugins-filters-cipher-remove_tag]]
+===== `remove_tag` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, remove arbitrary tags from the event.
+Tags can be dynamic and include parts of the event using the `%{field}`
+syntax.
+
+Example:
+[source,ruby]
+    filter {
+      cipher {
+        remove_tag => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also remove multiple tags at once:
+    filter {
+      cipher {
+        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would remove the tag `foo_hello` if it is present. The second example
+would remove a sad, unwanted tag as well.
+
+[[plugins-filters-cipher-source]]
+===== `source` 
+
+  * Value type is <<string,string>>
+  * Default value is `"message"`
+
+The field to perform filter
+
+Example, to use the @message field (default) :
+[source,ruby]
+    filter { cipher { source => "message" } }
+
+[[plugins-filters-cipher-tags]]
+===== `tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Optional.
+
+[[plugins-filters-cipher-target]]
+===== `target` 
+
+  * Value type is <<string,string>>
+  * Default value is `"message"`
+
+The name of the container to put the result
+
+Example, to place the result into crypt :
+[source,ruby]
+    filter { cipher { target => "crypt" } }
+
+[[plugins-filters-cipher-type]]
+===== `type`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
+`exclude_fields`) must be met in order for the event to be handled by the filter.
+The type to act on. If a type is given, then this filter will only
+act on messages with the same type. See any input plugin's "type"
+attribute for more.
+Optional.
+

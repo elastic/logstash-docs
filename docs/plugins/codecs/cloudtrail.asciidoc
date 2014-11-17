@@ -1,0 +1,43 @@
+[[plugins-codecs-cloudtrail]]
+=== cloudtrail
+
+
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+cloudtrail {
+  }
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-codecs-cloudtrail-spool_size>> |<<number,number>>|No|`50`
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-codecs-cloudtrail-spool_size]]
+===== `spool_size` 
+
+  * Value type is <<number,number>>
+  * Default value is `50`
+
+
+

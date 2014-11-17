@@ -1,0 +1,147 @@
+[[plugins-outputs-tcp]]
+=== tcp
+
+Write events over a TCP socket.
+
+Each event json is separated by a newline.
+
+Can either accept connections from clients or connect to a server,
+depending on `mode`.
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+tcp {
+    host => ... 
+    port => ... 
+}
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-outputs-tcp-codec>> |<<codec,codec>>|No|`"json"`
+| <<plugins-outputs-tcp-host>> |<<string,string>>|Yes|
+| <<plugins-outputs-tcp-mode>> |<<string,string>>, one of `["server", "client"]`|No|`"client"`
+| <<plugins-outputs-tcp-port>> |<<number,number>>|Yes|
+| <<plugins-outputs-tcp-reconnect_interval>> |<<number,number>>|No|`10`
+| <<plugins-outputs-tcp-workers>> |<<number,number>>|No|`1`
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-outputs-tcp-codec]]
+===== `codec` 
+
+  * Value type is <<codec,codec>>
+  * Default value is `"json"`
+
+The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
+
+[[plugins-outputs-tcp-exclude_tags]]
+===== `exclude_tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events without any of these tags. Note this check is additional to type and tags.
+
+[[plugins-outputs-tcp-host]]
+===== `host` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+When mode is `server`, the address to listen on.
+When mode is `client`, the address to connect to.
+
+[[plugins-outputs-tcp-message_format]]
+===== `message_format`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The format to use when writing events to the file. This value
+supports any string and can include `%{name}` and other dynamic
+strings.
+
+If this setting is omitted, the full json representation of the
+event will be written as a single line.
+
+[[plugins-outputs-tcp-mode]]
+===== `mode` 
+
+  * Value can be any of: `server`, `client`
+  * Default value is `"client"`
+
+Mode to operate in. `server` listens for client connections,
+`client` connects to a server.
+
+[[plugins-outputs-tcp-port]]
+===== `port` 
+
+  * This is a required setting.
+  * Value type is <<number,number>>
+  * There is no default value for this setting.
+
+When mode is `server`, the port to listen on.
+When mode is `client`, the port to connect to.
+
+[[plugins-outputs-tcp-reconnect_interval]]
+===== `reconnect_interval` 
+
+  * Value type is <<number,number>>
+  * Default value is `10`
+
+When connect failed,retry interval in sec.
+
+[[plugins-outputs-tcp-tags]]
+===== `tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events with all of these tags.  Note that if you specify
+a type, the event must also match that type.
+Optional.
+
+[[plugins-outputs-tcp-type]]
+===== `type`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+The type to act on. If a type is given, then this output will only
+act on messages with the same type. See any input plugin's `type`
+attribute for more.
+Optional.
+
+[[plugins-outputs-tcp-workers]]
+===== `workers` 
+
+  * Value type is <<number,number>>
+  * Default value is `1`
+
+The number of workers to use for this output.
+Note that this setting may not be useful for all outputs.
+

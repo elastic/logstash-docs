@@ -1,0 +1,210 @@
+[[plugins-outputs-riak]]
+=== riak
+
+Riak is a distributed k/v store from Basho.
+It's based on the Dynamo model.
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+riak {
+}
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-outputs-riak-bucket>> |<<array,array>>|No|`["logstash-%{+YYYY.MM.dd}"]`
+| <<plugins-outputs-riak-bucket_props>> |<<hash,hash>>|No|
+| <<plugins-outputs-riak-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-outputs-riak-enable_search>> |<<boolean,boolean>>|No|`false`
+| <<plugins-outputs-riak-enable_ssl>> |<<boolean,boolean>>|No|`false`
+| <<plugins-outputs-riak-indices>> |<<array,array>>|No|
+| <<plugins-outputs-riak-key_name>> |<<string,string>>|No|
+| <<plugins-outputs-riak-nodes>> |<<hash,hash>>|No|`{"localhost"=>"8098"}`
+| <<plugins-outputs-riak-proto>> |<<string,string>>, one of `["http", "pb"]`|No|`"http"`
+| <<plugins-outputs-riak-ssl_opts>> |<<hash,hash>>|No|
+| <<plugins-outputs-riak-workers>> |<<number,number>>|No|`1`
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-outputs-riak-bucket]]
+===== `bucket` 
+
+  * Value type is <<array,array>>
+  * Default value is `["logstash-%{+YYYY.MM.dd}"]`
+
+The bucket name to write events to
+Expansion is supported here as values are 
+passed through event.sprintf
+Multiple buckets can be specified here
+but any bucket-specific settings defined
+apply to ALL the buckets.
+
+[[plugins-outputs-riak-bucket_props]]
+===== `bucket_props` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+Bucket properties (NYI)
+Logstash hash of properties for the bucket
+i.e.
+[source,ruby]
+    `bucket_props => ["r", "one", "w", "one", "dw", "one"]`
+or
+[source,ruby]
+    `bucket_props => ["n_val", "3"]`
+Note that the Logstash config language cannot support
+hash or array values
+Properties will be passed as-is
+
+[[plugins-outputs-riak-codec]]
+===== `codec` 
+
+  * Value type is <<codec,codec>>
+  * Default value is `"plain"`
+
+The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
+
+[[plugins-outputs-riak-enable_search]]
+===== `enable_search` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Search
+Enable search on the bucket defined above
+
+[[plugins-outputs-riak-enable_ssl]]
+===== `enable_ssl` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+SSL
+Enable SSL
+
+[[plugins-outputs-riak-exclude_tags]]
+===== `exclude_tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events without any of these tags. Note this check is additional to type and tags.
+
+[[plugins-outputs-riak-indices]]
+===== `indices` 
+
+  * Value type is <<array,array>>
+  * There is no default value for this setting.
+
+Indices
+Array of fields to add 2i on
+e.g.
+[source,ruby]
+    `indices => ["source_host", "type"]
+Off by default as not everyone runs eleveldb
+
+[[plugins-outputs-riak-key_name]]
+===== `key_name` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The event key name
+variables are valid here.
+
+Choose this carefully. Best to let riak decide....
+
+[[plugins-outputs-riak-nodes]]
+===== `nodes` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{"localhost"=>"8098"}`
+
+The nodes of your Riak cluster
+This can be a single host or
+a Logstash hash of node/port pairs
+e.g
+[source,ruby]
+    ["node1", "8098", "node2", "8098"]
+
+[[plugins-outputs-riak-proto]]
+===== `proto` 
+
+  * Value can be any of: `http`, `pb`
+  * Default value is `"http"`
+
+The protocol to use
+HTTP or ProtoBuf
+Applies to ALL backends listed above
+No mix and match
+
+[[plugins-outputs-riak-ssl_opts]]
+===== `ssl_opts` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+SSL Options
+Options for SSL connections
+Only applied if SSL is enabled
+Logstash hash that maps to the riak-client options
+here: https://github.com/basho/riak-ruby-client/wiki/Connecting-to-Riak
+You'll likely want something like this:
+
+`ssl_opts => ["pem", "/etc/riak.pem", "ca_path", "/usr/share/certificates"]
+
+Per the riak client docs, the above sample options
+will turn on SSL `VERIFY_PEER`
+
+[[plugins-outputs-riak-tags]]
+===== `tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events with all of these tags.  Note that if you specify
+a type, the event must also match that type.
+Optional.
+
+[[plugins-outputs-riak-type]]
+===== `type`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+The type to act on. If a type is given, then this output will only
+act on messages with the same type. See any input plugin's `type`
+attribute for more.
+Optional.
+
+[[plugins-outputs-riak-workers]]
+===== `workers` 
+
+  * Value type is <<number,number>>
+  * Default value is `1`
+
+The number of workers to use for this output.
+Note that this setting may not be useful for all outputs.
+

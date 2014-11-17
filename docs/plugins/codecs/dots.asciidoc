@@ -1,0 +1,26 @@
+[[plugins-codecs-dots]]
+=== dots
+
+
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+dots {
+  }
+--------------------------
+
+
+
+==== Details
+
+&nbsp;
+

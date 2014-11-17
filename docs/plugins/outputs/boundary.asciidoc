@@ -1,0 +1,183 @@
+[[plugins-outputs-boundary]]
+=== boundary
+
+This output lets you send annotations to
+Boundary based on Logstash events
+
+Note that since Logstash maintains no state
+these will be one-shot events
+
+By default the start and stop time will be
+the event timestamp
+
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+boundary {
+    api_key => ... 
+    org_id => ... 
+}
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-outputs-boundary-api_key>> |<<string,string>>|Yes|
+| <<plugins-outputs-boundary-auto>> |<<boolean,boolean>>|No|`false`
+| <<plugins-outputs-boundary-bsubtype>> |<<string,string>>|No|
+| <<plugins-outputs-boundary-btags>> |<<array,array>>|No|
+| <<plugins-outputs-boundary-btype>> |<<string,string>>|No|
+| <<plugins-outputs-boundary-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-outputs-boundary-end_time>> |<<string,string>>|No|
+| <<plugins-outputs-boundary-org_id>> |<<string,string>>|Yes|
+| <<plugins-outputs-boundary-start_time>> |<<string,string>>|No|
+| <<plugins-outputs-boundary-workers>> |<<number,number>>|No|`1`
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-outputs-boundary-api_key]]
+===== `api_key` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Your Boundary API key
+
+[[plugins-outputs-boundary-auto]]
+===== `auto` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Auto
+If set to true, logstash will try to pull boundary fields out
+of the event. Any field explicitly set by config options will
+override these.
+`['type', 'subtype', 'creation_time', 'end_time', 'links', 'tags', 'loc']`
+
+[[plugins-outputs-boundary-bsubtype]]
+===== `bsubtype` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Sub-Type
+
+[[plugins-outputs-boundary-btags]]
+===== `btags` 
+
+  * Value type is <<array,array>>
+  * There is no default value for this setting.
+
+Tags
+Set any custom tags for this event
+Default are the Logstash tags if any
+
+[[plugins-outputs-boundary-btype]]
+===== `btype` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Type
+
+[[plugins-outputs-boundary-codec]]
+===== `codec` 
+
+  * Value type is <<codec,codec>>
+  * Default value is `"plain"`
+
+The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
+
+[[plugins-outputs-boundary-end_time]]
+===== `end_time` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+End time
+Override the stop time
+Note that Boundary requires this to be seconds since epoch
+If overriding, it is your responsibility to type this correctly
+By default this is set to `event["@timestamp"].to_i`
+
+[[plugins-outputs-boundary-exclude_tags]]
+===== `exclude_tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events without any of these tags. Note this check is additional to type and tags.
+
+[[plugins-outputs-boundary-org_id]]
+===== `org_id` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Your Boundary Org ID
+
+[[plugins-outputs-boundary-start_time]]
+===== `start_time` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Start time
+Override the start time
+Note that Boundary requires this to be seconds since epoch
+If overriding, it is your responsibility to type this correctly
+By default this is set to `event["@timestamp"].to_i`
+
+[[plugins-outputs-boundary-tags]]
+===== `tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events with all of these tags.  Note that if you specify
+a type, the event must also match that type.
+Optional.
+
+[[plugins-outputs-boundary-type]]
+===== `type`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+The type to act on. If a type is given, then this output will only
+act on messages with the same type. See any input plugin's `type`
+attribute for more.
+Optional.
+
+[[plugins-outputs-boundary-workers]]
+===== `workers` 
+
+  * Value type is <<number,number>>
+  * Default value is `1`
+
+The number of workers to use for this output.
+Note that this setting may not be useful for all outputs.
+

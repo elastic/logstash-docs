@@ -1,0 +1,358 @@
+[[plugins-filters-translate]]
+=== translate
+
+A general search and replace tool which uses a configured hash
+and/or a YAML file to determine replacement values.
+
+The dictionary entries can be specified in one of two ways: First,
+the `dictionary` configuration item may contain a hash representing
+the mapping. Second, an external YAML file (readable by logstash) may be specified
+in the `dictionary_path` configuration item. These two methods may not be used
+in conjunction; it will produce an error.
+
+Operationally, if the event field specified in the `field` configuration
+matches the EXACT contents of a dictionary entry key (or matches a regex if
+`regex` configuration item has been enabled), the field's value will be substituted
+with the matched key's value from the dictionary.
+
+By default, the translate filter will replace the contents of the 
+maching event field (in-place). However, by using the `destination`
+configuration item, you may also specify a target event field to
+populate with the new translated value.
+
+Alternatively, for simple string search and replacements for just a few values
+you might consider using the gsub function of the mutate filter.
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+translate {
+    field => ... 
+}
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-filters-translate-add_field>> |<<hash,hash>>|No|`{}`
+| <<plugins-filters-translate-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-translate-destination>> |<<string,string>>|No|`"translation"`
+| <<plugins-filters-translate-dictionary>> |<<hash,hash>>|No|`{}`
+| <<plugins-filters-translate-dictionary_path>> |a valid filesystem path|No|
+| <<plugins-filters-translate-exact>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-translate-fallback>> |<<string,string>>|No|
+| <<plugins-filters-translate-field>> |<<string,string>>|Yes|
+| <<plugins-filters-translate-override>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-translate-periodic_flush>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-translate-refresh_interval>> |<<number,number>>|No|`300`
+| <<plugins-filters-translate-regex>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-translate-remove_field>> |<<array,array>>|No|`[]`
+| <<plugins-filters-translate-remove_tag>> |<<array,array>>|No|`[]`
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-filters-translate-add_field]]
+===== `add_field` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+If this filter is successful, add any arbitrary fields to this event.
+Field names can be dynamic and include parts of the event using the `%{field}`.
+
+Example:
+[source,ruby]
+    filter {
+      translate {
+        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
+      }
+    }
+[source,ruby]
+    # You can also add multiple fields at once:
+    filter {
+      translate {
+        add_field => {
+          "foo_%{somefield}" => "Hello world, from %{host}"
+          "new_field" => "new_static_value"
+        }
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would add field `foo_hello` if it is present, with the
+value above and the `%{host}` piece replaced with that value from the
+event. The second example would also add a hardcoded field.
+
+[[plugins-filters-translate-add_tag]]
+===== `add_tag` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, add arbitrary tags to the event.
+Tags can be dynamic and include parts of the event using the `%{field}`
+syntax.
+
+Example:
+[source,ruby]
+    filter {
+      translate {
+        add_tag => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also add multiple tags at once:
+    filter {
+      translate {
+        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
+
+[[plugins-filters-translate-destination]]
+===== `destination` 
+
+  * Value type is <<string,string>>
+  * Default value is `"translation"`
+
+The destination field you wish to populate with the translated code. The default
+is a field named `translation`. Set this to the same value as source if you want
+to do a substitution, in this case filter will allways succeed. This will clobber
+the old value of the source field! 
+
+[[plugins-filters-translate-dictionary]]
+===== `dictionary` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+The dictionary to use for translation, when specified in the logstash filter
+configuration item (i.e. do not use the `@dictionary_path` YAML file)
+Example:
+[source,ruby]
+    filter {
+      translate {
+        dictionary => [ "100", "Continue",
+                        "101", "Switching Protocols",
+                        "merci", "thank you",
+                        "old version", "new version" ]
+      }
+    }
+NOTE: it is an error to specify both `dictionary` and `dictionary_path`
+
+[[plugins-filters-translate-dictionary_path]]
+===== `dictionary_path` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+The full path of the external YAML dictionary file. The format of the table
+should be a standard YAML file. Make sure you specify any integer-based keys
+in quotes. The YAML file should look something like this:
+[source,ruby]
+    "100": Continue
+    "101": Switching Protocols
+    merci: gracias
+    old version: new version
+    
+NOTE: it is an error to specify both `dictionary` and `dictionary_path`
+
+[[plugins-filters-translate-exact]]
+===== `exact` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+When `exact => true`, the translate filter will populate the destination field
+with the exact contents of the dictionary value. When `exact => false`, the
+filter will populate the destination field with the result of any existing
+destination field's data, with the translated value substituted in-place.
+
+For example, consider this simple translation.yml, configured to check the `data` field:
+[source,ruby]
+    foo: bar
+
+If logstash receives an event with the `data` field set to `foo`, and `exact => true`,
+the destination field will be populated with the string `bar`.
+If `exact => false`, and logstash receives the same event, the destination field
+will be also set to `bar`. However, if logstash receives an event with the `data` field
+set to `foofing`, the destination field will be set to `barfing`.
+
+Set both `exact => true` AND `regex => `true` if you would like to match using dictionary
+keys as regular expressions. A large dictionary could be expensive to match in this case. 
+
+[[plugins-filters-translate-exclude_tags]]
+===== `exclude_tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events without all/any (controlled by `exclude_any` config
+option) of these tags.
+Optional.
+
+[[plugins-filters-translate-fallback]]
+===== `fallback` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+In case no translation occurs in the event (no matches), this will add a default
+translation string, which will always populate `field`, if the match failed.
+
+For example, if we have configured `fallback => "no match"`, using this dictionary:
+[source,ruby]
+    foo: bar
+
+Then, if logstash received an event with the field `foo` set to `bar`, the destination
+field would be set to `bar`. However, if logstash received an event with `foo` set to `nope`,
+then the destination field would still be populated, but with the value of `no match`.
+
+[[plugins-filters-translate-field]]
+===== `field` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The name of the logstash event field containing the value to be compared for a
+match by the translate filter (e.g. `message`, `host`, `response_code`). 
+
+If this field is an array, only the first value will be used.
+
+[[plugins-filters-translate-override]]
+===== `override` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+If the destination (or target) field already exists, this configuration item specifies
+whether the filter should skip translation (default) or overwrite the target field
+value with the new translation value.
+
+[[plugins-filters-translate-periodic_flush]]
+===== `periodic_flush` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Call the filter flush method at regular interval.
+Optional.
+
+[[plugins-filters-translate-refresh_interval]]
+===== `refresh_interval` 
+
+  * Value type is <<number,number>>
+  * Default value is `300`
+
+When using a dictionary file, this setting will indicate how frequently
+(in seconds) logstash will check the YAML file for updates.
+
+[[plugins-filters-translate-regex]]
+===== `regex` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+If you'd like to treat dictionary keys as regular expressions, set `exact => true`.
+Note: this is activated only when `exact => true`.
+
+[[plugins-filters-translate-remove_field]]
+===== `remove_field` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, remove arbitrary fields from this event.
+Fields names can be dynamic and include parts of the event using the %{field}
+Example:
+[source,ruby]
+    filter {
+      translate {
+        remove_field => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also remove multiple fields at once:
+    filter {
+      translate {
+        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would remove the field with name `foo_hello` if it is present. The second
+example would remove an additional, non-dynamic field.
+
+[[plugins-filters-translate-remove_tag]]
+===== `remove_tag` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, remove arbitrary tags from the event.
+Tags can be dynamic and include parts of the event using the `%{field}`
+syntax.
+
+Example:
+[source,ruby]
+    filter {
+      translate {
+        remove_tag => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also remove multiple tags at once:
+    filter {
+      translate {
+        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would remove the tag `foo_hello` if it is present. The second example
+would remove a sad, unwanted tag as well.
+
+[[plugins-filters-translate-tags]]
+===== `tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Optional.
+
+[[plugins-filters-translate-type]]
+===== `type`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
+`exclude_fields`) must be met in order for the event to be handled by the filter.
+The type to act on. If a type is given, then this filter will only
+act on messages with the same type. See any input plugin's "type"
+attribute for more.
+Optional.
+

@@ -1,0 +1,204 @@
+[[plugins-outputs-metriccatcher]]
+=== metriccatcher
+
+This output ships metrics to MetricCatcher, allowing you to
+utilize Coda Hale's Metrics.
+
+More info on MetricCatcher: https://github.com/clearspring/MetricCatcher
+
+At Clearspring, we use it to count the response codes from Apache logs:
+[source,ruby]
+    metriccatcher {
+        host => "localhost"
+        port => "1420"
+        type => "apache-access"
+        fields => [ "response" ]
+        meter => [ "%{host}.apache.response.%{response}", "1" ]
+    }
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+metriccatcher {
+}
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-outputs-metriccatcher-biased>> |<<hash,hash>>|No|
+| <<plugins-outputs-metriccatcher-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-outputs-metriccatcher-counter>> |<<hash,hash>>|No|
+| <<plugins-outputs-metriccatcher-gauge>> |<<hash,hash>>|No|
+| <<plugins-outputs-metriccatcher-host>> |<<string,string>>|No|`"localhost"`
+| <<plugins-outputs-metriccatcher-meter>> |<<hash,hash>>|No|
+| <<plugins-outputs-metriccatcher-port>> |<<number,number>>|No|`1420`
+| <<plugins-outputs-metriccatcher-timer>> |<<hash,hash>>|No|
+| <<plugins-outputs-metriccatcher-uniform>> |<<hash,hash>>|No|
+| <<plugins-outputs-metriccatcher-workers>> |<<number,number>>|No|`1`
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-outputs-metriccatcher-biased]]
+===== `biased` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+The metrics to send. This supports dynamic strings like `%{host}`
+for metric names and also for values. This is a hash field with key
+of the metric name, value of the metric value.
+
+The value will be coerced to a floating point value. Values which cannot be
+coerced will zero (0)
+
+[[plugins-outputs-metriccatcher-codec]]
+===== `codec` 
+
+  * Value type is <<codec,codec>>
+  * Default value is `"plain"`
+
+The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
+
+[[plugins-outputs-metriccatcher-counter]]
+===== `counter` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+The metrics to send. This supports dynamic strings like `%{host}`
+for metric names and also for values. This is a hash field with key
+of the metric name, value of the metric value. Example:
+[source,ruby]
+  counter => [ "%{host}.apache.hits.%{response}, "1" ]
+
+The value will be coerced to a floating point value. Values which cannot be
+coerced will zero (0)
+
+[[plugins-outputs-metriccatcher-exclude_tags]]
+===== `exclude_tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events without any of these tags. Note this check is additional to type and tags.
+
+[[plugins-outputs-metriccatcher-gauge]]
+===== `gauge` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+The metrics to send. This supports dynamic strings like `%{host}`
+for metric names and also for values. This is a hash field with key
+of the metric name, value of the metric value.
+
+The value will be coerced to a floating point value. Values which cannot be
+coerced will zero (0)
+
+[[plugins-outputs-metriccatcher-host]]
+===== `host` 
+
+  * Value type is <<string,string>>
+  * Default value is `"localhost"`
+
+The address of the MetricCatcher
+
+[[plugins-outputs-metriccatcher-meter]]
+===== `meter` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+The metrics to send. This supports dynamic strings like `%{host}`
+for metric names and also for values. This is a hash field with key
+of the metric name, value of the metric value.
+
+The value will be coerced to a floating point value. Values which cannot be
+coerced will zero (0)
+
+[[plugins-outputs-metriccatcher-port]]
+===== `port` 
+
+  * Value type is <<number,number>>
+  * Default value is `1420`
+
+The port to connect on your MetricCatcher
+
+[[plugins-outputs-metriccatcher-tags]]
+===== `tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events with all of these tags.  Note that if you specify
+a type, the event must also match that type.
+Optional.
+
+[[plugins-outputs-metriccatcher-timer]]
+===== `timer` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+The metrics to send. This supports dynamic strings like %{host}
+for metric names and also for values. This is a hash field with key
+of the metric name, value of the metric value. Example:
+[source,ruby]
+  timer => [ "%{host}.apache.response_time, "%{response_time}" ]
+
+The value will be coerced to a floating point value. Values which cannot be
+coerced will zero (0)
+
+[[plugins-outputs-metriccatcher-type]]
+===== `type`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+The type to act on. If a type is given, then this output will only
+act on messages with the same type. See any input plugin's `type`
+attribute for more.
+Optional.
+
+[[plugins-outputs-metriccatcher-uniform]]
+===== `uniform` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+The metrics to send. This supports dynamic strings like `%{host}`
+for metric names and also for values. This is a hash field with key
+of the metric name, value of the metric value.
+
+The value will be coerced to a floating point value. Values which cannot be
+coerced will zero (0)
+
+[[plugins-outputs-metriccatcher-workers]]
+===== `workers` 
+
+  * Value type is <<number,number>>
+  * Default value is `1`
+
+The number of workers to use for this output.
+Note that this setting may not be useful for all outputs.
+

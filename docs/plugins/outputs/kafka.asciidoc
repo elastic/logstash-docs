@@ -1,0 +1,315 @@
+[[plugins-outputs-kafka]]
+=== kafka
+
+Write events to a Kafka topic. This uses the Kafka Producer API to write messages to a topic on
+the broker.
+
+The only required configuration is the topic name. The default codec is json,
+so events will be persisted on the broker in json format. If you select a codec of plain,
+Logstash will encode your messages with not only the message but also with a timestamp and
+hostname. If you do not want anything but your message passing through, you should make the output
+configuration something like:
+[source,ruby]
+    output {
+      kafka {
+        codec => plain {
+           format => "%{message}"
+        }
+      }
+    }
+For more information see http://kafka.apache.org/documentation.html#theproducer
+
+Kafka producer configuration: http://kafka.apache.org/documentation.html#producerconfigs
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+kafka {
+    topic_id => ... 
+}
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-outputs-kafka-batch_num_messages>> |<<number,number>>|No|`200`
+| <<plugins-outputs-kafka-broker_list>> |<<string,string>>|No|`"localhost:9092"`
+| <<plugins-outputs-kafka-client_id>> |<<string,string>>|No|`""`
+| <<plugins-outputs-kafka-codec>> |<<codec,codec>>|No|`"json"`
+| <<plugins-outputs-kafka-compressed_topics>> |<<string,string>>|No|`""`
+| <<plugins-outputs-kafka-compression_codec>> |<<string,string>>, one of `["none", "gzip", "snappy"]`|No|`"none"`
+| <<plugins-outputs-kafka-key_serializer_class>> |<<string,string>>|No|`nil`
+| <<plugins-outputs-kafka-message_send_max_retries>> |<<number,number>>|No|`3`
+| <<plugins-outputs-kafka-partitioner_class>> |<<string,string>>|No|`"kafka.producer.DefaultPartitioner"`
+| <<plugins-outputs-kafka-producer_type>> |<<string,string>>, one of `["sync", "async"]`|No|`"sync"`
+| <<plugins-outputs-kafka-queue_buffering_max_messages>> |<<number,number>>|No|`10000`
+| <<plugins-outputs-kafka-queue_buffering_max_ms>> |<<number,number>>|No|`5000`
+| <<plugins-outputs-kafka-queue_enqueue_timeout_ms>> |<<number,number>>|No|`-1`
+| <<plugins-outputs-kafka-request_required_acks>> |<<string,string>>, one of `[-1, 0, 1]`|No|`0`
+| <<plugins-outputs-kafka-request_timeout_ms>> |<<number,number>>|No|`10000`
+| <<plugins-outputs-kafka-retry_backoff_ms>> |<<number,number>>|No|`100`
+| <<plugins-outputs-kafka-send_buffer_bytes>> |<<number,number>>|No|`102400`
+| <<plugins-outputs-kafka-serializer_class>> |<<string,string>>|No|`"kafka.serializer.StringEncoder"`
+| <<plugins-outputs-kafka-topic_id>> |<<string,string>>|Yes|
+| <<plugins-outputs-kafka-topic_metadata_refresh_interval_ms>> |<<number,number>>|No|`600000`
+| <<plugins-outputs-kafka-workers>> |<<number,number>>|No|`1`
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-outputs-kafka-batch_num_messages]]
+===== `batch_num_messages` 
+
+  * Value type is <<number,number>>
+  * Default value is `200`
+
+The number of messages to send in one batch when using async mode. The producer will wait
+until either this number of messages are ready to send or `queue.buffer.max.ms` is reached.
+
+[[plugins-outputs-kafka-broker_list]]
+===== `broker_list` 
+
+  * Value type is <<string,string>>
+  * Default value is `"localhost:9092"`
+
+This is for bootstrapping and the producer will only use it for getting metadata (topics,
+partitions and replicas). The socket connections for sending the actual data will be
+established based on the broker information returned in the metadata. The format is
+`host1:port1,host2:port2`, and the list can be a subset of brokers or a VIP pointing to a
+subset of brokers.
+
+[[plugins-outputs-kafka-client_id]]
+===== `client_id` 
+
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+The client id is a user-specified string sent in each request to help trace calls. It should
+logically identify the application making the request.
+
+[[plugins-outputs-kafka-codec]]
+===== `codec` 
+
+  * Value type is <<codec,codec>>
+  * Default value is `"json"`
+
+The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
+
+[[plugins-outputs-kafka-compressed_topics]]
+===== `compressed_topics` 
+
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+This parameter allows you to set whether compression should be turned on for particular
+topics. If the compression codec is anything other than `NoCompressionCodec`,
+enable compression only for specified topics if any. If the list of compressed topics is
+empty, then enable the specified compression codec for all topics. If the compression codec
+is `NoCompressionCodec`, compression is disabled for all topics
+
+[[plugins-outputs-kafka-compression_codec]]
+===== `compression_codec` 
+
+  * Value can be any of: `none`, `gzip`, `snappy`
+  * Default value is `"none"`
+
+This parameter allows you to specify the compression codec for all data generated by this
+producer. Valid values are `none`, `gzip` and `snappy`.
+
+[[plugins-outputs-kafka-exclude_tags]]
+===== `exclude_tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events without any of these tags. Note this check is additional to type and tags.
+
+[[plugins-outputs-kafka-key_serializer_class]]
+===== `key_serializer_class` 
+
+  * Value type is <<string,string>>
+  * Default value is `nil`
+
+The serializer class for keys (defaults to the same as for messages if nothing is given)
+
+[[plugins-outputs-kafka-message_send_max_retries]]
+===== `message_send_max_retries` 
+
+  * Value type is <<number,number>>
+  * Default value is `3`
+
+This property will cause the producer to automatically retry a failed send request. This
+property specifies the number of retries when such failures occur. Note that setting a
+non-zero value here can lead to duplicates in the case of network errors that cause a message
+to be sent but the acknowledgement to be lost.
+
+[[plugins-outputs-kafka-partitioner_class]]
+===== `partitioner_class` 
+
+  * Value type is <<string,string>>
+  * Default value is `"kafka.producer.DefaultPartitioner"`
+
+The partitioner class for partitioning messages amongst partitions in the topic. The default
+partitioner is based on the hash of the key. If the key is null,
+the message is sent to a random partition in the broker.
+NOTE: `topic_metadata_refresh_interval_ms` controls how long the producer will distribute to a
+partition in the topic. This defaults to 10 mins, so the producer will continue to write to a
+single partition for 10 mins before it switches
+
+[[plugins-outputs-kafka-producer_type]]
+===== `producer_type` 
+
+  * Value can be any of: `sync`, `async`
+  * Default value is `"sync"`
+
+This parameter specifies whether the messages are sent asynchronously in a background thread.
+Valid values are (1) async for asynchronous send and (2) sync for synchronous send. By
+setting the producer to async we allow batching together of requests (which is great for
+throughput) but open the possibility of a failure of the client machine dropping unsent data.
+
+[[plugins-outputs-kafka-queue_buffering_max_messages]]
+===== `queue_buffering_max_messages` 
+
+  * Value type is <<number,number>>
+  * Default value is `10000`
+
+The maximum number of unsent messages that can be queued up the producer when using async
+mode before either the producer must be blocked or data must be dropped.
+
+[[plugins-outputs-kafka-queue_buffering_max_ms]]
+===== `queue_buffering_max_ms` 
+
+  * Value type is <<number,number>>
+  * Default value is `5000`
+
+Maximum time to buffer data when using async mode. For example a setting of 100 will try to
+batch together 100ms of messages to send at once. This will improve throughput but adds
+message delivery latency due to the buffering.
+
+[[plugins-outputs-kafka-queue_enqueue_timeout_ms]]
+===== `queue_enqueue_timeout_ms` 
+
+  * Value type is <<number,number>>
+  * Default value is `-1`
+
+The amount of time to block before dropping messages when running in async mode and the
+buffer has reached `queue.buffering.max.messages`. If set to 0 events will be enqueued
+immediately or dropped if the queue is full (the producer send call will never block). If set
+to -1 the producer will block indefinitely and never willingly drop a send.
+
+[[plugins-outputs-kafka-request_required_acks]]
+===== `request_required_acks` 
+
+  * Value can be any of: `-1`, `0`, `1`
+  * Default value is `0`
+
+This value controls when a produce request is considered completed. Specifically,
+how many other brokers must have committed the data to their log and acknowledged this to the
+leader. For more info, see -- http://kafka.apache.org/documentation.html#producerconfigs
+
+[[plugins-outputs-kafka-request_timeout_ms]]
+===== `request_timeout_ms` 
+
+  * Value type is <<number,number>>
+  * Default value is `10000`
+
+The amount of time the broker will wait trying to meet the `request.required.acks` requirement
+before sending back an error to the client.
+
+[[plugins-outputs-kafka-retry_backoff_ms]]
+===== `retry_backoff_ms` 
+
+  * Value type is <<number,number>>
+  * Default value is `100`
+
+Before each retry, the producer refreshes the metadata of relevant topics to see if a new
+leader has been elected. Since leader election takes a bit of time,
+this property specifies the amount of time that the producer waits before refreshing the
+metadata.
+
+[[plugins-outputs-kafka-send_buffer_bytes]]
+===== `send_buffer_bytes` 
+
+  * Value type is <<number,number>>
+  * Default value is `102400`
+
+Socket write buffer size
+
+[[plugins-outputs-kafka-serializer_class]]
+===== `serializer_class` 
+
+  * Value type is <<string,string>>
+  * Default value is `"kafka.serializer.StringEncoder"`
+
+The serializer class for messages. The default encoder takes a byte[] and returns the same byte[]
+
+[[plugins-outputs-kafka-tags]]
+===== `tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events with all of these tags.  Note that if you specify
+a type, the event must also match that type.
+Optional.
+
+[[plugins-outputs-kafka-topic_id]]
+===== `topic_id` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The topic to produce the messages to
+
+[[plugins-outputs-kafka-topic_metadata_refresh_interval_ms]]
+===== `topic_metadata_refresh_interval_ms` 
+
+  * Value type is <<number,number>>
+  * Default value is `600000`
+
+The producer generally refreshes the topic metadata from brokers when there is a failure
+(partition missing, leader not available...). It will also poll regularly (default: every
+10min so 600000ms). If you set this to a negative value, metadata will only get refreshed on
+failure. If you set this to zero, the metadata will get refreshed after each message sent
+(not recommended). Important note: the refresh happen only AFTER the message is sent,
+so if the producer never sends a message the metadata is never refreshed
+
+[[plugins-outputs-kafka-type]]
+===== `type`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+The type to act on. If a type is given, then this output will only
+act on messages with the same type. See any input plugin's `type`
+attribute for more.
+Optional.
+
+[[plugins-outputs-kafka-workers]]
+===== `workers` 
+
+  * Value type is <<number,number>>
+  * Default value is `1`
+
+The number of workers to use for this output.
+Note that this setting may not be useful for all outputs.
+

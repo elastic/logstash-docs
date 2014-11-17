@@ -1,0 +1,30 @@
+[[plugins-codecs-es_bulk]]
+=== es_bulk
+
+This codec will decode the Elasticsearch bulk format into
+individual events, plus metadata into the `@metadata` field.
+
+Encoding is not supported at this time as the Elasticsearch
+output submits Logstash events in bulk format.
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+es_bulk {
+  }
+--------------------------
+
+
+
+==== Details
+
+&nbsp;
+

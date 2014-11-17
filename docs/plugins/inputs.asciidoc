@@ -1,0 +1,128 @@
+[[input-plugins]]
+== Input plugins
+
+An input plugin enables a specific source of events to be read by Logstash.
+
+The following input plugins are available:
+
+<<plugins-inputs-letters-e, e>>
+<<plugins-inputs-letters-f, f>>
+<<plugins-inputs-letters-g, g>>
+<<plugins-inputs-letters-h, h>>
+<<plugins-inputs-letters-i, i>>
+<<plugins-inputs-letters-j, j>>
+<<plugins-inputs-letters-k, k>>
+<<plugins-inputs-letters-l, l>>
+<<plugins-inputs-letters-m, m>>
+<<plugins-inputs-letters-p, p>>
+<<plugins-inputs-letters-r, r>>
+<<plugins-inputs-letters-s, s>>
+<<plugins-inputs-letters-t, t>>
+<<plugins-inputs-letters-u, u>>
+<<plugins-inputs-letters-v, v>>
+<<plugins-inputs-letters-w, w>>
+<<plugins-inputs-letters-x, x>>
+<<plugins-inputs-letters-z, z>>
+[cols="asciidoc,asciidoc,asciidoc"]
+|=======================================================================
+|[[plugins-inputs-letters-e]] 
+* <<plugins-inputs-elasticsearch,elasticsearch>>
+* <<plugins-inputs-eventlog,eventlog>>
+* <<plugins-inputs-exec,exec>>
+|[[plugins-inputs-letters-f]] 
+* <<plugins-inputs-file,file>>
+|[[plugins-inputs-letters-g]] 
+* <<plugins-inputs-ganglia,ganglia>>
+* <<plugins-inputs-generator,generator>>
+* <<plugins-inputs-graphite,graphite>>
+* <<plugins-inputs-gelf,gelf>>
+|[[plugins-inputs-letters-h]] 
+* <<plugins-inputs-heroku,heroku>>
+|[[plugins-inputs-letters-i]] 
+* <<plugins-inputs-imap,imap>>
+* <<plugins-inputs-irc,irc>>
+|[[plugins-inputs-letters-j]] 
+* <<plugins-inputs-jmx,jmx>>
+|[[plugins-inputs-letters-k]] 
+* <<plugins-inputs-kafka,kafka>>
+|[[plugins-inputs-letters-l]] 
+* <<plugins-inputs-log4j,log4j>>
+* <<plugins-inputs-lumberjack,lumberjack>>
+|[[plugins-inputs-letters-m]] 
+* <<plugins-inputs-meetup,meetup>>
+|[[plugins-inputs-letters-p]] 
+* <<plugins-inputs-puppet_facter,puppet_facter>>
+* <<plugins-inputs-pipe,pipe>>
+|[[plugins-inputs-letters-r]] 
+* <<plugins-inputs-relp,relp>>
+* <<plugins-inputs-rackspace,rackspace>>
+* <<plugins-inputs-redis,redis>>
+* <<plugins-inputs-rabbitmq,rabbitmq>>
+|[[plugins-inputs-letters-s]] 
+* <<plugins-inputs-stdin,stdin>>
+* <<plugins-inputs-sqlite,sqlite>>
+* <<plugins-inputs-syslog,syslog>>
+* <<plugins-inputs-stomp,stomp>>
+* <<plugins-inputs-snmptrap,snmptrap>>
+* <<plugins-inputs-sqs,sqs>>
+* <<plugins-inputs-s3,s3>>
+|[[plugins-inputs-letters-t]] 
+* <<plugins-inputs-tcp,tcp>>
+* <<plugins-inputs-twitter,twitter>>
+|[[plugins-inputs-letters-u]] 
+* <<plugins-inputs-udp,udp>>
+* <<plugins-inputs-unix,unix>>
+|[[plugins-inputs-letters-v]] 
+* <<plugins-inputs-varnishlog,varnishlog>>
+|[[plugins-inputs-letters-w]] 
+* <<plugins-inputs-websocket,websocket>>
+* <<plugins-inputs-wmi,wmi>>
+|[[plugins-inputs-letters-x]] 
+* <<plugins-inputs-xmpp,xmpp>>
+|[[plugins-inputs-letters-z]] 
+* <<plugins-inputs-zenoss,zenoss>>
+* <<plugins-inputs-zeromq,zeromq>>
+|&nbsp; 
+|&nbsp; 
+|&nbsp; 
+|=======================================================================
+
+include::inputs/elasticsearch.asciidoc[]
+include::inputs/eventlog.asciidoc[]
+include::inputs/exec.asciidoc[]
+include::inputs/file.asciidoc[]
+include::inputs/ganglia.asciidoc[]
+include::inputs/generator.asciidoc[]
+include::inputs/graphite.asciidoc[]
+include::inputs/gelf.asciidoc[]
+include::inputs/heroku.asciidoc[]
+include::inputs/imap.asciidoc[]
+include::inputs/irc.asciidoc[]
+include::inputs/jmx.asciidoc[]
+include::inputs/kafka.asciidoc[]
+include::inputs/log4j.asciidoc[]
+include::inputs/lumberjack.asciidoc[]
+include::inputs/meetup.asciidoc[]
+include::inputs/puppet_facter.asciidoc[]
+include::inputs/pipe.asciidoc[]
+include::inputs/relp.asciidoc[]
+include::inputs/rackspace.asciidoc[]
+include::inputs/redis.asciidoc[]
+include::inputs/rabbitmq.asciidoc[]
+include::inputs/stdin.asciidoc[]
+include::inputs/sqlite.asciidoc[]
+include::inputs/syslog.asciidoc[]
+include::inputs/stomp.asciidoc[]
+include::inputs/snmptrap.asciidoc[]
+include::inputs/sqs.asciidoc[]
+include::inputs/s3.asciidoc[]
+include::inputs/tcp.asciidoc[]
+include::inputs/twitter.asciidoc[]
+include::inputs/udp.asciidoc[]
+include::inputs/unix.asciidoc[]
+include::inputs/varnishlog.asciidoc[]
+include::inputs/websocket.asciidoc[]
+include::inputs/wmi.asciidoc[]
+include::inputs/xmpp.asciidoc[]
+include::inputs/zenoss.asciidoc[]
+include::inputs/zeromq.asciidoc[]

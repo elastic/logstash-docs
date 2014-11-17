@@ -1,0 +1,26 @@
+[[plugins-codecs-edn]]
+=== edn
+
+
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+edn {
+  }
+--------------------------
+
+
+
+==== Details
+
+&nbsp;
+

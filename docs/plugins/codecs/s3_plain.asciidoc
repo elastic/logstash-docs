@@ -1,0 +1,27 @@
+[[plugins-codecs-s3_plain]]
+=== s3_plain
+
+The "s3_plain" codec is used for backward compatibility with previous version of the S3 Output
+
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+s3_plain {
+  }
+--------------------------
+
+
+
+==== Details
+
+&nbsp;
+

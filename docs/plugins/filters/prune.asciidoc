@@ -1,0 +1,283 @@
+[[plugins-filters-prune]]
+=== prune
+
+The prune filter is for pruning event data from `@fields` based on whitelist/blacklist
+of field names or their values (names and values can also be regular expressions).
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+prune {
+}
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-filters-prune-add_field>> |<<hash,hash>>|No|`{}`
+| <<plugins-filters-prune-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-prune-blacklist_names>> |<<array,array>>|No|`["%{[^}]+}"]`
+| <<plugins-filters-prune-blacklist_values>> |<<hash,hash>>|No|`{}`
+| <<plugins-filters-prune-interpolate>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-prune-periodic_flush>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-prune-remove_field>> |<<array,array>>|No|`[]`
+| <<plugins-filters-prune-remove_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-prune-whitelist_names>> |<<array,array>>|No|`[]`
+| <<plugins-filters-prune-whitelist_values>> |<<hash,hash>>|No|`{}`
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-filters-prune-add_field]]
+===== `add_field` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+If this filter is successful, add any arbitrary fields to this event.
+Field names can be dynamic and include parts of the event using the `%{field}`.
+
+Example:
+[source,ruby]
+    filter {
+      prune {
+        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
+      }
+    }
+[source,ruby]
+    # You can also add multiple fields at once:
+    filter {
+      prune {
+        add_field => {
+          "foo_%{somefield}" => "Hello world, from %{host}"
+          "new_field" => "new_static_value"
+        }
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would add field `foo_hello` if it is present, with the
+value above and the `%{host}` piece replaced with that value from the
+event. The second example would also add a hardcoded field.
+
+[[plugins-filters-prune-add_tag]]
+===== `add_tag` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, add arbitrary tags to the event.
+Tags can be dynamic and include parts of the event using the `%{field}`
+syntax.
+
+Example:
+[source,ruby]
+    filter {
+      prune {
+        add_tag => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also add multiple tags at once:
+    filter {
+      prune {
+        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
+
+[[plugins-filters-prune-blacklist_names]]
+===== `blacklist_names` 
+
+  * Value type is <<array,array>>
+  * Default value is `["%{[^}]+}"]`
+
+Exclude fields which names match specified regexps, by default exclude unresolved `%{field}` strings.
+[source,ruby]
+    filter { 
+      prune { 
+        tags            => [ "apache-accesslog" ]
+        blacklist_names => [ "method", "(referrer|status)", "${some}_field" ]
+      }
+    }
+
+[[plugins-filters-prune-blacklist_values]]
+===== `blacklist_values` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+Exclude specified fields if their values match regexps.
+In case field values are arrays, the fields are pruned on per array item
+in case all array items are matched whole field will be deleted.
+[source,ruby]
+    filter { 
+      prune { 
+        tags             => [ "apache-accesslog" ]
+        blacklist_values => [ "uripath", "/index.php",
+                              "method", "(HEAD|OPTIONS)",
+                              "status", "^[^2]" ]
+      }
+    }
+
+[[plugins-filters-prune-exclude_tags]]
+===== `exclude_tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events without all/any (controlled by `exclude_any` config
+option) of these tags.
+Optional.
+
+[[plugins-filters-prune-interpolate]]
+===== `interpolate` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Trigger whether configation fields and values should be interpolated for
+dynamic values.
+Probably adds some performance overhead. Defaults to false.
+
+[[plugins-filters-prune-periodic_flush]]
+===== `periodic_flush` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Call the filter flush method at regular interval.
+Optional.
+
+[[plugins-filters-prune-remove_field]]
+===== `remove_field` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, remove arbitrary fields from this event.
+Fields names can be dynamic and include parts of the event using the %{field}
+Example:
+[source,ruby]
+    filter {
+      prune {
+        remove_field => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also remove multiple fields at once:
+    filter {
+      prune {
+        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would remove the field with name `foo_hello` if it is present. The second
+example would remove an additional, non-dynamic field.
+
+[[plugins-filters-prune-remove_tag]]
+===== `remove_tag` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, remove arbitrary tags from the event.
+Tags can be dynamic and include parts of the event using the `%{field}`
+syntax.
+
+Example:
+[source,ruby]
+    filter {
+      prune {
+        remove_tag => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also remove multiple tags at once:
+    filter {
+      prune {
+        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would remove the tag `foo_hello` if it is present. The second example
+would remove a sad, unwanted tag as well.
+
+[[plugins-filters-prune-tags]]
+===== `tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Optional.
+
+[[plugins-filters-prune-type]]
+===== `type`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
+`exclude_fields`) must be met in order for the event to be handled by the filter.
+The type to act on. If a type is given, then this filter will only
+act on messages with the same type. See any input plugin's "type"
+attribute for more.
+Optional.
+
+[[plugins-filters-prune-whitelist_names]]
+===== `whitelist_names` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Include only fields only if their names match specified regexps, default to empty list which means include everything.
+[source,ruby] 
+    filter { 
+      prune { 
+        tags            => [ "apache-accesslog" ]
+        whitelist_names => [ "method", "(referrer|status)", "${some}_field" ]
+      }
+    }
+
+[[plugins-filters-prune-whitelist_values]]
+===== `whitelist_values` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+Include specified fields only if their values match regexps.
+In case field values are arrays, the fields are pruned on per array item
+thus only matching array items will be included.
+[source,ruby]
+    filter { 
+      prune { 
+        tags             => [ "apache-accesslog" ]
+        whitelist_values => [ "uripath", "/index.php",
+                              "method", "(GET|POST)",
+                              "status", "^[^2]" ]
+      }
+    }
+

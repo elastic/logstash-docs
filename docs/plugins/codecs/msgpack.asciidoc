@@ -1,0 +1,43 @@
+[[plugins-codecs-msgpack]]
+=== msgpack
+
+
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+msgpack {
+  }
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-codecs-msgpack-format>> |<<string,string>>|No|`nil`
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-codecs-msgpack-format]]
+===== `format` 
+
+  * Value type is <<string,string>>
+  * Default value is `nil`
+
+
+
