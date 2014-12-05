@@ -488,7 +488,3 @@ Now you should see the output of Logstash in your original shell as it processes
 ----------------------------------
 
 Congratulations! You're well on your way to being a real Logstash power user. You should be comfortable configuring, running and sending events to Logstash, but there's much more to explore.
-
-|=======================================================================
-
-include::static/configuration.asciidoc[]
