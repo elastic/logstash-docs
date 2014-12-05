@@ -41,6 +41,7 @@ input { # comments can appear at the end of a line, too
   # ...
 }
 ----------------------------------
+[[plugin_configuration]]
 [float]
 === Plugins
 
