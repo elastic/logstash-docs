@@ -2,7 +2,7 @@
 
 This document shows you how to add a new filter to Logstash.
 
-For a general overview of how to add a new plugin, see [the extending Logstash](.) overview.
+For a general overview of how to add a new plugin, see <<contributing-to-logstash,the extending Logstash>> overview.
 
 [float]
 === Write code.

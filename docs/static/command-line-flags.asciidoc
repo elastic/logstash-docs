@@ -3,15 +3,15 @@
 [float]
 === Agent
 
-The Logstash agent has the following flags (also try using the '--help' flag)
+The Logstash agent has the following flags (also try using the `--help` flag)
 
-[source,js]
+[source,ruby]
 ----------------------------------
 -f, --config CONFIGFILE
  Load the Logstash config from a specific file, directory, or a wildcard. If given a directory or wildcard, config files will be read from the directory in alphabetical order.
 
 -e CONFIGSTRING
- Use the given string as the configuration data. Same syntax as the config file. If not input is specified, 'stdin { type => stdin }' is default. If no output is specified, 'stdout { codec => rubydebug }}' is default.
+ Use the given string as the configuration data. Same syntax as the config file. If not input is specified, `stdin { type => stdin }` is default. If no output is specified, `stdout { codec => rubydebug }}` is default.
 
 -w, --filterworkers COUNT
  Run COUNT filter workers (default: 1)
@@ -39,7 +39,7 @@ The Logstash agent has the following flags (also try using the '--help' flag)
 [float]
 === Web
 
-[source,js]
+[source,ruby]
 ----------------------------------
 -a, --address ADDRESS 
  Address on which to start webserver. Default is 0.0.0.0.
