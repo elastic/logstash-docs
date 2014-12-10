@@ -32,12 +32,12 @@ Once you have verified the existence of Java on your system, we can move on!
 [float]
 ==== Logstash in two commands
 First, we're going to download the 'logstash' binary and run it with a very simple configuration.
-[source,js]
+["source","sh",subs="attributes,callouts"]
 ----------------------------------
 curl -O https://download.elasticsearch.org/logstash/logstash/logstash-{logstash_version}.tar.gz
 ----------------------------------
 Now you should have the file named 'logstash-{logstash_version}.tar.gz' on your local filesystem. Let's unpack it:
-[source,js]
+["source","sh",subs="attributes,callouts"]
 ----------------------------------
 tar zxvf logstash-{logstash_version}.tar.gz
 cd logstash-{logstash_version}
@@ -81,7 +81,7 @@ So, by re-configuring the `stdout` output (adding a "codec"), we can change the 
 === Storing logs with Elasticsearch
 Now, you're probably saying, "that's all fine and dandy, but typing all my logs into Logstash isn't really an option, and merely seeing them spit to STDOUT isn't very useful." Good point. First, let's set up Elasticsearch to store the messages we send into Logstash. If you don't have Elasticearch already installed, you can http://www.elasticsearch.org/download/[download the RPM or DEB package], or install manually by downloading the current release tarball, by issuing the following four commands:
 
-[source,js]
+["source","sh",subs="attributes,callouts"]
 ----------------------------------
 curl -O https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-{elasticsearch_version}.tar.gz
 tar zxvf elasticsearch-{elasticsearch_version}.tar.gz
