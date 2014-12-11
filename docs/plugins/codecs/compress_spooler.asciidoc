@@ -1,0 +1,52 @@
+[[plugins-codecs-compress_spooler]]
+=== compress_spooler
+
+
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+compress_spooler {
+  }
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-codecs-compress_spooler-compress_level>> |<<number,number>>|No|`6`
+| <<plugins-codecs-compress_spooler-spool_size>> |<<number,number>>|No|`50`
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-codecs-compress_spooler-compress_level]]
+===== `compress_level` 
+
+  * Value type is <<number,number>>
+  * Default value is `6`
+
+
+
+[[plugins-codecs-compress_spooler-spool_size]]
+===== `spool_size` 
+
+  * Value type is <<number,number>>
+  * Default value is `50`
+
+
+

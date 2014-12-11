@@ -8,6 +8,7 @@ The following codec plugins are available:
 <<plugins-codecs-letters-c, c>>
 <<plugins-codecs-letters-d, d>>
 <<plugins-codecs-letters-e, e>>
+<<plugins-codecs-letters-f, f>>
 <<plugins-codecs-letters-g, g>>
 <<plugins-codecs-letters-j, j>>
 <<plugins-codecs-letters-l, l>>
@@ -22,6 +23,7 @@ The following codec plugins are available:
 |=======================================================================
 |[[plugins-codecs-letters-c]] 
 * <<plugins-codecs-cloudfront,cloudfront>>
+* <<plugins-codecs-compress_spooler,compress_spooler>>
 * <<plugins-codecs-cloudtrail,cloudtrail>>
 * <<plugins-codecs-collectd,collectd>>
 |[[plugins-codecs-letters-d]] 
@@ -30,6 +32,8 @@ The following codec plugins are available:
 * <<plugins-codecs-edn_lines,edn_lines>>
 * <<plugins-codecs-edn,edn>>
 * <<plugins-codecs-es_bulk,es_bulk>>
+|[[plugins-codecs-letters-f]] 
+* <<plugins-codecs-fluent,fluent>>
 |[[plugins-codecs-letters-g]] 
 * <<plugins-codecs-graphite,graphite>>
 * <<plugins-codecs-gzip_lines,gzip_lines>>
@@ -54,16 +58,17 @@ The following codec plugins are available:
 * <<plugins-codecs-spool,spool>>
 |&nbsp; 
 |&nbsp; 
-|&nbsp; 
 |=======================================================================
 
 include::codecs/cloudfront.asciidoc[]
+include::codecs/compress_spooler.asciidoc[]
 include::codecs/cloudtrail.asciidoc[]
 include::codecs/collectd.asciidoc[]
 include::codecs/dots.asciidoc[]
 include::codecs/edn_lines.asciidoc[]
 include::codecs/edn.asciidoc[]
 include::codecs/es_bulk.asciidoc[]
+include::codecs/fluent.asciidoc[]
 include::codecs/graphite.asciidoc[]
 include::codecs/gzip_lines.asciidoc[]
 include::codecs/json.asciidoc[]

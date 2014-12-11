@@ -1,10 +1,17 @@
-[[plugins-inputs-s3]]
-=== s3
+[[plugins-inputs-drupal_dblog]]
+=== drupal_dblog
 
-Stream events from files from a S3 bucket.
+Retrieve watchdog log events from a Drupal installation with DBLog enabled.
+The events are pulled out directly from the database.
+The original events are not deleted, and on every consecutive run only new
+events are pulled.
 
-Each line from each file generates an event.
-Files ending in `.gz` are handled as gzip'ed files.
+The last watchdog event id that was processed is stored in the Drupal
+variable table with the name "logstash_last_wid". Delete this variable or
+set it to 0 if you want to re-import all events.
+
+More info on DBLog: http://drupal.org/documentation/modules/dblog
+
 
 &nbsp;
 
@@ -17,8 +24,7 @@ Required configuration options:
 
 [source,json]
 --------------------------
-s3 {
-    bucket => ... 
+drupal_dblog {
 }
 --------------------------
 
@@ -29,19 +35,14 @@ Available configuration options:
 [cols="<,<,<,<m",options="header",]
 |=======================================================================
 |Setting |Input type|Required|Default value
-| <<plugins-inputs-s3-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-s3-backup_to_bucket>> |<<string,string>>|No|`nil`
-| <<plugins-inputs-s3-backup_to_dir>> |<<string,string>>|No|`nil`
-| <<plugins-inputs-s3-bucket>> |<<string,string>>|Yes|
-| <<plugins-inputs-s3-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-inputs-s3-credentials>> |<<array,array>>|No|`[]`
-| <<plugins-inputs-s3-delete>> |<<boolean,boolean>>|No|`false`
-| <<plugins-inputs-s3-interval>> |<<number,number>>|No|`60`
-| <<plugins-inputs-s3-prefix>> |<<string,string>>|No|`nil`
-| <<plugins-inputs-s3-region_endpoint>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "eu-west-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "sa-east-1", "us-gov-west-1"]`|No|`"us-east-1"`
-| <<plugins-inputs-s3-sincedb_path>> |<<string,string>>|No|`nil`
-| <<plugins-inputs-s3-tags>> |<<array,array>>|No|
-| <<plugins-inputs-s3-type>> |<<string,string>>|No|
+| <<plugins-inputs-drupal_dblog-add_field>> |<<hash,hash>>|No|`{}`
+| <<plugins-inputs-drupal_dblog-add_usernames>> |<<boolean,boolean>>|No|`false`
+| <<plugins-inputs-drupal_dblog-bulksize>> |<<number,number>>|No|`5000`
+| <<plugins-inputs-drupal_dblog-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-inputs-drupal_dblog-databases>> |<<hash,hash>>|No|
+| <<plugins-inputs-drupal_dblog-interval>> |<<number,number>>|No|`10`
+| <<plugins-inputs-drupal_dblog-tags>> |<<array,array>>|No|
+| <<plugins-inputs-drupal_dblog-type>> |<<string,string>>|No|`"watchdog"`
 |=======================================================================
 
 
@@ -49,7 +50,7 @@ Available configuration options:
 
 &nbsp;
 
-[[plugins-inputs-s3-add_field]]
+[[plugins-inputs-drupal_dblog-add_field]]
 ===== `add_field` 
 
   * Value type is <<hash,hash>>
@@ -57,32 +58,26 @@ Available configuration options:
 
 Add a field to an event
 
-[[plugins-inputs-s3-backup_to_bucket]]
-===== `backup_to_bucket` 
+[[plugins-inputs-drupal_dblog-add_usernames]]
+===== `add_usernames` 
 
-  * Value type is <<string,string>>
-  * Default value is `nil`
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
 
-Name of a S3 bucket to backup processed files to.
+By default, the event only contains the current user id as a field.
+If you whish to add the username as an additional field, set this to true.
 
-[[plugins-inputs-s3-backup_to_dir]]
-===== `backup_to_dir` 
+[[plugins-inputs-drupal_dblog-bulksize]]
+===== `bulksize` 
 
-  * Value type is <<string,string>>
-  * Default value is `nil`
+  * Value type is <<number,number>>
+  * Default value is `5000`
 
-Path of a local directory to backup processed files to.
+The amount of log messages that should be fetched with each query.
+Bulk fetching is done to prevent querying huge data sets when lots of
+messages are in the database.
 
-[[plugins-inputs-s3-bucket]]
-===== `bucket` 
-
-  * This is a required setting.
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-The name of the S3 bucket.
-
-[[plugins-inputs-s3-charset]]
+[[plugins-inputs-drupal_dblog-charset]]
 ===== `charset`  (DEPRECATED)
 
   * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
@@ -97,7 +92,7 @@ or in another character set other than `UTF-8`.
 
 This only affects `plain` format logs since json is `UTF-8` already.
 
-[[plugins-inputs-s3-codec]]
+[[plugins-inputs-drupal_dblog-codec]]
 ===== `codec` 
 
   * Value type is <<codec,codec>>
@@ -105,21 +100,25 @@ This only affects `plain` format logs since json is `UTF-8` already.
 
 The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
 
-[[plugins-inputs-s3-credentials]]
-===== `credentials` 
+[[plugins-inputs-drupal_dblog-databases]]
+===== `databases` 
 
-  * Value type is <<array,array>>
-  * Default value is `[]`
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
 
-TODO(sissel): refactor to use `line` codec (requires removing both gzip
-support and readline usage). Support gzip through a gzip codec! ;)
-The credentials of the AWS account used to access the bucket.
-Credentials can be specified:
-- As an `["id","secret"]` array
-- As a path to a file containing `AWS_ACCESS_KEY_ID=...` and `AWS_SECRET_ACCESS_KEY=...`
-- In the environment, if not set (using variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`)
+Specify all drupal databases that you whish to import from.
+This can be as many as you whish.
+The format is a hash, with a unique site name as the key, and a databse
+url as the value.
 
-[[plugins-inputs-s3-debug]]
+Example:
+[
+  "site1", "mysql://user1:password@host1.com/databasename",
+  "other_site", "mysql://user2:password@otherhost.com/databasename",
+  ...
+]
+
+[[plugins-inputs-drupal_dblog-debug]]
 ===== `debug`  (DEPRECATED)
 
   * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
@@ -128,15 +127,7 @@ Credentials can be specified:
 
 
 
-[[plugins-inputs-s3-delete]]
-===== `delete` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Whether to delete processed files from the original bucket.
-
-[[plugins-inputs-s3-format]]
+[[plugins-inputs-drupal_dblog-format]]
 ===== `format`  (DEPRECATED)
 
   * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
@@ -145,16 +136,15 @@ Whether to delete processed files from the original bucket.
 
 The format of input data (plain, json, json_event)
 
-[[plugins-inputs-s3-interval]]
+[[plugins-inputs-drupal_dblog-interval]]
 ===== `interval` 
 
   * Value type is <<number,number>>
-  * Default value is `60`
+  * Default value is `10`
 
-Interval to wait between to check the file list again after a run is finished.
-Value is in seconds.
+Time between checks in minutes.
 
-[[plugins-inputs-s3-message_format]]
+[[plugins-inputs-drupal_dblog-message_format]]
 ===== `message_format`  (DEPRECATED)
 
   * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
@@ -169,43 +159,7 @@ If format is `json_event`, ALL fields except for `@type`
 are expected to be present. Not receiving all fields
 will cause unexpected results.
 
-[[plugins-inputs-s3-prefix]]
-===== `prefix` 
-
-  * Value type is <<string,string>>
-  * Default value is `nil`
-
-If specified, the prefix the filenames in the bucket must match (not a regexp)
-
-[[plugins-inputs-s3-region]]
-===== `region`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `eu-west-1`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `sa-east-1`, `us-gov-west-1`
-  * There is no default value for this setting.
-
-The AWS region for your bucket.
-
-[[plugins-inputs-s3-region_endpoint]]
-===== `region_endpoint` 
-
-  * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `eu-west-1`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `sa-east-1`, `us-gov-west-1`
-  * Default value is `"us-east-1"`
-
-The AWS region for your bucket.
-
-[[plugins-inputs-s3-sincedb_path]]
-===== `sincedb_path` 
-
-  * Value type is <<string,string>>
-  * Default value is `nil`
-
-Where to write the since database (keeps track of the date
-the last handled file was added to S3). The default will write
-sincedb files to some path matching "$HOME/.sincedb*"
-Should be a path with filename not just a directory.
-
-[[plugins-inputs-s3-tags]]
+[[plugins-inputs-drupal_dblog-tags]]
 ===== `tags` 
 
   * Value type is <<array,array>>
@@ -215,22 +169,19 @@ Add any number of arbitrary tags to your event.
 
 This can help with processing later.
 
-[[plugins-inputs-s3-type]]
+[[plugins-inputs-drupal_dblog-type]]
 ===== `type` 
 
   * Value type is <<string,string>>
-  * There is no default value for this setting.
+  * Default value is `"watchdog"`
 
-Add a `type` field to all events handled by this input.
-
+Label this input with a type.
 Types are used mainly for filter activation.
 
-The type is stored as part of the event itself, so you can
-also use the type to search for it in the web interface.
 
-If you try to set a type on an event that already has one (for
-example when you send an event from a shipper to an indexer) then
-a new input will not override the existing type. A type set at 
-the shipper stays with that event for its life even
-when sent to another Logstash server.
+If you create an input with type "foobar", then only filters
+which also have type "foobar" will act on them.
+
+The type is also stored as part of the event itself, so you
+can also use the type to search for in the web interface.
 

@@ -5,6 +5,7 @@ An input plugin enables a specific source of events to be read by Logstash.
 
 The following input plugins are available:
 
+<<plugins-inputs-letters-d, d>>
 <<plugins-inputs-letters-e, e>>
 <<plugins-inputs-letters-f, f>>
 <<plugins-inputs-letters-g, g>>
@@ -25,6 +26,8 @@ The following input plugins are available:
 <<plugins-inputs-letters-z, z>>
 [cols="asciidoc,asciidoc,asciidoc"]
 |=======================================================================
+|[[plugins-inputs-letters-d]] 
+* <<plugins-inputs-drupal_dblog,drupal_dblog>>
 |[[plugins-inputs-letters-e]] 
 * <<plugins-inputs-elasticsearch,elasticsearch>>
 * <<plugins-inputs-eventlog,eventlog>>
@@ -36,6 +39,7 @@ The following input plugins are available:
 * <<plugins-inputs-generator,generator>>
 * <<plugins-inputs-graphite,graphite>>
 * <<plugins-inputs-gelf,gelf>>
+* <<plugins-inputs-github,github>>
 |[[plugins-inputs-letters-h]] 
 * <<plugins-inputs-heroku,heroku>>
 |[[plugins-inputs-letters-i]] 
@@ -55,6 +59,7 @@ The following input plugins are available:
 * <<plugins-inputs-pipe,pipe>>
 |[[plugins-inputs-letters-r]] 
 * <<plugins-inputs-relp,relp>>
+* <<plugins-inputs-rss,rss>>
 * <<plugins-inputs-rackspace,rackspace>>
 * <<plugins-inputs-redis,redis>>
 * <<plugins-inputs-rabbitmq,rabbitmq>>
@@ -84,9 +89,9 @@ The following input plugins are available:
 * <<plugins-inputs-zeromq,zeromq>>
 |&nbsp; 
 |&nbsp; 
-|&nbsp; 
 |=======================================================================
 
+include::inputs/drupal_dblog.asciidoc[]
 include::inputs/elasticsearch.asciidoc[]
 include::inputs/eventlog.asciidoc[]
 include::inputs/exec.asciidoc[]
@@ -95,6 +100,7 @@ include::inputs/ganglia.asciidoc[]
 include::inputs/generator.asciidoc[]
 include::inputs/graphite.asciidoc[]
 include::inputs/gelf.asciidoc[]
+include::inputs/github.asciidoc[]
 include::inputs/heroku.asciidoc[]
 include::inputs/imap.asciidoc[]
 include::inputs/irc.asciidoc[]
@@ -106,6 +112,7 @@ include::inputs/meetup.asciidoc[]
 include::inputs/puppet_facter.asciidoc[]
 include::inputs/pipe.asciidoc[]
 include::inputs/relp.asciidoc[]
+include::inputs/rss.asciidoc[]
 include::inputs/rackspace.asciidoc[]
 include::inputs/redis.asciidoc[]
 include::inputs/rabbitmq.asciidoc[]
