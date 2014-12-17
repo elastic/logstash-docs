@@ -26,13 +26,13 @@ The following filter plugins are available:
 [cols="asciidoc,asciidoc,asciidoc"]
 |=======================================================================
 |[[plugins-filters-letters-a]] 
-* <<plugins-filters-anonymize,anonymize>>
 * <<plugins-filters-alter,alter>>
+* <<plugins-filters-anonymize,anonymize>>
 |[[plugins-filters-letters-c]] 
-* <<plugins-filters-csv,csv>>
 * <<plugins-filters-collate,collate>>
-* <<plugins-filters-clone,clone>>
+* <<plugins-filters-csv,csv>>
 * <<plugins-filters-cidr,cidr>>
+* <<plugins-filters-clone,clone>>
 * <<plugins-filters-cipher,cipher>>
 * <<plugins-filters-checksum,checksum>>
 |[[plugins-filters-letters-d]] 
@@ -40,15 +40,15 @@ The following filter plugins are available:
 * <<plugins-filters-dns,dns>>
 * <<plugins-filters-drop,drop>>
 |[[plugins-filters-letters-e]] 
-* <<plugins-filters-environment,environment>>
-* <<plugins-filters-extractnumbers,extractnumbers>>
 * <<plugins-filters-elasticsearch,elasticsearch>>
+* <<plugins-filters-extractnumbers,extractnumbers>>
+* <<plugins-filters-environment,environment>>
 * <<plugins-filters-elapsed,elapsed>>
 |[[plugins-filters-letters-f]] 
 * <<plugins-filters-fingerprint,fingerprint>>
 |[[plugins-filters-letters-g]] 
-* <<plugins-filters-grok,grok>>
 * <<plugins-filters-geoip,geoip>>
+* <<plugins-filters-grok,grok>>
 |[[plugins-filters-letters-i]] 
 * <<plugins-filters-i18n,i18n>>
 |[[plugins-filters-letters-j]] 
@@ -57,8 +57,8 @@ The following filter plugins are available:
 |[[plugins-filters-letters-k]] 
 * <<plugins-filters-kv,kv>>
 |[[plugins-filters-letters-m]] 
-* <<plugins-filters-metrics,metrics>>
 * <<plugins-filters-mutate,mutate>>
+* <<plugins-filters-metrics,metrics>>
 * <<plugins-filters-multiline,multiline>>
 * <<plugins-filters-metaevent,metaevent>>
 |[[plugins-filters-letters-p]] 
@@ -68,16 +68,16 @@ The following filter plugins are available:
 * <<plugins-filters-ruby,ruby>>
 * <<plugins-filters-range,range>>
 |[[plugins-filters-letters-s]] 
-* <<plugins-filters-split,split>>
-* <<plugins-filters-sleep,sleep>>
 * <<plugins-filters-syslog_pri,syslog_pri>>
+* <<plugins-filters-sleep,sleep>>
+* <<plugins-filters-split,split>>
 |[[plugins-filters-letters-t]] 
-* <<plugins-filters-translate,translate>>
 * <<plugins-filters-throttle,throttle>>
+* <<plugins-filters-translate,translate>>
 |[[plugins-filters-letters-u]] 
 * <<plugins-filters-uuid,uuid>>
-* <<plugins-filters-useragent,useragent>>
 * <<plugins-filters-urldecode,urldecode>>
+* <<plugins-filters-useragent,useragent>>
 |[[plugins-filters-letters-x]] 
 * <<plugins-filters-xml,xml>>
 |[[plugins-filters-letters-z]] 
@@ -85,43 +85,43 @@ The following filter plugins are available:
 |&nbsp; 
 |=======================================================================
 
-include::filters/anonymize.asciidoc[]
 include::filters/alter.asciidoc[]
-include::filters/csv.asciidoc[]
+include::filters/anonymize.asciidoc[]
 include::filters/collate.asciidoc[]
-include::filters/clone.asciidoc[]
+include::filters/csv.asciidoc[]
 include::filters/cidr.asciidoc[]
+include::filters/clone.asciidoc[]
 include::filters/cipher.asciidoc[]
 include::filters/checksum.asciidoc[]
 include::filters/date.asciidoc[]
 include::filters/dns.asciidoc[]
 include::filters/drop.asciidoc[]
-include::filters/environment.asciidoc[]
-include::filters/extractnumbers.asciidoc[]
 include::filters/elasticsearch.asciidoc[]
+include::filters/extractnumbers.asciidoc[]
+include::filters/environment.asciidoc[]
 include::filters/elapsed.asciidoc[]
 include::filters/fingerprint.asciidoc[]
-include::filters/grok.asciidoc[]
 include::filters/geoip.asciidoc[]
+include::filters/grok.asciidoc[]
 include::filters/i18n.asciidoc[]
 include::filters/json.asciidoc[]
 include::filters/json_encode.asciidoc[]
 include::filters/kv.asciidoc[]
-include::filters/metrics.asciidoc[]
 include::filters/mutate.asciidoc[]
+include::filters/metrics.asciidoc[]
 include::filters/multiline.asciidoc[]
 include::filters/metaevent.asciidoc[]
 include::filters/prune.asciidoc[]
 include::filters/punct.asciidoc[]
 include::filters/ruby.asciidoc[]
 include::filters/range.asciidoc[]
-include::filters/split.asciidoc[]
-include::filters/sleep.asciidoc[]
 include::filters/syslog_pri.asciidoc[]
-include::filters/translate.asciidoc[]
+include::filters/sleep.asciidoc[]
+include::filters/split.asciidoc[]
 include::filters/throttle.asciidoc[]
+include::filters/translate.asciidoc[]
 include::filters/uuid.asciidoc[]
-include::filters/useragent.asciidoc[]
 include::filters/urldecode.asciidoc[]
+include::filters/useragent.asciidoc[]
 include::filters/xml.asciidoc[]
 include::filters/zeromq.asciidoc[]
