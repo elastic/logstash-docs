@@ -57,6 +57,7 @@ The following codec plugins are available:
 * <<plugins-codecs-s3_plain,s3_plain>>
 * <<plugins-codecs-spool,spool>>
 |&nbsp; 
+|&nbsp; 
 |=======================================================================
 
 include::codecs/compress_spooler.asciidoc[]
