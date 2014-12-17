@@ -5,7 +5,6 @@ The plugins in this section change the data representation of an input or output
 
 The following codec plugins are available:
 
-<<plugins-codecs-letters-a, a>>
 <<plugins-codecs-letters-c, c>>
 <<plugins-codecs-letters-d, d>>
 <<plugins-codecs-letters-e, e>>
@@ -22,8 +21,6 @@ The following codec plugins are available:
 
 [cols="asciidoc,asciidoc,asciidoc"]
 |=======================================================================
-|[[plugins-codecs-letters-a]] 
-* <<plugins-codecs-avro,avro>>
 |[[plugins-codecs-letters-c]] 
 * <<plugins-codecs-compress_spooler,compress_spooler>>
 * <<plugins-codecs-cloudtrail,cloudtrail>>
@@ -62,7 +59,6 @@ The following codec plugins are available:
 |&nbsp; 
 |=======================================================================
 
-include::codecs/avro.asciidoc[]
 include::codecs/compress_spooler.asciidoc[]
 include::codecs/cloudtrail.asciidoc[]
 include::codecs/cloudfront.asciidoc[]
