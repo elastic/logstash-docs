@@ -8,7 +8,7 @@ Configuration in your Logstash configuration file can be as simple as:
 [source,ruby]
     input {
       udp {
-        port => 28526
+        port => 25826
         buffer_size => 1452
         codec => collectd { }
       }
