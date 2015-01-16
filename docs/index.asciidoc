@@ -7,15 +7,15 @@
 
 include::static/getting-started-with-logstash.asciidoc[]
 
-include::static/example-add-a-new-filter.asciidoc[]
-
-include::static/command-line-flags.asciidoc[]
+include::static/life-of-an-event.asciidoc[]
 
 include::static/configuration.asciidoc[]
 
+include::static/command-line-flags.asciidoc[]
+
 include::static/contributing-to-logstash.asciidoc[]
 
-include::static/life-of-an-event.asciidoc[]
+include::static/example-add-a-new-filter.asciidoc[]
 
 include::plugins/inputs.asciidoc[]
 include::plugins/outputs.asciidoc[]
