@@ -1,0 +1,15 @@
+:branch:        	1.5
+:ls_version:		1.5.0.beta1
+:register_method:	true
+:receive_method:	true
+:teardown_method: true
+:plugintype:    	output
+:pluginclass:   	Outputs
+:pluginname:    	example
+:pluginnamecap: 	Example
+
+:introfooter: For this example, we are going to examine the example output plugin at https://github.com/logstash-plugins/logstash-output-example/ .
+
+:methodheader: Logstash outputs contain two main methods: `register` and `receive`.
+
+include::include/pluginbody.asciidoc[]

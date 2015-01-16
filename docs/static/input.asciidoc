@@ -1,0 +1,15 @@
+:branch:        	1.5
+:ls_version:		1.5.0.beta1
+:register_method:	true
+:run_method:		true
+:teardown_method: true
+:plugintype:    	input
+:pluginclass:   	Inputs
+:pluginname:    	example
+:pluginnamecap: 	Example
+
+:introfooter: For this example, we are going to examine the example input plugin at https://github.com/logstash-plugins/logstash-input-example/ .
+
+:methodheader: Logstash inputs require two main methods: `register` and `run`.
+
+include::include/pluginbody.asciidoc[]
