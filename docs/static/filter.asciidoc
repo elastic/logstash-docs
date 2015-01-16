@@ -1,0 +1,14 @@
+:branch:        	1.5
+:ls_version:		1.5.0.beta1
+:register_method:	true
+:filter_method:		true
+:plugintype:    	filter
+:pluginclass:   	Filters
+:pluginname:    	example
+:pluginnamecap: 	Example
+
+:introfooter: For this example, we are going to examine the example filter plugin at https://github.com/logstash-plugins/logstash-filter-example/ .
+
+:methodheader: Logstash filters contain two main methods: `register` and `filter`.
+
+include::include/pluginbody.asciidoc[]
