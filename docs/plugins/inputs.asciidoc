@@ -5,6 +5,7 @@ An input plugin enables a specific source of events to be read by Logstash.
 
 The following input plugins are available:
 
+<<plugins-inputs-letters-c, c>>
 <<plugins-inputs-letters-d, d>>
 <<plugins-inputs-letters-e, e>>
 <<plugins-inputs-letters-f, f>>
@@ -26,6 +27,8 @@ The following input plugins are available:
 <<plugins-inputs-letters-z, z>>
 [cols="asciidoc,asciidoc,asciidoc"]
 |=======================================================================
+|[[plugins-inputs-letters-c]] 
+* <<plugins-inputs-couchdb_changes,couchdb_changes>>
 |[[plugins-inputs-letters-d]] 
 * <<plugins-inputs-drupal_dblog,drupal_dblog>>
 |[[plugins-inputs-letters-e]] 
@@ -91,6 +94,7 @@ The following input plugins are available:
 |&nbsp; 
 |=======================================================================
 
+include::inputs/couchdb_changes.asciidoc[]
 include::inputs/drupal_dblog.asciidoc[]
 include::inputs/elasticsearch.asciidoc[]
 include::inputs/exec.asciidoc[]
