@@ -7,8 +7,6 @@
 
 include::static/getting-started-with-logstash.asciidoc[]
 
-include::static/example-add-a-new-filter.asciidoc[]
-
 include::static/command-line-flags.asciidoc[]
 
 include::static/configuration.asciidoc[]
@@ -21,3 +19,12 @@ include::plugins/inputs.asciidoc[]
 include::plugins/outputs.asciidoc[]
 include::plugins/filters.asciidoc[]
 include::plugins/codecs.asciidoc[]
+
+== Creating a Logstash Plugin
+include::static/input.asciidoc[Inputs]
+
+include::static/codec.asciidoc[Codecs]
+
+include::static/input.asciidoc[Filters]
+
+include::static/input.asciidoc[Outputs]
