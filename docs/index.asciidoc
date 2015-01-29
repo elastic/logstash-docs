@@ -20,11 +20,11 @@ include::plugins/outputs.asciidoc[]
 include::plugins/filters.asciidoc[]
 include::plugins/codecs.asciidoc[]
 
-== Creating a Logstash Plugin
-include::static/input.asciidoc[Inputs]
 
-include::static/codec.asciidoc[Codecs]
+include::static/input.asciidoc[]
 
-include::static/input.asciidoc[Filters]
+include::static/codec.asciidoc[]
 
-include::static/input.asciidoc[Outputs]
+include::static/filter.asciidoc[]
+
+include::static/output.asciidoc[]
