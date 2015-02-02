@@ -3,10 +3,10 @@
 == Contributing to Logstash
 
 Before version 1.5, Logstash included all plugins in each release.  This made it
-easy to make use of any plugin, but it complicated releases.  A new release of
-Logstash became necessary if a plugin needed to be patched and released.  Since
-version 1.5, all plugins reside in their own repositories.  You can even add
-your own input, codec, filter, or output plugins to Logstash!
+easy to make use of any plugin, but it complicated plugin development--a new
+release of Logstash became necessary if a plugin needed patching.  Since version
+1.5, all plugins are independent of the Logstash core. Now you can add your own
+input, codec, filter, or output plugins to Logstash much more easily!
 
 [float]
 === Adding plugins
