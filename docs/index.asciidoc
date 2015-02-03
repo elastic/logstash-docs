@@ -11,8 +11,6 @@ include::static/command-line-flags.asciidoc[]
 
 include::static/configuration.asciidoc[]
 
-include::static/contributing-to-logstash.asciidoc[]
-
 include::static/life-of-an-event.asciidoc[]
 
 include::plugins/inputs.asciidoc[]
@@ -20,6 +18,7 @@ include::plugins/outputs.asciidoc[]
 include::plugins/filters.asciidoc[]
 include::plugins/codecs.asciidoc[]
 
+include::static/contributing-to-logstash.asciidoc[]
 
 include::static/input.asciidoc[]
 
