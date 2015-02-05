@@ -7,20 +7,16 @@
 
 ==== Synopsis
 
-This plugin supports the following configuration options:
+This plugin has no configuration options.
 
 
-Required configuration options:
+Complete configuration example:
 
 [source,json]
 --------------------------
 dots {
-  }
+}
 --------------------------
 
 
-
-==== Details
-
-&nbsp;
 

@@ -44,6 +44,7 @@ The following input plugins are available:
 * <<plugins-inputs-graphite,graphite>>
 * <<plugins-inputs-github,github>>
 |[[plugins-inputs-letters-h]] 
+* <<plugins-inputs-heartbeat,heartbeat>>
 * <<plugins-inputs-heroku,heroku>>
 |[[plugins-inputs-letters-i]] 
 * <<plugins-inputs-irc,irc>>
@@ -105,6 +106,7 @@ include::inputs/gelf.asciidoc[]
 include::inputs/generator.asciidoc[]
 include::inputs/graphite.asciidoc[]
 include::inputs/github.asciidoc[]
+include::inputs/heartbeat.asciidoc[]
 include::inputs/heroku.asciidoc[]
 include::inputs/irc.asciidoc[]
 include::inputs/imap.asciidoc[]
