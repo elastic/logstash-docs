@@ -1,6 +1,8 @@
 [[plugins-filters-date]]
 === date
 
+
+
 The date filter is used for parsing dates from fields, and then using that
 date or timestamp as the logstash timestamp for the event.
 
@@ -124,8 +126,7 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without all/any (controlled by `exclude_any` config
-option) of these tags.
+Only handle events without any of these tags.
 Optional.
 
 [[plugins-filters-date-locale]]
@@ -168,8 +169,8 @@ to help you save time and ensure correctness of date parsing.
 
 * `ISO8601` - should parse any valid ISO8601 timestamp, such as
   `2011-04-19T03:44:01.103Z`
-* `UNIX` - will parse unix time in seconds since epoch
-* `UNIX_MS` - will parse unix time in milliseconds since epoch
+* `UNIX` - will parse *float or int* value expressing unix time in seconds since epoch like 1326149001.132 as well as 1326149001
+* `UNIX_MS` - will parse **int** value expressing unix time in milliseconds since epoch like 1366125117000
 * `TAI64N` - will parse tai64n time values
 
 For example, if you have a field `logdate`, with a value that looks like
@@ -183,7 +184,7 @@ For example, if you have a field `logdate`, with a value that looks like
 
 If your field is nested in your structure, you can use the nested
 syntax `[foo][bar]` to match its value. For more information, please refer to
-http://logstash.net/docs/latest/configuration#fieldreferences
+http://www.elasticsearch.org/guide/en/logstash/current/_logstash_config_language.html#_field_references
 
 [[plugins-filters-date-periodic_flush]]
 ===== `periodic_flush` 
@@ -257,7 +258,7 @@ would remove a sad, unwanted tag as well.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-filters-date-target]]
@@ -293,7 +294,7 @@ For example, `America/Los_Angeles` or `Europe/France` are valid IDs.
 Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
 `exclude_fields`) must be met in order for the event to be handled by the filter.
 The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's "type"
+act on messages with the same type. See any input plugin's `type`
 attribute for more.
 Optional.
 

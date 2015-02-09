@@ -1,6 +1,10 @@
 [[plugins-outputs-google_bigquery]]
 === google_bigquery
 
+
+NOTE: This is a community-contributed plugin! It does not ship with logstash by default, but it is easy to install! To use this, you must have installed the contrib plugins package.
+
+
 Author: Rodrigo De Castro <rdc@google.com>
 Date: 2013-09-20
 
@@ -183,7 +187,8 @@ This only affects how long files are on the hard disk after the job is done.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-google_bigquery-flush_interval_secs]]
 ===== `flush_interval_secs` 
@@ -245,8 +250,7 @@ Table name will be <table_prefix>_<date>
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-google_bigquery-temp_directory]]
