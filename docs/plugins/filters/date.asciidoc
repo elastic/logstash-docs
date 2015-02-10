@@ -184,7 +184,7 @@ For example, if you have a field `logdate`, with a value that looks like
 
 If your field is nested in your structure, you can use the nested
 syntax `[foo][bar]` to match its value. For more information, please refer to
-http://www.elasticsearch.org/guide/en/logstash/current/_logstash_config_language.html#_field_references
+<<logstash-config-field-references>>
 
 [[plugins-filters-date-periodic_flush]]
 ===== `periodic_flush` 
