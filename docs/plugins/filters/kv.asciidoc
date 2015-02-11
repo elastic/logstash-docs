@@ -1,6 +1,8 @@
 [[plugins-filters-kv]]
 === kv
 
+
+
 This filter helps automatically parse messages (or specific event fields)
 which are of the `foo=bar` variety.
 
@@ -63,6 +65,7 @@ Available configuration options:
 | <<plugins-filters-kv-trimkey>> |<<string,string>>|No|
 | <<plugins-filters-kv-value_split>> |<<string,string>>|No|`"="`
 |=======================================================================
+
 
 
 ==== Details
@@ -170,8 +173,7 @@ To exclude `from` and `to`, but retain the `foo` key, you could use this configu
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without all/any (controlled by `exclude_any` config
-option) of these tags.
+Only handle events without any of these tags.
 Optional.
 
 [[plugins-filters-kv-field_split]]
@@ -319,7 +321,7 @@ For example, to process the `not_the_message` field:
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-filters-kv-target]]
@@ -388,7 +390,7 @@ For example, to strip `<` `>` `[` `]` and `,` characters from keys:
 Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
 `exclude_fields`) must be met in order for the event to be handled by the filter.
 The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's "type"
+act on messages with the same type. See any input plugin's `type`
 attribute for more.
 Optional.
 
@@ -407,4 +409,5 @@ For example, to identify key-values such as
 `key1:value1 key2:value2`:
 [source,ruby]
     filter { kv { value_split => ":" } }
+
 

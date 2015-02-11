@@ -1,6 +1,10 @@
 [[plugins-filters-alter]]
 === alter
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-filter-alter`.
+
+
 The alter filter allows you to do general alterations to fields 
 that are not included in the normal mutate filter. 
 
@@ -39,6 +43,7 @@ Available configuration options:
 | <<plugins-filters-alter-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-alter-remove_tag>> |<<array,array>>|No|`[]`
 |=======================================================================
+
 
 
 ==== Details
@@ -172,8 +177,7 @@ Example:
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without all/any (controlled by `exclude_any` config
-option) of these tags.
+Only handle events without any of these tags.
 Optional.
 
 [[plugins-filters-alter-periodic_flush]]
@@ -248,7 +252,7 @@ would remove a sad, unwanted tag as well.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-filters-alter-type]]
@@ -261,7 +265,8 @@ Optional.
 Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
 `exclude_fields`) must be met in order for the event to be handled by the filter.
 The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's "type"
+act on messages with the same type. See any input plugin's `type`
 attribute for more.
 Optional.
+
 

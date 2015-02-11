@@ -55,6 +55,7 @@ Available configuration options:
 |=======================================================================
 
 
+
 ==== Details
 
 &nbsp;
@@ -297,4 +298,5 @@ The type to act on. If a type is given, then this filter will only
 act on messages with the same type. See any input plugin's `type`
 attribute for more.
 Optional.
+
 

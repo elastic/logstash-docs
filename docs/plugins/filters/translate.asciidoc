@@ -1,6 +1,10 @@
 [[plugins-filters-translate]]
 === translate
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-filter-translate`.
+
+
 A general search and replace tool which uses a configured hash
 and/or a YAML file to determine replacement values.
 
@@ -35,7 +39,7 @@ Required configuration options:
 [source,json]
 --------------------------
 translate {
-    field => ... 
+    field => ...
 }
 --------------------------
 
@@ -61,6 +65,7 @@ Available configuration options:
 | <<plugins-filters-translate-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-translate-remove_tag>> |<<array,array>>|No|`[]`
 |=======================================================================
+
 
 
 ==== Details
@@ -206,8 +211,7 @@ keys as regular expressions. A large dictionary could be expensive to match in t
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without all/any (controlled by `exclude_any` config
-option) of these tags.
+Only handle events without any of these tags.
 Optional.
 
 [[plugins-filters-translate-fallback]]
@@ -339,7 +343,7 @@ would remove a sad, unwanted tag as well.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-filters-translate-type]]
@@ -352,7 +356,8 @@ Optional.
 Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
 `exclude_fields`) must be met in order for the event to be handled by the filter.
 The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's "type"
+act on messages with the same type. See any input plugin's `type`
 attribute for more.
 Optional.
+
 

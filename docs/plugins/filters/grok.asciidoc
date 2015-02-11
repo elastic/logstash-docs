@@ -1,6 +1,8 @@
 [[plugins-filters-grok]]
 === grok
 
+
+
 Parse arbitrary text and structure it.
 
 Grok is currently the best way in logstash to parse crappy unstructured log
@@ -11,7 +13,7 @@ logs, and in general, any log format that is generally written for humans
 and not computer consumption.
 
 Logstash ships with about 120 patterns by default. You can find them here:
-<https://github.com/logstash/logstash/tree/v2.0.0.dev/patterns>. You can add
+<https://github.com/logstash-plugins/logstash-patterns-core/tree/master/patterns>. You can add
 your own trivially. (See the `patterns_dir` setting)
 
 If you need help building patterns to match your logs, you will find the
@@ -170,6 +172,7 @@ Available configuration options:
 |=======================================================================
 
 
+
 ==== Details
 
 &nbsp;
@@ -251,8 +254,7 @@ parsing different things), then set this to false.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without all/any (controlled by `exclude_any` config
-option) of these tags.
+Only handle events without any of these tags.
 Optional.
 
 [[plugins-filters-grok-keep_empty_captures]]
@@ -437,7 +439,7 @@ successful match
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-filters-grok-type]]
@@ -450,7 +452,8 @@ Optional.
 Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
 `exclude_fields`) must be met in order for the event to be handled by the filter.
 The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's "type"
+act on messages with the same type. See any input plugin's `type`
 attribute for more.
 Optional.
+
 

@@ -1,6 +1,8 @@
 [[plugins-filters-throttle]]
 === throttle
 
+
+
 The throttle filter is for throttling the number of events received. The filter
 is configured with a lower bound, the `before_count`, and upper bound, the `after_count`,
 and a period of time. All events passing through the filter will be counted based on 
@@ -122,7 +124,7 @@ Required configuration options:
 [source,json]
 --------------------------
 throttle {
-    key => ... 
+    key => ...
 }
 --------------------------
 
@@ -144,6 +146,7 @@ Available configuration options:
 | <<plugins-filters-throttle-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-throttle-remove_tag>> |<<array,array>>|No|`[]`
 |=======================================================================
+
 
 
 ==== Details
@@ -235,8 +238,7 @@ default, will cause no messages to be throttled based on the lower bound.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without all/any (controlled by `exclude_any` config
-option) of these tags.
+Only handle events without any of these tags.
 Optional.
 
 [[plugins-filters-throttle-key]]
@@ -247,7 +249,6 @@ Optional.
   * There is no default value for this setting.
 
 The name to use in configuration files.
-New plugins should start life at milestone 1.
 The key used to identify events. Events with the same key will be throttled
 as a group.  Field substitutions are allowed, so you can combine multiple
 fields.
@@ -350,7 +351,7 @@ would remove a sad, unwanted tag as well.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-filters-throttle-type]]
@@ -363,7 +364,8 @@ Optional.
 Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
 `exclude_fields`) must be met in order for the event to be handled by the filter.
 The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's "type"
+act on messages with the same type. See any input plugin's `type`
 attribute for more.
 Optional.
+
 

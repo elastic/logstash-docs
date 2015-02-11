@@ -1,11 +1,14 @@
-[[plugins-filters-csv]]
-=== csv
+[[plugins-filters-oui]]
+=== oui
 
 
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-filter-oui`.
 
-The CSV filter takes an event field containing CSV data, parses it,
-and stores it as individual fields (can optionally specify the names).
-This filter can also parse data with any separator, not just commas.
+
+This example filter will replace the contents of the default 
+message field with whatever you specify in the configuration.
+
+It is only intended to be used as an example.
 
 &nbsp;
 
@@ -18,7 +21,7 @@ Required configuration options:
 
 [source,json]
 --------------------------
-csv {
+oui {
 }
 --------------------------
 
@@ -29,16 +32,13 @@ Available configuration options:
 [cols="<,<,<,<m",options="header",]
 |=======================================================================
 |Setting |Input type|Required|Default value
-| <<plugins-filters-csv-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-csv-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-csv-columns>> |<<array,array>>|No|`[]`
-| <<plugins-filters-csv-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-csv-quote_char>> |<<string,string>>|No|`"\""`
-| <<plugins-filters-csv-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-csv-remove_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-csv-separator>> |<<string,string>>|No|`","`
-| <<plugins-filters-csv-source>> |<<string,string>>|No|`"message"`
-| <<plugins-filters-csv-target>> |<<string,string>>|No|
+| <<plugins-filters-oui-add_field>> |<<hash,hash>>|No|`{}`
+| <<plugins-filters-oui-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-oui-periodic_flush>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-oui-remove_field>> |<<array,array>>|No|`[]`
+| <<plugins-filters-oui-remove_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-oui-source>> |<<string,string>>|No|`"message"`
+| <<plugins-filters-oui-target>> |<<string,string>>|No|`"oui"`
 |=======================================================================
 
 
@@ -47,7 +47,7 @@ Available configuration options:
 
 &nbsp;
 
-[[plugins-filters-csv-add_field]]
+[[plugins-filters-oui-add_field]]
 ===== `add_field` 
 
   * Value type is <<hash,hash>>
@@ -59,14 +59,14 @@ Field names can be dynamic and include parts of the event using the `%{field}`.
 Example:
 [source,ruby]
     filter {
-      csv {
+      oui {
         add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
       }
     }
 [source,ruby]
     # You can also add multiple fields at once:
     filter {
-      csv {
+      oui {
         add_field => {
           "foo_%{somefield}" => "Hello world, from %{host}"
           "new_field" => "new_static_value"
@@ -79,7 +79,7 @@ would add field `foo_hello` if it is present, with the
 value above and the `%{host}` piece replaced with that value from the
 event. The second example would also add a hardcoded field.
 
-[[plugins-filters-csv-add_tag]]
+[[plugins-filters-oui-add_tag]]
 ===== `add_tag` 
 
   * Value type is <<array,array>>
@@ -92,14 +92,14 @@ syntax.
 Example:
 [source,ruby]
     filter {
-      csv {
+      oui {
         add_tag => [ "foo_%{somefield}" ]
       }
     }
 [source,ruby]
     # You can also add multiple tags at once:
     filter {
-      csv {
+      oui {
         add_tag => [ "foo_%{somefield}", "taggedy_tag"]
       }
     }
@@ -107,20 +107,7 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
 
-[[plugins-filters-csv-columns]]
-===== `columns` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Define a list of column names (in the order they appear in the CSV,
-as if it were a header line). If `columns` is not configured, or there
-are not enough columns specified, the default column names are
-"column1", "column2", etc. In the case that there are more columns
-in the data than specified in this column list, extra columns will be auto-numbered:
-(e.g. "user_defined_1", "user_defined_2", "column3", "column4", etc.)
-
-[[plugins-filters-csv-exclude_tags]]
+[[plugins-filters-oui-exclude_tags]]
 ===== `exclude_tags`  (DEPRECATED)
 
   * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
@@ -130,7 +117,7 @@ in the data than specified in this column list, extra columns will be auto-numbe
 Only handle events without any of these tags.
 Optional.
 
-[[plugins-filters-csv-periodic_flush]]
+[[plugins-filters-oui-periodic_flush]]
 ===== `periodic_flush` 
 
   * Value type is <<boolean,boolean>>
@@ -139,17 +126,7 @@ Optional.
 Call the filter flush method at regular interval.
 Optional.
 
-[[plugins-filters-csv-quote_char]]
-===== `quote_char` 
-
-  * Value type is <<string,string>>
-  * Default value is `"\""`
-
-Define the character used to quote CSV fields. If this is not specified
-the default is a double quote `"`.
-Optional.
-
-[[plugins-filters-csv-remove_field]]
+[[plugins-filters-oui-remove_field]]
 ===== `remove_field` 
 
   * Value type is <<array,array>>
@@ -160,14 +137,14 @@ Fields names can be dynamic and include parts of the event using the %{field}
 Example:
 [source,ruby]
     filter {
-      csv {
+      oui {
         remove_field => [ "foo_%{somefield}" ]
       }
     }
 [source,ruby]
     # You can also remove multiple fields at once:
     filter {
-      csv {
+      oui {
         remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
       }
     }
@@ -176,7 +153,7 @@ If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the field with name `foo_hello` if it is present. The second
 example would remove an additional, non-dynamic field.
 
-[[plugins-filters-csv-remove_tag]]
+[[plugins-filters-oui-remove_tag]]
 ===== `remove_tag` 
 
   * Value type is <<array,array>>
@@ -189,14 +166,14 @@ syntax.
 Example:
 [source,ruby]
     filter {
-      csv {
+      oui {
         remove_tag => [ "foo_%{somefield}" ]
       }
     }
 [source,ruby]
     # You can also remove multiple tags at once:
     filter {
-      csv {
+      oui {
         remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
       }
     }
@@ -205,26 +182,24 @@ If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the tag `foo_hello` if it is present. The second example
 would remove a sad, unwanted tag as well.
 
-[[plugins-filters-csv-separator]]
-===== `separator` 
-
-  * Value type is <<string,string>>
-  * Default value is `","`
-
-Define the column separator value. If this is not specified, the default
-is a comma `,`.
-Optional.
-
-[[plugins-filters-csv-source]]
+[[plugins-filters-oui-source]]
 ===== `source` 
 
   * Value type is <<string,string>>
   * Default value is `"message"`
 
-The CSV data in the value of the `source` field will be expanded into a
-data structure.
+Setting the config_name here is required. This is how you
+configure this filter from your Logstash config.
 
-[[plugins-filters-csv-tags]]
+filter {
+  example {
+    message => "My message..."
+  }
+}
+
+The source field to parse
+
+[[plugins-filters-oui-tags]]
 ===== `tags`  (DEPRECATED)
 
   * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
@@ -234,16 +209,15 @@ data structure.
 Only handle events with all of these tags.
 Optional.
 
-[[plugins-filters-csv-target]]
+[[plugins-filters-oui-target]]
 ===== `target` 
 
   * Value type is <<string,string>>
-  * There is no default value for this setting.
+  * Default value is `"oui"`
 
-Define target field for placing the data.
-Defaults to writing to the root of the event.
+The target field to place all the data
 
-[[plugins-filters-csv-type]]
+[[plugins-filters-oui-type]]
 ===== `type`  (DEPRECATED)
 
   * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
