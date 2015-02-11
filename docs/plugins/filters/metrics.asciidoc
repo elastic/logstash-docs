@@ -1,6 +1,8 @@
 [[plugins-filters-metrics]]
 === metrics
 
+
+
 The metrics filter is useful for aggregating metrics.
 
 For example, if you have a field 'response' that is
@@ -135,6 +137,7 @@ Available configuration options:
 |=======================================================================
 
 
+
 ==== Details
 
 &nbsp;
@@ -217,8 +220,7 @@ Otherwise, should be a multiple of 5s.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without all/any (controlled by `exclude_any` config
-option) of these tags.
+Only handle events without any of these tags.
 Optional.
 
 [[plugins-filters-metrics-flush_interval]]
@@ -347,7 +349,7 @@ would remove a sad, unwanted tag as well.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-filters-metrics-timer]]
@@ -368,7 +370,8 @@ syntax: `timer => [ "name of metric", "%{time_value}" ]`
 Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
 `exclude_fields`) must be met in order for the event to be handled by the filter.
 The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's "type"
+act on messages with the same type. See any input plugin's `type`
 attribute for more.
 Optional.
+
 

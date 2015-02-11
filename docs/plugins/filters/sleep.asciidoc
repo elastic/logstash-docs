@@ -1,6 +1,8 @@
 [[plugins-filters-sleep]]
 === sleep
 
+
+
 Sleep a given amount of time. This will cause logstash
 to stall for the given amount of time. This is useful
 for rate limiting, etc.
@@ -37,6 +39,7 @@ Available configuration options:
 | <<plugins-filters-sleep-replay>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-sleep-time>> |<<string,string>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -127,8 +130,7 @@ Example:
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without all/any (controlled by `exclude_any` config
-option) of these tags.
+Only handle events without any of these tags.
 Optional.
 
 [[plugins-filters-sleep-periodic_flush]]
@@ -234,7 +236,7 @@ replay 2-times faster than the original time speed.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-filters-sleep-time]]
@@ -269,7 +271,8 @@ Example:
 Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
 `exclude_fields`) must be met in order for the event to be handled by the filter.
 The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's "type"
+act on messages with the same type. See any input plugin's `type`
 attribute for more.
 Optional.
+
 

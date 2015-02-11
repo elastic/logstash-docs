@@ -1,6 +1,10 @@
 [[plugins-filters-i18n]]
 === i18n
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-filter-i18n`.
+
+
 The i18n filter allows you to remove special characters from
 from a field
 
@@ -33,6 +37,7 @@ Available configuration options:
 | <<plugins-filters-i18n-remove_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-i18n-transliterate>> |<<array,array>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -106,8 +111,7 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without all/any (controlled by `exclude_any` config
-option) of these tags.
+Only handle events without any of these tags.
 Optional.
 
 [[plugins-filters-i18n-periodic_flush]]
@@ -182,7 +186,7 @@ would remove a sad, unwanted tag as well.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-filters-i18n-transliterate]]
@@ -212,7 +216,8 @@ Example:
 Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
 `exclude_fields`) must be met in order for the event to be handled by the filter.
 The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's "type"
+act on messages with the same type. See any input plugin's `type`
 attribute for more.
 Optional.
+
 

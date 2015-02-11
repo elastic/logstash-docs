@@ -1,6 +1,10 @@
 [[plugins-filters-json_encode]]
 === json_encode
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-filter-json_encode`.
+
+
 JSON encode filter. Takes a field and serializes it into JSON
 
 If no target is specified, the source field is overwritten with the JSON
@@ -28,7 +32,7 @@ Required configuration options:
 [source,json]
 --------------------------
 json_encode {
-    source => ... 
+    source => ...
 }
 --------------------------
 
@@ -47,6 +51,7 @@ Available configuration options:
 | <<plugins-filters-json_encode-source>> |<<string,string>>|Yes|
 | <<plugins-filters-json_encode-target>> |<<string,string>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -120,8 +125,7 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without all/any (controlled by `exclude_any` config
-option) of these tags.
+Only handle events without any of these tags.
 Optional.
 
 [[plugins-filters-json_encode-periodic_flush]]
@@ -205,7 +209,7 @@ The field to convert to JSON.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-filters-json_encode-target]]
@@ -227,7 +231,8 @@ field will be overwritten.
 Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
 `exclude_fields`) must be met in order for the event to be handled by the filter.
 The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's "type"
+act on messages with the same type. See any input plugin's `type`
 attribute for more.
 Optional.
+
 

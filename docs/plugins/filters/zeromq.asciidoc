@@ -1,6 +1,10 @@
 [[plugins-filters-zeromq]]
 === zeromq
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-filter-zeromq`.
+
+
 ZeroMQ filter. This is the best way to send an event externally for filtering
 It works much like an exec filter would by sending the event "offsite"
 for processing and waiting for a response
@@ -12,7 +16,7 @@ The protocol here is:
 
 Note that this is a limited subset of the zeromq functionality in
 inputs and outputs. The only topology that makes sense here is:
-REQ/REP. 
+REQ/REP. bunde
 
 &nbsp;
 
@@ -49,6 +53,7 @@ Available configuration options:
 | <<plugins-filters-zeromq-sockopt>> |<<hash,hash>>|No|
 | <<plugins-filters-zeromq-timeout>> |<<number,number>>|No|`500`
 |=======================================================================
+
 
 
 ==== Details
@@ -142,8 +147,7 @@ By default, filters connect
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without all/any (controlled by `exclude_any` config
-option) of these tags.
+Only handle events without any of these tags.
 Optional.
 
 [[plugins-filters-zeromq-field]]
@@ -240,7 +244,7 @@ would remove a sad, unwanted tag as well.
 
 number of retries, used for both sending and receiving messages.
 for sending, retries should return instantly.
-for receiving, the total blocking time is up to retries X timeout, 
+for receiving, the total blocking time is up to retries X timeout,
 which by default is 3 X 500 = 1500ms
 
 [[plugins-filters-zeromq-sockopt]]
@@ -269,7 +273,7 @@ example: sockopt => ["ZMQ::HWM", 50, "ZMQ::IDENTITY", "my_named_queue"]
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-filters-zeromq-timeout]]
@@ -290,7 +294,8 @@ timeout in milliseconds on which to wait for a reply.
 Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
 `exclude_fields`) must be met in order for the event to be handled by the filter.
 The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's "type"
+act on messages with the same type. See any input plugin's `type`
 attribute for more.
 Optional.
+
 

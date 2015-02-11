@@ -1,6 +1,8 @@
 [[plugins-filters-ruby]]
 === ruby
 
+
+
 Execute ruby code.
 
 For example, to cancel 90% of events, you can do this:
@@ -25,7 +27,7 @@ Required configuration options:
 [source,json]
 --------------------------
 ruby {
-    code => ... 
+    code => ...
 }
 --------------------------
 
@@ -44,6 +46,7 @@ Available configuration options:
 | <<plugins-filters-ruby-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-ruby-remove_tag>> |<<array,array>>|No|`[]`
 |=======================================================================
+
 
 
 ==== Details
@@ -127,8 +130,7 @@ You will have an `event` variable available that is the event itself.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without all/any (controlled by `exclude_any` config
-option) of these tags.
+Only handle events without any of these tags.
 Optional.
 
 [[plugins-filters-ruby-init]]
@@ -211,7 +213,7 @@ would remove a sad, unwanted tag as well.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-filters-ruby-type]]
@@ -224,7 +226,8 @@ Optional.
 Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
 `exclude_fields`) must be met in order for the event to be handled by the filter.
 The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's "type"
+act on messages with the same type. See any input plugin's `type`
 attribute for more.
 Optional.
+
 

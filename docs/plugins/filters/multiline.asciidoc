@@ -2,6 +2,8 @@
 === multiline
 
 
+
+
 This filter will collapse multiline messages from a single source into one Logstash event.
 
 The original goal of this filter was to allow joining of multi-line messages
@@ -70,8 +72,8 @@ Required configuration options:
 [source,json]
 --------------------------
 multiline {
-    pattern => ... 
-    what => ... 
+    pattern => ...
+    what => ...
 }
 --------------------------
 
@@ -84,6 +86,7 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-filters-multiline-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-multiline-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-multiline-allow_duplicates>> |<<boolean,boolean>>|No|`true`
 | <<plugins-filters-multiline-max_age>> |<<number,number>>|No|`5`
 | <<plugins-filters-multiline-negate>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-multiline-pattern>> |<<string,string>>|Yes|
@@ -91,9 +94,11 @@ Available configuration options:
 | <<plugins-filters-multiline-periodic_flush>> |<<boolean,boolean>>|No|`true`
 | <<plugins-filters-multiline-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-multiline-remove_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-multiline-source>> |<<string,string>>|No|`"message"`
 | <<plugins-filters-multiline-stream_identity>> |<<string,string>>|No|`"%{host}.%{path}.%{type}"`
 | <<plugins-filters-multiline-what>> |<<string,string>>, one of `["previous", "next"]`|Yes|
 |=======================================================================
+
 
 
 ==== Details
@@ -160,6 +165,14 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
 
+[[plugins-filters-multiline-allow_duplicates]]
+===== `allow_duplicates` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Allow duplcate values on the source field.
+
 [[plugins-filters-multiline-exclude_tags]]
 ===== `exclude_tags`  (DEPRECATED)
 
@@ -167,8 +180,7 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without all/any (controlled by `exclude_any` config
-option) of these tags.
+Only handle events without any of these tags.
 Optional.
 
 [[plugins-filters-multiline-max_age]]
@@ -280,6 +292,14 @@ If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the tag `foo_hello` if it is present. The second example
 would remove a sad, unwanted tag as well.
 
+[[plugins-filters-multiline-source]]
+===== `source` 
+
+  * Value type is <<string,string>>
+  * Default value is `"message"`
+
+The field name to execute the pattern match on.
+
 [[plugins-filters-multiline-stream_identity]]
 ===== `stream_identity` 
 
@@ -306,7 +326,7 @@ case, you can use `%{@source_host}.%{@type}` instead.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-filters-multiline-type]]
@@ -319,7 +339,7 @@ Optional.
 Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
 `exclude_fields`) must be met in order for the event to be handled by the filter.
 The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's "type"
+act on messages with the same type. See any input plugin's `type`
 attribute for more.
 Optional.
 
@@ -331,4 +351,5 @@ Optional.
   * There is no default value for this setting.
 
 If the pattern matched, does event belong to the next or previous event?
+
 

@@ -1,6 +1,10 @@
 [[plugins-filters-elapsed]]
 === elapsed
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-filter-elapsed`.
+
+
 elapsed filter
 
 This filter tracks a pair of start/end events and calculates the elapsed
@@ -90,9 +94,9 @@ Required configuration options:
 [source,json]
 --------------------------
 elapsed {
-    end_tag => ... 
-    start_tag => ... 
-    unique_id_field => ... 
+    end_tag => ...
+    start_tag => ...
+    unique_id_field => ...
 }
 --------------------------
 
@@ -114,6 +118,7 @@ Available configuration options:
 | <<plugins-filters-elapsed-timeout>> |<<number,number>>|No|`1800`
 | <<plugins-filters-elapsed-unique_id_field>> |<<string,string>>|Yes|
 |=======================================================================
+
 
 
 ==== Details
@@ -196,8 +201,7 @@ The name of the tag identifying the "end event"
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without all/any (controlled by `exclude_any` config
-option) of these tags.
+Only handle events without any of these tags.
 Optional.
 
 [[plugins-filters-elapsed-new_event_on_match]]
@@ -291,7 +295,7 @@ The name of the tag identifying the "start event"
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-filters-elapsed-timeout]]
@@ -314,7 +318,7 @@ is generated. The default value is 30 minutes (1800 seconds).
 Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
 `exclude_fields`) must be met in order for the event to be handled by the filter.
 The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's "type"
+act on messages with the same type. See any input plugin's `type`
 attribute for more.
 Optional.
 
@@ -328,4 +332,5 @@ Optional.
 The name of the field containing the task ID.
 This value must uniquely identify the task in the system, otherwise
 it's impossible to match the couple of events.
+
 

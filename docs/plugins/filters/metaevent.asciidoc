@@ -2,6 +2,10 @@
 === metaevent
 
 
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-filter-metaevent`.
+
+
+
 
 &nbsp;
 
@@ -15,7 +19,7 @@ Required configuration options:
 [source,json]
 --------------------------
 metaevent {
-    followed_by_tags => ... 
+    followed_by_tags => ...
 }
 --------------------------
 
@@ -34,6 +38,7 @@ Available configuration options:
 | <<plugins-filters-metaevent-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-metaevent-remove_tag>> |<<array,array>>|No|`[]`
 |=======================================================================
+
 
 
 ==== Details
@@ -107,8 +112,7 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without all/any (controlled by `exclude_any` config
-option) of these tags.
+Only handle events without any of these tags.
 Optional.
 
 [[plugins-filters-metaevent-followed_by_tags]]
@@ -200,7 +204,7 @@ would remove a sad, unwanted tag as well.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-filters-metaevent-type]]
@@ -213,7 +217,8 @@ Optional.
 Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
 `exclude_fields`) must be met in order for the event to be handled by the filter.
 The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's "type"
+act on messages with the same type. See any input plugin's `type`
 attribute for more.
 Optional.
+
 

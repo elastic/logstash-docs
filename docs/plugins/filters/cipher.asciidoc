@@ -1,6 +1,10 @@
 [[plugins-filters-cipher]]
 === cipher
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-filter-cipher`.
+
+
 This filter parses a source and apply a cipher or decipher before
 storing it in the target.
 
@@ -17,8 +21,8 @@ Required configuration options:
 [source,json]
 --------------------------
 cipher {
-    algorithm => ... 
-    mode => ... 
+    algorithm => ...
+    mode => ...
 }
 --------------------------
 
@@ -45,6 +49,7 @@ Available configuration options:
 | <<plugins-filters-cipher-source>> |<<string,string>>|No|`"message"`
 | <<plugins-filters-cipher-target>> |<<string,string>>|No|`"message"`
 |=======================================================================
+
 
 
 ==== Details
@@ -165,8 +170,7 @@ it, Set this parameter to 0
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without all/any (controlled by `exclude_any` config
-option) of these tags.
+Only handle events without any of these tags.
 Optional.
 
 [[plugins-filters-cipher-iv]]
@@ -309,7 +313,7 @@ Example, to use the @message field (default) :
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all/any (controlled by `include_any` config option) of these tags.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-filters-cipher-target]]
@@ -334,7 +338,8 @@ Example, to place the result into crypt :
 Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
 `exclude_fields`) must be met in order for the event to be handled by the filter.
 The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's "type"
+act on messages with the same type. See any input plugin's `type`
 attribute for more.
 Optional.
+
 
