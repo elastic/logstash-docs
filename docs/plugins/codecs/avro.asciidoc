@@ -1,0 +1,55 @@
+[[plugins-codecs-avro]]
+=== avro
+
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-codec-avro`.
+
+
+
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+avro {
+      schema_uri => ...
+  }
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-codecs-avro-schema_uri>> |<<string,string>>|Yes|
+|=======================================================================
+
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-codecs-avro-schema_uri]]
+===== `schema_uri` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+schema path to fetch the schema from
+This can be a 'http' or 'file' scheme URI
+example:
+    http - "http://example.com/schema.avsc"
+    file - "/path/to/schema.avsc"
+
+

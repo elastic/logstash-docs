@@ -1,6 +1,8 @@
 [[plugins-codecs-plain]]
 === plain
 
+
+
 The "plain" codec is for plain text with no delimiting between events.
 
 This is mainly useful on inputs and outputs that already have a defined
@@ -33,6 +35,7 @@ Available configuration options:
 |=======================================================================
 
 
+
 ==== Details
 
 &nbsp;
@@ -61,4 +64,5 @@ Set the message you which to emit for each event. This supports `sprintf`
 strings.
 
 This setting only affects outputs (encoding of events).
+
 

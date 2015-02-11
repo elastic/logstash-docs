@@ -1,6 +1,8 @@
 [[plugins-codecs-rubydebug]]
 === rubydebug
 
+
+
 The rubydebug codec will output your Logstash event data using
 the Ruby Awesome Print library.
 
@@ -31,6 +33,7 @@ Available configuration options:
 |=======================================================================
 
 
+
 ==== Details
 
 &nbsp;
@@ -42,4 +45,5 @@ Available configuration options:
   * Default value is `false`
 
 Should the event's metadata be included?
+
 
