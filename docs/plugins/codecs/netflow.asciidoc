@@ -1,6 +1,8 @@
 [[plugins-codecs-netflow]]
 === netflow
 
+
+
 The "netflow" codec is for decoding Netflow v5/v9 flows.
 
 &nbsp;
@@ -30,6 +32,7 @@ Available configuration options:
 | <<plugins-codecs-netflow-target>> |<<string,string>>|No|`"netflow"`
 | <<plugins-codecs-netflow-versions>> |<<array,array>>|No|`[5, 9]`
 |=======================================================================
+
 
 
 ==== Details
@@ -64,7 +67,7 @@ Each Netflow field is defined like so:
    id:
    - :skip
 
-See <https://github.com/logstash/logstash/tree/v2.0.0.dev/lib/logstash/codecs/netflow/netflow.yaml> for the base set.
+See <https://github.com/logstash-plugins/logstash-codec-netflow/blob/master/lib/logstash/codecs/netflow/netflow.yaml> for the base set.
 
 [[plugins-codecs-netflow-target]]
 ===== `target` 
@@ -81,4 +84,5 @@ Specify into what field you want the Netflow data.
   * Default value is `[5, 9]`
 
 Specify which Netflow versions you will accept.
+
 

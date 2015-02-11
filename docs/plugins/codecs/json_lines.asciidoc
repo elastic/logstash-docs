@@ -1,6 +1,8 @@
 [[plugins-codecs-json_lines]]
 === json_lines
 
+
+
 This codec will decode streamed JSON that is newline delimited.
 For decoding line-oriented JSON payload in the redis or file inputs,
 for example, use the json codec instead.
@@ -32,6 +34,7 @@ Available configuration options:
 |=======================================================================
 
 
+
 ==== Details
 
 &nbsp;
@@ -51,4 +54,5 @@ weird cases like this, you can set the charset setting to the
 actual encoding of the text and logstash will convert it for you.
 
 For nxlog users, you'll want to set this to `CP1252`
+
 

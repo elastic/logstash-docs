@@ -2,6 +2,10 @@
 === compress_spooler
 
 
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-codec-compress_spooler`.
+
+
+
 
 &nbsp;
 
@@ -30,6 +34,7 @@ Available configuration options:
 |=======================================================================
 
 
+
 ==== Details
 
 &nbsp;
@@ -47,6 +52,7 @@ Available configuration options:
 
   * Value type is <<number,number>>
   * Default value is `50`
+
 
 
 

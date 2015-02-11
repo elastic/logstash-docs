@@ -1,6 +1,8 @@
 [[plugins-codecs-graphite]]
 === graphite
 
+
+
 This codec will encode and decode Graphite formated lines.
 
 &nbsp;
@@ -31,6 +33,7 @@ Available configuration options:
 | <<plugins-codecs-graphite-metrics>> |<<hash,hash>>|No|`{}`
 | <<plugins-codecs-graphite-metrics_format>> |<<string,string>>|No|`"*"`
 |=======================================================================
+
 
 
 ==== Details
@@ -88,4 +91,5 @@ replaced with the name of the actual metric.
     metrics_format => "foo.bar.*.sum"
 
 NOTE: If no metrics_format is defined the name of the metric will be used as fallback.
+
 

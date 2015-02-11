@@ -1,6 +1,8 @@
 [[plugins-codecs-line]]
 === line
 
+
+
 Line-oriented text data.
 
 Decoding behavior: Only whole line events will be emitted.
@@ -34,6 +36,7 @@ Available configuration options:
 |=======================================================================
 
 
+
 ==== Details
 
 &nbsp;
@@ -59,4 +62,5 @@ This only affects "plain" format logs since json is `UTF-8` already.
   * There is no default value for this setting.
 
 Set the desired text format for encoding.
+
 

@@ -1,6 +1,10 @@
 [[plugins-codecs-gzip_lines]]
 === gzip_lines
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-codec-gzip_lines`.
+
+
 This codec will read gzip encoded content
 
 &nbsp;
@@ -29,6 +33,7 @@ Available configuration options:
 |=======================================================================
 
 
+
 ==== Details
 
 &nbsp;
@@ -48,4 +53,5 @@ weird cases like this, you can set the charset setting to the
 actual encoding of the text and logstash will convert it for you.
 
 For nxlog users, you'll want to set this to "CP1252"
+
 

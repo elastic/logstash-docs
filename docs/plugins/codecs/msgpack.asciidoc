@@ -3,6 +3,8 @@
 
 
 
+
+
 &nbsp;
 
 ==== Synopsis
@@ -29,6 +31,7 @@ Available configuration options:
 |=======================================================================
 
 
+
 ==== Details
 
 &nbsp;
@@ -38,6 +41,7 @@ Available configuration options:
 
   * Value type is <<string,string>>
   * Default value is `nil`
+
 
 
 

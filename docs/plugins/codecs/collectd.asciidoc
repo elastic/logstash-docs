@@ -1,6 +1,8 @@
 [[plugins-codecs-collectd]]
 === collectd
 
+
+
 Read events from the collectd binary protocol over the network via udp.
 See https://collectd.org/wiki/index.php/Binary_protocol
 
@@ -8,7 +10,7 @@ Configuration in your Logstash configuration file can be as simple as:
 [source,ruby]
     input {
       udp {
-        port => 28526
+        port => 25826
         buffer_size => 1452
         codec => collectd { }
       }
@@ -63,6 +65,7 @@ Available configuration options:
 | <<plugins-codecs-collectd-security_level>> |<<string,string>>, one of `["None", "Sign", "Encrypt"]`|No|`"None"`
 | <<plugins-codecs-collectd-typesdb>> |<<array,array>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -136,4 +139,5 @@ collectd https://collectd.org/wiki/index.php/Plugin:Network[Network plugin]
 File path(s) to collectd `types.db` to use.
 The last matching pattern wins if you have identical pattern names in multiple files.
 If no types.db is provided the included `types.db` will be used (currently 5.4.0).
+
 

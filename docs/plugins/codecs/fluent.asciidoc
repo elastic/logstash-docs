@@ -1,6 +1,8 @@
 [[plugins-codecs-fluent]]
 === fluent
 
+
+
 This codec handles fluentd's msgpack schema.
 
 For example, you can receive logs from `fluent-logger-ruby` with:

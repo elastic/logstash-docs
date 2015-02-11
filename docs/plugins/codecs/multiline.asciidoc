@@ -1,6 +1,8 @@
 [[plugins-codecs-multiline]]
 === multiline
 
+
+
 The multiline codec will collapse multiline messages and merge them into a
 single event.
 
@@ -87,8 +89,8 @@ Required configuration options:
 [source,json]
 --------------------------
 multiline {
-      pattern => ... 
-      what => ... 
+      pattern => ...
+      what => ...
   }
 --------------------------
 
@@ -106,6 +108,7 @@ Available configuration options:
 | <<plugins-codecs-multiline-patterns_dir>> |<<array,array>>|No|`[]`
 | <<plugins-codecs-multiline-what>> |<<string,string>>, one of `["previous", "next"]`|Yes|
 |=======================================================================
+
 
 
 ==== Details
@@ -178,4 +181,5 @@ For example:
   * There is no default value for this setting.
 
 If the pattern matched, does event belong to the next or previous event?
+
 
