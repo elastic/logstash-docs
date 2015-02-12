@@ -1,6 +1,8 @@
 [[plugins-outputs-nagios]]
 === nagios
 
+
+
 The Nagios output is used for sending passive check results to Nagios via the
 Nagios command file. This output currently supports Nagios 3.
 
@@ -60,6 +62,7 @@ Available configuration options:
 |=======================================================================
 
 
+
 ==== Details
 
 &nbsp;
@@ -87,7 +90,8 @@ The full path to your Nagios command file.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-nagios-nagios_level]]
 ===== `nagios_level` 
@@ -105,8 +109,7 @@ The Nagios check level. Should be one of 0=OK, 1=WARNING, 2=CRITICAL,
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-nagios-type]]
@@ -129,4 +132,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

@@ -1,6 +1,8 @@
 [[plugins-outputs-hipchat]]
 === hipchat
 
+
+
 This output allows you to write events to https://www.hipchat.com/[HipChat].
 
 
@@ -16,8 +18,8 @@ Required configuration options:
 [source,json]
 --------------------------
 hipchat {
-    room_id => ... 
-    token => ... 
+    room_id => ...
+    token => ...
 }
 --------------------------
 
@@ -37,6 +39,7 @@ Available configuration options:
 | <<plugins-outputs-hipchat-trigger_notify>> |<<boolean,boolean>>|No|`false`
 | <<plugins-outputs-hipchat-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -68,7 +71,8 @@ HipChat currently supports one of "yellow", "red", "green", "purple",
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-hipchat-format]]
 ===== `format` 
@@ -102,8 +106,7 @@ The ID or name of the room.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-hipchat-token]]
@@ -143,4 +146,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

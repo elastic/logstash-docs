@@ -1,6 +1,8 @@
 [[plugins-outputs-graphite]]
 === graphite
 
+
+
 This output allows you to pull metrics from your logs and ship them to
 Graphite. Graphite is an open source tool for storing and graphing metrics.
 
@@ -44,6 +46,7 @@ Available configuration options:
 |=======================================================================
 
 
+
 ==== Details
 
 &nbsp;
@@ -80,7 +83,8 @@ Exclude regex matched metric names, by default exclude unresolved %{field} strin
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-graphite-fields_are_metrics]]
 ===== `fields_are_metrics` 
@@ -168,8 +172,7 @@ Should metrics be resent on failure?
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-graphite-type]]
@@ -192,4 +195,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

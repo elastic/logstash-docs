@@ -1,6 +1,10 @@
 [[plugins-outputs-google_cloud_storage]]
 === google_cloud_storage
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-google_cloud_storage`.
+
+
 Author: Rodrigo De Castro <rdc@google.com>
 Date: 2013-09-20
 
@@ -75,9 +79,9 @@ Required configuration options:
 [source,json]
 --------------------------
 google_cloud_storage {
-    bucket => ... 
-    key_path => ... 
-    service_account => ... 
+    bucket => ...
+    key_path => ...
+    service_account => ...
 }
 --------------------------
 
@@ -103,6 +107,7 @@ Available configuration options:
 | <<plugins-outputs-google_cloud_storage-uploader_interval_secs>> |<<number,number>>|No|`60`
 | <<plugins-outputs-google_cloud_storage-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -142,7 +147,8 @@ Must Time.strftime patterns: www.ruby-doc.org/core-2.0/Time.html#method-i-strfti
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-google_cloud_storage-flush_interval_secs]]
 ===== `flush_interval_secs` 
@@ -219,8 +225,7 @@ GCS service account.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-google_cloud_storage-temp_directory]]
@@ -262,4 +267,5 @@ around one hour).
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

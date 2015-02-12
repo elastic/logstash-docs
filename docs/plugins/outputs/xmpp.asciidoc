@@ -1,6 +1,8 @@
 [[plugins-outputs-xmpp]]
 === xmpp
 
+
+
 This output allows you ship events over XMPP/Jabber.
 
 This plugin can be used for posting events to humans over XMPP, or you can
@@ -18,9 +20,9 @@ Required configuration options:
 [source,json]
 --------------------------
 xmpp {
-    message => ... 
-    password => ... 
-    user => ... 
+    message => ...
+    password => ...
+    user => ...
 }
 --------------------------
 
@@ -42,6 +44,7 @@ Available configuration options:
 |=======================================================================
 
 
+
 ==== Details
 
 &nbsp;
@@ -61,7 +64,8 @@ The codec used for output data. Output codecs are a convenient method for encodi
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-xmpp-host]]
 ===== `host` 
@@ -106,8 +110,7 @@ you want to join: room@conference.domain/nick
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-xmpp-type]]
@@ -147,4 +150,5 @@ The users to send messages to
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

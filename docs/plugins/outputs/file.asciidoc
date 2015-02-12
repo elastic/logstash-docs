@@ -1,6 +1,8 @@
 [[plugins-outputs-file]]
 === file
 
+
+
 This output will write events to files on disk. You can use fields
 from the event as parts of the filename and/or path.
 
@@ -16,7 +18,7 @@ Required configuration options:
 [source,json]
 --------------------------
 file {
-    path => ... 
+    path => ...
 }
 --------------------------
 
@@ -38,6 +40,7 @@ Available configuration options:
 |=======================================================================
 
 
+
 ==== Details
 
 &nbsp;
@@ -57,7 +60,8 @@ The codec used for output data. Output codecs are a convenient method for encodi
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-file-filename_failure]]
 ===== `filename_failure` 
@@ -136,8 +140,7 @@ E.g: `/%{myfield}/`, `/test-%{myfield}/` are not valid paths
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-file-type]]
@@ -160,4 +163,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

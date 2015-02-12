@@ -1,7 +1,7 @@
 [[plugins-outputs-s3]]
 === s3
 
-TODO integrate aws_config in the future
+
 
 INFORMATION:
 
@@ -32,22 +32,7 @@ This plugin have a system to restore the previous temporary files if something c
 
 
 
-INFORMATION ABOUT CLASS:
-
-I tried to comment the class at best i could do.
-I think there are much thing to improve, but if you want some points to develop here a list:
-
-TODO Integrate aws_config in the future
-TODO Find a method to push them all files when logtstash close the session.
-TODO Integrate @field on the path file
-TODO Permanent connection or on demand? For now on demand, but isn't a good implementation.
-     Use a while or a thread to try the connection before break a time_out and signal an error.
-TODO If you have bugs report or helpful advice contact me, but remember that this code is much mine as much as yours,
-     try to work on it if you want :)
-
-
-USAGE:
-
+#### Usage:
 This is an example of logstash config:
 [source,ruby]
 output {
@@ -61,36 +46,6 @@ output {
      format => "plain"                        (optional)
      canned_acl => "private"                  (optional. Options are "private", "public_read", "public_read_write", "authenticated_read". Defaults to "private" )
    }
-}
-
-We analize this:
-
-access_key_id => "crazy_key"
-Amazon will give you the key for use their service if you buy it or try it. (not very much open source anyway)
-
-secret_access_key => "monkey_access_key"
-Amazon will give you the secret_access_key for use their service if you buy it or try it . (not very much open source anyway).
-
-endpoint_region => "eu-west-1"
-When you make a contract with Amazon, you should know where the services you use.
-
-bucket => "boss_please_open_your_bucket"
-Be careful you have the permission to write on bucket and know the name.
-
-size_file => 2048
-Means the size, in KB, of files who can store on temporary directory before you will be pushed on bucket.
-Is useful if you have a little server with poor space on disk and you don't want blow up the server with unnecessary temporary log files.
-
-time_file => 5
-Means, in minutes, the time  before the files will be pushed on bucket. Is useful if you want to push the files every specific time.
-
-format => "plain"
-Means the format of events you want to store in the files
-
-canned_acl => "private"
-The S3 canned ACL to use when putting the file. Defaults to "private".
-
-LET'S ROCK AND ROLL ON THE CODE!
 
 
 &nbsp;
@@ -116,21 +71,24 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-outputs-s3-access_key_id>> |<<string,string>>|No|
-| <<plugins-outputs-s3-aws_credentials_file>> |<<,>>|No|
+| <<plugins-outputs-s3-aws_credentials_file>> |<<string,string>>|No|
 | <<plugins-outputs-s3-bucket>> |<<string,string>>|No|
 | <<plugins-outputs-s3-canned_acl>> |<<string,string>>, one of `["private", "public_read", "public_read_write", "authenticated_read"]`|No|`"private"`
-| <<plugins-outputs-s3-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-s3-endpoint_region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "eu-west-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "sa-east-1", "us-gov-west-1"]`|No|`"us-east-1"`
-| <<plugins-outputs-s3-format>> |<<string,string>>, one of `["json", "plain", "nil"]`|No|`"plain"`
-| <<plugins-outputs-s3-proxy_uri>> |<<,>>|No|
-| <<plugins-outputs-s3-region>> |<<,>>|No|
+| <<plugins-outputs-s3-codec>> |<<codec,codec>>|No|`"line"`
+| <<plugins-outputs-s3-prefix>> |<<string,string>>|No|`""`
+| <<plugins-outputs-s3-proxy_uri>> |<<string,string>>|No|
+| <<plugins-outputs-s3-region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "eu-west-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "sa-east-1", "us-gov-west-1"]`|No|`"us-east-1"`
 | <<plugins-outputs-s3-restore>> |<<boolean,boolean>>|No|`false`
 | <<plugins-outputs-s3-secret_access_key>> |<<string,string>>|No|
+| <<plugins-outputs-s3-session_token>> |<<string,string>>|No|
 | <<plugins-outputs-s3-size_file>> |<<number,number>>|No|`0`
+| <<plugins-outputs-s3-temporary_directory>> |<<string,string>>|No|`"/var/folders/_n/n4w7mmts5f58nflsvnnk_l2w0000gn/T/logstash"`
 | <<plugins-outputs-s3-time_file>> |<<number,number>>|No|`0`
-| <<plugins-outputs-s3-use_ssl>> |<<,>>|No|
+| <<plugins-outputs-s3-upload_workers_count>> |<<number,number>>|No|`1`
+| <<plugins-outputs-s3-use_ssl>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-s3-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -143,16 +101,20 @@ Available configuration options:
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
- include LogStash::PluginMixins::AwsConfig
-Aws access_key.
+This plugin uses the AWS SDK and supports several ways to get credentials, which will be tried in this order...
+1. Static configuration, using `access_key_id` and `secret_access_key` params in logstash plugin config
+2. External credentials file specified by `aws_credentials_file`
+3. Environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
+4. Environment variables `AMAZON_ACCESS_KEY_ID` and `AMAZON_SECRET_ACCESS_KEY`
+5. IAM Instance Profile (available when running inside EC2)
 
 [[plugins-outputs-s3-aws_credentials_file]]
 ===== `aws_credentials_file` 
 
-  <li> Value type is <<string,string>>
+  * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Path to YAML file containing a hash of AWS credentials.   
+Path to YAML file containing a hash of AWS credentials.
 This file will only be loaded if `access_key_id` and
 `secret_access_key` aren't set. The contents of the
 file should look like this:
@@ -175,23 +137,24 @@ S3 bucket
   * Value can be any of: `private`, `public_read`, `public_read_write`, `authenticated_read`
   * Default value is `"private"`
 
-Aws canned ACL
+The S3 canned ACL to use when putting the file. Defaults to "private".
 
 [[plugins-outputs-s3-codec]]
 ===== `codec` 
 
   * Value type is <<codec,codec>>
-  * Default value is `"plain"`
+  * Default value is `"line"`
 
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
 
 [[plugins-outputs-s3-endpoint_region]]
-===== `endpoint_region` 
+===== `endpoint_region`  (DEPRECATED)
 
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
   * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `eu-west-1`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `sa-east-1`, `us-gov-west-1`
-  * Default value is `"us-east-1"`
+  * There is no default value for this setting.
 
-Aws endpoint_region
+AWS endpoint_region
 
 [[plugins-outputs-s3-exclude_tags]]
 ===== `exclude_tags`  (DEPRECATED)
@@ -200,20 +163,21 @@ Aws endpoint_region
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
-[[plugins-outputs-s3-format]]
-===== `format` 
+[[plugins-outputs-s3-prefix]]
+===== `prefix` 
 
-  * Value can be any of: `json`, `plain`, `nil`
-  * Default value is `"plain"`
+  * Value type is <<string,string>>
+  * Default value is `""`
 
-The event format you want to store in files. Defaults to plain text.
+Specify a prefix to the uploaded filename, this can simulate directories on S3
 
 [[plugins-outputs-s3-proxy_uri]]
 ===== `proxy_uri` 
 
-  <li> Value type is <<string,string>>
+  * Value type is <<string,string>>
   * There is no default value for this setting.
 
 URI to proxy server if required
@@ -221,8 +185,8 @@ URI to proxy server if required
 [[plugins-outputs-s3-region]]
 ===== `region` 
 
-  <li> Value type is <<string,string>>
-  * There is no default value for this setting.
+  * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `eu-west-1`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `sa-east-1`, `us-gov-west-1`
+  * Default value is `"us-east-1"`
 
 The AWS Region
 
@@ -240,7 +204,15 @@ The AWS Region
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Aws secret_access_key
+The AWS Secret Access Key
+
+[[plugins-outputs-s3-session_token]]
+===== `session_token` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The AWS Session token for temprory credential
 
 [[plugins-outputs-s3-size_file]]
 ===== `size_file` 
@@ -248,7 +220,7 @@ Aws secret_access_key
   * Value type is <<number,number>>
   * Default value is `0`
 
-Set the size of file in KB, this means that files on bucket when have dimension > file_size, they are stored in two or more file.
+Set the size of file in bytes, this means that files on bucket when have dimension > file_size, they are stored in two or more file.
 If you have tags then it will generate a specific size file for every tags
 
 [[plugins-outputs-s3-tags]]
@@ -258,9 +230,17 @@ If you have tags then it will generate a specific size file for every tags
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
+
+[[plugins-outputs-s3-temporary_directory]]
+===== `temporary_directory` 
+
+  * Value type is <<string,string>>
+  * Default value is `"/var/folders/_n/n4w7mmts5f58nflsvnnk_l2w0000gn/T/logstash"`
+
+Set the directory where logstash will store the tmp files before sending it to S3
+default to the current OS temporary directory in linux /tmp/logstash
 
 [[plugins-outputs-s3-time_file]]
 ===== `time_file` 
@@ -285,13 +265,21 @@ act on messages with the same type. See any input plugin's `type`
 attribute for more.
 Optional.
 
+[[plugins-outputs-s3-upload_workers_count]]
+===== `upload_workers_count` 
+
+  * Value type is <<number,number>>
+  * Default value is `1`
+
+Specify how many workers to use to upload the files to S3
+
 [[plugins-outputs-s3-use_ssl]]
 ===== `use_ssl` 
 
-  <li> Value type is <<string,string>>
-  * There is no default value for this setting.
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
 
-Should we require (true) or disable (false) using SSL for communicating with the AWS API   
+Should we require (true) or disable (false) using SSL for communicating with the AWS API
 The AWS SDK for Ruby defaults to SSL so we preserve that
 
 [[plugins-outputs-s3-workers]]
@@ -302,4 +290,5 @@ The AWS SDK for Ruby defaults to SSL so we preserve that
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

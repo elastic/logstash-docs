@@ -1,6 +1,8 @@
 [[plugins-outputs-zeromq]]
 === zeromq
 
+
+
 Write events to a 0MQ PUB socket.
 
 You need to have the 0mq 2.1.x library installed to be able to use
@@ -22,7 +24,7 @@ Required configuration options:
 [source,json]
 --------------------------
 zeromq {
-    topology => ... 
+    topology => ...
 }
 --------------------------
 
@@ -41,6 +43,7 @@ Available configuration options:
 | <<plugins-outputs-zeromq-topology>> |<<string,string>>, one of `["pushpull", "pubsub", "pair"]`|Yes|
 | <<plugins-outputs-zeromq-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -73,7 +76,8 @@ The codec used for output data. Output codecs are a convenient method for encodi
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-zeromq-mode]]
 ===== `mode` 
@@ -109,8 +113,7 @@ sockopt => ["ZMQ::HWM", 50, "ZMQ::IDENTITY", "my_named_queue"]
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-zeromq-topic]]
@@ -163,4 +166,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

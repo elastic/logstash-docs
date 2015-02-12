@@ -1,6 +1,8 @@
 [[plugins-outputs-redis]]
 === redis
 
+
+
 This output will send events to a Redis queue using RPUSH.
 The RPUSH command is supported in Redis v0.0.7+. Using
 PUBLISH to a channel requires at least v1.3.8+.
@@ -50,6 +52,7 @@ Available configuration options:
 | <<plugins-outputs-redis-timeout>> |<<number,number>>|No|`5`
 | <<plugins-outputs-redis-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -143,7 +146,8 @@ The Redis database number.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-redis-host]]
 ===== `host` 
@@ -230,8 +234,7 @@ Shuffle the host list during Logstash startup.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-redis-timeout]]
@@ -262,4 +265,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

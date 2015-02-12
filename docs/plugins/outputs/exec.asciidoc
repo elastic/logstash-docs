@@ -1,6 +1,8 @@
 [[plugins-outputs-exec]]
 === exec
 
+
+
 This output will run a command for any matching event.
 Example:
 [source,ruby]
@@ -28,7 +30,7 @@ Required configuration options:
 [source,json]
 --------------------------
 exec {
-    command => ... 
+    command => ...
 }
 --------------------------
 
@@ -43,6 +45,7 @@ Available configuration options:
 | <<plugins-outputs-exec-command>> |<<string,string>>|Yes|
 | <<plugins-outputs-exec-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -73,7 +76,8 @@ Command line to execute via subprocess. Use dtach or screen to make it non block
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-exec-tags]]
 ===== `tags`  (DEPRECATED)
@@ -82,8 +86,7 @@ Only handle events without any of these tags. Note this check is additional to t
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-exec-type]]
@@ -106,4 +109,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

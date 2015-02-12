@@ -1,6 +1,8 @@
 [[plugins-outputs-email]]
 === email
 
+
+
 Send email when an output is received. Alternatively, you may include or
 exclude the email output execution using conditionals. 
 
@@ -16,7 +18,7 @@ Required configuration options:
 [source,json]
 --------------------------
 email {
-    to => ... 
+    to => ...
 }
 --------------------------
 
@@ -41,6 +43,7 @@ Available configuration options:
 | <<plugins-outputs-email-via>> |<<string,string>>|No|`"smtp"`
 | <<plugins-outputs-email-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -98,7 +101,8 @@ NOTE: this may not be functional (KH)
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-email-from]]
 ===== `from` 
@@ -204,8 +208,7 @@ Subject: for the email.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-email-to]]
@@ -250,4 +253,5 @@ How Logstash should send the email, either via SMTP or by invoking sendmail.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

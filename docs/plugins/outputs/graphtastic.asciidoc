@@ -1,6 +1,10 @@
 [[plugins-outputs-graphtastic]]
 === graphtastic
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-graphtastic`.
+
+
 A plugin for a newly developed Java/Spring Metrics application
 I didn't really want to code this project but I couldn't find
 a respectable alternative that would also run on any Windows
@@ -46,6 +50,7 @@ Available configuration options:
 | <<plugins-outputs-graphtastic-retries>> |<<number,number>>|No|`1`
 | <<plugins-outputs-graphtastic-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -100,7 +105,8 @@ NOT IMPLEMENTED!
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-graphtastic-host]]
 ===== `host` 
@@ -163,8 +169,7 @@ ensured to be established.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-graphtastic-type]]
@@ -187,4 +192,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

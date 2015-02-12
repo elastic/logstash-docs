@@ -1,6 +1,10 @@
 [[plugins-outputs-jira]]
 === jira
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-jira`.
+
+
 Origin https://groups.google.com/forum/#!msg/logstash-users/exgrB4iQ-mw/R34apku5nXsJ
 and https://botbot.me/freenode/logstash/msg/4169496/ 
 via https://gist.github.com/electrical/4660061e8fff11cdcf37#file-jira-rb
@@ -25,12 +29,12 @@ Required configuration options:
 [source,json]
 --------------------------
 jira {
-    issuetypeid => ... 
-    password => ... 
-    priority => ... 
-    projectid => ... 
-    summary => ... 
-    username => ... 
+    issuetypeid => ...
+    password => ...
+    priority => ...
+    projectid => ...
+    summary => ...
+    username => ...
 }
 --------------------------
 
@@ -53,6 +57,7 @@ Available configuration options:
 | <<plugins-outputs-jira-username>> |<<string,string>>|Yes|
 | <<plugins-outputs-jira-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -82,7 +87,8 @@ The codec used for output data. Output codecs are a convenient method for encodi
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-jira-host]]
 ===== `host` 
@@ -154,8 +160,7 @@ JIRA Summary
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-jira-type]]
@@ -187,4 +192,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

@@ -1,6 +1,10 @@
 [[plugins-outputs-metriccatcher]]
 === metriccatcher
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-metriccatcher`.
+
+
 This output ships metrics to MetricCatcher, allowing you to
 utilize Coda Hale's Metrics.
 
@@ -51,6 +55,7 @@ Available configuration options:
 |=======================================================================
 
 
+
 ==== Details
 
 &nbsp;
@@ -98,7 +103,8 @@ coerced will zero (0)
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-metriccatcher-gauge]]
 ===== `gauge` 
@@ -149,8 +155,7 @@ The port to connect on your MetricCatcher
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-metriccatcher-timer]]
@@ -201,4 +206,5 @@ coerced will zero (0)
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

@@ -1,6 +1,10 @@
 [[plugins-outputs-boundary]]
 === boundary
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-boundary`.
+
+
 This output lets you send annotations to
 Boundary based on Logstash events
 
@@ -23,8 +27,8 @@ Required configuration options:
 [source,json]
 --------------------------
 boundary {
-    api_key => ... 
-    org_id => ... 
+    api_key => ...
+    org_id => ...
 }
 --------------------------
 
@@ -46,6 +50,7 @@ Available configuration options:
 | <<plugins-outputs-boundary-start_time>> |<<string,string>>|No|
 | <<plugins-outputs-boundary-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -126,7 +131,8 @@ By default this is set to `event["@timestamp"].to_i`
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-boundary-org_id]]
 ===== `org_id` 
@@ -156,8 +162,7 @@ By default this is set to `event["@timestamp"].to_i`
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-boundary-type]]
@@ -180,4 +185,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

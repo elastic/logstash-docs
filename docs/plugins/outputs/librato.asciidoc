@@ -2,6 +2,10 @@
 === librato
 
 
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-librato`.
+
+
+
 
 &nbsp;
 
@@ -15,8 +19,8 @@ Required configuration options:
 [source,json]
 --------------------------
 librato {
-    account_id => ... 
-    api_token => ... 
+    account_id => ...
+    api_token => ...
 }
 --------------------------
 
@@ -36,6 +40,7 @@ Available configuration options:
 | <<plugins-outputs-librato-gauge>> |<<hash,hash>>|No|`{}`
 | <<plugins-outputs-librato-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -127,7 +132,8 @@ Default is to use the event's timestamp
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-librato-gauge]]
 ===== `gauge` 
@@ -153,8 +159,7 @@ Default is to use the event's timestamp
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-librato-type]]
@@ -177,4 +182,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

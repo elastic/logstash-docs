@@ -1,6 +1,8 @@
 [[plugins-outputs-rabbitmq]]
 === rabbitmq
 
+
+
 Push events to a RabbitMQ exchange. Requires RabbitMQ 2.x
 or later version (3.x is recommended).
 
@@ -22,9 +24,9 @@ Required configuration options:
 [source,json]
 --------------------------
 rabbitmq {
-    exchange => ... 
-    exchange_type => ... 
-    host => ... 
+    exchange => ...
+    exchange_type => ...
+    host => ...
 }
 --------------------------
 
@@ -50,6 +52,7 @@ Available configuration options:
 | <<plugins-outputs-rabbitmq-vhost>> |<<string,string>>|No|`"/"`
 | <<plugins-outputs-rabbitmq-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -109,7 +112,8 @@ The exchange type (fanout, topic, direct)
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-rabbitmq-host]]
 ===== `host` 
@@ -172,8 +176,7 @@ Enable or disable SSL
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-rabbitmq-type]]
@@ -220,4 +223,5 @@ The vhost to use. If you don't know what this is, leave the default.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

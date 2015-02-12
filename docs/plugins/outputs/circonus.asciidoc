@@ -2,6 +2,10 @@
 === circonus
 
 
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-circonus`.
+
+
+
 
 &nbsp;
 
@@ -15,9 +19,9 @@ Required configuration options:
 [source,json]
 --------------------------
 circonus {
-    annotation => ... 
-    api_token => ... 
-    app_name => ... 
+    annotation => ...
+    api_token => ...
+    app_name => ...
 }
 --------------------------
 
@@ -34,6 +38,7 @@ Available configuration options:
 | <<plugins-outputs-circonus-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-outputs-circonus-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -102,7 +107,8 @@ The codec used for output data. Output codecs are a convenient method for encodi
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-circonus-tags]]
 ===== `tags`  (DEPRECATED)
@@ -111,8 +117,7 @@ Only handle events without any of these tags. Note this check is additional to t
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-circonus-type]]
@@ -135,4 +140,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

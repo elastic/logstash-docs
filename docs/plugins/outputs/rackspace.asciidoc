@@ -2,6 +2,10 @@
 === rackspace
 
 
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-rackspace`.
+
+
+
 
 &nbsp;
 
@@ -15,8 +19,8 @@ Required configuration options:
 [source,json]
 --------------------------
 rackspace {
-    api_key => ... 
-    username => ... 
+    api_key => ...
+    username => ...
 }
 --------------------------
 
@@ -35,6 +39,7 @@ Available configuration options:
 | <<plugins-outputs-rackspace-username>> |<<string,string>>|Yes|
 | <<plugins-outputs-rackspace-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -65,7 +70,8 @@ The codec used for output data. Output codecs are a convenient method for encodi
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-rackspace-queue]]
 ===== `queue` 
@@ -91,8 +97,7 @@ ord, dfw, lon, syd, etc
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-rackspace-ttl]]
@@ -132,4 +137,5 @@ Rackspace Cloud Username
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 
