@@ -1,9 +1,11 @@
 [[plugins-inputs-redis]]
 === redis
 
+
+
 This input will read events from a Redis instance; it supports both Redis channels and lists.
 The list command (BLPOP) used by Logstash is supported in Redis v1.3.1+, and
-the channel commands used by Logstash are found in Redis v1.3.8+. 
+the channel commands used by Logstash are found in Redis v1.3.8+.
 While you may be able to make these Redis versions work, the best performance
 and stability will be found in more recent stable versions.  Versions 2.6.0+
 are recommended.
@@ -50,6 +52,7 @@ Available configuration options:
 | <<plugins-inputs-redis-timeout>> |<<number,number>>|No|`5`
 | <<plugins-inputs-redis-type>> |<<string,string>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -245,4 +248,5 @@ example when you send an event from a shipper to an indexer) then
 a new input will not override the existing type. A type set at 
 the shipper stays with that event for its life even
 when sent to another Logstash server.
+
 

@@ -1,6 +1,8 @@
 [[plugins-inputs-kafka]]
 === kafka
 
+
+
 This input will read events from a Kafka topic. It uses the high level consumer API provided
 by Kafka to read messages from the broker. It also maintains the state of what has been
 consumed using Zookeeper. The default input codec is json
@@ -28,7 +30,7 @@ Required configuration options:
 [source,json]
 --------------------------
 kafka {
-    topic_id => ... 
+    topic_id => ...
 }
 --------------------------
 
@@ -58,6 +60,7 @@ Available configuration options:
 | <<plugins-inputs-kafka-type>> |<<string,string>>|No|
 | <<plugins-inputs-kafka-zk_connect>> |<<string,string>>|No|`"localhost:2181"`
 |=======================================================================
+
 
 
 ==== Details
@@ -297,4 +300,5 @@ which puts its data under some path in the global ZooKeeper namespace. If so the
 should use the same chroot path in its connection string. For example to give a chroot path of
 `/chroot/path` you would give the connection string as
 `hostname1:port1,hostname2:port2,hostname3:port3/chroot/path`.
+
 

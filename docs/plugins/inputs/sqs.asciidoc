@@ -1,6 +1,8 @@
 [[plugins-inputs-sqs]]
 === sqs
 
+
+
 Pull events from an Amazon Web Services Simple Queue Service (SQS) queue.
 
 SQS is a simple, scalable queue system that is part of the
@@ -66,7 +68,7 @@ Required configuration options:
 [source,json]
 --------------------------
 sqs {
-    queue => ... 
+    queue => ...
 }
 --------------------------
 
@@ -88,11 +90,13 @@ Available configuration options:
 | <<plugins-inputs-sqs-region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "eu-west-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "sa-east-1", "us-gov-west-1"]`|No|`"us-east-1"`
 | <<plugins-inputs-sqs-secret_access_key>> |<<string,string>>|No|
 | <<plugins-inputs-sqs-sent_timestamp_field>> |<<string,string>>|No|
+| <<plugins-inputs-sqs-session_token>> |<<string,string>>|No|
 | <<plugins-inputs-sqs-tags>> |<<array,array>>|No|
 | <<plugins-inputs-sqs-threads>> |<<number,number>>|No|`1`
 | <<plugins-inputs-sqs-type>> |<<string,string>>|No|
 | <<plugins-inputs-sqs-use_ssl>> |<<boolean,boolean>>|No|`true`
 |=======================================================================
+
 
 
 ==== Details
@@ -105,12 +109,12 @@ Available configuration options:
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-This plugin uses the AWS SDK and supports several ways to get credentials, which will be tried in this order...   
-1. Static configuration, using `access_key_id` and `secret_access_key` params in logstash plugin config   
-2. External credentials file specified by `aws_credentials_file`   
-3. Environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`   
-4. Environment variables `AMAZON_ACCESS_KEY_ID` and `AMAZON_SECRET_ACCESS_KEY`   
-5. IAM Instance Profile (available when running inside EC2)   
+This plugin uses the AWS SDK and supports several ways to get credentials, which will be tried in this order...
+1. Static configuration, using `access_key_id` and `secret_access_key` params in logstash plugin config
+2. External credentials file specified by `aws_credentials_file`
+3. Environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
+4. Environment variables `AMAZON_ACCESS_KEY_ID` and `AMAZON_SECRET_ACCESS_KEY`
+5. IAM Instance Profile (available when running inside EC2)
 
 [[plugins-inputs-sqs-add_field]]
 ===== `add_field` 
@@ -126,7 +130,7 @@ Add a field to an event
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Path to YAML file containing a hash of AWS credentials.   
+Path to YAML file containing a hash of AWS credentials.
 This file will only be loaded if `access_key_id` and
 `secret_access_key` aren't set. The contents of the
 file should look like this:
@@ -248,6 +252,14 @@ The AWS Secret Access Key
 
 Name of the event field in which to store the  SQS message Sent Timestamp
 
+[[plugins-inputs-sqs-session_token]]
+===== `session_token` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The AWS Session token for temprory credential
+
 [[plugins-inputs-sqs-tags]]
 ===== `tags` 
 
@@ -292,6 +304,7 @@ when sent to another Logstash server.
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-Should we require (true) or disable (false) using SSL for communicating with the AWS API   
+Should we require (true) or disable (false) using SSL for communicating with the AWS API
 The AWS SDK for Ruby defaults to SSL so we preserve that
+
 

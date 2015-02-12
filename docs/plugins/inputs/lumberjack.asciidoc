@@ -1,6 +1,8 @@
 [[plugins-inputs-lumberjack]]
 === lumberjack
 
+
+
 Receive events using the lumberjack protocol.
 
 This is mainly to receive events shipped with lumberjack[http://github.com/jordansissel/lumberjack], 
@@ -20,9 +22,9 @@ Required configuration options:
 [source,json]
 --------------------------
 lumberjack {
-    port => ... 
-    ssl_certificate => ... 
-    ssl_key => ... 
+    port => ...
+    ssl_certificate => ...
+    ssl_key => ...
 }
 --------------------------
 
@@ -43,6 +45,7 @@ Available configuration options:
 | <<plugins-inputs-lumberjack-tags>> |<<array,array>>|No|
 | <<plugins-inputs-lumberjack-type>> |<<string,string>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -184,4 +187,5 @@ example when you send an event from a shipper to an indexer) then
 a new input will not override the existing type. A type set at 
 the shipper stays with that event for its life even
 when sent to another Logstash server.
+
 

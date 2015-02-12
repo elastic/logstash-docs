@@ -2,6 +2,10 @@
 === rackspace
 
 
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-input-rackspace`.
+
+
+
 
 &nbsp;
 
@@ -15,8 +19,8 @@ Required configuration options:
 [source,json]
 --------------------------
 rackspace {
-    api_key => ... 
-    username => ... 
+    api_key => ...
+    username => ...
 }
 --------------------------
 
@@ -38,6 +42,7 @@ Available configuration options:
 | <<plugins-inputs-rackspace-type>> |<<string,string>>|No|
 | <<plugins-inputs-rackspace-username>> |<<string,string>>|Yes|
 |=======================================================================
+
 
 
 ==== Details
@@ -189,4 +194,5 @@ when sent to another Logstash server.
   * There is no default value for this setting.
 
 Rackspace Cloud Username
+
 

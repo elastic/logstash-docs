@@ -1,6 +1,8 @@
 [[plugins-inputs-udp]]
 === udp
 
+
+
 Read messages as events over the network via udp. The only required
 configuration item is `port`, which specifies the udp port logstash
 will listen on for event streams.
@@ -18,7 +20,7 @@ Required configuration options:
 [source,json]
 --------------------------
 udp {
-    port => ... 
+    port => ...
 }
 --------------------------
 
@@ -39,6 +41,7 @@ Available configuration options:
 | <<plugins-inputs-udp-type>> |<<string,string>>|No|
 | <<plugins-inputs-udp-workers>> |<<number,number>>|No|`2`
 |=======================================================================
+
 
 
 ==== Details
@@ -180,4 +183,5 @@ when sent to another Logstash server.
   * Default value is `2`
 
 Number of threads processing packets
+
 

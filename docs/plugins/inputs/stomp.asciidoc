@@ -2,6 +2,10 @@
 === stomp
 
 
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-input-stomp`.
+
+
+
 
 &nbsp;
 
@@ -15,8 +19,8 @@ Required configuration options:
 [source,json]
 --------------------------
 stomp {
-    destination => ... 
-    host => ... 
+    destination => ...
+    host => ...
 }
 --------------------------
 
@@ -39,6 +43,7 @@ Available configuration options:
 | <<plugins-inputs-stomp-user>> |<<string,string>>|No|`""`
 | <<plugins-inputs-stomp-vhost>> |<<string,string>>|No|`nil`
 |=======================================================================
+
 
 
 ==== Details
@@ -188,4 +193,5 @@ The username to authenticate with.
   * Default value is `nil`
 
 The vhost to use
+
 

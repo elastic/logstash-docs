@@ -1,6 +1,8 @@
 [[plugins-inputs-irc]]
 === irc
 
+
+
 Read events from an IRC Server.
 
 
@@ -16,8 +18,8 @@ Required configuration options:
 [source,json]
 --------------------------
 irc {
-    channels => ... 
-    host => ... 
+    channels => ...
+    host => ...
 }
 --------------------------
 
@@ -41,6 +43,7 @@ Available configuration options:
 | <<plugins-inputs-irc-type>> |<<string,string>>|No|
 | <<plugins-inputs-irc-user>> |<<string,string>>|No|`"logstash"`
 |=======================================================================
+
 
 
 ==== Details
@@ -212,4 +215,5 @@ when sent to another Logstash server.
   * Default value is `"logstash"`
 
 IRC Username
+
 

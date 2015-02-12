@@ -1,6 +1,10 @@
 [[plugins-inputs-sqlite]]
 === sqlite
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-input-sqlite`.
+
+
 Read rows from an sqlite database.
 
 This is most useful in cases where you are logging directly to a table.
@@ -67,7 +71,7 @@ Required configuration options:
 [source,json]
 --------------------------
 sqlite {
-    path => ... 
+    path => ...
 }
 --------------------------
 
@@ -86,6 +90,7 @@ Available configuration options:
 | <<plugins-inputs-sqlite-tags>> |<<array,array>>|No|
 | <<plugins-inputs-sqlite-type>> |<<string,string>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -210,4 +215,5 @@ example when you send an event from a shipper to an indexer) then
 a new input will not override the existing type. A type set at 
 the shipper stays with that event for its life even
 when sent to another Logstash server.
+
 

@@ -1,6 +1,8 @@
 [[plugins-inputs-generator]]
 === generator
 
+
+
 Generate random log events.
 
 The general intention of this is to test performance of plugins.
@@ -38,6 +40,7 @@ Available configuration options:
 | <<plugins-inputs-generator-threads>> |<<number,number>>|No|`1`
 | <<plugins-inputs-generator-type>> |<<string,string>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -193,4 +196,5 @@ example when you send an event from a shipper to an indexer) then
 a new input will not override the existing type. A type set at 
 the shipper stays with that event for its life even
 when sent to another Logstash server.
+
 

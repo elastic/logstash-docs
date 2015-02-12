@@ -2,6 +2,10 @@
 === zenoss
 
 
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-input-zenoss`.
+
+
+
 
 &nbsp;
 
@@ -48,6 +52,7 @@ Available configuration options:
 | <<plugins-inputs-zenoss-verify_ssl>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-zenoss-vhost>> |<<string,string>>|No|`"/zenoss"`
 |=======================================================================
+
 
 
 ==== Details
@@ -294,4 +299,5 @@ Your rabbitmq username
   * Default value is `"/zenoss"`
 
 The vhost to use. If you don't know what this is, leave the default.
+
 

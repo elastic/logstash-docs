@@ -1,6 +1,8 @@
 [[plugins-inputs-gelf]]
 === gelf
 
+
+
 This input will read GELF messages as events over the network,
 making it a good choice if you already use Graylog2 today.
 
@@ -39,6 +41,7 @@ Available configuration options:
 | <<plugins-inputs-gelf-tags>> |<<array,array>>|No|
 | <<plugins-inputs-gelf-type>> |<<string,string>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -182,4 +185,5 @@ example when you send an event from a shipper to an indexer) then
 a new input will not override the existing type. A type set at 
 the shipper stays with that event for its life even
 when sent to another Logstash server.
+
 

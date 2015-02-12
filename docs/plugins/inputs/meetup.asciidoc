@@ -1,6 +1,10 @@
 [[plugins-inputs-meetup]]
 === meetup
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-input-meetup`.
+
+
 Run command line tools and capture the whole output as an event.
 
 Notes:
@@ -22,8 +26,8 @@ Required configuration options:
 [source,json]
 --------------------------
 meetup {
-    interval => ... 
-    meetupkey => ... 
+    interval => ...
+    meetupkey => ...
 }
 --------------------------
 
@@ -45,6 +49,7 @@ Available configuration options:
 | <<plugins-inputs-meetup-urlname>> |<<string,string>>|No|
 | <<plugins-inputs-meetup-venueid>> |<<string,string>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -196,4 +201,5 @@ Must have one of urlname, venue_id, group_id
 
 The venue ID
 Must have one of `urlname`, `venue_id`, `group_id`
+
 

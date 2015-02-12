@@ -1,6 +1,10 @@
 [[plugins-inputs-puppet_facter]]
 === puppet_facter
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-input-puppet_facter`.
+
+
 Connects to a puppet server and requests facts
 
 &nbsp;
@@ -37,6 +41,7 @@ Available configuration options:
 | <<plugins-inputs-puppet_facter-tags>> |<<array,array>>|No|
 | <<plugins-inputs-puppet_facter-type>> |<<string,string>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -191,4 +196,5 @@ example when you send an event from a shipper to an indexer) then
 a new input will not override the existing type. A type set at 
 the shipper stays with that event for its life even
 when sent to another Logstash server.
+
 

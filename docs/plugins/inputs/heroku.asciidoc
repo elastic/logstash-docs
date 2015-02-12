@@ -1,6 +1,10 @@
 [[plugins-inputs-heroku]]
 === heroku
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-input-heroku`.
+
+
 Stream events from a heroku app's logs.
 
 This will read events in a manner similar to how the `heroku logs -t` command
@@ -27,7 +31,7 @@ Required configuration options:
 [source,json]
 --------------------------
 heroku {
-    app => ... 
+    app => ...
 }
 --------------------------
 
@@ -44,6 +48,7 @@ Available configuration options:
 | <<plugins-inputs-heroku-tags>> |<<array,array>>|No|
 | <<plugins-inputs-heroku-type>> |<<string,string>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -152,4 +157,5 @@ example when you send an event from a shipper to an indexer) then
 a new input will not override the existing type. A type set at 
 the shipper stays with that event for its life even
 when sent to another Logstash server.
+
 

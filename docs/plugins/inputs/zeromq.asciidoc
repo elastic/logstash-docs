@@ -1,6 +1,8 @@
 [[plugins-inputs-zeromq]]
 === zeromq
 
+
+
 Read events over a 0MQ SUB socket.
 
 You need to have the 0mq 2.1.x library installed to be able to use
@@ -22,7 +24,7 @@ Required configuration options:
 [source,json]
 --------------------------
 zeromq {
-    topology => ... 
+    topology => ...
 }
 --------------------------
 
@@ -44,6 +46,7 @@ Available configuration options:
 | <<plugins-inputs-zeromq-topology>> |<<string,string>>, one of `["pushpull", "pubsub", "pair"]`|Yes|
 | <<plugins-inputs-zeromq-type>> |<<string,string>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -227,4 +230,5 @@ example when you send an event from a shipper to an indexer) then
 a new input will not override the existing type. A type set at 
 the shipper stays with that event for its life even
 when sent to another Logstash server.
+
 

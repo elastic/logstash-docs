@@ -1,6 +1,8 @@
 [[plugins-inputs-twitter]]
 === twitter
 
+
+
 Read events from the twitter streaming api.
 
 &nbsp;
@@ -15,11 +17,11 @@ Required configuration options:
 [source,json]
 --------------------------
 twitter {
-    consumer_key => ... 
-    consumer_secret => ... 
-    keywords => ... 
-    oauth_token => ... 
-    oauth_token_secret => ... 
+    consumer_key => ...
+    consumer_secret => ...
+    keywords => ...
+    oauth_token => ...
+    oauth_token_secret => ...
 }
 --------------------------
 
@@ -41,6 +43,7 @@ Available configuration options:
 | <<plugins-inputs-twitter-tags>> |<<array,array>>|No|
 | <<plugins-inputs-twitter-type>> |<<string,string>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -215,4 +218,5 @@ example when you send an event from a shipper to an indexer) then
 a new input will not override the existing type. A type set at 
 the shipper stays with that event for its life even
 when sent to another Logstash server.
+
 

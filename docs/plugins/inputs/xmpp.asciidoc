@@ -1,6 +1,8 @@
 [[plugins-inputs-xmpp]]
 === xmpp
 
+
+
 This input allows you to receive events over XMPP/Jabber.
 
 This plugin can be used for accepting events from humans or applications
@@ -19,8 +21,8 @@ Required configuration options:
 [source,json]
 --------------------------
 xmpp {
-    password => ... 
-    user => ... 
+    password => ...
+    user => ...
 }
 --------------------------
 
@@ -40,6 +42,7 @@ Available configuration options:
 | <<plugins-inputs-xmpp-type>> |<<string,string>>|No|
 | <<plugins-inputs-xmpp-user>> |<<string,string>>|Yes|
 |=======================================================================
+
 
 
 ==== Details
@@ -175,4 +178,5 @@ when sent to another Logstash server.
   * There is no default value for this setting.
 
 The user or resource ID, like `foo@example.com`.
+
 

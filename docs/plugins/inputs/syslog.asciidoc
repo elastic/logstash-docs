@@ -1,6 +1,8 @@
 [[plugins-inputs-syslog]]
 === syslog
 
+
+
 Read syslog messages as events over the network.
 
 This input is a good choice if you already use syslog today.
@@ -44,12 +46,15 @@ Available configuration options:
 | <<plugins-inputs-syslog-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-inputs-syslog-facility_labels>> |<<array,array>>|No|`["kernel", "user-level", "mail", "system", "security/authorization", "syslogd", "line printer", "network news", "UUCP", "clock", "security/authorization", "FTP", "NTP", "log audit", "log alert", "clock", "local0", "local1", "local2", "local3", "local4", "local5", "local6", "local7"]`
 | <<plugins-inputs-syslog-host>> |<<string,string>>|No|`"0.0.0.0"`
+| <<plugins-inputs-syslog-locale>> |<<string,string>>|No|
 | <<plugins-inputs-syslog-port>> |<<number,number>>|No|`514`
 | <<plugins-inputs-syslog-severity_labels>> |<<array,array>>|No|`["Emergency", "Alert", "Critical", "Error", "Warning", "Notice", "Informational", "Debug"]`
 | <<plugins-inputs-syslog-tags>> |<<array,array>>|No|
+| <<plugins-inputs-syslog-timezone>> |<<string,string>>|No|
 | <<plugins-inputs-syslog-type>> |<<string,string>>|No|
 | <<plugins-inputs-syslog-use_labels>> |<<boolean,boolean>>|No|`true`
 |=======================================================================
+
 
 
 ==== Details
@@ -121,6 +126,20 @@ The format of input data (plain, json, json_event)
 
 The address to listen on.
 
+[[plugins-inputs-syslog-locale]]
+===== `locale` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Specify a locale to be used for date parsing using either IETF-BCP47 or POSIX language tag.
+Simple examples are `en`,`en-US` for BCP47 or `en_US` for POSIX.
+If not specified, the platform default will be used.
+
+The locale is mostly necessary to be set for parsing month names (pattern with MMM) and
+weekday names (pattern with EEE).
+
+
 [[plugins-inputs-syslog-message_format]]
 ===== `message_format`  (DEPRECATED)
 
@@ -163,6 +182,20 @@ Add any number of arbitrary tags to your event.
 
 This can help with processing later.
 
+[[plugins-inputs-syslog-timezone]]
+===== `timezone` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Specify a time zone canonical ID to be used for date parsing.
+The valid IDs are listed on the [Joda.org available time zones page](http://joda-time.sourceforge.net/timezones.html).
+This is useful in case the time zone cannot be extracted from the value,
+and is not the platform default.
+If this is not specified the platform default will be used.
+Canonical ID is good as it takes care of daylight saving time for you
+For example, `America/Los_Angeles` or `Europe/France` are valid IDs.
+
 [[plugins-inputs-syslog-type]]
 ===== `type` 
 
@@ -189,4 +222,5 @@ when sent to another Logstash server.
   * Default value is `true`
 
 Use label parsing for severity and facility levels.
+
 
