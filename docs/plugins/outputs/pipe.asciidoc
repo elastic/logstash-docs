@@ -1,6 +1,8 @@
 [[plugins-outputs-pipe]]
 === pipe
 
+
+
 Pipe output.
 
 Pipe events to stdin of another program. You can use fields from the
@@ -19,7 +21,7 @@ Required configuration options:
 [source,json]
 --------------------------
 pipe {
-    command => ... 
+    command => ...
 }
 --------------------------
 
@@ -36,6 +38,7 @@ Available configuration options:
 | <<plugins-outputs-pipe-ttl>> |<<number,number>>|No|`10`
 | <<plugins-outputs-pipe-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -66,7 +69,8 @@ Command line to launch and pipe to
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-pipe-message_format]]
 ===== `message_format` 
@@ -88,8 +92,7 @@ event will be written as a single line.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-pipe-ttl]]
@@ -120,4 +123,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

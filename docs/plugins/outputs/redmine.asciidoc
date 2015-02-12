@@ -1,6 +1,10 @@
 [[plugins-outputs-redmine]]
 === redmine
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-redmine`.
+
+
 The redmine output is used to create a ticket via the API redmine. 
 
 It send a POST request in a JSON format and use TOKEN authentication
@@ -32,12 +36,12 @@ Required configuration options:
 [source,json]
 --------------------------
 redmine {
-    priority_id => ... 
-    project_id => ... 
-    status_id => ... 
-    token => ... 
-    tracker_id => ... 
-    url => ... 
+    priority_id => ...
+    project_id => ...
+    status_id => ...
+    token => ...
+    tracker_id => ...
+    url => ...
 }
 --------------------------
 
@@ -64,6 +68,7 @@ Available configuration options:
 | <<plugins-outputs-redmine-url>> |<<string,string>>|Yes|
 | <<plugins-outputs-redmine-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -111,7 +116,8 @@ required
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-redmine-fixed_version_id]]
 ===== `fixed_version_id` 
@@ -184,8 +190,7 @@ required
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-redmine-token]]
@@ -237,4 +242,5 @@ value format : 'http://urlofredmine.tld' - Not add '/issues' at end
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

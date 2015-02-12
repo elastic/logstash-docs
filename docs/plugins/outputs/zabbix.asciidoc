@@ -1,6 +1,10 @@
 [[plugins-outputs-zabbix]]
 === zabbix
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-zabbix`.
+
+
 The zabbix output is used for sending item data to zabbix via the
 zabbix_sender executable.
 
@@ -91,6 +95,7 @@ Available configuration options:
 |=======================================================================
 
 
+
 ==== Details
 
 &nbsp;
@@ -110,7 +115,8 @@ The codec used for output data. Output codecs are a convenient method for encodi
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-zabbix-host]]
 ===== `host` 
@@ -135,8 +141,7 @@ Only handle events without any of these tags. Note this check is additional to t
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-zabbix-type]]
@@ -165,6 +170,7 @@ Note that this setting may not be useful for all outputs.
 
   * Value type is <<path,path>>
   * Default value is `"/usr/local/bin/zabbix_sender"`
+
 
 
 

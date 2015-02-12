@@ -1,6 +1,8 @@
 [[plugins-outputs-juggernaut]]
 === juggernaut
 
+
+
 Push messages to the juggernaut websockets server:
 
 * https://github.com/maccman/juggernaut
@@ -22,7 +24,7 @@ Required configuration options:
 [source,json]
 --------------------------
 juggernaut {
-    channels => ... 
+    channels => ...
 }
 --------------------------
 
@@ -43,6 +45,7 @@ Available configuration options:
 | <<plugins-outputs-juggernaut-timeout>> |<<number,number>>|No|`5`
 | <<plugins-outputs-juggernaut-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -82,7 +85,8 @@ The redis database number.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-juggernaut-host]]
 ===== `host` 
@@ -123,8 +127,7 @@ The port to connect on.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-juggernaut-timeout]]
@@ -155,4 +158,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

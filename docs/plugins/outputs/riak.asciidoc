@@ -1,6 +1,10 @@
 [[plugins-outputs-riak]]
 === riak
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-riak`.
+
+
 Riak is a distributed k/v store from Basho.
 It's based on the Dynamo model.
 
@@ -38,6 +42,7 @@ Available configuration options:
 | <<plugins-outputs-riak-ssl_opts>> |<<hash,hash>>|No|
 | <<plugins-outputs-riak-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -108,7 +113,8 @@ Enable SSL
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-riak-indices]]
 ===== `indices` 
@@ -183,8 +189,7 @@ will turn on SSL `VERIFY_PEER`
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-riak-type]]
@@ -207,4 +212,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

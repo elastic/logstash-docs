@@ -3,6 +3,8 @@
 
 
 
+
+
 &nbsp;
 
 ==== Synopsis
@@ -15,8 +17,8 @@ Required configuration options:
 [source,json]
 --------------------------
 http {
-    http_method => ... 
-    url => ... 
+    http_method => ...
+    url => ...
 }
 --------------------------
 
@@ -38,6 +40,7 @@ Available configuration options:
 | <<plugins-outputs-http-verify_ssl>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-http-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -72,7 +75,8 @@ If not specified, this defaults to the following:
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-http-format]]
 ===== `format` 
@@ -136,8 +140,7 @@ For example:
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-http-type]]
@@ -183,4 +186,5 @@ validate SSL?
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

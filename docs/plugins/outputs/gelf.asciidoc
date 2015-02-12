@@ -1,6 +1,8 @@
 [[plugins-outputs-gelf]]
 === gelf
 
+
+
 This output generates messages in GELF format. This is most useful if you
 want to use Logstash to output events to Graylog2.
 
@@ -18,7 +20,7 @@ Required configuration options:
 [source,json]
 --------------------------
 gelf {
-    host => ... 
+    host => ...
 }
 --------------------------
 
@@ -43,6 +45,7 @@ Available configuration options:
 | <<plugins-outputs-gelf-short_message>> |<<string,string>>|No|`"short_message"`
 | <<plugins-outputs-gelf-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -83,7 +86,8 @@ sets `_foo_field` = `some_value`.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-gelf-facility]]
 ===== `facility`  (DEPRECATED)
@@ -217,8 +221,7 @@ the event message is taken instead.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-gelf-type]]
@@ -241,4 +244,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

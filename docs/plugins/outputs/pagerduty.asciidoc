@@ -1,6 +1,8 @@
 [[plugins-outputs-pagerduty]]
 === pagerduty
 
+
+
 The PagerDuty output will send notifications based on pre-configured services
 and escalation policies. Logstash can send "trigger", "acknowledge" and "resolve"
 event types. In addition, you may configure custom descriptions and event details.
@@ -20,7 +22,7 @@ Required configuration options:
 [source,json]
 --------------------------
 pagerduty {
-    service_key => ... 
+    service_key => ...
 }
 --------------------------
 
@@ -40,6 +42,7 @@ Available configuration options:
 | <<plugins-outputs-pagerduty-service_key>> |<<string,string>>|Yes|
 | <<plugins-outputs-pagerduty-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -86,7 +89,8 @@ Event type
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-pagerduty-incident_key]]
 ===== `incident_key` 
@@ -121,8 +125,7 @@ The PagerDuty Service API Key
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-pagerduty-type]]
@@ -145,4 +148,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

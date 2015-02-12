@@ -1,6 +1,10 @@
 [[plugins-outputs-influxdb]]
 === influxdb
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-influxdb`.
+
+
 This output lets you output Metrics to InfluxDB
 
 The configuration here attempts to be as friendly as possible
@@ -24,10 +28,10 @@ Required configuration options:
 [source,json]
 --------------------------
 influxdb {
-    data_points => ... 
-    host => ... 
-    password => ... 
-    user => ... 
+    data_points => ...
+    host => ...
+    password => ...
+    user => ...
 }
 --------------------------
 
@@ -53,6 +57,7 @@ Available configuration options:
 | <<plugins-outputs-influxdb-user>> |<<string,string>>|Yes|`nil`
 | <<plugins-outputs-influxdb-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -125,7 +130,8 @@ The database to write
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-influxdb-flush_size]]
 ===== `flush_size` 
@@ -193,8 +199,7 @@ Series name - supports sprintf formatting
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-influxdb-time_precision]]
@@ -236,4 +241,5 @@ The user who has access to the named database
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

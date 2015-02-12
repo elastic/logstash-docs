@@ -1,6 +1,10 @@
 [[plugins-outputs-datadog_metrics]]
 === datadog_metrics
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-datadog_metrics`.
+
+
 This output lets you send metrics to
 DataDogHQ based on Logstash events.
 Default `queue_size` and `timeframe` are low in order to provide near realtime alerting.
@@ -18,7 +22,7 @@ Required configuration options:
 [source,json]
 --------------------------
 datadog_metrics {
-    api_key => ... 
+    api_key => ...
 }
 --------------------------
 
@@ -41,6 +45,7 @@ Available configuration options:
 | <<plugins-outputs-datadog_metrics-timeframe>> |<<number,number>>|No|`10`
 | <<plugins-outputs-datadog_metrics-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -88,7 +93,8 @@ The name of the device that produced the metric.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-datadog_metrics-host]]
 ===== `host` 
@@ -138,8 +144,7 @@ prior to schedule set in `@timeframe`
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-datadog_metrics-timeframe]]
@@ -170,4 +175,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

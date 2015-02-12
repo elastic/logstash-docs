@@ -1,6 +1,8 @@
 [[plugins-outputs-ganglia]]
 === ganglia
 
+
+
 This output allows you to pull metrics from your logs and ship them to
 ganglia's gmond. This is heavily based on the graphite output.
 
@@ -16,8 +18,8 @@ Required configuration options:
 [source,json]
 --------------------------
 ganglia {
-    metric => ... 
-    value => ... 
+    metric => ...
+    value => ...
 }
 --------------------------
 
@@ -43,6 +45,7 @@ Available configuration options:
 |=======================================================================
 
 
+
 ==== Details
 
 &nbsp;
@@ -62,7 +65,8 @@ The codec used for output data. Output codecs are a convenient method for encodi
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-ganglia-group]]
 ===== `group` 
@@ -136,8 +140,7 @@ Metric slope, represents metric behavior
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-ganglia-type]]
@@ -180,4 +183,5 @@ coerced will zero (0)
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

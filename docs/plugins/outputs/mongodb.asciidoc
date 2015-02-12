@@ -2,6 +2,10 @@
 === mongodb
 
 
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-mongodb`.
+
+
+
 
 &nbsp;
 
@@ -15,9 +19,9 @@ Required configuration options:
 [source,json]
 --------------------------
 mongodb {
-    collection => ... 
-    database => ... 
-    uri => ... 
+    collection => ...
+    database => ...
+    uri => ...
 }
 --------------------------
 
@@ -37,6 +41,7 @@ Available configuration options:
 | <<plugins-outputs-mongodb-uri>> |<<string,string>>|Yes|
 | <<plugins-outputs-mongodb-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -77,7 +82,8 @@ The database to use
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-mongodb-generateId]]
 ===== `generateId` 
@@ -114,8 +120,7 @@ Number of seconds to wait after failure before retrying
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-mongodb-type]]
@@ -148,4 +153,5 @@ See http://docs.mongodb.org/manual/reference/connection-string/
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

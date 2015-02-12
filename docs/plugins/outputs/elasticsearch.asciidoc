@@ -1,6 +1,8 @@
 [[plugins-outputs-elasticsearch]]
 === elasticsearch
 
+
+
 This output lets you store logs in Elasticsearch and is the most recommended
 output for Logstash. If you plan on using the Kibana web interface, you'll
 need to use this output.
@@ -37,9 +39,6 @@ Required configuration options:
 [source,json]
 --------------------------
 elasticsearch {
-    aws_access_key => ... 
-    aws_region => ... 
-    aws_secret_key => ... 
 }
 --------------------------
 
@@ -51,12 +50,12 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-outputs-elasticsearch-action>> |<<string,string>>|No|`"index"`
-| <<plugins-outputs-elasticsearch-aws_access_key>> |<<string,string>>|Yes|
+| <<plugins-outputs-elasticsearch-aws_access_key>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-aws_protocol>> |<<string,string>>, one of `["http", "https"]`|No|`"https"`
 | <<plugins-outputs-elasticsearch-aws_proxy_host>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-aws_proxy_port>> |<<number,number>>|No|
-| <<plugins-outputs-elasticsearch-aws_region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "eu-west-1", "sa-east-1"]`|Yes|
-| <<plugins-outputs-elasticsearch-aws_secret_key>> |<<string,string>>|Yes|
+| <<plugins-outputs-elasticsearch-aws_region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "eu-west-1", "sa-east-1"]`|No|
+| <<plugins-outputs-elasticsearch-aws_secret_key>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-bind_host>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-bind_port>> |<<number,number>>|No|
 | <<plugins-outputs-elasticsearch-cacert>> |a valid filesystem path|No|
@@ -72,11 +71,15 @@ Available configuration options:
 | <<plugins-outputs-elasticsearch-index>> |<<string,string>>|No|`"logstash-%{+YYYY.MM.dd}"`
 | <<plugins-outputs-elasticsearch-index_type>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-manage_template>> |<<boolean,boolean>>|No|`true`
+| <<plugins-outputs-elasticsearch-max_retries>> |<<number,number>>|No|`3`
 | <<plugins-outputs-elasticsearch-node_name>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-password>> |<<password,password>>|No|
 | <<plugins-outputs-elasticsearch-port>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-protocol>> |<<string,string>>, one of `["node", "transport", "http"]`|No|
+| <<plugins-outputs-elasticsearch-retry_max_interval>> |<<number,number>>|No|`5`
+| <<plugins-outputs-elasticsearch-retry_max_items>> |<<number,number>>|No|`5000`
 | <<plugins-outputs-elasticsearch-s3_protocol>> |<<string,string>>, one of `["http", "https"]`|No|
+| <<plugins-outputs-elasticsearch-sniffing>> |<<boolean,boolean>>|No|`false`
 | <<plugins-outputs-elasticsearch-ssl>> |<<boolean,boolean>>|No|`false`
 | <<plugins-outputs-elasticsearch-template>> |a valid filesystem path|No|
 | <<plugins-outputs-elasticsearch-template_name>> |<<string,string>>|No|`"logstash"`
@@ -86,6 +89,7 @@ Available configuration options:
 | <<plugins-outputs-elasticsearch-user>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -107,13 +111,15 @@ What does each action do?
 
 - index: indexes a document (an event from Logstash).
 - delete: deletes a document by id
+- create: indexes a document, fails if a document by that id already exists in the index.
+following action is not supported by HTTP protocol
+- create_unless_exists: creates a document, fails if no id is provided
 
 For more details on actions, check out the http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk.html[Elasticsearch bulk API documentation]
 
 [[plugins-outputs-elasticsearch-aws_access_key]]
 ===== `aws_access_key` 
 
-  * This is a required setting.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
@@ -146,7 +152,6 @@ For more details on actions, check out the http://www.elasticsearch.org/guide/en
 [[plugins-outputs-elasticsearch-aws_region]]
 ===== `aws_region` 
 
-  * This is a required setting.
   * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `eu-west-1`, `sa-east-1`
   * There is no default value for this setting.
 
@@ -155,7 +160,6 @@ For more details on actions, check out the http://www.elasticsearch.org/guide/en
 [[plugins-outputs-elasticsearch-aws_secret_key]]
 ===== `aws_secret_key` 
 
-  * This is a required setting.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
@@ -249,7 +253,8 @@ default.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-elasticsearch-flush_size]]
 ===== `flush_size` 
@@ -272,6 +277,11 @@ of events.
 The hostname or IP address of the host to use for Elasticsearch unicast discovery
 This is only required if the normal multicast/cluster discovery stuff won't
 work in your environment.
+
+The plugin will use multicast discovery to connect to Elasticsearch
+when using `protocol => node` without setting a host.
+
+http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-discovery-zen.html#multicast[Multicast Discovery Docs]
 
     `"127.0.0.1"`
     `["127.0.0.1:9300","127.0.0.2:9300"]`
@@ -339,6 +349,14 @@ your templates manually.
 This setting no longer does anything. It exists to keep config validation
 from failing. It will be removed in future versions.
 
+[[plugins-outputs-elasticsearch-max_retries]]
+===== `max_retries` 
+
+  * Value type is <<number,number>>
+  * Default value is `3`
+
+Set max retry for each event
+
 [[plugins-outputs-elasticsearch-node_name]]
 ===== `node_name` 
 
@@ -397,6 +415,22 @@ All protocols will use bulk requests when talking to Elasticsearch.
 The default `protocol` setting under java/jruby is "node". The default
 `protocol` on non-java rubies is "http"
 
+[[plugins-outputs-elasticsearch-retry_max_interval]]
+===== `retry_max_interval` 
+
+  * Value type is <<number,number>>
+  * Default value is `5`
+
+Set max interval between bulk retries
+
+[[plugins-outputs-elasticsearch-retry_max_items]]
+===== `retry_max_items` 
+
+  * Value type is <<number,number>>
+  * Default value is `5000`
+
+Set retry policy for events that failed to send
+
 [[plugins-outputs-elasticsearch-s3_protocol]]
 ===== `s3_protocol` 
 
@@ -404,6 +438,15 @@ The default `protocol` setting under java/jruby is "node". The default
   * There is no default value for this setting.
 
 
+
+[[plugins-outputs-elasticsearch-sniffing]]
+===== `sniffing` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Enable cluster sniffing (transport only)
+Asks host for the list of all cluster nodes and adds them to the hosts list
 
 [[plugins-outputs-elasticsearch-ssl]]
 ===== `ssl` 
@@ -422,8 +465,7 @@ Enable SSL
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-elasticsearch-template]]
@@ -503,4 +545,5 @@ Username and password (HTTP only)
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

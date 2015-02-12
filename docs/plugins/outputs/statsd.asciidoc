@@ -1,6 +1,8 @@
 [[plugins-outputs-statsd]]
 === statsd
 
+
+
 statsd is a network daemon for aggregating statistics, such as counters and timers,
 and shipping over UDP to backend services, such as Graphite or Datadog.
 
@@ -68,6 +70,7 @@ Available configuration options:
 |=======================================================================
 
 
+
 ==== Details
 
 &nbsp;
@@ -112,7 +115,8 @@ A decrement metric. Metric names as array.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-statsd-gauge]]
 ===== `gauge` 
@@ -185,8 +189,7 @@ A set metric. `metric_name => "string"` to append as hash
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-statsd-timing]]
@@ -217,4 +220,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

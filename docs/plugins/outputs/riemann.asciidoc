@@ -1,6 +1,10 @@
 [[plugins-outputs-riemann]]
 === riemann
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-riemann`.
+
+
 Riemann is a network event stream processing system.
 
 While Riemann is very similar conceptually to Logstash, it has
@@ -50,6 +54,7 @@ Available configuration options:
 |=======================================================================
 
 
+
 ==== Details
 
 &nbsp;
@@ -78,7 +83,8 @@ Enable debugging output?
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-riemann-host]]
 ===== `host` 
@@ -193,8 +199,7 @@ in the Riemann event
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-riemann-type]]
@@ -217,4 +222,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

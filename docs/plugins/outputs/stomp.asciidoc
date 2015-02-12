@@ -2,6 +2,10 @@
 === stomp
 
 
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-stomp`.
+
+
+
 
 &nbsp;
 
@@ -15,8 +19,8 @@ Required configuration options:
 [source,json]
 --------------------------
 stomp {
-    destination => ... 
-    host => ... 
+    destination => ...
+    host => ...
 }
 --------------------------
 
@@ -37,6 +41,7 @@ Available configuration options:
 | <<plugins-outputs-stomp-vhost>> |<<string,string>>|No|`nil`
 | <<plugins-outputs-stomp-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -78,7 +83,8 @@ Example: "/topic/logstash"
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-stomp-host]]
 ===== `host` 
@@ -112,8 +118,7 @@ The port to connect to on your STOMP server.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-stomp-type]]
@@ -152,4 +157,5 @@ The vhost to use
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

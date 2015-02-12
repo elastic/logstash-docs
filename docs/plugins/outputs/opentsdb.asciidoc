@@ -1,6 +1,8 @@
 [[plugins-outputs-opentsdb]]
 === opentsdb
 
+
+
 This output allows you to pull metrics from your logs and ship them to
 opentsdb. Opentsdb is an open source tool for storing and graphing metrics.
 
@@ -17,7 +19,7 @@ Required configuration options:
 [source,json]
 --------------------------
 opentsdb {
-    metrics => ... 
+    metrics => ...
 }
 --------------------------
 
@@ -34,6 +36,7 @@ Available configuration options:
 | <<plugins-outputs-opentsdb-port>> |<<number,number>>|No|`4242`
 | <<plugins-outputs-opentsdb-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -64,7 +67,8 @@ Enable debugging.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-opentsdb-host]]
 ===== `host` 
@@ -112,8 +116,7 @@ The port to connect on your graphite server.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-opentsdb-type]]
@@ -136,4 +139,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

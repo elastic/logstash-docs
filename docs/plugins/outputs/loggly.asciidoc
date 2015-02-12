@@ -1,6 +1,10 @@
 [[plugins-outputs-loggly]]
 === loggly
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-loggly`.
+
+
 Got a loggly account? Use logstash to ship logs to Loggly!
 
 This is most useful so you can use logstash to parse and structure
@@ -21,7 +25,7 @@ Required configuration options:
 [source,json]
 --------------------------
 loggly {
-    key => ... 
+    key => ...
 }
 --------------------------
 
@@ -44,6 +48,7 @@ Available configuration options:
 |=======================================================================
 
 
+
 ==== Details
 
 &nbsp;
@@ -63,7 +68,8 @@ The codec used for output data. Output codecs are a convenient method for encodi
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-loggly-host]]
 ===== `host` 
@@ -82,11 +88,12 @@ server which is usually "logs.loggly.com"
   * There is no default value for this setting.
 
 The loggly http input key to send to.
-This is usually visible in the Loggly 'Inputs' page as something like this
+This is usually visible in the Loggly 'Inputs' page as something like this:
+....
     https://logs.hoover.loggly.net/inputs/abcdef12-3456-7890-abcd-ef0123456789
                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                                           \---------->   key   <-------------/
-
+....
 You can use `%{foo}` field lookups here if you need to pull the api key from
 the event. This is mainly aimed at multitenant hosting providers who want
 to offer shipping a customer's logs to that customer's loggly account.
@@ -138,8 +145,7 @@ Proxy Username
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-loggly-type]]
@@ -162,4 +168,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

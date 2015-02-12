@@ -3,6 +3,8 @@
 
 
 
+
+
 &nbsp;
 
 ==== Synopsis
@@ -15,8 +17,8 @@ Required configuration options:
 [source,json]
 --------------------------
 csv {
-    fields => ... 
-    path => ... 
+    fields => ...
+    path => ...
 }
 --------------------------
 
@@ -38,6 +40,7 @@ Available configuration options:
 | <<plugins-outputs-csv-path>> |<<string,string>>|Yes|
 | <<plugins-outputs-csv-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -69,7 +72,8 @@ A typical use case would be to use alternative column or row seperators eg: `csv
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-csv-fields]]
 ===== `fields` 
@@ -139,8 +143,7 @@ Supports field reference syntax eg: `fields => ["field1", "[nested][field]"]`.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-csv-type]]
@@ -163,4 +166,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

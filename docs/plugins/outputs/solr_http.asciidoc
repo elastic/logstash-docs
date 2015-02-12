@@ -1,6 +1,10 @@
 [[plugins-outputs-solr_http]]
 === solr_http
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-solr_http`.
+
+
 This output lets you index&store your logs in Solr. If you want to get
 started quickly you should use version 4.4 or above in schemaless mode,
 which will try and guess your fields automatically. To turn that on,
@@ -45,6 +49,7 @@ Available configuration options:
 |=======================================================================
 
 
+
 ==== Details
 
 &nbsp;
@@ -73,7 +78,8 @@ Solr document ID for events. You'd typically have a variable here, like
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-solr_http-flush_size]]
 ===== `flush_size` 
@@ -107,8 +113,7 @@ URL used to connect to Solr
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-solr_http-type]]
@@ -131,4 +136,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 

@@ -1,6 +1,8 @@
 [[plugins-outputs-kafka]]
 === kafka
 
+
+
 Write events to a Kafka topic. This uses the Kafka Producer API to write messages to a topic on
 the broker.
 
@@ -33,7 +35,7 @@ Required configuration options:
 [source,json]
 --------------------------
 kafka {
-    topic_id => ... 
+    topic_id => ...
 }
 --------------------------
 
@@ -66,6 +68,7 @@ Available configuration options:
 | <<plugins-outputs-kafka-topic_metadata_refresh_interval_ms>> |<<number,number>>|No|`600000`
 | <<plugins-outputs-kafka-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -138,7 +141,8 @@ producer. Valid values are `none`, `gzip` and `snappy`.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events without any of these tags. Note this check is additional to type and tags.
+Only handle events without any of these tags.
+Optional.
 
 [[plugins-outputs-kafka-key_serializer_class]]
 ===== `key_serializer_class` 
@@ -266,8 +270,7 @@ The serializer class for messages. The default encoder takes a byte[] and return
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Only handle events with all of these tags.  Note that if you specify
-a type, the event must also match that type.
+Only handle events with all of these tags.
 Optional.
 
 [[plugins-outputs-kafka-topic_id]]
@@ -312,4 +315,5 @@ Optional.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
 
