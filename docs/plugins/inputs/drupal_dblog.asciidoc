@@ -1,6 +1,10 @@
 [[plugins-inputs-drupal_dblog]]
 === drupal_dblog
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-input-drupal_dblog`.
+
+
 Retrieve watchdog log events from a Drupal installation with DBLog enabled.
 The events are pulled out directly from the database.
 The original events are not deleted, and on every consecutive run only new
@@ -44,6 +48,7 @@ Available configuration options:
 | <<plugins-inputs-drupal_dblog-tags>> |<<array,array>>|No|
 | <<plugins-inputs-drupal_dblog-type>> |<<string,string>>|No|`"watchdog"`
 |=======================================================================
+
 
 
 ==== Details
@@ -184,4 +189,5 @@ which also have type "foobar" will act on them.
 
 The type is also stored as part of the event itself, so you
 can also use the type to search for in the web interface.
+
 

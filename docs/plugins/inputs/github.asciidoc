@@ -1,6 +1,10 @@
 [[plugins-inputs-github]]
 === github
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-input-github`.
+
+
 Read events from github webhooks
 
 &nbsp;
@@ -15,7 +19,7 @@ Required configuration options:
 [source,json]
 --------------------------
 github {
-    port => ... 
+    port => ...
 }
 --------------------------
 
@@ -35,6 +39,7 @@ Available configuration options:
 | <<plugins-inputs-github-tags>> |<<array,array>>|No|
 | <<plugins-inputs-github-type>> |<<string,string>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -167,4 +172,5 @@ example when you send an event from a shipper to an indexer) then
 a new input will not override the existing type. A type set at 
 the shipper stays with that event for its life even
 when sent to another Logstash server.
+
 

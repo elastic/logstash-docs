@@ -1,6 +1,8 @@
 [[plugins-inputs-exec]]
 === exec
 
+
+
 Run command line tools and capture the whole output as an event.
 
 Notes:
@@ -22,8 +24,8 @@ Required configuration options:
 [source,json]
 --------------------------
 exec {
-    command => ... 
-    interval => ... 
+    command => ...
+    interval => ...
 }
 --------------------------
 
@@ -41,6 +43,7 @@ Available configuration options:
 | <<plugins-inputs-exec-tags>> |<<array,array>>|No|
 | <<plugins-inputs-exec-type>> |<<string,string>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -157,4 +160,5 @@ example when you send an event from a shipper to an indexer) then
 a new input will not override the existing type. A type set at 
 the shipper stays with that event for its life even
 when sent to another Logstash server.
+
 

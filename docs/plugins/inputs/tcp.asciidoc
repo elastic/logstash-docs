@@ -1,6 +1,8 @@
 [[plugins-inputs-tcp]]
 === tcp
 
+
+
 Read events over a TCP socket.
 
 Like stdin and file inputs, each event is assumed to be one line of text.
@@ -20,7 +22,7 @@ Required configuration options:
 [source,json]
 --------------------------
 tcp {
-    port => ... 
+    port => ...
 }
 --------------------------
 
@@ -46,6 +48,7 @@ Available configuration options:
 | <<plugins-inputs-tcp-tags>> |<<array,array>>|No|
 | <<plugins-inputs-tcp-type>> |<<string,string>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -232,4 +235,5 @@ example when you send an event from a shipper to an indexer) then
 a new input will not override the existing type. A type set at 
 the shipper stays with that event for its life even
 when sent to another Logstash server.
+
 

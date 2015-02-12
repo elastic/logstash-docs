@@ -1,6 +1,8 @@
 [[plugins-inputs-snmptrap]]
 === snmptrap
 
+
+
 Read snmp trap messages as events
 
 Resulting `@message` looks like :
@@ -42,6 +44,7 @@ Available configuration options:
 | <<plugins-inputs-snmptrap-type>> |<<string,string>>|No|
 | <<plugins-inputs-snmptrap-yamlmibdir>> |<<string,string>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -173,4 +176,5 @@ when sent to another Logstash server.
   * There is no default value for this setting.
 
 directory of YAML MIB maps  (same format ruby-snmp uses)
+
 

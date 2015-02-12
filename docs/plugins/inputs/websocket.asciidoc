@@ -1,6 +1,10 @@
 [[plugins-inputs-websocket]]
 === websocket
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-input-websocket`.
+
+
 Read events over the websocket protocol.
 
 &nbsp;
@@ -32,6 +36,7 @@ Available configuration options:
 | <<plugins-inputs-websocket-type>> |<<string,string>>|No|
 | <<plugins-inputs-websocket-url>> |<<string,string>>|No|`"0.0.0.0"`
 |=======================================================================
+
 
 
 ==== Details
@@ -153,4 +158,5 @@ when sent to another Logstash server.
   * Default value is `"0.0.0.0"`
 
 The url to connect to or serve from
+
 

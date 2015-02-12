@@ -1,6 +1,8 @@
 [[plugins-inputs-pipe]]
 === pipe
 
+
+
 Stream events from a long running command pipe.
 
 By default, each event is assumed to be one line. If you
@@ -19,7 +21,7 @@ Required configuration options:
 [source,json]
 --------------------------
 pipe {
-    command => ... 
+    command => ...
 }
 --------------------------
 
@@ -36,6 +38,7 @@ Available configuration options:
 | <<plugins-inputs-pipe-tags>> |<<array,array>>|No|
 | <<plugins-inputs-pipe-type>> |<<string,string>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -149,4 +152,5 @@ example when you send an event from a shipper to an indexer) then
 a new input will not override the existing type. A type set at 
 the shipper stays with that event for its life even
 when sent to another Logstash server.
+
 

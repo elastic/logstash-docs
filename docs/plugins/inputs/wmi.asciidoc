@@ -1,6 +1,10 @@
 [[plugins-inputs-wmi]]
 === wmi
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-input-wmi`.
+
+
 Collect data from WMI query
 
 This is useful for collecting performance metrics and other data
@@ -30,7 +34,7 @@ Required configuration options:
 [source,json]
 --------------------------
 wmi {
-    query => ... 
+    query => ...
 }
 --------------------------
 
@@ -48,6 +52,7 @@ Available configuration options:
 | <<plugins-inputs-wmi-tags>> |<<array,array>>|No|
 | <<plugins-inputs-wmi-type>> |<<string,string>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -163,4 +168,5 @@ example when you send an event from a shipper to an indexer) then
 a new input will not override the existing type. A type set at 
 the shipper stays with that event for its life even
 when sent to another Logstash server.
+
 

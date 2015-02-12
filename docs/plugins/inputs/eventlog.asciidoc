@@ -1,6 +1,8 @@
 [[plugins-inputs-eventlog]]
 === eventlog
 
+
+
 This input will pull events from a http://msdn.microsoft.com/en-us/library/windows/desktop/bb309026%28v=vs.85%29.aspx[Windows Event Log].
 
 To collect Events from the System Event Log, use a config like:
@@ -40,6 +42,7 @@ Available configuration options:
 | <<plugins-inputs-eventlog-tags>> |<<array,array>>|No|
 | <<plugins-inputs-eventlog-type>> |<<string,string>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -146,4 +149,5 @@ example when you send an event from a shipper to an indexer) then
 a new input will not override the existing type. A type set at 
 the shipper stays with that event for its life even
 when sent to another Logstash server.
+
 

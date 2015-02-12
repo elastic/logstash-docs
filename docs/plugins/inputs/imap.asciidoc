@@ -1,9 +1,11 @@
 [[plugins-inputs-imap]]
 === imap
 
-Read mail from IMAP servers
 
-Periodically scans INBOX and moves any read messages
+
+Read mails from IMAP server
+
+Periodically scan an IMAP folder (`INBOX` by default) and move any read messages
 to the trash.
 
 &nbsp;
@@ -18,9 +20,9 @@ Required configuration options:
 [source,json]
 --------------------------
 imap {
-    host => ... 
-    password => ... 
-    user => ... 
+    host => ...
+    password => ...
+    user => ...
 }
 --------------------------
 
@@ -37,6 +39,7 @@ Available configuration options:
 | <<plugins-inputs-imap-content_type>> |<<string,string>>|No|`"text/plain"`
 | <<plugins-inputs-imap-delete>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-imap-fetch_count>> |<<number,number>>|No|`50`
+| <<plugins-inputs-imap-folder>> |<<string,string>>|No|`"INBOX"`
 | <<plugins-inputs-imap-host>> |<<string,string>>|Yes|
 | <<plugins-inputs-imap-lowercase_headers>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-imap-password>> |<<password,password>>|Yes|
@@ -47,6 +50,7 @@ Available configuration options:
 | <<plugins-inputs-imap-user>> |<<string,string>>|Yes|
 | <<plugins-inputs-imap-verify_cert>> |<<boolean,boolean>>|No|`true`
 |=======================================================================
+
 
 
 ==== Details
@@ -123,6 +127,14 @@ content-type as the event message.
 
   * Value type is <<number,number>>
   * Default value is `50`
+
+
+
+[[plugins-inputs-imap-folder]]
+===== `folder` 
+
+  * Value type is <<string,string>>
+  * Default value is `"INBOX"`
 
 
 
@@ -235,6 +247,7 @@ when sent to another Logstash server.
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
+
 
 
 

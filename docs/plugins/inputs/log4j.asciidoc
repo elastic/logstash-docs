@@ -1,6 +1,8 @@
 [[plugins-inputs-log4j]]
 === log4j
 
+
+
 Read events over a TCP socket from a Log4j SocketAppender.
 
 Can either accept connections from clients or connect to a server,
@@ -39,6 +41,7 @@ Available configuration options:
 | <<plugins-inputs-log4j-tags>> |<<array,array>>|No|
 | <<plugins-inputs-log4j-type>> |<<string,string>>|No|
 |=======================================================================
+
 
 
 ==== Details
@@ -175,4 +178,5 @@ example when you send an event from a shipper to an indexer) then
 a new input will not override the existing type. A type set at 
 the shipper stays with that event for its life even
 when sent to another Logstash server.
+
 

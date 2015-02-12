@@ -1,6 +1,10 @@
 [[plugins-inputs-rss]]
 === rss
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-input-rss`.
+
+
 Run command line tools and capture the whole output as an event.
 
 Notes:
@@ -22,8 +26,8 @@ Required configuration options:
 [source,json]
 --------------------------
 rss {
-    interval => ... 
-    url => ... 
+    interval => ...
+    url => ...
 }
 --------------------------
 
@@ -41,6 +45,7 @@ Available configuration options:
 | <<plugins-inputs-rss-type>> |<<string,string>>|No|
 | <<plugins-inputs-rss-url>> |<<string,string>>|Yes|
 |=======================================================================
+
 
 
 ==== Details
@@ -157,4 +162,5 @@ when sent to another Logstash server.
   * There is no default value for this setting.
 
 RSS/Atom feed URL
+
 

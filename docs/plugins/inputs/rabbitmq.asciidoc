@@ -1,6 +1,8 @@
 [[plugins-inputs-rabbitmq]]
 === rabbitmq
 
+
+
 Pull events from a RabbitMQ exchange.
 
 The default settings will create an entirely transient queue and listen for all messages by default.
@@ -25,7 +27,7 @@ Required configuration options:
 [source,json]
 --------------------------
 rabbitmq {
-    host => ... 
+    host => ...
 }
 --------------------------
 
@@ -59,6 +61,7 @@ Available configuration options:
 | <<plugins-inputs-rabbitmq-verify_ssl>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-rabbitmq-vhost>> |<<string,string>>|No|`"/"`
 |=======================================================================
+
 
 
 ==== Details
@@ -326,4 +329,5 @@ Validate SSL certificate
   * Default value is `"/"`
 
 The vhost to use. If you don't know what this is, leave the default.
+
 
