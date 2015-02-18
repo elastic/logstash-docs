@@ -1237,6 +1237,17 @@ and commit your changes.
 
 To publish version 0.1.0 of your new logstash gem:
 
+If you are using rvm as your ruby version manger, and rvm list shows jruby 1.7.19 as the current version you will need to
+set the following before running bundle exec rake publish_gem.
+export JRUBY_OPTS="--1.9"
+
+If you do not set --1.9 you will get the following errors.
+rake aborted!
+```
+GemPublisher::CliFacade::Error: ERROR:  While executing gem ... (RuntimeError)
+    Can't find 'rubygems-update' in any repo. Check `gem source list`.
+```
+
 [source,sh]
 ----------------------------------
 bundle install
