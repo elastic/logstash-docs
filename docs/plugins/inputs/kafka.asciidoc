@@ -238,7 +238,7 @@ maximum number of attempts before giving up.
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
-Specify whether to jump to beginning of the queue when there is no initial offset in
+Specify whether to jump to beginning of the topic when there is no initial offset in
 ZooKeeper, or if an offset is out of range. If this is `false`, messages are consumed
 from the latest offset
 
