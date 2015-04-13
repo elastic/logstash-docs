@@ -1,6 +1,3 @@
-:branch:          1.5
-:ls_version:		  1.5.0.beta1
-
 == How to write a Logstash {plugintype} plugin
 
 To develop a new {plugintype} for Logstash, you build a self-contained Ruby gem
@@ -374,7 +371,7 @@ match => {
 
 
 TIP: For more asciidoc formatting tips, see the excellent reference at
-https://github.com/elasticsearch/docs#asciidoc-guide
+https://github.com/elastic/docs#asciidoc-guide
 
 [float]
 === `class` Declaration
@@ -855,7 +852,7 @@ It is appropriate to change these values to fit your plugin. In particular,
 you are ready to publish your plugin.
 
 Logstash and all its plugins are licensed under
-https://github.com/elasticsearch/logstash/blob/master/LICENSE[Apache License, version 2 ("ALv2")].
+https://github.com/elastic/logstash/blob/master/LICENSE[Apache License, version 2 ("ALv2")].
 If you make your plugin publicly available via http://rubygems.org[RubyGems.org],
 please make sure to have this line in your gemspec:
 
@@ -1023,9 +1020,9 @@ http://www.elasticsearch.org/overview/logstash/download/[Logstash downloads page
 [source,sh]
 [subs="attributes"]
 ----------------------------------
-curl -O http://download.elasticsearch.org/logstash/logstash/logstash-{ls_version}.tar.gz
-tar xzvf logstash-{ls_version}.tar.gz
-cd logstash-{ls_version}
+curl -O http://download.elasticsearch.org/logstash/logstash/logstash-{logstash_version}.tar.gz
+tar xzvf logstash-{logstash_version}.tar.gz
+cd logstash-{logstash_version}
 ----------------------------------
 . Using the plugin tool, we can install the gem we just built.
 +
@@ -1204,7 +1201,7 @@ Logstash users by simply publishing it to RubyGems.org.
 [float]
 === Licensing
 Logstash and all its plugins are licensed under
-https://github.com/elasticsearch/logstash/blob/master/LICENSE[Apache License, version 2 ("ALv2")].
+https://github.com/elastic/logstash/blob/master/LICENSE[Apache License, version 2 ("ALv2")].
 If you make your plugin publicly available via http://rubygems.org[RubyGems.org],
 please make sure to have this line in your gemspec:
 
@@ -1299,7 +1296,7 @@ creating tests for Logstash which will make it easier.  In the meantime, you can
 refer to http://betterspecs.org/ for examples.
 
 To begin migrating your plugin to logstash-plugins, simply create a new
-https://github.com/elasticsearch/logstash/issues[issue] in
+https://github.com/elastic/logstash/issues[issue] in
 the Logstash repository. When the acceptance guidelines are completed, we will
 facilitate the move to the logstash-plugins organization using the recommended
 https://help.github.com/articles/transferring-a-repository/#transferring-from-a-user-to-an-organization[github process].
