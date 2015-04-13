@@ -1,30 +1,53 @@
 [[logstash-reference]]
 = Reference
 
+:branch:          1.5
 :logstash_version: 1.5.0.RC2
-:elasticsearch_version: 1.4.4
+:elasticsearch_version: 1.5.1
 :jdk:     1.7.0_60
 
+[preface]
+== Preface
+Logstash is a tool for receiving, processing and outputting logs. All kinds of
+logs. System logs, webserver logs, error logs, application logs, and just about
+anything you can throw at it. Sounds great, eh?
+
+Logstash provides a powerful pipeline for storing, querying, and analyzing your
+logs. When using Elasticsearch as a backend data store and Kibana as a front-end
+reporting tool, Logstash acts as the workhorse.  It includes an arsenal of
+built-in inputs, filters, codecs, and outputs, enabling you to harness some
+powerful functionality with a small amount of effort. So, let's get started!
+
+// The pass blocks here point to the correct repository for the edit links in
+// the guide.
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/getting-started-with-logstash.asciidoc ?>]
 include::static/getting-started-with-logstash.asciidoc[]
 
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/repositories.asciidoc ?>]
 include::static/repositories.asciidoc[]
+
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/command-line-flags.asciidoc ?>]
 include::static/command-line-flags.asciidoc[]
 
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/configuration.asciidoc ?>]
 include::static/configuration.asciidoc[]
 
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/life-of-an-event.asciidoc ?>]
 include::static/life-of-an-event.asciidoc[]
 
+// These files do their own pass blocks
 include::plugins/inputs.asciidoc[]
 include::plugins/outputs.asciidoc[]
 include::plugins/filters.asciidoc[]
 include::plugins/codecs.asciidoc[]
 
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/contributing-to-logstash.asciidoc ?>]
 include::static/contributing-to-logstash.asciidoc[]
 
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/include/pluginbody.asciidoc ?>]
 include::static/input.asciidoc[]
-
 include::static/codec.asciidoc[]
-
 include::static/filter.asciidoc[]
-
 include::static/output.asciidoc[]
+
+pass::[<?edit_url?>]
