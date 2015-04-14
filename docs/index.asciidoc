@@ -45,10 +45,15 @@ include::plugins/codecs.asciidoc[]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/contributing-to-logstash.asciidoc ?>]
 include::static/contributing-to-logstash.asciidoc[]
 
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/include/pluginbody.asciidoc ?>]
+// A space is necessary here ^^^
+pass::[<?edit_url?>]
+
+// This is in the pluginbody.asciidoc itself
+// pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/include/pluginbody.asciidoc ?>]
 include::static/input.asciidoc[]
 include::static/codec.asciidoc[]
 include::static/filter.asciidoc[]
 include::static/output.asciidoc[]
 
-pass::[<?edit_url?>]
+// This is in the pluginbody.asciidoc itself
+// pass::[<?edit_url?>]
