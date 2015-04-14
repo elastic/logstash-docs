@@ -62,7 +62,7 @@ it before you copy the example.
 ----
 cd /path/to/logstash-{plugintype}-mypluginname
 mv logstash-{plugintype}-{pluginname}.gemspec logstash-{plugintype}-mypluginname.gemspec
-mv lib/logstash/{plugintype}/example.rb lib/logstash/{plugintype}/mypluginname.rb
+mv lib/logstash/{plugintype}s/example.rb lib/logstash/{plugintype}s/mypluginname.rb
 mv spec/{plugintype}s/{pluginname}_spec.rb spec/{plugintype}s/mypluginname_spec.rb
 ----
 
@@ -372,7 +372,7 @@ match => {
 
 
 TIP: For more asciidoc formatting tips, see the excellent reference at
-https://github.com/elastic/docs#asciidoc-guide
+https://github.com/elasticsearch/docs#asciidoc-guide
 
 [float]
 === `class` Declaration
@@ -808,7 +808,7 @@ TIP: See http://bundler.io/gemfile.html[Bundler's Gemfile page] for more details
 ----------------------------------
 source 'https://rubygems.org'
 gemspec
-gem "logstash", :github => "elasticsearch/logstash", :branch => "{branch}"
+gem "logstash", :github => "elastic/logstash", :branch => "{branch}"
 ----------------------------------
 
 [float]
@@ -827,9 +827,9 @@ Gem::Specification.new do |s|
   s.licenses = ['Apache License (2.0)']
   s.summary = "This {plugintype} does x, y, z in Logstash"
   s.description = "This gem is a logstash plugin required to be installed on top of the Logstash core pipeline using $LS_HOME/bin/plugin install gemname. This gem is not a stand-alone program"
-  s.authors = ["Elasticsearch"]
-  s.email = 'info@elasticsearch.com'
-  s.homepage = "http://www.elasticsearch.org/guide/en/logstash/current/index.html"
+  s.authors = ["Elastic"]
+  s.email = 'info@elastic.co'
+  s.homepage = "http://www.elastic.co/guide/en/logstash/current/index.html"
   s.require_paths = ["lib"]
 
   # Files
@@ -1014,14 +1014,14 @@ this case, `0.1.0`.
 ==== Test installation
 You should test install your plugin into a clean installation of Logstash.
 Download the latest version from the
-http://www.elasticsearch.org/overview/logstash/download/[Logstash downloads page].
+https://www.elastic.co/downloads/logstash/[Logstash downloads page].
 
 . Untar and cd in to the directory:
 +
 [source,sh]
 [subs="attributes"]
 ----------------------------------
-curl -O http://download.elasticsearch.org/logstash/logstash/logstash-{logstash_version}.tar.gz
+curl -O https://download.elastic.co/logstash/logstash/logstash-{logstash_version}.tar.gz
 tar xzvf logstash-{logstash_version}.tar.gz
 cd logstash-{logstash_version}
 ----------------------------------
@@ -1202,7 +1202,7 @@ Logstash users by simply publishing it to RubyGems.org.
 [float]
 === Licensing
 Logstash and all its plugins are licensed under
-https://github.com/elastic/logstash/blob/master/LICENSE[Apache License, version 2 ("ALv2")].
+https://github.com/elasticsearch/logstash/blob/master/LICENSE[Apache License, version 2 ("ALv2")].
 If you make your plugin publicly available via http://rubygems.org[RubyGems.org],
 please make sure to have this line in your gemspec:
 
@@ -1297,9 +1297,10 @@ creating tests for Logstash which will make it easier.  In the meantime, you can
 refer to http://betterspecs.org/ for examples.
 
 To begin migrating your plugin to logstash-plugins, simply create a new
-https://github.com/elastic/logstash/issues[issue] in
+https://github.com/elasticsearch/logstash/issues[issue] in
 the Logstash repository. When the acceptance guidelines are completed, we will
 facilitate the move to the logstash-plugins organization using the recommended
 https://help.github.com/articles/transferring-a-repository/#transferring-from-a-user-to-an-organization[github process].
 
 pass::[<?edit_url?>]
+
