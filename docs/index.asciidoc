@@ -36,6 +36,7 @@ pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/
 include::static/life-of-an-event.asciidoc[]
 
 // These files do their own pass blocks
+pass::[<?edit_url?>]
 include::plugins/inputs.asciidoc[]
 include::plugins/outputs.asciidoc[]
 include::plugins/filters.asciidoc[]
