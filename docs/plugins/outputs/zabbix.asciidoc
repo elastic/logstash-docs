@@ -5,65 +5,41 @@
 NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-zabbix`.
 
 
-The zabbix output is used for sending item data to zabbix via the
-zabbix_sender executable.
+The Zabbix output is used to send item data (key/value pairs) to a Zabbix
+server.  The event `@timestamp` will automatically be associated with the
+Zabbix item data.
 
-For this output to work, your event must have the following fields:
+The Zabbix Sender protocol is described at
+https://www.zabbix.org/wiki/Docs/protocols/zabbix_sender/2.0
+Zabbix uses a kind of nested key/value store.
 
-* "zabbix_host"    (the host configured in Zabbix)
-* "zabbix_item"    (the item key on the host in Zabbix)
-* "send_field"    (the field name that is sending to Zabbix)
+[source,txt]
+    host
+      ├── item1
+      │     └── value1
+      ├── item2
+      │     └── value2
+      ├── ...
+      │     └── ...
+      ├── item_n
+      │     └── value_n
 
-In Zabbix, create your host with the same name (no spaces in the name of
-the host supported) and create your item with the specified key as a
-Zabbix Trapper item. Also you need to set field that will be send to zabbix
-as item.value, otherwise `@message` will be sent.
+Each "host" is an identifier, and each item is associated with that host.
+Items are typed on the Zabbix side.  You can send numbers as strings and
+Zabbix will Do The Right Thing.
 
-The easiest way to use this output is with the grep filter.
-Presumably, you only want certain events matching a given pattern
-to send events to zabbix, so use grep or grok to match and also to add the required
-fields.
-[source,ruby]
-     filter {
-       grep {
-         type => "linux-syslog"
-         match => [ "@message", "(error|ERROR|CRITICAL)" ]
-         add_tag => [ "zabbix-sender" ]
-         add_field => [
-           "zabbix_host", "%{source_host}",
-           "zabbix_item", "item.key"
-           "send_field", "field_name"
-         ]
-      }
-       grok {
-         match => [ "message", "%{SYSLOGBASE} %{DATA:data}" ]
-         add_tag => [ "zabbix-sender" ]
-         add_field => [
-           "zabbix_host", "%{source_host}",
-           "zabbix_item", "item.key",
-           "send_field", "data"
-         ]
-      }
-    }
+In the Zabbix UI, ensure that your hostname matches the value referenced by
+`zabbix_host`. Create the item with the key as it appears in the field
+referenced by `zabbix_key`.  In the item configuration window, ensure that the
+type dropdown is set to Zabbix Trapper. Also be sure to set the type of
+information that Zabbix should expect for this item.
 
-[source,ruby]
-    output {
-      zabbix {
-        # only process events with this tag
-        tags => "zabbix-sender"
+This plugin does not currently send in batches.  While it is possible to do
+so, this is not supported.  Be careful not to flood your Zabbix server with
+too many events per second.
 
-        # specify the hostname or ip of your zabbix server
-        # (defaults to localhost)
-        host => "localhost"
-
-        # specify the port to connect to (default 10051)
-        port => "10051"
-
-        # specify the path to zabbix_sender
-        # (defaults to "/usr/local/bin/zabbix_sender")
-        zabbix_sender => "/usr/local/bin/zabbix_sender"
-      }
-    }
+NOTE: This plugin will log a warning if a necessary field is missing. It will
+not attempt to resend if Zabbix is down, but will log an error message.
 
 &nbsp;
 
@@ -77,6 +53,8 @@ Required configuration options:
 [source,json]
 --------------------------
 zabbix {
+    zabbix_host => ...
+    zabbix_key => ...
 }
 --------------------------
 
@@ -88,10 +66,13 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-outputs-zabbix-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-zabbix-host>> |<<string,string>>|No|`"localhost"`
-| <<plugins-outputs-zabbix-port>> |<<number,number>>|No|`10051`
+| <<plugins-outputs-zabbix-timeout>> |<<number,number>>|No|`1`
 | <<plugins-outputs-zabbix-workers>> |<<number,number>>|No|`1`
-| <<plugins-outputs-zabbix-zabbix_sender>> |a valid filesystem path|No|`"/usr/local/bin/zabbix_sender"`
+| <<plugins-outputs-zabbix-zabbix_host>> |<<string,string>>|Yes|
+| <<plugins-outputs-zabbix-zabbix_key>> |<<string,string>>|Yes|
+| <<plugins-outputs-zabbix-zabbix_server_host>> |<<string,string>>|No|`"localhost"`
+| <<plugins-outputs-zabbix-zabbix_server_port>> |<<number,number>>|No|`10051`
+| <<plugins-outputs-zabbix-zabbix_value>> |<<string,string>>|No|`"message"`
 |=======================================================================
 
 
@@ -118,22 +99,6 @@ The codec used for output data. Output codecs are a convenient method for encodi
 Only handle events without any of these tags.
 Optional.
 
-[[plugins-outputs-zabbix-host]]
-===== `host` 
-
-  * Value type is <<string,string>>
-  * Default value is `"localhost"`
-
-
-
-[[plugins-outputs-zabbix-port]]
-===== `port` 
-
-  * Value type is <<number,number>>
-  * Default value is `10051`
-
-
-
 [[plugins-outputs-zabbix-tags]]
 ===== `tags`  (DEPRECATED)
 
@@ -143,6 +108,16 @@ Optional.
 
 Only handle events with all of these tags.
 Optional.
+
+[[plugins-outputs-zabbix-timeout]]
+===== `timeout` 
+
+  * Value type is <<number,number>>
+  * Default value is `1`
+
+The number of seconds to wait before giving up on a connection to the Zabbix
+server. This number should be very small, otherwise delays in delivery of
+other outputs could result.
 
 [[plugins-outputs-zabbix-type]]
 ===== `type`  (DEPRECATED)
@@ -165,12 +140,48 @@ Optional.
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
 
-[[plugins-outputs-zabbix-zabbix_sender]]
-===== `zabbix_sender` 
+[[plugins-outputs-zabbix-zabbix_host]]
+===== `zabbix_host` 
 
-  * Value type is <<path,path>>
-  * Default value is `"/usr/local/bin/zabbix_sender"`
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
 
+The field name which holds the Zabbix host name. This can be a sub-field of
+the @metadata field.
 
+[[plugins-outputs-zabbix-zabbix_key]]
+===== `zabbix_key` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The field name which holds the Zabbix key. This can be a sub-field of
+the @metadata field.
+
+[[plugins-outputs-zabbix-zabbix_server_host]]
+===== `zabbix_server_host` 
+
+  * Value type is <<string,string>>
+  * Default value is `"localhost"`
+
+The IP or resolvable hostname where the Zabbix server is running
+
+[[plugins-outputs-zabbix-zabbix_server_port]]
+===== `zabbix_server_port` 
+
+  * Value type is <<number,number>>
+  * Default value is `10051`
+
+The port on which the Zabbix server is running
+
+[[plugins-outputs-zabbix-zabbix_value]]
+===== `zabbix_value` 
+
+  * Value type is <<string,string>>
+  * Default value is `"message"`
+
+The field name which holds the value you want to send.
 
 

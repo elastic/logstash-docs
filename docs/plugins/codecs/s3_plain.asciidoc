@@ -1,6 +1,10 @@
 [[plugins-codecs-s3_plain]]
 === s3_plain
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-codec-s3_plain`.
+
+
 The "s3_plain" codec is used for backward compatibility with previous version of the S3 Output
 
 
@@ -8,20 +12,16 @@ The "s3_plain" codec is used for backward compatibility with previous version of
 
 ==== Synopsis
 
-This plugin supports the following configuration options:
+This plugin has no configuration options.
 
 
-Required configuration options:
+Complete configuration example:
 
 [source,json]
 --------------------------
 s3_plain {
-  }
+}
 --------------------------
 
 
-
-==== Details
-
-&nbsp;
 

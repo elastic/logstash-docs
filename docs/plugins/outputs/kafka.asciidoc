@@ -52,8 +52,9 @@ Available configuration options:
 | <<plugins-outputs-kafka-codec>> |<<codec,codec>>|No|`"json"`
 | <<plugins-outputs-kafka-compressed_topics>> |<<string,string>>|No|`""`
 | <<plugins-outputs-kafka-compression_codec>> |<<string,string>>, one of `["none", "gzip", "snappy"]`|No|`"none"`
-| <<plugins-outputs-kafka-key_serializer_class>> |<<string,string>>|No|`nil`
+| <<plugins-outputs-kafka-key_serializer_class>> |<<string,string>>|No|`"kafka.serializer.StringEncoder"`
 | <<plugins-outputs-kafka-message_send_max_retries>> |<<number,number>>|No|`3`
+| <<plugins-outputs-kafka-partition_key_format>> |<<string,string>>|No|`nil`
 | <<plugins-outputs-kafka-partitioner_class>> |<<string,string>>|No|`"kafka.producer.DefaultPartitioner"`
 | <<plugins-outputs-kafka-producer_type>> |<<string,string>>, one of `["sync", "async"]`|No|`"sync"`
 | <<plugins-outputs-kafka-queue_buffering_max_messages>> |<<number,number>>|No|`10000`
@@ -148,7 +149,7 @@ Optional.
 ===== `key_serializer_class` 
 
   * Value type is <<string,string>>
-  * Default value is `nil`
+  * Default value is `"kafka.serializer.StringEncoder"`
 
 The serializer class for keys (defaults to the same as for messages if nothing is given)
 
@@ -162,6 +163,23 @@ This property will cause the producer to automatically retry a failed send reque
 property specifies the number of retries when such failures occur. Note that setting a
 non-zero value here can lead to duplicates in the case of network errors that cause a message
 to be sent but the acknowledgement to be lost.
+
+[[plugins-outputs-kafka-partition_key_format]]
+===== `partition_key_format` 
+
+  * Value type is <<string,string>>
+  * Default value is `nil`
+
+Provides a way to specify a partition key as a string. To specify a partition key for
+Kafka, configure a format that will produce the key as a string. Defaults
+`key_serializer_class` to `kafka.serializer.StringEncoder` to match. For example, to partition
+by host:
+[source,ruby]
+    output {
+      kafka {
+          partition_key_format => "%{host}"
+      }
+    }
 
 [[plugins-outputs-kafka-partitioner_class]]
 ===== `partitioner_class` 

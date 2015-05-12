@@ -2,12 +2,10 @@
 === heartbeat
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-input-heartbeat`.
-
 
 Generate heartbeat messages.
 
-The general intention of this is to test the performance and 
+The general intention of this is to test the performance and
 availability of Logstash.
 
 
@@ -35,6 +33,7 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-inputs-heartbeat-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-inputs-heartbeat-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-inputs-heartbeat-count>> |<<number,number>>|No|`-1`
 | <<plugins-inputs-heartbeat-interval>> |<<number,number>>|No|`60`
 | <<plugins-inputs-heartbeat-message>> |<<string,string>>|No|`"ok"`
 | <<plugins-inputs-heartbeat-tags>> |<<array,array>>|No|
@@ -79,6 +78,15 @@ This only affects `plain` format logs since json is `UTF-8` already.
 
 The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
 
+[[plugins-inputs-heartbeat-count]]
+===== `count` 
+
+  * Value type is <<number,number>>
+  * Default value is `-1`
+
+How many times to iterate.
+This is typically used only for testing purposes.
+
 [[plugins-inputs-heartbeat-debug]]
 ===== `debug`  (DEPRECATED)
 
@@ -119,7 +127,7 @@ If you set this to `epoch` then this plugin will use the current
 timestamp in unix timestamp (which is by definition, UTC).  It will
 output this value into a field called `clock`
 
-If you set this to `sequence` then this plugin will send a sequence of 
+If you set this to `sequence` then this plugin will send a sequence of
 numbers beginning at 0 and incrementing each interval.  It will
 output this value into a field called `clock`
 
@@ -157,8 +165,7 @@ This can help with processing later.
   * Value type is <<number,number>>
   * Default value is `1`
 
-Set this to the number of threads you want this input to spawn.
-This is the same as declaring the input multiple times
+
 
 [[plugins-inputs-heartbeat-type]]
 ===== `type` 
@@ -171,11 +178,11 @@ Add a `type` field to all events handled by this input.
 Types are used mainly for filter activation.
 
 The type is stored as part of the event itself, so you can
-also use the type to search for it in the web interface.
+also use the type to search for it in Kibana.
 
 If you try to set a type on an event that already has one (for
 example when you send an event from a shipper to an indexer) then
-a new input will not override the existing type. A type set at 
+a new input will not override the existing type. A type set at
 the shipper stays with that event for its life even
 when sent to another Logstash server.
 

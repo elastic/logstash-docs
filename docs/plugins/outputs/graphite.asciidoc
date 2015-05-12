@@ -42,6 +42,7 @@ Available configuration options:
 | <<plugins-outputs-graphite-port>> |<<number,number>>|No|`2003`
 | <<plugins-outputs-graphite-reconnect_interval>> |<<number,number>>|No|`2`
 | <<plugins-outputs-graphite-resend_on_failure>> |<<boolean,boolean>>|No|`false`
+| <<plugins-outputs-graphite-timestamp_field>> |<<string,string>>|No|`"@timestamp"`
 | <<plugins-outputs-graphite-workers>> |<<number,number>>|No|`1`
 |=======================================================================
 
@@ -122,7 +123,7 @@ The metric(s) to use. This supports dynamic strings like %{host}
 for metric names and also for values. This is a hash field with key 
 being the metric name, value being the metric value. Example:
 [source,ruby]
-    [ "%{host}/uptime", "%{uptime_1m}" ]
+    metrics => { "%{host}/uptime" => "%{uptime_1m}" }
 
 The value will be coerced to a floating point value. Values which cannot be
 coerced will be set to zero (0). You may use either `metrics` or `fields_are_metrics`,
@@ -174,6 +175,16 @@ Should metrics be resent on failure?
 
 Only handle events with all of these tags.
 Optional.
+
+[[plugins-outputs-graphite-timestamp_field]]
+===== `timestamp_field` 
+
+  * Value type is <<string,string>>
+  * Default value is `"@timestamp"`
+
+Use this field for the timestamp instead of '@timestamp' which is the
+default. Useful when backfilling or just getting more accurate data into
+graphite since you probably have a cache layer infront of Logstash.
 
 [[plugins-outputs-graphite-type]]
 ===== `type`  (DEPRECATED)

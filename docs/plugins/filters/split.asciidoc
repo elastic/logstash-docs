@@ -40,6 +40,7 @@ Available configuration options:
 | <<plugins-filters-split-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-split-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-split-remove_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-split-target>> |<<string,string>>|No|
 | <<plugins-filters-split-terminator>> |<<string,string>>|No|`"\n"`
 |=======================================================================
 
@@ -201,6 +202,15 @@ would remove a sad, unwanted tag as well.
 
 Only handle events with all of these tags.
 Optional.
+
+[[plugins-filters-split-target]]
+===== `target` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The field within the new event which the value is split into.
+If not set, target field defaults to split field name.
 
 [[plugins-filters-split-terminator]]
 ===== `terminator` 

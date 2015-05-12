@@ -194,7 +194,7 @@ The configuration for the JSON filter:
 [source,ruby]
     source => source_field
 
-For example, if you have JSON data in the @message field:
+For example, if you have JSON data in the `message` field:
 [source,ruby]
     filter {
       json {
@@ -202,7 +202,7 @@ For example, if you have JSON data in the @message field:
       }
     }
 
-The above would parse the json from the @message field
+The above would parse the json from the `message` field
 
 [[plugins-filters-json-tags]]
 ===== `tags`  (DEPRECATED)

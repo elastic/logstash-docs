@@ -124,7 +124,15 @@ Convert a field's value to a different type, like turning a string to an
 integer. If the field value is an array, all members will be converted.
 If the field is a hash, no action will be taken.
 
-Valid conversion targets are: integer, float, string.
+If the conversion type is `boolean`, the acceptable values are:
+
+* **True:** `true`, `t`, `yes`, `y`, and `1`
+* **False:** `false`, `f`, `no`, `n`, and `0`
+
+If a value other than these is provided, it will pass straight through 
+and log a warning message.
+
+Valid conversion targets are: integer, float, string, and boolean.
 
 Example:
 [source,ruby]
