@@ -3,13 +3,13 @@
 
 
 
-This CouchDB input allows you to automatically stream events from the 
+This CouchDB input allows you to automatically stream events from the
 CouchDB http://guide.couchdb.org/draft/notifications.html[_changes] URI.
 Moreover, any "future" changes will automatically be streamed as well making it easy to synchronize
 your CouchDB data with any target destination
 
 ### Upsert and delete
-You can use event metadata to allow for document deletion. 
+You can use event metadata to allow for document deletion.
 All non-delete operations are treated as upserts
 
 ### Starting at a Specific Sequence
@@ -149,7 +149,7 @@ The format of input data (plain, json, json_event)
 
 Logstash connects to CouchDB's _changes with feed=continuous
 The heartbeat is how often (in milliseconds) Logstash will ping
-CouchDB to ensure the connection is maintained.  Changing this 
+CouchDB to ensure the connection is maintained.  Changing this
 setting is not recommended unless you know what you are doing.
 
 [[plugins-inputs-couchdb_changes-host]]
@@ -166,7 +166,7 @@ IP or hostname of your CouchDB instance
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-Future feature! Until implemented, changing this from the default 
+Future feature! Until implemented, changing this from the default
 will not do anything.
 
 Ignore attachments associated with CouchDB documents.
@@ -181,7 +181,7 @@ If unspecified, Logstash will attempt to read the last sequence number
 from the `sequence_path` file.  If that is empty or non-existent, it will
 begin with 0 (the beginning).
 
-If you specify this value, it is anticipated that you will 
+If you specify this value, it is anticipated that you will
 only be doing so for an initial read under special circumstances
 and that you will unset this value afterwards.
 
@@ -215,7 +215,7 @@ will cause unexpected results.
   * Value type is <<password,password>>
   * Default value is `nil`
 
-Password, if authentication is needed to connect to 
+Password, if authentication is needed to connect to
 CouchDB
 
 [[plugins-inputs-couchdb_changes-port]]
@@ -283,11 +283,11 @@ Add a `type` field to all events handled by this input.
 Types are used mainly for filter activation.
 
 The type is stored as part of the event itself, so you can
-also use the type to search for it in the web interface.
+also use the type to search for it in Kibana.
 
 If you try to set a type on an event that already has one (for
 example when you send an event from a shipper to an indexer) then
-a new input will not override the existing type. A type set at 
+a new input will not override the existing type. A type set at
 the shipper stays with that event for its life even
 when sent to another Logstash server.
 
@@ -297,7 +297,7 @@ when sent to another Logstash server.
   * Value type is <<string,string>>
   * Default value is `nil`
 
-Username, if authentication is needed to connect to 
+Username, if authentication is needed to connect to
 CouchDB
 
 

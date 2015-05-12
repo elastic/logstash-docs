@@ -55,6 +55,7 @@ The following input plugins are available:
 * <<plugins-inputs-kafka,kafka>>
 |[[plugins-inputs-letters-l]]
 * <<plugins-inputs-log4j,log4j>>
+* <<plugins-inputs-log4j2,log4j2>>
 * <<plugins-inputs-lumberjack,lumberjack>>
 |[[plugins-inputs-letters-m]]
 * <<plugins-inputs-meetup,meetup>>
