@@ -26,7 +26,7 @@ Once you have verified the existence of Java on your system, we can move on!
 Logstash startup script uses environment variables so you can easily configure your
 environment if you wish to do so.
 
-When you start Logstash using the startup script, we launch Java with pre-configured JVM options. 
+When you start Logstash using the startup script, we launch Java with pre-configured JVM options.
 Most times it is better to leave the options as is, but you have the option to pass in
 extra JVM settings. For example, if you want to monitor Logstash using JMX, you can add these settings
 using the environment variable `LS_JAVA_OPTS` and start Logstash
@@ -104,7 +104,7 @@ stored data when you query it.
 Now, you're probably saying, "that's all fine and dandy, but typing all my logs
 into Logstash isn't really an option, and merely seeing them spit to STDOUT
 isn't very useful." Good point. First, let's set up Elasticsearch to store the
-messages we send into Logstash. If you don't have Elasticearch already
+messages we send into Logstash. If you don't have Elasticsearch already
 installed, you can
 http://www.elastic.co/download/[download the RPM or DEB package], or install
 manually by downloading the current release tarball, by issuing the following
@@ -181,23 +181,6 @@ This should return something like the following:
 ----------------------------------
 
 Congratulations! You've successfully stashed logs in Elasticsearch via Logstash.
-
-[float]
-==== Elasticsearch Plugins (an aside)
-Another very useful tool for querying your Logstash data (and Elasticsearch in
-general) is the Elasticearch-kopf plugin. (For more information about
-Elasticsearch plugins, see
-http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-plugins.html[Elasticsearch plugins].)
-To install elasticsearch-kopf,  issue the following command from your
-Elasticsearch directory (the same one from which you started Elasticsearch):
-
-[source,js]
-----------------------------------
-bin/plugin -install lmenezes/elasticsearch-kopf
-----------------------------------
-Now you can go to
-http://localhost:9200/_plugin/kopf/[http://localhost:9200/_plugin/kopf/]
-to browse your Elasticsearch data, settings, and mappings!
 
 [float]
 ==== Multiple Outputs
