@@ -7,7 +7,7 @@ This output lets you store logs in Elasticsearch and is the most recommended
 output for Logstash. If you plan on using the Kibana web interface, you'll
 need to use this output.
 
-  *VERSION NOTE*: Your Elasticsearch cluster must be running Elasticsearch 1.0.0 or later.
+*VERSION NOTE*: Your Elasticsearch cluster must be running Elasticsearch 1.0.0 or later.
 
 If you want to set other Elasticsearch options that are not exposed directly
 as configuration options, there are two methods:
@@ -21,11 +21,39 @@ cluster status.
 
 You can learn more about Elasticsearch at <https://www.elastic.co/products/elasticsearch>
 
-==== Operational Notes
+## Operational Notes
 
 If using the default `protocol` setting ("node"), your firewalls might need
-to permit port `9300` in *both* directions (from Logstash to Elasticsearch, and
+to permit port 9300 in *both* directions (from Logstash to Elasticsearch, and
 Elasticsearch to Logstash)
+
+## Retry Policy
+
+By default all bulk requests to ES are synchronous. Not all events in the bulk requests
+always make it successfully. For example, there could be events which are not formatted
+correctly for the index they are targeting (type mismatch in mapping). So that we minimize loss of 
+events, we have a specific retry policy in place. We retry all events which fail to be reached by 
+Elasticsearch for network related issues. We retry specific events which exhibit errors under a separate 
+policy described below. Events of this nature are ones which experience ES error codes described as 
+retryable errors.
+
+Retryable Errors:
+
+- 429, Too Many Requests (RFC6585)
+- 503, The server is currently unable to handle the request due to a temporary overloading or maintenance of the server.
+
+Here are the rules of what is retried when:
+
+- Block and retry all events in bulk response that experiences transient network exceptions until
+  a successful submission is received by Elasticsearch.
+- Retry subset of sent events which resulted in ES errors of a retryable nature which can be found 
+  in RETRYABLE_CODES
+- For events which returned retryable error codes, they will be pushed onto a separate queue for 
+  retrying events. events in this queue will be retried a maximum of 5 times by default (configurable through :max_retries). The size of 
+  this queue is capped by the value set in :retry_max_items.
+- Events from the retry queue are submitted again either when the queue reaches its max size or when
+  the max interval time is reached, which is set in :retry_max_interval.
+- Events which are not retryable or have reached their max retry count are logged to stderr.
 
 &nbsp;
 
@@ -50,21 +78,13 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-outputs-elasticsearch-action>> |<<string,string>>|No|`"index"`
-| <<plugins-outputs-elasticsearch-aws_access_key>> |<<string,string>>|No|
-| <<plugins-outputs-elasticsearch-aws_protocol>> |<<string,string>>, one of `["http", "https"]`|No|`"https"`
-| <<plugins-outputs-elasticsearch-aws_proxy_host>> |<<string,string>>|No|
-| <<plugins-outputs-elasticsearch-aws_proxy_port>> |<<number,number>>|No|
-| <<plugins-outputs-elasticsearch-aws_region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "eu-west-1", "sa-east-1"]`|No|
-| <<plugins-outputs-elasticsearch-aws_secret_key>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-bind_host>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-bind_port>> |<<number,number>>|No|
 | <<plugins-outputs-elasticsearch-cacert>> |a valid filesystem path|No|
 | <<plugins-outputs-elasticsearch-cluster>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-elasticsearch-discovery>> |<<string,string>>, one of `["zen", "ec2"]`|No|`"zen"`
 | <<plugins-outputs-elasticsearch-document_id>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-document_type>> |<<string,string>>|No|
-| <<plugins-outputs-elasticsearch-ec2_protocol>> |<<string,string>>, one of `["http", "https"]`|No|
 | <<plugins-outputs-elasticsearch-embedded>> |<<boolean,boolean>>|No|`false`
 | <<plugins-outputs-elasticsearch-embedded_http_port>> |<<string,string>>|No|`"9200-9300"`
 | <<plugins-outputs-elasticsearch-flush_size>> |<<number,number>>|No|`5000`
@@ -80,9 +100,9 @@ Available configuration options:
 | <<plugins-outputs-elasticsearch-retry_max_interval>> |<<number,number>>|No|`5`
 | <<plugins-outputs-elasticsearch-retry_max_items>> |<<number,number>>|No|`5000`
 | <<plugins-outputs-elasticsearch-routing>> |<<string,string>>|No|
-| <<plugins-outputs-elasticsearch-s3_protocol>> |<<string,string>>, one of `["http", "https"]`|No|
 | <<plugins-outputs-elasticsearch-sniffing>> |<<boolean,boolean>>|No|`false`
 | <<plugins-outputs-elasticsearch-ssl>> |<<boolean,boolean>>|No|`false`
+| <<plugins-outputs-elasticsearch-ssl_certificate_verification>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-elasticsearch-template>> |a valid filesystem path|No|
 | <<plugins-outputs-elasticsearch-template_name>> |<<string,string>>|No|`"logstash"`
 | <<plugins-outputs-elasticsearch-template_overwrite>> |<<boolean,boolean>>|No|`false`
@@ -119,54 +139,6 @@ following action is not supported by HTTP protocol
 
 For more details on actions, check out the http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk.html[Elasticsearch bulk API documentation]
 
-[[plugins-outputs-elasticsearch-aws_access_key]]
-===== `aws_access_key` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-
-
-[[plugins-outputs-elasticsearch-aws_protocol]]
-===== `aws_protocol` 
-
-  * Value can be any of: `http`, `https`
-  * Default value is `"https"`
-
-
-
-[[plugins-outputs-elasticsearch-aws_proxy_host]]
-===== `aws_proxy_host` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-
-
-[[plugins-outputs-elasticsearch-aws_proxy_port]]
-===== `aws_proxy_port` 
-
-  * Value type is <<number,number>>
-  * There is no default value for this setting.
-
-
-
-[[plugins-outputs-elasticsearch-aws_region]]
-===== `aws_region` 
-
-  * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `eu-west-1`, `sa-east-1`
-  * There is no default value for this setting.
-
-
-
-[[plugins-outputs-elasticsearch-aws_secret_key]]
-===== `aws_secret_key` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-
-
 [[plugins-outputs-elasticsearch-bind_host]]
 ===== `bind_host` 
 
@@ -200,7 +172,8 @@ The .cer or .pem file to validate the server's certificate
   * There is no default value for this setting.
 
 The name of your cluster if you set it on the Elasticsearch side. Useful
-for discovery.
+for discovery when using `node` or `transport` protocols.
+By default, it looks for a cluster named 'elasticsearch'.
 
 [[plugins-outputs-elasticsearch-codec]]
 ===== `codec` 
@@ -209,14 +182,6 @@ for discovery.
   * Default value is `"plain"`
 
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-elasticsearch-discovery]]
-===== `discovery` 
-
-  * Value can be any of: `zen`, `ec2`
-  * Default value is `"zen"`
-
-
 
 [[plugins-outputs-elasticsearch-document_id]]
 ===== `document_id` 
@@ -235,14 +200,6 @@ Elasticsearch with the same ID.
 
 The document type to write events to. Generally you should try to write only
 similar events to the same 'type'. String expansion `%{foo}` works here.
-
-[[plugins-outputs-elasticsearch-ec2_protocol]]
-===== `ec2_protocol` 
-
-  * Value can be any of: `http`, `https`
-  * There is no default value for this setting.
-
-
 
 [[plugins-outputs-elasticsearch-embedded]]
 ===== `embedded` 
@@ -295,20 +252,38 @@ of events.
   * Value type is <<array,array>>
   * There is no default value for this setting.
 
-The hostname or IP address of the host to use for Elasticsearch unicast discovery
-This is only required if the normal multicast/cluster discovery stuff won't
-work in your environment.
-
-The plugin will use multicast discovery to connect to Elasticsearch
-when using `protocol => node` without setting a host. When setting unicast 
-hosts for `node` protocol, it is important to confirm that at least one non-client
-node is listed in the `:host` list. client nodes are filtered by default in zen-discovery.
-You need to set `discovery.zen.master_election.filter_client` to `false` to override this behavior.
-
-http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-discovery-zen.html#multicast[Multicast Discovery Docs]
-
+For the `node` protocol, if you do not specify `host`, it will attempt to use
+multicast discovery to connect to Elasticsearch.  If http://www.elastic.co/guide/en/elasticsearch/guide/current/_important_configuration_changes.html#_prefer_unicast_over_multicast[multicast is disabled] in Elasticsearch, 
+you must include the hostname or IP address of the host(s) to use for Elasticsearch unicast discovery.
+Remember the `node` protocol uses the http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-transport.html#modules-transport[transport] address (eg. 9300, not 9200).
     `"127.0.0.1"`
     `["127.0.0.1:9300","127.0.0.2:9300"]`
+When setting hosts for `node` protocol, it is important to confirm that at least one non-client
+node is listed in the `host` list.  Also keep in mind that the `host` parameter when used with 
+the `node` protocol is for *discovery purposes only* (not for load balancing).  When multiple hosts 
+are specified, it will contact the first host to see if it can use it to discover the cluster.  If not, 
+then it will contact the second host in the list and so forth. With the `node` protocol, 
+Logstash will join the Elasticsearch cluster as a node client (which has a copy of the cluster
+state) and this node client is the one that will automatically handle the load balancing of requests 
+across data nodes in the cluster.  
+If you are looking for a high availability setup, our recommendation is to use the `transport` protocol (below), 
+set up multiple http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html[client nodes] and list the client nodes in the `host` parameter.
+
+For the `transport` protocol, it will load balance requests across the hosts specified in the `host` parameter.
+Remember the `transport` protocol uses the http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-transport.html#modules-transport[transport] address (eg. 9300, not 9200).
+    `"127.0.0.1"`
+    `["127.0.0.1:9300","127.0.0.2:9300"]`
+There is also a `sniffing` option (see below) that can be used with the transport protocol to instruct it to use the host to sniff for
+"alive" nodes in the cluster and automatically use it as the hosts list (but will skip the dedicated master nodes).  
+If you do not use the sniffing option, it is important to exclude http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html[dedicated master nodes] from the `host` list
+to prevent Logstash from sending bulk requests to the master nodes. So this parameter should only reference either data or client nodes.
+
+For the `http` protocol, it will load balance requests across the hosts specified in the `host` parameter.
+Remember the `http` protocol uses the http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-http.html#modules-http[http] address (eg. 9200, not 9300).
+    `"127.0.0.1"`
+    `["127.0.0.1:9200","127.0.0.2:9200"]`
+It is important to exclude http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html[dedicated master nodes] from the `host` list
+to prevent LS from sending bulk requests to the master nodes.  So this parameter should only reference either data or client nodes.
 
 [[plugins-outputs-elasticsearch-idle_flush_time]]
 ===== `idle_flush_time` 
@@ -423,11 +398,15 @@ If you do not set this, the following defaults are used:
 
 Choose the protocol used to talk to Elasticsearch.
 
-The 'node' protocol will connect to the cluster as a normal Elasticsearch
-node (but will not store data). This allows you to use things like
-multicast discovery. If you use the `node` protocol, you must permit
+The 'node' protocol (default) will connect to the cluster as a normal Elasticsearch
+node (but will not store data). If you use the `node` protocol, you must permit
 bidirectional communication on the port 9300 (or whichever port you have
 configured).
+
+If you do not specify the `host` parameter, it will use  multicast for http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-discovery-zen.html[Elasticsearch discovery].  While this may work in a test/dev environment where multicast is enabled in 
+Elasticsearch, we strongly recommend http://www.elastic.co/guide/en/elasticsearch/guide/current/_important_configuration_changes.html#_prefer_unicast_over_multicast[disabling multicast]
+in Elasticsearch.  To connect to an Elasticsearch cluster with multicast disabled,
+you must include the `host` parameter (see relevant section above).  
 
 The 'transport' protocol will connect to the host you specify and will
 not show up as a 'node' in the Elasticsearch cluster. This is useful
@@ -467,14 +446,6 @@ Set retry policy for events that failed to send
 A routing override to be applied to all processed events.
 This can be dynamic using the `%{foo}` syntax.
 
-[[plugins-outputs-elasticsearch-s3_protocol]]
-===== `s3_protocol` 
-
-  * Value can be any of: `http`, `https`
-  * There is no default value for this setting.
-
-
-
 [[plugins-outputs-elasticsearch-sniffing]]
 ===== `sniffing` 
 
@@ -493,6 +464,16 @@ Asks host for the list of all cluster nodes and adds them to the hosts list
 SSL Configurations (only valid when protocol is HTTP)
 
 Enable SSL
+
+[[plugins-outputs-elasticsearch-ssl_certificate_verification]]
+===== `ssl_certificate_verification` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Validate the server's certificate
+Disabling this severely compromises security
+For more information read https://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf
 
 [[plugins-outputs-elasticsearch-tags]]
 ===== `tags`  (DEPRECATED)

@@ -104,7 +104,10 @@ This is where you would set values like:
 
 Example:
 [source,ruby]
-sockopt => ["ZMQ::HWM", 50, "ZMQ::IDENTITY", "my_named_queue"]
+    sockopt => {
+       "ZMQ::HWM" => 50
+       "ZMQ::IDENTITY"  => "my_named_queue"
+    }
 
 [[plugins-outputs-zeromq-tags]]
 ===== `tags`  (DEPRECATED)
@@ -143,8 +146,6 @@ The default logstash topologies work as follows:
 
 If the predefined topology flows don't work for you,
 you can change the 'mode' setting
-TODO (lusis) add req/rep MAYBE
-TODO (lusis) add router/dealer
 
 [[plugins-outputs-zeromq-type]]
 ===== `type`  (DEPRECATED)

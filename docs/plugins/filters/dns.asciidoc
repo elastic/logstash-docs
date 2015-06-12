@@ -3,10 +3,6 @@
 
 
 
-DNS Filter
-
-This filter will resolve any IP addresses from a field of your choosing.
-
 The DNS filter performs a lookup (either an A record/CNAME record lookup
 or a reverse lookup at the PTR record) on records specified under the
 `reverse` and `resolve` arrays.
@@ -22,9 +18,13 @@ The config should look like this:
       }
     }
 
-Caveats: at the moment, there's no way to tune the timeout with the `resolv`
-core library.  It does seem to be fixed in here: http://redmine.ruby-lang.org/issues/5100
-but isn't currently in JRuby.
+Caveats: Currently there is no way to specify a timeout in the DNS lookup.
+
+This filter, like all filters, only processes 1 event at a time, so the use
+of this plugin can significantly slow down your pipeline's throughput if you
+have a high latency network. By way of example, if each DNS lookup takes 2
+milliseconds, the maximum throughput you can achieve with a single filter
+worker is 500 events per second (1000 milliseconds / 2 milliseconds).
 
 &nbsp;
 
@@ -232,6 +232,10 @@ Forward resolve one or more fields.
   * Value type is <<array,array>>
   * There is no default value for this setting.
 
+TODO(sissel): The timeout limitation does seem to be fixed in here: http://redmine.ruby-lang.org/issues/5100 # but isn't currently in JRuby.
+TODO(sissel): make `action` required? This was always the intent, but it
+due to a typo it was never enforced. Thus the default behavior in past
+versions was `append` by accident.
 Reverse resolve one or more fields.
 
 [[plugins-filters-dns-tags]]
@@ -250,9 +254,6 @@ Optional.
   * Value type is <<number,number>>
   * Default value is `2`
 
-TODO(sissel): make `action` required? This was always the intent, but it
-due to a typo it was never enforced. Thus the default behavior in past
-versions was `append` by accident.
 `resolv` calls will be wrapped in a timeout instance
 
 [[plugins-filters-dns-type]]
