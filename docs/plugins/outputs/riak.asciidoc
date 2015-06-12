@@ -72,12 +72,14 @@ Bucket properties (NYI)
 Logstash hash of properties for the bucket
 i.e.
 [source,ruby]
-    `bucket_props => ["r", "one", "w", "one", "dw", "one"]`
+    bucket_props => {
+        "r" => "one"
+        "w" => "one"
+        "dw", "one
+     }
 or
 [source,ruby]
-    `bucket_props => ["n_val", "3"]`
-Note that the Logstash config language cannot support
-hash or array values
+    bucket_props => { "n_val" => "3" }
 Properties will be passed as-is
 
 [[plugins-outputs-riak-codec]]
@@ -138,7 +140,7 @@ Off by default as not everyone runs eleveldb
 The event key name
 variables are valid here.
 
-Choose this carefully. Best to let riak decide....
+Choose this carefully. Best to let riak decide.
 
 [[plugins-outputs-riak-nodes]]
 ===== `nodes` 
@@ -151,7 +153,10 @@ This can be a single host or
 a Logstash hash of node/port pairs
 e.g
 [source,ruby]
-    ["node1", "8098", "node2", "8098"]
+    {
+        "node1" => "8098"
+        "node2" => "8098"
+    }
 
 [[plugins-outputs-riak-proto]]
 ===== `proto` 
@@ -177,7 +182,11 @@ Logstash hash that maps to the riak-client options
 here: https://github.com/basho/riak-ruby-client/wiki/Connecting-to-Riak
 You'll likely want something like this:
 
-`ssl_opts => ["pem", "/etc/riak.pem", "ca_path", "/usr/share/certificates"]
+[source, ruby]
+    ssl_opts => {
+       "pem" => "/etc/riak.pem"
+       "ca_path" => "/usr/share/certificates"
+    }
 
 Per the riak client docs, the above sample options
 will turn on SSL `VERIFY_PEER`
