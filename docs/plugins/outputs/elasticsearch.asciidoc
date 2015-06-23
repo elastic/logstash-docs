@@ -21,13 +21,13 @@ cluster status.
 
 You can learn more about Elasticsearch at <https://www.elastic.co/products/elasticsearch>
 
-===== Operational Notes
+==== Operational Notes
 
 If using the default `protocol` setting ("node"), your firewalls might need
 to permit port 9300 in *both* directions (from Logstash to Elasticsearch, and
 Elasticsearch to Logstash)
 
-===== Retry Policy
+==== Retry Policy
 
 By default all bulk requests to ES are synchronous. Not all events in the bulk requests
 always make it successfully. For example, there could be events which are not formatted
