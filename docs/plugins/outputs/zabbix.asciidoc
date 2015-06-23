@@ -54,7 +54,6 @@ Required configuration options:
 --------------------------
 zabbix {
     zabbix_host => ...
-    zabbix_key => ...
 }
 --------------------------
 
@@ -66,10 +65,11 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-outputs-zabbix-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-outputs-zabbix-multi_value>> |<<array,array>>|No|
 | <<plugins-outputs-zabbix-timeout>> |<<number,number>>|No|`1`
 | <<plugins-outputs-zabbix-workers>> |<<number,number>>|No|`1`
 | <<plugins-outputs-zabbix-zabbix_host>> |<<string,string>>|Yes|
-| <<plugins-outputs-zabbix-zabbix_key>> |<<string,string>>|Yes|
+| <<plugins-outputs-zabbix-zabbix_key>> |<<string,string>>|No|
 | <<plugins-outputs-zabbix-zabbix_server_host>> |<<string,string>>|No|`"localhost"`
 | <<plugins-outputs-zabbix-zabbix_server_port>> |<<number,number>>|No|`10051`
 | <<plugins-outputs-zabbix-zabbix_value>> |<<string,string>>|No|`"message"`
@@ -98,6 +98,24 @@ The codec used for output data. Output codecs are a convenient method for encodi
 
 Only handle events without any of these tags.
 Optional.
+
+[[plugins-outputs-zabbix-multi_value]]
+===== `multi_value` 
+
+  * Value type is <<array,array>>
+  * There is no default value for this setting.
+
+Use the `multi_value` directive to send multiple key/value pairs.
+This can be thought of as an array, like:
+
+`[ zabbix_key1, zabbix_value1, zabbix_key2, zabbix_value2, ... zabbix_keyN, zabbix_valueN ]`
+
+...where `zabbix_key1` is an instance of `zabbix_key`, and `zabbix_value1`
+is an instance of `zabbix_value`.  If the field referenced by any
+`zabbix_key` or `zabbix_value` does not exist, that entry will be ignored.
+
+This directive cannot be used in conjunction with the single-value directives
+`zabbix_key` and `zabbix_value`.
 
 [[plugins-outputs-zabbix-tags]]
 ===== `tags`  (DEPRECATED)
@@ -153,12 +171,12 @@ the @metadata field.
 [[plugins-outputs-zabbix-zabbix_key]]
 ===== `zabbix_key` 
 
-  * This is a required setting.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The field name which holds the Zabbix key. This can be a sub-field of
-the @metadata field.
+A single field name which holds the value you intend to use as the Zabbix
+item key. This can be a sub-field of the @metadata field.
+This directive will be ignored if using `multi_value`
 
 [[plugins-outputs-zabbix-zabbix_server_host]]
 ===== `zabbix_server_host` 
@@ -183,5 +201,6 @@ The port on which the Zabbix server is running
   * Default value is `"message"`
 
 The field name which holds the value you want to send.
+This directive will be ignored if using `multi_value`
 
 
