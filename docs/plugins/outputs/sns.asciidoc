@@ -6,7 +6,7 @@
 SNS output.
 
 Send events to Amazon's Simple Notification Service, a hosted pub/sub
-framework.  It supports subscribers of type email, HTTP/S, SMS, and SQS.
+framework.  It supports various subscription types, including email, HTTP/S, SMS, and SQS.
 
 For further documentation about the service see:
 
@@ -17,12 +17,17 @@ This plugin looks for the following fields on events it receives:
  * `sns` - If no ARN is found in the configuration file, this will be used as
  the ARN to publish.
  * `sns_subject` - The subject line that should be used.
- Optional. The "%{host}" will be used if not present and truncated at
- `MAX_SUBJECT_SIZE_IN_CHARACTERS`.
- * `sns_message` - The message that should be
- sent. Optional. The event serialzed as JSON will be used if not present and
+ Optional. The "%{host}" will be used if `sns_subject` is not present. The subject
+ will be truncated to 100 characters. If `sns_subject` is set to a non-string value a JSON version of that value will be saved.
+ * `sns_message` - Optional string of message to be sent. If this is set to a non-string value it will be encoded with the specified `codec`. If this is not set the entire event will be encoded with the codec.
  with the @message truncated so that the length of the JSON fits in
- `MAX_MESSAGE_SIZE_IN_BYTES`.
+ `32768` bytes.
+
+## Upgrading to 2.0.0
+
+This plugin used to have a `format` option for controlling the encoding of messages prior to being sent to SNS.
+This plugin now uses the logstash standard https://www.elastic.co/guide/en/logstash/current/configuration.html#codec[codec] option for encoding instead.
+If you want the same 'plain' format as the v0/1 codec (`format => "plain"`) use `codec => "s3_plain"`.
 
 
 &nbsp;
@@ -51,13 +56,11 @@ Available configuration options:
 | <<plugins-outputs-sns-arn>> |<<string,string>>|No|
 | <<plugins-outputs-sns-aws_credentials_file>> |<<string,string>>|No|
 | <<plugins-outputs-sns-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-sns-format>> |<<string,string>>, one of `["json", "plain"]`|No|`"plain"`
 | <<plugins-outputs-sns-proxy_uri>> |<<string,string>>|No|
 | <<plugins-outputs-sns-publish_boot_message_arn>> |<<string,string>>|No|
 | <<plugins-outputs-sns-region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "sa-east-1", "us-gov-west-1", "cn-north-1"]`|No|`"us-east-1"`
 | <<plugins-outputs-sns-secret_access_key>> |<<string,string>>|No|
 | <<plugins-outputs-sns-session_token>> |<<string,string>>|No|
-| <<plugins-outputs-sns-use_ssl>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-sns-workers>> |<<number,number>>|No|`1`
 |=======================================================================
 
@@ -81,7 +84,8 @@ Available configuration options:
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-SNS topic ARN.
+Optional ARN to send messages to. If you do not set this you must
+include the `sns` field in your events to set the ARN on a per-message basis!
 
 [[plugins-outputs-sns-aws_credentials_file]]
 ===== `aws_credentials_file` 
@@ -108,14 +112,6 @@ The codec used for output data. Output codecs are a convenient method for encodi
 
 Only handle events without any of these tags.
 Optional.
-
-[[plugins-outputs-sns-format]]
-===== `format` 
-
-  * Value can be any of: `json`, `plain`
-  * Default value is `"plain"`
-
-Message format.  Defaults to plain text.
 
 [[plugins-outputs-sns-proxy_uri]]
 ===== `proxy_uri` 
@@ -183,14 +179,6 @@ The type to act on. If a type is given, then this output will only
 act on messages with the same type. See any input plugin's `type`
 attribute for more.
 Optional.
-
-[[plugins-outputs-sns-use_ssl]]
-===== `use_ssl` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-
 
 [[plugins-outputs-sns-workers]]
 ===== `workers` 
