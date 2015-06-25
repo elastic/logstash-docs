@@ -7,6 +7,7 @@ The Logstash pipeline has the following flags. (You can use the `--help` flag to
 display this information.)
 
 .Flags
+[source,shell]
 ----------------------------------
 -f, --config CONFIGFILE
  Load the Logstash config from a specific file, directory, or a wildcard. If
@@ -50,29 +51,36 @@ bin/plugin install logstash-output-kafka`
 ----------------------------------
 
 .Alternatively, using a file location:
+[source,shell]
 ----------------------------------
 bin/plugin install /path/to/logstash-output-kafka-1.0.0.gem
 ----------------------------------
 
 .Removing a plugin
+[source,shell]
 ----------------------------------
 bin/plugin uninstall logstash-output-kafka
 ----------------------------------
 
 .Updating plugins
+[source,shell]
 ----------------------------------
 bin/plugin update <1>
 bin/plugin update logstash-output-kafka <2>
 ----------------------------------
-\<1> will update all installed plugins
-\<2> will update only this plugin
+<1> will update all installed plugins
+
+<2> will update only this plugin
 
 .Listing plugins
+[source,shell]
 ----------------------------------
 bin/plugin list <1>
 bin/plugin list [namefragment] <2>
 bin/plugin list --group output <3>
 ----------------------------------
-\<1> Will list all installed plugins
-\<2> Will list all installed plugins containing a namefragment
-\<3> Will list all installed plugins for a particular group (input, filter, codec, output)
+<1> Will list all installed plugins
+
+<2> Will list all installed plugins containing a namefragment
+
+<3> Will list all installed plugins for a particular group (input, filter, codec, output)
