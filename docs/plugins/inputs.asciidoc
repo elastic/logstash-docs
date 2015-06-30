@@ -46,6 +46,7 @@ The following input plugins are available:
 |[[plugins-inputs-letters-h]]
 * <<plugins-inputs-heartbeat,heartbeat>>
 * <<plugins-inputs-heroku,heroku>>
+* <<plugins-inputs-http,http>>
 |[[plugins-inputs-letters-i]]
 * <<plugins-inputs-irc,irc>>
 * <<plugins-inputs-imap,imap>>
@@ -125,6 +126,8 @@ include::inputs/heartbeat.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-heroku/edit/master/lib/logstash/inputs/heroku.rb ?>]
 include::inputs/heroku.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-irc/edit/master/lib/logstash/inputs/irc.rb ?>]
+include::inputs/http.asciidoc[]
+pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-http/edit/master/lib/logstash/inputs/http.rb ?>]
 include::inputs/irc.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-imap/edit/master/lib/logstash/inputs/imap.rb ?>]
 include::inputs/imap.asciidoc[]
