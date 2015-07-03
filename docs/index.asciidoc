@@ -1,10 +1,14 @@
 [[logstash-reference]]
 = Reference
 
-:branch:          1.5
-:logstash_version: 1.5.0
+:branch:                1.5
+:logstash_version:      1.5.0
 :elasticsearch_version: 1.5.1
-:jdk:     1.7.0_60
+:jdk:                   1.7.0_60
+:guide:                 https://www.elastic.co/guide/en/elasticsearch/guide/current/
+:ref:                   https://www.elastic.co/guide/en/elasticsearch/reference/current/
+:shield:                https://www.elastic.co/guide/en/shield/current
+:logstash:              https://www.elastic.co/guide/en/logstash/current/
 
 [preface]
 == Preface
