@@ -51,6 +51,7 @@ The following input plugins are available:
 * <<plugins-inputs-irc,irc>>
 * <<plugins-inputs-imap,imap>>
 |[[plugins-inputs-letters-j]]
+* <<plugins-inputs-jdbc,jdbc>>
 * <<plugins-inputs-jmx,jmx>>
 |[[plugins-inputs-letters-k]]
 * <<plugins-inputs-kafka,kafka>>
@@ -131,6 +132,8 @@ pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-http/edit/m
 include::inputs/irc.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-imap/edit/master/lib/logstash/inputs/imap.rb ?>]
 include::inputs/imap.asciidoc[]
+pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-jdbc/edit/master/lib/logstash/inputs/jdbc.rb ?>]
+include::inputs/jdbc.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-jmx/edit/master/lib/logstash/inputs/jmx.rb ?>]
 include::inputs/jmx.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-kafka/edit/master/lib/logstash/inputs/kafka.rb ?>]
