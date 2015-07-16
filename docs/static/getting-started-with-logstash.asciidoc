@@ -42,7 +42,7 @@ it with a very simple configuration.
 
 First, download the Logstash tar file.
 
-["source","sh"]
+["source","sh",subs="attributes,callouts"]
 ----------------------------------
 curl -O https://download.elasticsearch.org/logstash/logstash/logstash-{logstash_version}.tar.gz
 ----------------------------------
