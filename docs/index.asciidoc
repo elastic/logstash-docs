@@ -2,7 +2,7 @@
 = Reference
 
 :branch:                1.5
-:logstash_version:      1.5.0
+:logstash_version:      1.5.2
 :elasticsearch_version: 1.5.1
 :jdk:                   1.7.0_60
 :guide:                 https://www.elastic.co/guide/en/elasticsearch/guide/current/
