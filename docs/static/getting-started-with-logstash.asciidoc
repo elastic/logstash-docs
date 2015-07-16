@@ -53,7 +53,8 @@ Then, unpack 'logstash-{logstash_version}.tar.gz' on your local filesystem.
 tar -zxvf logstash-{logstash_version}.tar.gz
 ----------------------------------
 Now, you can run Logstash with a basic configuration:
-[source,js]
+
+[source,sh,subs="attributes,callouts"]
 ----------------------------------
 cd logstash-{logstash_version}
 bin/logstash -e 'input { stdin { } } output { stdout {} }'
