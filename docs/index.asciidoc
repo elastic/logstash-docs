@@ -39,6 +39,9 @@ include::static/configuration.asciidoc[]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/deploying.asciidoc ?>]
 include::static/deploying.asciidoc[]
 
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/plugin-manager.asciidoc ?>]
+include::static/plugin-manager.asciidoc[]
+
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/life-of-an-event.asciidoc ?>]
 include::static/life-of-an-event.asciidoc[]
 
