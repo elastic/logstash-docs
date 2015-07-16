@@ -54,7 +54,7 @@ tar -zxvf logstash-{logstash_version}.tar.gz
 ----------------------------------
 Now, you can run Logstash with a basic configuration:
 
-[source,sh,subs="attributes,callouts"]
+["source","sh",subs="attributes,callouts"]
 ----------------------------------
 cd logstash-{logstash_version}
 bin/logstash -e 'input { stdin { } } output { stdout {} }'
