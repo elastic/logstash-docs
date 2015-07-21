@@ -50,6 +50,7 @@ Available configuration options:
 | <<plugins-filters-date-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-date-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-date-remove_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-date-tag_on_failure>> |<<array,array>>|No|`["_dateparsefailure"]`
 | <<plugins-filters-date-target>> |<<string,string>>|No|`"@timestamp"`
 | <<plugins-filters-date-timezone>> |<<string,string>>|No|
 |=======================================================================
@@ -138,11 +139,12 @@ Optional.
 
 Specify a locale to be used for date parsing using either IETF-BCP47 or POSIX language tag.
 Simple examples are `en`,`en-US` for BCP47 or `en_US` for POSIX.
-If not specified, the platform default will be used.
 
 The locale is mostly necessary to be set for parsing month names (pattern with `MMM`) and
 weekday names (pattern with `EEE`).
 
+If not specified, the platform default will be used but for non-english platform default
+an english parser will also be used as a fallback mechanism.
 
 [[plugins-filters-date-match]]
 ===== `match` 
@@ -251,6 +253,15 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the tag `foo_hello` if it is present. The second example
 would remove a sad, unwanted tag as well.
+
+[[plugins-filters-date-tag_on_failure]]
+===== `tag_on_failure` 
+
+  * Value type is <<array,array>>
+  * Default value is `["_dateparsefailure"]`
+
+Append values to the `tags` field when there has been no
+successful match
 
 [[plugins-filters-date-tags]]
 ===== `tags`  (DEPRECATED)

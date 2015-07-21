@@ -51,6 +51,7 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-filters-kv-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-kv-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-kv-allow_duplicate_values>> |<<boolean,boolean>>|No|`true`
 | <<plugins-filters-kv-default_keys>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-kv-exclude_keys>> |<<array,array>>|No|`[]`
 | <<plugins-filters-kv-field_split>> |<<string,string>>|No|`" "`
@@ -131,6 +132,25 @@ Example:
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
+
+[[plugins-filters-kv-allow_duplicate_values]]
+===== `allow_duplicate_values` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+A bool option for removing duplicate key/value pairs. When set to false, only 
+one unique key/value pair will be preserved.
+
+For example, consider a source like `from=me from=me`. `[from]` will map to 
+an Array with two elements: `["me", "me"]`. to only keep unique key/value pairs,
+you could use this configuration:
+[source,ruby]
+    filter {
+      kv {
+        allow_duplicate_values => false
+      }
+    }
 
 [[plugins-filters-kv-default_keys]]
 ===== `default_keys` 

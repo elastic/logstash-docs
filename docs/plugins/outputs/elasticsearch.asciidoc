@@ -91,12 +91,15 @@ Available configuration options:
 | <<plugins-outputs-elasticsearch-host>> |<<array,array>>|No|
 | <<plugins-outputs-elasticsearch-idle_flush_time>> |<<number,number>>|No|`1`
 | <<plugins-outputs-elasticsearch-index>> |<<string,string>>|No|`"logstash-%{+YYYY.MM.dd}"`
+| <<plugins-outputs-elasticsearch-keystore>> |a valid filesystem path|No|
+| <<plugins-outputs-elasticsearch-keystore_password>> |<<password,password>>|No|
 | <<plugins-outputs-elasticsearch-manage_template>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-elasticsearch-max_retries>> |<<number,number>>|No|`3`
 | <<plugins-outputs-elasticsearch-node_name>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-password>> |<<password,password>>|No|
 | <<plugins-outputs-elasticsearch-port>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-protocol>> |<<string,string>>, one of `["node", "transport", "http"]`|No|
+| <<plugins-outputs-elasticsearch-proxy>> |<<,>>|No|
 | <<plugins-outputs-elasticsearch-retry_max_interval>> |<<number,number>>|No|`5`
 | <<plugins-outputs-elasticsearch-retry_max_items>> |<<number,number>>|No|`5000`
 | <<plugins-outputs-elasticsearch-routing>> |<<string,string>>|No|
@@ -325,6 +328,23 @@ similar events to the same 'type'. String expansion `%{foo}` works here.
 
 Deprecated in favor of `document_type` field.
 
+[[plugins-outputs-elasticsearch-keystore]]
+===== `keystore` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+The keystore used to present a certificate to the server
+It can be either .jks or .p12
+
+[[plugins-outputs-elasticsearch-keystore_password]]
+===== `keystore_password` 
+
+  * Value type is <<password,password>>
+  * There is no default value for this setting.
+
+Set the truststore password
+
 [[plugins-outputs-elasticsearch-manage_template]]
 ===== `manage_template` 
 
@@ -420,6 +440,17 @@ All protocols will use bulk requests when talking to Elasticsearch.
 
 The default `protocol` setting under java/jruby is "node". The default
 `protocol` on non-java rubies is "http"
+
+[[plugins-outputs-elasticsearch-proxy]]
+===== `proxy` 
+
+  <li> Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Set the address of a forward HTTP proxy. Must be used with the `http` protocol.
+Can be either a string, such as `http://localhost:123` or a hash in the form of
+`{host: 'proxy.org' port: 80 scheme: 'http'}`. Note, this is NOT a SOCKS proxy, 
+but a plain HTTP proxy.
 
 [[plugins-outputs-elasticsearch-retry_max_interval]]
 ===== `retry_max_interval` 
@@ -560,5 +591,4 @@ Username and password (only valid when protocol is HTTP; this setting works with
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
-
 

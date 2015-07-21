@@ -10,8 +10,8 @@ Drops everything that gets to this filter.
 This is best used in combination with conditionals, for example:
 [source,ruby]
     filter {
-      if [loglevel] == "debug" { 
-        drop { } 
+      if [loglevel] == "debug" {
+        drop { }
       }
     }
 
@@ -42,6 +42,7 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-filters-drop-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-drop-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-drop-percentage>> |<<number,number>>|No|`100`
 | <<plugins-filters-drop-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-drop-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-drop-remove_tag>> |<<array,array>>|No|`[]`
@@ -122,6 +123,26 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
 
 Only handle events without any of these tags.
 Optional.
+
+[[plugins-filters-drop-percentage]]
+===== `percentage` 
+
+  * Value type is <<number,number>>
+  * Default value is `100`
+
+Drop all the events within a pre-configured percentage.
+
+This is useful if you just need a percentage but not the whole.
+
+Example, to only drop around 40% of the events that have the field loglevel wiht value "debug".
+
+    filter {
+      if [loglevel] == "debug" {
+        drop {
+          percentage => 40
+        }
+      }
+    }
 
 [[plugins-filters-drop-periodic_flush]]
 ===== `periodic_flush` 
