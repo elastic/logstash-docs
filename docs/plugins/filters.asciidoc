@@ -26,6 +26,7 @@ The following filter plugins are available:
 [cols="asciidoc,asciidoc,asciidoc"]
 |=======================================================================
 |[[plugins-filters-letters-a]]
+* <<plugins-filters-aggregate,aggregate>>
 * <<plugins-filters-alter,alter>>
 * <<plugins-filters-anonymize,anonymize>>
 |[[plugins-filters-letters-c]]
@@ -85,6 +86,8 @@ The following filter plugins are available:
 |&nbsp;
 |=======================================================================
 
+pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-aggregate/edit/master/lib/logstash/filters/aggregate.rb ?>]
+include::filters/alter.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-alter/edit/master/lib/logstash/filters/alter.rb ?>]
 include::filters/alter.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-anonymize/edit/master/lib/logstash/filters/anonymize.rb ?>]

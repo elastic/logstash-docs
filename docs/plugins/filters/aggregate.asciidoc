@@ -1,0 +1,375 @@
+[[plugins-filters-aggregate]]
+=== aggregate
+
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-filter-aggregate`.
+
+
+
+The aim of this filter is to aggregate informations available among several events (typically log lines) belonging to a same task,
+and finally push aggregated information into final task event.
+
+==== Example #1
+
+* with these given logs :  
+[source,ruby]
+----------------------------------
+  INFO - 12345 - TASK_START - start
+  INFO - 12345 - SQL - sqlQuery1 - 12
+  INFO - 12345 - SQL - sqlQuery2 - 34
+  INFO - 12345 - TASK_END - end
+----------------------------------
+
+* you can aggregate "sql duration" for the whole task with this configuration :
+[source,ruby]
+----------------------------------
+    filter {
+        grok {
+            match => [ "message", "%{LOGLEVEL:loglevel} - %{NOTSPACE:taskid} - %{NOTSPACE:logger} - %{WORD:label}( - %{INT:duration:int})?" ]
+        }
+    
+        if [logger] == "TASK_START" {
+            aggregate {
+                task_id => "%{taskid}"
+                code => "map['sql_duration'] = 0"
+                map_action => "create"
+            }
+        }
+    
+        if [logger] == "SQL" {
+            aggregate {
+                task_id => "%{taskid}"
+                code => "map['sql_duration'] += event['duration']"
+                map_action => "update"
+            }
+        }
+    
+        if [logger] == "TASK_END" {
+            aggregate {
+                task_id => "%{taskid}"
+                code => "event['sql_duration'] = map['sql_duration']"
+                map_action => "update"
+                end_of_task => true
+                timeout => 120
+            }
+        }
+    }
+----------------------------------
+
+* the final event then looks like :  
+[source,ruby]
+----------------------------------
+{
+        "message" => "INFO - 12345 - TASK_END - end message",
+   "sql_duration" => 46
+}
+----------------------------------
+
+the field `sql_duration` is added and contains the sum of all sql queries durations.
+
+==== Example #2
+
+* If you have the same logs than example #1, but without a start log :
+[source,ruby]
+----------------------------------
+  INFO - 12345 - SQL - sqlQuery1 - 12
+  INFO - 12345 - SQL - sqlQuery2 - 34
+  INFO - 12345 - TASK_END - end
+----------------------------------
+
+* you can also aggregate "sql duration" with a slightly different configuration : 
+[source,ruby]
+----------------------------------
+    filter {
+        grok {
+            match => [ "message", "%{LOGLEVEL:loglevel} - %{NOTSPACE:taskid} - %{NOTSPACE:logger} - %{WORD:label}( - %{INT:duration:int})?" ]
+        }
+    
+        if [logger] == "SQL" {
+            aggregate {
+                task_id => "%{taskid}"
+                code => "map['sql_duration'] ||= 0 ; map['sql_duration'] += event['duration']"
+            }
+        }
+    
+        if [logger] == "TASK_END" {
+            aggregate {
+                task_id => "%{taskid}"
+                code => "event['sql_duration'] = map['sql_duration']"
+                end_of_task => true
+                timeout => 120
+            }
+        }
+    }
+----------------------------------
+
+* the final event is exactly the same than example #1
+* the key point is the "||=" ruby operator. +
+it allows to initialize 'sql_duration' map entry to 0 only if this map entry is not already initialized
+
+
+==== How it works
+* the filter needs a "task_id" to correlate events (log lines) of a same task
+* at the task beggining, filter creates a map, attached to task_id
+* for each event, you can execute code using 'event' and 'map' (for instance, copy an event field to map)
+* in the final event, you can execute a last code (for instance, add map data to final event)
+* after the final event, the map attached to task is deleted
+* in one filter configuration, it is recommanded to define a timeout option to protect the feature against unterminated tasks. It tells the filter to delete expired maps
+* if no timeout is defined, by default, all maps older than 1800 seconds are automatically deleted
+
+
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+aggregate {
+    code => ...
+    task_id => ...
+}
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-filters-aggregate-add_field>> |<<hash,hash>>|No|`{}`
+| <<plugins-filters-aggregate-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-aggregate-code>> |<<string,string>>|Yes|
+| <<plugins-filters-aggregate-end_of_task>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-aggregate-map_action>> |<<string,string>>|No|`"create_or_update"`
+| <<plugins-filters-aggregate-periodic_flush>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-aggregate-remove_field>> |<<array,array>>|No|`[]`
+| <<plugins-filters-aggregate-remove_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-aggregate-task_id>> |<<string,string>>|Yes|
+| <<plugins-filters-aggregate-timeout>> |<<number,number>>|No|`0`
+|=======================================================================
+
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-filters-aggregate-add_field]]
+===== `add_field` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+If this filter is successful, add any arbitrary fields to this event.
+Field names can be dynamic and include parts of the event using the `%{field}`.
+
+Example:
+[source,ruby]
+    filter {
+      aggregate {
+        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
+      }
+    }
+[source,ruby]
+    # You can also add multiple fields at once:
+    filter {
+      aggregate {
+        add_field => {
+          "foo_%{somefield}" => "Hello world, from %{host}"
+          "new_field" => "new_static_value"
+        }
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would add field `foo_hello` if it is present, with the
+value above and the `%{host}` piece replaced with that value from the
+event. The second example would also add a hardcoded field.
+
+[[plugins-filters-aggregate-add_tag]]
+===== `add_tag` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, add arbitrary tags to the event.
+Tags can be dynamic and include parts of the event using the `%{field}`
+syntax.
+
+Example:
+[source,ruby]
+    filter {
+      aggregate {
+        add_tag => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also add multiple tags at once:
+    filter {
+      aggregate {
+        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
+
+[[plugins-filters-aggregate-code]]
+===== `code` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The code to execute to update map, using current event. +
+Or on the contrary, the code to execute to update event, using current map. +
+You will have a 'map' variable and an 'event' variable available (that is the event itself). +
+Example value : "map['sql_duration'] += event['duration']" +
+
+[[plugins-filters-aggregate-end_of_task]]
+===== `end_of_task` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Tell the filter that task is ended, and therefore, to delete map after code execution.  
+
+[[plugins-filters-aggregate-exclude_tags]]
+===== `exclude_tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events without any of these tags.
+Optional.
+
+[[plugins-filters-aggregate-map_action]]
+===== `map_action` 
+
+  * Value type is <<string,string>>
+  * Default value is `"create_or_update"`
+
+Tell the filter what to do with aggregate map (default :  "create_or_update"). +
+create: create the map, and execute the code only if map wasn't created before +
+update: doesn't create the map, and execute the code only if map was created before +
+create_or_update: create the map if it wasn't created before, execute the code in all cases +
+
+[[plugins-filters-aggregate-periodic_flush]]
+===== `periodic_flush` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Call the filter flush method at regular interval.
+Optional.
+
+[[plugins-filters-aggregate-remove_field]]
+===== `remove_field` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, remove arbitrary fields from this event.
+Fields names can be dynamic and include parts of the event using the %{field}
+Example:
+[source,ruby]
+    filter {
+      aggregate {
+        remove_field => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also remove multiple fields at once:
+    filter {
+      aggregate {
+        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would remove the field with name `foo_hello` if it is present. The second
+example would remove an additional, non-dynamic field.
+
+[[plugins-filters-aggregate-remove_tag]]
+===== `remove_tag` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+If this filter is successful, remove arbitrary tags from the event.
+Tags can be dynamic and include parts of the event using the `%{field}`
+syntax.
+
+Example:
+[source,ruby]
+    filter {
+      aggregate {
+        remove_tag => [ "foo_%{somefield}" ]
+      }
+    }
+[source,ruby]
+    # You can also remove multiple tags at once:
+    filter {
+      aggregate {
+        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
+      }
+    }
+
+If the event has field `"somefield" == "hello"` this filter, on success,
+would remove the tag `foo_hello` if it is present. The second example
+would remove a sad, unwanted tag as well.
+
+[[plugins-filters-aggregate-tags]]
+===== `tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events with all of these tags.
+Optional.
+
+[[plugins-filters-aggregate-task_id]]
+===== `task_id` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The expression defining task ID to correlate logs. +
+This value must uniquely identify the task in the system +
+Example value : "%{application}%{my_task_id}" +
+
+[[plugins-filters-aggregate-timeout]]
+===== `timeout` 
+
+  * Value type is <<number,number>>
+  * Default value is `0`
+
+The amount of seconds after a task "end event" can be considered lost. +
+The task "map" is evicted. +
+The default value is 0, which means no timeout so no auto eviction. +
+
+[[plugins-filters-aggregate-type]]
+===== `type`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
+`exclude_fields`) must be met in order for the event to be handled by the filter.
+The type to act on. If a type is given, then this filter will only
+act on messages with the same type. See any input plugin's `type`
+attribute for more.
+Optional.
+
+
