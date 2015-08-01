@@ -27,6 +27,9 @@ powerful functionality with a small amount of effort. So, let's get started!
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/getting-started-with-logstash.asciidoc ?>]
 include::static/getting-started-with-logstash.asciidoc[]
 
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/advanced-pipeline.asciidoc ?>]
+include::static/advanced-pipeline.asciidoc[]
+
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/repositories.asciidoc ?>]
 include::static/repositories.asciidoc[]
 
