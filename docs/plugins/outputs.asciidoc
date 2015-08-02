@@ -100,6 +100,7 @@ The following output plugins are available:
 |[[plugins-outputs-letters-u]]
 * <<plugins-outputs-udp,udp>>
 |[[plugins-outputs-letters-w]]
+* <<plugins-outputs-webhdfs,webhdfs>>
 * <<plugins-outputs-websocket,websocket>>
 |[[plugins-outputs-letters-x]]
 * <<plugins-outputs-xmpp,xmpp>>
@@ -210,6 +211,8 @@ pass::[<?edit_url https://github.com/logstash-plugins/logstash-output-tcp/edit/m
 include::outputs/tcp.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-output-udp/edit/master/lib/logstash/outputs/udp.rb ?>]
 include::outputs/udp.asciidoc[]
+pass::[<?edit_url https://github.com/logstash-plugins/logstash-output-webhdfs/edit/master/lib/logstash/outputs/webhdfs.rb ?>]
+include::outputs/webhdfs.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-output-websocket/edit/master/lib/logstash/outputs/websocket.rb ?>]
 include::outputs/websocket.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-output-xmpp/edit/master/lib/logstash/outputs/xmpp.rb ?>]

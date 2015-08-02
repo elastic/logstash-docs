@@ -1,0 +1,282 @@
+[[plugins-outputs-webhdfs]]
+=== webhdfs
+
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-webhdfs`.
+
+
+This plugin sends Logstash events into files in HDFS via the https://hadoop.apache.org/docs/r1.0.4/webhdfs.html[webhdfs] REST API.
+
+==== Dependencies
+This plugin has no dependency on jars from hadoop, thus reducing configuration and compatibility
+problems. It uses the webhdfs gem from Kazuki Ohta and TAGOMORI Satoshi (@see: https://github.com/kzk/webhdfs).
+Optional dependencies are zlib and snappy gem if you use the compression functionality. 
+
+==== Operational Notes
+If you get an error like:
+
+    Max write retries reached. Exception: initialize: name or service not known {:level=>:error}
+
+make sure that the hostname of your namenode is resolvable on the host running Logstash. When creating/appending
+to a file, webhdfs somtime sends a `307 TEMPORARY_REDIRECT` with the `HOSTNAME` of the machine its running on.
+
+==== Usage
+This is an example of Logstash config:
+
+[source,ruby]
+----------------------------------
+input {
+  ...
+}
+filter {
+  ...
+}
+output {
+  webhdfs {
+    server => "127.0.0.1:50070"         # (required)
+    path => "/user/logstash/dt=%{+YYYY-MM-dd}/logstash-%{+HH}.log"  # (required)
+    user => "hue"                       # (required)
+  }
+}
+----------------------------------
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+
+Required configuration options:
+
+[source,json]
+--------------------------
+webhdfs {
+    host => ...
+    path => ...
+    user => ...
+}
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-outputs-webhdfs-codec>> |<<codec,codec>>|No|`"line"`
+| <<plugins-outputs-webhdfs-compression>> |<<string,string>>, one of `["none", "snappy", "gzip"]`|No|`"none"`
+| <<plugins-outputs-webhdfs-flush_size>> |<<number,number>>|No|`500`
+| <<plugins-outputs-webhdfs-host>> |<<string,string>>|Yes|
+| <<plugins-outputs-webhdfs-idle_flush_time>> |<<number,number>>|No|`1`
+| <<plugins-outputs-webhdfs-message_format>> |<<string,string>>|No|
+| <<plugins-outputs-webhdfs-open_timeout>> |<<number,number>>|No|`30`
+| <<plugins-outputs-webhdfs-path>> |<<string,string>>|Yes|
+| <<plugins-outputs-webhdfs-port>> |<<number,number>>|No|`50070`
+| <<plugins-outputs-webhdfs-read_timeout>> |<<number,number>>|No|`30`
+| <<plugins-outputs-webhdfs-retry_interval>> |<<number,number>>|No|`0.5`
+| <<plugins-outputs-webhdfs-retry_known_errors>> |<<boolean,boolean>>|No|`true`
+| <<plugins-outputs-webhdfs-retry_times>> |<<number,number>>|No|`5`
+| <<plugins-outputs-webhdfs-snappy_bufsize>> |<<number,number>>|No|`32768`
+| <<plugins-outputs-webhdfs-snappy_format>> |<<string,string>>, one of `["stream", "file"]`|No|`"stream"`
+| <<plugins-outputs-webhdfs-use_httpfs>> |<<boolean,boolean>>|No|`false`
+| <<plugins-outputs-webhdfs-user>> |<<string,string>>|Yes|
+| <<plugins-outputs-webhdfs-workers>> |<<number,number>>|No|`1`
+|=======================================================================
+
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-outputs-webhdfs-codec]]
+===== `codec` 
+
+  * Value type is <<codec,codec>>
+  * Default value is `"line"`
+
+The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
+
+[[plugins-outputs-webhdfs-compression]]
+===== `compression` 
+
+  * Value can be any of: `none`, `snappy`, `gzip`
+  * Default value is `"none"`
+
+Compress output. One of ['none', 'snappy', 'gzip']
+
+[[plugins-outputs-webhdfs-exclude_tags]]
+===== `exclude_tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events without any of these tags.
+Optional.
+
+[[plugins-outputs-webhdfs-flush_size]]
+===== `flush_size` 
+
+  * Value type is <<number,number>>
+  * Default value is `500`
+
+Sending data to webhdfs if event count is above, even if `store_interval_in_secs` is not reached.
+
+[[plugins-outputs-webhdfs-host]]
+===== `host` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The server name for webhdfs/httpfs connections.
+
+[[plugins-outputs-webhdfs-idle_flush_time]]
+===== `idle_flush_time` 
+
+  * Value type is <<number,number>>
+  * Default value is `1`
+
+Sending data to webhdfs in x seconds intervals.
+
+[[plugins-outputs-webhdfs-message_format]]
+===== `message_format` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The format to use when writing events to the file. This value
+supports any string and can include `%{name}` and other dynamic
+strings.
+
+If this setting is omitted, the full json representation of the
+event will be written as a single line.
+
+[[plugins-outputs-webhdfs-open_timeout]]
+===== `open_timeout` 
+
+  * Value type is <<number,number>>
+  * Default value is `30`
+
+WebHdfs open timeout, default 30s.
+
+[[plugins-outputs-webhdfs-path]]
+===== `path` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The path to the file to write to. Event fields can be used here,
+as well as date fields in the joda time format, e.g.:
+`/user/logstash/dt=%{+YYYY-MM-dd}/%{@source_host}-%{+HH}.log`
+
+[[plugins-outputs-webhdfs-port]]
+===== `port` 
+
+  * Value type is <<number,number>>
+  * Default value is `50070`
+
+The server port for webhdfs/httpfs connections.
+
+[[plugins-outputs-webhdfs-read_timeout]]
+===== `read_timeout` 
+
+  * Value type is <<number,number>>
+  * Default value is `30`
+
+The WebHdfs read timeout, default 30s.
+
+[[plugins-outputs-webhdfs-retry_interval]]
+===== `retry_interval` 
+
+  * Value type is <<number,number>>
+  * Default value is `0.5`
+
+How long should we wait between retries.
+
+[[plugins-outputs-webhdfs-retry_known_errors]]
+===== `retry_known_errors` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Retry some known webhdfs errors. These may be caused by race conditions when appending to same file, etc.
+
+[[plugins-outputs-webhdfs-retry_times]]
+===== `retry_times` 
+
+  * Value type is <<number,number>>
+  * Default value is `5`
+
+How many times should we retry. If retry_times is exceeded, an error will be logged and the event will be discarded.
+
+[[plugins-outputs-webhdfs-snappy_bufsize]]
+===== `snappy_bufsize` 
+
+  * Value type is <<number,number>>
+  * Default value is `32768`
+
+Set snappy chunksize. Only neccessary for stream format. Defaults to 32k. Max is 65536
+@see http://code.google.com/p/snappy/source/browse/trunk/framing_format.txt
+
+[[plugins-outputs-webhdfs-snappy_format]]
+===== `snappy_format` 
+
+  * Value can be any of: `stream`, `file`
+  * Default value is `"stream"`
+
+Set snappy format. One of "stream", "file". Set to stream to be hive compatible.
+
+[[plugins-outputs-webhdfs-tags]]
+===== `tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Only handle events with all of these tags.
+Optional.
+
+[[plugins-outputs-webhdfs-type]]
+===== `type`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+The type to act on. If a type is given, then this output will only
+act on messages with the same type. See any input plugin's `type`
+attribute for more.
+Optional.
+
+[[plugins-outputs-webhdfs-use_httpfs]]
+===== `use_httpfs` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Use httpfs mode if set to true, else webhdfs.
+
+[[plugins-outputs-webhdfs-user]]
+===== `user` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The Username for webhdfs.
+
+[[plugins-outputs-webhdfs-workers]]
+===== `workers` 
+
+  * Value type is <<number,number>>
+  * Default value is `1`
+
+The number of workers to use for this output.
+Note that this setting may not be useful for all outputs.
+
+
