@@ -2,10 +2,49 @@
 === avro
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-codec-avro`.
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-codec-avro`.
 
 
+Read serialized Avro records as Logstash events.
 
+This plugin is used to serialize Logstash events as 
+Avro datums, as well as deserializing Avro datums into 
+Logstash events.
+
+=== Encoding
+
+This codec is for serializing individual Logstash events 
+as Avro datums that are Avro binary blobs. It does not encode 
+Logstash events into an Avro file.
+
+
+=== Decoding
+
+This codec is for deserializing individual Avro records. It is not for reading
+Avro files. Avro files have a unique format that must be handled upon input.
+
+
+=== Usage
+Example usage with Kafka input.
+
+[source,ruby]
+----------------------------------
+input {
+  kafka {
+    codec => {
+      avro => {
+        schema_uri => "/tmp/schema.avsc"
+      }
+    }
+  }
+}
+filter {
+  ...
+}
+output {
+  ...
+}
+----------------------------------
 
 &nbsp;
 
@@ -46,8 +85,8 @@ Available configuration options:
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-schema path to fetch the schema from
-This can be a 'http' or 'file' scheme URI
+Schema path to fetch the schema from. This can be a 'http' or 'file' scheme URI
+
 example:
     http - "http://example.com/schema.avsc"
     file - "/path/to/schema.avsc"
