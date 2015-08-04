@@ -5,6 +5,7 @@ A codec plugin changes the data representation of an event. Codecs are essential
 
 The following codec plugins are available:
 
+<<plugins-codecs-letters-a, a>>
 <<plugins-codecs-letters-c, c>>
 <<plugins-codecs-letters-d, d>>
 <<plugins-codecs-letters-e, e>>
@@ -21,6 +22,8 @@ The following codec plugins are available:
 
 [cols="asciidoc,asciidoc,asciidoc"]
 |=======================================================================
+|[[plugins-codecs-letters-a]]
+* <<plugins-codecs-avro,avro>>
 |[[plugins-codecs-letters-c]]
 * <<plugins-codecs-compress_spooler,compress_spooler>>
 * <<plugins-codecs-cloudtrail,cloudtrail>>
@@ -60,6 +63,8 @@ The following codec plugins are available:
 |&nbsp;
 |=======================================================================
 
+pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-avro/edit/master/lib/logstash/codecs/avro.rb ?>]
+include::codecs/avro.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-compress_spooler/edit/master/lib/logstash/codecs/compress_spooler.rb ?>]
 include::codecs/compress_spooler.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-cloudtrail/edit/master/lib/logstash/codecs/cloudtrail.rb ?>]
