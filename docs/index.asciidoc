@@ -11,7 +11,7 @@
 :logstash:              https://www.elastic.co/guide/en/logstash/current/
 
 [preface]
-== Preface
+== Introduction
 Logstash is a tool for receiving, processing and outputting logs. All kinds of
 logs. System logs, webserver logs, error logs, application logs, and just about
 anything you can throw at it. Sounds great, eh?
@@ -31,13 +31,13 @@ powerful functionality with a small amount of effort. So, let's get started!
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/getting-started-with-logstash.asciidoc ?>]
 include::static/getting-started-with-logstash.asciidoc[]
 
-// Installing from a Repository
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/repositories.asciidoc ?>]
-include::static/repositories.asciidoc[]
-
 // Advanced LS Pipelines
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/advanced-pipeline.asciidoc ?>]
 include::static/advanced-pipeline.asciidoc[]
+
+// Installing from a Repository
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/repositories.asciidoc ?>]
+include::static/repositories.asciidoc[]
 
 // Configuring Logstash
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/configuration.asciidoc ?>]
@@ -58,13 +58,6 @@ include::static/plugin-manager.asciidoc[]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/life-of-an-event.asciidoc ?>]
 include::static/life-of-an-event.asciidoc[]
 
-// These files do their own pass blocks
-pass::[<?edit_url?>]
-include::plugins/inputs.asciidoc[]
-include::plugins/outputs.asciidoc[]
-include::plugins/filters.asciidoc[]
-include::plugins/codecs.asciidoc[]
-
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/contributing-to-logstash.asciidoc ?>]
 include::static/contributing-to-logstash.asciidoc[]
 
@@ -80,3 +73,10 @@ include::static/output.asciidoc[]
 
 // This is in the pluginbody.asciidoc itself
 // pass::[<?edit_url?>]
+
+// These files do their own pass blocks
+pass::[<?edit_url?>]
+include::plugins/inputs.asciidoc[]
+include::plugins/outputs.asciidoc[]
+include::plugins/filters.asciidoc[]
+include::plugins/codecs.asciidoc[]
