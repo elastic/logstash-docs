@@ -1,10 +1,7 @@
-== Command-line flags
+[[command-line-flags]]
+=== Command-line flags
 
-[float]
-=== Pipeline
-
-The Logstash pipeline has the following flags. (You can use the `--help` flag to
-display this information.)
+Logstash has the following flags. You can use the `--help` flag to display this information.
 
 [source,shell]
 ----------------------------------
