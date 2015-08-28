@@ -10,8 +10,9 @@
 :shield:                https://www.elastic.co/guide/en/shield/current
 :logstash:              https://www.elastic.co/guide/en/logstash/current/
 
-// Magic period, do not delete
 .
+
+// preceding period is magic, do not delete
 
 // Glossary and core concepts go here
 
