@@ -42,6 +42,9 @@ include::static/configuration.asciidoc[]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/command-line-flags.asciidoc ?>]
 include::static/command-line-flags.asciidoc[]
 
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/managing-multiline-events.asciidoc ?>]
+include::static/managing-multiline-events.asciidoc[]
+
 // Deploying & Scaling
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/deploying.asciidoc ?>]
 include::static/deploying.asciidoc[]
