@@ -28,7 +28,7 @@ See the full documentation for the {logstash}plugins-codecs-multiline.html[multi
 ==== Multiline Special Cases
 
 * The current release of the multiline codec plugin treats all input from the 
-{logstash}plugins-inputs-lumberjack[lumberjack] input plugin as a single stream. When your use case involves the 
+{logstash}plugins-inputs-lumberjack.html[lumberjack] input plugin as a single stream. When your use case involves the 
 Logstash Forwarder processing multiple files concurrently, proper event ordering can be challenging to maintain, and 
 any resulting errors can be difficult to diagnose. Carefully monitor the output of Logstash configurations that involve 
 multiline processing of multiple files handled by the Logstash Forwarder.
