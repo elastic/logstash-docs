@@ -161,6 +161,8 @@ pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-rabbitmq/ed
 include::inputs/rabbitmq.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-redis/edit/master/lib/logstash/inputs/redis.rb ?>]
 include::inputs/redis.asciidoc[]
+pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-salesforce/edit/master/lib/logstash/inputs/salesforce.rb ?>]
+include::inputs/salesforce.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-snmptrap/edit/master/lib/logstash/inputs/snmptrap.rb ?>]
 include::inputs/snmptrap.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-stdin/edit/master/lib/logstash/inputs/stdin.rb ?>]
