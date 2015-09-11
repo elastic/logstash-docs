@@ -233,7 +233,7 @@ The index to write events to. This can be dynamic using the `%{foo}` syntax.
 The default value will partition your indices by day so you can more easily
 delete old data or only search specific date ranges.
 Indexes may not contain uppercase characters.
-For weekly indexes ISO 8601 format is recommended, eg. logstash-%{+xxxx.ww}
+For weekly indexes `ISO 8601` format is recommended, eg. `logstash-%{+xxxx.ww}`
 
 [[plugins-outputs-elasticsearch-index_type]]
 ===== `index_type`  (DEPRECATED)
@@ -319,10 +319,8 @@ You can set the remote port as part of the host, or explicitly here as well
   <li> Value type is <<string,string>>
   * There is no default value for this setting.
 
-Set the address of a forward HTTP proxy. Must be used with the 'http' protocol
-Can be either a string, such as 'http://localhost:123' or a hash in the form
-{host: 'proxy.org' port: 80 scheme: 'http'}
-Note, this is NOT a SOCKS proxy, but a plain HTTP proxy
+Set the address of a forward HTTP proxy. Can be either a string, such as `http://localhost:123` or a hash in the form
+`{host: 'proxy.org' port: 80 scheme: 'http'}`. Note, this is NOT a SOCKS proxy, but a plain HTTP proxy
 
 [[plugins-outputs-elasticsearch-retry_max_interval]]
 ===== `retry_max_interval` 
