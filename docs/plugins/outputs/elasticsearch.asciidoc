@@ -5,27 +5,15 @@
 
 This output lets you store logs in Elasticsearch and is the most recommended
 output for Logstash. If you plan on using the Kibana web interface, you'll
-need to use this output.
+want to use this output.
 
-*VERSION NOTE*: Your Elasticsearch cluster must be running Elasticsearch 1.0.0 or later.
+This output only speaks the HTTP, which is the preferred protocol for interacting with Elasticsearch. By default
+Elasticsearch exposes HTTP on port 9200.
 
-If you want to set other Elasticsearch options that are not exposed directly
-as configuration options, there are two methods:
-
-* Create an `elasticsearch.yml` file in the $PWD of the Logstash process
-* Pass in es.* java properties (`java -Des.node.foo=` or `ruby -J-Des.node.foo=`)
-
-With the default `protocol` setting ("node"), this plugin will join your
-Elasticsearch cluster as a client node, so it will show up in Elasticsearch's
-cluster status.
+We strongly encourage the use of HTTP over the node protocol. It is just as
+fast and far easier to administer. For those wishing to use the java protocol please see the 'elasticsearch_java' gem.
 
 You can learn more about Elasticsearch at <https://www.elastic.co/products/elasticsearch>
-
-==== Operational Notes
-
-If using the default `protocol` setting ("node"), your firewalls might need
-to permit port 9300 in *both* directions (from Logstash to Elasticsearch, and
-Elasticsearch to Logstash)
 
 ==== Retry Policy
 
@@ -77,35 +65,29 @@ Available configuration options:
 [cols="<,<,<,<m",options="header",]
 |=======================================================================
 |Setting |Input type|Required|Default value
-| <<plugins-outputs-elasticsearch-action>> |<<string,string>>|No|`"index"`
-| <<plugins-outputs-elasticsearch-bind_host>> |<<string,string>>|No|
-| <<plugins-outputs-elasticsearch-bind_port>> |<<number,number>>|No|
+| <<plugins-outputs-elasticsearch-action>> |<<string,string>>, one of `["index", "delete", "create", "update"]`|No|`"index"`
 | <<plugins-outputs-elasticsearch-cacert>> |a valid filesystem path|No|
-| <<plugins-outputs-elasticsearch-cluster>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-outputs-elasticsearch-doc_as_upsert>> |<<boolean,boolean>>|No|`false`
 | <<plugins-outputs-elasticsearch-document_id>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-document_type>> |<<string,string>>|No|
-| <<plugins-outputs-elasticsearch-embedded>> |<<boolean,boolean>>|No|`false`
-| <<plugins-outputs-elasticsearch-embedded_http_port>> |<<string,string>>|No|`"9200-9300"`
-| <<plugins-outputs-elasticsearch-flush_size>> |<<number,number>>|No|`5000`
-| <<plugins-outputs-elasticsearch-host>> |<<array,array>>|No|
+| <<plugins-outputs-elasticsearch-flush_size>> |<<number,number>>|No|`500`
+| <<plugins-outputs-elasticsearch-hosts>> |<<array,array>>|No|
 | <<plugins-outputs-elasticsearch-idle_flush_time>> |<<number,number>>|No|`1`
 | <<plugins-outputs-elasticsearch-index>> |<<string,string>>|No|`"logstash-%{+YYYY.MM.dd}"`
 | <<plugins-outputs-elasticsearch-keystore>> |a valid filesystem path|No|
 | <<plugins-outputs-elasticsearch-keystore_password>> |<<password,password>>|No|
 | <<plugins-outputs-elasticsearch-manage_template>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-elasticsearch-max_retries>> |<<number,number>>|No|`3`
-| <<plugins-outputs-elasticsearch-node_name>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-password>> |<<password,password>>|No|
 | <<plugins-outputs-elasticsearch-path>> |<<string,string>>|No|`"/"`
-| <<plugins-outputs-elasticsearch-port>> |<<string,string>>|No|
-| <<plugins-outputs-elasticsearch-protocol>> |<<string,string>>, one of `["node", "transport", "http"]`|No|
+| <<plugins-outputs-elasticsearch-port>> |<<string,string>>|No|`9200`
 | <<plugins-outputs-elasticsearch-proxy>> |<<,>>|No|
 | <<plugins-outputs-elasticsearch-retry_max_interval>> |<<number,number>>|No|`5`
 | <<plugins-outputs-elasticsearch-retry_max_items>> |<<number,number>>|No|`5000`
 | <<plugins-outputs-elasticsearch-routing>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-sniffing>> |<<boolean,boolean>>|No|`false`
+| <<plugins-outputs-elasticsearch-sniffing_delay>> |<<number,number>>|No|`30`
 | <<plugins-outputs-elasticsearch-ssl>> |<<boolean,boolean>>|No|`false`
 | <<plugins-outputs-elasticsearch-ssl_certificate_verification>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-elasticsearch-template>> |a valid filesystem path|No|
@@ -127,7 +109,7 @@ Available configuration options:
 [[plugins-outputs-elasticsearch-action]]
 ===== `action` 
 
-  * Value type is <<string,string>>
+  * Value can be any of: `index`, `delete`, `create`, `update`
   * Default value is `"index"`
 
 The Elasticsearch action to perform. Valid actions are: `index`, `delete`.
@@ -142,27 +124,8 @@ What does each action do?
 - create: indexes a document, fails if a document by that id already exists in the index.
 - update: updates a document by id
 following action is not supported by HTTP protocol
-- create_unless_exists: creates a document, fails if no id is provided
 
 For more details on actions, check out the http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk.html[Elasticsearch bulk API documentation]
-
-[[plugins-outputs-elasticsearch-bind_host]]
-===== `bind_host` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-The name/address of the host to bind to for Elasticsearch clustering
-
-[[plugins-outputs-elasticsearch-bind_port]]
-===== `bind_port` 
-
-  * Value type is <<number,number>>
-  * There is no default value for this setting.
-
-This is only valid for the 'node' protocol.
-
-The port for the node to listen on.
 
 [[plugins-outputs-elasticsearch-cacert]]
 ===== `cacert` 
@@ -171,16 +134,6 @@ The port for the node to listen on.
   * There is no default value for this setting.
 
 The .cer or .pem file to validate the server's certificate
-
-[[plugins-outputs-elasticsearch-cluster]]
-===== `cluster` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-The name of your cluster if you set it on the Elasticsearch side. Useful
-for discovery when using `node` or `transport` protocols.
-By default, it looks for a cluster named 'elasticsearch'.
 
 [[plugins-outputs-elasticsearch-codec]]
 ===== `codec` 
@@ -216,31 +169,8 @@ Elasticsearch with the same ID.
 
 The document type to write events to. Generally you should try to write only
 similar events to the same 'type'. String expansion `%{foo}` works here.
-Unless you set `document_type`, the event `type` will be used if it exists 
+Unless you set 'document_type', the event 'type' will be used if it exists 
 otherwise the document type will be assigned the value of 'logs'
-
-[[plugins-outputs-elasticsearch-embedded]]
-===== `embedded` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Run the Elasticsearch server embedded in this process.
-This option is useful if you want to run a single Logstash process that
-handles log processing and indexing; it saves you from needing to run
-a separate Elasticsearch process. An example use case is 
-proof-of-concept testing.
-WARNING: This is not recommended for production use!
-
-[[plugins-outputs-elasticsearch-embedded_http_port]]
-===== `embedded_http_port` 
-
-  * Value type is <<string,string>>
-  * Default value is `"9200-9300"`
-
-If you are running the embedded Elasticsearch server, you can set the http
-port it listens on here; it is not common to need this setting changed from
-default.
 
 [[plugins-outputs-elasticsearch-exclude_tags]]
 ===== `exclude_tags`  (DEPRECATED)
@@ -256,7 +186,7 @@ Optional.
 ===== `flush_size` 
 
   * Value type is <<number,number>>
-  * Default value is `5000`
+  * Default value is `500`
 
 This plugin uses the bulk index api for improved indexing performance.
 To make efficient bulk api calls, we will buffer a certain number of
@@ -264,39 +194,13 @@ events before flushing that out to Elasticsearch. This setting
 controls how many events will be buffered before sending a batch
 of events.
 
-[[plugins-outputs-elasticsearch-host]]
-===== `host` 
+[[plugins-outputs-elasticsearch-hosts]]
+===== `hosts` 
 
   * Value type is <<array,array>>
   * There is no default value for this setting.
 
-For the `node` protocol, if you do not specify `host`, it will attempt to use
-multicast discovery to connect to Elasticsearch.  If http://www.elastic.co/guide/en/elasticsearch/guide/current/_important_configuration_changes.html#_prefer_unicast_over_multicast[multicast is disabled] in Elasticsearch, 
-you must include the hostname or IP address of the host(s) to use for Elasticsearch unicast discovery.
-Remember the `node` protocol uses the http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-transport.html#modules-transport[transport] address (eg. 9300, not 9200).
-    `"127.0.0.1"`
-    `["127.0.0.1:9300","127.0.0.2:9300"]`
-When setting hosts for `node` protocol, it is important to confirm that at least one non-client
-node is listed in the `host` list.  Also keep in mind that the `host` parameter when used with 
-the `node` protocol is for *discovery purposes only* (not for load balancing).  When multiple hosts 
-are specified, it will contact the first host to see if it can use it to discover the cluster.  If not, 
-then it will contact the second host in the list and so forth. With the `node` protocol, 
-Logstash will join the Elasticsearch cluster as a node client (which has a copy of the cluster
-state) and this node client is the one that will automatically handle the load balancing of requests 
-across data nodes in the cluster.  
-If you are looking for a high availability setup, our recommendation is to use the `transport` protocol (below), 
-set up multiple http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html[client nodes] and list the client nodes in the `host` parameter.
-
-For the `transport` protocol, it will load balance requests across the hosts specified in the `host` parameter.
-Remember the `transport` protocol uses the http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-transport.html#modules-transport[transport] address (eg. 9300, not 9200).
-    `"127.0.0.1"`
-    `["127.0.0.1:9300","127.0.0.2:9300"]`
-There is also a `sniffing` option (see below) that can be used with the transport protocol to instruct it to use the host to sniff for
-"alive" nodes in the cluster and automatically use it as the hosts list (but will skip the dedicated master nodes).  
-If you do not use the sniffing option, it is important to exclude http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html[dedicated master nodes] from the `host` list
-to prevent Logstash from sending bulk requests to the master nodes. So this parameter should only reference either data or client nodes.
-
-For the `http` protocol, it will load balance requests across the hosts specified in the `host` parameter.
+Sets the host(s) of the remote instance. If given an array it will load balance requests across the hosts specified in the `host` parameter.
 Remember the `http` protocol uses the http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-http.html#modules-http[http] address (eg. 9200, not 9300).
     `"127.0.0.1"`
     `["127.0.0.1:9200","127.0.0.2:9200"]`
@@ -376,16 +280,6 @@ If you have dynamic templating (e.g. creating indices based on field names)
 then you should set `manage_template` to false and use the REST API to upload
 your templates manually.
 
-[[plugins-outputs-elasticsearch-max_inflight_requests]]
-===== `max_inflight_requests`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<number,number>>
-  * Default value is `50`
-
-This setting no longer does anything. It exists to keep config validation
-from failing. It will be removed in future versions.
-
 [[plugins-outputs-elasticsearch-max_retries]]
 ===== `max_retries` 
 
@@ -393,16 +287,6 @@ from failing. It will be removed in future versions.
   * Default value is `3`
 
 Set max retry for each event
-
-[[plugins-outputs-elasticsearch-node_name]]
-===== `node_name` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-The node name Elasticsearch will use when joining a cluster.
-
-By default, this is generated internally by the ES client.
 
 [[plugins-outputs-elasticsearch-password]]
 ===== `password` 
@@ -425,45 +309,9 @@ the root path for the Elasticsearch HTTP API lives. This option is ignored for n
 ===== `port` 
 
   * Value type is <<string,string>>
-  * There is no default value for this setting.
+  * Default value is `9200`
 
-The port for Elasticsearch transport to use.
-
-If you do not set this, the following defaults are used:
-* `protocol => http` - port 9200
-* `protocol => transport` - port 9300-9305
-* `protocol => node` - port 9300-9305
-
-[[plugins-outputs-elasticsearch-protocol]]
-===== `protocol` 
-
-  * Value can be any of: `node`, `transport`, `http`
-  * There is no default value for this setting.
-
-Choose the protocol used to talk to Elasticsearch.
-
-The 'node' protocol (default) will connect to the cluster as a normal Elasticsearch
-node (but will not store data). If you use the `node` protocol, you must permit
-bidirectional communication on the port 9300 (or whichever port you have
-configured).
-
-If you do not specify the `host` parameter, it will use  multicast for http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-discovery-zen.html[Elasticsearch discovery].  While this may work in a test/dev environment where multicast is enabled in 
-Elasticsearch, we strongly recommend http://www.elastic.co/guide/en/elasticsearch/guide/current/_important_configuration_changes.html#_prefer_unicast_over_multicast[disabling multicast]
-in Elasticsearch.  To connect to an Elasticsearch cluster with multicast disabled,
-you must include the `host` parameter (see relevant section above).  
-
-The 'transport' protocol will connect to the host you specify and will
-not show up as a 'node' in the Elasticsearch cluster. This is useful
-in situations where you cannot permit connections outbound from the
-Elasticsearch cluster to this Logstash server.
-
-The 'http' protocol will use the Elasticsearch REST/HTTP interface to talk
-to elasticsearch.
-
-All protocols will use bulk requests when talking to Elasticsearch.
-
-The default `protocol` setting under java/jruby is "node". The default
-`protocol` on non-java rubies is "http"
+You can set the remote port as part of the host, or explicitly here as well
 
 [[plugins-outputs-elasticsearch-proxy]]
 ===== `proxy` 
@@ -471,9 +319,9 @@ The default `protocol` setting under java/jruby is "node". The default
   <li> Value type is <<string,string>>
   * There is no default value for this setting.
 
-Set the address of a forward HTTP proxy. Must be used with the 'http' protocol.Can be either a string, such as `http://localhost:123` or a hash in the form
-`{host: 'proxy.org' port: 80 scheme: 'http'}`
-
+Set the address of a forward HTTP proxy. Must be used with the 'http' protocol
+Can be either a string, such as 'http://localhost:123' or a hash in the form
+{host: 'proxy.org' port: 80 scheme: 'http'}
 Note, this is NOT a SOCKS proxy, but a plain HTTP proxy
 
 [[plugins-outputs-elasticsearch-retry_max_interval]]
@@ -507,8 +355,19 @@ This can be dynamic using the `%{foo}` syntax.
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
-Enable cluster sniffing (transport only)
+Enable cluster sniffing
 Asks host for the list of all cluster nodes and adds them to the hosts list
+Will return ALL nodes with HTTP enabled (including master nodes!). If you use
+this with master nodes, you probably want to disable HTTP on them by setting
+`http.enabled` to false in their elasticsearch.yml.
+
+[[plugins-outputs-elasticsearch-sniffing_delay]]
+===== `sniffing_delay` 
+
+  * Value type is <<number,number>>
+  * Default value is `30`
+
+How long to wait, in seconds, between sniffing attempts
 
 [[plugins-outputs-elasticsearch-ssl]]
 ===== `ssl` 
@@ -526,7 +385,8 @@ Enable SSL
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-Validate the server's certificate. Disabling this severely compromises security.
+Validate the server's certificate
+Disabling this severely compromises security
 For more information read https://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf
 
 [[plugins-outputs-elasticsearch-tags]]
