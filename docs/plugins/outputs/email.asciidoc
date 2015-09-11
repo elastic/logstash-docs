@@ -29,17 +29,24 @@ Available configuration options:
 [cols="<,<,<,<m",options="header",]
 |=======================================================================
 |Setting |Input type|Required|Default value
+| <<plugins-outputs-email-address>> |<<string,string>>|No|`"localhost"`
 | <<plugins-outputs-email-attachments>> |<<array,array>>|No|`[]`
+| <<plugins-outputs-email-authentication>> |<<string,string>>|No|
 | <<plugins-outputs-email-body>> |<<string,string>>|No|`""`
 | <<plugins-outputs-email-cc>> |<<string,string>>|No|
 | <<plugins-outputs-email-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-outputs-email-contenttype>> |<<string,string>>|No|`"text/html; charset=UTF-8"`
+| <<plugins-outputs-email-debug>> |<<boolean,boolean>>|No|`false`
+| <<plugins-outputs-email-domain>> |<<string,string>>|No|`"localhost"`
 | <<plugins-outputs-email-from>> |<<string,string>>|No|`"logstash.alert@nowhere.com"`
 | <<plugins-outputs-email-htmlbody>> |<<string,string>>|No|`""`
-| <<plugins-outputs-email-options>> |<<hash,hash>>|No|`{}`
+| <<plugins-outputs-email-password>> |<<string,string>>|No|
+| <<plugins-outputs-email-port>> |<<number,number>>|No|`25`
 | <<plugins-outputs-email-replyto>> |<<string,string>>|No|
 | <<plugins-outputs-email-subject>> |<<string,string>>|No|`""`
 | <<plugins-outputs-email-to>> |<<string,string>>|Yes|
+| <<plugins-outputs-email-use_tls>> |<<boolean,boolean>>|No|`false`
+| <<plugins-outputs-email-username>> |<<string,string>>|No|
 | <<plugins-outputs-email-via>> |<<string,string>>|No|`"smtp"`
 | <<plugins-outputs-email-workers>> |<<number,number>>|No|`1`
 |=======================================================================
@@ -50,6 +57,14 @@ Available configuration options:
 
 &nbsp;
 
+[[plugins-outputs-email-address]]
+===== `address` 
+
+  * Value type is <<string,string>>
+  * Default value is `"localhost"`
+
+The address used to connect to the mail server
+
 [[plugins-outputs-email-attachments]]
 ===== `attachments` 
 
@@ -57,6 +72,14 @@ Available configuration options:
   * Default value is `[]`
 
 Attachments - specify the name(s) and location(s) of the files.
+
+[[plugins-outputs-email-authentication]]
+===== `authentication` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Authentication method used when identifying with the server
 
 [[plugins-outputs-email-body]]
 ===== `body` 
@@ -94,6 +117,22 @@ The codec used for output data. Output codecs are a convenient method for encodi
 contenttype : for multipart messages, set the content-type and/or charset of the HTML part.
 NOTE: this may not be functional (KH)
 
+[[plugins-outputs-email-debug]]
+===== `debug` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Run the mail relay in debug mode
+
+[[plugins-outputs-email-domain]]
+===== `domain` 
+
+  * Value type is <<string,string>>
+  * Default value is `"localhost"`
+
+Domain used to send the email messages
+
 [[plugins-outputs-email-exclude_tags]]
 ===== `exclude_tags`  (DEPRECATED)
 
@@ -120,70 +159,21 @@ The fully-qualified email address for the From: field in the email.
 
 HTML Body for the email, which may contain HTML markup.
 
-[[plugins-outputs-email-match]]
-===== `match`  (DEPRECATED)
+[[plugins-outputs-email-password]]
+===== `password` 
 
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<hash,hash>>
+  * Value type is <<string,string>>
   * There is no default value for this setting.
 
-This setting is deprecated in favor of Logstash's "conditionals" feature
-If you were using this setting previously, please use conditionals instead.
+Password to authenticate with the server
 
-If you need help converting your older `match` setting to a conditional,
-I welcome you to join the #logstash irc channel on freenode or to post
-a message on https://discuss.elastic.co/c/logstash and ask for help! :)
+[[plugins-outputs-email-port]]
+===== `port` 
 
-[[plugins-outputs-email-options]]
-===== `options` 
+  * Value type is <<number,number>>
+  * Default value is `25`
 
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-Specify the options to use:
-
-Via SMTP: `smtpIporHost`, `port`, `domain`, `userName`, `password`, `authenticationType`, `starttls`
-
-Via sendmail: `location`, `arguments`
-
-If you do not specify any `options`, you will get the following equivalent code set in
-every new mail object:
-[source,ruby]
-    Mail.defaults do
-      delivery_method :smtp, { :smtpIporHost         => "localhost",
-                               :port                 => 25,
-                               :domain               => 'localhost.localdomain',
-                               :userName             => nil,
-                               :password             => nil,
-                               :authenticationType   => nil,(plain, login and cram_md5)
-                               :starttls             => true  }
-
-      retriever_method :pop3, { :address             => "localhost",
-                                :port                => 995,
-                                :user_name           => nil,
-                                :password            => nil,
-                                :enable_ssl          => true }
-
-      Mail.delivery_method.new  #=> Mail::SMTP instance
-      Mail.retriever_method.new #=> Mail::POP3 instance
-    end
-
-Each mail object inherits the defaults set in Mail.delivery_method. However, on
-a per email basis, you can override the method:
-[source,ruby]
-    mail.delivery_method :sendmail
-
-Or you can override the method and pass in settings:
-[source,ruby]
-    mail.delivery_method :sendmail, { :address => 'some.host' }
-
-You can also just modify the settings:
-[source,ruby]
-    mail.delivery_settings = { :address => 'some.host' }
-
-The hash you supply is just merged against the defaults with "merge!" and the result
-assigned to the mail object.  For instance, the above example will change only the
-`:address` value of the global `smtp_settings` to be 'some.host', retaining all other values.
+Port used to communicate with the mail server
 
 [[plugins-outputs-email-replyto]]
 ===== `replyto` 
@@ -236,6 +226,22 @@ The type to act on. If a type is given, then this output will only
 act on messages with the same type. See any input plugin's `type`
 attribute for more.
 Optional.
+
+[[plugins-outputs-email-use_tls]]
+===== `use_tls` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Enables TLS when communicating with the server
+
+[[plugins-outputs-email-username]]
+===== `username` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Username to authenticate with the server
 
 [[plugins-outputs-email-via]]
 ===== `via` 
