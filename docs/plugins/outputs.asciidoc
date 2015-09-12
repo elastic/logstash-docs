@@ -42,6 +42,7 @@ The following output plugins are available:
 |[[plugins-outputs-letters-e]]
 * <<plugins-outputs-email,email>>
 * <<plugins-outputs-elasticsearch,elasticsearch>>
+* <<plugins-outputs-elasticsearch_java,elasticsearch_java>>
 * <<plugins-outputs-exec,exec>>
 |[[plugins-outputs-letters-f]]
 * <<plugins-outputs-file,file>>
@@ -127,6 +128,8 @@ pass::[<?edit_url https://github.com/logstash-plugins/logstash-output-email/edit
 include::outputs/email.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-output-elasticsearch/edit/master/lib/logstash/outputs/elasticsearch.rb ?>]
 include::outputs/elasticsearch.asciidoc[]
+pass::[<?edit_url https://github.com/logstash-plugins/logstash-output-elasticsearch_java/edit/master/lib/logstash/outputs/elasticsearch_java.rb ?>]
+include::outputs/elasticsearch_java.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-output-exec/edit/master/lib/logstash/outputs/exec.rb ?>]
 include::outputs/exec.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-output-file/edit/master/lib/logstash/outputs/file.rb ?>]
