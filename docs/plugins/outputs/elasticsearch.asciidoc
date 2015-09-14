@@ -127,13 +127,8 @@ Available configuration options:
 [[plugins-outputs-elasticsearch-action]]
 ===== `action` 
 
-  * Value type is <<string,string>>
-  * Default value is `"index"`
-
-The Elasticsearch action to perform. Valid actions are: `index`, `delete`.
-
-Use of this setting *REQUIRES* you also configure the `document_id` setting
-because `delete` actions all require a document id.
+  * Value can be any of: `index`, `delete`, `create`, `update`
+  * Default value is `index`
 
 What does each action do?
 
