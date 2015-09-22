@@ -3,14 +3,62 @@
 
 
 
-Stream events from files.
+Stream events from files, normally by tailing them in a manner
+similar to `tail -0F` but optionally reading them from the
+beginning.
 
 By default, each event is assumed to be one line. If you would like
 to join multiple log lines into one event, you'll want to use the
-multiline codec.
+multiline codec or filter.
 
-Files are followed in a manner similar to `tail -0F`. File rotation
-is detected and handled by this input.
+The plugin aims to track changing files and emit new content as it's
+appended to each file. It's not well-suited for reading a file from
+beginning to end and storing all of it in a single event (not even
+with the multiline codec or filter).
+
+==== Tracking of current position in watched files
+
+The plugin keeps track of the current position in each file by
+recording it in a separate file named sincedb. This makes it
+possible to stop and restart Logstash and have it pick up where it
+left off without missing the lines that were added to the file while
+Logstash was stopped.
+
+By default, the sincedb file is placed in the home directory of the
+user running Logstash with a filename based on the filename patterns
+being watched (i.e. the `path` option). Thus, changing the filename
+patterns will result in a new sincedb file being used and any
+existing current position state will be lost. If you change your
+patterns with any frequency it might make sense to explicitly choose
+a sincedb path with the `sincedb_path` option.
+
+Sincedb files are text files with four columns:
+
+. The inode number (or equivalent).
+. The major device number of the file system (or equivalent).
+. The minor device number of the file system (or equivalent).
+. The current byte offset within the file.
+
+On non-Windows systems you can obtain the inode number of a file
+with e.g. `ls -li`.
+
+==== File rotation
+
+File rotation is detected and handled by this input, regardless of
+whether the file is rotated via a rename or a copy operation. To
+support programs that write to the rotated file for some time after
+the rotation has taken place, include both the original filename and
+the rotated filename (e.g. /var/log/syslog and /var/log/syslog.1) in
+the filename patterns to watch (the `path` option). Note that the
+rotated filename will be treated as a new file so if
+`start_position` is set to 'beginning' the rotated file will be
+reprocessed.
+
+With the default value of `start_position` ('end') any messages
+written to the end of the file between the last read operation prior
+to the rotation and its reopening under the new name (an interval
+determined by the `stat_interval` and `discover_interval` options)
+will not get picked up.
 
 &nbsp;
 
@@ -67,7 +115,7 @@ Add a field to an event
 ===== `charset`  (DEPRECATED)
 
   * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value can be any of: `ASCII-8BIT`, `Big5`, `Big5-HKSCS`, `Big5-UAO`, `CP949`, `Emacs-Mule`, `EUC-JP`, `EUC-KR`, `EUC-TW`, `GB18030`, `GBK`, `ISO-8859-1`, `ISO-8859-2`, `ISO-8859-3`, `ISO-8859-4`, `ISO-8859-5`, `ISO-8859-6`, `ISO-8859-7`, `ISO-8859-8`, `ISO-8859-9`, `ISO-8859-10`, `ISO-8859-11`, `ISO-8859-13`, `ISO-8859-14`, `ISO-8859-15`, `ISO-8859-16`, `KOI8-R`, `KOI8-U`, `Shift_JIS`, `US-ASCII`, `UTF-8`, `UTF-16BE`, `UTF-16LE`, `UTF-32BE`, `UTF-32LE`, `Windows-1251`, `GB2312`, `IBM437`, `IBM737`, `IBM775`, `CP850`, `IBM852`, `CP852`, `IBM855`, `CP855`, `IBM857`, `IBM860`, `IBM861`, `IBM862`, `IBM863`, `IBM864`, `IBM865`, `IBM866`, `IBM869`, `Windows-1258`, `GB1988`, `macCentEuro`, `macCroatian`, `macCyrillic`, `macGreek`, `macIceland`, `macRoman`, `macRomania`, `macThai`, `macTurkish`, `macUkraine`, `CP950`, `CP951`, `stateless-ISO-2022-JP`, `eucJP-ms`, `CP51932`, `GB12345`, `ISO-2022-JP`, `ISO-2022-JP-2`, `CP50220`, `CP50221`, `Windows-1252`, `Windows-1250`, `Windows-1256`, `Windows-1253`, `Windows-1255`, `Windows-1254`, `TIS-620`, `Windows-874`, `Windows-1257`, `Windows-31J`, `MacJapanese`, `UTF-7`, `UTF8-MAC`, `UTF-16`, `UTF-32`, `UTF8-DoCoMo`, `SJIS-DoCoMo`, `UTF8-KDDI`, `SJIS-KDDI`, `ISO-2022-JP-KDDI`, `stateless-ISO-2022-JP-KDDI`, `UTF8-SoftBank`, `SJIS-SoftBank`, `BINARY`, `CP437`, `CP737`, `CP775`, `IBM850`, `CP857`, `CP860`, `CP861`, `CP862`, `CP863`, `CP864`, `CP865`, `CP866`, `CP869`, `CP1258`, `Big5-HKSCS:2008`, `eucJP`, `euc-jp-ms`, `eucKR`, `eucTW`, `EUC-CN`, `eucCN`, `CP936`, `ISO2022-JP`, `ISO2022-JP2`, `ISO8859-1`, `CP1252`, `ISO8859-2`, `CP1250`, `ISO8859-3`, `ISO8859-4`, `ISO8859-5`, `ISO8859-6`, `CP1256`, `ISO8859-7`, `CP1253`, `ISO8859-8`, `CP1255`, `ISO8859-9`, `CP1254`, `ISO8859-10`, `ISO8859-11`, `CP874`, `ISO8859-13`, `CP1257`, `ISO8859-14`, `ISO8859-15`, `ISO8859-16`, `CP878`, `CP932`, `csWindows31J`, `SJIS`, `PCK`, `MacJapan`, `ASCII`, `ANSI_X3.4-1968`, `646`, `CP65000`, `CP65001`, `UTF-8-MAC`, `UTF-8-HFS`, `UCS-2BE`, `UCS-4BE`, `UCS-4LE`, `CP1251`, `external`, `locale`
+  <li> Value type is <<string,string>>
   * There is no default value for this setting.
 
 The character encoding used in this input. Examples include `UTF-8`
@@ -164,7 +212,7 @@ You can use globs here, such as `/var/log/*.log`
 Paths must be absolute and cannot be relative.
 
 You may also configure multiple paths. See an example
-on the [Logstash configuration page](configuration#array).
+on the <<array,Logstash configuration page>>.
 
 [[plugins-inputs-file-sincedb_path]]
 ===== `sincedb_path` 
@@ -172,9 +220,10 @@ on the [Logstash configuration page](configuration#array).
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Where to write the sincedb database (keeps track of the current
-position of monitored log files). The default will write
-sincedb files to some path matching `$HOME/.sincedb*`
+Path of the sincedb database file (keeps track of the current
+position of monitored log files) that will be written to disk.
+The default will write sincedb files to some path matching `$HOME/.sincedb*`
+NOTE: it must be a file path and not a directory path
 
 [[plugins-inputs-file-sincedb_write_interval]]
 ===== `sincedb_write_interval` 
