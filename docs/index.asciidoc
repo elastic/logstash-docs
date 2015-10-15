@@ -16,12 +16,15 @@
 
 // Glossary and core concepts go here
 
-// The pass blocks here point to the correct repository for the edit links in
-// the guide.
+// The pass blocks here point to the correct repository for the edit links in the guide.
 
 // Introduction
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/introduction.asciidoc ?>]
 include::static/introduction.asciidoc[]
+
+// Breaking Changes
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/introduction.asciidoc ?>]
+include::static/breaking-changes.asciidoc[]
 
 // Getting Started with Logstash
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/getting-started-with-logstash.asciidoc ?>]
