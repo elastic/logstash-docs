@@ -23,7 +23,7 @@ pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/
 include::static/introduction.asciidoc[]
 
 // Breaking Changes
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/introduction.asciidoc ?>]
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/breaking-changes.asciidoc ?>]
 include::static/breaking-changes.asciidoc[]
 
 // Getting Started with Logstash
