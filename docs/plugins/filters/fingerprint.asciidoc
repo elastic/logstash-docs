@@ -30,6 +30,7 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-filters-fingerprint-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-fingerprint-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-fingerprint-base64encode>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-fingerprint-concatenate_sources>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-fingerprint-key>> |<<string,string>>|No|
 | <<plugins-filters-fingerprint-method>> |<<string,string>>, one of `["SHA1", "SHA256", "SHA384", "SHA512", "MD5", "MURMUR3", "IPV4_NETWORK", "UUID", "PUNCTUATION"]`|Yes|`"SHA1"`
@@ -106,6 +107,15 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
 
+[[plugins-filters-fingerprint-base64encode]]
+===== `base64encode` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+When set to 'true', SHA1', 'SHA256', 'SHA384', 'SHA512' and 'MD5' fingerprint methods will be returned
+base64 encoded rather than hex encoded.
+
 [[plugins-filters-fingerprint-concatenate_sources]]
 ===== `concatenate_sources` 
 
@@ -113,16 +123,6 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
   * Default value is `false`
 
 When set to `true`, we concatenate the values of all fields into 1 string like the old checksum filter.
-
-[[plugins-filters-fingerprint-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
 
 [[plugins-filters-fingerprint-key]]
 ===== `key` 
@@ -216,16 +216,6 @@ would remove a sad, unwanted tag as well.
 
 Source field(s)
 
-[[plugins-filters-fingerprint-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
 [[plugins-filters-fingerprint-target]]
 ===== `target` 
 
@@ -234,19 +224,5 @@ Optional.
 
 Target field.
 will overwrite current value of a field if it exists.
-
-[[plugins-filters-fingerprint-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
-`exclude_fields`) must be met in order for the event to be handled by the filter.
-The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 

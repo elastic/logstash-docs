@@ -49,6 +49,7 @@ Available configuration options:
 | <<plugins-filters-geoip-add_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-geoip-database>> |a valid filesystem path|No|
 | <<plugins-filters-geoip-fields>> |<<array,array>>|No|
+| <<plugins-filters-geoip-lru_cache_size>> |<<number,number>>|No|`1000`
 | <<plugins-filters-geoip-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-geoip-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-geoip-remove_tag>> |<<array,array>>|No|`[]`
@@ -128,21 +129,14 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
   * Value type is <<path,path>>
   * There is no default value for this setting.
 
+Map of lookup caches, keyed by geoip_type
 The path to the GeoIP database file which Logstash should use. Country, City, ASN, ISP
 and organization databases are supported.
 
 If not specified, this will default to the GeoLiteCity database that ships
 with Logstash.
-
-[[plugins-filters-geoip-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
+Up-to-date databases can be downloaded from here: <https://dev.maxmind.com/geoip/legacy/geolite/>
+Please be sure to download a legacy format database.
 
 [[plugins-filters-geoip-fields]]
 ===== `fields` 
@@ -158,6 +152,27 @@ are included in the event.
 For the built-in GeoLiteCity database, the following are available:
 `city_name`, `continent_code`, `country_code2`, `country_code3`, `country_name`,
 `dma_code`, `ip`, `latitude`, `longitude`, `postal_code`, `region_name` and `timezone`.
+
+[[plugins-filters-geoip-lru_cache_size]]
+===== `lru_cache_size` 
+
+  * Value type is <<number,number>>
+  * Default value is `1000`
+
+GeoIP lookup is surprisingly expensive. This filter uses an LRU cache to take advantage of the fact that
+IPs agents are often found adjacent to one another in log files and rarely have a random distribution.
+The higher you set this the more likely an item is to be in the cache and the faster this filter will run.
+However, if you set this too high you can use more memory than desired.
+
+Experiment with different values for this option to find the best performance for your dataset.
+
+This MUST be set to a value > 0. There is really no reason to not want this behavior, the overhead is minimal
+and the speed gains are large.
+
+It is important to note that this config value is global to the geoip_type. That is to say all instances of the geoip filter
+of the same geoip_type share the same cache. The last declared cache size will 'win'. The reason for this is that there would be no benefit
+to having multiple caches for different instances at different points in the pipeline, that would just increase the
+number of cache misses and waste memory.
 
 [[plugins-filters-geoip-periodic_flush]]
 ===== `periodic_flush` 
@@ -234,16 +249,6 @@ would remove a sad, unwanted tag as well.
 The field containing the IP address or hostname to map via geoip. If
 this field is an array, only the first value will be used.
 
-[[plugins-filters-geoip-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
 [[plugins-filters-geoip-target]]
 ===== `target` 
 
@@ -261,19 +266,5 @@ new template.
 
 Even if you don't use the `geo\_point` mapping, the `[target][location]` field
 is still valid GeoJSON.
-
-[[plugins-filters-geoip-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
-`exclude_fields`) must be met in order for the event to be handled by the filter.
-The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 

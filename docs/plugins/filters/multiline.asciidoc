@@ -173,16 +173,6 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
 
 Allow duplcate values on the source field.
 
-[[plugins-filters-multiline-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
-
 [[plugins-filters-multiline-max_age]]
 ===== `max_age` 
 
@@ -318,30 +308,6 @@ reconnects (due to error or client restart), then logstash will identify
 the new connection as a new stream and break any multiline goodness that
 may have occurred between the old and new connection. To solve this use
 case, you can use `%{@source_host}.%{@type}` instead.
-
-[[plugins-filters-multiline-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
-[[plugins-filters-multiline-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
-`exclude_fields`) must be met in order for the event to be handled by the filter.
-The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 [[plugins-filters-multiline-what]]
 ===== `what` 

@@ -5,6 +5,8 @@
 
 This output allows you to write events to https://www.hipchat.com/[HipChat].
 
+Make sure your API token have the appropriate permissions and support
+sending  messages.
 
 &nbsp;
 
@@ -34,6 +36,8 @@ Available configuration options:
 | <<plugins-outputs-hipchat-color>> |<<string,string>>|No|`"yellow"`
 | <<plugins-outputs-hipchat-format>> |<<string,string>>|No|`"%{message}"`
 | <<plugins-outputs-hipchat-from>> |<<string,string>>|No|`"logstash"`
+| <<plugins-outputs-hipchat-host>> |<<string,string>>|No|
+| <<plugins-outputs-hipchat-message_format>> |<<string,string>>, one of `["html", "text"]`|No|`"html"`
 | <<plugins-outputs-hipchat-room_id>> |<<string,string>>|Yes|
 | <<plugins-outputs-hipchat-token>> |<<string,string>>|Yes|
 | <<plugins-outputs-hipchat-trigger_notify>> |<<boolean,boolean>>|No|`false`
@@ -62,17 +66,7 @@ The codec used for output data. Output codecs are a convenient method for encodi
 
 Background color for message.
 HipChat currently supports one of "yellow", "red", "green", "purple",
-"gray", or "random". (default: yellow)
-
-[[plugins-outputs-hipchat-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
+"gray", or "random". (default: yellow), support fieldref
 
 [[plugins-outputs-hipchat-format]]
 ===== `format` 
@@ -88,7 +82,23 @@ Message format to send, event tokens are usable here.
   * Value type is <<string,string>>
   * Default value is `"logstash"`
 
-The name the message will appear be sent from.
+The name the message will appear be sent from, you can use fieldref
+
+[[plugins-outputs-hipchat-host]]
+===== `host` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+HipChat host to use
+
+[[plugins-outputs-hipchat-message_format]]
+===== `message_format` 
+
+  * Value can be any of: `html`, `text`
+  * Default value is `"html"`
+
+Specify `Message Format`
 
 [[plugins-outputs-hipchat-room_id]]
 ===== `room_id` 
@@ -97,17 +107,7 @@ The name the message will appear be sent from.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The ID or name of the room.
-
-[[plugins-outputs-hipchat-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
+The ID or name of the room, support fieldref
 
 [[plugins-outputs-hipchat-token]]
 ===== `token` 
@@ -125,18 +125,6 @@ The HipChat authentication token.
   * Default value is `false`
 
 Whether or not this message should trigger a notification for people in the room.
-
-[[plugins-outputs-hipchat-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-The type to act on. If a type is given, then this output will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 [[plugins-outputs-hipchat-workers]]
 ===== `workers` 

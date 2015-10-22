@@ -127,7 +127,7 @@ If the conversion type is `boolean`, the acceptable values are:
 * **True:** `true`, `t`, `yes`, `y`, and `1`
 * **False:** `false`, `f`, `no`, `n`, and `0`
 
-If a value other than these is provided, it will pass straight through 
+If a value other than these is provided, it will pass straight through
 and log a warning message.
 
 Valid conversion targets are: integer, float, string, and boolean.
@@ -139,16 +139,6 @@ Example:
         convert => { "fieldname" => "integer" }
       }
     }
-
-[[plugins-filters-mutate-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
 
 [[plugins-filters-mutate-gsub]]
 ===== `gsub` 
@@ -383,30 +373,6 @@ Example:
          strip => ["field1", "field2"]
       }
     }
-
-[[plugins-filters-mutate-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
-[[plugins-filters-mutate-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
-`exclude_fields`) must be met in order for the event to be handled by the filter.
-The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 [[plugins-filters-mutate-update]]
 ===== `update` 
