@@ -433,7 +433,7 @@ If you do not set this, the following defaults are used:
 ===== `protocol` 
 
   * Value can be any of: `node`, `transport`, `http`
-  * There is no default value for this setting.
+  * Default value is `node`.
 
 Choose the protocol used to talk to Elasticsearch.
 
@@ -457,13 +457,10 @@ to elasticsearch.
 
 All protocols will use bulk requests when talking to Elasticsearch.
 
-The default `protocol` setting under java/jruby is "node". The default
-`protocol` on non-java rubies is "http"
-
 [[plugins-outputs-elasticsearch-proxy]]
 ===== `proxy` 
 
-  <li> Value type is <<string,string>>
+  * Value type is <<string,string>>
   * There is no default value for this setting.
 
 Set the address of a forward HTTP proxy. Must be used with the 'http' protocol.Can be either a string, such as `http://localhost:123` or a hash in the form
