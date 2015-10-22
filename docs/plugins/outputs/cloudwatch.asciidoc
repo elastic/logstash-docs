@@ -52,7 +52,7 @@ besides a metric name, then events will be counted (Unit: Count, Value: 1)
 by their metric name (either a default or from their `CW_metricname` field)
 
 Other fields which can be added to events to modify the behavior of this
-plugin are, `CW_namespace`, `CW_unit`, `CW_value`, and 
+plugin are, `CW_namespace`, `CW_unit`, `CW_value`, and
 `CW_dimensions`.  All of these field names are configurable in
 this output.  You can also set per-output defaults for any of them.
 See below for details.
@@ -142,17 +142,7 @@ The codec used for output data. Output codecs are a convenient method for encodi
   * Value type is <<hash,hash>>
   * There is no default value for this setting.
 
-The default dimensions [ name, value, ... ] to use for events which do not have a `CW_dimensions` field   
-
-[[plugins-outputs-cloudwatch-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
+The default dimensions [ name, value, ... ] to use for events which do not have a `CW_dimensions` field
 
 [[plugins-outputs-cloudwatch-field_dimensions]]
 ===== `field_dimensions` 
@@ -160,7 +150,7 @@ Optional.
   * Value type is <<string,string>>
   * Default value is `"CW_dimensions"`
 
-The name of the field used to set the dimensions on an event metric   
+The name of the field used to set the dimensions on an event metric
 The field named here, if present in an event, must have an array of
 one or more key & value pairs, for example...
     `add_field => [ "CW_dimensions", "Environment", "CW_dimensions", "prod" ]`
@@ -174,7 +164,7 @@ or, equivalently...
   * Value type is <<string,string>>
   * Default value is `"CW_metricname"`
 
-The name of the field used to set the metric name on an event   
+The name of the field used to set the metric name on an event
 The author of this plugin recommends adding this field to events in inputs &
 filters rather than using the per-output default setting so that one output
 plugin on your logstash indexer can serve all events (which of course had
@@ -186,7 +176,7 @@ fields set on your logstash shippers.)
   * Value type is <<string,string>>
   * Default value is `"CW_namespace"`
 
-The name of the field used to set a different namespace per event   
+The name of the field used to set a different namespace per event
 Note: Only one namespace can be sent to CloudWatch per API call
 so setting different namespaces will increase the number of API calls
 and those cost money.
@@ -197,7 +187,7 @@ and those cost money.
   * Value type is <<string,string>>
   * Default value is `"CW_unit"`
 
-The name of the field used to set the unit on an event metric   
+The name of the field used to set the unit on an event metric
 
 [[plugins-outputs-cloudwatch-field_value]]
 ===== `field_value` 
@@ -205,7 +195,7 @@ The name of the field used to set the unit on an event metric
   * Value type is <<string,string>>
   * Default value is `"CW_value"`
 
-The name of the field used to set the value (float) on an event metric   
+The name of the field used to set the value (float) on an event metric
 
 [[plugins-outputs-cloudwatch-metricname]]
 ===== `metricname` 
@@ -213,7 +203,7 @@ The name of the field used to set the value (float) on an event metric
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The default metric name to use for events which do not have a `CW_metricname` field.   
+The default metric name to use for events which do not have a `CW_metricname` field.
 Beware: If this is provided then all events which pass through this output will be aggregated and
 sent to CloudWatch, so use this carefully.  Furthermore, when providing this option, you
 will probably want to also restrict events from passing through this output using event
@@ -241,7 +231,7 @@ The default namespace to use for events which do not have a `CW_namespace` field
   * Value type is <<number,number>>
   * Default value is `10000`
 
-How many events to queue before forcing a call to the CloudWatch API ahead of `timeframe` schedule   
+How many events to queue before forcing a call to the CloudWatch API ahead of `timeframe` schedule
 Set this to the number of events-per-timeframe you will be sending to CloudWatch to avoid extra API calls
 
 [[plugins-outputs-cloudwatch-region]]
@@ -268,16 +258,6 @@ Set this to the number of events-per-timeframe you will be sending to CloudWatch
 
 
 
-[[plugins-outputs-cloudwatch-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
 [[plugins-outputs-cloudwatch-timeframe]]
 ===== `timeframe` 
 
@@ -287,7 +267,7 @@ Optional.
 Constants
 aggregate_key members
 Units
-How often to send data to CloudWatch   
+How often to send data to CloudWatch
 This does not affect the event timestamps, events will always have their
 actual timestamp (to-the-minute) sent to CloudWatch.
 
@@ -295,25 +275,13 @@ We only call the API if there is data to send.
 
 See the Rufus Scheduler docs for an https://github.com/jmettraux/rufus-scheduler#the-time-strings-understood-by-rufus-scheduler[explanation of allowed values]
 
-[[plugins-outputs-cloudwatch-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-The type to act on. If a type is given, then this output will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
-
 [[plugins-outputs-cloudwatch-unit]]
 ===== `unit` 
 
   * Value can be any of: `Seconds`, `Microseconds`, `Milliseconds`, `Bytes`, `Kilobytes`, `Megabytes`, `Gigabytes`, `Terabytes`, `Bits`, `Kilobits`, `Megabits`, `Gigabits`, `Terabits`, `Percent`, `Count`, `Bytes/Second`, `Kilobytes/Second`, `Megabytes/Second`, `Gigabytes/Second`, `Terabytes/Second`, `Bits/Second`, `Kilobits/Second`, `Megabits/Second`, `Gigabits/Second`, `Terabits/Second`, `Count/Second`, `None`
   * Default value is `"Count"`
 
-The default unit to use for events which do not have a `CW_unit` field   
+The default unit to use for events which do not have a `CW_unit` field
 If you set this option you should probably set the "value" option along with it
 
 [[plugins-outputs-cloudwatch-use_ssl]]
@@ -330,7 +298,7 @@ If you set this option you should probably set the "value" option along with it
   * Value type is <<string,string>>
   * Default value is `"1"`
 
-The default value to use for events which do not have a `CW_value` field   
+The default value to use for events which do not have a `CW_value` field
 If provided, this must be a string which can be converted to a float, for example...
     "1", "2.34", ".5", and "0.67"
 If you set this option you should probably set the `unit` option along with it

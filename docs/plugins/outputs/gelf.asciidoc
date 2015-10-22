@@ -79,16 +79,6 @@ fields. This exposes that. Exclude the `_` portion of the field name
 e.g. `custom_fields => ['foo_field', 'some_value']`
 sets `_foo_field` = `some_value`.
 
-[[plugins-outputs-gelf-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
-
 [[plugins-outputs-gelf-facility]]
 ===== `facility`  (DEPRECATED)
 
@@ -213,28 +203,6 @@ event as the field `\_tags`.
 
 The GELF short message field name. If the field does not exist or is empty,
 the event message is taken instead.
-
-[[plugins-outputs-gelf-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
-[[plugins-outputs-gelf-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-The type to act on. If a type is given, then this output will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 [[plugins-outputs-gelf-workers]]
 ===== `workers` 

@@ -29,15 +29,34 @@ Available configuration options:
 [cols="<,<,<,<m",options="header",]
 |=======================================================================
 |Setting |Input type|Required|Default value
+| <<plugins-outputs-http-automatic_retries>> |<<number,number>>|No|`0`
+| <<plugins-outputs-http-cacert>> |a valid filesystem path|No|
+| <<plugins-outputs-http-client_cert>> |a valid filesystem path|No|
+| <<plugins-outputs-http-client_key>> |a valid filesystem path|No|
 | <<plugins-outputs-http-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-outputs-http-connect_timeout>> |<<number,number>>|No|`10`
 | <<plugins-outputs-http-content_type>> |<<string,string>>|No|
+| <<plugins-outputs-http-cookies>> |<<boolean,boolean>>|No|`true`
+| <<plugins-outputs-http-follow_redirects>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-http-format>> |<<string,string>>, one of `["json", "form", "message"]`|No|`"json"`
 | <<plugins-outputs-http-headers>> |<<hash,hash>>|No|
-| <<plugins-outputs-http-http_method>> |<<string,string>>, one of `["put", "post"]`|Yes|
+| <<plugins-outputs-http-http_method>> |<<string,string>>, one of `["put", "post", "patch", "delete", "get", "head"]`|Yes|
+| <<plugins-outputs-http-keepalive>> |<<boolean,boolean>>|No|`true`
+| <<plugins-outputs-http-keystore>> |a valid filesystem path|No|
+| <<plugins-outputs-http-keystore_password>> |<<password,password>>|No|
+| <<plugins-outputs-http-keystore_type>> |<<string,string>>|No|`"JKS"`
 | <<plugins-outputs-http-mapping>> |<<hash,hash>>|No|
 | <<plugins-outputs-http-message>> |<<string,string>>|No|
+| <<plugins-outputs-http-pool_max>> |<<number,number>>|No|`50`
+| <<plugins-outputs-http-pool_max_per_route>> |<<number,number>>|No|`25`
+| <<plugins-outputs-http-proxy>> |<<,>>|No|
+| <<plugins-outputs-http-request_timeout>> |<<number,number>>|No|`60`
+| <<plugins-outputs-http-socket_timeout>> |<<number,number>>|No|`10`
+| <<plugins-outputs-http-ssl_certificate_validation>> |<<boolean,boolean>>|No|`true`
+| <<plugins-outputs-http-truststore>> |a valid filesystem path|No|
+| <<plugins-outputs-http-truststore_password>> |<<password,password>>|No|
+| <<plugins-outputs-http-truststore_type>> |<<string,string>>|No|`"JKS"`
 | <<plugins-outputs-http-url>> |<<string,string>>|Yes|
-| <<plugins-outputs-http-verify_ssl>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-http-workers>> |<<number,number>>|No|`1`
 |=======================================================================
 
@@ -47,6 +66,38 @@ Available configuration options:
 
 &nbsp;
 
+[[plugins-outputs-http-automatic_retries]]
+===== `automatic_retries` 
+
+  * Value type is <<number,number>>
+  * Default value is `0`
+
+
+
+[[plugins-outputs-http-cacert]]
+===== `cacert` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+
+
+[[plugins-outputs-http-client_cert]]
+===== `client_cert` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+
+
+[[plugins-outputs-http-client_key]]
+===== `client_key` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+
+
 [[plugins-outputs-http-codec]]
 ===== `codec` 
 
@@ -54,6 +105,14 @@ Available configuration options:
   * Default value is `"plain"`
 
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
+
+[[plugins-outputs-http-connect_timeout]]
+===== `connect_timeout` 
+
+  * Value type is <<number,number>>
+  * Default value is `10`
+
+
 
 [[plugins-outputs-http-content_type]]
 ===== `content_type` 
@@ -68,15 +127,21 @@ If not specified, this defaults to the following:
 * if format is "json", "application/json"
 * if format is "form", "application/x-www-form-urlencoded"
 
-[[plugins-outputs-http-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
+[[plugins-outputs-http-cookies]]
+===== `cookies` 
 
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
 
-Only handle events without any of these tags.
-Optional.
+
+
+[[plugins-outputs-http-follow_redirects]]
+===== `follow_redirects` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+
 
 [[plugins-outputs-http-format]]
 ===== `format` 
@@ -106,11 +171,42 @@ format is `headers => ["X-My-Header", "%{host}"]`
 ===== `http_method` 
 
   * This is a required setting.
-  * Value can be any of: `put`, `post`
+  * Value can be any of: `put`, `post`, `patch`, `delete`, `get`, `head`
   * There is no default value for this setting.
 
-What verb to use
-only put and post are supported for now
+The HTTP Verb. One of "put", "post", "patch", "delete", "get", "head"
+
+[[plugins-outputs-http-keepalive]]
+===== `keepalive` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+
+
+[[plugins-outputs-http-keystore]]
+===== `keystore` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+
+
+[[plugins-outputs-http-keystore_password]]
+===== `keystore_password` 
+
+  * Value type is <<password,password>>
+  * There is no default value for this setting.
+
+
+
+[[plugins-outputs-http-keystore_type]]
+===== `keystore_type` 
+
+  * Value type is <<string,string>>
+  * Default value is `"JKS"`
+
+
 
 [[plugins-outputs-http-mapping]]
 ===== `mapping` 
@@ -123,7 +219,7 @@ This lets you choose the structure and parts of the event that are sent.
 
 For example:
 [source,ruby]
-   mapping => ["foo", "%{host}", "bar", "%{type}"]
+   mapping => {"foo", "%{host}", "bar", "%{type}"}
 
 [[plugins-outputs-http-message]]
 ===== `message` 
@@ -133,27 +229,77 @@ For example:
 
 
 
-[[plugins-outputs-http-tags]]
-===== `tags`  (DEPRECATED)
+[[plugins-outputs-http-pool_max]]
+===== `pool_max` 
 
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
+  * Value type is <<number,number>>
+  * Default value is `50`
 
-Only handle events with all of these tags.
-Optional.
 
-[[plugins-outputs-http-type]]
-===== `type`  (DEPRECATED)
 
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+[[plugins-outputs-http-pool_max_per_route]]
+===== `pool_max_per_route` 
+
+  * Value type is <<number,number>>
+  * Default value is `25`
+
+
+
+[[plugins-outputs-http-proxy]]
+===== `proxy` 
+
+  <li> Value type is <<string,string>>
+  * There is no default value for this setting.
+
+
+
+[[plugins-outputs-http-request_timeout]]
+===== `request_timeout` 
+
+  * Value type is <<number,number>>
+  * Default value is `60`
+
+
+
+[[plugins-outputs-http-socket_timeout]]
+===== `socket_timeout` 
+
+  * Value type is <<number,number>>
+  * Default value is `10`
+
+
+
+[[plugins-outputs-http-ssl_certificate_validation]]
+===== `ssl_certificate_validation` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+
+
+[[plugins-outputs-http-truststore]]
+===== `truststore` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+
+
+[[plugins-outputs-http-truststore_password]]
+===== `truststore_password` 
+
+  * Value type is <<password,password>>
+  * There is no default value for this setting.
+
+
+
+[[plugins-outputs-http-truststore_type]]
+===== `truststore_type` 
+
   * Value type is <<string,string>>
-  * Default value is `""`
+  * Default value is `"JKS"`
 
-The type to act on. If a type is given, then this output will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
+
 
 [[plugins-outputs-http-url]]
 ===== `url` 
@@ -162,21 +308,26 @@ Optional.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-This output lets you `PUT` or `POST` events to a
+This output lets you send events to a
 generic HTTP(S) endpoint
 
-Additionally, you are given the option to customize
-the headers sent as well as basic customization of the
-event json itself.
+This output will execute up to 'pool_max' requests in parallel for performance.
+Consider this when tuning this plugin for performance.
+
+Additionally, note that when parallel execution is used strict ordering of events is not
+guaranteed!
+
+Beware, this gem does not yet support codecs. Please use the 'format' option for now.
 URL to use
 
 [[plugins-outputs-http-verify_ssl]]
-===== `verify_ssl` 
+===== `verify_ssl`  (DEPRECATED)
 
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-validate SSL?
+DEPRECATED. Set 'ssl_certificate_validation' instead
 
 [[plugins-outputs-http-workers]]
 ===== `workers` 

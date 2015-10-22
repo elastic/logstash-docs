@@ -39,6 +39,7 @@ Available configuration options:
 | <<plugins-outputs-graphite-include_metrics>> |<<array,array>>|No|`[".*"]`
 | <<plugins-outputs-graphite-metrics>> |<<hash,hash>>|No|`{}`
 | <<plugins-outputs-graphite-metrics_format>> |<<string,string>>|No|`"*"`
+| <<plugins-outputs-graphite-nested_object_separator>> |<<string,string>>|No|`"."`
 | <<plugins-outputs-graphite-port>> |<<number,number>>|No|`2003`
 | <<plugins-outputs-graphite-reconnect_interval>> |<<number,number>>|No|`2`
 | <<plugins-outputs-graphite-resend_on_failure>> |<<boolean,boolean>>|No|`false`
@@ -76,16 +77,6 @@ Enable debug output.
   * Default value is `["%{[^}]+}"]`
 
 Exclude regex matched metric names, by default exclude unresolved %{field} strings.
-
-[[plugins-outputs-graphite-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
 
 [[plugins-outputs-graphite-fields_are_metrics]]
 ===== `fields_are_metrics` 
@@ -142,6 +133,23 @@ replaced with the name of the actual metric.
 
 NOTE: If no metrics_format is defined, the name of the metric will be used as fallback.
 
+[[plugins-outputs-graphite-nested_object_separator]]
+===== `nested_object_separator` 
+
+  * Value type is <<string,string>>
+  * Default value is `"."`
+
+When hashes are passed in as values they are broken out into a dotted notation
+For instance if you configure this plugin with
+# [source,ruby]
+    metrics => "mymetrics"
+
+and "mymetrics" is a nested hash of '{a => 1, b => { c => 2 }}'
+this plugin will generate two metrics: a => 1, and b.c => 2 .
+If you've specified a 'metrics_format' it will respect that,
+but you still may want control over the separator within these nested key names.
+This config setting changes the separator from the '.' default.
+
 [[plugins-outputs-graphite-port]]
 ===== `port` 
 
@@ -166,16 +174,6 @@ Interval between reconnect attempts to Carbon.
 
 Should metrics be resent on failure?
 
-[[plugins-outputs-graphite-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
 [[plugins-outputs-graphite-timestamp_field]]
 ===== `timestamp_field` 
 
@@ -185,18 +183,6 @@ Optional.
 Use this field for the timestamp instead of '@timestamp' which is the
 default. Useful when backfilling or just getting more accurate data into
 graphite since you probably have a cache layer infront of Logstash.
-
-[[plugins-outputs-graphite-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-The type to act on. If a type is given, then this output will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 [[plugins-outputs-graphite-workers]]
 ===== `workers` 

@@ -120,16 +120,6 @@ are not enough columns specified, the default column names are
 in the data than specified in this column list, extra columns will be auto-numbered:
 (e.g. "user_defined_1", "user_defined_2", "column3", "column4", etc.)
 
-[[plugins-filters-csv-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
-
 [[plugins-filters-csv-periodic_flush]]
 ===== `periodic_flush` 
 
@@ -224,16 +214,6 @@ Optional.
 The CSV data in the value of the `source` field will be expanded into a
 data structure.
 
-[[plugins-filters-csv-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
 [[plugins-filters-csv-target]]
 ===== `target` 
 
@@ -242,19 +222,5 @@ Optional.
 
 Define target field for placing the data.
 Defaults to writing to the root of the event.
-
-[[plugins-filters-csv-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
-`exclude_fields`) must be met in order for the event to be handled by the filter.
-The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 

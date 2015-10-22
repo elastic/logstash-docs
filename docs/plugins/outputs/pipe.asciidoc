@@ -62,16 +62,6 @@ The codec used for output data. Output codecs are a convenient method for encodi
 
 Command line to launch and pipe to
 
-[[plugins-outputs-pipe-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
-
 [[plugins-outputs-pipe-message_format]]
 ===== `message_format` 
 
@@ -85,16 +75,6 @@ strings.
 If this setting is omitted, the full json representation of the
 event will be written as a single line.
 
-[[plugins-outputs-pipe-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
 [[plugins-outputs-pipe-ttl]]
 ===== `ttl` 
 
@@ -102,18 +82,6 @@ Optional.
   * Default value is `10`
 
 Close pipe that hasn't been used for TTL seconds. -1 or 0 means never close.
-
-[[plugins-outputs-pipe-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-The type to act on. If a type is given, then this output will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 [[plugins-outputs-pipe-workers]]
 ===== `workers` 

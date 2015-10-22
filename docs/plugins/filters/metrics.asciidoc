@@ -5,13 +5,18 @@
 
 The metrics filter is useful for aggregating metrics.
 
+IMPORTANT: Elasticsearch 2.0 no longer allows field names with dots. Version 3.0
+of the metrics filter plugin changes behavior to use nested fields rather than
+dotted notation to avoid colliding with versions of Elasticsearch 2.0+.  Please
+note the changes in the documentation (underscores and sub-fields used).
+
 For example, if you have a field 'response' that is
 a http response code, and you want to count each
 kind of response, you can do this:
 [source,ruby]
     filter {
       metrics {
-        meter => [ "http.%{response}" ]
+        meter => [ "http_%{response}" ]
         add_tag => "metric"
       }
     }
@@ -31,30 +36,31 @@ metric in the following way:
 
 For a `meter => "something"` you will receive the following fields:
 
-* "thing.count" - the total count of events
-* "thing.rate_1m" - the 1-minute rate (sliding)
-* "thing.rate_5m" - the 5-minute rate (sliding)
-* "thing.rate_15m" - the 15-minute rate (sliding)
+* "[thing][count]" - the total count of events
+* "[thing][rate_1m]" - the 1-minute rate (sliding)
+* "[thing][rate_5m]" - the 5-minute rate (sliding)
+* "[thing][rate_15m]" - the 15-minute rate (sliding)
 
 #### 'timer' values
 
 For a `timer => [ "thing", "%{duration}" ]` you will receive the following fields:
 
-* "thing.count" - the total count of events
-* "thing.rate_1m" - the 1-minute rate of events (sliding)
-* "thing.rate_5m" - the 5-minute rate of events (sliding)
-* "thing.rate_15m" - the 15-minute rate of events (sliding)
-* "thing.min" - the minimum value seen for this metric
-* "thing.max" - the maximum value seen for this metric
-* "thing.stddev" - the standard deviation for this metric
-* "thing.mean" - the mean for this metric
-* "thing.pXX" - the XXth percentile for this metric (see `percentiles`)
+* "[thing][count]" - the total count of events
+* "[thing][rate_1m]" - the 1-minute rate of events (sliding)
+* "[thing][rate_5m]" - the 5-minute rate of events (sliding)
+* "[thing][rate_15m]" - the 15-minute rate of events (sliding)
+* "[thing][min]" - the minimum value seen for this metric
+* "[thing][max]" - the maximum value seen for this metric
+* "[thing][stddev]" - the standard deviation for this metric
+* "[thing][mean]" - the mean for this metric
+* "[thing][pXX]" - the XXth percentile for this metric (see `percentiles`)
 
 #### Example: computing event rate
 
 For a simple example, let's track how many events per second are running
 through logstash:
 [source,ruby]
+----
     input {
       generator {
         type => "generated"
@@ -75,11 +81,12 @@ through logstash:
       if "metric" in [tags] {
         stdout {
           codec => line {
-            format => "rate: %{events.rate_1m}"
+            format => "rate: %{[events][rate_1m]}"
           }
         }
       }
     }
+----
 
 Running the above:
 [source,ruby]
@@ -96,7 +103,7 @@ like so:
 [source,ruby]
     output {
       graphite {
-        metrics => [ "events.rate_1m", "%{events.rate_1m}" ]
+        metrics => [ "events.rate_1m", "%{[events][rate_1m]}" ]
       }
     }
 
@@ -212,16 +219,6 @@ The clear interval, when all counter are reset.
 
 If set to -1, the default value, the metrics will never be cleared.
 Otherwise, should be a multiple of 5s.
-
-[[plugins-filters-metrics-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
 
 [[plugins-filters-metrics-flush_interval]]
 ===== `flush_interval` 
@@ -342,16 +339,6 @@ If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the tag `foo_hello` if it is present. The second example
 would remove a sad, unwanted tag as well.
 
-[[plugins-filters-metrics-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
 [[plugins-filters-metrics-timer]]
 ===== `timer` 
 
@@ -359,19 +346,5 @@ Optional.
   * Default value is `{}`
 
 syntax: `timer => [ "name of metric", "%{time_value}" ]`
-
-[[plugins-filters-metrics-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
-`exclude_fields`) must be met in order for the event to be handled by the filter.
-The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 

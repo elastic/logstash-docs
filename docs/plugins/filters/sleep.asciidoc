@@ -123,16 +123,6 @@ Example:
       }
     }
 
-[[plugins-filters-sleep-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
-
 [[plugins-filters-sleep-periodic_flush]]
 ===== `periodic_flush` 
 
@@ -229,16 +219,6 @@ For example:
 The above will sleep in such a way that it will perform
 replay 2-times faster than the original time speed.
 
-[[plugins-filters-sleep-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
 [[plugins-filters-sleep-time]]
 ===== `time` 
 
@@ -260,19 +240,5 @@ Example:
         time => "1"
       }
     }
-
-[[plugins-filters-sleep-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
-`exclude_fields`) must be met in order for the event to be handled by the filter.
-The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 
