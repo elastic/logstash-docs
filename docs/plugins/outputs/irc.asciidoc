@@ -72,16 +72,6 @@ These should be full channel names including the '#' symbol, such as
 
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
 
-[[plugins-outputs-irc-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
-
 [[plugins-outputs-irc-format]]
 ===== `format` 
 
@@ -162,28 +152,6 @@ IRC Real name
   * Default value is `false`
 
 Set this to true to enable SSL.
-
-[[plugins-outputs-irc-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
-[[plugins-outputs-irc-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-The type to act on. If a type is given, then this output will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 [[plugins-outputs-irc-user]]
 ===== `user` 

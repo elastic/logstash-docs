@@ -82,16 +82,6 @@ Tags are automatically included if detected so there is no need to explicitly ad
 
 Event type
 
-[[plugins-outputs-pagerduty-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
-
 [[plugins-outputs-pagerduty-incident_key]]
 ===== `incident_key` 
 
@@ -117,28 +107,6 @@ should PagerDuty iterate the API and Logstash hasn't been updated yet.
   * There is no default value for this setting.
 
 The PagerDuty Service API Key
-
-[[plugins-outputs-pagerduty-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
-[[plugins-outputs-pagerduty-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-The type to act on. If a type is given, then this output will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 [[plugins-outputs-pagerduty-workers]]
 ===== `workers` 
