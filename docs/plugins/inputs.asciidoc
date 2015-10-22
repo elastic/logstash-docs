@@ -5,6 +5,7 @@ An input plugin enables a specific source of events to be read by Logstash.
 
 The following input plugins are available:
 
+<<plugins-inputs-letters-b, b>>
 <<plugins-inputs-letters-c, c>>
 <<plugins-inputs-letters-d, d>>
 <<plugins-inputs-letters-e, e>>
@@ -27,6 +28,8 @@ The following input plugins are available:
 <<plugins-inputs-letters-z, z>>
 [cols="asciidoc,asciidoc,asciidoc"]
 |=======================================================================
+[[plugins-inputs-letters-b]]
+* <<plugins-inputs-beats,beats>>
 |[[plugins-inputs-letters-c]]
 * <<plugins-inputs-couchdb_changes,couchdb_changes>>
 |[[plugins-inputs-letters-d]]
@@ -97,6 +100,9 @@ The following input plugins are available:
 |&nbsp;
 |&nbsp;
 |=======================================================================
+
+pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-beats/edit/master/lib/logstash/inputs/beats.rb ?>]
+include::inputs/beats.asciidoc[]
 
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-couchdb_changes/edit/master/lib/logstash/inputs/couchdb_changes.rb ?>]
 include::inputs/couchdb_changes.asciidoc[]
