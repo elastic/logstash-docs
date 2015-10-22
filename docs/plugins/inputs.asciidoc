@@ -28,7 +28,7 @@ The following input plugins are available:
 <<plugins-inputs-letters-z, z>>
 [cols="asciidoc,asciidoc,asciidoc"]
 |=======================================================================
-[[plugins-inputs-letters-b]]
+|[[plugins-inputs-letters-b]]
 * <<plugins-inputs-beats,beats>>
 |[[plugins-inputs-letters-c]]
 * <<plugins-inputs-couchdb_changes,couchdb_changes>>
