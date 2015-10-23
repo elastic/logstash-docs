@@ -140,16 +140,6 @@ Please note that inproc:// will not work with logstash
 as we use a context per thread
 By default, filters connect
 
-[[plugins-filters-zeromq-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
-
 [[plugins-filters-zeromq-field]]
 ===== `field` 
 
@@ -158,8 +148,6 @@ Optional.
 
 The field to send off-site for processing
 If this is unset, the whole event will be sent
-TODO (lusis)
-Allow filtering multiple fields
 
 [[plugins-filters-zeromq-mode]]
 ===== `mode` 
@@ -266,16 +254,6 @@ ZMQ::SUBSCRIBE - topic filters for pubsub
 
 example: sockopt => ["ZMQ::HWM", 50, "ZMQ::IDENTITY", "my_named_queue"]
 
-[[plugins-filters-zeromq-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
 [[plugins-filters-zeromq-timeout]]
 ===== `timeout` 
 
@@ -283,19 +261,5 @@ Optional.
   * Default value is `500`
 
 timeout in milliseconds on which to wait for a reply.
-
-[[plugins-filters-zeromq-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
-`exclude_fields`) must be met in order for the event to be handled by the filter.
-The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 

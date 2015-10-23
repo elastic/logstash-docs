@@ -97,16 +97,6 @@ Tags
 Set any custom tags for this event
 Default are the Logstash tags if any
 
-[[plugins-outputs-datadog-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
-
 [[plugins-outputs-datadog-priority]]
 ===== `priority` 
 
@@ -123,16 +113,6 @@ Priority
 
 Source type name
 
-[[plugins-outputs-datadog-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
 [[plugins-outputs-datadog-text]]
 ===== `text` 
 
@@ -148,18 +128,6 @@ Text
   * Default value is `"Logstash event for %{host}"`
 
 Title
-
-[[plugins-outputs-datadog-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-The type to act on. If a type is given, then this output will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 [[plugins-outputs-datadog-workers]]
 ===== `workers` 

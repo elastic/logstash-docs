@@ -1,6 +1,10 @@
 [[plugins-outputs-elasticsearch_java]]
 === elasticsearch_java
 
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-elasticsearch_java`.
+
+
 This output lets you store logs in Elasticsearch using the native 'node' and 'transport'
 protocols. It is highly recommended to use the regular 'logstash-output-elasticsearch' output
 which uses HTTP instead. This output is, in-fact, sometimes slower, and never faster than that one.
@@ -8,7 +12,7 @@ Additionally, upgrading your Elasticsearch cluster may require you to simultaneo
 plugin for any protocol level changes. The HTTP client may be easier to work with due to wider
 familiarity with HTTP.
 
-*VERSION NOTE*: Your Elasticsearch cluster must be running Elasticsearch 2.0.0 or later.
+*VERSION NOTE*: Your Elasticsearch cluster must be running Elasticsearch 1.0.0 or later.
 
 If you want to set other Elasticsearch options that are not exposed directly
 as configuration options, there are two methods:
@@ -16,7 +20,7 @@ as configuration options, there are two methods:
 * Create an `elasticsearch.yml` file in the $PWD of the Logstash process
 * Pass in es.* java properties (`java -Des.node.foo=` or `ruby -J-Des.node.foo=`)
 
-With the default `protocol` setting (`node`), this plugin will join your
+With the default `protocol` setting ("node"), this plugin will join your
 Elasticsearch cluster as a client node, so it will show up in Elasticsearch's
 cluster status.
 
@@ -24,7 +28,7 @@ You can learn more about Elasticsearch at <https://www.elastic.co/products/elast
 
 ==== Operational Notes
 
-If using the default `protocol` setting (`node`), your firewalls might need
+If using the default `protocol` setting ("node"), your firewalls might need
 to permit port 9300 in *both* directions (from Logstash to Elasticsearch, and
 Elasticsearch to Logstash)
 
@@ -53,7 +57,7 @@ Here are the rules of what is retried when:
   retrying events. events in this queue will be retried a maximum of 5 times by default (configurable through :max_retries). The size of 
   this queue is capped by the value set in :retry_max_items.
 - Events from the retry queue are submitted again either when the queue reaches its max size or when
-  the max interval time is reached, which is set in `:retry_max_interval`.
+  the max interval time is reached, which is set in :retry_max_interval.
 - Events which are not retryable or have reached their max retry count are logged to stderr.
 
 &nbsp;
@@ -68,6 +72,7 @@ Required configuration options:
 [source,json]
 --------------------------
 elasticsearch_java {
+    network_host => ...
 }
 --------------------------
 
@@ -93,10 +98,10 @@ Available configuration options:
 | <<plugins-outputs-elasticsearch_java-keystore_password>> |<<password,password>>|No|
 | <<plugins-outputs-elasticsearch_java-manage_template>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-elasticsearch_java-max_retries>> |<<number,number>>|No|`3`
-| <<plugins-outputs-elasticsearch_java-network_host>> |<<string,string>>|No|
+| <<plugins-outputs-elasticsearch_java-network_host>> |<<string,string>>|Yes|
 | <<plugins-outputs-elasticsearch_java-node_name>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch_java-port>> |<<string,string>>|No|`"9300-9305"`
-| <<plugins-outputs-elasticsearch_java-protocol>> |<<string,string>>, one of `["node", "transport"]`|No|`"node"`
+| <<plugins-outputs-elasticsearch_java-protocol>> |<<string,string>>, one of `["node", "transport"]`|No|`"transport"`
 | <<plugins-outputs-elasticsearch_java-retry_max_interval>> |<<number,number>>|No|`5`
 | <<plugins-outputs-elasticsearch_java-retry_max_items>> |<<number,number>>|No|`5000`
 | <<plugins-outputs-elasticsearch_java-routing>> |<<string,string>>|No|
@@ -157,6 +162,7 @@ The .cer or .pem file to validate the server's certificate
 The name of your cluster if you set it on the Elasticsearch side. Useful
 for discovery when using `node` or `transport` protocols.
 By default, it looks for a cluster named 'elasticsearch'.
+Equivalent to the Elasticsearch option 'cluster.name'
 
 [[plugins-outputs-elasticsearch_java-codec]]
 ===== `codec` 
@@ -194,16 +200,6 @@ The document type to write events to. Generally you should try to write only
 similar events to the same 'type'. String expansion `%{foo}` works here.
 Unless you set 'document_type', the event 'type' will be used if it exists 
 otherwise the document type will be assigned the value of 'logs'
-
-[[plugins-outputs-elasticsearch_java-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
 
 [[plugins-outputs-elasticsearch_java-flush_size]]
 ===== `flush_size` 
@@ -350,11 +346,13 @@ Set max retry for each event
 [[plugins-outputs-elasticsearch_java-network_host]]
 ===== `network_host` 
 
+  * This is a required setting.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The name/address of the host to bind to for Elasticsearch clustering
-This MUST be set when the node protocol is used. The internal Elasticsearch node
+The name/address of the host to bind to for Elasticsearch clustering. Equivalent to the Elasticsearch option 'network.host'
+option.
+This MUST be set for either protocol to work (node or transport)! The internal Elasticsearch node
 will bind to this ip. This ip MUST be reachable by all nodes in the Elasticsearch cluster
 
 [[plugins-outputs-elasticsearch_java-node_name]]
@@ -383,7 +381,7 @@ If you do not set this, the following defaults are used:
 ===== `protocol` 
 
   * Value can be any of: `node`, `transport`
-  * Default value is `"node"`
+  * Default value is `"transport"`
 
 Choose the protocol used to talk to Elasticsearch.
 
@@ -403,9 +401,6 @@ in situations where you cannot permit connections outbound from the
 Elasticsearch cluster to this Logstash server.
 
 All protocols will use bulk requests when talking to Elasticsearch.
-
-The default `protocol` setting under java/jruby is "node". The default
-`protocol` on non-java rubies is "http"
 
 [[plugins-outputs-elasticsearch_java-retry_max_interval]]
 ===== `retry_max_interval` 
@@ -438,8 +433,9 @@ This can be dynamic using the `%{foo}` syntax.
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
-Enable cluster sniffing (transport only)
+Enable cluster sniffing (transport only).
 Asks host for the list of all cluster nodes and adds them to the hosts list
+Equivalent to the Elasticsearch option 'client.transport.sniff'
 
 [[plugins-outputs-elasticsearch_java-ssl_certificate_verification]]
 ===== `ssl_certificate_verification` 
@@ -450,16 +446,6 @@ Asks host for the list of all cluster nodes and adds them to the hosts list
 Validate the server's certificate
 Disabling this severely compromises security
 For more information read https://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf
-
-[[plugins-outputs-elasticsearch_java-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
 
 [[plugins-outputs-elasticsearch_java-template]]
 ===== `template` 
@@ -499,9 +485,7 @@ in the `template` and `template_name` directives.
   * Value type is <<number,number>>
   * There is no default value for this setting.
 
-This is only valid for the 'node' protocol. This sets the port to bind to on `network_host`
-
-The port for the node to listen on.
+This sets the local port to bind to. Equivalent to the Elasticsrearch option 'transport.tcp.port'
 
 [[plugins-outputs-elasticsearch_java-truststore]]
 ===== `truststore` 
@@ -519,18 +503,6 @@ Use either `:truststore` or `:cacert`
   * There is no default value for this setting.
 
 Set the truststore password
-
-[[plugins-outputs-elasticsearch_java-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-The type to act on. If a type is given, then this output will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 [[plugins-outputs-elasticsearch_java-upsert]]
 ===== `upsert` 

@@ -124,16 +124,6 @@ Note that Boundary requires this to be seconds since epoch
 If overriding, it is your responsibility to type this correctly
 By default this is set to `event["@timestamp"].to_i`
 
-[[plugins-outputs-boundary-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
-
 [[plugins-outputs-boundary-org_id]]
 ===== `org_id` 
 
@@ -154,28 +144,6 @@ Override the start time
 Note that Boundary requires this to be seconds since epoch
 If overriding, it is your responsibility to type this correctly
 By default this is set to `event["@timestamp"].to_i`
-
-[[plugins-outputs-boundary-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
-[[plugins-outputs-boundary-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-The type to act on. If a type is given, then this output will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 [[plugins-outputs-boundary-workers]]
 ===== `workers` 

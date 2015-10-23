@@ -8,7 +8,13 @@ NOTE: This is a community-maintained plugin! It does not ship with Logstash by d
 Send events to a syslog server.
 
 You can send messages compliant with RFC3164 or RFC5424
-UDP or TCP syslog transport is supported
+using either UDP or TCP as the transport protocol.
+
+By default the contents of the `message` field will be shipped as
+the free-form message text part of the emitted syslog message. If
+your messages don't have a `message` field or if you for some other
+reason want to change the emitted message, modify the `message`
+configuration option.
 
 &nbsp;
 
@@ -40,6 +46,7 @@ Available configuration options:
 | <<plugins-outputs-syslog-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-outputs-syslog-facility>> |<<string,string>>, one of `["kernel", "user-level", "mail", "daemon", "security/authorization", "syslogd", "line printer", "network news", "uucp", "clock", "security/authorization", "ftp", "ntp", "log audit", "log alert", "clock", "local0", "local1", "local2", "local3", "local4", "local5", "local6", "local7"]`|Yes|
 | <<plugins-outputs-syslog-host>> |<<string,string>>|Yes|
+| <<plugins-outputs-syslog-message>> |<<string,string>>|No|`"%{message}"`
 | <<plugins-outputs-syslog-msgid>> |<<string,string>>|No|`"-"`
 | <<plugins-outputs-syslog-port>> |<<number,number>>|Yes|
 | <<plugins-outputs-syslog-procid>> |<<string,string>>|No|`"-"`
@@ -72,16 +79,6 @@ application name for syslog message
 
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
 
-[[plugins-outputs-syslog-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
-
 [[plugins-outputs-syslog-facility]]
 ===== `facility` 
 
@@ -99,6 +96,14 @@ facility label for syslog message
   * There is no default value for this setting.
 
 syslog server address to connect to
+
+[[plugins-outputs-syslog-message]]
+===== `message` 
+
+  * Value type is <<string,string>>
+  * Default value is `"%{message}"`
+
+message text to log
 
 [[plugins-outputs-syslog-msgid]]
 ===== `msgid` 
@@ -158,16 +163,6 @@ severity label for syslog message
 
 source host for syslog message
 
-[[plugins-outputs-syslog-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
 [[plugins-outputs-syslog-timestamp]]
 ===== `timestamp`  (DEPRECATED)
 
@@ -176,18 +171,6 @@ Optional.
   * Default value is `"%{@timestamp}"`
 
 timestamp for syslog message
-
-[[plugins-outputs-syslog-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-The type to act on. If a type is given, then this output will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 [[plugins-outputs-syslog-workers]]
 ===== `workers` 

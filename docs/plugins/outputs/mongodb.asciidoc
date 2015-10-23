@@ -75,16 +75,6 @@ select a collection based on data in the event.
 
 The database to use
 
-[[plugins-outputs-mongodb-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
-
 [[plugins-outputs-mongodb-generateId]]
 ===== `generateId` 
 
@@ -112,28 +102,6 @@ http://www.mongodb.org/display/DOCS/Dates
   * Default value is `3`
 
 Number of seconds to wait after failure before retrying
-
-[[plugins-outputs-mongodb-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
-[[plugins-outputs-mongodb-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-The type to act on. If a type is given, then this output will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 [[plugins-outputs-mongodb-uri]]
 ===== `uri` 

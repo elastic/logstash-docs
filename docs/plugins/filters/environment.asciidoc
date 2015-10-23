@@ -5,7 +5,27 @@
 NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-filter-environment`.
 
 
-Set fields from environment variables
+This filter stores environment variables as subfields in the `@metadata` field.
+You can then use these values in other parts of the pipeline.
+
+Adding environment variables is as easy as:
+   filter {
+     environment {
+       add_metadata_from_env { "field_name" => "ENV_VAR_NAME" }
+     }
+   }
+
+Accessing stored environment variables is now done through the `@metadata` field:
+
+   ["@metadata"]["field_name"]
+
+This would reference field `field_name`, which in the above example references
+the `ENV_VAR_NAME` environment variable.
+
+IMPORTANT: Previous versions of this plugin put the environment variables as
+fields at the root level of the event.  Current versions make use of the
+`@metadata` field, as outlined.  You have to change `add_field_from_env` in
+the older versions to `add_metadata_from_env` in the newer version.
 
 &nbsp;
 
@@ -30,7 +50,7 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-filters-environment-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-environment-add_field_from_env>> |<<hash,hash>>|No|`{}`
+| <<plugins-filters-environment-add_metadata_from_env>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-environment-add_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-environment-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-environment-remove_field>> |<<array,array>>|No|`[]`
@@ -75,14 +95,24 @@ would add field `foo_hello` if it is present, with the
 value above and the `%{host}` piece replaced with that value from the
 event. The second example would also add a hardcoded field.
 
-[[plugins-filters-environment-add_field_from_env]]
-===== `add_field_from_env` 
+[[plugins-filters-environment-add_metadata_from_env]]
+===== `add_metadata_from_env` 
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
 
-Specify a hash of fields to the environment variable
-A hash of matches of `field => environment` variable
+Specify a hash of field names and the environment variable name with the
+value you want imported into Logstash. For example:
+
+   add_metadata_from_env { "field_name" => "ENV_VAR_NAME" }
+
+or
+
+   add_metadata_from_env {
+     "field1" => "ENV1"
+     "field2" => "ENV2"
+     # "field_n" => "ENV_n"
+   }
 
 [[plugins-filters-environment-add_tag]]
 ===== `add_tag` 
@@ -111,16 +141,6 @@ Example:
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
-
-[[plugins-filters-environment-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
 
 [[plugins-filters-environment-periodic_flush]]
 ===== `periodic_flush` 
@@ -186,29 +206,5 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the tag `foo_hello` if it is present. The second example
 would remove a sad, unwanted tag as well.
-
-[[plugins-filters-environment-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
-[[plugins-filters-environment-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
-`exclude_fields`) must be met in order for the event to be handled by the filter.
-The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 
