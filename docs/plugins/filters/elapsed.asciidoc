@@ -194,16 +194,6 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
 
 The name of the tag identifying the "end event"
 
-[[plugins-filters-elapsed-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
-
 [[plugins-filters-elapsed-new_event_on_match]]
 ===== `new_event_on_match` 
 
@@ -288,16 +278,6 @@ would remove a sad, unwanted tag as well.
 
 The name of the tag identifying the "start event"
 
-[[plugins-filters-elapsed-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
 [[plugins-filters-elapsed-timeout]]
 ===== `timeout` 
 
@@ -307,20 +287,6 @@ Optional.
 The amount of seconds after an "end event" can be considered lost.
 The corresponding "start event" is discarded and an "expired event"
 is generated. The default value is 30 minutes (1800 seconds).
-
-[[plugins-filters-elapsed-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
-`exclude_fields`) must be met in order for the event to be handled by the filter.
-The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 [[plugins-filters-elapsed-unique_id_field]]
 ===== `unique_id_field` 

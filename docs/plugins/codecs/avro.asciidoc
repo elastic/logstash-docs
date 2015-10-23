@@ -2,10 +2,10 @@
 === avro
 
 
-NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-codec-avro`.
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-codec-avro`.
 
 
-Read serialized Avro records as Logstash events.
+Read serialized Avro records as Logstash events
 
 This plugin is used to serialize Logstash events as 
 Avro datums, as well as deserializing Avro datums into 
@@ -85,10 +85,11 @@ Available configuration options:
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Schema path to fetch the schema from. This can be a 'http' or 'file' scheme URI
-
+schema path to fetch the schema from.
+This can be a 'http' or 'file' scheme URI
 example:
-    http - "http://example.com/schema.avsc"
-    file - "/path/to/schema.avsc"
+
+* http - `http://example.com/schema.avsc`
+* file - `/path/to/schema.avsc`
 
 

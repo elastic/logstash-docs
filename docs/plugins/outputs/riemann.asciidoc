@@ -76,16 +76,6 @@ The codec used for output data. Output codecs are a convenient method for encodi
 
 Enable debugging output?
 
-[[plugins-outputs-riemann-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
-
 [[plugins-outputs-riemann-host]]
 ===== `host` 
 
@@ -191,28 +181,6 @@ but can be overridden here.
 The name of the sender.
 This sets the `host` value
 in the Riemann event
-
-[[plugins-outputs-riemann-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
-[[plugins-outputs-riemann-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-The type to act on. If a type is given, then this output will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 [[plugins-outputs-riemann-workers]]
 ===== `workers` 

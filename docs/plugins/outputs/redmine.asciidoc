@@ -5,7 +5,7 @@
 NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-redmine`.
 
 
-The redmine output is used to create a ticket via the API redmine. 
+The redmine output is used to create a ticket via the API redmine.
 
 It send a POST request in a JSON format and use TOKEN authentication
 
@@ -109,16 +109,6 @@ The codec used for output data. Output codecs are a convenient method for encodi
 redmine issue description
 required
 
-[[plugins-outputs-redmine-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
-
 [[plugins-outputs-redmine-fixed_version_id]]
 ===== `fixed_version_id` 
 
@@ -144,7 +134,7 @@ not required for post_issue
   * There is no default value for this setting.
 
 redmine issue priority_id
-required 
+required
 
 [[plugins-outputs-redmine-project_id]]
 ===== `project_id` 
@@ -153,8 +143,8 @@ required
   * Value type is <<number,number>>
   * There is no default value for this setting.
 
-redmine issue projet_id 
-required 
+redmine issue projet_id
+required
 
 [[plugins-outputs-redmine-ssl]]
 ===== `ssl` 
@@ -172,7 +162,7 @@ required
   * There is no default value for this setting.
 
 redmine issue status_id
-required 
+required
 
 [[plugins-outputs-redmine-subject]]
 ===== `subject` 
@@ -181,17 +171,7 @@ required
   * Default value is `"%{host}"`
 
 redmine issue subject
-required 
-
-[[plugins-outputs-redmine-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
+required
 
 [[plugins-outputs-redmine-token]]
 ===== `token` 
@@ -210,19 +190,7 @@ redmine token user used for authentication
   * There is no default value for this setting.
 
 redmine issue tracker_id
-required 
-
-[[plugins-outputs-redmine-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-The type to act on. If a type is given, then this output will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
+required
 
 [[plugins-outputs-redmine-url]]
 ===== `url` 

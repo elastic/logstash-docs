@@ -113,16 +113,6 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
 
-[[plugins-filters-range-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
-
 [[plugins-filters-range-negate]]
 ===== `negate` 
 
@@ -166,8 +156,6 @@ Example:
 Supported actions are drop tag or field with specified value.
 Added tag names and field names and field values can have `%{dynamic}` values.
 
-TODO(piavlo): The action syntax is ugly at the moment due to logstash grammar limitations - arrays grammar should support
-TODO(piavlo): simple not nested hashses as values in addition to numaric and string values to prettify the syntax.
 
 [[plugins-filters-range-remove_field]]
 ===== `remove_field` 
@@ -224,29 +212,5 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the tag `foo_hello` if it is present. The second example
 would remove a sad, unwanted tag as well.
-
-[[plugins-filters-range-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
-[[plugins-filters-range-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
-`exclude_fields`) must be met in order for the event to be handled by the filter.
-The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 

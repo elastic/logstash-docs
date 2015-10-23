@@ -10,10 +10,10 @@ I didn't really want to code this project but I couldn't find
 a respectable alternative that would also run on any Windows
 machine - which is the problem and why I am not going with Graphite
 and statsd.  This application provides multiple integration options
-so as to make its use under your network requirements possible. 
+so as to make its use under your network requirements possible.
 This includes a REST option that is always enabled for your use
-in case you want to write a small script to send the occasional 
-metric data. 
+in case you want to write a small script to send the occasional
+metric data.
 
 Find GraphTastic here : https://github.com/NickPadilla/GraphTastic
 
@@ -63,8 +63,8 @@ Available configuration options:
   * Value type is <<number,number>>
   * Default value is `60`
 
-the number of metrics to send to GraphTastic at one time. 60 seems to be the perfect 
-amount for UDP, with default packet size. 
+the number of metrics to send to GraphTastic at one time. 60 seems to be the perfect
+amount for UDP, with default packet size.
 
 [[plugins-outputs-graphtastic-codec]]
 ===== `codec` 
@@ -82,7 +82,7 @@ The codec used for output data. Output codecs are a convenient method for encodi
 
 if using rest as your end point you need to also provide the application url
 it defaults to localhost/graphtastic.  You can customize the application url
-by changing the name of the .war file.  There are other ways to change the 
+by changing the name of the .war file.  There are other ways to change the
 application context, but they vary depending on the Application Server in use.
 Please consult your application server documentation for more on application
 contexts.
@@ -97,16 +97,6 @@ setting allows you to specify where we save errored transactions
 this makes the most sense at this point - will need to decide
 on how we reintegrate these error metrics
 NOT IMPLEMENTED!
-
-[[plugins-outputs-graphtastic-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
 
 [[plugins-outputs-graphtastic-host]]
 ===== `host` 
@@ -130,11 +120,11 @@ options are udp(fastest - default) - rmi(faster) - rest(fast) - tcp(don't use TC
   * Value type is <<hash,hash>>
   * Default value is `{}`
 
-metrics hash - you will provide a name for your metric and the metric 
+metrics hash - you will provide a name for your metric and the metric
 data as key value pairs.  so for example:
 
 [source,ruby]
-metrics => { "Response" => "%{response}" } 
+metrics => { "Response" => "%{response}" }
 
 example for the logstash config
 
@@ -160,29 +150,7 @@ port for the graphtastic instance - defaults to 1199 for RMI, 1299 for TCP, 1399
 number of attempted retry after send error - currently only way to integrate
 errored transactions - should try and save to a file or later consumption
 either by graphtastic utility or by this program after connectivity is
-ensured to be established. 
-
-[[plugins-outputs-graphtastic-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
-[[plugins-outputs-graphtastic-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-The type to act on. If a type is given, then this output will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
+ensured to be established.
 
 [[plugins-outputs-graphtastic-workers]]
 ===== `workers` 
