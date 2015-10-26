@@ -100,7 +100,7 @@ Available configuration options:
 | <<plugins-outputs-elasticsearch-password>> |<<password,password>>|No|
 | <<plugins-outputs-elasticsearch-path>> |<<string,string>>|No|`"/"`
 | <<plugins-outputs-elasticsearch-port>> |<<string,string>>|No|
-| <<plugins-outputs-elasticsearch-protocol>> |<<string,string>>, one of `["node", "transport", "http"]`|No|
+| <<plugins-outputs-elasticsearch-protocol>> |<<string,string>>, one of `["node", "transport", "http"]`|No|`node`
 | <<plugins-outputs-elasticsearch-proxy>> |<<,>>|No|
 | <<plugins-outputs-elasticsearch-retry_max_interval>> |<<number,number>>|No|`5`
 | <<plugins-outputs-elasticsearch-retry_max_items>> |<<number,number>>|No|`5000`
@@ -437,6 +437,12 @@ If you do not set this, the following defaults are used:
 
 Choose the protocol used to talk to Elasticsearch.
 
+The 'http' protocol will use the Elasticsearch REST/HTTP interface to talk to elasticsearch. 
+We strongly encourage the use of HTTP over the node protocol for a number of reasons. 
+HTTP is only marginally slower, yet far easier to administer and work with. 
+When using the HTTP protocol one may upgrade Elasticsearch versions without having to upgrade
+Logstash in lock-step
+
 The 'node' protocol (default) will connect to the cluster as a normal Elasticsearch
 node (but will not store data). If you use the `node` protocol, you must permit
 bidirectional communication on the port 9300 (or whichever port you have
@@ -451,9 +457,6 @@ The 'transport' protocol will connect to the host you specify and will
 not show up as a 'node' in the Elasticsearch cluster. This is useful
 in situations where you cannot permit connections outbound from the
 Elasticsearch cluster to this Logstash server.
-
-The 'http' protocol will use the Elasticsearch REST/HTTP interface to talk
-to elasticsearch.
 
 All protocols will use bulk requests when talking to Elasticsearch.
 
