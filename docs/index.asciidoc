@@ -2,8 +2,8 @@
 = Reference
 
 :branch:                2.0
-:logstash_version:      2.0.0-beta1
-:elasticsearch_version: 2.0.0-beta1
+:logstash_version:      2.0.0
+:elasticsearch_version: 2.0.0
 :jdk:                   1.7.0_60
 :guide:                 https://www.elastic.co/guide/en/elasticsearch/guide/current/
 :ref:                   https://www.elastic.co/guide/en/elasticsearch/reference/current/
