@@ -6,7 +6,7 @@ NOTE: This is a community-maintained plugin! It does not ship with Logstash by d
 
 
 
-The aim of this filter is to aggregate informations available among several events (typically log lines) belonging to a same task,
+The aim of this filter is to aggregate information available among several events (typically log lines) belonging to a same task,
 and finally push aggregated information into final task event.
 
 ==== Example #1
@@ -104,8 +104,7 @@ the field `sql_duration` is added and contains the sum of all sql queries durati
 ----------------------------------
 
 * the final event is exactly the same than example #1
-* the key point is the "||=" ruby operator. +
-it allows to initialize 'sql_duration' map entry to 0 only if this map entry is not already initialized
+* the key point is the "||=" ruby operator. It allows to initialize 'sql_duration' map entry to 0 only if this map entry is not already initialized
 
 
 ==== How it works
@@ -116,6 +115,7 @@ it allows to initialize 'sql_duration' map entry to 0 only if this map entry is 
 * after the final event, the map attached to task is deleted
 * in one filter configuration, it is recommanded to define a timeout option to protect the feature against unterminated tasks. It tells the filter to delete expired maps
 * if no timeout is defined, by default, all maps older than 1800 seconds are automatically deleted
+* finally, if `code` execution raises an exception, the error is logged and event is tagged '_aggregateexception'
 
 
 
@@ -228,10 +228,13 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The code to execute to update map, using current event. +
-Or on the contrary, the code to execute to update event, using current map. +
-You will have a 'map' variable and an 'event' variable available (that is the event itself). +
-Example value : "map['sql_duration'] += event['duration']" +
+The code to execute to update map, using current event.
+
+Or on the contrary, the code to execute to update event, using current map.
+
+You will have a 'map' variable and an 'event' variable available (that is the event itself).
+
+Example value : "map['sql_duration'] += event['duration']"
 
 [[plugins-filters-aggregate-end_of_task]]
 ===== `end_of_task` 
@@ -241,26 +244,19 @@ Example value : "map['sql_duration'] += event['duration']" +
 
 Tell the filter that task is ended, and therefore, to delete map after code execution.  
 
-[[plugins-filters-aggregate-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events without any of these tags.
-Optional.
-
 [[plugins-filters-aggregate-map_action]]
 ===== `map_action` 
 
   * Value type is <<string,string>>
   * Default value is `"create_or_update"`
 
-Tell the filter what to do with aggregate map (default :  "create_or_update"). +
-create: create the map, and execute the code only if map wasn't created before +
-update: doesn't create the map, and execute the code only if map was created before +
-create_or_update: create the map if it wasn't created before, execute the code in all cases +
+Tell the filter what to do with aggregate map.
+
+`create`: create the map, and execute the code only if map wasn't created before
+
+`update`: doesn't create the map, and execute the code only if map was created before
+
+`create_or_update`: create the map if it wasn't created before, execute the code in all cases
 
 [[plugins-filters-aggregate-periodic_flush]]
 ===== `periodic_flush` 
@@ -327,16 +323,6 @@ If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the tag `foo_hello` if it is present. The second example
 would remove a sad, unwanted tag as well.
 
-[[plugins-filters-aggregate-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
 [[plugins-filters-aggregate-task_id]]
 ===== `task_id` 
 
@@ -344,9 +330,11 @@ Optional.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The expression defining task ID to correlate logs. +
-This value must uniquely identify the task in the system +
-Example value : "%{application}%{my_task_id}" +
+The expression defining task ID to correlate logs.
+
+This value must uniquely identify the task in the system.
+
+Example value : "%{application}%{my_task_id}"
 
 [[plugins-filters-aggregate-timeout]]
 ===== `timeout` 
@@ -354,22 +342,10 @@ Example value : "%{application}%{my_task_id}" +
   * Value type is <<number,number>>
   * Default value is `0`
 
-The amount of seconds after a task "end event" can be considered lost. +
-The task "map" is evicted. +
-The default value is 0, which means no timeout so no auto eviction. +
+The amount of seconds after a task "end event" can be considered lost.
 
-[[plugins-filters-aggregate-type]]
-===== `type`  (DEPRECATED)
+The task "map" is evicted.
 
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-Note that all of the specified routing options (`type`,`tags`,`exclude_tags`,`include_fields`,
-`exclude_fields`) must be met in order for the event to be handled by the filter.
-The type to act on. If a type is given, then this filter will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
+Default value (`0`) means no timeout so no auto eviction.
 
 
