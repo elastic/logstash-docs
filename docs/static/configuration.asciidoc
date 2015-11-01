@@ -11,7 +11,7 @@ Let's step through creating a simple config file and using it to run Logstash. C
 ----------------------------------
 input { stdin { } }
 output {
-  elasticsearch { host => localhost }
+  elasticsearch { hosts => ["localhost:9200"] }
   stdout { codec => rubydebug }
 }
 ----------------------------------
@@ -150,6 +150,8 @@ Input codecs provide a convenient way to decode your data before it enters the i
 Output codecs provide a convenient way to encode your data before it leaves the output.
 Using an input or output codec eliminates the need for a separate filter in your Logstash pipeline.
 
+A list of available codecs can be found at the <<codec-plugins,Codec Plugins>> page.
+
 Example:
 
 [source,js]
@@ -218,13 +220,18 @@ Example:
 [float]
 ==== String
 
-A string must be a single character sequence. Note that string values are enclosed in quotes.
+A string must be a single character sequence. Note that string values are
+enclosed in quotes, either double or single. Literal quotes in the string
+need to be escaped with a backslash if they are of the same kind as the string
+delimiter, i.e. single quotes within a single-quoted string need to be escaped
+as well as double quotes within a double-quoted string.
 
 Example:
 
 [source,js]
 ----------------------------------
   name => "Hello world"
+  name => 'It\'s a beautiful day'
 ----------------------------------
 
 [float]
@@ -585,7 +592,7 @@ output {
   elasticsearch {
     action => "%{[@metadata][action]}"
     document_id => "%{[@metadata][_id]}"
-    host => "example.com"
+    hosts => ["example.com"]
     index => "index_name"
     protocol => "http"
   }
@@ -615,7 +622,7 @@ filter {
 }
 
 output {
-  elasticsearch { host => localhost }
+  elasticsearch { hosts => ["localhost:9200"] }
   stdout { codec => rubydebug }
 }
 ----------------------------------
@@ -687,7 +694,7 @@ filter {
 
 output {
   elasticsearch {
-    host => localhost
+    hosts => ["localhost:9200"]
   }
   stdout { codec => rubydebug }
 }
@@ -756,7 +763,7 @@ filter {
 }
 
 output {
-  elasticsearch { host => localhost }
+  elasticsearch { hosts => ["localhost:9200"] }
   stdout { codec => rubydebug }
 }
 ----------------------------------
@@ -823,7 +830,7 @@ filter {
 }
 
 output {
-  elasticsearch { host => localhost }
+  elasticsearch { hosts => ["localhost:9200"] }
   stdout { codec => rubydebug }
 }
 ----------------------------------
