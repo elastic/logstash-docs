@@ -38,7 +38,8 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-inputs-eventlog-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-inputs-eventlog-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-inputs-eventlog-logfile>> |<<array,array>>|No|`["Application", "Security", "System"]`
+| <<plugins-inputs-eventlog-logfile>> |<<string,string>>|No|`"Application"`
+| <<plugins-inputs-eventlog-interval>> |<<number,number>>|No|`1000`
 | <<plugins-inputs-eventlog-tags>> |<<array,array>>|No|
 | <<plugins-inputs-eventlog-type>> |<<string,string>>|No|
 |=======================================================================
@@ -71,7 +72,16 @@ The codec used for input data. Input codecs are a convenient method for decoding
   * Value type is <<array,array>>
   * Default value is `["Application", "Security", "System"]`
 
-Event Log Name
+Event Log Name. System and Security may require that privileges are given to the user running Logstash.
+For more information, see: https://social.technet.microsoft.com/forums/windowsserver/en-US/d2f813db-6142-4b5b-8d86-253ebb740473/easy-way-to-read-security-log
+
+[[plugins-inputs-eventlog-interval]]
+===== `interval` 
+
+  * Value type is <<number,number>>
+  * Default value is `1000`
+  
+How frequently should tail check for new event logs in milliseconds
 
 [[plugins-inputs-eventlog-tags]]
 ===== `tags` 
