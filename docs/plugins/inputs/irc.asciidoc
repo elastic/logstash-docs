@@ -1,7 +1,7 @@
 [[plugins-inputs-irc]]
 === irc
 
-
+NOTE: This is a community-maintained plugin!
 
 Read events from an IRC Server.
 

@@ -1,7 +1,7 @@
 [[plugins-inputs-pipe]]
 === pipe
 
-
+NOTE: This is a community-maintained plugin!
 
 Stream events from a long running command pipe.
 

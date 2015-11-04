@@ -1,7 +1,7 @@
 [[plugins-outputs-hipchat]]
 === hipchat
 
-
+NOTE: This is a community-maintained plugin!
 
 This output allows you to write events to https://www.hipchat.com/[HipChat].
 

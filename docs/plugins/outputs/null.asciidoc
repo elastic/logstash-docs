@@ -1,7 +1,7 @@
 [[plugins-outputs-null]]
 === null
 
-
+NOTE: This is a community-maintained plugin!
 
 A null output. This is useful for testing logstash inputs and filters for
 performance.
