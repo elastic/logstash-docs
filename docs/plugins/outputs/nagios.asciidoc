@@ -1,7 +1,7 @@
 [[plugins-outputs-nagios]]
 === nagios
 
-
+NOTE: This is a community-maintained plugin!
 
 The Nagios output is used for sending passive check results to Nagios via the
 Nagios command file. This output currently supports Nagios 3.

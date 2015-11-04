@@ -1,7 +1,7 @@
 [[plugins-outputs-irc]]
 === irc
 
-
+NOTE: This is a community-maintained plugin!
 
 Write events to IRC
 

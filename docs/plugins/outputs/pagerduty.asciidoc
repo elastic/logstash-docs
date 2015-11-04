@@ -1,7 +1,7 @@
 [[plugins-outputs-pagerduty]]
 === pagerduty
 
-
+NOTE: This is a community-maintained plugin!
 
 The PagerDuty output will send notifications based on pre-configured services
 and escalation policies. Logstash can send "trigger", "acknowledge" and "resolve"

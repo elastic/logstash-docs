@@ -1,7 +1,7 @@
 [[plugins-filters-clone]]
 === clone
 
-
+NOTE: This is a community-maintained plugin!
 
 The clone filter is for duplicating events.
 A clone will be made for each type in the clone list.

@@ -1,7 +1,7 @@
 [[plugins-outputs-nagios_nsca]]
 === nagios_nsca
 
-
+NOTE: This is a community-maintained plugin!
 
 The nagios_nsca output is used for sending passive check results to Nagios
 through the NSCA protocol.

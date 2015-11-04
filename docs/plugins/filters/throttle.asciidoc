@@ -1,7 +1,7 @@
 [[plugins-filters-throttle]]
 === throttle
 
-
+NOTE: This is a community-maintained plugin!
 
 The throttle filter is for throttling the number of events received. The filter
 is configured with a lower bound, the `before_count`, and upper bound, the `after_count`,

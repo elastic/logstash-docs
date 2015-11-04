@@ -1,7 +1,7 @@
 [[plugins-outputs-sqs]]
 === sqs
 
-
+NOTE: This is a community-maintained plugin!
 
 Push events to an Amazon Web Services Simple Queue Service (SQS) queue.
 

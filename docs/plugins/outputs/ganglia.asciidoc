@@ -1,7 +1,7 @@
 [[plugins-outputs-ganglia]]
 === ganglia
 
-
+NOTE: This is a community-maintained plugin!
 
 This output allows you to pull metrics from your logs and ship them to
 ganglia's gmond. This is heavily based on the graphite output.

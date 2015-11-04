@@ -1,7 +1,7 @@
 [[plugins-inputs-unix]]
 === unix
 
-
+NOTE: This is a community-maintained plugin!
 
 Read events over a UNIX socket.
 

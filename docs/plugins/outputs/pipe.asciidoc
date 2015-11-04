@@ -1,7 +1,7 @@
 [[plugins-outputs-pipe]]
 === pipe
 
-
+NOTE: This is a community-maintained plugin!
 
 Pipe output.
 
