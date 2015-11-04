@@ -1,7 +1,7 @@
 [[plugins-codecs-netflow]]
 === netflow
 
-
+NOTE: This is a community-maintained plugin!
 
 The "netflow" codec is for decoding Netflow v5/v9 flows.
 

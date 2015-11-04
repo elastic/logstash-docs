@@ -1,7 +1,7 @@
 [[plugins-filters-checksum]]
 === checksum
 
-
+NOTE: This is a community-maintained plugin!
 
 This filter let's you create a checksum based on various parts
 of the logstash event.

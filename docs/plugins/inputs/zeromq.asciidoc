@@ -1,7 +1,7 @@
 [[plugins-inputs-zeromq]]
 === zeromq
 
-
+NOTE: This is a community-maintained plugin!
 
 Read events over a 0MQ SUB socket.
 

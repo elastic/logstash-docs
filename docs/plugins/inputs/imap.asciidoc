@@ -1,7 +1,7 @@
 [[plugins-inputs-imap]]
 === imap
 
-
+NOTE: This is a community-maintained plugin!
 
 Read mails from IMAP server
 

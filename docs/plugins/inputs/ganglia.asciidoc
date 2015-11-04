@@ -1,7 +1,7 @@
 [[plugins-inputs-ganglia]]
 === ganglia
 
-
+NOTE: This is a community-maintained plugin!
 
 Read ganglia packets from the network via udp
 
