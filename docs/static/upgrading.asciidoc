@@ -47,13 +47,13 @@ There is one known issue (removal of https://www.elastic.co/guide/en/elasticsear
 Note: If you have custom template changes, please make sure to save it and merge any changes. You can 
 get the existing template by running:
 
-```
+[source,shell]
 curl -XGET localhost:9200/_template/logstash
-```
+
 
 Add the following option to your Logstash config:
 
-```
+[source,json]
 output {
 	elasticsearch {
 		template_overwrite => true
@@ -68,6 +68,6 @@ for this breaking change, including logstash-filter-metrics and logstash-filter-
 These plugin updates are available for Logstash 2.0. To upgrade to the latest version of these
 plugins, the command is:
 
-```
+[source,shell]
 bin/plugin update <plugin_name>
-```
+
