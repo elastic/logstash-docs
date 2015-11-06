@@ -218,7 +218,8 @@ JDBC connection string
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-JDBC driver class to load, for example `oracle.jdbc.OracleDriver` or `org.apache.derby.jdbc.ClientDriver`
+JDBC driver class to load, for example, `"org.apache.derby.jdbc.ClientDriver"`. If you are using
+the Oracle JDBC driver (`ojdbc6.jar`) the correct `jdbc_driver_class` is `"Java::oracle.jdbc.driver.OracleDriver"`
 
 [[plugins-inputs-jdbc-jdbc_driver_library]]
 ===== `jdbc_driver_library` 
