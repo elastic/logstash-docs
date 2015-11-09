@@ -38,6 +38,7 @@ The following filter plugins are available:
 * <<plugins-filters-checksum,checksum>>
 |[[plugins-filters-letters-d]]
 * <<plugins-filters-date,date>>
+* <<plugins-filters-de_dot,de_dot>>
 * <<plugins-filters-dns,dns>>
 * <<plugins-filters-drop,drop>>
 |[[plugins-filters-letters-e]]
@@ -106,6 +107,8 @@ pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-checksum/e
 include::filters/checksum.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-date/edit/master/lib/logstash/filters/date.rb ?>]
 include::filters/date.asciidoc[]
+pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-de_dot/edit/master/lib/logstash/filters/de_dot.rb ?>]
+include::filters/de_dot.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-dns/edit/master/lib/logstash/filters/dns.rb ?>]
 include::filters/dns.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-drop/edit/master/lib/logstash/filters/drop.rb ?>]
