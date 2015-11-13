@@ -10,17 +10,25 @@
 :shield:                https://www.elastic.co/guide/en/shield/current
 :logstash:              https://www.elastic.co/guide/en/logstash/current/
 
-.
+[[introduction]]
+== Logstash Introduction
 
-// preceding period is magic, do not delete
+Logstash is an open source data collection engine with real-time pipelining capabilities. Logstash can dynamically 
+unify data from disparate sources and normalize the data into destinations of your choice. Cleanse and democratize all 
+your data for diverse advanced downstream analytics and visualization use cases.
 
-// Glossary and core concepts go here
+While Logstash originally drove innovation in log collection, its capabilities extend well beyond that use case. Any 
+type of event can be enriched and transformed with a broad array of input, filter, and output plugins, with many 
+native codecs further simplifying the ingestion process. Logstash accelerates your insights by harnessing a greater 
+volume and variety of data.
 
 // The pass blocks here point to the correct repository for the edit links in the guide.
 
 // Introduction
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/introduction.asciidoc ?>]
 include::static/introduction.asciidoc[]
+
+// Glossary and core concepts go here
 
 // Getting Started with Logstash
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/getting-started-with-logstash.asciidoc ?>]
@@ -64,8 +72,13 @@ include::static/deploying.asciidoc[]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/plugin-manager.asciidoc ?>]
 include::static/plugin-manager.asciidoc[]
 
+// Contributing to Logstash
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/contributing-to-logstash.asciidoc ?>]
 include::static/contributing-to-logstash.asciidoc[]
+
+// Logstash Community Maintainer Guide
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/maintainer-guide.asciidoc ?>]
+include::static/maintainer-guide.asciidoc[]
 
 // A space is necessary here ^^^
 pass::[<?edit_url?>]
