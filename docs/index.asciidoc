@@ -72,13 +72,13 @@ include::static/deploying.asciidoc[]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/plugin-manager.asciidoc ?>]
 include::static/plugin-manager.asciidoc[]
 
-// Contributing to Logstash
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/contributing-to-logstash.asciidoc ?>]
-include::static/contributing-to-logstash.asciidoc[]
-
 // Logstash Community Maintainer Guide
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/maintainer-guide.asciidoc ?>]
 include::static/maintainer-guide.asciidoc[]
+
+// Contributing to Logstash
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/contributing-to-logstash.asciidoc ?>]
+include::static/contributing-to-logstash.asciidoc[]
 
 // A space is necessary here ^^^
 pass::[<?edit_url?>]
