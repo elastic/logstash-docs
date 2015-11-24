@@ -228,4 +228,3 @@ How Logstash should send the email, either via SMTP or by invoking sendmail.
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
 
-

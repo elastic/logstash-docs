@@ -1,9 +1,9 @@
 [[logstash-reference]]
 = Reference
 
-:branch:                1.5
-:logstash_version:      1.5.2
-:elasticsearch_version: 1.5.1
+:branch:                2.0
+:logstash_version:      2.0.0
+:elasticsearch_version: 2.0.0
 :jdk:                   1.7.0_60
 :guide:                 https://www.elastic.co/guide/en/elasticsearch/guide/current/
 :ref:                   https://www.elastic.co/guide/en/elasticsearch/reference/current/
