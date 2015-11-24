@@ -39,7 +39,7 @@ The following deprecated configuration settings are removed in this release:
 Configuration files with these settings present are invalid and prevent Logstash from starting.
 
 [float]
-== Kafka Output Configuration Changes
+=== Kafka Output Configuration Changes
 
 The 2.0 release of Logstash includes a new version of the Kafka output plugin with significant configuration changes.
 Please compare the documentation pages for the 
