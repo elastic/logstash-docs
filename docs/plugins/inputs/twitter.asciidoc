@@ -43,8 +43,11 @@ Available configuration options:
 | <<plugins-inputs-twitter-locations>> |<<string,string>>|No|
 | <<plugins-inputs-twitter-oauth_token>> |<<string,string>>|Yes|
 | <<plugins-inputs-twitter-oauth_token_secret>> |<<password,password>>|Yes|
+| <<plugins-inputs-twitter-proxy_address>> |<<string,string>>|No|`"127.0.0.1"`
+| <<plugins-inputs-twitter-proxy_port>> |<<number,number>>|No|`3128`
 | <<plugins-inputs-twitter-tags>> |<<array,array>>|No|
 | <<plugins-inputs-twitter-type>> |<<string,string>>|No|
+| <<plugins-inputs-twitter-use_proxy>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-twitter-use_samples>> |<<boolean,boolean>>|No|`false`
 |=======================================================================
 
@@ -193,6 +196,22 @@ Then at the bottom of the page, click 'Create my access token' which
 will create an oauth token and secret bound to your account and that
 application.
 
+[[plugins-inputs-twitter-proxy_address]]
+===== `proxy_address` 
+
+  * Value type is <<string,string>>
+  * Default value is `"127.0.0.1"`
+
+Location of the proxy, by default the same machine as the one running this LS instance
+
+[[plugins-inputs-twitter-proxy_port]]
+===== `proxy_port` 
+
+  * Value type is <<number,number>>
+  * Default value is `3128`
+
+Port where the proxy is listening, by default 3128 (squid)
+
 [[plugins-inputs-twitter-tags]]
 ===== `tags` 
 
@@ -221,6 +240,14 @@ example when you send an event from a shipper to an indexer) then
 a new input will not override the existing type. A type set at
 the shipper stays with that event for its life even
 when sent to another Logstash server.
+
+[[plugins-inputs-twitter-use_proxy]]
+===== `use_proxy` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+When to use a proxy to handle the connections
 
 [[plugins-inputs-twitter-use_samples]]
 ===== `use_samples` 
