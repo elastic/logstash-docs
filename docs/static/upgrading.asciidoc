@@ -71,6 +71,13 @@ plugins, the command is:
 [source,shell]
 bin/plugin update <plugin_name>
 
+If you have a custom plugin that is creating field names with dots, we advice you to not use dots. You can safely use underscore or nested fields like `[foo][bar]`. Unfortunately, many users have no control over the sources of their fields.  This has resulted in a poor user experience where dotted fields existed.  To address this issue, the de_dot filter has been created.  You can find the plugin documentation for it https://www.elastic.co/guide/en/logstash/master/plugins-filters-de_dot.html[here].
+
+You can install the de_dot filter using the plugin command:
+
+[source,shell]
+bin/plugin install logstash-filter-de_dot
+
 **Multiline Filter:** If you are using the Multiline Filter in your configuration and upgrade to Logstash 2.0,
 you will get an error. Make sure to explicitly set the number of filter workers (`-w`) to `1`. You can set the number
 of workers by passing a command line flag such as:
