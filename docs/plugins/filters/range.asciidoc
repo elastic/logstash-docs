@@ -144,11 +144,11 @@ Example:
         ranges => [ "message", 0, 10, "tag:short",
                     "message", 11, 100, "tag:medium",
                     "message", 101, 1000, "tag:long",
-                    "message", 1001, 1e1000, "drop",
+                    "message", 1001, 100000, "drop",
                     "duration", 0, 100, "field:latency:fast",
                     "duration", 101, 200, "field:latency:normal",
                     "duration", 201, 1000, "field:latency:slow",
-                    "duration", 1001, 1e1000, "field:latency:outlier",
+                    "duration", 1001, 100000, "field:latency:outlier",
                     "requests", 0, 10, "tag:too_few_%{host}_requests" ]
       }
     }
