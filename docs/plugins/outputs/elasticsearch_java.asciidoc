@@ -220,7 +220,7 @@ of events.
   * Default value is `["127.0.0.1"]`
 
 For the `node` protocol, if you do not specify `host`, it will attempt to use
-multicast discovery to connect to Elasticsearch.  If http://www.elastic.co/guide/en/elasticsearch/guide/current/_important_configuration_changes.html#_prefer_unicast_over_multicast[multicast is disabled] in Elasticsearch, 
+multicast discovery to connect to Elasticsearch.  If http://www.elastic.co/guide/en/elasticsearch/guide/current/important-configuration-changes.html#unicast[multicast is disabled] in Elasticsearch, 
 you must include the hostname or IP address of the host(s) to use for Elasticsearch unicast discovery.
 Remember the `node` protocol uses the http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-transport.html#modules-transport[transport] address (eg. 9300, not 9200).
     `"127.0.0.1"`
@@ -391,7 +391,7 @@ bidirectional communication on the port 9300 (or whichever port you have
 configured).
 
 If you do not specify the `host` parameter, it will use  multicast for http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-discovery-zen.html[Elasticsearch discovery].  While this may work in a test/dev environment where multicast is enabled in 
-Elasticsearch, we strongly recommend http://www.elastic.co/guide/en/elasticsearch/guide/current/_important_configuration_changes.html#_prefer_unicast_over_multicast[disabling multicast]
+Elasticsearch, we strongly recommend http://www.elastic.co/guide/en/elasticsearch/guide/current/important-configuration-changes.html#unicast[using unicast]
 in Elasticsearch.  To connect to an Elasticsearch cluster with multicast disabled,
 you must include the `host` parameter (see relevant section above).  
 
