@@ -38,12 +38,12 @@ Available configuration options:
 | <<plugins-inputs-tcp-host>> |<<string,string>>|No|`"0.0.0.0"`
 | <<plugins-inputs-tcp-mode>> |<<string,string>>, one of `["server", "client"]`|No|`"server"`
 | <<plugins-inputs-tcp-port>> |<<number,number>>|Yes|
-| <<plugins-inputs-tcp-ssl_cacert>> |a valid filesystem path|No|
 | <<plugins-inputs-tcp-ssl_cert>> |a valid filesystem path|No|
 | <<plugins-inputs-tcp-ssl_enable>> |<<boolean,boolean>>|No|`false`
+| <<plugins-inputs-tcp-ssl_extra_chain_certs>> |<<array,array>>|No|`[]`
 | <<plugins-inputs-tcp-ssl_key>> |a valid filesystem path|No|
 | <<plugins-inputs-tcp-ssl_key_passphrase>> |<<password,password>>|No|`nil`
-| <<plugins-inputs-tcp-ssl_verify>> |<<boolean,boolean>>|No|`false`
+| <<plugins-inputs-tcp-ssl_verify>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-tcp-tags>> |<<array,array>>|No|
 | <<plugins-inputs-tcp-type>> |<<string,string>>|No|
 |=======================================================================
@@ -108,8 +108,9 @@ When mode is `server`, the port to listen on.
 When mode is `client`, the port to connect to.
 
 [[plugins-inputs-tcp-ssl_cacert]]
-===== `ssl_cacert` 
+===== `ssl_cacert`  (DEPRECATED)
 
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
   * Value type is <<path,path>>
   * There is no default value for this setting.
 
@@ -131,6 +132,15 @@ SSL certificate path
 
 Enable SSL (must be set for other `ssl_` options to take effect).
 
+[[plugins-inputs-tcp-ssl_extra_chain_certs]]
+===== `ssl_extra_chain_certs` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+An Array of extra X509 certificates to be added to the certificate chain.
+Useful when the CA chain is not necessary in the system store.
+
 [[plugins-inputs-tcp-ssl_key]]
 ===== `ssl_key` 
 
@@ -151,7 +161,7 @@ SSL key passphrase
 ===== `ssl_verify` 
 
   * Value type is <<boolean,boolean>>
-  * Default value is `false`
+  * Default value is `true`
 
 Verify the identity of the other end of the SSL connection against the CA.
 For input, sets the field `sslsubject` to that of the client certificate.
