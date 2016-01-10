@@ -76,6 +76,10 @@ include::static/plugin-manager.asciidoc[]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/contributing-to-logstash.asciidoc ?>]
 include::static/contributing-to-logstash.asciidoc[]
 
+// Contributing a Patch to a Logstash Plugin
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/contributing-patch.asciidoc ?>]
+include::static/contributing-patch.asciidoc[]
+
 // Logstash Community Maintainer Guide
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/maintainer-guide.asciidoc ?>]
 include::static/maintainer-guide.asciidoc[]
