@@ -323,10 +323,10 @@ output {
 }
 ----------------------------------
 
-You can also format times using this sprintf format. Instead of specifying a field name, use the `+FORMAT` syntax where `FORMAT` is a http://joda-time.sourceforge.net/apidocs/org/joda/time/format/DateTimeFormat.html[time format].
+Similarly, you can convert the timestamp in the `@timestamp` field into a string. Instead of specifying a field name inside the curly braces, use the `+FORMAT` syntax where `FORMAT` is a http://joda-time.sourceforge.net/apidocs/org/joda/time/format/DateTimeFormat.html[time format].
 
 For example, if you want to use the file output to write to logs based on the
-hour and the 'type' field:
+event's date and hour and the `type` field:
 
 [source,js]
 ----------------------------------
@@ -406,30 +406,6 @@ output {
 }
 ----------------------------------
 
-You can test for the presence or absence of a field:
-
-[source,js]
-----------------------------------
-output {
-  # Alerts pagerduty if the `halted` field is present
-  if [halted]  {
-    pagerduty {
-    ...
-    }
-  }
-}
-----------------------------------
-
-[source,js]
-----------------------------------
-output {
-  # Drops messages without timestamps
-  if ![timestamp]  {
-    drop {}
-  }
-}
-----------------------------------
-
 The `in` conditional enables you to compare against the value of a field:
 
 [source,js]
@@ -473,11 +449,12 @@ For more complex examples, see <<using-conditionals, Using Conditionals>>.
 
 [float]
 [[metadata]]
-==== The @metadata field added[1.5]
+==== The @metadata field
 
-The contents of the `@metadata` field are not part of any of your events at output time. You can use
-the `@metadata` field for conditionals or to extend and build event fields with field reference and 
-`sprintf` formatting.
+In Logstash 1.5 there is a new, special field, called `@metadata`.  The contents
+of `@metadata` will not be part of any of your events at output time, which
+makes it great to use for conditionals, or extending and building event fields
+with field reference and sprintf formatting.
 
 The following configuration file will yield events from STDIN.  Whatever is
 typed will become the `message` field in the event.  The `mutate` events in the
@@ -845,7 +822,6 @@ filter {
       add_field => [ "received_at", "%{@timestamp}" ]
       add_field => [ "received_from", "%{host}" ]
     }
-    syslog_pri { }
     date {
       match => [ "syslog_timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
     }
