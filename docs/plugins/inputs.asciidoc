@@ -5,100 +5,57 @@ An input plugin enables a specific source of events to be read by Logstash.
 
 The following input plugins are available:
 
-<<plugins-inputs-letters-b, b>>
-<<plugins-inputs-letters-c, c>>
-<<plugins-inputs-letters-d, d>>
-<<plugins-inputs-letters-e, e>>
-<<plugins-inputs-letters-f, f>>
-<<plugins-inputs-letters-g, g>>
-<<plugins-inputs-letters-h, h>>
-<<plugins-inputs-letters-i, i>>
-<<plugins-inputs-letters-j, j>>
-<<plugins-inputs-letters-k, k>>
-<<plugins-inputs-letters-l, l>>
-<<plugins-inputs-letters-m, m>>
-<<plugins-inputs-letters-p, p>>
-<<plugins-inputs-letters-r, r>>
-<<plugins-inputs-letters-s, s>>
-<<plugins-inputs-letters-t, t>>
-<<plugins-inputs-letters-u, u>>
-<<plugins-inputs-letters-v, v>>
-<<plugins-inputs-letters-w, w>>
-<<plugins-inputs-letters-x, x>>
-<<plugins-inputs-letters-z, z>>
-[cols="asciidoc,asciidoc,asciidoc"]
 |=======================================================================
-|[[plugins-inputs-letters-b]]
-* <<plugins-inputs-beats,beats>>
-|[[plugins-inputs-letters-c]]
-* <<plugins-inputs-couchdb_changes,couchdb_changes>>
-|[[plugins-inputs-letters-d]]
-* <<plugins-inputs-drupal_dblog,drupal_dblog>>
-|[[plugins-inputs-letters-e]]
-* <<plugins-inputs-elasticsearch,elasticsearch>>
-* <<plugins-inputs-exec,exec>>
-* <<plugins-inputs-eventlog,eventlog>>
-|[[plugins-inputs-letters-f]]
-* <<plugins-inputs-file,file>>
-|[[plugins-inputs-letters-g]]
-* <<plugins-inputs-ganglia,ganglia>>
-* <<plugins-inputs-gelf,gelf>>
-* <<plugins-inputs-generator,generator>>
-* <<plugins-inputs-graphite,graphite>>
-* <<plugins-inputs-github,github>>
-|[[plugins-inputs-letters-h]]
-* <<plugins-inputs-heartbeat,heartbeat>>
-* <<plugins-inputs-heroku,heroku>>
-* <<plugins-inputs-http,http>>
-* <<plugins-inputs-http_poller,http_poller>>
-|[[plugins-inputs-letters-i]]
-* <<plugins-inputs-irc,irc>>
-* <<plugins-inputs-imap,imap>>
-|[[plugins-inputs-letters-j]]
-* <<plugins-inputs-jdbc,jdbc>>
-* <<plugins-inputs-jmx,jmx>>
-|[[plugins-inputs-letters-k]]
-* <<plugins-inputs-kafka,kafka>>
-|[[plugins-inputs-letters-l]]
-* <<plugins-inputs-log4j,log4j>>
-* <<plugins-inputs-lumberjack,lumberjack>>
-|[[plugins-inputs-letters-m]]
-* <<plugins-inputs-meetup,meetup>>
-|[[plugins-inputs-letters-p]]
-* <<plugins-inputs-pipe,pipe>>
-* <<plugins-inputs-puppet_facter,puppet_facter>>
-|[[plugins-inputs-letters-r]]
-* <<plugins-inputs-relp,relp>>
-* <<plugins-inputs-rss,rss>>
-* <<plugins-inputs-rackspace,rackspace>>
-* <<plugins-inputs-rabbitmq,rabbitmq>>
-* <<plugins-inputs-redis,redis>>
-|[[plugins-inputs-letters-s]]
-* <<plugins-inputs-snmptrap,snmptrap>>
-* <<plugins-inputs-stdin,stdin>>
-* <<plugins-inputs-sqlite,sqlite>>
-* <<plugins-inputs-s3,s3>>
-* <<plugins-inputs-sqs,sqs>>
-* <<plugins-inputs-stomp,stomp>>
-* <<plugins-inputs-syslog,syslog>>
-|[[plugins-inputs-letters-t]]
-* <<plugins-inputs-tcp,tcp>>
-* <<plugins-inputs-twitter,twitter>>
-|[[plugins-inputs-letters-u]]
-* <<plugins-inputs-unix,unix>>
-* <<plugins-inputs-udp,udp>>
-|[[plugins-inputs-letters-v]]
-* <<plugins-inputs-varnishlog,varnishlog>>
-|[[plugins-inputs-letters-w]]
-* <<plugins-inputs-wmi,wmi>>
-* <<plugins-inputs-websocket,websocket>>
-|[[plugins-inputs-letters-x]]
-* <<plugins-inputs-xmpp,xmpp>>
-|[[plugins-inputs-letters-z]]
-* <<plugins-inputs-zenoss,zenoss>>
-* <<plugins-inputs-zeromq,zeromq>>
-|&nbsp;
-|&nbsp;
+| Plugin | Description | Github repository
+| <<plugins-inputs-beats,beats>> | Receives events from the Elastic Beats framework | https://github.com/logstash-plugins/logstash-input-beats[logstash-input-beats]
+| <<plugins-inputs-couchdb_changes,couchdb_changes>> | Streams events from CouchDB's `_changes` URI | https://github.com/logstash-plugins/logstash-input-couchdb_changes[logstash-input-couchdb_changes]
+| <<plugins-inputs-drupal_dblog,drupal_dblog>> | Retrieves watchdog log events from Drupal installations with DBLog enabled | https://github.com/logstash-plugins/logstash-input-drupal_dblog[logstash-input-drupal_dblog]
+| <<plugins-inputs-elasticsearch,elasticsearch>> | Reads query results from an Elasticsearch cluster | https://github.com/logstash-plugins/logstash-input-elasticsearch[logstash-input-elasticsearch]
+| <<plugins-inputs-exec,exec>> | Captures the output of a shell command as an event | https://github.com/logstash-plugins/logstash-input-exec[logstash-input-exec]
+| <<plugins-inputs-eventlog,eventlog>> | Pulls events from the Windows Event Log | https://github.com/logstash-plugins/logstash-input-eventlog[logstash-input-eventlog]
+| <<plugins-inputs-file,file>> | Streams events from files | https://github.com/logstash-plugins/logstash-input-file[logstash-input-file]
+| <<plugins-inputs-ganglia,ganglia>> | Reads Ganglia packets over UDP | https://github.com/logstash-plugins/logstash-input-ganglia[logstash-input-ganglia]
+| <<plugins-inputs-gelf,gelf>> | Reads GELF-format messages from Graylog2 as events | https://github.com/logstash-plugins/logstash-input-gelf[logstash-input-gelf]
+| <<plugins-inputs-generator,generator>> | Generates random log events for test purposes | https://github.com/logstash-plugins/logstash-input-generator[logstash-input-generator]
+| <<plugins-inputs-graphite,graphite>> | Reads metrics from the `graphite` tool | https://github.com/logstash-plugins/logstash-input-graphite[logstash-input-graphite]
+| <<plugins-inputs-github,github>> | Reads events from a GitHub webhook | https://github.com/logstash-plugins/logstash-input-github[logstash-input-github]
+| <<plugins-inputs-heartbeat,heartbeat>> | Generates heartbeat events for testing | https://github.com/logstash-plugins/logstash-input-heartbeat[logstash-input-heartbeat]
+| <<plugins-inputs-heroku,heroku>> | Streams events from the logs of a Heroku app | https://github.com/logstash-plugins/logstash-input-heroku[logstash-input-heroku]
+| <<plugins-inputs-http,http>> | Receives events over HTTP or HTTPS | https://github.com/logstash-plugins/logstash-input-http[logstash-input-http]
+| <<plugins-inputs-http_poller,http_poller>> | Decodes the output of an HTTP API into events | https://github.com/logstash-plugins/logstash-input-http_poller[logstash-input-http_poller]
+| <<plugins-inputs-irc,irc>> | Reads events from an IRC server | https://github.com/logstash-plugins/logstash-input-irc[logstash-input-irc]
+| <<plugins-inputs-imap,imap>> | Reads mail from an IMAP server | https://github.com/logstash-plugins/logstash-input-imap[logstash-input-imap]
+| <<plugins-inputs-jdbc,jdbc>> | Creates events from JDBC data | https://github.com/logstash-plugins/logstash-input-jdbc[logstash-input-jdbc]
+| <<plugins-inputs-jmx,jmx>> | Retrieves metrics from remote Java applications over JMX | https://github.com/logstash-plugins/logstash-input-jmx[logstash-input-jmx]
+| <<plugins-inputs-kafka,kafka>> | Reads events from a Kafka topic | https://github.com/logstash-plugins/logstash-input-kafka[logstash-input-kafka]
+| <<plugins-inputs-log4j,log4j>> | Reads events over a TCP socket from a Log4j `SocketAppender` object | https://github.com/logstash-plugins/logstash-input-log4j[logstash-input-log4j]
+| <<plugins-inputs-lumberjack,lumberjack>> | Receives events using the Lumberjack protocl | https://github.com/logstash-plugins/logstash-input-lumberjack[logstash-input-lumberjack]
+| <<plugins-inputs-meetup,meetup>> | Captures the output of command line tools as an event | https://github.com/logstash-plugins/logstash-input-meetup[logstash-input-meetup]
+| <<plugins-inputs-pipe,pipe>> | Streams events from a long-running command pipe | https://github.com/logstash-plugins/logstash-input-pipe[logstash-input-pipe]
+| <<plugins-inputs-puppet_facter,puppet_facter>> | Receives facts from a Puppet server | https://github.com/logstash-plugins/logstash-input-puppet_facter[logstash-input-puppet_facter]
+| <<plugins-inputs-relp,relp>> | Receives RELP events over a TCP socket | https://github.com/logstash-plugins/logstash-input-relp[logstash-input-relp]
+| <<plugins-inputs-rss,rss>> | Captures the output of command line tools as an event | https://github.com/logstash-plugins/logstash-input-rss[logstash-input-rss]
+| <<plugins-inputs-rackspace,rackspace>> | Receives events from a Rackspace Cloud Queue service | https://github.com/logstash-plugins/logstash-input-rackspace[logstash-input-rackspace]
+| <<plugins-inputs-rabbitmq,rabbitmq>> | Pulls events from a RabbitMQ exchange | https://github.com/logstash-plugins/logstash-input-rabbitmq[logstash-input-rabbitmq]
+| <<plugins-inputs-redis,redis>> | Reads events from a Redis instance | https://github.com/logstash-plugins/logstash-input-redis[logstash-input-redis]
+| <<plugins-inputs-salesforce,salesforce>> | Creates events based on a Salesforce SOQL query | https://github.com/logstash-plugins/logstash-input-salesforce[logstash-input-salesforce]
+| <<plugins-inputs-snmptrap,snmptrap>> | Creates events based on SNMP trap messages | https://github.com/logstash-plugins/logstash-input-snmptrap[logstash-input-snmptrap]
+| <<plugins-inputs-stdin,stdin>> | Reads events from standard input | https://github.com/logstash-plugins/logstash-input-stdin[logstash-input-stdin]
+| <<plugins-inputs-sqlite,sqlite>> | Creates events based on rows in an SQLite database | https://github.com/logstash-plugins/logstash-input-sqlite[logstash-input-sqlite]
+| <<plugins-inputs-s3,s3>> | Streams events from files in a S3 bucket | https://github.com/logstash-plugins/logstash-input-s3[logstash-input-s3]
+| <<plugins-inputs-sqs,sqs>> | Pulls events from an Amazon Web Services Simple Queue Service queue | https://github.com/logstash-plugins/logstash-input-sqs[logstash-input-sqs]
+| <<plugins-inputs-stomp,stomp>> | Creates events received with the STOMP protocol | https://github.com/logstash-plugins/logstash-input-stomp[logstash-input-stomp]
+| <<plugins-inputs-syslog,syslog>> | Reads syslog messages as events | https://github.com/logstash-plugins/logstash-input-syslog[logstash-input-syslog]
+| <<plugins-inputs-tcp,tcp>> | Reads events from a TCP socket | https://github.com/logstash-plugins/logstash-input-tcp[logstash-input-tcp]
+| <<plugins-inputs-twitter,twitter>> | Reads events from the Twitter Streaming API | https://github.com/logstash-plugins/logstash-input-twitter[logstash-input-twitter]
+| <<plugins-inputs-unix,unix>> | Reads events over a UNIX socket | https://github.com/logstash-plugins/logstash-input-unix[logstash-input-unix]
+| <<plugins-inputs-udp,udp>> | Reads events over UDP | https://github.com/logstash-plugins/logstash-input-udp[logstash-input-udp]
+| <<plugins-inputs-varnishlog,varnishlog>> | Reads from the `varnish` cache shared memory log | https://github.com/logstash-plugins/logstash-input-varnishlog[logstash-input-varnishlog]
+| <<plugins-inputs-wmi,wmi>> | Creates events based on the results of a WMI query | https://github.com/logstash-plugins/logstash-input-wmi[logstash-input-wmi]
+| <<plugins-inputs-websocket,websocket>> | Reads events from a websocket | https://github.com/logstash-plugins/logstash-input-websocket[logstash-input-websocket]
+| <<plugins-inputs-xmpp,xmpp>> | Receives events over the XMPP/Jabber protocol | https://github.com/logstash-plugins/logstash-input-xmpp[logstash-input-xmpp]
+| <<plugins-inputs-zenoss,zenoss>> | Reads Zenoss events from the fanout exchange | https://github.com/logstash-plugins/logstash-input-zenoss[logstash-input-zenoss]
+| <<plugins-inputs-zeromq,zeromq>> | Reads events from a ZeroMQ SUB socket | https://github.com/logstash-plugins/logstash-input-zeromq[logstash-input-zeromq]
 |=======================================================================
 
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-beats/edit/master/lib/logstash/inputs/beats.rb ?>]

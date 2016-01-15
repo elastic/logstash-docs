@@ -87,12 +87,16 @@ include::static/maintainer-guide.asciidoc[]
 // A space is necessary here ^^^
 pass::[<?edit_url?>]
 
+// Submitting a Plugin
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/submitting-a-plugin.asciidoc ?>]
+include::static/submitting-a-plugin.asciidoc[]
+
 // This is in the pluginbody.asciidoc itself
 // pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/include/pluginbody.asciidoc ?>]
-include::static/input.asciidoc[]
-include::static/codec.asciidoc[]
-include::static/filter.asciidoc[]
-include::static/output.asciidoc[]
+// include::static/input.asciidoc[]
+// include::static/codec.asciidoc[]
+// include::static/filter.asciidoc[]
+// include::static/output.asciidoc[]
 
 // This is in the pluginbody.asciidoc itself
 // pass::[<?edit_url?>]
