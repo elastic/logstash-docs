@@ -5,111 +5,64 @@ An output plugin sends event data to a particular destination. Outputs are the f
 
 The following output plugins are available:
 
-<<plugins-outputs-letters-b, b>>
-<<plugins-outputs-letters-c, c>>
-<<plugins-outputs-letters-d, d>>
-<<plugins-outputs-letters-e, e>>
-<<plugins-outputs-letters-f, f>>
-<<plugins-outputs-letters-g, g>>
-<<plugins-outputs-letters-h, h>>
-<<plugins-outputs-letters-i, i>>
-<<plugins-outputs-letters-j, j>>
-<<plugins-outputs-letters-k, k>>
-<<plugins-outputs-letters-l, l>>
-<<plugins-outputs-letters-m, m>>
-<<plugins-outputs-letters-n, n>>
-<<plugins-outputs-letters-o, o>>
-<<plugins-outputs-letters-p, p>>
-<<plugins-outputs-letters-r, r>>
-<<plugins-outputs-letters-s, s>>
-<<plugins-outputs-letters-t, t>>
-<<plugins-outputs-letters-u, u>>
-<<plugins-outputs-letters-w, w>>
-<<plugins-outputs-letters-x, x>>
-<<plugins-outputs-letters-z, z>>
-
-[cols="asciidoc,asciidoc,asciidoc"]
 |=======================================================================
-|[[plugins-outputs-letters-b]]
-* <<plugins-outputs-boundary,boundary>>
-|[[plugins-outputs-letters-c]]
-* <<plugins-outputs-circonus,circonus>>
-* <<plugins-outputs-csv,csv>>
-* <<plugins-outputs-cloudwatch,cloudwatch>>
-|[[plugins-outputs-letters-d]]
-* <<plugins-outputs-datadog,datadog>>
-* <<plugins-outputs-datadog_metrics,datadog_metrics>>
-|[[plugins-outputs-letters-e]]
-* <<plugins-outputs-email,email>>
-* <<plugins-outputs-elasticsearch,elasticsearch>>
-* <<plugins-outputs-elasticsearch_java,elasticsearch_java>>
-* <<plugins-outputs-exec,exec>>
-|[[plugins-outputs-letters-f]]
-* <<plugins-outputs-file,file>>
-|[[plugins-outputs-letters-g]]
-* <<plugins-outputs-google_bigquery,google_bigquery>>
-* <<plugins-outputs-google_cloud_storage,google_cloud_storage>>
-* <<plugins-outputs-ganglia,ganglia>>
-* <<plugins-outputs-gelf,gelf>>
-* <<plugins-outputs-graphtastic,graphtastic>>
-* <<plugins-outputs-graphite,graphite>>
-|[[plugins-outputs-letters-h]]
-* <<plugins-outputs-hipchat,hipchat>>
-* <<plugins-outputs-http,http>>
-|[[plugins-outputs-letters-i]]
-* <<plugins-outputs-irc,irc>>
-* <<plugins-outputs-influxdb,influxdb>>
-|[[plugins-outputs-letters-j]]
-* <<plugins-outputs-juggernaut,juggernaut>>
-* <<plugins-outputs-jira,jira>>
-|[[plugins-outputs-letters-k]]
-* <<plugins-outputs-kafka,kafka>>
-|[[plugins-outputs-letters-l]]
-* <<plugins-outputs-lumberjack,lumberjack>>
-* <<plugins-outputs-librato,librato>>
-* <<plugins-outputs-loggly,loggly>>
-|[[plugins-outputs-letters-m]]
-* <<plugins-outputs-mongodb,mongodb>>
-* <<plugins-outputs-metriccatcher,metriccatcher>>
-|[[plugins-outputs-letters-n]]
-* <<plugins-outputs-nagios,nagios>>
-* <<plugins-outputs-null,null>>
-* <<plugins-outputs-nagios_nsca,nagios_nsca>>
-|[[plugins-outputs-letters-o]]
-* <<plugins-outputs-opentsdb,opentsdb>>
-|[[plugins-outputs-letters-p]]
-* <<plugins-outputs-pagerduty,pagerduty>>
-* <<plugins-outputs-pipe,pipe>>
-|[[plugins-outputs-letters-r]]
-* <<plugins-outputs-riemann,riemann>>
-* <<plugins-outputs-redmine,redmine>>
-* <<plugins-outputs-rackspace,rackspace>>
-* <<plugins-outputs-rabbitmq,rabbitmq>>
-* <<plugins-outputs-redis,redis>>
-* <<plugins-outputs-riak,riak>>
-|[[plugins-outputs-letters-s]]
-* <<plugins-outputs-s3,s3>>
-* <<plugins-outputs-sqs,sqs>>
-* <<plugins-outputs-stomp,stomp>>
-* <<plugins-outputs-statsd,statsd>>
-* <<plugins-outputs-solr_http,solr_http>>
-* <<plugins-outputs-sns,sns>>
-* <<plugins-outputs-syslog,syslog>>
-* <<plugins-outputs-stdout,stdout>>
-|[[plugins-outputs-letters-t]]
-* <<plugins-outputs-tcp,tcp>>
-|[[plugins-outputs-letters-u]]
-* <<plugins-outputs-udp,udp>>
-|[[plugins-outputs-letters-w]]
-* <<plugins-outputs-webhdfs,webhdfs>>
-* <<plugins-outputs-websocket,websocket>>
-|[[plugins-outputs-letters-x]]
-* <<plugins-outputs-xmpp,xmpp>>
-|[[plugins-outputs-letters-z]]
-* <<plugins-outputs-zabbix,zabbix>>
-* <<plugins-outputs-zeromq,zeromq>>
-|&nbsp;
-|&nbsp;
+| Plugin | Description | Github repository
+| <<plugins-outputs-boundary,boundary>> | Sends annotations to Boundary based on Logstash events | https://github.com/logstash-plugins/logstash-output-boundary[logstash-output-boundary]
+| <<plugins-outputs-circonus,circonus>> | Sends annotations to Circonus based on Logstash events | https://github.com/logstash-plugins/logstash-output-circonus[logstash-output-circonus]
+| <<plugins-outputs-csv,csv>> | Writes events to disk in a delimited format | https://github.com/logstash-plugins/logstash-output-csv[logstash-output-csv]
+| <<plugins-outputs-cloudwatch,cloudwatch>> | Aggregates and sends metric data to AWS CloudWatch | https://github.com/logstash-plugins/logstash-output-cloudwatch[logstash-output-cloudwatch]
+| <<plugins-outputs-datadog,datadog>> | Sends events to DataDogHQ based on Logstash events | https://github.com/logstash-plugins/logstash-output-datadog[logstash-output-datadog]
+| <<plugins-outputs-datadog_metrics,datadog_metrics>> | Sends metrics to DataDogHQ based on Logstash events | https://github.com/logstash-plugins/logstash-output-datadog_metrics[logstash-output-datadog_metrics]
+| <<plugins-outputs-email,email>> | Sends email to a specified address when output is received | https://github.com/logstash-plugins/logstash-output-email[logstash-output-email]
+| <<plugins-outputs-elasticsearch,elasticsearch>> | Stores logs in Elasticsearch | https://github.com/logstash-plugins/logstash-output-elasticsearch[logstash-output-elasticsearch]
+| <<plugins-outputs-elasticsearch_java,elasticsearch_java>> | Stores logs in Elasticsearch using the `node` and `transport` protocols | https://github.com/logstash-plugins/logstash-output-elasticsearch_java[logstash-output-elasticsearch_java]
+| <<plugins-outputs-exec,exec>> | Runs a command for a matching event | https://github.com/logstash-plugins/logstash-output-exec[logstash-output-exec]
+| <<plugins-outputs-file,file>> | Writes events to files on disk | https://github.com/logstash-plugins/logstash-output-file[logstash-output-file]
+| <<plugins-outputs-google_bigquery,google_bigquery>> | Writes events to Google BigQuery | https://github.com/logstash-plugins/logstash-output-google_bigquery[logstash-output-google_bigquery]
+| <<plugins-outputs-google_cloud_storage,google_cloud_storage>> | Writes events to Google Cloud Storage | https://github.com/logstash-plugins/logstash-output-google_cloud_storage[logstash-output-google_cloud_storage]
+| <<plugins-outputs-ganglia,ganglia>> | Writes metrics to Ganglia's `gmond` | https://github.com/logstash-plugins/logstash-output-ganglia[logstash-output-ganglia]
+| <<plugins-outputs-gelf,gelf>> | Generates GELF formatted output for Graylog2 | https://github.com/logstash-plugins/logstash-output-gelf[logstash-output-gelf]
+| <<plugins-outputs-graphtastic,graphtastic>> | Sends metric data on Windows | https://github.com/logstash-plugins/logstash-output-graphtastic[logstash-output-graphtastic]
+| <<plugins-outputs-graphite,graphite>> | Writes metrics to Graphite | https://github.com/logstash-plugins/logstash-output-graphite[logstash-output-graphite]
+| <<plugins-outputs-hipchat,hipchat>> | Writes events to HipChat | https://github.com/logstash-plugins/logstash-output-hipchat[logstash-output-hipchat]
+| <<plugins-outputs-http,http>> | Sends events to a generic HTTP or HTTPS endpoint | https://github.com/logstash-plugins/logstash-output-http[logstash-output-http]
+| <<plugins-outputs-irc,irc>> | Writes events to IRC | https://github.com/logstash-plugins/logstash-output-irc[logstash-output-irc]
+| <<plugins-outputs-influxdb,influxdb>> | Writes metrics to InfluxDB | https://github.com/logstash-plugins/logstash-output-influxdb[logstash-output-influxdb]
+| <<plugins-outputs-juggernaut,juggernaut>> | Pushes messages to the Juggernaut websockets server | https://github.com/logstash-plugins/logstash-output-juggernaut[logstash-output-juggernaut]
+| <<plugins-outputs-jira,jira>> | Writes strutured JSON events to JIRA | https://github.com/logstash-plugins/logstash-output-jira[logstash-output-jira]
+| <<plugins-outputs-kafka,kafka>> | Writes events to a Kafka topic | https://github.com/logstash-plugins/logstash-output-kafka[logstash-output-kafka]
+| <<plugins-outputs-lumberjack,lumberjack>> | Sends events using the `lumberjack` protocol | https://github.com/logstash-plugins/logstash-output-lumberjack[logstash-output-lumberjack]
+| <<plugins-outputs-librato,librato>> | Sends metrics, annotations, and alerts to Librato based on Logstash events | https://github.com/logstash-plugins/logstash-output-librato[logstash-output-librato]
+| <<plugins-outputs-loggly,loggly>> | Ships logs to Loggly | https://github.com/logstash-plugins/logstash-output-loggly[logstash-output-loggly]
+| <<plugins-outputs-mongodb,mongodb>> | Writes events to MongoDB | https://github.com/logstash-plugins/logstash-output-mongodb[logstash-output-mongodb]
+| <<plugins-outputs-metriccatcher,metriccatcher>> | Writes metrics to MetricCatcher | https://github.com/logstash-plugins/logstash-output-metriccatcher[logstash-output-metriccatcher]
+| <<plugins-outputs-nagios,nagios>> | Sends passive check results to Nagios | https://github.com/logstash-plugins/logstash-output-nagios[logstash-output-nagios]
+| <<plugins-outputs-nagios_nsca,nagios_nsca>> | Sends passive check results to Nagios using the NSCA protocol | https://github.com/logstash-plugins/logstash-output-nagios_nsca[logstash-output-nagios_nsca]
+| <<plugins-outputs-null,null>> | A null output for testing | https://github.com/logstash-plugins/logstash-output-null[logstash-output-null]
+| <<plugins-outputs-opentsdb,opentsdb>> | Writes metrics to OpenTSDB | https://github.com/logstash-plugins/logstash-output-opentsdb[logstash-output-opentsdb]
+| <<plugins-outputs-pagerduty,pagerduty>> | Sends notifications based on preconfigured services and escalation policies | https://github.com/logstash-plugins/logstash-output-pagerduty[logstash-output-pagerduty]
+| <<plugins-outputs-pipe,pipe>> | Pipes events to another program's standard input | https://github.com/logstash-plugins/logstash-output-pipe[logstash-output-pipe]
+| <<plugins-outputs-riemann,riemann>> | Sends metrics to Riemann | https://github.com/logstash-plugins/logstash-output-riemann[logstash-output-riemann]
+| <<plugins-outputs-redmine,redmine>> | Creates tickets using the Redmine API | https://github.com/logstash-plugins/logstash-output-redmine[logstash-output-redmine]
+| <<plugins-outputs-rackspace,rackspace>> | Sends events to a Rackspace Cloud Queue service | https://github.com/logstash-plugins/logstash-output-rackspace[logstash-output-rackspace]
+| <<plugins-outputs-rabbitmq,rabbitmq>> | Pushes events to a RabbitMQ exchange | https://github.com/logstash-plugins/logstash-output-rabbitmq[logstash-output-rabbitmq]
+| <<plugins-outputs-redis,redis>> | Sends events to a Redis queue using the `RPUSH` command | https://github.com/logstash-plugins/logstash-output-redis[logstash-output-redis]
+| <<plugins-outputs-riak,riak>> | Writes events to the Riak distributed key/value store | https://github.com/logstash-plugins/logstash-output-riak[logstash-output-riak]
+| <<plugins-outputs-s3,s3>> | Sends Logstash events to the Amazon Simple Storage Service | https://github.com/logstash-plugins/logstash-output-s3[logstash-output-s3]
+| <<plugins-outputs-sqs,sqs>> | Pushes events to an Amazon Web Services Simple Queue Serice queue | https://github.com/logstash-plugins/logstash-output-sqs[logstash-output-sqs]
+| <<plugins-outputs-stomp,stomp>> | Writes events using the STOMP protocol | https://github.com/logstash-plugins/logstash-output-stomp[logstash-output-stomp]
+| <<plugins-outputs-statsd,statsd>> | Sends metrics using the `statsd` network daemon | https://github.com/logstash-plugins/logstash-output-statsd[logstash-output-statsd]
+| <<plugins-outputs-solr_http,solr_http>> | Stores and indexes logs in Solr | https://github.com/logstash-plugins/logstash-output-solr_http[logstash-output-solr_http]
+| <<plugins-outputs-sns,sns>> | Sends events to Amazon's Simple Notification Service | https://github.com/logstash-plugins/logstash-output-sns[logstash-output-sns]
+| <<plugins-outputs-syslog,syslog>> | Sends events to a `syslog` server | https://github.com/logstash-plugins/logstash-output-syslog[logstash-output-syslog]
+| <<plugins-outputs-stdout,stdout>> | Prints events to the standard output | https://github.com/logstash-plugins/logstash-output-stdout[logstash-output-stdout]
+| <<plugins-outputs-tcp,tcp>> | Writes events over a TCP socket | https://github.com/logstash-plugins/logstash-output-tcp[logstash-output-tcp]
+| <<plugins-outputs-udp,udp>> | Sends events over UDP | https://github.com/logstash-plugins/logstash-output-udp[logstash-output-udp]
+| <<plugins-outputs-webhdfs,webhdfs>> | Sends Logstash events to HDFS using the `webhdfs` REST API | https://github.com/logstash-plugins/logstash-output-webhdfs[logstash-output-webhdfs]
+| <<plugins-outputs-websocket,websocket>> | Publishes messages to a websocket | https://github.com/logstash-plugins/logstash-output-websocket[logstash-output-websocket]
+| <<plugins-outputs-xmpp,xmpp>> | Posts events over XMPP | https://github.com/logstash-plugins/logstash-output-xmpp[logstash-output-xmpp]
+| <<plugins-outputs-zabbix,zabbix>> | Sends events to a Zabbix server | https://github.com/logstash-plugins/logstash-output-zabbix[logstash-output-zabbix]
+| <<plugins-outputs-zeromq,zeromq>> | Writes events to a ZeroMQ PUB socket | https://github.com/logstash-plugins/logstash-output-zeromq[logstash-output-zeromq]
 |=======================================================================
 
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-output-boundary/edit/master/lib/logstash/outputs/boundary.rb ?>]
