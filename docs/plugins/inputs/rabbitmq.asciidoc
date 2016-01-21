@@ -42,7 +42,7 @@ Available configuration options:
 | <<plugins-inputs-rabbitmq-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-inputs-rabbitmq-arguments>> |<<array,array>>|No|`{}`
 | <<plugins-inputs-rabbitmq-auto_delete>> |<<boolean,boolean>>|No|`false`
-| <<plugins-inputs-rabbitmq-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-inputs-rabbitmq-codec>> |<<codec,codec>>|No|`"json"`
 | <<plugins-inputs-rabbitmq-durable>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-rabbitmq-exchange>> |<<string,string>>|No|
 | <<plugins-inputs-rabbitmq-exclusive>> |<<boolean,boolean>>|No|`false`
@@ -123,7 +123,7 @@ This only affects `plain` format logs since json is `UTF-8` already.
 ===== `codec` 
 
   * Value type is <<codec,codec>>
-  * Default value is `"plain"`
+  * Default value is `"json"`
 
 The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
 
