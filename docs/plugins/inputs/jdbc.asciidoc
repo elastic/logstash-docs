@@ -414,3 +414,4 @@ when sent to another Logstash server.
   * Default value is `false`
 
 Use an incremental column value rather than a timestamp
+
