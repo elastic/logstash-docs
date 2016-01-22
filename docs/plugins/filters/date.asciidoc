@@ -275,5 +275,6 @@ and is not the platform default.
 If this is not specified the platform default will be used.
 Canonical ID is good as it takes care of daylight saving time for you
 For example, `America/Los_Angeles` or `Europe/Paris` are valid IDs.
+This field can be dynamic and include parts of the event using the `%{field}` syntax
 
 

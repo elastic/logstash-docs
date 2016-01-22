@@ -2,8 +2,6 @@
 === http_poller
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-input-http_poller`.
-
 
 This Logstash input plugin allows you to call an HTTP API, decode the output of it into event(s), and
 send them on their merry way. The idea behind this plugins came from a need to read springboot
@@ -72,7 +70,7 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-inputs-http_poller-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-http_poller-automatic_retries>> |<<number,number>>|No|`0`
+| <<plugins-inputs-http_poller-automatic_retries>> |<<number,number>>|No|`1`
 | <<plugins-inputs-http_poller-cacert>> |a valid filesystem path|No|
 | <<plugins-inputs-http_poller-client_cert>> |a valid filesystem path|No|
 | <<plugins-inputs-http_poller-client_key>> |a valid filesystem path|No|
@@ -90,6 +88,7 @@ Available configuration options:
 | <<plugins-inputs-http_poller-pool_max_per_route>> |<<number,number>>|No|`25`
 | <<plugins-inputs-http_poller-proxy>> |<<,>>|No|
 | <<plugins-inputs-http_poller-request_timeout>> |<<number,number>>|No|`60`
+| <<plugins-inputs-http_poller-retry_non_idempotent>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-http_poller-socket_timeout>> |<<number,number>>|No|`10`
 | <<plugins-inputs-http_poller-ssl_certificate_validation>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-http_poller-tags>> |<<array,array>>|No|
@@ -119,7 +118,7 @@ Add a field to an event
 ===== `automatic_retries` 
 
   * Value type is <<number,number>>
-  * Default value is `0`
+  * Default value is `1`
 
 
 
@@ -259,6 +258,14 @@ hash of metadata.
 
   * Value type is <<number,number>>
   * Default value is `60`
+
+
+
+[[plugins-inputs-http_poller-retry_non_idempotent]]
+===== `retry_non_idempotent` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
 
 
 

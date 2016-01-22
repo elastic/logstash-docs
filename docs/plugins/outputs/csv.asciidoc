@@ -30,12 +30,14 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-outputs-csv-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-outputs-csv-create_if_deleted>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-csv-csv_options>> |<<hash,hash>>|No|`{}`
+| <<plugins-outputs-csv-dir_mode>> |<<number,number>>|No|`-1`
 | <<plugins-outputs-csv-fields>> |<<array,array>>|Yes|
+| <<plugins-outputs-csv-file_mode>> |<<number,number>>|No|`-1`
 | <<plugins-outputs-csv-filename_failure>> |<<string,string>>|No|`"_filepath_failures"`
 | <<plugins-outputs-csv-flush_interval>> |<<number,number>>|No|`2`
 | <<plugins-outputs-csv-gzip>> |<<boolean,boolean>>|No|`false`
-| <<plugins-outputs-csv-message_format>> |<<string,string>>|No|
 | <<plugins-outputs-csv-path>> |<<string,string>>|Yes|
 | <<plugins-outputs-csv-workers>> |<<number,number>>|No|`1`
 |=======================================================================
@@ -54,6 +56,14 @@ Available configuration options:
 
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
 
+[[plugins-outputs-csv-create_if_deleted]]
+===== `create_if_deleted` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+
+
 [[plugins-outputs-csv-csv_options]]
 ===== `csv_options` 
 
@@ -63,6 +73,14 @@ The codec used for output data. Output codecs are a convenient method for encodi
 Options for CSV output. This is passed directly to the Ruby stdlib to_csv function.
 Full documentation is available on the http://ruby-doc.org/stdlib-2.0.0/libdoc/csv/rdoc/index.html[Ruby CSV documentation page].
 A typical use case would be to use alternative column or row seperators eg: `csv_options => {"col_sep" => "\t" "row_sep" => "\r\n"}` gives tab seperated data with windows line endings
+
+[[plugins-outputs-csv-dir_mode]]
+===== `dir_mode` 
+
+  * Value type is <<number,number>>
+  * Default value is `-1`
+
+
 
 [[plugins-outputs-csv-fields]]
 ===== `fields` 
@@ -75,6 +93,14 @@ The field names from the event that should be written to the CSV file.
 Fields are written to the CSV in the same order as the array.
 If a field does not exist on the event, an empty string will be written.
 Supports field reference syntax eg: `fields => ["field1", "[nested][field]"]`.
+
+[[plugins-outputs-csv-file_mode]]
+===== `file_mode` 
+
+  * Value type is <<number,number>>
+  * Default value is `-1`
+
+
 
 [[plugins-outputs-csv-filename_failure]]
 ===== `filename_failure` 
@@ -101,8 +127,9 @@ Supports field reference syntax eg: `fields => ["field1", "[nested][field]"]`.
 
 
 [[plugins-outputs-csv-message_format]]
-===== `message_format` 
+===== `message_format`  (DEPRECATED)
 
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 

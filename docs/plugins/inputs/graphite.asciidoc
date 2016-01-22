@@ -33,12 +33,12 @@ Available configuration options:
 | <<plugins-inputs-graphite-host>> |<<string,string>>|No|`"0.0.0.0"`
 | <<plugins-inputs-graphite-mode>> |<<string,string>>, one of `["server", "client"]`|No|`"server"`
 | <<plugins-inputs-graphite-port>> |<<number,number>>|Yes|
-| <<plugins-inputs-graphite-ssl_cacert>> |a valid filesystem path|No|
 | <<plugins-inputs-graphite-ssl_cert>> |a valid filesystem path|No|
 | <<plugins-inputs-graphite-ssl_enable>> |<<boolean,boolean>>|No|`false`
+| <<plugins-inputs-graphite-ssl_extra_chain_certs>> |<<array,array>>|No|`[]`
 | <<plugins-inputs-graphite-ssl_key>> |a valid filesystem path|No|
 | <<plugins-inputs-graphite-ssl_key_passphrase>> |<<password,password>>|No|`nil`
-| <<plugins-inputs-graphite-ssl_verify>> |<<boolean,boolean>>|No|`false`
+| <<plugins-inputs-graphite-ssl_verify>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-graphite-tags>> |<<array,array>>|No|
 | <<plugins-inputs-graphite-type>> |<<string,string>>|No|
 |=======================================================================
@@ -100,8 +100,9 @@ The codec used for input data. Input codecs are a convenient method for decoding
 
 
 [[plugins-inputs-graphite-ssl_cacert]]
-===== `ssl_cacert` 
+===== `ssl_cacert`  (DEPRECATED)
 
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
   * Value type is <<path,path>>
   * There is no default value for this setting.
 
@@ -120,6 +121,14 @@ The codec used for input data. Input codecs are a convenient method for decoding
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
+
+
+
+[[plugins-inputs-graphite-ssl_extra_chain_certs]]
+===== `ssl_extra_chain_certs` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
 
 
 
@@ -143,7 +152,7 @@ The codec used for input data. Input codecs are a convenient method for decoding
 ===== `ssl_verify` 
 
   * Value type is <<boolean,boolean>>
-  * Default value is `false`
+  * Default value is `true`
 
 
 

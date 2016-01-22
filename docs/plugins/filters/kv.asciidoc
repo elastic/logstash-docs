@@ -141,10 +141,10 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-A bool option for removing duplicate key/value pairs. When set to false, only 
+A bool option for removing duplicate key/value pairs. When set to false, only
 one unique key/value pair will be preserved.
 
-For example, consider a source like `from=me from=me`. `[from]` will map to 
+For example, consider a source like `from=me from=me`. `[from]` will map to
 an Array with two elements: `["me", "me"]`. to only keep unique key/value pairs,
 you could use this configuration:
 [source,ruby]
@@ -179,7 +179,7 @@ in case these keys do not exist in the source field being parsed.
 An array specifying the parsed keys which should not be added to the event.
 By default no keys will be excluded.
 
-For example, consider a source like `Hey, from=<abc>, to=def foo=bar`. 
+For example, consider a source like `Hey, from=<abc>, to=def foo=bar`.
 To exclude `from` and `to`, but retain the `foo` key, you could use this configuration:
 [source,ruby]
     filter {
@@ -254,7 +254,7 @@ instead of:
 An array specifying the parsed keys which should be added to the event.
 By default all keys will be added.
 
-For example, consider a source like `Hey, from=<abc>, to=def foo=bar`. 
+For example, consider a source like `Hey, from=<abc>, to=def foo=bar`.
 To include `from` and `to`, but exclude the `foo` key, you could use this configuration:
 [source,ruby]
     filter {
@@ -290,7 +290,7 @@ For example, to prepend arg_ to all keys:
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
-A boolean specifying whether to drill down into values 
+A boolean specifying whether to drill down into values
 and recursively get more key-value pairs from it.
 The extra key-value pairs will be stored as subkeys of the root key.
 

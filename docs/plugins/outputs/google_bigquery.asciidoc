@@ -66,7 +66,7 @@ output {
    google_bigquery {
      project_id => "folkloric-guru-278"                        (required)
      dataset => "logs"                                         (required)
-     csv_schema => "path:STRING,status:INTEGER,score:FLOAT"    (required)
+     csv_schema => "path:STRING,status:INTEGER,score:FLOAT"    (required*)
      key_path => "/path/to/privatekey.p12"                     (required)
      key_password => "notasecret"                              (optional)
      service_account => "1234@developer.gserviceaccount.com"   (required)
@@ -78,6 +78,8 @@ output {
      deleter_interval_secs => 60                               (optional)
    }
 }
+
+* Specify either a csv_schema or a json_schema.
 
 Improvements TODO list:
 - Refactor common code between Google BQ and GCS plugins.
@@ -97,7 +99,6 @@ Required configuration options:
 [source,json]
 --------------------------
 google_bigquery {
-    csv_schema => ...
     dataset => ...
     key_path => ...
     project_id => ...
@@ -113,12 +114,13 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-outputs-google_bigquery-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-google_bigquery-csv_schema>> |<<string,string>>|Yes|
+| <<plugins-outputs-google_bigquery-csv_schema>> |<<string,string>>|No|`nil`
 | <<plugins-outputs-google_bigquery-dataset>> |<<string,string>>|Yes|
 | <<plugins-outputs-google_bigquery-date_pattern>> |<<string,string>>|No|`"%Y-%m-%dT%H:00"`
 | <<plugins-outputs-google_bigquery-deleter_interval_secs>> |<<number,number>>|No|`60`
 | <<plugins-outputs-google_bigquery-flush_interval_secs>> |<<number,number>>|No|`2`
 | <<plugins-outputs-google_bigquery-ignore_unknown_values>> |<<boolean,boolean>>|No|`false`
+| <<plugins-outputs-google_bigquery-json_schema>> |<<hash,hash>>|No|`nil`
 | <<plugins-outputs-google_bigquery-key_password>> |<<string,string>>|No|`"notasecret"`
 | <<plugins-outputs-google_bigquery-key_path>> |<<string,string>>|Yes|
 | <<plugins-outputs-google_bigquery-project_id>> |<<string,string>>|Yes|
@@ -147,9 +149,8 @@ The codec used for output data. Output codecs are a convenient method for encodi
 [[plugins-outputs-google_bigquery-csv_schema]]
 ===== `csv_schema` 
 
-  * This is a required setting.
   * Value type is <<string,string>>
-  * There is no default value for this setting.
+  * Default value is `nil`
 
 Schema for log data. It must follow this format:
 <field1-name>:<field1-type>,<field2-name>:<field2-type>,...
@@ -199,6 +200,26 @@ on every message.
 
 Indicates if BigQuery should allow extra values that are not represented in the table schema.
 If true, the extra values are ignored. If false, records with extra columns are treated as bad records, and if there are too many bad records, an invalid error is returned in the job result. The default value is false.
+
+[[plugins-outputs-google_bigquery-json_schema]]
+===== `json_schema` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `nil`
+
+Schema for log data, as a hash. Example:
+json_schema => {
+    fields => [{
+        name => "timestamp"
+        type => "TIMESTAMP"
+    }, {
+        name => "host"
+        type => "STRING"
+    }, {
+        name => "message"
+        type => "STRING"
+    }]
+}
 
 [[plugins-outputs-google_bigquery-key_password]]
 ===== `key_password` 

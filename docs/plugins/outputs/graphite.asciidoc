@@ -111,7 +111,7 @@ Include only regex matched metric names.
   * Default value is `{}`
 
 The metric(s) to use. This supports dynamic strings like %{host}
-for metric names and also for values. This is a hash field with key 
+for metric names and also for values. This is a hash field with key
 being the metric name, value being the metric value. Example:
 [source,ruby]
     metrics => { "%{host}/uptime" => "%{uptime_1m}" }

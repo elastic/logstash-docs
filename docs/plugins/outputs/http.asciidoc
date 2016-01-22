@@ -29,7 +29,7 @@ Available configuration options:
 [cols="<,<,<,<m",options="header",]
 |=======================================================================
 |Setting |Input type|Required|Default value
-| <<plugins-outputs-http-automatic_retries>> |<<number,number>>|No|`0`
+| <<plugins-outputs-http-automatic_retries>> |<<number,number>>|No|`1`
 | <<plugins-outputs-http-cacert>> |a valid filesystem path|No|
 | <<plugins-outputs-http-client_cert>> |a valid filesystem path|No|
 | <<plugins-outputs-http-client_key>> |a valid filesystem path|No|
@@ -51,6 +51,7 @@ Available configuration options:
 | <<plugins-outputs-http-pool_max_per_route>> |<<number,number>>|No|`25`
 | <<plugins-outputs-http-proxy>> |<<,>>|No|
 | <<plugins-outputs-http-request_timeout>> |<<number,number>>|No|`60`
+| <<plugins-outputs-http-retry_non_idempotent>> |<<boolean,boolean>>|No|`false`
 | <<plugins-outputs-http-socket_timeout>> |<<number,number>>|No|`10`
 | <<plugins-outputs-http-ssl_certificate_validation>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-http-truststore>> |a valid filesystem path|No|
@@ -70,7 +71,7 @@ Available configuration options:
 ===== `automatic_retries` 
 
   * Value type is <<number,number>>
-  * Default value is `0`
+  * Default value is `1`
 
 
 
@@ -258,6 +259,14 @@ For example:
 
   * Value type is <<number,number>>
   * Default value is `60`
+
+
+
+[[plugins-outputs-http-retry_non_idempotent]]
+===== `retry_non_idempotent` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
 
 
 
