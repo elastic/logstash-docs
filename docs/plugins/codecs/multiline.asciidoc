@@ -215,3 +215,5 @@ For example:
   * There is no default value for this setting.
 
 If the pattern matched, does event belong to the next or previous event?
+
+
