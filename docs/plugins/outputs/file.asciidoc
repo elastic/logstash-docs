@@ -3,8 +3,18 @@
 
 
 
-This output will write events to files on disk. You can use fields
+This output writes events to files on disk. You can use fields
 from the event as parts of the filename and/or path.
+
+By default, this output writes one event per line in **json** format.
+You can customise the line format using the `line` codec like
+[source,ruby]
+output {
+ file {
+   path => ...
+   codec => { line { format => "custom format: %{message}"}}
+ }
+}
 
 &nbsp;
 
@@ -29,11 +39,13 @@ Available configuration options:
 [cols="<,<,<,<m",options="header",]
 |=======================================================================
 |Setting |Input type|Required|Default value
-| <<plugins-outputs-file-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-outputs-file-codec>> |<<codec,codec>>|No|`"json_lines"`
+| <<plugins-outputs-file-create_if_deleted>> |<<boolean,boolean>>|No|`true`
+| <<plugins-outputs-file-dir_mode>> |<<number,number>>|No|`-1`
+| <<plugins-outputs-file-file_mode>> |<<number,number>>|No|`-1`
 | <<plugins-outputs-file-filename_failure>> |<<string,string>>|No|`"_filepath_failures"`
 | <<plugins-outputs-file-flush_interval>> |<<number,number>>|No|`2`
 | <<plugins-outputs-file-gzip>> |<<boolean,boolean>>|No|`false`
-| <<plugins-outputs-file-message_format>> |<<string,string>>|No|
 | <<plugins-outputs-file-path>> |<<string,string>>|Yes|
 | <<plugins-outputs-file-workers>> |<<number,number>>|No|`1`
 |=======================================================================
@@ -48,9 +60,40 @@ Available configuration options:
 ===== `codec` 
 
   * Value type is <<codec,codec>>
-  * Default value is `"plain"`
+  * Default value is `"json_lines"`
 
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
+
+[[plugins-outputs-file-create_if_deleted]]
+===== `create_if_deleted` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+If the a file is deleted, but an event is comming with the need to be stored
+in such a file, the plugin will created a gain this file. Default => true
+
+[[plugins-outputs-file-dir_mode]]
+===== `dir_mode` 
+
+  * Value type is <<number,number>>
+  * Default value is `-1`
+
+Dir access mode to use. Note that due to the bug in jruby system umask
+is ignored on linux: https://github.com/jruby/jruby/issues/3426
+Setting it to -1 uses default OS value.
+Example: `"dir_mode" => 0750`
+
+[[plugins-outputs-file-file_mode]]
+===== `file_mode` 
+
+  * Value type is <<number,number>>
+  * Default value is `-1`
+
+File access mode to use. Note that due to the bug in jruby system umask
+is ignored on linux: https://github.com/jruby/jruby/issues/3426
+Setting it to -1 uses default OS value.
+Example: `"file_mode" => 0640`
 
 [[plugins-outputs-file-filename_failure]]
 ===== `filename_failure` 
@@ -79,8 +122,9 @@ Flush interval (in seconds) for flushing writes to log files.
 Gzip the output stream before writing to disk.
 
 [[plugins-outputs-file-message_format]]
-===== `message_format` 
+===== `message_format`  (DEPRECATED)
 
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 

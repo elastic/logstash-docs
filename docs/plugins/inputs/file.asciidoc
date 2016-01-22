@@ -84,10 +84,12 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-inputs-file-add_field>> |<<hash,hash>>|No|`{}`
+| <<plugins-inputs-file-close_older>> |<<number,number>>|No|`3600`
 | <<plugins-inputs-file-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-inputs-file-delimiter>> |<<string,string>>|No|`"\n"`
 | <<plugins-inputs-file-discover_interval>> |<<number,number>>|No|`15`
 | <<plugins-inputs-file-exclude>> |<<array,array>>|No|
+| <<plugins-inputs-file-ignore_older>> |<<number,number>>|No|`86400`
 | <<plugins-inputs-file-path>> |<<array,array>>|Yes|
 | <<plugins-inputs-file-sincedb_path>> |<<string,string>>|No|
 | <<plugins-inputs-file-sincedb_write_interval>> |<<number,number>>|No|`15`
@@ -110,6 +112,16 @@ Available configuration options:
   * Default value is `{}`
 
 Add a field to an event
+
+[[plugins-inputs-file-close_older]]
+===== `close_older` 
+
+  * Value type is <<number,number>>
+  * Default value is `3600`
+
+If this option is specified, the file input closes any files that remain
+unmodified for longer than the specified timespan in seconds.
+The default is 1 hour
 
 [[plugins-inputs-file-codec]]
 ===== `codec` 
@@ -151,6 +163,17 @@ You might want to exclude gzipped files:
 [source,ruby]
     exclude => "*.gz"
 
+[[plugins-inputs-file-ignore_older]]
+===== `ignore_older` 
+
+  * Value type is <<number,number>>
+  * Default value is `86400`
+
+If this option is specified, when the file input discovers a file that
+was last modified before the specified timespan in seconds, the file is
+ignored. After it's discovery, if an ignored file is modified it is no
+longer ignored and any new data is read. The default is 24 hours.
+
 [[plugins-inputs-file-path]]
 ===== `path` 
 
@@ -158,10 +181,10 @@ You might want to exclude gzipped files:
   * Value type is <<array,array>>
   * There is no default value for this setting.
 
-TODO(sissel): This should switch to use the `line` codec by default
-once file following
 The path(s) to the file(s) to use as an input.
 You can use filename patterns here, such as `/var/log/*.log`.
+If you use a pattern like `/var/log/**/*.log`, a recursive search
+of `/var/log` will be done for all `*.log` files.
 Paths must be absolute and cannot be relative.
 
 You may also configure multiple paths. See an example

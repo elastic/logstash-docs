@@ -274,7 +274,7 @@ If you need to match multiple patterns against a single field, the value can be 
     filter {
       grok { match => { "message" => [ "Duration: %{NUMBER:duration}", "Speed: %{NUMBER:speed}" ] } }
     }
- 
+
 
 [[plugins-filters-grok-named_captures_only]]
 ===== `named_captures_only` 
@@ -332,7 +332,7 @@ patterns. You can point to multiple pattern directories using this setting
 Note that Grok will read all files in the directory and assume its a pattern
 file (including any tilde backup files)
 [source,ruby]
-    patterns_dir => ["/opt/logstash/patterns", "/opt/logstash/extra_patterns"] 
+    patterns_dir => ["/opt/logstash/patterns", "/opt/logstash/extra_patterns"]
 
 Pattern files are plain text with format:
 [source,ruby]

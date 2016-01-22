@@ -330,7 +330,7 @@ Example:
   * Value type is <<hash,hash>>
   * There is no default value for this setting.
 
-Replace a field with a new value. The new value can include %{foo} strings
+Replace a field with a new value. The new value can include `%{foo}` strings
 to help you build a new value from other parts of the event.
 
 Example:

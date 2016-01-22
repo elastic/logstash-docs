@@ -11,8 +11,8 @@ For example, to cancel 90% of events, you can do this:
       ruby {
         # Cancel 90% of events
         code => "event.cancel if rand <= 0.90"
-      } 
-    } 
+      }
+    }
 
 
 &nbsp;

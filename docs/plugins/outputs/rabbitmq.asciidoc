@@ -1,8 +1,6 @@
 [[plugins-outputs-rabbitmq]]
 === rabbitmq
 
-
-
 Push events to a RabbitMQ exchange. Requires RabbitMQ 2.x
 or later version (3.x is recommended).
 
@@ -10,7 +8,6 @@ Relevant links:
 
 * http://www.rabbitmq.com/[RabbitMQ]
 * http://rubymarchhare.info[March Hare]
-* http://rubybunny.info[Bunny]
 
 &nbsp;
 
@@ -37,12 +34,18 @@ Available configuration options:
 [cols="<,<,<,<m",options="header",]
 |=======================================================================
 |Setting |Input type|Required|Default value
-| <<plugins-outputs-rabbitmq-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-outputs-rabbitmq-arguments>> |<<array,array>>|No|`{}`
+| <<plugins-outputs-rabbitmq-automatic_recovery>> |<<boolean,boolean>>|No|`true`
+| <<plugins-outputs-rabbitmq-codec>> |<<codec,codec>>|No|`"json"`
+| <<plugins-outputs-rabbitmq-connect_retry_interval>> |<<number,number>>|No|`1`
+| <<plugins-outputs-rabbitmq-connection_timeout>> |<<number,number>>|No|
 | <<plugins-outputs-rabbitmq-durable>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-rabbitmq-exchange>> |<<string,string>>|Yes|
 | <<plugins-outputs-rabbitmq-exchange_type>> |<<string,string>>, one of `["fanout", "direct", "topic"]`|Yes|
+| <<plugins-outputs-rabbitmq-heartbeat>> |<<number,number>>|No|
 | <<plugins-outputs-rabbitmq-host>> |<<string,string>>|Yes|
 | <<plugins-outputs-rabbitmq-key>> |<<string,string>>|No|`"logstash"`
+| <<plugins-outputs-rabbitmq-passive>> |<<boolean,boolean>>|No|`false`
 | <<plugins-outputs-rabbitmq-password>> |<<password,password>>|No|`"guest"`
 | <<plugins-outputs-rabbitmq-persistent>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-rabbitmq-port>> |<<number,number>>|No|`5672`
@@ -59,13 +62,45 @@ Available configuration options:
 
 &nbsp;
 
+[[plugins-outputs-rabbitmq-arguments]]
+===== `arguments`
+
+  * Value type is <<array,array>>
+  * Default value is `{}`
+
+
+
+[[plugins-outputs-rabbitmq-automatic_recovery]]
+===== `automatic_recovery`
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+
+
 [[plugins-outputs-rabbitmq-codec]]
-===== `codec` 
+===== `codec`
 
   * Value type is <<codec,codec>>
-  * Default value is `"plain"`
+  * Default value is `"json"`
 
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
+
+[[plugins-outputs-rabbitmq-connect_retry_interval]]
+===== `connect_retry_interval`
+
+  * Value type is <<number,number>>
+  * Default value is `1`
+
+
+
+[[plugins-outputs-rabbitmq-connection_timeout]]
+===== `connection_timeout`
+
+  * Value type is <<number,number>>
+  * There is no default value for this setting.
+
+
 
 [[plugins-outputs-rabbitmq-debug]]
 ===== `debug`  (DEPRECATED)
@@ -77,7 +112,7 @@ The codec used for output data. Output codecs are a convenient method for encodi
 Enable or disable logging
 
 [[plugins-outputs-rabbitmq-durable]]
-===== `durable` 
+===== `durable`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -85,7 +120,7 @@ Enable or disable logging
 Is this exchange durable? (aka; Should it survive a broker restart?)
 
 [[plugins-outputs-rabbitmq-exchange]]
-===== `exchange` 
+===== `exchange`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -94,41 +129,33 @@ Is this exchange durable? (aka; Should it survive a broker restart?)
 The name of the exchange
 
 [[plugins-outputs-rabbitmq-exchange_type]]
-===== `exchange_type` 
+===== `exchange_type`
 
   * This is a required setting.
   * Value can be any of: `fanout`, `direct`, `topic`
   * There is no default value for this setting.
 
-
-Exchange
-
 The exchange type (fanout, topic, direct)
 
-[[plugins-outputs-rabbitmq-exclude_tags]]
-===== `exclude_tags`  (DEPRECATED)
+[[plugins-outputs-rabbitmq-heartbeat]]
+===== `heartbeat`
 
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
+  * Value type is <<number,number>>
+  * There is no default value for this setting.
 
-Only handle events without any of these tags.
-Optional.
+
 
 [[plugins-outputs-rabbitmq-host]]
-===== `host` 
+===== `host`
 
   * This is a required setting.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
 
-Connection
-
-RabbitMQ server address
 
 [[plugins-outputs-rabbitmq-key]]
-===== `key` 
+===== `key`
 
   * Value type is <<string,string>>
   * Default value is `"logstash"`
@@ -137,16 +164,24 @@ Key to route to by default. Defaults to 'logstash'
 
 * Routing keys are ignored on fanout exchanges.
 
+[[plugins-outputs-rabbitmq-passive]]
+===== `passive`
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+
+
 [[plugins-outputs-rabbitmq-password]]
-===== `password` 
+===== `password`
 
   * Value type is <<password,password>>
   * Default value is `"guest"`
 
-RabbitMQ password
+
 
 [[plugins-outputs-rabbitmq-persistent]]
-===== `persistent` 
+===== `persistent`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -154,53 +189,31 @@ RabbitMQ password
 Should RabbitMQ persist messages to disk?
 
 [[plugins-outputs-rabbitmq-port]]
-===== `port` 
+===== `port`
 
   * Value type is <<number,number>>
   * Default value is `5672`
 
-RabbitMQ port to connect on
+
 
 [[plugins-outputs-rabbitmq-ssl]]
-===== `ssl` 
+===== `ssl`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
-Enable or disable SSL
 
-[[plugins-outputs-rabbitmq-tags]]
-===== `tags`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-Only handle events with all of these tags.
-Optional.
-
-[[plugins-outputs-rabbitmq-type]]
-===== `type`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `""`
-
-The type to act on. If a type is given, then this output will only
-act on messages with the same type. See any input plugin's `type`
-attribute for more.
-Optional.
 
 [[plugins-outputs-rabbitmq-user]]
-===== `user` 
+===== `user`
 
   * Value type is <<string,string>>
   * Default value is `"guest"`
 
-RabbitMQ username
+
 
 [[plugins-outputs-rabbitmq-verify_ssl]]
-===== `verify_ssl` 
+===== `verify_ssl`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -208,7 +221,7 @@ RabbitMQ username
 Validate SSL certificate
 
 [[plugins-outputs-rabbitmq-vhost]]
-===== `vhost` 
+===== `vhost`
 
   * Value type is <<string,string>>
   * Default value is `"/"`
@@ -216,12 +229,10 @@ Validate SSL certificate
 The vhost to use. If you don't know what this is, leave the default.
 
 [[plugins-outputs-rabbitmq-workers]]
-===== `workers` 
+===== `workers`
 
   * Value type is <<number,number>>
   * Default value is `1`
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
-
-
