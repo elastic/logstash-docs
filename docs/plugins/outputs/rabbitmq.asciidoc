@@ -236,3 +236,5 @@ The vhost to use. If you don't know what this is, leave the default.
 
 The number of workers to use for this output.
 Note that this setting may not be useful for all outputs.
+
+
