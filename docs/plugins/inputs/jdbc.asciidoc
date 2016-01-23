@@ -244,7 +244,7 @@ JDBC enable paging. This will cause a sql statement to be broken up into multipl
   * Value type is <<password,password>>
   * There is no default value for this setting.
 
-
+Password
 
 [[plugins-inputs-jdbc-jdbc_pool_timeout]]
 ===== `jdbc_pool_timeout`
