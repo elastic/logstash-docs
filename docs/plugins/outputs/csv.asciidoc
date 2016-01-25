@@ -39,6 +39,7 @@ Available configuration options:
 | <<plugins-outputs-csv-flush_interval>> |<<number,number>>|No|`2`
 | <<plugins-outputs-csv-gzip>> |<<boolean,boolean>>|No|`false`
 | <<plugins-outputs-csv-path>> |<<string,string>>|Yes|
+| <<plugins-outputs-csv-spreadsheet_safe>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-csv-workers>> |<<number,number>>|No|`1`
 |=======================================================================
 
@@ -143,6 +144,15 @@ Supports field reference syntax eg: `fields => ["field1", "[nested][field]"]`.
   * There is no default value for this setting.
 
 
+
+[[plugins-outputs-csv-spreadsheet_safe]]
+===== `spreadsheet_safe` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Option to not escape/munge string values. Please note turning off this option
+may not make the values safe in your spreadsheet application
 
 [[plugins-outputs-csv-workers]]
 ===== `workers` 
