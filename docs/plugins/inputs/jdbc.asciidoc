@@ -134,7 +134,7 @@ Available configuration options:
 | <<plugins-inputs-jdbc-jdbc_user>> |<<string,string>>|Yes|
 | <<plugins-inputs-jdbc-jdbc_validate_connection>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-jdbc-jdbc_validation_timeout>> |<<number,number>>|No|`3600`
-| <<plugins-inputs-jdbc-last_run_metadata_path>> |<<string,string>>|No|`"/Users/suyog/.logstash_jdbc_last_run"`
+| <<plugins-inputs-jdbc-last_run_metadata_path>> |<<string,string>>|No|`"$USER_HOME/.logstash_jdbc_last_run"`
 | <<plugins-inputs-jdbc-lowercase_column_names>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-jdbc-parameters>> |<<hash,hash>>|No|`{}`
 | <<plugins-inputs-jdbc-record_last_run>> |<<boolean,boolean>>|No|`true`
@@ -414,4 +414,3 @@ when sent to another Logstash server.
   * Default value is `false`
 
 Use an incremental column value rather than a timestamp
-
