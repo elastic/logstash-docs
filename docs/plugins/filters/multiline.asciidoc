@@ -1,7 +1,8 @@
 [[plugins-filters-multiline]]
 === multiline
 
-
+NOTE: This filter has been deprecated in favor of multiline-codec. Multiline filter
+is not thread-safe and cannot handle messages from multiple streams.
 
 
 This filter will collapse multiline messages from a single source into one Logstash event.

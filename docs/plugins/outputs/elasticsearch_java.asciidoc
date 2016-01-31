@@ -2,8 +2,8 @@
 === elasticsearch_java
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-elasticsearch_java`.
-
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-elasticsearch_java`.
+Also note that `node` protocol usage is discouraged. Please use `http` or `transport` protocol.
 
 This output lets you store logs in Elasticsearch using the native 'node' and 'transport'
 protocols. It is highly recommended to use the regular 'logstash-output-elasticsearch' output
