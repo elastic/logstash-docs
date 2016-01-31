@@ -87,14 +87,14 @@ should kept to the minimum.
 
 Every plugin should have a changelog (CHANGELOG.md).  If not, please create one.  When changes are made to a plugin, make sure to include a changelog entry under the respective version to document the change.  The changelog should be easily understood from a user point of view.  As we iterate and release plugins rapidly, users use the changelog as a mechanism for deciding whether to update.
 
-For non user facing changes, please tag them as “Internal: x”.  For example:
+Changes that are not user facing should be tagged as “Internal: ”.  For example:
 
 * "Internal: Refactored specs for better testing"
 * "Default timeout configuration changed from 10s to 5s"
 
 ==== Continuous Integration
 
-Logstash plugins are setup with automated continuous integration (CI) build environments and there should be a corresponding badge on each Github page.  If it’s missing, please contact the Logstash core team.
+Plugins are setup with automated continuous integration (CI) environments and there should be a corresponding badge on each Github page.  If it’s missing, please contact the Logstash core team.
 
 Every Pull Request opened automatically triggers a CI run.  To conduct a manual run, comment “Jenkins, please test this.” on the Pull Request.
 
