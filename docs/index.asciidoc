@@ -77,6 +77,13 @@ include::static/plugin-manager.asciidoc[]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/contributing-to-logstash.asciidoc ?>]
 include::static/contributing-to-logstash.asciidoc[]
 
+// This is in the pluginbody.asciidoc itself
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/include/pluginbody.asciidoc ?>]
+include::static/input.asciidoc[]
+include::static/codec.asciidoc[]
+include::static/filter.asciidoc[]
+include::static/output.asciidoc[]
+
 // Contributing a Patch to a Logstash Plugin
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/contributing-patch.asciidoc ?>]
 include::static/contributing-patch.asciidoc[]
@@ -92,12 +99,6 @@ pass::[<?edit_url?>]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/submitting-a-plugin.asciidoc ?>]
 include::static/submitting-a-plugin.asciidoc[]
 
-// This is in the pluginbody.asciidoc itself
-// pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/include/pluginbody.asciidoc ?>]
-// include::static/input.asciidoc[]
-// include::static/codec.asciidoc[]
-// include::static/filter.asciidoc[]
-// include::static/output.asciidoc[]
 
 // This is in the pluginbody.asciidoc itself
 // pass::[<?edit_url?>]
