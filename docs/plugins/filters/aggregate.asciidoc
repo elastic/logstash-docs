@@ -14,54 +14,54 @@ and finally push aggregated information into final task event.
 * with these given logs :  
 [source,ruby]
 ----------------------------------
-  INFO - 12345 - TASK_START - start
-  INFO - 12345 - SQL - sqlQuery1 - 12
-  INFO - 12345 - SQL - sqlQuery2 - 34
-  INFO - 12345 - TASK_END - end
+ INFO - 12345 - TASK_START - start
+ INFO - 12345 - SQL - sqlQuery1 - 12
+ INFO - 12345 - SQL - sqlQuery2 - 34
+ INFO - 12345 - TASK_END - end
 ----------------------------------
 
 * you can aggregate "sql duration" for the whole task with this configuration :
 [source,ruby]
 ----------------------------------
-    filter {
-        grok {
-            match => [ "message", "%{LOGLEVEL:loglevel} - %{NOTSPACE:taskid} - %{NOTSPACE:logger} - %{WORD:label}( - %{INT:duration:int})?" ]
-        }
-    
-        if [logger] == "TASK_START" {
-            aggregate {
-                task_id => "%{taskid}"
-                code => "map['sql_duration'] = 0"
-                map_action => "create"
-            }
-        }
-    
-        if [logger] == "SQL" {
-            aggregate {
-                task_id => "%{taskid}"
-                code => "map['sql_duration'] += event['duration']"
-                map_action => "update"
-            }
-        }
-    
-        if [logger] == "TASK_END" {
-            aggregate {
-                task_id => "%{taskid}"
-                code => "event['sql_duration'] = map['sql_duration']"
-                map_action => "update"
-                end_of_task => true
-                timeout => 120
-            }
-        }
-    }
+ filter {
+   grok {
+     match => [ "message", "%{LOGLEVEL:loglevel} - %{NOTSPACE:taskid} - %{NOTSPACE:logger} - %{WORD:label}( - %{INT:duration:int})?" ]
+   }
+ 
+   if [logger] == "TASK_START" {
+     aggregate {
+       task_id => "%{taskid}"
+       code => "map['sql_duration'] = 0"
+       map_action => "create"
+     }
+   }
+
+   if [logger] == "SQL" {
+     aggregate {
+       task_id => "%{taskid}"
+       code => "map['sql_duration'] += event['duration']"
+       map_action => "update"
+     }
+   }
+ 
+   if [logger] == "TASK_END" {
+     aggregate {
+       task_id => "%{taskid}"
+       code => "event['sql_duration'] = map['sql_duration']"
+       map_action => "update"
+       end_of_task => true
+       timeout => 120
+     }
+   }
+ }
 ----------------------------------
 
 * the final event then looks like :  
 [source,ruby]
 ----------------------------------
 {
-        "message" => "INFO - 12345 - TASK_END - end message",
-   "sql_duration" => 46
+       "message" => "INFO - 12345 - TASK_END - end message",
+  "sql_duration" => 46
 }
 ----------------------------------
 
@@ -72,35 +72,35 @@ the field `sql_duration` is added and contains the sum of all sql queries durati
 * If you have the same logs than example #1, but without a start log :
 [source,ruby]
 ----------------------------------
-  INFO - 12345 - SQL - sqlQuery1 - 12
-  INFO - 12345 - SQL - sqlQuery2 - 34
-  INFO - 12345 - TASK_END - end
+ INFO - 12345 - SQL - sqlQuery1 - 12
+ INFO - 12345 - SQL - sqlQuery2 - 34
+ INFO - 12345 - TASK_END - end
 ----------------------------------
 
 * you can also aggregate "sql duration" with a slightly different configuration : 
 [source,ruby]
 ----------------------------------
-    filter {
-        grok {
-            match => [ "message", "%{LOGLEVEL:loglevel} - %{NOTSPACE:taskid} - %{NOTSPACE:logger} - %{WORD:label}( - %{INT:duration:int})?" ]
-        }
+ filter {
+   grok {
+     match => [ "message", "%{LOGLEVEL:loglevel} - %{NOTSPACE:taskid} - %{NOTSPACE:logger} - %{WORD:label}( - %{INT:duration:int})?" ]
+   }
     
-        if [logger] == "SQL" {
-            aggregate {
-                task_id => "%{taskid}"
-                code => "map['sql_duration'] ||= 0 ; map['sql_duration'] += event['duration']"
-            }
-        }
+   if [logger] == "SQL" {
+     aggregate {
+       task_id => "%{taskid}"
+       code => "map['sql_duration'] ||= 0 ; map['sql_duration'] += event['duration']"
+     }
+   }
     
-        if [logger] == "TASK_END" {
-            aggregate {
-                task_id => "%{taskid}"
-                code => "event['sql_duration'] = map['sql_duration']"
-                end_of_task => true
-                timeout => 120
-            }
-        }
-    }
+   if [logger] == "TASK_END" {
+     aggregate {
+       task_id => "%{taskid}"
+       code => "event['sql_duration'] = map['sql_duration']"
+       end_of_task => true
+       timeout => 120
+     }
+   }
+ }
 ----------------------------------
 
 * the final event is exactly the same than example #1
