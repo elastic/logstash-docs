@@ -5,11 +5,11 @@
 NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-influxdb`.
 
 
-This output lets you output Metrics to InfluxDB
+This output lets you output Metrics to InfluxDB (>= 0.9.0-rc31)
 
 The configuration here attempts to be as friendly as possible
 and minimize the need for multiple definitions to write to
-multiple series and still be efficient
+multiple measurements and still be efficient
 
 the InfluxDB API let's you do some semblance of bulk operation
 per http call but each call is database-specific
@@ -30,8 +30,6 @@ Required configuration options:
 influxdb {
     data_points => ...
     host => ...
-    password => ...
-    user => ...
 }
 --------------------------
 
@@ -46,15 +44,19 @@ Available configuration options:
 | <<plugins-outputs-influxdb-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-outputs-influxdb-coerce_values>> |<<hash,hash>>|No|`{}`
 | <<plugins-outputs-influxdb-data_points>> |<<hash,hash>>|Yes|`{}`
-| <<plugins-outputs-influxdb-db>> |<<string,string>>|No|`"stats"`
+| <<plugins-outputs-influxdb-db>> |<<string,string>>|No|`"statistics"`
+| <<plugins-outputs-influxdb-exclude_fields>> |<<array,array>>|No|`["@timestamp", "@version", "sequence", "message", "type"]`
 | <<plugins-outputs-influxdb-flush_size>> |<<number,number>>|No|`100`
 | <<plugins-outputs-influxdb-host>> |<<string,string>>|Yes|
 | <<plugins-outputs-influxdb-idle_flush_time>> |<<number,number>>|No|`1`
-| <<plugins-outputs-influxdb-password>> |<<password,password>>|Yes|`nil`
+| <<plugins-outputs-influxdb-measurement>> |<<string,string>>|No|`"logstash"`
+| <<plugins-outputs-influxdb-password>> |<<password,password>>|No|`nil`
 | <<plugins-outputs-influxdb-port>> |<<number,number>>|No|`8086`
-| <<plugins-outputs-influxdb-series>> |<<string,string>>|No|`"logstash"`
-| <<plugins-outputs-influxdb-time_precision>> |<<string,string>>, one of `["m", "s", "u"]`|No|`"s"`
-| <<plugins-outputs-influxdb-user>> |<<string,string>>|Yes|`nil`
+| <<plugins-outputs-influxdb-retention_policy>> |<<string,string>>|No|`"default"`
+| <<plugins-outputs-influxdb-send_as_tags>> |<<array,array>>|No|`["host"]`
+| <<plugins-outputs-influxdb-time_precision>> |<<string,string>>, one of `["n", "u", "ms", "s", "m", "h"]`|No|`"ms"`
+| <<plugins-outputs-influxdb-use_event_fields_for_data_points>> |<<boolean,boolean>>|No|`false`
+| <<plugins-outputs-influxdb-user>> |<<string,string>>|No|`nil`
 | <<plugins-outputs-influxdb-workers>> |<<number,number>>|No|`1`
 |=======================================================================
 
@@ -112,16 +114,31 @@ currently supported datatypes are `integer` and `float`
 Hash of key/value pairs representing data points to send to the named database
 Example: `{'column1' => 'value1', 'column2' => 'value2'}`
 
-Events for the same series will be batched together where possible
+Events for the same measurement will be batched together where possible
 Both keys and values support sprintf formatting
 
 [[plugins-outputs-influxdb-db]]
 ===== `db` 
 
   * Value type is <<string,string>>
-  * Default value is `"stats"`
+  * Default value is `"statistics"`
 
 The database to write
+
+[[plugins-outputs-influxdb-exclude_fields]]
+===== `exclude_fields` 
+
+  * Value type is <<array,array>>
+  * Default value is `["@timestamp", "@version", "sequence", "message", "type"]`
+
+An array containing the names of fields from the event to exclude from the
+data points 
+
+Events, in general, contain keys "@version" and "@timestamp". Other plugins
+may add others that you'll want to exclude (such as "command" from the 
+exec plugin).
+
+This only applies when use_event_fields_for_data_points is true.
 
 [[plugins-outputs-influxdb-flush_size]]
 ===== `flush_size` 
@@ -130,7 +147,7 @@ The database to write
   * Default value is `100`
 
 This setting controls how many events will be buffered before sending a batch
-of events. Note that these are only batched for the same series
+of events. Note that these are only batched for the same measurement
 
 [[plugins-outputs-influxdb-host]]
 ===== `host` 
@@ -157,10 +174,17 @@ logstash will flush those 10 events automatically.
 This helps keep both fast and slow log streams moving along in
 near-real-time.
 
+[[plugins-outputs-influxdb-measurement]]
+===== `measurement` 
+
+  * Value type is <<string,string>>
+  * Default value is `"logstash"`
+
+Measurement name - supports sprintf formatting
+
 [[plugins-outputs-influxdb-password]]
 ===== `password` 
 
-  * This is a required setting.
   * Value type is <<password,password>>
   * Default value is `nil`
 
@@ -174,28 +198,45 @@ The password for the user who access to the named database
 
 The port for InfluxDB
 
-[[plugins-outputs-influxdb-series]]
-===== `series` 
+[[plugins-outputs-influxdb-retention_policy]]
+===== `retention_policy` 
 
   * Value type is <<string,string>>
-  * Default value is `"logstash"`
+  * Default value is `"default"`
 
-Series name - supports sprintf formatting
+The retention policy to use
+
+[[plugins-outputs-influxdb-send_as_tags]]
+===== `send_as_tags` 
+
+  * Value type is <<array,array>>
+  * Default value is `["host"]`
+
+An array containing the names of fields to send to Influxdb as tags instead 
+of fields. Influxdb 0.9 convention is that values that do not change every
+request should be considered metadata and given as tags.
 
 [[plugins-outputs-influxdb-time_precision]]
 ===== `time_precision` 
 
-  * Value can be any of: `m`, `s`, `u`
-  * Default value is `"s"`
+  * Value can be any of: `n`, `u`, `ms`, `s`, `m`, `h`
+  * Default value is `"ms"`
 
 Set the level of precision of `time`
 
 only useful when overriding the time value
 
+[[plugins-outputs-influxdb-use_event_fields_for_data_points]]
+===== `use_event_fields_for_data_points` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Automatically use fields from the event as the data points sent to Influxdb
+
 [[plugins-outputs-influxdb-user]]
 ===== `user` 
 
-  * This is a required setting.
   * Value type is <<string,string>>
   * Default value is `nil`
 
