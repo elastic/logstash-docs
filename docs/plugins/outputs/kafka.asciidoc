@@ -1,7 +1,7 @@
 [[plugins-outputs-kafka]]
 === kafka
 
-
+NOTE: This plugin version (3.0.0) is not backward compatible with 0.8.x brokers and needs a 0.9 broker.
 
 Write events to a Kafka topic. This uses the Kafka Producer API to write messages to a topic on
 the broker.
@@ -48,11 +48,10 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-outputs-kafka-acks>> |<<string,string>>, one of `["0", "1", "all"]`|No|`"1"`
 | <<plugins-outputs-kafka-batch_size>> |<<number,number>>|No|`16384`
-| <<plugins-outputs-kafka-block_on_buffer_full>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-kafka-bootstrap_servers>> |<<string,string>>|No|`"localhost:9092"`
 | <<plugins-outputs-kafka-buffer_memory>> |<<number,number>>|No|`33554432`
 | <<plugins-outputs-kafka-client_id>> |<<string,string>>|No|
-| <<plugins-outputs-kafka-codec>> |<<codec,codec>>|No|`"json"`
+| <<plugins-outputs-kafka-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-outputs-kafka-compression_type>> |<<string,string>>, one of `["none", "gzip", "snappy"]`|No|`"none"`
 | <<plugins-outputs-kafka-key_serializer>> |<<string,string>>|No|`"org.apache.kafka.common.serialization.StringSerializer"`
 | <<plugins-outputs-kafka-linger_ms>> |<<number,number>>|No|`0`
@@ -62,10 +61,15 @@ Available configuration options:
 | <<plugins-outputs-kafka-metadata_max_age_ms>> |<<number,number>>|No|`300000`
 | <<plugins-outputs-kafka-receive_buffer_bytes>> |<<number,number>>|No|`32768`
 | <<plugins-outputs-kafka-reconnect_backoff_ms>> |<<number,number>>|No|`10`
+| <<plugins-outputs-kafka-request_timeout_ms>> |<<string,string>>|No|
 | <<plugins-outputs-kafka-retries>> |<<number,number>>|No|`0`
 | <<plugins-outputs-kafka-retry_backoff_ms>> |<<number,number>>|No|`100`
 | <<plugins-outputs-kafka-send_buffer_bytes>> |<<number,number>>|No|`131072`
-| <<plugins-outputs-kafka-timeout_ms>> |<<number,number>>|No|`30000`
+| <<plugins-outputs-kafka-ssl>> |<<boolean,boolean>>|No|`false`
+| <<plugins-outputs-kafka-ssl_keystore_location>> |a valid filesystem path|No|
+| <<plugins-outputs-kafka-ssl_keystore_password>> |<<password,password>>|No|
+| <<plugins-outputs-kafka-ssl_truststore_location>> |a valid filesystem path|No|
+| <<plugins-outputs-kafka-ssl_truststore_password>> |<<password,password>>|No|
 | <<plugins-outputs-kafka-topic_id>> |<<string,string>>|Yes|
 | <<plugins-outputs-kafka-value_serializer>> |<<string,string>>|No|`"org.apache.kafka.common.serialization.StringSerializer"`
 | <<plugins-outputs-kafka-workers>> |<<number,number>>|No|`1`
@@ -102,8 +106,9 @@ records are being sent to the same partition. This helps performance on both the
 and the server. This configuration controls the default batch size in bytes.
 
 [[plugins-outputs-kafka-block_on_buffer_full]]
-===== `block_on_buffer_full` 
+===== `block_on_buffer_full`  (DEPRECATED)
 
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
@@ -145,7 +150,7 @@ ip/port by allowing a logical application name to be included with the request
 ===== `codec` 
 
   * Value type is <<codec,codec>>
-  * Default value is `"json"`
+  * Default value is `"plain"`
 
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
 
@@ -228,6 +233,17 @@ The size of the TCP receive buffer to use when reading data
 
 The amount of time to wait before attempting to reconnect to a given host when a connection fails.
 
+[[plugins-outputs-kafka-request_timeout_ms]]
+===== `request_timeout_ms` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The configuration controls the maximum amount of time the client will wait
+for the response of a request. If the response is not received before the timeout
+elapses the client will resend the request if necessary or fail the request if
+retries are exhausted.
+
 [[plugins-outputs-kafka-retries]]
 ===== `retries` 
 
@@ -253,9 +269,51 @@ The amount of time to wait before attempting to retry a failed produce request t
 
 The size of the TCP send buffer to use when sending data.
 
-[[plugins-outputs-kafka-timeout_ms]]
-===== `timeout_ms` 
+[[plugins-outputs-kafka-ssl]]
+===== `ssl` 
 
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Enable SSL/TLS secured communication to Kafka broker. Note that secure communication 
+is only available with a broker running v0.9 of Kafka.
+
+[[plugins-outputs-kafka-ssl_keystore_location]]
+===== `ssl_keystore_location` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+If client authentication is required, this setting stores the keystore path.
+
+[[plugins-outputs-kafka-ssl_keystore_password]]
+===== `ssl_keystore_password` 
+
+  * Value type is <<password,password>>
+  * There is no default value for this setting.
+
+If client authentication is required, this setting stores the keystore password
+
+[[plugins-outputs-kafka-ssl_truststore_location]]
+===== `ssl_truststore_location` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+The JKS truststore path to validate the Kafka broker's certificate.
+
+[[plugins-outputs-kafka-ssl_truststore_password]]
+===== `ssl_truststore_password` 
+
+  * Value type is <<password,password>>
+  * There is no default value for this setting.
+
+The truststore password
+
+[[plugins-outputs-kafka-timeout_ms]]
+===== `timeout_ms`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
   * Value type is <<number,number>>
   * Default value is `30000`
 
