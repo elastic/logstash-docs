@@ -69,6 +69,10 @@ include::static/managing-multiline-events.asciidoc[]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/deploying.asciidoc ?>]
 include::static/deploying.asciidoc[]
 
+// Monitoring APIs
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/monitoring-apis.asciidoc ?>]
+include::static/monitoring-apis.asciidoc[]
+
 // Working with Plugins
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/plugin-manager.asciidoc ?>]
 include::static/plugin-manager.asciidoc[]
