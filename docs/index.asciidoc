@@ -59,6 +59,9 @@ include::static/upgrading.asciidoc[]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/configuration.asciidoc ?>]
 include::static/configuration.asciidoc[]
 
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/reloading-config.asciidoc ?>]
+include::static/reloading-config.asciidoc[]
+
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/command-line-flags.asciidoc ?>]
 include::static/command-line-flags.asciidoc[]
 
