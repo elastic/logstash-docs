@@ -21,3 +21,6 @@ had to use the new 0.9 version of the consumer which is not compatible with prev
 To use these new features, users have to first upgrade Kafka Brokers from 0.8.x to 0.9 and then use the 
 input plugins. Please note that several configurations have changed in the Logstash configuration.
 
+Configuration Changes:
+* <<plugins-inputs-kafka,Kafka Input Plugin>>
+* <<plugins-outputs-kafka,Kafka Output Plugin>>
