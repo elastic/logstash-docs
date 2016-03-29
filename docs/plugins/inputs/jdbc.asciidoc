@@ -150,6 +150,8 @@ Available configuration options:
 | <<plugins-inputs-jdbc-lowercase_column_names>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-jdbc-parameters>> |<<hash,hash>>|No|`{}`
 | <<plugins-inputs-jdbc-record_last_run>> |<<boolean,boolean>>|No|`true`
+| <<plugins-inputs-jdbc-connection_retry_attempts>> |<<number,number>>|No|`1`
+| <<plugins-inputs-jdbc-connection_retry_attempts_wait_time>> |<<number,number>>|No|`0.5`
 | <<plugins-inputs-jdbc-schedule>> |<<string,string>>|No|
 | <<plugins-inputs-jdbc-sequel_opts>> |<<hash,hash>>|No|`{}`
 | <<plugins-inputs-jdbc-sql_log_level>> |<<string,string>>, one of `["fatal", "error", "warn", "info", "debug"]`|No|`"info"`
@@ -190,6 +192,18 @@ Whether the previous run state should be preserved
   * Default value is `"plain"`
 
 The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
+
+[[plugins-inputs-jdbc-connection_retry_attempts]]
+===== `connection_retry_attempts` 
+
+  * Value type is <<number,number>>
+  * Default value is `1`
+
+[[plugins-inputs-jdbc-connection_retry_attempts_wait_time]]
+===== `connection_retry_attempts_wait_time` 
+
+  * Value type is <<number,number>>
+  * Default value is `0.5`
 
 [[plugins-inputs-jdbc-jdbc_connection_string]]
 ===== `jdbc_connection_string`
