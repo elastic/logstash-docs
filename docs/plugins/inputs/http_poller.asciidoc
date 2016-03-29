@@ -98,6 +98,7 @@ Available configuration options:
 | <<plugins-inputs-http_poller-truststore_type>> |<<string,string>>|No|`"JKS"`
 | <<plugins-inputs-http_poller-type>> |<<string,string>>|No|
 | <<plugins-inputs-http_poller-urls>> |<<hash,hash>>|Yes|
+| <<plugins-inputs-http_poller-validate_after_inactivity>> |<<number,number>>|No|`200`
 |=======================================================================
 
 
@@ -169,14 +170,12 @@ The codec used for input data. Input codecs are a convenient method for decoding
   * Default value is `true`
 
 
-
 [[plugins-inputs-http_poller-follow_redirects]]
 ===== `follow_redirects` 
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
-
-
+  
 
 [[plugins-inputs-http_poller-interval]]
 ===== `interval` 
@@ -355,5 +354,13 @@ when sent to another Logstash server.
 
 A Hash of urls in this format : `"name" => "url"`.
 The name and the url will be passed in the outputed event
+
+[[plugins-inputs-http_poller-validate_after_inactivity]]
+===== `validate_after_inactivity` 
+
+  * Value type is <<number,number>>
+  * Default value is `200`
+
+
 
 

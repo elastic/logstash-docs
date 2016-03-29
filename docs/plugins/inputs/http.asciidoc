@@ -54,11 +54,13 @@ Available configuration options:
 | <<plugins-inputs-http-keystore_password>> |<<password,password>>|No|
 | <<plugins-inputs-http-password>> |<<password,password>>|No|
 | <<plugins-inputs-http-port>> |<<number,number>>|No|`8080`
+| <<plugins-inputs-http-response_headers>> |<<hash,hash>>|No|`{"Content-Type"=>"text/plain"}`
 | <<plugins-inputs-http-ssl>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-http-tags>> |<<array,array>>|No|
 | <<plugins-inputs-http-threads>> |<<number,number>>|No|`4`
 | <<plugins-inputs-http-type>> |<<string,string>>|No|
 | <<plugins-inputs-http-user>> |<<string,string>>|No|
+| <<plugins-inputs-http-verify_mode>> |<<string,string>>, one of `["none", "peer", "force_peer"]`|No|`"none"`
 |=======================================================================
 
 
@@ -136,6 +138,14 @@ Password for basic authorization
 
 The TCP port to bind to
 
+[[plugins-inputs-http-response_headers]]
+===== `response_headers` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{"Content-Type"=>"text/plain"}`
+
+specify a custom set of response headers
+
 [[plugins-inputs-http-ssl]]
 ===== `ssl` 
 
@@ -190,5 +200,13 @@ when sent to another Logstash server.
   * There is no default value for this setting.
 
 Username for basic authorization
+
+[[plugins-inputs-http-verify_mode]]
+===== `verify_mode` 
+
+  * Value can be any of: `none`, `peer`, `force_peer`
+  * Default value is `"none"`
+
+Set the client certificate verification method. Valid methods: none, peer, force_peer
 
 

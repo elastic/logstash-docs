@@ -18,8 +18,6 @@ The config should look like this:
       }
     }
 
-Caveats: Currently there is no way to specify a timeout in the DNS lookup.
-
 This filter, like all filters, only processes 1 event at a time, so the use
 of this plugin can significantly slow down your pipeline's throughput if you
 have a high latency network. By way of example, if each DNS lookup takes 2
@@ -51,13 +49,18 @@ Available configuration options:
 | <<plugins-filters-dns-action>> |<<string,string>>, one of `["append", "replace"]`|No|`"append"`
 | <<plugins-filters-dns-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-dns-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-dns-failed_cache_size>> |<<number,number>>|No|`0`
+| <<plugins-filters-dns-failed_cache_ttl>> |<<number,number>>|No|`5`
+| <<plugins-filters-dns-hit_cache_size>> |<<number,number>>|No|`0`
+| <<plugins-filters-dns-hit_cache_ttl>> |<<number,number>>|No|`60`
+| <<plugins-filters-dns-max_retries>> |<<number,number>>|No|`2`
 | <<plugins-filters-dns-nameserver>> |<<array,array>>|No|
 | <<plugins-filters-dns-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-dns-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-dns-remove_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-dns-resolve>> |<<array,array>>|No|
 | <<plugins-filters-dns-reverse>> |<<array,array>>|No|
-| <<plugins-filters-dns-timeout>> |<<number,number>>|No|`2`
+| <<plugins-filters-dns-timeout>> |<<number,number>>|No|`0.5`
 |=======================================================================
 
 
@@ -134,6 +137,46 @@ Example:
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
+
+[[plugins-filters-dns-failed_cache_size]]
+===== `failed_cache_size` 
+
+  * Value type is <<number,number>>
+  * Default value is `0`
+
+cache size for failed requests (Resolv::
+
+[[plugins-filters-dns-failed_cache_ttl]]
+===== `failed_cache_ttl` 
+
+  * Value type is <<number,number>>
+  * Default value is `5`
+
+how long to cache failed requests (in seconds)
+
+[[plugins-filters-dns-hit_cache_size]]
+===== `hit_cache_size` 
+
+  * Value type is <<number,number>>
+  * Default value is `0`
+
+set the size of cache for successful requests
+
+[[plugins-filters-dns-hit_cache_ttl]]
+===== `hit_cache_ttl` 
+
+  * Value type is <<number,number>>
+  * Default value is `60`
+
+how long to cache successful requests (in seconds)
+
+[[plugins-filters-dns-max_retries]]
+===== `max_retries` 
+
+  * Value type is <<number,number>>
+  * Default value is `2`
+
+number of times to retry a failed resolve/reverse
 
 [[plugins-filters-dns-nameserver]]
 ===== `nameserver` 
@@ -232,7 +275,7 @@ Reverse resolve one or more fields.
 ===== `timeout` 
 
   * Value type is <<number,number>>
-  * Default value is `2`
+  * Default value is `0.5`
 
 `resolv` calls will be wrapped in a timeout instance
 
