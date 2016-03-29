@@ -144,7 +144,7 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
   * Value type is <<number,number>>
   * Default value is `0`
 
-cache size for failed requests (Resolv::
+cache size for failed requests
 
 [[plugins-filters-dns-failed_cache_ttl]]
 ===== `failed_cache_ttl` 
