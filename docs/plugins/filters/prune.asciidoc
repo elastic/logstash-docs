@@ -5,8 +5,14 @@
 NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-filter-prune`.
 
 
-The prune filter is for pruning event data from `@fields` based on whitelist/blacklist
-of field names or their values (names and values can also be regular expressions).
+The prune filter is for removing fields from events based on
+whitelists or blacklist of field names or their values (names and
+values can also be regular expressions).
+
+This can e.g. be useful if you have a <<plugins-filters-json,json>>
+or <<plugins-filters-kv,kv>> filter that creates a number of fields
+with names that you don't necessarily know the names of beforehand,
+and you only want to keep a subset of them.
 
 &nbsp;
 
@@ -114,11 +120,10 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
   * Value type is <<array,array>>
   * Default value is `["%{[^}]+}"]`
 
-Exclude fields which names match specified regexps, by default exclude unresolved `%{field}` strings.
+Exclude fields whose names match specified regexps, by default exclude unresolved `%{field}` strings.
 [source,ruby]
     filter { 
       prune { 
-        tags            => [ "apache-accesslog" ]
         blacklist_names => [ "method", "(referrer|status)", "${some}_field" ]
       }
     }
@@ -129,13 +134,11 @@ Exclude fields which names match specified regexps, by default exclude unresolve
   * Value type is <<hash,hash>>
   * Default value is `{}`
 
-Exclude specified fields if their values match regexps.
-In case field values are arrays, the fields are pruned on per array item
-in case all array items are matched whole field will be deleted.
+Exclude specified fields if their values match one of the supplied regular expressions.
+In case field values are arrays, each array item is matched against the regular expressions and matching array items will be excluded.
 [source,ruby]
     filter { 
       prune { 
-        tags             => [ "apache-accesslog" ]
         blacklist_values => [ "uripath", "/index.php",
                               "method", "(HEAD|OPTIONS)",
                               "status", "^[^2]" ]
@@ -148,7 +151,7 @@ in case all array items are matched whole field will be deleted.
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
-Trigger whether configation fields and values should be interpolated for
+Trigger whether configuration fields and values should be interpolated for
 dynamic values.
 Probably adds some performance overhead. Defaults to false.
 
@@ -227,7 +230,6 @@ Include only fields only if their names match specified regexps, default to empt
 [source,ruby] 
     filter { 
       prune { 
-        tags            => [ "apache-accesslog" ]
         whitelist_names => [ "method", "(referrer|status)", "${some}_field" ]
       }
     }
@@ -238,13 +240,11 @@ Include only fields only if their names match specified regexps, default to empt
   * Value type is <<hash,hash>>
   * Default value is `{}`
 
-Include specified fields only if their values match regexps.
-In case field values are arrays, the fields are pruned on per array item
-thus only matching array items will be included.
+Include specified fields only if their values match one of the supplied regular expressions.
+In case field values are arrays, each array item is matched against the regular expressions and only matching array items will be included.
 [source,ruby]
     filter { 
       prune { 
-        tags             => [ "apache-accesslog" ]
         whitelist_values => [ "uripath", "/index.php",
                               "method", "(GET|POST)",
                               "status", "^[^2]" ]
