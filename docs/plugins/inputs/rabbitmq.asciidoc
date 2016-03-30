@@ -1,9 +1,57 @@
 [[plugins-inputs-rabbitmq]]
 === rabbitmq
 
+Pull events from a http://www.rabbitmq.com/[RabbitMQ] queue.
 
+The default settings will create an entirely transient queue and listen for all messages by default.
+If you need durability or any other advanced settings, please set the appropriate options
 
+This plugin uses the http://rubymarchhare.info/[March Hare] library
+for interacting with the RabbitMQ server. Most configuration options
+map directly to standard RabbitMQ and AMQP concepts. The
+https://www.rabbitmq.com/amqp-0-9-1-reference.html[AMQP 0-9-1 reference guide]
+and other parts of the RabbitMQ documentation are useful for deeper
+understanding.
 
+The properties of messages received will be stored in the
+`[@metadata][rabbitmq_properties]` field if the `@metadata_enabled` setting is checked.
+Note that storing metadata may degrade performance.
+The following properties may be available (in most cases dependent on whether
+they were set by the sender):
+
+* app-id
+* cluster-id
+* consumer-tag
+* content-encoding
+* content-type
+* correlation-id
+* delivery-mode
+* exchange
+* expiration
+* message-id
+* priority
+* redeliver
+* reply-to
+* routing-key
+* timestamp
+* type
+* user-id
+
+For example, to get the RabbitMQ message's timestamp property
+into the Logstash event's `@timestamp` field, use the date
+filter to parse the `[@metadata][rabbitmq_properties][timestamp]`
+field:
+[source,ruby]
+   filter {
+     if [@metadata][rabbitmq_properties][timestamp] {
+       date {
+         match => ["[@metadata][rabbitmq_properties][timestamp]", "UNIX"]
+       }
+     }
+   }
+
+Additionally, any message headers will be saved in the
+`[@metadata][rabbitmq_headers]` field.
 
 &nbsp;
 
@@ -43,6 +91,7 @@ Available configuration options:
 | <<plugins-inputs-rabbitmq-heartbeat>> |<<number,number>>|No|
 | <<plugins-inputs-rabbitmq-host>> |<<string,string>>|Yes|
 | <<plugins-inputs-rabbitmq-key>> |<<string,string>>|No|`"logstash"`
+| <<plugins-inputs-rabbitmq-metadata_enabled>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-rabbitmq-passive>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-rabbitmq-password>> |<<password,password>>|No|`"guest"`
 | <<plugins-inputs-rabbitmq-port>> |<<number,number>>|No|`5672`
@@ -70,7 +119,14 @@ Available configuration options:
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-Enable message acknowledgement
+Enable message acknowledgements. With acknowledgements
+messages fetched by Logstash but not yet sent into the
+Logstash pipeline will be requeued by the server if Logstash
+shuts down. Acknowledgements will however hurt the message
+throughput.
+
+This will only send an ack back every `prefetch_count` messages.
+Working in batches provides a performance boost here.
 
 [[plugins-inputs-rabbitmq-add_field]]
 ===== `add_field` 
@@ -196,13 +252,25 @@ This is only relevant for direct or topic exchanges.
 * Routing keys are ignored on fanout exchanges.
 * Wildcards are not valid on direct exchanges.
 
+[[plugins-inputs-rabbitmq-metadata_enabled]]
+===== `metadata_enabled` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Enable the storage of message headers and properties in `@metadata`. This may impact performance
+
 [[plugins-inputs-rabbitmq-passive]]
 ===== `passive` 
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
-Passive queue creation? Useful for checking queue existance without modifying server state
+If true the queue will be passively declared, meaning it must
+already exist on the server. To have Logstash create the queue
+if necessary leave this option as false. If actively declaring
+a queue that already exists, the queue options for this plugin
+(durable etc) must match those of the existing queue.
 
 [[plugins-inputs-rabbitmq-password]]
 ===== `password` 
@@ -226,7 +294,7 @@ RabbitMQ port to connect on
   * Value type is <<number,number>>
   * Default value is `256`
 
-Prefetch count. Number of messages to prefetch
+Prefetch count. If acknowledgements are enabled with the `ack` option, specifies the number of outstanding unacknowledged
 
 [[plugins-inputs-rabbitmq-queue]]
 ===== `queue` 
@@ -234,8 +302,8 @@ Prefetch count. Number of messages to prefetch
   * Value type is <<string,string>>
   * Default value is `""`
 
-The default codec for this plugin is JSON. You can override this to suit your particular needs however.
-The name of the queue Logstash will consume events from.
+The name of the queue Logstash will consume events from. If left empty, a transient queue with an randomly chosen name 
+will be created.
 
 [[plugins-inputs-rabbitmq-ssl]]
 ===== `ssl` 
