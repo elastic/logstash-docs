@@ -1,9 +1,9 @@
 [[logstash-reference]]
 = Reference
 
-:branch:                2.2
-:logstash_version:      2.2.2
-:elasticsearch_version: 2.2.0
+:branch:                5.0
+:logstash_version:      5.0.0-alpha1
+:elasticsearch_version: 5.0.0-alpha1
 :jdk:                   1.7.0_60
 :guide:                 https://www.elastic.co/guide/en/elasticsearch/guide/current/
 :ref:                   https://www.elastic.co/guide/en/elasticsearch/reference/current/
@@ -72,10 +72,6 @@ include::static/managing-multiline-events.asciidoc[]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/deploying.asciidoc ?>]
 include::static/deploying.asciidoc[]
 
-// Monitoring APIs
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/monitoring-apis.asciidoc ?>]
-include::static/monitoring-apis.asciidoc[]
-
 // Working with Plugins
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/plugin-manager.asciidoc ?>]
 include::static/plugin-manager.asciidoc[]
@@ -83,6 +79,13 @@ include::static/plugin-manager.asciidoc[]
 // Contributing to Logstash
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/contributing-to-logstash.asciidoc ?>]
 include::static/contributing-to-logstash.asciidoc[]
+
+// This is in the pluginbody.asciidoc itself
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/include/pluginbody.asciidoc ?>]
+include::static/input.asciidoc[]
+include::static/codec.asciidoc[]
+include::static/filter.asciidoc[]
+include::static/output.asciidoc[]
 
 // Contributing a Patch to a Logstash Plugin
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/contributing-patch.asciidoc ?>]
@@ -99,12 +102,6 @@ pass::[<?edit_url?>]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/submitting-a-plugin.asciidoc ?>]
 include::static/submitting-a-plugin.asciidoc[]
 
-// This is in the pluginbody.asciidoc itself
-// pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/include/pluginbody.asciidoc ?>]
-// include::static/input.asciidoc[]
-// include::static/codec.asciidoc[]
-// include::static/filter.asciidoc[]
-// include::static/output.asciidoc[]
 
 // This is in the pluginbody.asciidoc itself
 // pass::[<?edit_url?>]
@@ -115,3 +112,7 @@ include::plugins/inputs.asciidoc[]
 include::plugins/outputs.asciidoc[]
 include::plugins/filters.asciidoc[]
 include::plugins/codecs.asciidoc[]
+
+// Release Notes
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/releasenotes.asciidoc ?>]
+include::static/releasenotes.asciidoc[]
