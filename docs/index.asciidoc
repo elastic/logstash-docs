@@ -10,6 +10,7 @@
 :shield:                https://www.elastic.co/guide/en/shield/current
 :logstash:              https://www.elastic.co/guide/en/logstash/current/
 :lsissue:               https://github.com/elastic/logstash/issues/
+:security:              X-Pack Security
 
 [[introduction]]
 == Logstash Introduction
