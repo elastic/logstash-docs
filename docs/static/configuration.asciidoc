@@ -601,9 +601,12 @@ output {
 
 [[environment-variables]]
 === Using Environment Variables in Configuration
+
+This feature is _experimental_, to enable it you will need to run logstash with the `--allow-env` flag.
+
 ==== Overview
 
-* You can set environment variable references into Logstash plugins configuration using `${var}` or `$var`.
+* You can set environment variable references into Logstash plugins configuration using `${var}`.
 * Each reference will be replaced by environment variable value at Logstash startup.
 * The replacement is case-sensitive.
 * References to undefined variables raise a Logstash configuration error.
@@ -616,31 +619,6 @@ output {
 [cols="a,a,a"]
 |==================================
 |Logstash config source	|Environment 	|Logstash config result
-
-|
-[source,ruby]
-----
-input {
-  tcp {
-    port => "$TCP_PORT"
-  }
-}
-----
-
-|
-[source,shell]
-----
-export TCP_PORT=12345
-----
-|
-[source,ruby]
-----
-input {
-  tcp {
-    port => 12345
-  }
-}
-----
 |
 [source,ruby]
 ----
