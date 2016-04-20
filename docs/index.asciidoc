@@ -44,10 +44,6 @@ include::static/advanced-pipeline.asciidoc[]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/life-of-an-event.asciidoc ?>]
 include::static/life-of-an-event.asciidoc[]
 
-// Installing from a Repository
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/repositories.asciidoc ?>]
-include::static/repositories.asciidoc[]
-
 // Breaking Changes
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/breaking-changes.asciidoc ?>]
 include::static/breaking-changes.asciidoc[]
