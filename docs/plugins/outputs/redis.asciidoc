@@ -129,7 +129,6 @@ Only supported for `list` Redis `data_type`.
 
 Either list or channel.  If `redis_type` is list, then we will set
 RPUSH to key. If `redis_type` is channel, then we will PUBLISH to `key`.
-TODO set required true
 
 [[plugins-outputs-redis-db]]
 ===== `db` 
@@ -162,7 +161,6 @@ For example:
 
 The name of a Redis list or channel. Dynamic names are
 valid here, for example `logstash-%{type}`.
-TODO set required true
 
 [[plugins-outputs-redis-name]]
 ===== `name`  (DEPRECATED)
@@ -172,7 +170,6 @@ TODO set required true
   * Default value is `"default"`
 
 Name is used for logging in case there are multiple instances.
-TODO: delete
 
 [[plugins-outputs-redis-password]]
 ===== `password` 
@@ -199,7 +196,6 @@ The default port to connect on. Can be overridden on any hostname.
 
 The name of the Redis queue (we'll use RPUSH on this). Dynamic names are
 valid here, for example `logstash-%{type}`
-TODO: delete
 
 [[plugins-outputs-redis-reconnect_interval]]
 ===== `reconnect_interval` 
