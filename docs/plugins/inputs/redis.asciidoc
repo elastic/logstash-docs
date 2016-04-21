@@ -81,7 +81,6 @@ The codec used for input data. Input codecs are a convenient method for decoding
 Specify either list or channel.  If `redis\_type` is `list`, then we will BLPOP the
 key.  If `redis\_type` is `channel`, then we will SUBSCRIBE to the key.
 If `redis\_type` is `pattern_channel`, then we will PSUBSCRIBE to the key.
-TODO: change required to true
 
 [[plugins-inputs-redis-db]]
 ===== `db` 
@@ -106,7 +105,6 @@ The hostname of your Redis server.
   * There is no default value for this setting.
 
 The name of a Redis list or channel.
-TODO: change required to true
 
 [[plugins-inputs-redis-name]]
 ===== `name`  (DEPRECATED)
@@ -143,7 +141,6 @@ The port to connect on.
   * There is no default value for this setting.
 
 The name of the Redis queue (we'll use BLPOP against this).
-TODO: remove soon.
 
 [[plugins-inputs-redis-tags]]
 ===== `tags` 
