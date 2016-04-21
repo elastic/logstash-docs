@@ -77,6 +77,13 @@ include::static/monitoring-apis.asciidoc[]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/plugin-manager.asciidoc ?>]
 include::static/plugin-manager.asciidoc[]
 
+// These files do their own pass blocks
+pass::[<?edit_url?>]
+include::plugins/inputs.asciidoc[]
+include::plugins/outputs.asciidoc[]
+include::plugins/filters.asciidoc[]
+include::plugins/codecs.asciidoc[]
+
 // Contributing to Logstash
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/contributing-to-logstash.asciidoc ?>]
 include::static/contributing-to-logstash.asciidoc[]
@@ -107,9 +114,3 @@ include::static/submitting-a-plugin.asciidoc[]
 // This is in the pluginbody.asciidoc itself
 // pass::[<?edit_url?>]
 
-// These files do their own pass blocks
-pass::[<?edit_url?>]
-include::plugins/inputs.asciidoc[]
-include::plugins/outputs.asciidoc[]
-include::plugins/filters.asciidoc[]
-include::plugins/codecs.asciidoc[]
