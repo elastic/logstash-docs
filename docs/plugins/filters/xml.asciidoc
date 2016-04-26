@@ -31,6 +31,7 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-filters-xml-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-xml-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-xml-force_array>> |<<boolean,boolean>>|No|`true`
 | <<plugins-filters-xml-namespaces>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-xml-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-xml-remove_field>> |<<array,array>>|No|`[]`
@@ -107,6 +108,15 @@ Example:
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
+
+[[plugins-filters-xml-force_array]]
+===== `force_array` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+By default the filter will force single elements to be arrays. Setting this to 
+false will prevent storing single elements in arrays.
 
 [[plugins-filters-xml-namespaces]]
 ===== `namespaces` 
