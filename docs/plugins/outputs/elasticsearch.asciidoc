@@ -312,7 +312,7 @@ the root path for the Elasticsearch HTTP API lives.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Set which https://www.elastic.co/guide/en/elasticsearch/reference/master/pipeline.html[ingest] pipeline you wish to execute for he bulk indexing.
+Set which https://www.elastic.co/guide/en/elasticsearch/reference/master/pipeline.html[ingest] pipeline you wish to execute for bulk indexing.
 
 [[plugins-outputs-elasticsearch-proxy]]
 ===== `proxy` 
