@@ -79,6 +79,7 @@ Available configuration options:
 | <<plugins-outputs-elasticsearch-parent>> |<<string,string>>|No|`nil`
 | <<plugins-outputs-elasticsearch-password>> |<<password,password>>|No|
 | <<plugins-outputs-elasticsearch-path>> |<<string,string>>|No|`"/"`
+| <<plugins-outputs-elasticsearch-pipeline>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-proxy>> |<<,>>|No|
 | <<plugins-outputs-elasticsearch-retry_max_interval>> |<<number,number>>|No|`2`
 | <<plugins-outputs-elasticsearch-routing>> |<<string,string>>|No|
@@ -304,6 +305,14 @@ Password to authenticate to a secure Elasticsearch cluster
 
 HTTP Path at which the Elasticsearch server lives. Use this if you must run Elasticsearch behind a proxy that remaps
 the root path for the Elasticsearch HTTP API lives.
+
+[[plugins-outputs-elasticsearch-pipeline]]
+===== `pipeline` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Set which https://www.elastic.co/guide/en/elasticsearch/reference/master/pipeline.html[ingest] pipeline you wish to execute for he bulk indexing.
 
 [[plugins-outputs-elasticsearch-proxy]]
 ===== `proxy` 
