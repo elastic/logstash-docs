@@ -110,6 +110,9 @@ pass::[<?edit_url?>]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/submitting-a-plugin.asciidoc ?>]
 include::static/submitting-a-plugin.asciidoc[]
 
+// Glossary of Terms
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/glossary.asciidoc ?>]
+include::static/glossary.asciidoc[]
 
 // This is in the pluginbody.asciidoc itself
 // pass::[<?edit_url?>]
