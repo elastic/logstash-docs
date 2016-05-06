@@ -76,7 +76,13 @@ Available configuration options:
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
+This plugin uses the AWS SDK and supports several ways to get credentials, which will be tried in this order:
 
+1. Static configuration, using `access_key_id` and `secret_access_key` params in logstash plugin config
+2. External credentials file specified by `aws_credentials_file`
+3. Environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
+4. Environment variables `AMAZON_ACCESS_KEY_ID` and `AMAZON_SECRET_ACCESS_KEY`
+5. IAM Instance Profile (available when running inside EC2)
 
 [[plugins-outputs-sns-arn]]
 ===== `arn` 
@@ -93,7 +99,16 @@ include the `sns` field in your events to set the ARN on a per-message basis!
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
+Path to YAML file containing a hash of AWS credentials.
+This file will only be loaded if `access_key_id` and
+`secret_access_key` aren't set. The contents of the
+file should look like this:
 
+[source,ruby]
+----------------------------------
+ :access_key_id: "12345"
+ :secret_access_key: "54321"
+----------------------------------
 
 [[plugins-outputs-sns-codec]]
 ===== `codec` 
@@ -109,7 +124,7 @@ The codec used for output data. Output codecs are a convenient method for encodi
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-
+URI to proxy server if required
 
 [[plugins-outputs-sns-publish_boot_message_arn]]
 ===== `publish_boot_message_arn` 
@@ -138,7 +153,7 @@ Example: arn:aws:sns:us-east-1:770975001275:logstash-testing
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-
+The AWS Secret Access Key
 
 [[plugins-outputs-sns-session_token]]
 ===== `session_token` 
@@ -146,7 +161,7 @@ Example: arn:aws:sns:us-east-1:770975001275:logstash-testing
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-
+The AWS Session token for temporary credentials
 
 [[plugins-outputs-sns-workers]]
 ===== `workers` 
