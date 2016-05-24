@@ -1,51 +1,67 @@
 [[plugins-outputs-s3]]
 === s3
 
+This plugin batches and uploads Logstash events into Amazon Simple Storage Service (Amazon S3).
 
+==== Requirements:
 
-INFORMATION:
+* Amazon S3 Bucket and S3 Access Permissions (Typically access_key_id and secret_access_key)
+* S3 PutObject permission
+* Run Logstash as superuser to establish connection
 
-This plugin sends logstash events to Amazon Simple Storage Service (Amazon S3).
-To use it you need to have the proper write premissions and a valid s3 bucket.
-Make sure you have permissions to write files on S3's bucket.  Also be sure to run logstash as super user to establish a connection.
+Temp files on local drives are used to buffer messages until either `size_file` or `time_file` criteria 
+is met. The default temp file location depends on the operating system. For example on Linux it will be `/tmp/logstash`.
+On OS X, it will be in `/var/folders/`
+ 
+S3 output files will have the following format:
 
-
-This plugin outputs temporary files to "/opt/logstash/S3_temp/". If you want, you can change the path at the start of register method.
-These files have a special name, for example:
-
+[source,js]
+----------------------------------
 ls.s3.ip-10-228-27-95.2013-04-18T10.00.tag_hello.part0.txt
+----------------------------------
 
-ls.s3 : indicate logstash plugin s3
+* `ls.s3`: indicates Logstash plugin s3
+* `ip-10-228-27-95` : indicates the ip of your machine.
+* `2013-04-18T10.00` : represents the time whenever you specify time_file.
+* `tag_hello` : this indicates the event's tag.
+* `part0` : this means if you indicate `size_file` then it will generate more parts if your `file.size` > `size_file`.
+When a file is full it will be pushed to the bucket and then deleted from the temporary directory. If a file is empty, it is 
+simply deleted.  Empty files will not be pushed
 
-"ip-10-228-27-95" : indicates the ip of your machine.
-"2013-04-18T10.00" : represents the time whenever you specify time_file.
-"tag_hello" : this indicates the event's tag.
-"part0" : this means if you indicate size_file then it will generate more parts if you file.size > size_file.
-          When a file is full it will be pushed to a bucket and will be deleted from the temporary directory.
-          If a file is empty is not pushed, it is not deleted.
+==== Crash Recovery:
 
-This plugin have a system to restore the previous temporary files if something crash.
+This plugin will recover and upload temporary log files after crash/abnormal termination
 
+==== Additional Notes
 
+Both `time_file` and `size_file` settings can trigger a log "file rotation". A log rotation pushes the current 
+log "part" to s3 and deleted from local temporary storage. If you specify both `size_file` and `time_file` then it will 
+create file for each tag (if specified). When either `time_file` minutes have elapsed OR 
+log file size > `size_file`, a log rotation is triggered.
 
+If you only specify `time_file` but not `file_size`, one file for each tag (if specified) will be created. 
+When `time_file` minutes elapses, a log rotation will be triggered.
 
+If you only specify `size_file`, but not `time_file`, one files for each tag (if specified) will be created.
+When size of log file part > `size_file`, a log rotation will be triggered.
 
+If neither `size_file` nor `time_file` is specified, only one file for each tag (if specified) will be created.
 
-#### Usage:
+**WARNING:** Since no log rotation is triggered in this case, S3 Upload will only occur when Logstash restarts.
+
+==== Example Usage:
+
 This is an example of logstash config:
 [source,ruby]
 output {
    s3{
-     access_key_id => "crazy_key"             (required)
-     secret_access_key => "monkey_access_key" (required)
-     endpoint_region => "eu-west-1"           (required)
-     bucket => "boss_please_open_your_bucket" (required)
+     access_key_id => "aws_key"               (optional)
+     secret_access_key => "aws_access_key"    (optional)
+     region => "eu-west-1"                    (optional)
+     bucket => "my_bucket"                    (required)
      size_file => 2048                        (optional)
      time_file => 5                           (optional)
-     format => "plain"                        (optional)
-     canned_acl => "private"                  (optional. Options are "private", "public_read", "public_read_write", "authenticated_read". Defaults to "private" )
    }
-
 
 &nbsp;
 
