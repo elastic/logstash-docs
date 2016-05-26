@@ -44,6 +44,16 @@ include::static/advanced-pipeline.asciidoc[]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/life-of-an-event.asciidoc ?>]
 include::static/life-of-an-event.asciidoc[]
 
+// Lostash setup
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/setting-up-logstash.asciidoc ?>]
+include::static/setting-up-logstash.asciidoc[]
+
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/command-line-flags.asciidoc ?>]
+include::static/command-line-flags.asciidoc[]
+
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/settings-file.asciidoc ?>]
+include::static/settings-file.asciidoc[]
+
 // Breaking Changes
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/breaking-changes.asciidoc ?>]
 include::static/breaking-changes.asciidoc[]
@@ -58,12 +68,6 @@ include::static/configuration.asciidoc[]
 
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/reloading-config.asciidoc ?>]
 include::static/reloading-config.asciidoc[]
-
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/command-line-flags.asciidoc ?>]
-include::static/command-line-flags.asciidoc[]
-
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/settings-file.asciidoc ?>]
-include::static/settings-file.asciidoc[]
 
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/managing-multiline-events.asciidoc ?>]
 include::static/managing-multiline-events.asciidoc[]
