@@ -99,7 +99,7 @@ Available configuration options:
 | <<plugins-outputs-elasticsearch-truststore_password>> |<<password,password>>|No|
 | <<plugins-outputs-elasticsearch-upsert>> |<<string,string>>|No|`""`
 | <<plugins-outputs-elasticsearch-user>> |<<string,string>>|No|
-| <<plugins-outputs-elasticsearch-workers>> |<<number,number>>|No|`1`
+| <<plugins-outputs-elasticsearch-workers>> |<<number,number>>|No|`filterworkers`
 |=======================================================================
 
 
@@ -512,9 +512,8 @@ Username to authenticate to a secure Elasticsearch cluster
 ===== `workers` 
 
   * Value type is <<number,number>>
-  * Default value is `1`
+  * Default value is the same as the number of filter workers configured for the logstash instance
 
 The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
 
 
