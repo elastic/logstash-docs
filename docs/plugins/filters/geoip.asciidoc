@@ -3,8 +3,8 @@
 
 
 
-The GeoIP filter adds information about the geographical location of IP addresses,
-based on data from the Maxmind database.
+The GeoIP filter adds information about the geographical location of IP addresses, 
+based on data from the Maxmind GeoLite2 City Database.
 
 A `[geoip][location]` field is created if
 the GeoIP lookup returns a latitude and longitude. The field is stored in
@@ -18,9 +18,9 @@ the awesomeness of Elasticsearch's geospatial query, facet and filter functions
 and the flexibility of having GeoJSON for all other applications (like Kibana's
 map visualization).
 
-Logstash releases ship with the GeoLite2 City database made available freely from
-Maxmind with a CCA-ShareAlike 3.0 license. For more details on GeoLite, see
-<http://www.maxmind.com/en/geolite>.
+Note: This product includes GeoLite2 data created by MaxMind, available from
+http://www.maxmind.com. This database is licensed under 
+http://creativecommons.org/licenses/by-sa/4.0/[Creative Commons Attribution-ShareAlike 4.0 International License]
 
 &nbsp;
 
@@ -133,10 +133,8 @@ Map of lookup caches, keyed by geoip_type
 The path to the GeoIP database file which Logstash should use. Country, City, ASN, ISP
 and organization databases are supported.
 
-If not specified, this will default to the GeoLiteCity database that ships
-with Logstash.
-Up-to-date databases can be downloaded from here: <https://dev.maxmind.com/geoip/legacy/geolite/>
-Please be sure to download a legacy format database.
+If not specified, this will default to the GeoLite2 City database that ships with Logstash.
+Up-to-date databases can be downloaded from here: http://dev.maxmind.com/geoip/geoip2/geolite2/
 
 [[plugins-filters-geoip-fields]]
 ===== `fields` 
