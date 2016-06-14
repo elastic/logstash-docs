@@ -12,6 +12,33 @@ An example use case of this filter is for taking output from the
 the whole output of a command and splitting that output by newline -
 making each line an event.
 
+Split filter can also be used to split array fields in events into individual events.
+A very common pattern in JSON & XML is to make use of lists to group data together.
+
+For example, a JSON structure like this can be split into multiple events:
+
+[source,js]
+----------------------------------
+{ field1: ...,
+results: [
+  { result ... },
+  { result ... },
+  { result ... },
+  ...
+] }
+----------------------------------
+
+The split filter can be used on the above data to create separate events for each value of `results` field
+
+[source,js]
+----------------------------------
+filter {
+split {
+  field => "results"
+ }
+}
+----------------------------------
+
 The end result of each split is a complete copy of the event
 with only the current split section of the given field changed.
 
@@ -119,7 +146,8 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
   * Value type is <<string,string>>
   * Default value is `"message"`
 
-The field whose value is to be split by the terminator.
+The field whose value is to be split by the terminator. Can be a multiline message or the ID of an array. 
+Nested arrays are referenced like: `"[object_id][array_id]"`
 
 [[plugins-filters-split-periodic_flush]]
 ===== `periodic_flush` 
