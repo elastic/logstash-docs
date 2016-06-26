@@ -32,6 +32,7 @@ Available configuration options:
 | <<plugins-filters-xml-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-xml-add_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-xml-force_array>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-xml-force_content>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-xml-namespaces>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-xml-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-xml-remove_field>> |<<array,array>>|No|`[]`
@@ -39,6 +40,7 @@ Available configuration options:
 | <<plugins-filters-xml-remove_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-xml-source>> |<<string,string>>|Yes|
 | <<plugins-filters-xml-store_xml>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-xml-suppress_empty>> |<<boolean,boolean>>|No|`true`
 | <<plugins-filters-xml-target>> |<<string,string>>|No|
 | <<plugins-filters-xml-xpath>> |<<hash,hash>>|No|`{}`
 |=======================================================================
@@ -117,6 +119,16 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
 
 By default the filter will force single elements to be arrays. Setting this to 
 false will prevent storing single elements in arrays.
+
+[[plugins-filters-xml-force_content]]
+===== `force_content` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+By default the filter will expand attributes differently from content inside 
+of tags. This option allows you to force text content and attributes to always 
+parse to a hash value.
 
 [[plugins-filters-xml-namespaces]]
 ===== `namespaces` 
@@ -243,6 +255,15 @@ The above would parse the XML from the `message` field.
 
 By default the filter will store the whole parsed XML in the destination
 field as described above. Setting this to false will prevent that.
+
+[[plugins-filters-xml-suppress_empty]]
+===== `suppress_empty` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+By default, output nothing if the element is empty. If set to `false`, empty element 
+will result in an empty hash object.
 
 [[plugins-filters-xml-target]]
 ===== `target` 
