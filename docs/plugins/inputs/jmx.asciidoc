@@ -2,7 +2,7 @@
 === jmx
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-input-jmx`.
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-input-jmx`.
 
 
 This input plugin permits to retrieve metrics from remote Java applications using JMX.
