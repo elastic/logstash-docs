@@ -2,7 +2,7 @@
 === alter
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-filter-alter`.
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-alter`.
 
 
 The alter filter allows you to do general alterations to fields 

@@ -2,7 +2,7 @@
 === cef
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-codec-cef`.
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-codec-cef`.
 
 Implementation of a Logstash codec for the ArcSight Common Event Format (CEF).
 Based on Revision 20 of Implementing ArcSight CEF, dated from June 05, 2013.
