@@ -2,7 +2,7 @@
 === range
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-filter-range`.
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-range`.
 
 
 This filter is used to check that certain fields are within expected size/length ranges.

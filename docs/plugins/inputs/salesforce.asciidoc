@@ -2,7 +2,7 @@
 === salesforce
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-input-salesforce`.
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-input-salesforce`.
 
 
 This Logstash input plugin allows you to query Salesforce using SOQL and puts the results
