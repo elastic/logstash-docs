@@ -2,7 +2,7 @@
 === webhdfs
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-webhdfs`.
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-webhdfs`.
 
 
 This plugin sends Logstash events into files in HDFS via the https://hadoop.apache.org/docs/r1.0.4/webhdfs.html[webhdfs] REST API.

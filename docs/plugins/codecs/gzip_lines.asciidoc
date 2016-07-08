@@ -2,7 +2,7 @@
 === gzip_lines
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-codec-gzip_lines`.
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-codec-gzip_lines`.
 
 
 This codec will read gzip encoded content
