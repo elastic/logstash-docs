@@ -2,7 +2,7 @@
 === solr_http
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-output-solr_http`.
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-solr_http`.
 
 
 This output lets you index&store your logs in Solr. If you want to get

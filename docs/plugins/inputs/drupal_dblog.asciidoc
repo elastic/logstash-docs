@@ -2,7 +2,7 @@
 === drupal_dblog
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-input-drupal_dblog`.
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-input-drupal_dblog`.
 
 
 Retrieve watchdog log events from a Drupal installation with DBLog enabled.
