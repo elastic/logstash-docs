@@ -2,7 +2,7 @@
 === de_dot
 
 
-NOTE: This does not ship with Logstash by default, but it is easy to install by running `bin/plugin install logstash-filter-de_dot`.
+NOTE: This does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-de_dot`.
 
 
 This filter _appears_ to rename fields by replacing `.` characters with a different
