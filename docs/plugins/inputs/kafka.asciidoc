@@ -19,6 +19,9 @@ of Logstash and the Kafka input plugin:
 |0.10      |0.10      |2.4.0 - 5.0.x   | 5.x.x |Not compatible with the 0.9 broker 
 |==========================================================
 
+NOTE: It's a good idea to upgrade brokers before consumers/producers because brokers target backwards compatibility.
+For example, the 0.9 broker will work with both the 0.8 consumer and 0.9 consumer APIs, but not the other way around.
+
 The Logstash Kafka consumer handles group management and uses the default offset management
 strategy using Kafka topics.
 
