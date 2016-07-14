@@ -79,6 +79,10 @@ include::static/managing-multiline-events.asciidoc[]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/deploying.asciidoc ?>]
 include::static/deploying.asciidoc[]
 
+// Troubleshooting performance
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/performance-checklist.asciidoc ?>]
+include::static/performance-checklist.asciidoc[]
+
 // Monitoring APIs
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/monitoring-apis.asciidoc ?>]
 include::static/monitoring-apis.asciidoc[]
