@@ -48,11 +48,11 @@ include::static/life-of-an-event.asciidoc[]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/setting-up-logstash.asciidoc ?>]
 include::static/setting-up-logstash.asciidoc[]
 
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/command-line-flags.asciidoc ?>]
-include::static/command-line-flags.asciidoc[]
-
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/settings-file.asciidoc ?>]
 include::static/settings-file.asciidoc[]
+
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/command-line-flags.asciidoc ?>]
+include::static/command-line-flags.asciidoc[]
 
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/stalled-shutdown.asciidoc ?>]
 include::static/stalled-shutdown.asciidoc[]
