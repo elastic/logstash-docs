@@ -39,6 +39,12 @@ Available configuration options:
 | <<plugins-outputs-tcp-mode>> |<<string,string>>, one of `["server", "client"]`|No|`"client"`
 | <<plugins-outputs-tcp-port>> |<<number,number>>|Yes|
 | <<plugins-outputs-tcp-reconnect_interval>> |<<number,number>>|No|`10`
+| <<plugins-outputs-tcp-ssl_cacert>> |a valid filesystem path|No|
+| <<plugins-outputs-tcp-ssl_cert>> |a valid filesystem path|No|
+| <<plugins-outputs-tcp-ssl_enable>> |<<boolean,boolean>>|No|`false`
+| <<plugins-outputs-tcp-ssl_key>> |a valid filesystem path|No|
+| <<plugins-outputs-tcp-ssl_key_passphrase>> |<<password,password>>|No|`nil`
+| <<plugins-outputs-tcp-ssl_verify>> |<<boolean,boolean>>|No|`false`
 | <<plugins-outputs-tcp-workers>> |<<number,number>>|No|`1`
 |=======================================================================
 
@@ -106,6 +112,55 @@ When mode is `client`, the port to connect to.
   * Default value is `10`
 
 When connect failed,retry interval in sec.
+
+[[plugins-outputs-tcp-ssl_cacert]]
+===== `ssl_cacert` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+The SSL CA certificate, chainfile or CA path. The system CA path is automatically included.
+
+[[plugins-outputs-tcp-ssl_cert]]
+===== `ssl_cert` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+SSL certificate path
+
+[[plugins-outputs-tcp-ssl_enable]]
+===== `ssl_enable` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Enable SSL (must be set for other `ssl_` options to take effect).
+
+[[plugins-outputs-tcp-ssl_key]]
+===== `ssl_key` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+SSL key path
+
+[[plugins-outputs-tcp-ssl_key_passphrase]]
+===== `ssl_key_passphrase` 
+
+  * Value type is <<password,password>>
+  * Default value is `nil`
+
+SSL key passphrase
+
+[[plugins-outputs-tcp-ssl_verify]]
+===== `ssl_verify` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Verify the identity of the other end of the SSL connection against the CA.
+For input, sets the field `sslsubject` to that of the client certificate.
 
 [[plugins-outputs-tcp-workers]]
 ===== `workers` 

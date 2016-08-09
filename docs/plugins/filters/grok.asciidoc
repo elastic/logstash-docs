@@ -170,6 +170,8 @@ Available configuration options:
 | <<plugins-filters-grok-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-grok-remove_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-grok-tag_on_failure>> |<<array,array>>|No|`["_grokparsefailure"]`
+| <<plugins-filters-grok-tag_on_timeout>> |<<string,string>>|No|`"_groktimeout"`
+| <<plugins-filters-grok-timeout_millis>> |<<number,number>>|No|`2000`
 |=======================================================================
 
 
@@ -308,18 +310,6 @@ overwrite the `message` field with part of the match like so:
 In this case, a line like `May 29 16:37:11 sadness logger: hello world`
 will be parsed and `hello world` will overwrite the original message.
 
-[[plugins-filters-grok-pattern]]
-===== `pattern`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
-
-Specify a pattern to parse with. This will match the `message` field.
-
-If you want to match other fields than message, use the `match` setting.
-Multiple patterns is fine.
-
 [[plugins-filters-grok-patterns_dir]]
 ===== `patterns_dir` 
 
@@ -329,9 +319,9 @@ Multiple patterns is fine.
 
 Logstash ships by default with a bunch of patterns, so you don't
 necessarily need to define this yourself unless you are adding additional
-patterns. You can point to multiple pattern directories using this setting
+patterns. You can point to multiple pattern directories using this setting.
 Note that Grok will read all files in the directory matching the patterns_files_glob
-and assume its a pattern file (including any tilde backup files)
+and assume it's a pattern file (including any tilde backup files)
 [source,ruby]
     patterns_dir => ["/opt/logstash/patterns", "/opt/logstash/extra_patterns"]
 
@@ -417,16 +407,6 @@ If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the tag `foo_hello` if it is present. The second example
 would remove a sad, unwanted tag as well.
 
-[[plugins-filters-grok-singles]]
-===== `singles`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-If `true`, make single-value fields simply that value, not an array
-containing that one value.
-
 [[plugins-filters-grok-tag_on_failure]]
 ===== `tag_on_failure` 
 
@@ -435,5 +415,24 @@ containing that one value.
 
 Append values to the `tags` field when there has been no
 successful match
+
+[[plugins-filters-grok-tag_on_timeout]]
+===== `tag_on_timeout` 
+
+  * Value type is <<string,string>>
+  * Default value is `"_groktimeout"`
+
+Tag to apply if a grok regexp times out.
+
+[[plugins-filters-grok-timeout_millis]]
+===== `timeout_millis` 
+
+  * Value type is <<number,number>>
+  * Default value is `2000`
+
+Attempt to terminate regexps after this amount of time.
+This applies per pattern if multiple patterns are applied
+This will never timeout early, but may take a little longer to timeout.
+Actual timeout is approximate based on a 250ms quantization.
 
 
