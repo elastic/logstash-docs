@@ -1,13 +1,20 @@
 [[plugins-filters-uuid]]
 === uuid
 
+The uuid filter allows you to generate a
+https://en.wikipedia.org/wiki/Universally_unique_identifier[UUID]
+and add it as a field to each processed event.
 
+This is useful if you need to generate a string that's unique for every
+event, even if the same input is processed multiple times. If you want
+to generate strings that are identical each time a event with a given
+content is processed (i.e. a hash) you should use the
+<<plugins-filters-fingerprint,fingerprint filter>> instead.
 
-The uuid filter allows you to add a `UUID` field to messages.
-This is useful to be able to control the `_id` messages are indexed into Elasticsearch
-with, so that you can insert duplicate messages (i.e. the same message multiple times
-without creating duplicates) - for log pipeline reliability
-
+The generated UUIDs follow the version 4 definition in
+https://tools.ietf.org/html/rfc4122[RFC 4122]) and will be
+represented as a standard hexadecimal string format, e.g.
+"e08806fe-02af-406c-bbde-8a5ae4475e57".
 
 &nbsp;
 
@@ -64,7 +71,7 @@ Example:
       }
     }
 [source,ruby]
-    # You can also add multiple fields at once:
+     You can also add multiple fields at once:
     filter {
       uuid {
         add_field => {
@@ -97,7 +104,7 @@ Example:
       }
     }
 [source,ruby]
-    # You can also add multiple tags at once:
+     You can also add multiple tags at once:
     filter {
       uuid {
         add_tag => [ "foo_%{somefield}", "taggedy_tag"]
@@ -151,7 +158,7 @@ Example:
       }
     }
 [source,ruby]
-    # You can also remove multiple fields at once:
+     You can also remove multiple fields at once:
     filter {
       uuid {
         remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
@@ -180,7 +187,7 @@ Example:
       }
     }
 [source,ruby]
-    # You can also remove multiple tags at once:
+     You can also remove multiple tags at once:
     filter {
       uuid {
         remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
