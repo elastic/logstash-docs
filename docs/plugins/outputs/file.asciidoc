@@ -12,7 +12,7 @@ You can customise the line format using the `line` codec like
 output {
  file {
    path => ...
-   codec => { line { format => "custom format: %{message}"}}
+   codec => line { format => "custom format: %{message}"}
  }
 }
 
