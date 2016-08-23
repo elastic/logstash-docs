@@ -233,7 +233,7 @@ The AWS Session token for temporary credentials
 ===== `sincedb_path` 
 
   * Value type is <<string,string>>
-  * Default value is `nil`
+  * Default value is `$HOME/.sincedb_{MD5(bucket + prefix)}`
 
 Where to write the since database (keeps track of the date
 the last handled file was added to S3). The default will write
