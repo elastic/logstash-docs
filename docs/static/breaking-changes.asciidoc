@@ -2,8 +2,7 @@
 == Breaking Changes
 
 **Breaking changes in 2.4**
-
-=== Beats Output config change
+Beats Output config change
 
 The Beats input has been reimplemented using Netty, an asynchronous IO framework for Java.
 This rewrite for performance brings it in line with Logstash Forwarder + LS combination.
