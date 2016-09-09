@@ -7,7 +7,7 @@
 :jdk:                   1.8.0
 :guide:                 https://www.elastic.co/guide/en/elasticsearch/guide/current/
 :ref:                   https://www.elastic.co/guide/en/elasticsearch/reference/current/
-:shield:                https://www.elastic.co/guide/en/shield/current
+:xpack:                https://www.elastic.co/guide/en/x-pack/current
 :logstash:              https://www.elastic.co/guide/en/logstash/current/
 :lsissue:               https://github.com/elastic/logstash/issues/
 :security:              X-Pack Security
