@@ -54,6 +54,9 @@ include::static/settings-file.asciidoc[]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/command-line-flags.asciidoc ?>]
 include::static/command-line-flags.asciidoc[]
 
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/logging.asciidoc ?>]
+include::static/logging.asciidoc[]
+
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/stalled-shutdown.asciidoc ?>]
 include::static/stalled-shutdown.asciidoc[]
 
