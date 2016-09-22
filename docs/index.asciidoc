@@ -2,6 +2,7 @@
 = Logstash Reference
 
 :branch:                5.0
+:major-version:         5.x
 :logstash_version:      5.0.0-beta1
 :elasticsearch_version: 5.0.0-beta1
 :jdk:                   1.8.0
