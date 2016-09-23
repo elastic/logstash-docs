@@ -10,8 +10,8 @@ The following codec plugins are available:
 | Plugin | Description | Github repository
 | <<plugins-codecs-avro,avro>> | Reads serialized Avro records as Logstash events | https://github.com/logstash-plugins/logstash-codec-avro[logstash-codec-avro]
 | <<plugins-codecs-cef,cef>> | Reads the ArcSight Common Event Format (CEF). | https://github.com/logstash-plugins/logstash-codec-cef[logstash-codec-cef]
-| <<plugins-codecs-cloudtrail,cloudtrail>> | Reads AWS Cloudtrail events | https://github.com/logstash-plugins/logstash-codec-cloudtrail[logstash-codec-cloudtrail]
 | <<plugins-codecs-cloudfront,cloudfront>> | Reads AWS CloudFront reports | https://github.com/logstash-plugins/logstash-codec-cloudfront[logstash-codec-cloudfront]
+| <<plugins-codecs-cloudtrail,cloudtrail>> | Reads AWS Cloudtrail events | https://github.com/logstash-plugins/logstash-codec-cloudtrail[logstash-codec-cloudtrail]
 | <<plugins-codecs-collectd,collectd>> | Reads events from the `collectd` binary protocol using UDP. | https://github.com/logstash-plugins/logstash-codec-collectd[logstash-codec-collectd]
 | <<plugins-codecs-compress_spooler,compress_spooler>> | Compresses events into spooled batches | https://github.com/logstash-plugins/logstash-codec-compress_spooler[logstash-codec-compress_spooler]
 | <<plugins-codecs-dots,dots>> | Sends 1 dot per event to `stdout` for performance tracking | https://github.com/logstash-plugins/logstash-codec-dots[logstash-codec-dots]
