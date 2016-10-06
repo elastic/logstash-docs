@@ -6,9 +6,9 @@
 :elasticsearch_version: 5.1.0
 :jdk:                   1.8.0
 :guide:                 https://www.elastic.co/guide/en/elasticsearch/guide/current/
-:ref:                   https://www.elastic.co/guide/en/elasticsearch/reference/current/
-:xpack:                 https://www.elastic.co/guide/en/x-pack/current
-:logstash:              https://www.elastic.co/guide/en/logstash/current/
+:ref:                   https://www.elastic.co/guide/en/elasticsearch/reference/5.x/
+:xpack:                 https://www.elastic.co/guide/en/x-pack/5.x
+:logstash:              https://www.elastic.co/guide/en/logstash/5.x/
 :lsissue:               https://github.com/elastic/logstash/issues/
 :security:              X-Pack Security
 
