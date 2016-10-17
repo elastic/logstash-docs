@@ -116,10 +116,6 @@ include::static/output.asciidoc[]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/contributing-patch.asciidoc ?>]
 include::static/contributing-patch.asciidoc[]
 
-// Event API
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/event-api.asciidoc ?>]
-include::static/event-api.asciidoc[]
-
 // Logstash Community Maintainer Guide
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/maintainer-guide.asciidoc ?>]
 include::static/maintainer-guide.asciidoc[]
