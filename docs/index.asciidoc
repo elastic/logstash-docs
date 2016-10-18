@@ -3,8 +3,8 @@
 
 :branch:                5.0
 :major-version:         5.x
-:logstash_version:      5.0.0-beta1
-:elasticsearch_version: 5.0.0-beta1
+:logstash_version:      5.0.0
+:elasticsearch_version: 5.0.0
 :jdk:                   1.8.0
 :guide:                 https://www.elastic.co/guide/en/elasticsearch/guide/current/
 :ref:                   https://www.elastic.co/guide/en/elasticsearch/reference/5.0/
