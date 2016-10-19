@@ -93,7 +93,7 @@ Available configuration options:
 | <<plugins-inputs-file-delimiter>> |<<string,string>>|No|`"\n"`
 | <<plugins-inputs-file-discover_interval>> |<<number,number>>|No|`15`
 | <<plugins-inputs-file-exclude>> |<<array,array>>|No|
-| <<plugins-inputs-file-ignore_older>> |<<number,number>>|No|`86400`
+| <<plugins-inputs-file-ignore_older>> |<<number,number>>|No|
 | <<plugins-inputs-file-max_open_files>> |<<number,number>>|No|
 | <<plugins-inputs-file-path>> |<<array,array>>|Yes|
 | <<plugins-inputs-file-sincedb_path>> |<<string,string>>|No|
@@ -177,12 +177,13 @@ You might want to exclude gzipped files:
 ===== `ignore_older` 
 
   * Value type is <<number,number>>
-  * Default value is `86400`
+  * There is no default value for this setting.
 
 When the file input discovers a file that was last modified
 before the specified timespan in seconds, the file is ignored.
 After it's discovery, if an ignored file is modified it is no
-longer ignored and any new data is read. The default is 24 hours.
+longer ignored and any new data is read. By default, this option is 
+disabled. Note this unit is in seconds.
 
 [[plugins-inputs-file-max_open_files]]
 ===== `max_open_files` 
@@ -217,11 +218,11 @@ on the <<array,Logstash configuration page>>.
 ===== `sincedb_path` 
 
   * Value type is <<string,string>>
-  * There is no default value for this setting.
+  * Default path is `<path.data>/plugins/inputs/file`.
 
 Path of the sincedb database file (keeps track of the current
 position of monitored log files) that will be written to disk.
-The default will write sincedb files to some path matching `$HOME/.sincedb*`
+The default will write sincedb files to `<path.data>/plugins/inputs/file`
 NOTE: it must be a file path and not a directory path
 
 [[plugins-inputs-file-sincedb_write_interval]]
