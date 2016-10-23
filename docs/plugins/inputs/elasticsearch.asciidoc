@@ -1,8 +1,6 @@
 [[plugins-inputs-elasticsearch]]
 === elasticsearch
 
-
-
 Read from an Elasticsearch cluster, based on search query results.
 This is useful for replaying test logs, reindexing, etc.
 
@@ -12,7 +10,7 @@ Example:
       # Read all documents from Elasticsearch matching the given query
       elasticsearch {
         hosts => "localhost"
-        query => '{ "query": { "match": { "statuscode": 200 } } }'
+        query => '{ "query": { "match": { "statuscode": 200 } }, "sort": [ "_doc" ] }'
       }
     }
 
@@ -23,7 +21,8 @@ This would create an Elasticsearch query with the following format:
         "match": {
           "statuscode": 200
         }
-      }
+      },
+      "sort": [ "_doc" ]
     }'
 
 
@@ -32,7 +31,6 @@ This would create an Elasticsearch query with the following format:
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -58,8 +56,7 @@ Available configuration options:
 | <<plugins-inputs-elasticsearch-hosts>> |<<array,array>>|No|
 | <<plugins-inputs-elasticsearch-index>> |<<string,string>>|No|`"logstash-*"`
 | <<plugins-inputs-elasticsearch-password>> |<<password,password>>|No|
-| <<plugins-inputs-elasticsearch-query>> |<<string,string>>|No|`"{\"query\": { \"match_all\": {} } }"`
-| <<plugins-inputs-elasticsearch-scan>> |<<boolean,boolean>>|No|`true`
+| <<plugins-inputs-elasticsearch-query>> |<<string,string>>|No|`"{ \"sort\": [ \"_doc\" ] }"`
 | <<plugins-inputs-elasticsearch-scroll>> |<<string,string>>|No|`"1m"`
 | <<plugins-inputs-elasticsearch-size>> |<<number,number>>|No|`1000`
 | <<plugins-inputs-elasticsearch-ssl>> |<<boolean,boolean>>|No|`false`
@@ -67,7 +64,6 @@ Available configuration options:
 | <<plugins-inputs-elasticsearch-type>> |<<string,string>>|No|
 | <<plugins-inputs-elasticsearch-user>> |<<string,string>>|No|
 |=======================================================================
-
 
 
 ==== Details
@@ -109,8 +105,8 @@ the id in the event.
 
 It might be important to note, with regards to metadata, that if you're
 ingesting documents with the intent to re-index them (or just update them)
-that the `action` option in the elasticsearch output want's to know how to
-handle those things. It can be dynamically assigned with a field 
+that the `action` option in the elasticsearch output wants to know how to
+handle those things. It can be dynamically assigned with a field
 added to the metadata.
 
 Example
@@ -128,7 +124,7 @@ Example
     output {
       elasticsearch {
         index => "copy-of-production.%{[@metadata][_index]}"
-        document_type => "%{[@metadata][_type]}"
+        index_type => "%{[@metadata][_type]}"
         document_id => "%{[@metadata][_id]}"
       }
     }
@@ -162,6 +158,8 @@ List of elasticsearch hosts to use for querying.
 each host can be either IP, HOST, IP:port or HOST:port
 port defaults to 9200
 
+If you don't explicitely set this variable Logstash will generate a unique name.
+
 [[plugins-inputs-elasticsearch-index]]
 ===== `index` 
 
@@ -182,18 +180,11 @@ Basic Auth - password
 ===== `query` 
 
   * Value type is <<string,string>>
-  * Default value is `"{\"query\": { \"match_all\": {} } }"`
+  * Default value is `"{ \"sort\": [ \"_doc\" ] }"`
 
-The query to be executed.
-
-[[plugins-inputs-elasticsearch-scan]]
-===== `scan` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Enable the Elasticsearch "scan" search type.  This will disable
-sorting but increase speed and performance.
+The query to be executed. Read the Elasticsearch query DSL documentation
+for more info
+https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
 
 [[plugins-inputs-elasticsearch-scroll]]
 ===== `scroll` 
@@ -203,7 +194,7 @@ sorting but increase speed and performance.
 
 This parameter controls the keepalive time in seconds of the scrolling
 request and initiates the scrolling process. The timeout applies per
-round trip (i.e. between the previous scan scroll request, to the next).
+round trip (i.e. between the previous scroll request, to the next).
 
 [[plugins-inputs-elasticsearch-size]]
 ===== `size` 
