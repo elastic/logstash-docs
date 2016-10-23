@@ -3,33 +3,33 @@
 
 NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-elasticsearch`.
 
+Search Elasticsearch for a previous log event and copy some fields from it
+into the current event.  
 
-Search elasticsearch for a previous log event and copy some fields from it
-into the current event.  Below is a complete example of how this filter might
-be used.  Whenever logstash receives an "end" event, it uses this elasticsearch
+Below is a complete example of how this filter might
+be used.  Whenever Logstash receives an "end" event, it uses this Elasticsearch
 filter to find the matching "start" event based on some operation identifier.
 Then it copies the `@timestamp` field from the "start" event into a new field on
 the "end" event.  Finally, using a combination of the "date" filter and the
 "ruby" filter, we calculate the time duration in hours between the two events.
 
 [source,ruby]
+--------------------------------------------------
       if [type] == "end" {
          elasticsearch {
             hosts => ["es-server"]
             query => "type:start AND operation:%{[opid]}"
             fields => { "@timestamp" => "started" }
          }
-
          date {
             match => ["[started]", "ISO8601"]
             target => "[started]"
          }
-
          ruby {
             code => "event['duration_hrs'] = (event['@timestamp'] - event['started']) / 3600 rescue nil"
          }
       }
-
+--------------------------------------------------
 
 &nbsp;
 
