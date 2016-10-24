@@ -133,7 +133,7 @@ pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-multiline/
 include::filters/multiline.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-mutate/edit/master/lib/logstash/filters/mutate.rb ?>]
 include::filters/mutate.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-oui/edit/master/lib/logstash/filters/ouiv.rb ?>]
+pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-oui/edit/master/lib/logstash/filters/oui.rb ?>]
 include::filters/oui.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-prune/edit/master/lib/logstash/filters/prune.rb ?>]
 include::filters/prune.asciidoc[]
