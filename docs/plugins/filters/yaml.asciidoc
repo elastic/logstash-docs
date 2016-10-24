@@ -1,10 +1,15 @@
-[[plugins-filters-oui]]
-=== oui
+[[plugins-filters-yaml]]
+=== yaml
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-oui`.
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-yaml`.
 
 
-Logstash filter to parse OUI data from MAC addresses
+This is a YAML parsing filter. It takes an existing field which contains YAML and
+expands it into an actual data structure within the Logstash event.
+
+By default it will place the parsed YAML in the root (top level) of the Logstash event, but this
+filter can be configured to place the YAML into any arbitrary event field, using the
+`target` configuration.
 
 &nbsp;
 
@@ -16,7 +21,8 @@ Required configuration options:
 
 [source,json]
 --------------------------
-oui {
+yaml {
+    source => ...
 }
 --------------------------
 
@@ -27,15 +33,15 @@ Available configuration options:
 [cols="<,<,<,<m",options="header",]
 |=======================================================================
 |Setting |Input type|Required|Default value
-| <<plugins-filters-oui-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-oui-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-oui-enable_metric>> |<<boolean,boolean>>|No|`true`
-| <<plugins-filters-oui-id>> |<<string,string>>|No|
-| <<plugins-filters-oui-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-oui-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-oui-remove_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-oui-source>> |<<string,string>>|No|`"message"`
-| <<plugins-filters-oui-target>> |<<string,string>>|No|`"oui"`
+| <<plugins-filters-yaml-add_field>> |<<hash,hash>>|No|`{}`
+| <<plugins-filters-yaml-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-yaml-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-yaml-id>> |<<string,string>>|No|
+| <<plugins-filters-yaml-periodic_flush>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-yaml-remove_field>> |<<array,array>>|No|`[]`
+| <<plugins-filters-yaml-remove_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-yaml-source>> |<<string,string>>|Yes|
+| <<plugins-filters-yaml-target>> |<<string,string>>|No|
 |=======================================================================
 
 
@@ -43,7 +49,7 @@ Available configuration options:
 
 &nbsp;
 
-[[plugins-filters-oui-add_field]]
+[[plugins-filters-yaml-add_field]]
 ===== `add_field` 
 
   * Value type is <<hash,hash>>
@@ -75,7 +81,7 @@ would add field `foo_hello` if it is present, with the
 value above and the `%{host}` piece replaced with that value from the
 event. The second example would also add a hardcoded field.
 
-[[plugins-filters-oui-add_tag]]
+[[plugins-filters-yaml-add_tag]]
 ===== `add_tag` 
 
   * Value type is <<array,array>>
@@ -103,7 +109,7 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
 
-[[plugins-filters-oui-enable_metric]]
+[[plugins-filters-yaml-enable_metric]]
 ===== `enable_metric` 
 
   * Value type is <<boolean,boolean>>
@@ -113,7 +119,7 @@ Disable or enable metric logging for this specific plugin instance
 by default we record all the metrics we can, but you can disable metrics collection
 for a specific plugin.
 
-[[plugins-filters-oui-id]]
+[[plugins-filters-yaml-id]]
 ===== `id` 
 
   * Value type is <<string,string>>
@@ -132,7 +138,7 @@ output {
 
 If you don't explicitely set this variable Logstash will generate a unique name.
 
-[[plugins-filters-oui-periodic_flush]]
+[[plugins-filters-yaml-periodic_flush]]
 ===== `periodic_flush` 
 
   * Value type is <<boolean,boolean>>
@@ -141,7 +147,7 @@ If you don't explicitely set this variable Logstash will generate a unique name.
 Call the filter flush method at regular interval.
 Optional.
 
-[[plugins-filters-oui-remove_field]]
+[[plugins-filters-yaml-remove_field]]
 ===== `remove_field` 
 
   * Value type is <<array,array>>
@@ -168,7 +174,7 @@ If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the field with name `foo_hello` if it is present. The second
 example would remove an additional, non-dynamic field.
 
-[[plugins-filters-oui-remove_tag]]
+[[plugins-filters-yaml-remove_tag]]
 ===== `remove_tag` 
 
   * Value type is <<array,array>>
@@ -197,29 +203,47 @@ If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the tag `foo_hello` if it is present. The second example
 would remove a sad, unwanted tag as well.
 
-[[plugins-filters-oui-source]]
+[[plugins-filters-yaml-source]]
 ===== `source` 
 
+  * This is a required setting.
   * Value type is <<string,string>>
-  * Default value is `"message"`
+  * There is no default value for this setting.
 
-Setting the config_name here is required. This is how you
-configure this filter from your Logstash config.
+The configuration for the YAML filter:
+[source,ruby]
+    source => source_field
 
-filter {
-  example {
-    message => "My message..."
-  }
-}
+For example, if you have YAML data in the @message field:
+[source,ruby]
+    filter {
+      yaml {
+        source => "message"
+      }
+    }
 
-The source field to parse
+The above would parse the yaml from the @message field
 
-[[plugins-filters-oui-target]]
+[[plugins-filters-yaml-target]]
 ===== `target` 
 
   * Value type is <<string,string>>
-  * Default value is `"oui"`
+  * There is no default value for this setting.
 
-The target field to place all the data
+Define the target field for placing the parsed data. If this setting is
+omitted, the YAML data will be stored at the root (top level) of the event.
+
+For example, if you want the data to be put in the `doc` field:
+[source,ruby]
+    filter {
+      yaml {
+        target => "doc"
+      }
+    }
+
+YAML in the value of the `source` field will be expanded into a
+data structure in the `target` field.
+
+NOTE: if the `target` field already exists, it will be overwritten!
 
 

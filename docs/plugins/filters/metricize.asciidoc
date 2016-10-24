@@ -1,10 +1,38 @@
-[[plugins-filters-oui]]
-=== oui
+[[plugins-filters-metricize]]
+=== metricize
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-oui`.
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-metricize`.
 
 
-Logstash filter to parse OUI data from MAC addresses
+The metricize filter takes complex events containing a number of metrics
+and splits these up into multiple events, each holding a single metric.
+
+Example:
+
+    Assume the following filter configuration:
+
+    filter {
+      %PLUGIN% {
+        metrics => [ "metric1", "metric2" ]
+      }
+    }
+
+    Assuming the following event is passed in:
+
+    {
+         type => "type A"
+         metric1 => "value1"
+         metric2 => "value2"
+    }
+
+    This will result in the following 2 events being generated in addition to the original event:
+
+    {                               {
+        type => "type A"                type => "type A"
+        metric => "metric1"             metric => "metric2"
+        value => "value1"               value => "value2"
+    }                               }
+
 
 &nbsp;
 
@@ -16,7 +44,8 @@ Required configuration options:
 
 [source,json]
 --------------------------
-oui {
+metricize {
+    metrics => ...
 }
 --------------------------
 
@@ -27,15 +56,17 @@ Available configuration options:
 [cols="<,<,<,<m",options="header",]
 |=======================================================================
 |Setting |Input type|Required|Default value
-| <<plugins-filters-oui-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-oui-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-oui-enable_metric>> |<<boolean,boolean>>|No|`true`
-| <<plugins-filters-oui-id>> |<<string,string>>|No|
-| <<plugins-filters-oui-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-oui-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-oui-remove_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-oui-source>> |<<string,string>>|No|`"message"`
-| <<plugins-filters-oui-target>> |<<string,string>>|No|`"oui"`
+| <<plugins-filters-metricize-add_field>> |<<hash,hash>>|No|`{}`
+| <<plugins-filters-metricize-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-metricize-drop_original_event>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-metricize-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-metricize-id>> |<<string,string>>|No|
+| <<plugins-filters-metricize-metric_field_name>> |<<string,string>>|No|`"metric"`
+| <<plugins-filters-metricize-metrics>> |<<array,array>>|Yes|
+| <<plugins-filters-metricize-periodic_flush>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-metricize-remove_field>> |<<array,array>>|No|`[]`
+| <<plugins-filters-metricize-remove_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-metricize-value_field_name>> |<<string,string>>|No|`"value"`
 |=======================================================================
 
 
@@ -43,7 +74,7 @@ Available configuration options:
 
 &nbsp;
 
-[[plugins-filters-oui-add_field]]
+[[plugins-filters-metricize-add_field]]
 ===== `add_field` 
 
   * Value type is <<hash,hash>>
@@ -75,7 +106,7 @@ would add field `foo_hello` if it is present, with the
 value above and the `%{host}` piece replaced with that value from the
 event. The second example would also add a hardcoded field.
 
-[[plugins-filters-oui-add_tag]]
+[[plugins-filters-metricize-add_tag]]
 ===== `add_tag` 
 
   * Value type is <<array,array>>
@@ -103,7 +134,15 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
 
-[[plugins-filters-oui-enable_metric]]
+[[plugins-filters-metricize-drop_original_event]]
+===== `drop_original_event` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Flag indicating whether the original event should be dropped or not.
+
+[[plugins-filters-metricize-enable_metric]]
 ===== `enable_metric` 
 
   * Value type is <<boolean,boolean>>
@@ -113,7 +152,7 @@ Disable or enable metric logging for this specific plugin instance
 by default we record all the metrics we can, but you can disable metrics collection
 for a specific plugin.
 
-[[plugins-filters-oui-id]]
+[[plugins-filters-metricize-id]]
 ===== `id` 
 
   * Value type is <<string,string>>
@@ -132,7 +171,25 @@ output {
 
 If you don't explicitely set this variable Logstash will generate a unique name.
 
-[[plugins-filters-oui-periodic_flush]]
+[[plugins-filters-metricize-metric_field_name]]
+===== `metric_field_name` 
+
+  * Value type is <<string,string>>
+  * Default value is `"metric"`
+
+Name of the field the metric name will be written to.
+
+[[plugins-filters-metricize-metrics]]
+===== `metrics` 
+
+  * This is a required setting.
+  * Value type is <<array,array>>
+  * There is no default value for this setting.
+
+A new matrics event will be created for each metric field in this list.
+All fields in this list will be removed from generated events.
+
+[[plugins-filters-metricize-periodic_flush]]
 ===== `periodic_flush` 
 
   * Value type is <<boolean,boolean>>
@@ -141,7 +198,7 @@ If you don't explicitely set this variable Logstash will generate a unique name.
 Call the filter flush method at regular interval.
 Optional.
 
-[[plugins-filters-oui-remove_field]]
+[[plugins-filters-metricize-remove_field]]
 ===== `remove_field` 
 
   * Value type is <<array,array>>
@@ -168,7 +225,7 @@ If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the field with name `foo_hello` if it is present. The second
 example would remove an additional, non-dynamic field.
 
-[[plugins-filters-oui-remove_tag]]
+[[plugins-filters-metricize-remove_tag]]
 ===== `remove_tag` 
 
   * Value type is <<array,array>>
@@ -197,29 +254,12 @@ If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the tag `foo_hello` if it is present. The second example
 would remove a sad, unwanted tag as well.
 
-[[plugins-filters-oui-source]]
-===== `source` 
+[[plugins-filters-metricize-value_field_name]]
+===== `value_field_name` 
 
   * Value type is <<string,string>>
-  * Default value is `"message"`
+  * Default value is `"value"`
 
-Setting the config_name here is required. This is how you
-configure this filter from your Logstash config.
-
-filter {
-  example {
-    message => "My message..."
-  }
-}
-
-The source field to parse
-
-[[plugins-filters-oui-target]]
-===== `target` 
-
-  * Value type is <<string,string>>
-  * Default value is `"oui"`
-
-The target field to place all the data
+Name of the field the metric value will be written to.
 
 
