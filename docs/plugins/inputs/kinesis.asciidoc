@@ -1,0 +1,147 @@
+[[plugins-inputs-kinesis]]
+=== kinesis
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-input-kinesis`.
+
+
+Receive events through an AWS Kinesis stream.
+
+This input plugin uses the Java Kinesis Client Library underneath, so the
+documentation at https://github.com/awslabs/amazon-kinesis-client will be
+useful.
+
+AWS credentials can be specified either through environment variables, or an
+IAM instance role. The library uses a DynamoDB table for worker coordination,
+so you'll need to grant access to that as well as to the Kinesis stream. The
+DynamoDB table has the same name as the `application_name` configuration
+option, which defaults to "logstash".
+
+The library can optionally also send worker statistics to CloudWatch.
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+Required configuration options:
+
+[source,json]
+--------------------------
+kinesis {
+    kinesis_stream_name => ...
+}
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-inputs-kinesis-add_field>> |<<hash,hash>>|No|`{}`
+| <<plugins-inputs-kinesis-application_name>> |<<string,string>>|No|`"logstash"`
+| <<plugins-inputs-kinesis-checkpoint_interval_seconds>> |<<number,number>>|No|`60`
+| <<plugins-inputs-kinesis-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-inputs-kinesis-kinesis_stream_name>> |<<string,string>>|Yes|
+| <<plugins-inputs-kinesis-metrics>> |<<string,string>>, one of `[nil, "cloudwatch"]`|No|`nil`
+| <<plugins-inputs-kinesis-region>> |<<string,string>>|No|`"us-east-1"`
+| <<plugins-inputs-kinesis-tags>> |<<array,array>>|No|
+| <<plugins-inputs-kinesis-type>> |<<string,string>>|No|
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-inputs-kinesis-add_field]]
+===== `add_field` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+Add a field to an event
+
+[[plugins-inputs-kinesis-application_name]]
+===== `application_name` 
+
+  * Value type is <<string,string>>
+  * Default value is `"logstash"`
+
+The application name used for the dynamodb coordination table. Must be
+unique for this kinesis stream.
+
+[[plugins-inputs-kinesis-checkpoint_interval_seconds]]
+===== `checkpoint_interval_seconds` 
+
+  * Value type is <<number,number>>
+  * Default value is `60`
+
+How many seconds between worker checkpoints to dynamodb.
+
+[[plugins-inputs-kinesis-codec]]
+===== `codec` 
+
+  * Value type is <<codec,codec>>
+  * Default value is `"plain"`
+
+The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
+
+[[plugins-inputs-kinesis-kinesis_stream_name]]
+===== `kinesis_stream_name` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The kinesis stream name.
+
+[[plugins-inputs-kinesis-metrics]]
+===== `metrics` 
+
+  * Value can be any of: ``, `cloudwatch`
+  * Default value is `nil`
+
+Worker metric tracking. By default this is disabled, set it to "cloudwatch"
+to enable the cloudwatch integration in the Kinesis Client Library.
+
+[[plugins-inputs-kinesis-region]]
+===== `region` 
+
+  * Value type is <<string,string>>
+  * Default value is `"us-east-1"`
+
+The AWS region for Kinesis, DynamoDB, and CloudWatch (if enabled)
+
+[[plugins-inputs-kinesis-tags]]
+===== `tags` 
+
+  * Value type is <<array,array>>
+  * There is no default value for this setting.
+
+Add any number of arbitrary tags to your event.
+
+This can help with processing later.
+
+[[plugins-inputs-kinesis-type]]
+===== `type` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a `type` field to all events handled by this input.
+
+Types are used mainly for filter activation.
+
+The type is stored as part of the event itself, so you can
+also use the type to search for it in Kibana.
+
+If you try to set a type on an event that already has one (for
+example when you send an event from a shipper to an indexer) then
+a new input will not override the existing type. A type set at
+the shipper stays with that event for its life even
+when sent to another Logstash server.
+
+

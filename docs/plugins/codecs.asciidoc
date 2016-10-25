@@ -6,31 +6,53 @@ of an input or output.
 
 The following codec plugins are available:
 
+* <<elastic-supported-codec-plugins,Elastic supported plugins>>
+* <<community-supported-codec-plugins,Community supported plugins>>
+
+[float]
+[[elastic-supported-codec-plugins]]
+=== Elastic supported plugins
+
+These plugins are maintained and supported by Elastic.
+
 |=======================================================================
 | Plugin | Description | Github repository
 | <<plugins-codecs-avro,avro>> | Reads serialized Avro records as Logstash events | https://github.com/logstash-plugins/logstash-codec-avro[logstash-codec-avro]
-| <<plugins-codecs-cef,cef>> | Reads the ArcSight Common Event Format (CEF). | https://github.com/logstash-plugins/logstash-codec-cef[logstash-codec-cef]
-| <<plugins-codecs-cloudtrail,cloudtrail>> | Reads AWS Cloudtrail events | https://github.com/logstash-plugins/logstash-codec-cloudtrail[logstash-codec-cloudtrail]
-| <<plugins-codecs-cloudfront,cloudfront>> | Reads AWS CloudFront reports | https://github.com/logstash-plugins/logstash-codec-cloudfront[logstash-codec-cloudfront]
 | <<plugins-codecs-collectd,collectd>> | Reads events from the `collectd` binary protocol using UDP. | https://github.com/logstash-plugins/logstash-codec-collectd[logstash-codec-collectd]
-| <<plugins-codecs-compress_spooler,compress_spooler>> | Compresses events into spooled batches | https://github.com/logstash-plugins/logstash-codec-compress_spooler[logstash-codec-compress_spooler]
 | <<plugins-codecs-dots,dots>> | Sends 1 dot per event to `stdout` for performance tracking | https://github.com/logstash-plugins/logstash-codec-dots[logstash-codec-dots]
-| <<plugins-codecs-edn,edn>> | Reads EDN format data | https://github.com/logstash-plugins/logstash-codec-edn[logstash-codec-edn]
-| <<plugins-codecs-edn_lines,edn_lines>> | Reads newline-delimited EDN format data | https://github.com/logstash-plugins/logstash-codec-edn_lines[logstash-codec-edn_lines]
 | <<plugins-codecs-es_bulk,es_bulk>> | Reads the Elasticsearch bulk format into separate events, along with metadata | https://github.com/logstash-plugins/logstash-codec-es_bulk[logstash-codec-es_bulk]
 | <<plugins-codecs-fluent,fluent>> | Reads the `fluentd` `msgpack` schema | https://github.com/logstash-plugins/logstash-codec-fluent[logstash-codec-fluent]
 | <<plugins-codecs-graphite,graphite>> | Reads `graphite` formatted lines | https://github.com/logstash-plugins/logstash-codec-graphite[logstash-codec-graphite]
-| <<plugins-codecs-gzip_lines,gzip_lines>> | Reads `gzip` encoded content | https://github.com/logstash-plugins/logstash-codec-gzip_lines[logstash-codec-gzip_lines]
 | <<plugins-codecs-json,json>> | Reads JSON formatted content, creating one event per element in a JSON array | https://github.com/logstash-plugins/logstash-codec-json[logstash-codec-json]
 | <<plugins-codecs-json_lines,json_lines>> | Reads newline-delimited JSON | https://github.com/logstash-plugins/logstash-codec-json_lines[logstash-codec-json_lines]
 | <<plugins-codecs-line,line>> | Reads line-oriented text data | https://github.com/logstash-plugins/logstash-codec-line[logstash-codec-line]
 | <<plugins-codecs-msgpack,msgpack>> |  | https://github.com/logstash-plugins/logstash-codec-msgpack[logstash-codec-msgpack]
 | <<plugins-codecs-multiline,multiline>> | Merges multiline messages into a single event | https://github.com/logstash-plugins/logstash-codec-multiline[logstash-codec-multiline]
+| <<plugins-codecs-plain,plain>> | Reads plaintext with no delimiting between events | https://github.com/logstash-plugins/logstash-codec-plain[logstash-codec-plain]
+| <<plugins-codecs-rubydebug,rubydebug>> | Applies the Ruby Awesome Print library to Logstash events | https://github.com/logstash-plugins/logstash-codec-rubydebug[logstash-codec-rubydebug]
+|=======================================================================
+
+[float]
+[[community-supported-codec-plugins]]
+=== Community supported plugins
+
+These plugins are maintained and supported by the community. These plugins have met the Logstash development & testing
+criteria for integration. Contributors include
+https://discuss.elastic.co/t/logstash-plugins-community-maintainers/35953[Community Maintainers], the Logstash core team
+at Elastic, and the broader community.
+
+|=======================================================================
+| Plugin | Description | Github repository
+| <<plugins-codecs-cef,cef>> | Reads the ArcSight Common Event Format (CEF). | https://github.com/logstash-plugins/logstash-codec-cef[logstash-codec-cef]
+| <<plugins-codecs-cloudfront,cloudfront>> | Reads AWS CloudFront reports | https://github.com/logstash-plugins/logstash-codec-cloudfront[logstash-codec-cloudfront]
+| <<plugins-codecs-cloudtrail,cloudtrail>> | Reads AWS Cloudtrail events | https://github.com/logstash-plugins/logstash-codec-cloudtrail[logstash-codec-cloudtrail]
+| <<plugins-codecs-compress_spooler,compress_spooler>> | Compresses events into spooled batches | https://github.com/logstash-plugins/logstash-codec-compress_spooler[logstash-codec-compress_spooler]
+| <<plugins-codecs-edn,edn>> | Reads EDN format data | https://github.com/logstash-plugins/logstash-codec-edn[logstash-codec-edn]
+| <<plugins-codecs-edn_lines,edn_lines>> | Reads newline-delimited EDN format data | https://github.com/logstash-plugins/logstash-codec-edn_lines[logstash-codec-edn_lines]
+| <<plugins-codecs-gzip_lines,gzip_lines>> | Reads `gzip` encoded content | https://github.com/logstash-plugins/logstash-codec-gzip_lines[logstash-codec-gzip_lines]
 | <<plugins-codecs-netflow,netflow>> | Reads Netflow v5 and Netflow v9 data | https://github.com/logstash-plugins/logstash-codec-netflow[logstash-codec-netflow]
 | <<plugins-codecs-nmap,nmap>> | Reads Nmap data in XML format | https://github.com/logstash-plugins/logstash-codec-nmap[logstash-codec-nmap]
 | <<plugins-codecs-oldlogstashjson,oldlogstashjson>> | Reads Logstash JSON in the schema used by Logstash versions earlier than 1.2.0 | https://github.com/logstash-plugins/logstash-codec-oldlogstashjson[logstash-codec-oldlogstashjson]
-| <<plugins-codecs-plain,plain>> | Reads plaintext with no delimiting between events | https://github.com/logstash-plugins/logstash-codec-plain[logstash-codec-plain]
-| <<plugins-codecs-rubydebug,rubydebug>> | Applies the Ruby Awesome Print library to Logstash events | https://github.com/logstash-plugins/logstash-codec-rubydebug[logstash-codec-rubydebug]
 | <<plugins-codecs-s3_plain,s3_plain>> | Provides backwards compatibility with earlier versions of S3 Output  | https://github.com/logstash-plugins/logstash-codec-s3_plain[logstash-codec-s3_plain]
 | <<plugins-codecs-spool,spool>> | Collects events and transmits in batches | https://github.com/logstash-plugins/logstash-codec-spool[logstash-codec-spool]
 |=======================================================================
@@ -39,32 +61,32 @@ pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-avro/edit/m
 include::codecs/avro.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-cef/edit/master/lib/logstash/codecs/cef.rb ?>]
 include::codecs/cef.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-compress_spooler/edit/master/lib/logstash/codecs/compress_spooler.rb ?>]
-include::codecs/compress_spooler.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-cloudtrail/edit/master/lib/logstash/codecs/cloudtrail.rb ?>]
-include::codecs/cloudtrail.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-cloudfront/edit/master/lib/logstash/codecs/cloudfront.rb ?>]
 include::codecs/cloudfront.asciidoc[]
+pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-cloudtrail/edit/master/lib/logstash/codecs/cloudtrail.rb ?>]
+include::codecs/cloudtrail.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-collectd/edit/master/lib/logstash/codecs/collectd.rb ?>]
 include::codecs/collectd.asciidoc[]
+pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-compress_spooler/edit/master/lib/logstash/codecs/compress_spooler.rb ?>]
+include::codecs/compress_spooler.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-dots/edit/master/lib/logstash/codecs/dots.rb ?>]
 include::codecs/dots.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-edn_lines/edit/master/lib/logstash/codecs/edn_lines.rb ?>]
-include::codecs/edn_lines.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-edn/edit/master/lib/logstash/codecs/edn.rb ?>]
 include::codecs/edn.asciidoc[]
+pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-edn_lines/edit/master/lib/logstash/codecs/edn_lines.rb ?>]
+include::codecs/edn_lines.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-es_bulk/edit/master/lib/logstash/codecs/es_bulk.rb ?>]
 include::codecs/es_bulk.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-fluent/edit/master/lib/logstash/codecs/fluent.rb ?>]
 include::codecs/fluent.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-gzip_lines/edit/master/lib/logstash/codecs/gzip_lines.rb ?>]
-include::codecs/gzip_lines.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-graphite/edit/master/lib/logstash/codecs/graphite.rb ?>]
 include::codecs/graphite.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-json_lines/edit/master/lib/logstash/codecs/json_lines.rb ?>]
-include::codecs/json_lines.asciidoc[]
+pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-gzip_lines/edit/master/lib/logstash/codecs/gzip_lines.rb ?>]
+include::codecs/gzip_lines.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-json/edit/master/lib/logstash/codecs/json.rb ?>]
 include::codecs/json.asciidoc[]
+pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-json_lines/edit/master/lib/logstash/codecs/json_lines.rb ?>]
+include::codecs/json_lines.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-line/edit/master/lib/logstash/codecs/line.rb ?>]
 include::codecs/line.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-msgpack/edit/master/lib/logstash/codecs/msgpack.rb ?>]
