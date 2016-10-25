@@ -1,7 +1,7 @@
 [[plugins-filters-dissect]]
 === dissect
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-dissect`.
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-dissect`.
 
 
 The Dissect filter can be used to extract fields from unstructured data. Dissect is different from the Grok filter.
