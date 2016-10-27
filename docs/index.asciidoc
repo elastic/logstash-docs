@@ -2,6 +2,7 @@
 = Logstash Reference
 
 :branch:                5.x
+:major-version:         5.x
 :logstash_version:      5.1.0
 :elasticsearch_version: 5.1.0
 :jdk:                   1.8.0
@@ -9,8 +10,10 @@
 :ref:                   https://www.elastic.co/guide/en/elasticsearch/reference/5.x/
 :xpack:                 https://www.elastic.co/guide/en/x-pack/current/
 :logstash:              https://www.elastic.co/guide/en/logstash/5.x/
+:filebeat:              https://www.elastic.co/guide/en/beats/filebeat/5.x/
 :lsissue:               https://github.com/elastic/logstash/issues/
 :security:              X-Pack Security
+:stack:                 https://www.elastic.co/guide/en/elastic-stack/current/
 
 [[introduction]]
 == Logstash Introduction
