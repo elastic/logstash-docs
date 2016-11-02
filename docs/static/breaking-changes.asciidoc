@@ -38,7 +38,7 @@ install binaries. Previously it used to install in `/opt/logstash` directory. Th
 |`/opt/logstash`
 |Logstash 5.0 
 |`/usr/share/logstash`
-|`/var/lib/logstash`
+|`/usr/share/logstash`
 |===
 
 A complete directory layout is described in <<dir-layout>>. This will likely impact any scripts that you may have written
@@ -139,6 +139,15 @@ NOTE: None of the short form options have changed!
 
 [float]
 === Breaking Changes in Plugins
+
+[float]
+==== Elasticsearch Output `workers` Setting Removed
+
+Starting with Logstash 5.0, the `workers` setting in the Elasticsearch output
+plugin is no longer supported. Pipelines that specify this setting will no
+longer start up. You need to specify the `pipeline.workers` setting at the
+pipeline level instead. For more information about setting
+`pipeline.workers`, see <<logstash-settings-file>>.
 
 [float]
 ==== Elasticsearch Output Index Template
