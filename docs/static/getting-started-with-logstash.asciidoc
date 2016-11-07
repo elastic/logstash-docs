@@ -15,7 +15,7 @@ This section includes the following topics:
 [[installing-logstash]]
 === Installing Logstash
 
-NOTE: Logstash requires Java 8 or later. Use the
+NOTE: Logstash requires Java 8. Java 9 is not supported. Use the
 http://www.oracle.com/technetwork/java/javase/downloads/index.html[official Oracle distribution] or an open-source
 distribution such as http://openjdk.java.net/[OpenJDK].
 
@@ -81,7 +81,7 @@ Save the repository definition to  +/etc/apt/sources.list.d/elastic-{major-versi
 
 ["source","sh",subs="attributes,callouts"]
 --------------------------------------------------
-echo "deb https://artifacts.elastic.co/packages/{major-version}-prerelease/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-{major-version}.list
+echo "deb https://artifacts.elastic.co/packages/{major-version}/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-{major-version}.list
 --------------------------------------------------
 
 [WARNING]
@@ -124,7 +124,7 @@ in a file with a `.repo` suffix, for example `logstash.repo`
 --------------------------------------------------
 [logstash-{major-version}]
 name=Elastic repository for {major-version} packages
-baseurl=https://artifacts.elastic.co/packages/{major-version}-prerelease/yum
+baseurl=https://artifacts.elastic.co/packages/{major-version}/yum
 gpgcheck=1
 gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
 enabled=1
