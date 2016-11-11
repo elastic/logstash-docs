@@ -1,10 +1,7 @@
 [[plugins-filters-aggregate]]
 === aggregate
 
-
 NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-aggregate`.
-
-
 
 The aim of this filter is to aggregate information available among several events (typically log lines) belonging to a same task,
 and finally push aggregated information into final task event.
@@ -42,7 +39,7 @@ otherwise events may be processed out of sequence and unexpected results will oc
    if [logger] == "SQL" {
      aggregate {
        task_id => "%{taskid}"
-       code => "map['sql_duration'] += event['duration']"
+       code => "map['sql_duration'] += event.get('duration')"
        map_action => "update"
      }
    }
@@ -50,7 +47,7 @@ otherwise events may be processed out of sequence and unexpected results will oc
    if [logger] == "TASK_END" {
      aggregate {
        task_id => "%{taskid}"
-       code => "event['sql_duration'] = map['sql_duration']"
+       code => "event.set('sql_duration', map['sql_duration'])"
        map_action => "update"
        end_of_task => true
        timeout => 120
@@ -91,14 +88,14 @@ the field `sql_duration` is added and contains the sum of all sql queries durati
    if [logger] == "SQL" {
      aggregate {
        task_id => "%{taskid}"
-       code => "map['sql_duration'] ||= 0 ; map['sql_duration'] += event['duration']"
+       code => "map['sql_duration'] ||= 0 ; map['sql_duration'] += event.get('duration')"
      }
    }
     
    if [logger] == "TASK_END" {
      aggregate {
        task_id => "%{taskid}"
-       code => "event['sql_duration'] = map['sql_duration']"
+       code => "event.set('sql_duration', map['sql_duration'])"
        end_of_task => true
        timeout => 120
      }
@@ -144,7 +141,8 @@ filter {
     push_map_as_event_on_timeout => true
     timeout_task_id_field => "user_id"
     timeout => 600 # 10 minutes timeout
-    timeout_code => "event.tag('_aggregatetimeout')"
+    timeout_tags => ['_aggregatetimeout']
+    timeout_code => "event.set('several_clicks', event.get('clicks') > 1)"
   }
 }
 ----------------------------------
@@ -154,9 +152,10 @@ filter {
 [source,json]
 ----------------------------------
 {
-  "user_id" : "12345",
-  "clicks" : 3,
-    "tags" : [
+  "user_id": "12345",
+  "clicks": 3,
+  "several_clicks": true,
+    "tags": [
        "_aggregatetimeout"
     ]
 }
@@ -189,7 +188,6 @@ In that case, you don't want to wait task timeout to flush aggregation map.
      aggregate {
          task_id => "%{country_name}"
          code => "
-          map['tags'] ||= ['aggregated']
           map['town_name'] ||= []
           event.to_hash.each do |key,value|
             map[key] = value unless map.has_key?(key)
@@ -198,6 +196,7 @@ In that case, you don't want to wait task timeout to flush aggregation map.
          "
          push_previous_map_as_event => true
          timeout => 5
+         timeout_tags => ['aggregated']
      }
 
      if "aggregated" not in [tags] {
@@ -218,7 +217,8 @@ In that case, you don't want to wait task timeout to flush aggregation map.
 * after the final event, the map attached to task is deleted
 * in one filter configuration, it is recommanded to define a timeout option to protect the feature against unterminated tasks. It tells the filter to delete expired maps
 * if no timeout is defined, by default, all maps older than 1800 seconds are automatically deleted
-* finally, if `code` execution raises an exception, the error is logged and event is tagged '_aggregateexception'
+* all timeout options have to be defined in only one aggregate filter per task_id pattern. Timeout options are : timeout, timeout_code, push_map_as_event_on_timeout, push_previous_map_as_event, timeout_task_id_field, timeout_tags 
+* if `code` execution raises an exception, the error is logged and event is tagged '_aggregateexception'
 
 
 ==== Use Cases
@@ -236,7 +236,6 @@ In that case, you don't want to wait task timeout to flush aggregation map.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -259,7 +258,9 @@ Available configuration options:
 | <<plugins-filters-aggregate-add_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-aggregate-aggregate_maps_path>> |<<string,string>>|No|
 | <<plugins-filters-aggregate-code>> |<<string,string>>|Yes|
+| <<plugins-filters-aggregate-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-filters-aggregate-end_of_task>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-aggregate-id>> |<<string,string>>|No|
 | <<plugins-filters-aggregate-map_action>> |<<string,string>>|No|`"create_or_update"`
 | <<plugins-filters-aggregate-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-aggregate-push_map_as_event_on_timeout>> |<<boolean,boolean>>|No|`false`
@@ -269,9 +270,9 @@ Available configuration options:
 | <<plugins-filters-aggregate-task_id>> |<<string,string>>|Yes|
 | <<plugins-filters-aggregate-timeout>> |<<number,number>>|No|
 | <<plugins-filters-aggregate-timeout_code>> |<<string,string>>|No|
+| <<plugins-filters-aggregate-timeout_tags>> |<<array,array>>|No|`[]`
 | <<plugins-filters-aggregate-timeout_task_id_field>> |<<string,string>>|No|
 |=======================================================================
-
 
 
 ==== Details
@@ -365,7 +366,17 @@ Or on the contrary, the code to execute to update event, using current map.
 
 You will have a 'map' variable and an 'event' variable available (that is the event itself).
 
-Example value : `"map['sql_duration'] += event['duration']"`
+Example value : `"map['sql_duration'] += event.get('duration')"`
+
+[[plugins-filters-aggregate-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
 
 [[plugins-filters-aggregate-end_of_task]]
 ===== `end_of_task` 
@@ -373,7 +384,26 @@ Example value : `"map['sql_duration'] += event['duration']"`
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
-Tell the filter that task is ended, and therefore, to delete map after code execution.  
+Tell the filter that task is ended, and therefore, to delete aggregate map after code execution.  
+
+[[plugins-filters-aggregate-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-aggregate-map_action]]
 ===== `map_action` 
@@ -497,6 +527,8 @@ The amount of seconds after a task "end event" can be considered lost.
 
 When timeout occurs for a task, The task "map" is evicted.
 
+Timeout can be defined for each "task_id" pattern.
+
 If no timeout is defined, default timeout will be applied : 1800 seconds.
 
 [[plugins-filters-aggregate-timeout_code]]
@@ -510,7 +542,15 @@ The code block will have access to the newly generated timeout event that is pre
 
 If 'timeout_task_id_field' is set, the event is also populated with the task_id value 
 
-Example value: `"event.tag('_aggregatetimeout')"`
+Example value: `"event.set('state', 'timeout')"`
+
+[[plugins-filters-aggregate-timeout_tags]]
+===== `timeout_tags` 
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Defines tags to add when a timeout event is generated and yield
 
 [[plugins-filters-aggregate-timeout_task_id_field]]
 ===== `timeout_task_id_field` 
@@ -525,8 +565,4 @@ This field has no default value and will not be set on the event if not configur
 
 Example:
 
-If the task_id is "12345" and this field is set to "my_id", the generated event will have:
-event[ "my_id" ] = "12345"
-
-
-
+If the task_id is "12345" and this field is set to "my_id", the generated timeout event will contain `'my_id'` key with `'12345'` value.
