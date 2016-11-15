@@ -32,7 +32,6 @@ The following codec plugins are available:
 | <<plugins-codecs-plain,plain>> | Reads plaintext with no delimiting between events | https://github.com/logstash-plugins/logstash-codec-plain[logstash-codec-plain]
 | <<plugins-codecs-rubydebug,rubydebug>> | Applies the Ruby Awesome Print library to Logstash events | https://github.com/logstash-plugins/logstash-codec-rubydebug[logstash-codec-rubydebug]
 | <<plugins-codecs-s3_plain,s3_plain>> | Provides backwards compatibility with earlier versions of S3 Output  | https://github.com/logstash-plugins/logstash-codec-s3_plain[logstash-codec-s3_plain]
-| <<plugins-codecs-spool,spool>> | Collects events and transmits in batches | https://github.com/logstash-plugins/logstash-codec-spool[logstash-codec-spool]
 |=======================================================================
 
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-avro/edit/master/lib/logstash/codecs/avro.rb ?>]
@@ -83,7 +82,5 @@ pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-rubydebug/e
 include::codecs/rubydebug.asciidoc[]
 pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-s3_plain/edit/master/lib/logstash/codecs/s3_plain.rb ?>]
 include::codecs/s3_plain.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-spool/edit/master/lib/logstash/codecs/spool.rb ?>]
-include::codecs/spool.asciidoc[]
 
 pass::[<?edit_url?>]
