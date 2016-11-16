@@ -1,16 +1,16 @@
 [[plugins-filters-translate]]
 === translate
 
-
 NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-translate`.
 
 
-A general search and replace tool which uses a configured hash
-and/or a YAML file to determine replacement values.
+A general search and replace tool that uses a configured hash
+and/or a file to determine replacement values. Currently supported are 
+YAML, JSON, and CSV files.
 
 The dictionary entries can be specified in one of two ways: First,
 the `dictionary` configuration item may contain a hash representing
-the mapping. Second, an external YAML file (readable by logstash) may be specified
+the mapping. Second, an external file (readable by logstash) may be specified
 in the `dictionary_path` configuration item. These two methods may not be used
 in conjunction; it will produce an error.
 
@@ -33,7 +33,6 @@ you might consider using the gsub function of the mutate filter.
 
 This plugin supports the following configuration options:
 
-
 Required configuration options:
 
 [source,json]
@@ -55,9 +54,11 @@ Available configuration options:
 | <<plugins-filters-translate-destination>> |<<string,string>>|No|`"translation"`
 | <<plugins-filters-translate-dictionary>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-translate-dictionary_path>> |a valid filesystem path|No|
+| <<plugins-filters-translate-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-filters-translate-exact>> |<<boolean,boolean>>|No|`true`
 | <<plugins-filters-translate-fallback>> |<<string,string>>|No|
 | <<plugins-filters-translate-field>> |<<string,string>>|Yes|
+| <<plugins-filters-translate-id>> |<<string,string>>|No|
 | <<plugins-filters-translate-override>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-translate-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-translate-refresh_interval>> |<<number,number>>|No|`300`
@@ -65,7 +66,6 @@ Available configuration options:
 | <<plugins-filters-translate-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-translate-remove_tag>> |<<array,array>>|No|`[]`
 |=======================================================================
-
 
 
 ==== Details
@@ -150,7 +150,8 @@ the old value of the source field!
   * Default value is `{}`
 
 The dictionary to use for translation, when specified in the logstash filter
-configuration item (i.e. do not use the `@dictionary_path` YAML file)
+configuration item (i.e. do not use the `@dictionary_path` file).
+
 Example:
 [source,ruby]
     filter {
@@ -161,7 +162,8 @@ Example:
                         "old version", "new version" ]
       }
     }
-NOTE: it is an error to specify both `dictionary` and `dictionary_path`
+
+NOTE: It is an error to specify both `dictionary` and `dictionary_path`.
 
 [[plugins-filters-translate-dictionary_path]]
 ===== `dictionary_path` 
@@ -169,16 +171,32 @@ NOTE: it is an error to specify both `dictionary` and `dictionary_path`
   * Value type is <<path,path>>
   * There is no default value for this setting.
 
-The full path of the external YAML dictionary file. The format of the table
-should be a standard YAML file. Make sure you specify any integer-based keys
-in quotes. The YAML file should look something like this:
+The full path of the external dictionary file. The format of the table
+should be a standard YAML, JSON, or CSV. Make sure you specify any integer-based keys
+in quotes. For example, the YAML file should look something like this:
 [source,ruby]
     "100": Continue
     "101": Switching Protocols
     merci: gracias
     old version: new version
-    
-NOTE: it is an error to specify both `dictionary` and `dictionary_path`
+
+NOTE: it is an error to specify both `dictionary` and `dictionary_path`.
+
+The currently supported formats are YAML, JSON, and CSV. Format selection is
+based on the file extension: `json` for JSON, `yaml` or `yml` for YAML, and
+`csv` for CSV. The JSON format only supports simple key/value, unnested
+objects. The CSV format expects exactly two columns, with the first serving
+as the original text, and the second column as the replacement.
+
+[[plugins-filters-translate-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
 
 [[plugins-filters-translate-exact]]
 ===== `exact` 
@@ -234,6 +252,25 @@ match by the translate filter (e.g. `message`, `host`, `response_code`).
 
 If this field is an array, only the first value will be used.
 
+[[plugins-filters-translate-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
+
 [[plugins-filters-translate-override]]
 ===== `override` 
 
@@ -260,7 +297,7 @@ Optional.
   * Default value is `300`
 
 When using a dictionary file, this setting will indicate how frequently
-(in seconds) logstash will check the YAML file for updates.
+(in seconds) logstash will check the dictionary file for updates.
 
 [[plugins-filters-translate-regex]]
 ===== `regex` 
