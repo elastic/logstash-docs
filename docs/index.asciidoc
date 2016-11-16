@@ -5,6 +5,7 @@
 :major-version:         5.x
 :logstash_version:      5.0.1
 :elasticsearch_version: 5.0.1
+:docker-image:          docker.elastic.co/logstash/logstash:{logstash_version}
 :jdk:                   1.8.0
 :guide:                 https://www.elastic.co/guide/en/elasticsearch/guide/current/
 :ref:                   https://www.elastic.co/guide/en/elasticsearch/reference/5.0/
@@ -50,6 +51,9 @@ include::static/life-of-an-event.asciidoc[]
 // Lostash setup
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/setting-up-logstash.asciidoc ?>]
 include::static/setting-up-logstash.asciidoc[]
+
+pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/docker.asciidoc ?>]
+include::static/docker.asciidoc[]
 
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/settings-file.asciidoc ?>]
 include::static/settings-file.asciidoc[]
