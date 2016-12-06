@@ -4,76 +4,54 @@
 A filter plugin performs intermediary processing on an event. Filters are often applied conditionally depending on the 
 characteristics of the event.
 
-The following filter plugins are available:
-
-* <<elastic-supported-filter-plugins,Elastic supported plugins>>
-* <<community-supported-filter-plugins,Community supported plugins>>
-
-[float]
-[[elastic-supported-filter-plugins]]
-=== Elastic supported plugins
-
-These plugins are maintained and supported by Elastic.
+The following filter plugins are available below. For a list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Support Matrix].
 
 |=======================================================================
 | Plugin | Description | Github repository
 | <<plugins-filters-aggregate,aggregate>> | Aggregates information from several events originating with a single task | https://github.com/logstash-plugins/logstash-filter-aggregate[logstash-filter-aggregate]
+| <<plugins-filters-alter,alter>> | Performs general alterations to fields that the `mutate` filter does not handle | https://github.com/logstash-plugins/logstash-filter-alter[logstash-filter-alter]
 | <<plugins-filters-anonymize,anonymize>> | Replaces field values with a consistent hash | https://github.com/logstash-plugins/logstash-filter-anonymize[logstash-filter-anonymize]
+| <<plugins-filters-cidr,cidr>> | Checks IP addresses against a list of network blocks | https://github.com/logstash-plugins/logstash-filter-cidr[logstash-filter-cidr]
+| <<plugins-filters-cipher,cipher>> | Applies or removes a cipher to an event | https://github.com/logstash-plugins/logstash-filter-cipher[logstash-filter-cipher]
+| <<plugins-filters-clone,clone>> | Duplicates events | https://github.com/logstash-plugins/logstash-filter-clone[logstash-filter-clone]
+| <<plugins-filters-collate,collate>> | Collates events by time or count | https://github.com/logstash-plugins/logstash-filter-collate[logstash-filter-collate]
 | <<plugins-filters-csv,csv>> | Parses comma-separated value data into individual fields | https://github.com/logstash-plugins/logstash-filter-csv[logstash-filter-csv]
 | <<plugins-filters-date,date>> | Parses dates from fields to use as the Logstash timestamp for an event | https://github.com/logstash-plugins/logstash-filter-date[logstash-filter-date]
 | <<plugins-filters-de_dot,de_dot>> | Computationally expensive filter that removes dots from a field name | https://github.com/logstash-plugins/logstash-filter-de_dot[logstash-filter-de_dot]
 | <<plugins-filters-dissect,dissect>> | Extracts unstructured event data into fields using delimiters | https://github.com/logstash-plugins/logstash-filter-dissect[logstash-filter-dissect]
 | <<plugins-filters-dns,dns>> | Performs a standard or reverse DNS lookup | https://github.com/logstash-plugins/logstash-filter-dns[logstash-filter-dns]
 | <<plugins-filters-drop,drop>> | Drops all events | https://github.com/logstash-plugins/logstash-filter-drop[logstash-filter-drop]
+| <<plugins-filters-elapsed,elapsed>> | Calculates the elapsed time between a pair of events | https://github.com/logstash-plugins/logstash-filter-elapsed[logstash-filter-elapsed]
+| <<plugins-filters-elasticsearch,elasticsearch>> | Copies fields from previous log events in Elasticsearch to current events  | https://github.com/logstash-plugins/logstash-filter-elasticsearch[logstash-filter-elasticsearch]
+| <<plugins-filters-environment,environment>> | Stores environment variables as metadata sub-fields | https://github.com/logstash-plugins/logstash-filter-environment[logstash-filter-environment]
+| <<plugins-filters-extractnumbers,extractnumbers>> | Extracts numbers from a string | https://github.com/logstash-plugins/logstash-filter-extractnumbers[logstash-filter-extractnumbers]
 | <<plugins-filters-fingerprint,fingerprint>> | Fingerprints fields by replacing values with a consistent hash | https://github.com/logstash-plugins/logstash-filter-fingerprint[logstash-filter-fingerprint]
 | <<plugins-filters-geoip,geoip>> | Adds geographical information about an IP address | https://github.com/logstash-plugins/logstash-filter-geoip[logstash-filter-geoip]
 | <<plugins-filters-grok,grok>> | Parses unstructured event data into fields | https://github.com/logstash-plugins/logstash-filter-grok[logstash-filter-grok]
+| <<plugins-filters-i18n,i18n>> | Removes special characters from a field | https://github.com/logstash-plugins/logstash-filter-i18n[logstash-filter-i18n]
 | <<plugins-filters-json,json>> | Parses JSON events | https://github.com/logstash-plugins/logstash-filter-json[logstash-filter-json]
+| <<plugins-filters-json_encode,json_encode>> | Serializes a field to JSON | https://github.com/logstash-plugins/logstash-filter-json_encode[logstash-filter-json_encode]
 | <<plugins-filters-kv,kv>> | Parses key-value pairs | https://github.com/logstash-plugins/logstash-filter-kv[logstash-filter-kv]
+| <<plugins-filters-metaevent,metaevent>> | Adds arbitrary fields to an event | https://github.com/logstash-plugins/logstash-filter-metaevent[logstash-filter-metaevent]
+| <<plugins-filters-metricize,metricize>> | Takes complex events containing a number of metrics and splits these up into multiple events, each holding a single metric | https://github.com/logstash-plugins/logstash-filter-metricize[logstash-filter-metricize]
+| <<plugins-filters-metrics,metrics>> | Aggregates metrics | https://github.com/logstash-plugins/logstash-filter-metrics[logstash-filter-metrics]
 | <<plugins-filters-multiline,multiline>> | Merges multiple lines into a single event | https://github.com/logstash-plugins/logstash-filter-multiline[logstash-filter-multiline]
 | <<plugins-filters-mutate,mutate>> | Performs mutations on fields | https://github.com/logstash-plugins/logstash-filter-mutate[logstash-filter-mutate]
+| <<plugins-filters-oui,oui>> | Parse OUI data from MAC addresses | https://github.com/logstash-plugins/logstash-filter-oui[logstash-filter-oui]
+| <<plugins-filters-prune,prune>> | Prunes event data based on a list of fields to blacklist or whitelist | https://github.com/logstash-plugins/logstash-filter-prune[logstash-filter-prune]
+| <<plugins-filters-punct,punct>> | Strips all non-punctuation content from a field | https://github.com/logstash-plugins/logstash-filter-punct[logstash-filter-punct]
+| <<plugins-filters-range,range>> | Checks that specified fields stay within given size or length limits | https://github.com/logstash-plugins/logstash-filter-range[logstash-filter-range]
 | <<plugins-filters-ruby,ruby>> | Executes arbitrary Ruby code | https://github.com/logstash-plugins/logstash-filter-ruby[logstash-filter-ruby]
 | <<plugins-filters-sleep,sleep>> | Sleeps for a specified time span | https://github.com/logstash-plugins/logstash-filter-sleep[logstash-filter-sleep]
 | <<plugins-filters-split,split>> | Splits multi-line messages into distinct events | https://github.com/logstash-plugins/logstash-filter-split[logstash-filter-split]
 | <<plugins-filters-syslog_pri,syslog_pri>> | Parses the `PRI` (priority) field of a `syslog` message | https://github.com/logstash-plugins/logstash-filter-syslog_pri[logstash-filter-syslog_pri]
 | <<plugins-filters-throttle,throttle>> | Throttles the number of events | https://github.com/logstash-plugins/logstash-filter-throttle[logstash-filter-throttle]
+| <<plugins-filters-tld,tld>> | Replaces the contents of the default message field with whatever you specify in the configuration | https://github.com/logstash-plugins/logstash-filter-tld[logstash-filter-tld]
 | <<plugins-filters-translate,translate>> | Replaces field contents based on a hash or YAML file | https://github.com/logstash-plugins/logstash-filter-translate[logstash-filter-translate]
 | <<plugins-filters-urldecode,urldecode>> | Decodes URL-encoded fields | https://github.com/logstash-plugins/logstash-filter-urldecode[logstash-filter-urldecode]
 | <<plugins-filters-useragent,useragent>> | Parses user agent strings into fields  | https://github.com/logstash-plugins/logstash-filter-useragent[logstash-filter-useragent]
 | <<plugins-filters-uuid,uuid>> | Adds a UUID to events | https://github.com/logstash-plugins/logstash-filter-uuid[logstash-filter-uuid]
 | <<plugins-filters-xml,xml>> | Parses XML into fields | https://github.com/logstash-plugins/logstash-filter-xml[logstash-filter-xml]
-|=======================================================================
-
-[float]
-[[community-supported-filter-plugins]]
-=== Community supported plugins
-
-These plugins are maintained and supported by the community. These plugins have met the Logstash development & testing
-criteria for integration. Contributors include
-https://discuss.elastic.co/t/logstash-plugins-community-maintainers/35953[Community Maintainers], the Logstash core team
-at Elastic, and the broader community.
-
-|=======================================================================
-| Plugin | Description | Github repository
-| <<plugins-filters-alter,alter>> | Performs general alterations to fields that the `mutate` filter does not handle | https://github.com/logstash-plugins/logstash-filter-alter[logstash-filter-alter]
-| <<plugins-filters-cidr,cidr>> | Checks IP addresses against a list of network blocks | https://github.com/logstash-plugins/logstash-filter-cidr[logstash-filter-cidr]
-| <<plugins-filters-cipher,cipher>> | Applies or removes a cipher to an event | https://github.com/logstash-plugins/logstash-filter-cipher[logstash-filter-cipher]
-| <<plugins-filters-clone,clone>> | Duplicates events | https://github.com/logstash-plugins/logstash-filter-clone[logstash-filter-clone]
-| <<plugins-filters-collate,collate>> | Collates events by time or count | https://github.com/logstash-plugins/logstash-filter-collate[logstash-filter-collate]
-| <<plugins-filters-elapsed,elapsed>> | Calculates the elapsed time between a pair of events | https://github.com/logstash-plugins/logstash-filter-elapsed[logstash-filter-elapsed]
-| <<plugins-filters-elasticsearch,elasticsearch>> | Copies fields from previous log events in Elasticsearch to current events  | https://github.com/logstash-plugins/logstash-filter-elasticsearch[logstash-filter-elasticsearch]
-| <<plugins-filters-environment,environment>> | Stores environment variables as metadata sub-fields | https://github.com/logstash-plugins/logstash-filter-environment[logstash-filter-environment]
-| <<plugins-filters-extractnumbers,extractnumbers>> | Extracts numbers from a string | https://github.com/logstash-plugins/logstash-filter-extractnumbers[logstash-filter-extractnumbers]
-| <<plugins-filters-i18n,i18n>> | Removes special characters from a field | https://github.com/logstash-plugins/logstash-filter-i18n[logstash-filter-i18n]
-| <<plugins-filters-json_encode,json_encode>> | Serializes a field to JSON | https://github.com/logstash-plugins/logstash-filter-json_encode[logstash-filter-json_encode]
-| <<plugins-filters-metaevent,metaevent>> | Adds arbitrary fields to an event | https://github.com/logstash-plugins/logstash-filter-metaevent[logstash-filter-metaevent]
-| <<plugins-filters-metricize,metricize>> | Takes complex events containing a number of metrics and splits these up into multiple events, each holding a single metric | https://github.com/logstash-plugins/logstash-filter-metricize[logstash-filter-metricize]
-| <<plugins-filters-metrics,metrics>> | Aggregates metrics | https://github.com/logstash-plugins/logstash-filter-metrics[logstash-filter-metrics]
-| <<plugins-filters-oui,oui>> | Parse OUI data from MAC addresses | https://github.com/logstash-plugins/logstash-filter-oui[logstash-filter-oui]
-| <<plugins-filters-prune,prune>> | Prunes event data based on a list of fields to blacklist or whitelist | https://github.com/logstash-plugins/logstash-filter-prune[logstash-filter-prune]
-| <<plugins-filters-punct,punct>> | Strips all non-punctuation content from a field | https://github.com/logstash-plugins/logstash-filter-punct[logstash-filter-punct]
-| <<plugins-filters-range,range>> | Checks that specified fields stay within given size or length limits | https://github.com/logstash-plugins/logstash-filter-range[logstash-filter-range]
-| <<plugins-filters-tld,tld>> | Replaces the contents of the default message field with whatever you specify in the configuration | https://github.com/logstash-plugins/logstash-filter-tld[logstash-filter-tld]
 | <<plugins-filters-yaml,yaml>> | Takes an existing field that contains YAML and expands it into an actual data structure within the Logstash event | https://github.com/logstash-plugins/logstash-filter-yaml[logstash-filter-yaml]
 | <<plugins-filters-zeromq,zeromq>> | Sends an event to ZeroMQ | https://github.com/logstash-plugins/logstash-filter-zeromq[logstash-filter-zeromq]
 |=======================================================================
