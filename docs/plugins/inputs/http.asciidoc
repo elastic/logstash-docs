@@ -1,35 +1,24 @@
 [[plugins-inputs-http]]
 === http
 
+* Version: 3.0.3
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-input-http/blob/master/CHANGELOG.md#303[Changelog]
+* Compatible: 5.1.2, 5.1.1, 5.0.0, 2.4.1, 2.4.0
 
 
-Using this input you can receive single or multiline events over http(s).
-Applications can send a HTTP POST request with a body to the endpoint started by this
-input and Logstash will convert it into an event for subsequent processing. Users 
-can pass plain text, JSON, or any formatted data and use a corresponding codec with this
-input. For Content-Type `application/json` the `json` codec is used, but for all other
-data formats, `plain` codec is used.
 
-This input can also be used to receive webhook requests to integrate with other services
-and applications. By taking advantage of the vast plugin ecosystem available in Logstash
-you can trigger actionable events right from your application.
-
-==== Security
-This plugin supports standard HTTP basic authentication headers to identify the requester.
-You can pass in an username, password combination while sending data to this input
-
-You can also setup SSL and send data securely over https, with an option of validating 
-the client's certificate. Currently, the certificate setup is through 
-https://docs.oracle.com/cd/E19509-01/820-3503/ggfen/index.html[Java Keystore 
-format]
-
+We keep the redefined method in a new http server class, this is because
+in other parts of logstash we might be using puma as webserver, for example
+in the sinatra part we need this method to actually return the REQUEST_PATH, 
+so it can actually infer the right resource to use.
+Fixes https://github.com/logstash-plugins/logstash-input-http/issues/51
 
 &nbsp;
 
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -49,7 +38,9 @@ Available configuration options:
 | <<plugins-inputs-http-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-inputs-http-additional_codecs>> |<<hash,hash>>|No|`{"application/json"=>"json"}`
 | <<plugins-inputs-http-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-inputs-http-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-http-host>> |<<string,string>>|No|`"0.0.0.0"`
+| <<plugins-inputs-http-id>> |<<string,string>>|No|
 | <<plugins-inputs-http-keystore>> |a valid filesystem path|No|
 | <<plugins-inputs-http-keystore_password>> |<<password,password>>|No|
 | <<plugins-inputs-http-password>> |<<password,password>>|No|
@@ -62,7 +53,6 @@ Available configuration options:
 | <<plugins-inputs-http-user>> |<<string,string>>|No|
 | <<plugins-inputs-http-verify_mode>> |<<string,string>>, one of `["none", "peer", "force_peer"]`|No|`"none"`
 |=======================================================================
-
 
 
 ==== Details
@@ -95,6 +85,16 @@ and no codec for the request's content-type is found
 
 The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
 
+[[plugins-inputs-http-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric collection and reporting for this specific plugin instance. 
+By default we record metrics from all plugins, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-inputs-http-host]]
 ===== `host` 
 
@@ -105,6 +105,27 @@ Codec used to decode the incoming data.
 This codec will be used as a fall-back if the content-type
 is not found in the "additional_codecs" hash
 The host or ip to bind
+
+[[plugins-inputs-http-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique named `ID` to the plugin instance. This `ID` is used for tracking
+information for a specific configuration of the plugin and will be useful for 
+debugging purposes.
+
+[source,sh]
+--------------------------------------------------
+output {
+ stdout {
+   id => "debug_stdout"
+ }
+}
+--------------------------------------------------
+
+If you don't explicitly set this field, Logstash will generate a unique name.
 
 [[plugins-inputs-http-keystore]]
 ===== `keystore` 

@@ -1,6 +1,11 @@
 [[plugins-inputs-generator]]
 === generator
 
+* Version: 3.0.2
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-input-generator/blob/master/CHANGELOG.md#302[Changelog]
+* Compatible: 5.1.2, 5.1.1, 5.0.0, 2.4.1, 2.4.0
+
 
 
 Generate random log events.
@@ -14,7 +19,6 @@ An event is generated first
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -34,13 +38,14 @@ Available configuration options:
 | <<plugins-inputs-generator-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-inputs-generator-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-inputs-generator-count>> |<<number,number>>|No|`0`
+| <<plugins-inputs-generator-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-inputs-generator-id>> |<<string,string>>|No|
 | <<plugins-inputs-generator-lines>> |<<array,array>>|No|
 | <<plugins-inputs-generator-message>> |<<string,string>>|No|`"Hello world!"`
 | <<plugins-inputs-generator-tags>> |<<array,array>>|No|
 | <<plugins-inputs-generator-threads>> |<<number,number>>|No|`1`
 | <<plugins-inputs-generator-type>> |<<string,string>>|No|
 |=======================================================================
-
 
 
 ==== Details
@@ -72,6 +77,37 @@ The codec used for input data. Input codecs are a convenient method for decoding
 Set how many messages should be generated.
 
 The default, `0`, means generate an unlimited number of events.
+
+[[plugins-inputs-generator-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric collection and reporting for this specific plugin instance. 
+By default we record metrics from all plugins, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-inputs-generator-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique named `ID` to the plugin instance. This `ID` is used for tracking
+information for a specific configuration of the plugin and will be useful for 
+debugging purposes.
+
+[source,sh]
+--------------------------------------------------
+output {
+ stdout {
+   id => "debug_stdout"
+ }
+}
+--------------------------------------------------
+
+If you don't explicitly set this field, Logstash will generate a unique name.
 
 [[plugins-inputs-generator-lines]]
 ===== `lines` 

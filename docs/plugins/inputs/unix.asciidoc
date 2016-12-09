@@ -1,7 +1,12 @@
 [[plugins-inputs-unix]]
 === unix
 
-NOTE: This is a community-maintained plugin!
+* Version: 3.0.2
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-input-unix/blob/master/CHANGELOG.md#302[Changelog]
+* Compatible: 5.1.2, 5.1.1, 5.0.0, 2.4.1, 2.4.0
+
+
 
 Read events over a UNIX socket.
 
@@ -15,7 +20,6 @@ depending on `mode`.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -34,15 +38,16 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-inputs-unix-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-unix-codec>> |<<codec,codec>>|No|`"line"`
+| <<plugins-inputs-unix-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-inputs-unix-data_timeout>> |<<number,number>>|No|`-1`
+| <<plugins-inputs-unix-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-unix-force_unlink>> |<<boolean,boolean>>|No|`false`
+| <<plugins-inputs-unix-id>> |<<string,string>>|No|
 | <<plugins-inputs-unix-mode>> |<<string,string>>, one of `["server", "client"]`|No|`"server"`
 | <<plugins-inputs-unix-path>> |<<string,string>>|Yes|
 | <<plugins-inputs-unix-tags>> |<<array,array>>|No|
 | <<plugins-inputs-unix-type>> |<<string,string>>|No|
 |=======================================================================
-
 
 
 ==== Details
@@ -61,7 +66,7 @@ Add a field to an event
 ===== `codec` 
 
   * Value type is <<codec,codec>>
-  * Default value is `"line"`
+  * Default value is `"plain"`
 
 The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
 
@@ -76,6 +81,16 @@ more than this timeout period, we will assume it is dead and close it.
 
 If you never want to timeout, use -1.
 
+[[plugins-inputs-unix-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric collection and reporting for this specific plugin instance. 
+By default we record metrics from all plugins, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-inputs-unix-force_unlink]]
 ===== `force_unlink` 
 
@@ -83,6 +98,27 @@ If you never want to timeout, use -1.
   * Default value is `false`
 
 Remove socket file in case of EADDRINUSE failure
+
+[[plugins-inputs-unix-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique named `ID` to the plugin instance. This `ID` is used for tracking
+information for a specific configuration of the plugin and will be useful for 
+debugging purposes.
+
+[source,sh]
+--------------------------------------------------
+output {
+ stdout {
+   id => "debug_stdout"
+ }
+}
+--------------------------------------------------
+
+If you don't explicitly set this field, Logstash will generate a unique name.
 
 [[plugins-inputs-unix-mode]]
 ===== `mode` 

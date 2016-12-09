@@ -1,22 +1,25 @@
 [[plugins-inputs-lumberjack]]
 === lumberjack
 
-Receive events using the Lumberjack protocol.
+* Version: 3.1.1
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-input-lumberjack/blob/master/CHANGELOG.md#311[Changelog]
+* Compatible: 5.1.2, 5.1.1, 5.0.0, 2.4.1, 2.4.0
 
-This input can be used to reliably and securely transport
-events between Logstash instances. To do so, use the
-<<plugins-outputs-lumberjack,lumberjack output plugin>>
-in the sending Logstash instance(s).
 
-It can also be used to receive events from the deprecated
-https://github.com/elastic/logstash-forwarder[logstash-forwarder]
-tool that has been replaced by
-https://github.com/elastic/beats/tree/master/filebeat[Filebeat].
+
+Receive events using the lumberjack protocol.
+
+This is mainly to receive events shipped with lumberjack[http://github.com/jordansissel/lumberjack],
+now represented primarily via the
+https://github.com/elasticsearch/logstash-forwarder[Logstash-forwarder].
+
+
+&nbsp;
 
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -39,7 +42,9 @@ Available configuration options:
 | <<plugins-inputs-lumberjack-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-inputs-lumberjack-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-inputs-lumberjack-congestion_threshold>> |<<number,number>>|No|`5`
+| <<plugins-inputs-lumberjack-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-lumberjack-host>> |<<string,string>>|No|`"0.0.0.0"`
+| <<plugins-inputs-lumberjack-id>> |<<string,string>>|No|
 | <<plugins-inputs-lumberjack-port>> |<<number,number>>|Yes|
 | <<plugins-inputs-lumberjack-ssl_certificate>> |a valid filesystem path|Yes|
 | <<plugins-inputs-lumberjack-ssl_key>> |a valid filesystem path|Yes|
@@ -47,7 +52,6 @@ Available configuration options:
 | <<plugins-inputs-lumberjack-tags>> |<<array,array>>|No|
 | <<plugins-inputs-lumberjack-type>> |<<string,string>>|No|
 |=======================================================================
-
 
 
 ==== Details
@@ -79,6 +83,16 @@ The codec used for input data. Input codecs are a convenient method for decoding
 The number of seconds before we raise a timeout,
 this option is useful to control how much time to wait if something is blocking the pipeline.
 
+[[plugins-inputs-lumberjack-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric collection and reporting for this specific plugin instance. 
+By default we record metrics from all plugins, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-inputs-lumberjack-host]]
 ===== `host` 
 
@@ -87,14 +101,26 @@ this option is useful to control how much time to wait if something is blocking 
 
 The IP address to listen on.
 
-[[plugins-inputs-lumberjack-max_clients]]
-===== `max_clients`  (DEPRECATED)
+[[plugins-inputs-lumberjack-id]]
+===== `id` 
 
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * There is no default value for this setting.
 
-This setting no longer has any effect and will be removed in a future release.
+Add a unique named `ID` to the plugin instance. This `ID` is used for tracking
+information for a specific configuration of the plugin and will be useful for 
+debugging purposes.
+
+[source,sh]
+--------------------------------------------------
+output {
+ stdout {
+   id => "debug_stdout"
+ }
+}
+--------------------------------------------------
+
+If you don't explicitly set this field, Logstash will generate a unique name.
 
 [[plugins-inputs-lumberjack-port]]
 ===== `port` 

@@ -53,6 +53,8 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-inputs-beats-add_field>> |<<hash,hash>>|No|`{}`
+| <<plugins-inputs-beats-cipher_suites>> |<<array,array>>|No|`java.lang.String[TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256]@16f8ee2b`
+| <<plugins-inputs-beats-client_inactivity_timeout>> |<<number,number>>|No|`60`
 | <<plugins-inputs-beats-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-inputs-beats-congestion_threshold>> |<<number,number>>|No|`5`
 | <<plugins-inputs-beats-host>> |<<string,string>>|No|`"0.0.0.0"`
@@ -82,6 +84,25 @@ Available configuration options:
 
 Add a field to an event
 
+<<<<<<< HEAD
+=======
+[[plugins-inputs-beats-cipher_suites]]
+===== `cipher_suites` 
+
+  * Value type is <<array,array>>
+  * Default value is `java.lang.String[TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256]@16f8ee2b`
+
+The list of ciphers suite to use, listed by priorities.
+
+[[plugins-inputs-beats-client_inactivity_timeout]]
+===== `client_inactivity_timeout` 
+
+  * Value type is <<number,number>>
+  * Default value is `60`
+
+Close Idle clients after X seconds of inactivity.
+
+>>>>>>> d1a1fbc... Update input docs
 [[plugins-inputs-beats-codec]]
 ===== `codec` 
 
@@ -99,6 +120,19 @@ The codec used for input data. Input codecs are a convenient method for decoding
 The number of seconds before we raise a timeout. 
 This option is useful to control how much time to wait if something is blocking the pipeline.
 
+<<<<<<< HEAD
+=======
+[[plugins-inputs-beats-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric collection and reporting for this specific plugin instance. 
+By default we record metrics from all plugins, but you can disable metrics collection
+for a specific plugin.
+
+>>>>>>> d1a1fbc... Update input docs
 [[plugins-inputs-beats-host]]
 ===== `host` 
 
@@ -107,6 +141,38 @@ This option is useful to control how much time to wait if something is blocking 
 
 The IP address to listen on.
 
+<<<<<<< HEAD
+=======
+[[plugins-inputs-beats-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique named `ID` to the plugin instance. This `ID` is used for tracking
+information for a specific configuration of the plugin and will be useful for 
+debugging purposes.
+
+[source,sh]
+--------------------------------------------------
+output {
+ stdout {
+   id => "debug_stdout"
+ }
+}
+--------------------------------------------------
+
+If you don't explicitly set this field, Logstash will generate a unique name.
+
+[[plugins-inputs-beats-include_codec_tag]]
+===== `include_codec_tag` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+
+
+>>>>>>> d1a1fbc... Update input docs
 [[plugins-inputs-beats-port]]
 ===== `port` 
 
