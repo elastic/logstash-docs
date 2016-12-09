@@ -488,11 +488,11 @@ To use parameters, use named parameter syntax.
 For example:
 
 [source, ruby]
-----------------------------------
-"SELECT * FROM MYTABLE WHERE id = :target_id"
-----------------------------------
+--------------------------------------------
+SELECT * FROM MYTABLE WHERE id = :target_id
+--------------------------------------------
 
-here, ":target_id" is a named parameter. You can configure named parameters
+here, `:target_id` is a named parameter. You can configure named parameters
 with the `parameters` setting.
 
 [[plugins-inputs-jdbc-statement_filepath]]
