@@ -1,6 +1,11 @@
 [[plugins-inputs-couchdb_changes]]
 === couchdb_changes
 
+* Version: 3.1.0
+* Released on: 2016-10-13
+* https://github.com/logstash-plugins/logstash-input-couchdb_changes/blob/master/CHANGELOG.md#310[Changelog]
+* Compatible: 5.1.2, 5.1.1, 5.0.0, 2.4.1, 2.4.0
+
 
 
 This CouchDB input allows you to automatically stream events from the
@@ -21,7 +26,6 @@ You can use this fact to start or resume the stream at a particular sequence.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -44,10 +48,13 @@ Available configuration options:
 | <<plugins-inputs-couchdb_changes-ca_file>> |a valid filesystem path|No|
 | <<plugins-inputs-couchdb_changes-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-inputs-couchdb_changes-db>> |<<string,string>>|Yes|
+| <<plugins-inputs-couchdb_changes-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-couchdb_changes-heartbeat>> |<<number,number>>|No|`1000`
 | <<plugins-inputs-couchdb_changes-host>> |<<string,string>>|No|`"localhost"`
+| <<plugins-inputs-couchdb_changes-id>> |<<string,string>>|No|
 | <<plugins-inputs-couchdb_changes-ignore_attachments>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-couchdb_changes-initial_sequence>> |<<number,number>>|No|
+| <<plugins-inputs-couchdb_changes-keep_id>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-couchdb_changes-keep_revision>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-couchdb_changes-password>> |<<password,password>>|No|`nil`
 | <<plugins-inputs-couchdb_changes-port>> |<<number,number>>|No|`5984`
@@ -59,7 +66,6 @@ Available configuration options:
 | <<plugins-inputs-couchdb_changes-type>> |<<string,string>>|No|
 | <<plugins-inputs-couchdb_changes-username>> |<<string,string>>|No|`nil`
 |=======================================================================
-
 
 
 ==== Details
@@ -108,6 +114,16 @@ The codec used for input data. Input codecs are a convenient method for decoding
 The CouchDB db to connect to.
 Required parameter.
 
+[[plugins-inputs-couchdb_changes-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric collection and reporting for this specific plugin instance. 
+By default we record metrics from all plugins, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-inputs-couchdb_changes-heartbeat]]
 ===== `heartbeat` 
 
@@ -126,6 +142,27 @@ setting is not recommended unless you know what you are doing.
   * Default value is `"localhost"`
 
 IP or hostname of your CouchDB instance
+
+[[plugins-inputs-couchdb_changes-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique named `ID` to the plugin instance. This `ID` is used for tracking
+information for a specific configuration of the plugin and will be useful for 
+debugging purposes.
+
+[source,sh]
+--------------------------------------------------
+output {
+ stdout {
+   id => "debug_stdout"
+ }
+}
+--------------------------------------------------
+
+If you don't explicitly set this field, Logstash will generate a unique name.
 
 [[plugins-inputs-couchdb_changes-ignore_attachments]]
 ===== `ignore_attachments` 
@@ -151,6 +188,15 @@ begin with 0 (the beginning).
 If you specify this value, it is anticipated that you will
 only be doing so for an initial read under special circumstances
 and that you will unset this value afterwards.
+
+[[plugins-inputs-couchdb_changes-keep_id]]
+===== `keep_id` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Preserve the CouchDB document id "_id" value in the
+output.
 
 [[plugins-inputs-couchdb_changes-keep_revision]]
 ===== `keep_revision` 

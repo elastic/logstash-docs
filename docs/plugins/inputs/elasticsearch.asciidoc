@@ -1,6 +1,13 @@
 [[plugins-inputs-elasticsearch]]
 === elasticsearch
 
+* Version: 4.0.0
+* Released on: 2016-10-13
+* https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/master/CHANGELOG.md#400[Changelog]
+* Compatible: 5.1.2, 5.1.1, 5.0.0, 2.4.1, 2.4.0
+
+
+
 Read from an Elasticsearch cluster, based on search query results.
 This is useful for replaying test logs, reindexing, etc.
 
@@ -49,11 +56,13 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-inputs-elasticsearch-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-inputs-elasticsearch-ca_file>> |a valid filesystem path|No|
-| <<plugins-inputs-elasticsearch-codec>> |<<codec,codec>>|No|`"json"`
+| <<plugins-inputs-elasticsearch-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-inputs-elasticsearch-docinfo>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-elasticsearch-docinfo_fields>> |<<array,array>>|No|`["_index", "_type", "_id"]`
 | <<plugins-inputs-elasticsearch-docinfo_target>> |<<string,string>>|No|`"@metadata"`
+| <<plugins-inputs-elasticsearch-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-elasticsearch-hosts>> |<<array,array>>|No|
+| <<plugins-inputs-elasticsearch-id>> |<<string,string>>|No|
 | <<plugins-inputs-elasticsearch-index>> |<<string,string>>|No|`"logstash-*"`
 | <<plugins-inputs-elasticsearch-password>> |<<password,password>>|No|
 | <<plugins-inputs-elasticsearch-query>> |<<string,string>>|No|`"{ \"sort\": [ \"_doc\" ] }"`
@@ -90,7 +99,7 @@ SSL Certificate Authority file
 ===== `codec` 
 
   * Value type is <<codec,codec>>
-  * Default value is `"json"`
+  * Default value is `"plain"`
 
 The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
 
@@ -148,6 +157,16 @@ http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_document_meta
 
 Where to move the Elasticsearch document information by default we use the @metadata field.
 
+[[plugins-inputs-elasticsearch-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric collection and reporting for this specific plugin instance. 
+By default we record metrics from all plugins, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-inputs-elasticsearch-hosts]]
 ===== `hosts` 
 
@@ -158,7 +177,26 @@ List of elasticsearch hosts to use for querying.
 each host can be either IP, HOST, IP:port or HOST:port
 port defaults to 9200
 
-If you don't explicitely set this variable Logstash will generate a unique name.
+[[plugins-inputs-elasticsearch-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique named `ID` to the plugin instance. This `ID` is used for tracking
+information for a specific configuration of the plugin and will be useful for 
+debugging purposes.
+
+[source,sh]
+--------------------------------------------------
+output {
+ stdout {
+   id => "debug_stdout"
+ }
+}
+--------------------------------------------------
+
+If you don't explicitly set this field, Logstash will generate a unique name.
 
 [[plugins-inputs-elasticsearch-index]]
 ===== `index` 

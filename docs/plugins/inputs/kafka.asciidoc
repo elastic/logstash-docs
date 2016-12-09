@@ -1,11 +1,18 @@
 [[plugins-inputs-kafka]]
 === kafka
 
+* Version: 5.1.0
+* Released on: 2016-11-17
+* https://github.com/logstash-plugins/logstash-input-kafka/blob/master/CHANGELOG.md#510[Changelog]
+* Compatible: 5.1.2, 5.1.1, 5.0.0, 2.4.1, 2.4.0
+
+
+
 This input will read events from a Kafka topic. It uses the the newly designed
 0.10 version of consumer API provided by Kafka to read messages from the broker.
 
 Here's a compatibility matrix that shows the Kafka client versions that are compatible with each combination
-of Logstash and the Kafka input plugin:
+of Logstash and the Kafka input plugin: 
 
 [options="header"]
 |==========================================================
@@ -72,28 +79,37 @@ Available configuration options:
 | <<plugins-inputs-kafka-consumer_threads>> |<<number,number>>|No|`1`
 | <<plugins-inputs-kafka-decorate_events>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-kafka-enable_auto_commit>> |<<string,string>>|No|`"true"`
+| <<plugins-inputs-kafka-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-kafka-exclude_internal_topics>> |<<string,string>>|No|
 | <<plugins-inputs-kafka-fetch_max_wait_ms>> |<<string,string>>|No|
 | <<plugins-inputs-kafka-fetch_min_bytes>> |<<string,string>>|No|
 | <<plugins-inputs-kafka-group_id>> |<<string,string>>|No|`"logstash"`
 | <<plugins-inputs-kafka-heartbeat_interval_ms>> |<<string,string>>|No|
+| <<plugins-inputs-kafka-id>> |<<string,string>>|No|
+| <<plugins-inputs-kafka-jaas_path>> |a valid filesystem path|No|
+| <<plugins-inputs-kafka-kerberos_config>> |a valid filesystem path|No|
 | <<plugins-inputs-kafka-key_deserializer_class>> |<<string,string>>|No|`"org.apache.kafka.common.serialization.StringDeserializer"`
 | <<plugins-inputs-kafka-max_partition_fetch_bytes>> |<<string,string>>|No|
 | <<plugins-inputs-kafka-max_poll_records>> |<<string,string>>|No|
 | <<plugins-inputs-kafka-metadata_max_age_ms>> |<<string,string>>|No|
 | <<plugins-inputs-kafka-partition_assignment_strategy>> |<<string,string>>|No|
-| <<plugins-inputs-kafka-poll_timeout_ms>> |<<number,number>>|No|
+| <<plugins-inputs-kafka-poll_timeout_ms>> |<<number,number>>|No|`100`
 | <<plugins-inputs-kafka-receive_buffer_bytes>> |<<string,string>>|No|
 | <<plugins-inputs-kafka-reconnect_backoff_ms>> |<<string,string>>|No|
 | <<plugins-inputs-kafka-request_timeout_ms>> |<<string,string>>|No|
 | <<plugins-inputs-kafka-retry_backoff_ms>> |<<string,string>>|No|
+| <<plugins-inputs-kafka-sasl_kerberos_service_name>> |<<string,string>>|No|
+| <<plugins-inputs-kafka-sasl_mechanism>> |<<string,string>>|No|`"GSSAPI"`
+| <<plugins-inputs-kafka-security_protocol>> |<<string,string>>, one of `["PLAINTEXT", "SSL", "SASL_PLAINTEXT", "SASL_SSL"]`|No|`"PLAINTEXT"`
 | <<plugins-inputs-kafka-send_buffer_bytes>> |<<string,string>>|No|
 | <<plugins-inputs-kafka-session_timeout_ms>> |<<string,string>>|No|
-| <<plugins-inputs-kafka-ssl>> |<<boolean,boolean>>|No|`false`
+| <<plugins-inputs-kafka-ssl_key_password>> |<<password,password>>|No|
 | <<plugins-inputs-kafka-ssl_keystore_location>> |a valid filesystem path|No|
 | <<plugins-inputs-kafka-ssl_keystore_password>> |<<password,password>>|No|
+| <<plugins-inputs-kafka-ssl_keystore_type>> |<<string,string>>|No|
 | <<plugins-inputs-kafka-ssl_truststore_location>> |a valid filesystem path|No|
 | <<plugins-inputs-kafka-ssl_truststore_password>> |<<password,password>>|No|
+| <<plugins-inputs-kafka-ssl_truststore_type>> |<<string,string>>|No|
 | <<plugins-inputs-kafka-tags>> |<<array,array>>|No|
 | <<plugins-inputs-kafka-topics>> |<<array,array>>|No|`["logstash"]`
 | <<plugins-inputs-kafka-topics_pattern>> |<<string,string>>|No|
@@ -216,6 +232,16 @@ If true, periodically commit to Kafka the offsets of messages already returned b
 This committed offset will be used when the process fails as the position from
 which the consumption will begin.
 
+[[plugins-inputs-kafka-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric collection and reporting for this specific plugin instance. 
+By default we record metrics from all plugins, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-inputs-kafka-exclude_internal_topics]]
 ===== `exclude_internal_topics` 
 
@@ -267,6 +293,58 @@ consumers join or leave the group. The value must be set lower than
 `session.timeout.ms`, but typically should be set no higher than 1/3 of that value.
 It can be adjusted even lower to control the expected time for normal rebalances.
 
+[[plugins-inputs-kafka-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique named `ID` to the plugin instance. This `ID` is used for tracking
+information for a specific configuration of the plugin and will be useful for 
+debugging purposes.
+
+[source,sh]
+--------------------------------------------------
+output {
+ stdout {
+   id => "debug_stdout"
+ }
+}
+--------------------------------------------------
+
+If you don't explicitly set this field, Logstash will generate a unique name.
+
+[[plugins-inputs-kafka-jaas_path]]
+===== `jaas_path` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+The Java Authentication and Authorization Service (JAAS) API supplies user authentication and authorization 
+services for Kafka. This setting provides the path to the JAAS file. Sample JAAS file for Kafka client:
+[source,java]
+----------------------------------
+KafkaClient {
+  com.sun.security.auth.module.Krb5LoginModule required
+  useTicketCache=true
+  renewTicket=true
+  serviceName="kafka";
+  };
+----------------------------------
+
+Please note that specifying `jaas_path` and `kerberos_config` in the config file will add these  
+to the global JVM system properties. This means if you have multiple Kafka inputs, all of them would be sharing the same 
+`jaas_path` and `kerberos_config`. If this is not desirable, you would have to run separate instances of Logstash on 
+different JVM instances.
+
+[[plugins-inputs-kafka-kerberos_config]]
+===== `kerberos_config` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+Optional path to kerberos config file. This is krb5.conf style as detailed in https://web.mit.edu/kerberos/krb5-1.12/doc/admin/conf_files/krb5_conf.html
+
 [[plugins-inputs-kafka-key_deserializer_class]]
 ===== `key_deserializer_class` 
 
@@ -317,7 +395,7 @@ partition ownership amongst consumer instances
 ===== `poll_timeout_ms` 
 
   * Value type is <<number,number>>
-  * There is no default value for this setting.
+  * Default value is `100`
 
 Time kafka consumer will wait to receive new messages from topics
 
@@ -359,6 +437,33 @@ retries are exhausted.
 The amount of time to wait before attempting to retry a failed fetch request
 to a given topic partition. This avoids repeated fetching-and-failing in a tight loop.
 
+[[plugins-inputs-kafka-sasl_kerberos_service_name]]
+===== `sasl_kerberos_service_name` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The Kerberos principal name that Kafka broker runs as. 
+This can be defined either in Kafka's JAAS config or in Kafka's config.
+
+[[plugins-inputs-kafka-sasl_mechanism]]
+===== `sasl_mechanism` 
+
+  * Value type is <<string,string>>
+  * Default value is `"GSSAPI"`
+
+http://kafka.apache.org/documentation.html#security_sasl[SASL mechanism] used for client connections. 
+This may be any mechanism for which a security provider is available.
+GSSAPI is the default mechanism.
+
+[[plugins-inputs-kafka-security_protocol]]
+===== `security_protocol` 
+
+  * Value can be any of: `PLAINTEXT`, `SSL`, `SASL_PLAINTEXT`, `SASL_SSL`
+  * Default value is `"PLAINTEXT"`
+
+Security protocol to use, which can be either of PLAINTEXT,SSL,SASL_PLAINTEXT,SASL_SSL
+
 [[plugins-inputs-kafka-send_buffer_bytes]]
 ===== `send_buffer_bytes` 
 
@@ -377,12 +482,21 @@ The timeout after which, if the `poll_timeout_ms` is not invoked, the consumer i
 and a rebalance operation is triggered for the group identified by `group_id`
 
 [[plugins-inputs-kafka-ssl]]
-===== `ssl` 
+===== `ssl`  (DEPRECATED)
 
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
 Enable SSL/TLS secured communication to Kafka broker.
+
+[[plugins-inputs-kafka-ssl_key_password]]
+===== `ssl_key_password` 
+
+  * Value type is <<password,password>>
+  * There is no default value for this setting.
+
+The password of the private key in the key store file.
 
 [[plugins-inputs-kafka-ssl_keystore_location]]
 ===== `ssl_keystore_location` 
@@ -400,6 +514,14 @@ If client authentication is required, this setting stores the keystore path.
 
 If client authentication is required, this setting stores the keystore password
 
+[[plugins-inputs-kafka-ssl_keystore_type]]
+===== `ssl_keystore_type` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The keystore type.
+
 [[plugins-inputs-kafka-ssl_truststore_location]]
 ===== `ssl_truststore_location` 
 
@@ -415,6 +537,14 @@ The JKS truststore path to validate the Kafka broker's certificate.
   * There is no default value for this setting.
 
 The truststore password
+
+[[plugins-inputs-kafka-ssl_truststore_type]]
+===== `ssl_truststore_type` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The truststore type.
 
 [[plugins-inputs-kafka-tags]]
 ===== `tags` 

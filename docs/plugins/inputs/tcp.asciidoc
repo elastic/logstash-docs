@@ -1,6 +1,11 @@
 [[plugins-inputs-tcp]]
 === tcp
 
+* Version: 4.1.0
+* Released on: 2016-11-21
+* https://github.com/logstash-plugins/logstash-input-tcp/blob/master/CHANGELOG.md#410[Changelog]
+* Compatible: 5.1.2, 5.1.1, 5.0.0, 2.4.1, 2.4.0
+
 
 
 Read events over a TCP socket.
@@ -15,7 +20,6 @@ depending on `mode`.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -34,10 +38,13 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-inputs-tcp-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-tcp-codec>> |<<codec,codec>>|No|`"line"`
+| <<plugins-inputs-tcp-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-inputs-tcp-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-tcp-host>> |<<string,string>>|No|`"0.0.0.0"`
+| <<plugins-inputs-tcp-id>> |<<string,string>>|No|
 | <<plugins-inputs-tcp-mode>> |<<string,string>>, one of `["server", "client"]`|No|`"server"`
 | <<plugins-inputs-tcp-port>> |<<number,number>>|Yes|
+| <<plugins-inputs-tcp-proxy_protocol>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-tcp-ssl_cert>> |a valid filesystem path|No|
 | <<plugins-inputs-tcp-ssl_enable>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-tcp-ssl_extra_chain_certs>> |<<array,array>>|No|`[]`
@@ -47,7 +54,6 @@ Available configuration options:
 | <<plugins-inputs-tcp-tags>> |<<array,array>>|No|
 | <<plugins-inputs-tcp-type>> |<<string,string>>|No|
 |=======================================================================
-
 
 
 ==== Details
@@ -66,7 +72,7 @@ Add a field to an event
 ===== `codec` 
 
   * Value type is <<codec,codec>>
-  * Default value is `"line"`
+  * Default value is `"plain"`
 
 The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
 
@@ -79,6 +85,16 @@ The codec used for input data. Input codecs are a convenient method for decoding
 
 
 
+[[plugins-inputs-tcp-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric collection and reporting for this specific plugin instance. 
+By default we record metrics from all plugins, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-inputs-tcp-host]]
 ===== `host` 
 
@@ -87,6 +103,27 @@ The codec used for input data. Input codecs are a convenient method for decoding
 
 When mode is `server`, the address to listen on.
 When mode is `client`, the address to connect to.
+
+[[plugins-inputs-tcp-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique named `ID` to the plugin instance. This `ID` is used for tracking
+information for a specific configuration of the plugin and will be useful for 
+debugging purposes.
+
+[source,sh]
+--------------------------------------------------
+output {
+ stdout {
+   id => "debug_stdout"
+ }
+}
+--------------------------------------------------
+
+If you don't explicitly set this field, Logstash will generate a unique name.
 
 [[plugins-inputs-tcp-mode]]
 ===== `mode` 
@@ -106,6 +143,15 @@ Mode to operate in. `server` listens for client connections,
 
 When mode is `server`, the port to listen on.
 When mode is `client`, the port to connect to.
+
+[[plugins-inputs-tcp-proxy_protocol]]
+===== `proxy_protocol` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Proxy protocol support, only v1 is supported at this time
+http://www.haproxy.org/download/1.5/doc/proxy-protocol.txt
 
 [[plugins-inputs-tcp-ssl_cacert]]
 ===== `ssl_cacert`  (DEPRECATED)

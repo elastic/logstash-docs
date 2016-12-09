@@ -1,6 +1,11 @@
 [[plugins-inputs-heartbeat]]
 === heartbeat
 
+* Version: 3.0.2
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-input-heartbeat/blob/master/CHANGELOG.md#302[Changelog]
+* Compatible: 5.1.2, 5.1.1, 5.0.0, 2.4.1, 2.4.0
+
 
 
 Generate heartbeat messages.
@@ -14,7 +19,6 @@ availability of Logstash.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -34,13 +38,14 @@ Available configuration options:
 | <<plugins-inputs-heartbeat-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-inputs-heartbeat-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-inputs-heartbeat-count>> |<<number,number>>|No|`-1`
+| <<plugins-inputs-heartbeat-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-inputs-heartbeat-id>> |<<string,string>>|No|
 | <<plugins-inputs-heartbeat-interval>> |<<number,number>>|No|`60`
 | <<plugins-inputs-heartbeat-message>> |<<string,string>>|No|`"ok"`
 | <<plugins-inputs-heartbeat-tags>> |<<array,array>>|No|
 | <<plugins-inputs-heartbeat-threads>> |<<number,number>>|No|`1`
 | <<plugins-inputs-heartbeat-type>> |<<string,string>>|No|
 |=======================================================================
-
 
 
 ==== Details
@@ -71,6 +76,37 @@ The codec used for input data. Input codecs are a convenient method for decoding
 
 How many times to iterate.
 This is typically used only for testing purposes.
+
+[[plugins-inputs-heartbeat-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric collection and reporting for this specific plugin instance. 
+By default we record metrics from all plugins, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-inputs-heartbeat-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique named `ID` to the plugin instance. This `ID` is used for tracking
+information for a specific configuration of the plugin and will be useful for 
+debugging purposes.
+
+[source,sh]
+--------------------------------------------------
+output {
+ stdout {
+   id => "debug_stdout"
+ }
+}
+--------------------------------------------------
+
+If you don't explicitly set this field, Logstash will generate a unique name.
 
 [[plugins-inputs-heartbeat-interval]]
 ===== `interval` 

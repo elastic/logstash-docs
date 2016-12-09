@@ -1,6 +1,11 @@
 [[plugins-inputs-stdin]]
 === stdin
 
+* Version: 3.2.0
+* Released on: 2016-09-13
+* https://github.com/logstash-plugins/logstash-input-stdin/blob/master/CHANGELOG.md#320[Changelog]
+* Compatible: 5.1.2, 5.1.1, 5.0.0, 2.4.1, 2.4.0
+
 
 
 Read events from standard input.
@@ -13,7 +18,6 @@ want to join lines, you'll want to use the multiline filter.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -31,11 +35,12 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-inputs-stdin-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-stdin-codec>> |<<codec,codec>>|No|`"line"`
+| <<plugins-inputs-stdin-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-inputs-stdin-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-inputs-stdin-id>> |<<string,string>>|No|
 | <<plugins-inputs-stdin-tags>> |<<array,array>>|No|
 | <<plugins-inputs-stdin-type>> |<<string,string>>|No|
 |=======================================================================
-
 
 
 ==== Details
@@ -54,9 +59,40 @@ Add a field to an event
 ===== `codec` 
 
   * Value type is <<codec,codec>>
-  * Default value is `"line"`
+  * Default value is `"plain"`
 
 The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
+
+[[plugins-inputs-stdin-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric collection and reporting for this specific plugin instance. 
+By default we record metrics from all plugins, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-inputs-stdin-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique named `ID` to the plugin instance. This `ID` is used for tracking
+information for a specific configuration of the plugin and will be useful for 
+debugging purposes.
+
+[source,sh]
+--------------------------------------------------
+output {
+ stdout {
+   id => "debug_stdout"
+ }
+}
+--------------------------------------------------
+
+If you don't explicitly set this field, Logstash will generate a unique name.
 
 [[plugins-inputs-stdin-tags]]
 ===== `tags` 

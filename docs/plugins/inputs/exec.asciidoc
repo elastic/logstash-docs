@@ -1,6 +1,11 @@
 [[plugins-inputs-exec]]
 === exec
 
+* Version: 3.1.2
+* Released on: 2016-09-15
+* https://github.com/logstash-plugins/logstash-input-exec/blob/master/CHANGELOG.md#312[Changelog]
+* Compatible: 5.1.2, 5.1.1, 5.0.0, 2.4.1, 2.4.0
+
 
 
 Periodically run a shell command and capture the whole output as an event.
@@ -16,7 +21,6 @@ Notes:
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -38,11 +42,12 @@ Available configuration options:
 | <<plugins-inputs-exec-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-inputs-exec-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-inputs-exec-command>> |<<string,string>>|Yes|
+| <<plugins-inputs-exec-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-inputs-exec-id>> |<<string,string>>|No|
 | <<plugins-inputs-exec-interval>> |<<number,number>>|Yes|
 | <<plugins-inputs-exec-tags>> |<<array,array>>|No|
 | <<plugins-inputs-exec-type>> |<<string,string>>|No|
 |=======================================================================
-
 
 
 ==== Details
@@ -74,14 +79,36 @@ The codec used for input data. Input codecs are a convenient method for decoding
 
 Command to run. For example, `uptime`
 
-[[plugins-inputs-exec-debug]]
-===== `debug`  (DEPRECATED)
+[[plugins-inputs-exec-enable_metric]]
+===== `enable_metric` 
 
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
   * Value type is <<boolean,boolean>>
-  * Default value is `false`
+  * Default value is `true`
 
-Set this to true to enable debugging on an input.
+Disable or enable metric collection and reporting for this specific plugin instance. 
+By default we record metrics from all plugins, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-inputs-exec-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique named `ID` to the plugin instance. This `ID` is used for tracking
+information for a specific configuration of the plugin and will be useful for 
+debugging purposes.
+
+[source,sh]
+--------------------------------------------------
+output {
+ stdout {
+   id => "debug_stdout"
+ }
+}
+--------------------------------------------------
+
+If you don't explicitly set this field, Logstash will generate a unique name.
 
 [[plugins-inputs-exec-interval]]
 ===== `interval` 
