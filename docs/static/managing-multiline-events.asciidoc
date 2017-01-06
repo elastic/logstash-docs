@@ -6,7 +6,7 @@ Logstash needs to know how to tell which lines are part of a single event.
 
 Multiline event processing is complex and relies on proper event ordering. The best way to guarantee ordered log
 processing is to implement the processing as early in the pipeline as possible. The preferred tool in the Logstash
-pipeline is the {logstash-2.3}plugins-filters-multiline.html[multiline filter], which merges lines from a single input using
+pipeline is the {logstash-branch}plugins-filters-multiline.html[multiline filter], which merges lines from a single input using
 a simple set of rules.
 
 
@@ -21,9 +21,9 @@ in the `pattern` option are part of the following line.* The `negate` option app
 _do not_ match the regular expression specified in the `pattern` option.
 
 See the full documentation for the {logstash}plugins-codecs-multiline.html[multiline codec] or the
-{logstash-2.3}plugins-filters-multiline.html[multiline filter] plugin for more information on configuration options.
+{logstash-branch}plugins-filters-multiline.html[multiline filter] plugin for more information on configuration options.
 
-NOTE: For more complex needs, the {logstash}plugins-filters-multiline.html[multiline filter] performs a similar task at
+NOTE: For more complex needs, the {logstash-branch}plugins-filters-multiline.html[multiline filter] performs a similar task at
 the filter stage of processing, where the Logstash instance aggregates multiple inputs.
 The multiline filter plugin is not thread-safe. Avoid using multiple filter workers with the multiline filter. You can
 track the progress of upgrades to the functionality of the multiline codec at
