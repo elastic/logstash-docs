@@ -6,7 +6,7 @@ Logstash needs to know how to tell which lines are part of a single event.
 
 Multiline event processing is complex and relies on proper event ordering. The best way to guarantee ordered log 
 processing is to implement the processing as early in the pipeline as possible. The preferred tool in the Logstash 
-pipeline is the {logstash-2.0}plugins-filters-multiline.html[multiline filter], which merges lines from a single input using 
+pipeline is the {logstash-2.1}plugins-filters-multiline.html[multiline filter], which merges lines from a single input using 
 a simple set of rules.
 
 

@@ -9,7 +9,7 @@
 :ref:                   https://www.elastic.co/guide/en/elasticsearch/reference/current/
 :shield:                https://www.elastic.co/guide/en/shield/current
 :logstash:              https://www.elastic.co/guide/en/logstash/current/
-:logstash-2.0:          https://www.elastic.co/guide/en/logstash/2.0/
+:logstash-2.1:          https://www.elastic.co/guide/en/logstash/2.1/
 :lsissue:               https://github.com/elastic/logstash/issues/
 
 [[introduction]]
