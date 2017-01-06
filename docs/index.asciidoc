@@ -8,13 +8,8 @@
 :guide:                 https://www.elastic.co/guide/en/elasticsearch/guide/2.x/
 :ref:                   https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/
 :shield:                https://www.elastic.co/guide/en/shield/current
-<<<<<<< HEAD
-:logstash:              https://www.elastic.co/guide/en/logstash/current/
-:logstash-branch:          https://www.elastic.co/guide/en/logstash/{branch}/
-:lsissue:               https://github.com/elastic/logstash/issues/
-=======
 :logstash:              https://www.elastic.co/guide/en/logstash/{branch}/
->>>>>>> 1fb8d7e... Docs: Changing doc URL attributes to point to corresponding versions.
+:lsissue:               https://github.com/elastic/logstash/issues/
 
 [[introduction]]
 == Logstash Introduction
