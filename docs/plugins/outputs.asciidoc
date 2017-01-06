@@ -75,7 +75,7 @@ at Elastic, and the broader community.
 | <<plugins-outputs-riemann,riemann>> | Sends metrics to Riemann | https://github.com/logstash-plugins/logstash-output-riemann[logstash-output-riemann]
 | <<plugins-outputs-sns,sns>> | Sends events to Amazon's Simple Notification Service | https://github.com/logstash-plugins/logstash-output-sns[logstash-output-sns]
 | <<plugins-outputs-solr_http,solr_http>> | Stores and indexes logs in Solr | https://github.com/logstash-plugins/logstash-output-solr_http[logstash-output-solr_http]
-| <<plugins-outputs-sqs,sqs>> | Pushes events to an Amazon Web Services Simple Queue Serice queue | https://github.com/logstash-plugins/logstash-output-sqs[logstash-output-sqs]
+| <<plugins-outputs-sqs,sqs>> | Pushes events to an Amazon Web Services Simple Queue Service queue | https://github.com/logstash-plugins/logstash-output-sqs[logstash-output-sqs]
 | <<plugins-outputs-statsd,statsd>> | Sends metrics using the `statsd` network daemon | https://github.com/logstash-plugins/logstash-output-statsd[logstash-output-statsd]
 | <<plugins-outputs-stomp,stomp>> | Writes events using the STOMP protocol | https://github.com/logstash-plugins/logstash-output-stomp[logstash-output-stomp]
 | <<plugins-outputs-syslog,syslog>> | Sends events to a `syslog` server | https://github.com/logstash-plugins/logstash-output-syslog[logstash-output-syslog]
