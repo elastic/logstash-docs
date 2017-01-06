@@ -50,7 +50,7 @@ The following output plugins are available below. For a list of Elastic supporte
 | <<plugins-outputs-s3,s3>> | Sends Logstash events to the Amazon Simple Storage Service | https://github.com/logstash-plugins/logstash-output-s3[logstash-output-s3]
 | <<plugins-outputs-sns,sns>> | Sends events to Amazon's Simple Notification Service | https://github.com/logstash-plugins/logstash-output-sns[logstash-output-sns]
 | <<plugins-outputs-solr_http,solr_http>> | Stores and indexes logs in Solr | https://github.com/logstash-plugins/logstash-output-solr_http[logstash-output-solr_http]
-| <<plugins-outputs-sqs,sqs>> | Pushes events to an Amazon Web Services Simple Queue Serice queue | https://github.com/logstash-plugins/logstash-output-sqs[logstash-output-sqs]
+| <<plugins-outputs-sqs,sqs>> | Pushes events to an Amazon Web Services Simple Queue Service queue | https://github.com/logstash-plugins/logstash-output-sqs[logstash-output-sqs]
 | <<plugins-outputs-statsd,statsd>> | Sends metrics using the `statsd` network daemon | https://github.com/logstash-plugins/logstash-output-statsd[logstash-output-statsd]
 | <<plugins-outputs-stdout,stdout>> | Prints events to the standard output | https://github.com/logstash-plugins/logstash-output-stdout[logstash-output-stdout]
 | <<plugins-outputs-stomp,stomp>> | Writes events using the STOMP protocol | https://github.com/logstash-plugins/logstash-output-stomp[logstash-output-stomp]
