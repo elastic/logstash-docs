@@ -1,7 +1,12 @@
 [[plugins-inputs-imap]]
 === imap
 
-NOTE: This is a community-maintained plugin!
+Version: 3.0.2
+Released on: 2016-07-14
+https://github.com/logstash-plugins/logstash-input-imap/blob/master/CHANGELOG.md#302[Changelog]
+Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
+
 
 Read mails from IMAP server
 
@@ -13,7 +18,6 @@ to the trash.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -38,19 +42,22 @@ Available configuration options:
 | <<plugins-inputs-imap-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-inputs-imap-content_type>> |<<string,string>>|No|`"text/plain"`
 | <<plugins-inputs-imap-delete>> |<<boolean,boolean>>|No|`false`
+| <<plugins-inputs-imap-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-inputs-imap-expunge>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-imap-fetch_count>> |<<number,number>>|No|`50`
 | <<plugins-inputs-imap-folder>> |<<string,string>>|No|`"INBOX"`
 | <<plugins-inputs-imap-host>> |<<string,string>>|Yes|
+| <<plugins-inputs-imap-id>> |<<string,string>>|No|
 | <<plugins-inputs-imap-lowercase_headers>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-imap-password>> |<<password,password>>|Yes|
 | <<plugins-inputs-imap-port>> |<<number,number>>|No|
 | <<plugins-inputs-imap-secure>> |<<boolean,boolean>>|No|`true`
+| <<plugins-inputs-imap-strip_attachments>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-imap-tags>> |<<array,array>>|No|
 | <<plugins-inputs-imap-type>> |<<string,string>>|No|
 | <<plugins-inputs-imap-user>> |<<string,string>>|Yes|
 | <<plugins-inputs-imap-verify_cert>> |<<boolean,boolean>>|No|`true`
 |=======================================================================
-
 
 
 ==== Details
@@ -98,6 +105,24 @@ content-type as the event message.
 
 
 
+[[plugins-inputs-imap-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-inputs-imap-expunge]]
+===== `expunge` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+
+
 [[plugins-inputs-imap-fetch_count]]
 ===== `fetch_count` 
 
@@ -122,6 +147,25 @@ content-type as the event message.
   * There is no default value for this setting.
 
 
+
+[[plugins-inputs-imap-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-inputs-imap-lowercase_headers]]
 ===== `lowercase_headers` 
@@ -153,6 +197,14 @@ content-type as the event message.
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
+
+
+
+[[plugins-inputs-imap-strip_attachments]]
+===== `strip_attachments` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
 
 
 

@@ -1,6 +1,11 @@
 [[plugins-filters-sleep]]
 === sleep
 
+Version: 3.0.3
+Released on: 2016-12-26
+https://github.com/logstash-plugins/logstash-filter-sleep/blob/master/CHANGELOG.md#303[Changelog]
+Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 Sleep a given amount of time. This will cause logstash
@@ -13,7 +18,6 @@ for rate limiting, etc.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -32,14 +36,15 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-filters-sleep-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-sleep-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-sleep-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-filters-sleep-every>> |<<string,string>>|No|`1`
+| <<plugins-filters-sleep-id>> |<<string,string>>|No|
 | <<plugins-filters-sleep-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-sleep-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-sleep-remove_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-sleep-replay>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-sleep-time>> |<<string,string>>|No|
 |=======================================================================
-
 
 
 ==== Details
@@ -106,6 +111,16 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
 
+[[plugins-filters-sleep-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-filters-sleep-every]]
 ===== `every` 
 
@@ -122,6 +137,25 @@ Example:
         every => 10   # on every 10th event
       }
     }
+
+[[plugins-filters-sleep-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-sleep-periodic_flush]]
 ===== `periodic_flush` 

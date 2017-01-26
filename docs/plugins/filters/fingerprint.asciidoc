@@ -1,6 +1,11 @@
 [[plugins-filters-fingerprint]]
 === fingerprint
 
+Version: 3.0.2
+Released on: 2016-07-14
+https://github.com/logstash-plugins/logstash-filter-fingerprint/blob/master/CHANGELOG.md#302[Changelog]
+Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
  Fingerprint fields using by replacing values with a consistent hash.
@@ -10,7 +15,6 @@
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -32,6 +36,8 @@ Available configuration options:
 | <<plugins-filters-fingerprint-add_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-fingerprint-base64encode>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-fingerprint-concatenate_sources>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-fingerprint-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-fingerprint-id>> |<<string,string>>|No|
 | <<plugins-filters-fingerprint-key>> |<<string,string>>|No|
 | <<plugins-filters-fingerprint-method>> |<<string,string>>, one of `["SHA1", "SHA256", "SHA384", "SHA512", "MD5", "MURMUR3", "IPV4_NETWORK", "UUID", "PUNCTUATION"]`|Yes|`"SHA1"`
 | <<plugins-filters-fingerprint-periodic_flush>> |<<boolean,boolean>>|No|`false`
@@ -40,7 +46,6 @@ Available configuration options:
 | <<plugins-filters-fingerprint-source>> |<<array,array>>|No|`"message"`
 | <<plugins-filters-fingerprint-target>> |<<string,string>>|No|`"fingerprint"`
 |=======================================================================
-
 
 
 ==== Details
@@ -123,6 +128,35 @@ base64 encoded rather than hex encoded.
   * Default value is `false`
 
 When set to `true`, we concatenate the values of all fields into 1 string like the old checksum filter.
+
+[[plugins-filters-fingerprint-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-filters-fingerprint-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-fingerprint-key]]
 ===== `key` 

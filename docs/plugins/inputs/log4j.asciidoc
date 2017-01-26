@@ -1,6 +1,11 @@
 [[plugins-inputs-log4j]]
 === log4j
 
+Version: 3.0.3
+Released on: 2016-08-11
+https://github.com/logstash-plugins/logstash-input-log4j/blob/master/CHANGELOG.md#303[Changelog]
+Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 Read events over a TCP socket from a Log4j SocketAppender. This plugin works only with log4j version 1.x.
@@ -31,7 +36,6 @@ Also if the original log4j LoggingEvent contains MDC hash entries, they will be 
 
 This plugin supports the following configuration options:
 
-
 Required configuration options:
 
 [source,json]
@@ -49,14 +53,14 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-inputs-log4j-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-inputs-log4j-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-inputs-log4j-data_timeout>> |<<number,number>>|No|`5`
+| <<plugins-inputs-log4j-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-log4j-host>> |<<string,string>>|No|`"0.0.0.0"`
+| <<plugins-inputs-log4j-id>> |<<string,string>>|No|
 | <<plugins-inputs-log4j-mode>> |<<string,string>>, one of `["server", "client"]`|No|`"server"`
 | <<plugins-inputs-log4j-port>> |<<number,number>>|No|`4560`
 | <<plugins-inputs-log4j-tags>> |<<array,array>>|No|
 | <<plugins-inputs-log4j-type>> |<<string,string>>|No|
 |=======================================================================
-
 
 
 ==== Details
@@ -79,16 +83,15 @@ Add a field to an event
 
 The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
 
-[[plugins-inputs-log4j-data_timeout]]
-===== `data_timeout` 
+[[plugins-inputs-log4j-enable_metric]]
+===== `enable_metric` 
 
-  * Value type is <<number,number>>
-  * Default value is `5`
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
 
-Read timeout in seconds. If a particular TCP connection is
-idle for more than this timeout period, we will assume
-it is dead and close it.
-If you never want to timeout, use -1.
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
 
 [[plugins-inputs-log4j-host]]
 ===== `host` 
@@ -98,6 +101,25 @@ If you never want to timeout, use -1.
 
 When mode is `server`, the address to listen on.
 When mode is `client`, the address to connect to.
+
+[[plugins-inputs-log4j-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-inputs-log4j-mode]]
 ===== `mode` 

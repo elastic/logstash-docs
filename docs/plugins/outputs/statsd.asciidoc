@@ -1,53 +1,63 @@
 [[plugins-outputs-statsd]]
 === statsd
 
+Version: 3.1.1
+Released on: 2016-07-14
+https://github.com/logstash-plugins/logstash-output-statsd/blob/master/CHANGELOG.md#311[Changelog]
+Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 statsd is a network daemon for aggregating statistics, such as counters and timers,
-and shipping over UDP to backend services, such as Graphite or Datadog.
-
-The most basic coverage of this plugin is that the 'namespace', 'sender', and
-'metric' names are combined into the full metric path like so:
-
-    `namespace.sender.metric`
-
-The general idea is that you send statsd count or latency data and every few
-seconds it will emit the aggregated values to the backend. Example aggregates are
-`average`, `max`, `stddev`, etc.
+and shipping over UDP to backend services, such as Graphite or Datadog. The general
+idea is that you send metrics to statsd and every few seconds it will emit the
+aggregated values to the backend. Example aggregates are sums, average and maximum
+values, their standard deviation, etc. This plugin makes it easy to send such
+metrics based on data in Logstash events.
 
 You can learn about statsd here:
 
-* http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/[Etsy blog post announcing statsd]
+* https://codeascraft.com/2011/02/15/measure-anything-measure-everything/[Etsy blog post announcing statsd]
 * https://github.com/etsy/statsd[statsd on github]
 
-A simple example usage of this is to count HTTP hits by response code; to learn
-more about that, check out the ../tutorials/metrics-from-logs[log metrics tutorial]
+Typical examples of how this can be used with Logstash include counting HTTP hits
+by response code, summing the total number of bytes of traffic served, and tracking
+the 50th and 95th percentile of the processing time of requests.
 
-The default final metric sent to statsd would look like this:
+Each metric emitted to statsd has a dot-separated path, a type, and a value. The
+metric path is built from the `namespace` and `sender` options together with the
+metric name that's picked up depending on the type of metric. All in all, the
+metric path will follow this pattern:
 
-    `namespace.sender.metric`
+    namespace.sender.metric
 
-With regards to this plugin, the default namespace is "logstash", the default sender
-is the `${host}` field, and the metric name depends on what is set as the metric name
-in the `increment`, `decrement`, `timing`, `count, `set` or `gauge` variable. 
+With regards to this plugin, the default namespace is "logstash", the default
+sender is the `host` field, and the metric name depends on what is set as the
+metric name in the `increment`, `decrement`, `timing`, `count`, `set` or `gauge`
+options. In metric paths, colons (":"), pipes ("|") and at signs ("@") are reserved
+and will be replaced by underscores ("_").
 
 Example:
 [source,ruby]
 output {
- statsd {
-  host => "statsd.example.org"
-  count => { 
-   "http.bytes" => "%{bytes}"
+  statsd {
+    host => "statsd.example.org"
+    count => {
+      "http.bytes" => "%{bytes}"
+    }
   }
- }
 }
+
+If run on a host named hal9000 the configuration above will send the following
+metric to statsd if the current event has 123 in its `bytes` field:
+
+    logstash.hal9000.http.bytes:123|c
 
 &nbsp;
 
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -67,8 +77,10 @@ Available configuration options:
 | <<plugins-outputs-statsd-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-outputs-statsd-count>> |<<hash,hash>>|No|`{}`
 | <<plugins-outputs-statsd-decrement>> |<<array,array>>|No|`[]`
+| <<plugins-outputs-statsd-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-statsd-gauge>> |<<hash,hash>>|No|`{}`
 | <<plugins-outputs-statsd-host>> |<<string,string>>|No|`"localhost"`
+| <<plugins-outputs-statsd-id>> |<<string,string>>|No|
 | <<plugins-outputs-statsd-increment>> |<<array,array>>|No|`[]`
 | <<plugins-outputs-statsd-namespace>> |<<string,string>>|No|`"logstash"`
 | <<plugins-outputs-statsd-port>> |<<number,number>>|No|`8125`
@@ -76,9 +88,8 @@ Available configuration options:
 | <<plugins-outputs-statsd-sender>> |<<string,string>>|No|`"%{host}"`
 | <<plugins-outputs-statsd-set>> |<<hash,hash>>|No|`{}`
 | <<plugins-outputs-statsd-timing>> |<<hash,hash>>|No|`{}`
-| <<plugins-outputs-statsd-workers>> |<<number,number>>|No|`1`
+| <<plugins-outputs-statsd-workers>> |<<,>>|No|`1`
 |=======================================================================
-
 
 
 ==== Details
@@ -99,16 +110,8 @@ The codec used for output data. Output codecs are a convenient method for encodi
   * Value type is <<hash,hash>>
   * Default value is `{}`
 
-A count metric. `metric_name => count` as hash
-
-[[plugins-outputs-statsd-debug]]
-===== `debug`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Enable debugging.
+A count metric. `metric_name => count` as hash. `%{fieldname}` substitutions are
+allowed in the metric names.
 
 [[plugins-outputs-statsd-decrement]]
 ===== `decrement` 
@@ -116,7 +119,18 @@ Enable debugging.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-A decrement metric. Metric names as array.
+A decrement metric. Metric names as array. `%{fieldname}` substitutions are
+allowed in the metric names.
+
+[[plugins-outputs-statsd-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
 
 [[plugins-outputs-statsd-gauge]]
 ===== `gauge` 
@@ -124,7 +138,8 @@ A decrement metric. Metric names as array.
   * Value type is <<hash,hash>>
   * Default value is `{}`
 
-A gauge metric. `metric_name => gauge` as hash.
+A gauge metric. `metric_name => gauge` as hash. `%{fieldname}` substitutions are
+allowed in the metric names.
 
 [[plugins-outputs-statsd-host]]
 ===== `host` 
@@ -132,7 +147,26 @@ A gauge metric. `metric_name => gauge` as hash.
   * Value type is <<string,string>>
   * Default value is `"localhost"`
 
-The address of the statsd server.
+The hostname or IP address of the statsd server.
+
+[[plugins-outputs-statsd-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-statsd-increment]]
 ===== `increment` 
@@ -140,7 +174,8 @@ The address of the statsd server.
   * Value type is <<array,array>>
   * Default value is `[]`
 
-An increment metric. Metric names as array.
+An increment metric. Metric names as array. `%{fieldname}` substitutions are
+allowed in the metric names.
 
 [[plugins-outputs-statsd-namespace]]
 ===== `namespace` 
@@ -148,7 +183,8 @@ An increment metric. Metric names as array.
   * Value type is <<string,string>>
   * Default value is `"logstash"`
 
-The statsd namespace to use for this metric.
+The statsd namespace to use for this metric. `%{fieldname}` substitutions are
+allowed.
 
 [[plugins-outputs-statsd-port]]
 ===== `port` 
@@ -172,7 +208,8 @@ The sample rate for the metric.
   * Value type is <<string,string>>
   * Default value is `"%{host}"`
 
-The name of the sender. Dots will be replaced with underscores.
+The name of the sender. Dots will be replaced with underscores. `%{fieldname}`
+substitutions are allowed.
 
 [[plugins-outputs-statsd-set]]
 ===== `set` 
@@ -180,7 +217,8 @@ The name of the sender. Dots will be replaced with underscores.
   * Value type is <<hash,hash>>
   * Default value is `{}`
 
-A set metric. `metric_name => "string"` to append as hash
+A set metric. `metric_name => "string"` to append as hash. `%{fieldname}`
+substitutions are allowed in the metric names.
 
 [[plugins-outputs-statsd-timing]]
 ===== `timing` 
@@ -188,15 +226,17 @@ A set metric. `metric_name => "string"` to append as hash
   * Value type is <<hash,hash>>
   * Default value is `{}`
 
-A timing metric. `metric_name => duration` as hash
+A timing metric. `metric_name => duration` as hash. `%{fieldname}` substitutions
+are allowed in the metric names.
 
 [[plugins-outputs-statsd-workers]]
 ===== `workers` 
 
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * Default value is `1`
 
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
+TODO remove this in Logstash 6.0
+when we no longer support the :legacy type
+This is hacky, but it can only be herne
 
 

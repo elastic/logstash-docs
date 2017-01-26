@@ -1,6 +1,11 @@
 [[plugins-filters-date]]
 === date
 
+Version: 3.1.1
+Released on: 2016-11-17
+https://github.com/logstash-plugins/logstash-filter-date/blob/master/CHANGELOG.md#311[Changelog]
+Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 The date filter is used for parsing dates from fields, and then using that
@@ -27,7 +32,6 @@ time of each read.
 
 This plugin supports the following configuration options:
 
-
 Required configuration options:
 
 [source,json]
@@ -45,6 +49,8 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-filters-date-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-date-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-date-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-date-id>> |<<string,string>>|No|
 | <<plugins-filters-date-locale>> |<<string,string>>|No|
 | <<plugins-filters-date-match>> |<<array,array>>|No|`[]`
 | <<plugins-filters-date-periodic_flush>> |<<boolean,boolean>>|No|`false`
@@ -54,7 +60,6 @@ Available configuration options:
 | <<plugins-filters-date-target>> |<<string,string>>|No|`"@timestamp"`
 | <<plugins-filters-date-timezone>> |<<string,string>>|No|
 |=======================================================================
-
 
 
 ==== Details
@@ -121,6 +126,35 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
 
+[[plugins-filters-date-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-filters-date-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
+
 [[plugins-filters-date-locale]]
 ===== `locale` 
 
@@ -141,11 +175,6 @@ an english parser will also be used as a fallback mechanism.
 
   * Value type is <<array,array>>
   * Default value is `[]`
-
-The date formats allowed are anything allowed by Joda-Time (java time
-library). You can see the docs for this format here:
-
-http://joda-time.sourceforge.net/apidocs/org/joda/time/format/DateTimeFormat.html[joda.time.format.DateTimeFormat]
 
 An array with field name first, and format patterns following, `[ field,
 formats... ]`
@@ -341,4 +370,5 @@ If this is not specified the platform default will be used.
 Canonical ID is good as it takes care of daylight saving time for you
 For example, `America/Los_Angeles` or `Europe/Paris` are valid IDs.
 This field can be dynamic and include parts of the event using the `%{field}` syntax
+
 

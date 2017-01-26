@@ -1,16 +1,23 @@
 [[plugins-outputs-http]]
 === http
 
+Version: 3.1.1
+Released on: 2016-07-14
+https://github.com/logstash-plugins/logstash-output-http/blob/master/CHANGELOG.md#311[Changelog]
+Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
 
 
+We count outstanding requests with this queue
+This queue tracks the requests to create backpressure
+When this queue is empty no new requests may be sent,
+tokens must be added back by the client on success
 
 &nbsp;
 
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -37,10 +44,12 @@ Available configuration options:
 | <<plugins-outputs-http-connect_timeout>> |<<number,number>>|No|`10`
 | <<plugins-outputs-http-content_type>> |<<string,string>>|No|
 | <<plugins-outputs-http-cookies>> |<<boolean,boolean>>|No|`true`
+| <<plugins-outputs-http-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-http-follow_redirects>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-http-format>> |<<string,string>>, one of `["json", "form", "message"]`|No|`"json"`
 | <<plugins-outputs-http-headers>> |<<hash,hash>>|No|
 | <<plugins-outputs-http-http_method>> |<<string,string>>, one of `["put", "post", "patch", "delete", "get", "head"]`|Yes|
+| <<plugins-outputs-http-id>> |<<string,string>>|No|
 | <<plugins-outputs-http-keepalive>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-http-keystore>> |a valid filesystem path|No|
 | <<plugins-outputs-http-keystore_password>> |<<password,password>>|No|
@@ -58,9 +67,9 @@ Available configuration options:
 | <<plugins-outputs-http-truststore_password>> |<<password,password>>|No|
 | <<plugins-outputs-http-truststore_type>> |<<string,string>>|No|`"JKS"`
 | <<plugins-outputs-http-url>> |<<string,string>>|Yes|
-| <<plugins-outputs-http-workers>> |<<number,number>>|No|`1`
+| <<plugins-outputs-http-validate_after_inactivity>> |<<number,number>>|No|`200`
+| <<plugins-outputs-http-workers>> |<<,>>|No|`1`
 |=======================================================================
-
 
 
 ==== Details
@@ -73,7 +82,9 @@ Available configuration options:
   * Value type is <<number,number>>
   * Default value is `1`
 
-
+How many times should the client retry a failing URL. We highly recommend NOT setting this value
+to zero if keepalive is enabled. Some servers incorrectly end keepalives early requiring a retry!
+Note: if `retry_non_idempotent` is set only GET, HEAD, PUT, DELETE, OPTIONS, and TRACE requests will be retried.
 
 [[plugins-outputs-http-cacert]]
 ===== `cacert` 
@@ -81,7 +92,7 @@ Available configuration options:
   * Value type is <<path,path>>
   * There is no default value for this setting.
 
-
+If you need to use a custom X.509 CA (.pem certs) specify the path to that here
 
 [[plugins-outputs-http-client_cert]]
 ===== `client_cert` 
@@ -89,7 +100,7 @@ Available configuration options:
   * Value type is <<path,path>>
   * There is no default value for this setting.
 
-
+If you'd like to use a client certificate (note, most people don't want this) set the path to the x509 cert here
 
 [[plugins-outputs-http-client_key]]
 ===== `client_key` 
@@ -97,7 +108,7 @@ Available configuration options:
   * Value type is <<path,path>>
   * There is no default value for this setting.
 
-
+If you're using a client certificate specify the path to the encryption key here
 
 [[plugins-outputs-http-codec]]
 ===== `codec` 
@@ -113,7 +124,7 @@ The codec used for output data. Output codecs are a convenient method for encodi
   * Value type is <<number,number>>
   * Default value is `10`
 
-
+Timeout (in seconds) to wait for a connection to be established. Default is `10s`
 
 [[plugins-outputs-http-content_type]]
 ===== `content_type` 
@@ -134,7 +145,18 @@ If not specified, this defaults to the following:
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
+Enable cookie support. With this enabled the client will persist cookies
+across requests as a normal web browser would. Enabled by default
 
+[[plugins-outputs-http-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
 
 [[plugins-outputs-http-follow_redirects]]
 ===== `follow_redirects` 
@@ -142,7 +164,7 @@ If not specified, this defaults to the following:
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-
+Should redirects be followed? Defaults to `true`
 
 [[plugins-outputs-http-format]]
 ===== `format` 
@@ -177,13 +199,33 @@ format is `headers => ["X-My-Header", "%{host}"]`
 
 The HTTP Verb. One of "put", "post", "patch", "delete", "get", "head"
 
+[[plugins-outputs-http-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
+
 [[plugins-outputs-http-keepalive]]
 ===== `keepalive` 
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-
+Turn this on to enable HTTP keepalive support. We highly recommend setting `automatic_retries` to at least
+one with this to fix interactions with broken keepalive implementations.
 
 [[plugins-outputs-http-keystore]]
 ===== `keystore` 
@@ -191,7 +233,7 @@ The HTTP Verb. One of "put", "post", "patch", "delete", "get", "head"
   * Value type is <<path,path>>
   * There is no default value for this setting.
 
-
+If you need to use a custom keystore (`.jks`) specify that here. This does not work with .pem keys!
 
 [[plugins-outputs-http-keystore_password]]
 ===== `keystore_password` 
@@ -199,7 +241,8 @@ The HTTP Verb. One of "put", "post", "patch", "delete", "get", "head"
   * Value type is <<password,password>>
   * There is no default value for this setting.
 
-
+Specify the keystore password here.
+Note, most .jks files created with keytool require a password!
 
 [[plugins-outputs-http-keystore_type]]
 ===== `keystore_type` 
@@ -207,7 +250,7 @@ The HTTP Verb. One of "put", "post", "patch", "delete", "get", "head"
   * Value type is <<string,string>>
   * Default value is `"JKS"`
 
-
+Specify the keystore type here. One of `JKS` or `PKCS12`. Default is `JKS`
 
 [[plugins-outputs-http-mapping]]
 ===== `mapping` 
@@ -236,7 +279,7 @@ For example:
   * Value type is <<number,number>>
   * Default value is `50`
 
-
+Max number of concurrent connections. Defaults to `50`
 
 [[plugins-outputs-http-pool_max_per_route]]
 ===== `pool_max_per_route` 
@@ -244,15 +287,19 @@ For example:
   * Value type is <<number,number>>
   * Default value is `25`
 
-
+Max number of concurrent connections to a single host. Defaults to `25`
 
 [[plugins-outputs-http-proxy]]
 ===== `proxy` 
 
-  <li> Value type is <<string,string>>
+  * Value type is <<string,string>>
   * There is no default value for this setting.
 
+If you'd like to use an HTTP proxy . This supports multiple configuration syntaxes:
 
+1. Proxy host in form: `http://proxy.org:1234`
+2. Proxy host in form: `{host => "proxy.org", port => 80, scheme => 'http', user => 'username@host', password => 'password'}`
+3. Proxy host in form: `{url =>  'http://proxy.org:1234', user => 'username@host', password => 'password'}`
 
 [[plugins-outputs-http-request_timeout]]
 ===== `request_timeout` 
@@ -260,7 +307,7 @@ For example:
   * Value type is <<number,number>>
   * Default value is `60`
 
-
+Timeout (in seconds) for the entire request
 
 [[plugins-outputs-http-retry_non_idempotent]]
 ===== `retry_non_idempotent` 
@@ -268,7 +315,7 @@ For example:
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
-
+If `automatic_retries` is enabled this will cause non-idempotent HTTP verbs (such as POST) to be retried.
 
 [[plugins-outputs-http-socket_timeout]]
 ===== `socket_timeout` 
@@ -276,7 +323,7 @@ For example:
   * Value type is <<number,number>>
   * Default value is `10`
 
-
+Timeout (in seconds) to wait for data on the socket. Default is `10s`
 
 [[plugins-outputs-http-ssl_certificate_validation]]
 ===== `ssl_certificate_validation` 
@@ -284,7 +331,8 @@ For example:
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-
+Set this to false to disable SSL/TLS certificate validation
+Note: setting this to false is generally considered insecure!
 
 [[plugins-outputs-http-truststore]]
 ===== `truststore` 
@@ -292,7 +340,7 @@ For example:
   * Value type is <<path,path>>
   * There is no default value for this setting.
 
-
+If you need to use a custom truststore (`.jks`) specify that here. This does not work with .pem certs!
 
 [[plugins-outputs-http-truststore_password]]
 ===== `truststore_password` 
@@ -300,7 +348,8 @@ For example:
   * Value type is <<password,password>>
   * There is no default value for this setting.
 
-
+Specify the truststore password here.
+Note, most .jks files created with keytool require a password!
 
 [[plugins-outputs-http-truststore_type]]
 ===== `truststore_type` 
@@ -308,7 +357,7 @@ For example:
   * Value type is <<string,string>>
   * Default value is `"JKS"`
 
-
+Specify the truststore type here. One of `JKS` or `PKCS12`. Default is `JKS`
 
 [[plugins-outputs-http-url]]
 ===== `url` 
@@ -329,22 +378,26 @@ guaranteed!
 Beware, this gem does not yet support codecs. Please use the 'format' option for now.
 URL to use
 
-[[plugins-outputs-http-verify_ssl]]
-===== `verify_ssl`  (DEPRECATED)
+[[plugins-outputs-http-validate_after_inactivity]]
+===== `validate_after_inactivity` 
 
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
+  * Value type is <<number,number>>
+  * Default value is `200`
 
-DEPRECATED. Set 'ssl_certificate_validation' instead
+How long to wait before checking if the connection is stale before executing a request on a connection using keepalive.
+# You may want to set this lower, possibly to 0 if you get connection errors regularly
+Quoting the Apache commons docs (this client is based Apache Commmons):
+'Defines period of inactivity in milliseconds after which persistent connections must be re-validated prior to being leased to the consumer. Non-positive value passed to this method disables connection validation. This check helps detect connections that have become stale (half-closed) while kept inactive in the pool.'
+See https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/org/apache/http/impl/conn/PoolingHttpClientConnectionManager.html#setValidateAfterInactivity(int)[these docs for more info]
 
 [[plugins-outputs-http-workers]]
 ===== `workers` 
 
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * Default value is `1`
 
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
+TODO remove this in Logstash 6.0
+when we no longer support the :legacy type
+This is hacky, but it can only be herne
 
 

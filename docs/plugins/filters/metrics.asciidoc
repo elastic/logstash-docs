@@ -1,6 +1,11 @@
 [[plugins-filters-metrics]]
 === metrics
 
+Version: 4.0.2
+Released on: 2016-07-14
+https://github.com/logstash-plugins/logstash-filter-metrics/blob/master/CHANGELOG.md#402[Changelog]
+Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 The metrics filter is useful for aggregating metrics.
@@ -58,7 +63,7 @@ For a `timer => [ "thing", "%{duration}" ]` you will receive the following field
 The default lengths of the event rate window (1, 5, and 15 minutes)
 can be configured with the `rates` option.
 
-==== Example: computing event rate
+==== Example: Computing event rate
 
 For a simple example, let's track how many events per second are running
 through logstash:
@@ -116,7 +121,6 @@ like so:
 
 This plugin supports the following configuration options:
 
-
 Required configuration options:
 
 [source,json]
@@ -135,7 +139,9 @@ Available configuration options:
 | <<plugins-filters-metrics-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-metrics-add_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-metrics-clear_interval>> |<<number,number>>|No|`-1`
+| <<plugins-filters-metrics-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-filters-metrics-flush_interval>> |<<number,number>>|No|`5`
+| <<plugins-filters-metrics-id>> |<<string,string>>|No|
 | <<plugins-filters-metrics-ignore_older_than>> |<<number,number>>|No|`0`
 | <<plugins-filters-metrics-meter>> |<<array,array>>|No|`[]`
 | <<plugins-filters-metrics-percentiles>> |<<array,array>>|No|`[1, 5, 10, 90, 95, 99, 100]`
@@ -145,7 +151,6 @@ Available configuration options:
 | <<plugins-filters-metrics-remove_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-metrics-timer>> |<<hash,hash>>|No|`{}`
 |=======================================================================
-
 
 
 ==== Details
@@ -223,6 +228,16 @@ The clear interval, when all counter are reset.
 If set to -1, the default value, the metrics will never be cleared.
 Otherwise, should be a multiple of 5s.
 
+[[plugins-filters-metrics-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-filters-metrics-flush_interval]]
 ===== `flush_interval` 
 
@@ -230,6 +245,25 @@ Otherwise, should be a multiple of 5s.
   * Default value is `5`
 
 The flush interval, when the metrics event is created. Must be a multiple of 5s.
+
+[[plugins-filters-metrics-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-metrics-ignore_older_than]]
 ===== `ignore_older_than` 

@@ -1,12 +1,17 @@
 [[plugins-inputs-pipe]]
 === pipe
 
-NOTE: This is a community-maintained plugin!
+Version: 3.0.2
+Released on: 2016-07-14
+https://github.com/logstash-plugins/logstash-input-pipe/blob/master/CHANGELOG.md#302[Changelog]
+Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
+
 
 Stream events from a long running command pipe.
 
 By default, each event is assumed to be one line. If you
-want to join lines, you'll want to use the multiline codec.
+want to join lines, you'll want to use the multiline filter.
 
 
 &nbsp;
@@ -14,7 +19,6 @@ want to join lines, you'll want to use the multiline codec.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -35,10 +39,11 @@ Available configuration options:
 | <<plugins-inputs-pipe-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-inputs-pipe-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-inputs-pipe-command>> |<<string,string>>|Yes|
+| <<plugins-inputs-pipe-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-inputs-pipe-id>> |<<string,string>>|No|
 | <<plugins-inputs-pipe-tags>> |<<array,array>>|No|
 | <<plugins-inputs-pipe-type>> |<<string,string>>|No|
 |=======================================================================
-
 
 
 ==== Details
@@ -75,6 +80,35 @@ Command to run and read events from, one line at a time.
 Example:
 [source,ruby]
    command => "echo hello world"
+
+[[plugins-inputs-pipe-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-inputs-pipe-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-inputs-pipe-tags]]
 ===== `tags` 

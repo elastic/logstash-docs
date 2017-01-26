@@ -1,6 +1,11 @@
 [[plugins-outputs-sns]]
 === sns
 
+Version: 4.0.2
+Released on: 2016-07-14
+https://github.com/logstash-plugins/logstash-output-sns/blob/master/CHANGELOG.md#402[Changelog]
+Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 SNS output.
@@ -36,7 +41,6 @@ If you want the same 'plain' format as the v0/1 codec (`format => "plain"`) use 
 
 This plugin supports the following configuration options:
 
-
 Required configuration options:
 
 [source,json]
@@ -56,14 +60,15 @@ Available configuration options:
 | <<plugins-outputs-sns-arn>> |<<string,string>>|No|
 | <<plugins-outputs-sns-aws_credentials_file>> |<<string,string>>|No|
 | <<plugins-outputs-sns-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-outputs-sns-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-outputs-sns-id>> |<<string,string>>|No|
 | <<plugins-outputs-sns-proxy_uri>> |<<string,string>>|No|
 | <<plugins-outputs-sns-publish_boot_message_arn>> |<<string,string>>|No|
-| <<plugins-outputs-sns-region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "sa-east-1", "us-gov-west-1", "cn-north-1"]`|No|`"us-east-1"`
+| <<plugins-outputs-sns-region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ap-northeast-2", "sa-east-1", "us-gov-west-1", "cn-north-1", "ap-south-1"]`|No|`"us-east-1"`
 | <<plugins-outputs-sns-secret_access_key>> |<<string,string>>|No|
 | <<plugins-outputs-sns-session_token>> |<<string,string>>|No|
-| <<plugins-outputs-sns-workers>> |<<number,number>>|No|`1`
+| <<plugins-outputs-sns-workers>> |<<,>>|No|`1`
 |=======================================================================
-
 
 
 ==== Details
@@ -106,9 +111,10 @@ file should look like this:
 
 [source,ruby]
 ----------------------------------
- :access_key_id: "12345"
- :secret_access_key: "54321"
+    :access_key_id: "12345"
+    :secret_access_key: "54321"
 ----------------------------------
+
 
 [[plugins-outputs-sns-codec]]
 ===== `codec` 
@@ -117,6 +123,35 @@ file should look like this:
   * Default value is `"plain"`
 
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
+
+[[plugins-outputs-sns-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-outputs-sns-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-sns-proxy_uri]]
 ===== `proxy_uri` 
@@ -142,10 +177,10 @@ Example: arn:aws:sns:us-east-1:770975001275:logstash-testing
 [[plugins-outputs-sns-region]]
 ===== `region` 
 
-  * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`
+  * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `ap-northeast-2`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`, `ap-south-1`
   * Default value is `"us-east-1"`
 
-
+The AWS Region
 
 [[plugins-outputs-sns-secret_access_key]]
 ===== `secret_access_key` 
@@ -161,15 +196,16 @@ The AWS Secret Access Key
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The AWS Session token for temporary credentials
+The AWS Session token for temporary credential
 
 [[plugins-outputs-sns-workers]]
 ===== `workers` 
 
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * Default value is `1`
 
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
+TODO remove this in Logstash 6.0
+when we no longer support the :legacy type
+This is hacky, but it can only be herne
 
 

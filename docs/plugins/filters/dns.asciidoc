@@ -1,17 +1,21 @@
 [[plugins-filters-dns]]
 === dns
 
+Version: 3.0.3
+Released on: 2016-07-14
+https://github.com/logstash-plugins/logstash-filter-dns/blob/master/CHANGELOG.md#303[Changelog]
+Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 The DNS filter performs a lookup (either an A record/CNAME record lookup
 or a reverse lookup at the PTR record) on records specified under the
-`reverse` and `resolve` arrays.
+`reverse` arrays or respectively under the `resolve` arrays.
 
 The config should look like this:
 [source,ruby]
     filter {
       dns {
-        type => 'type'
         reverse => [ "source_host", "field_with_address" ]
         resolve => [ "field_with_fqdn" ]
         action => "replace"
@@ -29,7 +33,6 @@ worker is 500 events per second (1000 milliseconds / 2 milliseconds).
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -49,10 +52,13 @@ Available configuration options:
 | <<plugins-filters-dns-action>> |<<string,string>>, one of `["append", "replace"]`|No|`"append"`
 | <<plugins-filters-dns-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-dns-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-dns-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-filters-dns-failed_cache_size>> |<<number,number>>|No|`0`
 | <<plugins-filters-dns-failed_cache_ttl>> |<<number,number>>|No|`5`
 | <<plugins-filters-dns-hit_cache_size>> |<<number,number>>|No|`0`
 | <<plugins-filters-dns-hit_cache_ttl>> |<<number,number>>|No|`60`
+| <<plugins-filters-dns-hostsfile>> |<<array,array>>|No|
+| <<plugins-filters-dns-id>> |<<string,string>>|No|
 | <<plugins-filters-dns-max_retries>> |<<number,number>>|No|`2`
 | <<plugins-filters-dns-nameserver>> |<<array,array>>|No|
 | <<plugins-filters-dns-periodic_flush>> |<<boolean,boolean>>|No|`false`
@@ -62,7 +68,6 @@ Available configuration options:
 | <<plugins-filters-dns-reverse>> |<<array,array>>|No|
 | <<plugins-filters-dns-timeout>> |<<number,number>>|No|`0.5`
 |=======================================================================
-
 
 
 ==== Details
@@ -138,6 +143,16 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
 
+[[plugins-filters-dns-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-filters-dns-failed_cache_size]]
 ===== `failed_cache_size` 
 
@@ -169,6 +184,33 @@ set the size of cache for successful requests
   * Default value is `60`
 
 how long to cache successful requests (in seconds)
+
+[[plugins-filters-dns-hostsfile]]
+===== `hostsfile` 
+
+  * Value type is <<array,array>>
+  * There is no default value for this setting.
+
+Use custom hosts file(s). For example: `["/var/db/my_custom_hosts"]`
+
+[[plugins-filters-dns-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-dns-max_retries]]
 ===== `max_retries` 

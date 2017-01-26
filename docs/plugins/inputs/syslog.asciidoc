@@ -1,6 +1,11 @@
 [[plugins-inputs-syslog]]
 === syslog
 
+Version: 3.2.0
+Released on: 2016-11-21
+https://github.com/logstash-plugins/logstash-input-syslog/blob/master/CHANGELOG.md#320[Changelog]
+Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 Read syslog messages as events over the network.
@@ -26,7 +31,6 @@ Note: This input will start listeners on both TCP and UDP.
 
 This plugin supports the following configuration options:
 
-
 Required configuration options:
 
 [source,json]
@@ -44,17 +48,19 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-inputs-syslog-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-inputs-syslog-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-inputs-syslog-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-syslog-facility_labels>> |<<array,array>>|No|`["kernel", "user-level", "mail", "system", "security/authorization", "syslogd", "line printer", "network news", "UUCP", "clock", "security/authorization", "FTP", "NTP", "log audit", "log alert", "clock", "local0", "local1", "local2", "local3", "local4", "local5", "local6", "local7"]`
 | <<plugins-inputs-syslog-host>> |<<string,string>>|No|`"0.0.0.0"`
+| <<plugins-inputs-syslog-id>> |<<string,string>>|No|
 | <<plugins-inputs-syslog-locale>> |<<string,string>>|No|
 | <<plugins-inputs-syslog-port>> |<<number,number>>|No|`514`
+| <<plugins-inputs-syslog-proxy_protocol>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-syslog-severity_labels>> |<<array,array>>|No|`["Emergency", "Alert", "Critical", "Error", "Warning", "Notice", "Informational", "Debug"]`
 | <<plugins-inputs-syslog-tags>> |<<array,array>>|No|
 | <<plugins-inputs-syslog-timezone>> |<<string,string>>|No|
 | <<plugins-inputs-syslog-type>> |<<string,string>>|No|
 | <<plugins-inputs-syslog-use_labels>> |<<boolean,boolean>>|No|`true`
 |=======================================================================
-
 
 
 ==== Details
@@ -77,6 +83,16 @@ Add a field to an event
 
 The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
 
+[[plugins-inputs-syslog-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-inputs-syslog-facility_labels]]
 ===== `facility_labels` 
 
@@ -92,6 +108,25 @@ Labels for facility levels. These are defined in RFC3164.
   * Default value is `"0.0.0.0"`
 
 The address to listen on.
+
+[[plugins-inputs-syslog-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-inputs-syslog-locale]]
 ===== `locale` 
@@ -115,6 +150,15 @@ weekday names (pattern with EEE).
 
 The port to listen on. Remember that ports less than 1024 (privileged
 ports) may require root to use.
+
+[[plugins-inputs-syslog-proxy_protocol]]
+===== `proxy_protocol` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Proxy protocol support, only v1 is supported at this time
+http://www.haproxy.org/download/1.5/doc/proxy-protocol.txt
 
 [[plugins-inputs-syslog-severity_labels]]
 ===== `severity_labels` 

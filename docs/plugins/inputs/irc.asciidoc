@@ -1,7 +1,12 @@
 [[plugins-inputs-irc]]
 === irc
 
-NOTE: This is a community-maintained plugin!
+Version: 3.0.2
+Released on: 2016-07-14
+https://github.com/logstash-plugins/logstash-input-irc/blob/master/CHANGELOG.md#302[Changelog]
+Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
+
 
 Read events from an IRC Server.
 
@@ -11,7 +16,6 @@ Read events from an IRC Server.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -34,8 +38,10 @@ Available configuration options:
 | <<plugins-inputs-irc-catch_all>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-irc-channels>> |<<array,array>>|Yes|
 | <<plugins-inputs-irc-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-inputs-irc-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-irc-get_stats>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-irc-host>> |<<string,string>>|Yes|
+| <<plugins-inputs-irc-id>> |<<string,string>>|No|
 | <<plugins-inputs-irc-nick>> |<<string,string>>|No|`"logstash"`
 | <<plugins-inputs-irc-password>> |<<password,password>>|No|
 | <<plugins-inputs-irc-port>> |<<number,number>>|No|`6667`
@@ -46,7 +52,6 @@ Available configuration options:
 | <<plugins-inputs-irc-type>> |<<string,string>>|No|
 | <<plugins-inputs-irc-user>> |<<string,string>>|No|`"logstash"`
 |=======================================================================
-
 
 
 ==== Details
@@ -93,6 +98,16 @@ For passworded channels, add a space and the channel password, such as
 
 The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
 
+[[plugins-inputs-irc-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-inputs-irc-get_stats]]
 ===== `get_stats` 
 
@@ -109,6 +124,25 @@ Gather and send user counts for channels - this requires catch_all and will forc
   * There is no default value for this setting.
 
 Host of the IRC Server to connect to.
+
+[[plugins-inputs-irc-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-inputs-irc-nick]]
 ===== `nick` 

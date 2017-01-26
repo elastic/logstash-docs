@@ -1,6 +1,11 @@
 [[plugins-filters-syslog_pri]]
 === syslog_pri
 
+Version: 3.0.2
+Released on: 2016-07-14
+https://github.com/logstash-plugins/logstash-filter-syslog_pri/blob/master/CHANGELOG.md#302[Changelog]
+Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 Filter plugin for logstash to parse the `PRI` field from the front
@@ -15,7 +20,6 @@ with logstash.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -34,7 +38,9 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-filters-syslog_pri-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-syslog_pri-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-syslog_pri-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-filters-syslog_pri-facility_labels>> |<<array,array>>|No|`["kernel", "user-level", "mail", "daemon", "security/authorization", "syslogd", "line printer", "network news", "uucp", "clock", "security/authorization", "ftp", "ntp", "log audit", "log alert", "clock", "local0", "local1", "local2", "local3", "local4", "local5", "local6", "local7"]`
+| <<plugins-filters-syslog_pri-id>> |<<string,string>>|No|
 | <<plugins-filters-syslog_pri-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-syslog_pri-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-syslog_pri-remove_tag>> |<<array,array>>|No|`[]`
@@ -42,7 +48,6 @@ Available configuration options:
 | <<plugins-filters-syslog_pri-syslog_pri_field_name>> |<<string,string>>|No|`"syslog_pri"`
 | <<plugins-filters-syslog_pri-use_labels>> |<<boolean,boolean>>|No|`true`
 |=======================================================================
-
 
 
 ==== Details
@@ -109,6 +114,16 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
 
+[[plugins-filters-syslog_pri-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-filters-syslog_pri-facility_labels]]
 ===== `facility_labels` 
 
@@ -116,6 +131,25 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
   * Default value is `["kernel", "user-level", "mail", "daemon", "security/authorization", "syslogd", "line printer", "network news", "uucp", "clock", "security/authorization", "ftp", "ntp", "log audit", "log alert", "clock", "local0", "local1", "local2", "local3", "local4", "local5", "local6", "local7"]`
 
 Labels for facility levels. This comes from RFC3164.
+
+[[plugins-filters-syslog_pri-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-syslog_pri-periodic_flush]]
 ===== `periodic_flush` 

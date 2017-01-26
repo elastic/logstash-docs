@@ -1,13 +1,18 @@
 [[plugins-outputs-redis]]
 === redis
 
+Version: 3.0.3
+Released on: 2016-10-13
+https://github.com/logstash-plugins/logstash-output-redis/blob/master/CHANGELOG.md#303[Changelog]
+Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 This output will send events to a Redis queue using RPUSH.
 The RPUSH command is supported in Redis v0.0.7+. Using
 PUBLISH to a channel requires at least v1.3.8+.
 While you may be able to make these Redis versions work,
-the best performance and stability will be found in more 
+the best performance and stability will be found in more
 recent stable versions.  Versions 2.6.0+ are recommended.
 
 For more information, see http://redis.io/[the Redis homepage]
@@ -18,7 +23,6 @@ For more information, see http://redis.io/[the Redis homepage]
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -43,16 +47,17 @@ Available configuration options:
 | <<plugins-outputs-redis-congestion_threshold>> |<<number,number>>|No|`0`
 | <<plugins-outputs-redis-data_type>> |<<string,string>>, one of `["list", "channel"]`|No|
 | <<plugins-outputs-redis-db>> |<<number,number>>|No|`0`
+| <<plugins-outputs-redis-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-redis-host>> |<<array,array>>|No|`["127.0.0.1"]`
+| <<plugins-outputs-redis-id>> |<<string,string>>|No|
 | <<plugins-outputs-redis-key>> |<<string,string>>|No|
 | <<plugins-outputs-redis-password>> |<<password,password>>|No|
 | <<plugins-outputs-redis-port>> |<<number,number>>|No|`6379`
 | <<plugins-outputs-redis-reconnect_interval>> |<<number,number>>|No|`1`
 | <<plugins-outputs-redis-shuffle_hosts>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-redis-timeout>> |<<number,number>>|No|`5`
-| <<plugins-outputs-redis-workers>> |<<number,number>>|No|`1`
+| <<plugins-outputs-redis-workers>> |<<,>>|No|`1`
 |=======================================================================
-
 
 
 ==== Details
@@ -138,6 +143,16 @@ RPUSH to key. If `redis_type` is channel, then we will PUBLISH to `key`.
 
 The Redis database number.
 
+[[plugins-outputs-redis-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-outputs-redis-host]]
 ===== `host` 
 
@@ -146,12 +161,33 @@ The Redis database number.
 
 The hostname(s) of your Redis server(s). Ports may be specified on any
 hostname, which will override the global port config.
+If the hosts list is an array, Logstash will pick one random host to connect to,
+if that host is disconnected it will then pick another.
 
 For example:
 [source,ruby]
     "127.0.0.1"
     ["127.0.0.1", "127.0.0.2"]
     ["127.0.0.1:6380", "127.0.0.1"]
+
+[[plugins-outputs-redis-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-redis-key]]
 ===== `key` 
@@ -224,10 +260,11 @@ Redis initial connection timeout in seconds.
 [[plugins-outputs-redis-workers]]
 ===== `workers` 
 
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * Default value is `1`
 
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
+TODO remove this in Logstash 6.0
+when we no longer support the :legacy type
+This is hacky, but it can only be herne
 
 

@@ -1,31 +1,21 @@
 [[plugins-filters-geoip]]
 === geoip
 
-The GeoIP filter adds information about the geographical location of IP addresses, 
-based on data from the Maxmind GeoLite2 City Database.
+Version: 4.0.4
+Released on: 2016-11-30
+https://github.com/logstash-plugins/logstash-filter-geoip/blob/master/CHANGELOG.md#404[Changelog]
+Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
-A `[geoip][location]` field is created if
-the GeoIP lookup returns a latitude and longitude. The field is stored in
-http://geojson.org/geojson-spec.html[GeoJSON] format. Additionally,
-the default Elasticsearch template provided with the
-<<plugins-outputs-elasticsearch,`elasticsearch` output>> maps
-the `[geoip][location]` field to an https://www.elastic.co/guide/en/elasticsearch/reference/1.7/mapping-geo-point-type.html#_mapping_options[Elasticsearch geo_point].
 
-As this field is a `geo_point` _and_ it is still valid GeoJSON, you get
-the awesomeness of Elasticsearch's geospatial query, facet and filter functions
-and the flexibility of having GeoJSON for all other applications (like Kibana's
-map visualization).
 
-Note: This product includes GeoLite2 data created by MaxMind, available from
-http://www.maxmind.com. This database is licensed under 
-http://creativecommons.org/licenses/by-sa/4.0/[Creative Commons Attribution-ShareAlike 4.0 International License]
+always re-set to old value, even if block raises an exception
+create a new instance of the Java class File without shadowing the Ruby version of the File class
 
 &nbsp;
 
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -45,16 +35,19 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-filters-geoip-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-geoip-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-geoip-cache_size>> |<<number,number>>|No|`1000`
 | <<plugins-filters-geoip-database>> |a valid filesystem path|No|
-| <<plugins-filters-geoip-fields>> |<<array,array>>|No|
+| <<plugins-filters-geoip-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-geoip-fields>> |<<array,array>>|No|`["city_name", "continent_code", "country_code2", "country_code3", "country_name", "dma_code", "ip", "latitude", "longitude", "postal_code", "region_name", "region_code", "timezone", "location"]`
+| <<plugins-filters-geoip-id>> |<<string,string>>|No|
 | <<plugins-filters-geoip-lru_cache_size>> |<<number,number>>|No|`1000`
 | <<plugins-filters-geoip-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-geoip-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-geoip-remove_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-geoip-source>> |<<string,string>>|Yes|
+| <<plugins-filters-geoip-tag_on_failure>> |<<array,array>>|No|`["_geoip_lookup_failure"]`
 | <<plugins-filters-geoip-target>> |<<string,string>>|No|`"geoip"`
 |=======================================================================
-
 
 
 ==== Details
@@ -121,24 +114,53 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
 
+[[plugins-filters-geoip-cache_size]]
+===== `cache_size` 
+
+  * Value type is <<number,number>>
+  * Default value is `1000`
+
+GeoIP lookup is surprisingly expensive. This filter uses an cache to take advantage of the fact that
+IPs agents are often found adjacent to one another in log files and rarely have a random distribution.
+The higher you set this the more likely an item is to be in the cache and the faster this filter will run.
+However, if you set this too high you can use more memory than desired.
+Since the Geoip API upgraded to v2, there is not any eviction policy so far, if cache is full, no more record can be added.
+Experiment with different values for this option to find the best performance for your dataset.
+
+This MUST be set to a value > 0. There is really no reason to not want this behavior, the overhead is minimal
+and the speed gains are large.
+
+It is important to note that this config value is global to the geoip_type. That is to say all instances of the geoip filter
+of the same geoip_type share the same cache. The last declared cache size will 'win'. The reason for this is that there would be no benefit
+to having multiple caches for different instances at different points in the pipeline, that would just increase the
+number of cache misses and waste memory.
+
 [[plugins-filters-geoip-database]]
 ===== `database` 
 
   * Value type is <<path,path>>
   * There is no default value for this setting.
 
-Map of lookup caches, keyed by geoip_type
-The path to the GeoIP database file which Logstash should use. Country, City, ASN, ISP
-and organization databases are supported.
+The path to the GeoLite2 database file which Logstash should use. Only City database is supported by now.
 
-If not specified, this will default to the GeoLite2 City database that ships with Logstash.
-Up-to-date databases can be downloaded from here: http://dev.maxmind.com/geoip/geoip2/geolite2/
+If not specified, this will default to the GeoLite2 City database that ships
+with Logstash.
+
+[[plugins-filters-geoip-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
 
 [[plugins-filters-geoip-fields]]
 ===== `fields` 
 
   * Value type is <<array,array>>
-  * There is no default value for this setting.
+  * Default value is `["city_name", "continent_code", "country_code2", "country_code3", "country_name", "dma_code", "ip", "latitude", "longitude", "postal_code", "region_name", "region_code", "timezone", "location"]`
 
 An array of geoip fields to be included in the event.
 
@@ -148,6 +170,25 @@ are included in the event.
 For the built-in GeoLite2 City database, the following are available:
 `city_name`, `continent_code`, `country_code2`, `country_code3`, `country_name`,
 `dma_code`, `ip`, `latitude`, `longitude`, `postal_code`, `region_name` and `timezone`.
+
+[[plugins-filters-geoip-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-geoip-lru_cache_size]]
 ===== `lru_cache_size` 
@@ -244,6 +285,14 @@ would remove a sad, unwanted tag as well.
 
 The field containing the IP address or hostname to map via geoip. If
 this field is an array, only the first value will be used.
+
+[[plugins-filters-geoip-tag_on_failure]]
+===== `tag_on_failure` 
+
+  * Value type is <<array,array>>
+  * Default value is `["_geoip_lookup_failure"]`
+
+Tags the event on failure to look up geo information. This can be used in later analysis.
 
 [[plugins-filters-geoip-target]]
 ===== `target` 

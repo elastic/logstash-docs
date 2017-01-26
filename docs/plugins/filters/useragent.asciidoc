@@ -1,6 +1,11 @@
 [[plugins-filters-useragent]]
 === useragent
 
+Version: 3.0.3
+Released on: 2016-09-15
+https://github.com/logstash-plugins/logstash-filter-useragent/blob/master/CHANGELOG.md#303[Changelog]
+Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 Parse user agent strings into structured data based on BrowserScope data
@@ -17,7 +22,6 @@ ua-parser with an Apache 2.0 license. For more details on ua-parser, see
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -37,6 +41,8 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-filters-useragent-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-useragent-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-useragent-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-useragent-id>> |<<string,string>>|No|
 | <<plugins-filters-useragent-lru_cache_size>> |<<number,number>>|No|`1000`
 | <<plugins-filters-useragent-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-useragent-prefix>> |<<string,string>>|No|`""`
@@ -46,7 +52,6 @@ Available configuration options:
 | <<plugins-filters-useragent-source>> |<<string,string>>|Yes|
 | <<plugins-filters-useragent-target>> |<<string,string>>|No|
 |=======================================================================
-
 
 
 ==== Details
@@ -113,6 +118,35 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
 
+[[plugins-filters-useragent-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-filters-useragent-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
+
 [[plugins-filters-useragent-lru_cache_size]]
 ===== `lru_cache_size` 
 
@@ -163,7 +197,7 @@ If not specified, this will default to the `regexes.yaml` that ships
 with logstash.
 
 You can find the latest version of this here:
-<https://github.com/tobie/ua-parser/blob/master/regexes.yaml>
+<https://github.com/ua-parser/uap-core/blob/master/regexes.yaml>
 
 [[plugins-filters-useragent-remove_field]]
 ===== `remove_field` 

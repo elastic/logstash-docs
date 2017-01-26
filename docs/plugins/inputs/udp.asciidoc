@@ -1,6 +1,11 @@
 [[plugins-inputs-udp]]
 === udp
 
+Version: 3.1.0
+Released on: 2016-11-24
+https://github.com/logstash-plugins/logstash-input-udp/blob/master/CHANGELOG.md#310[Changelog]
+Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 Read messages as events over the network via udp. The only required
@@ -13,7 +18,6 @@ will listen on for event streams.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -32,16 +36,18 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-inputs-udp-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-udp-buffer_size>> |<<number,number>>|No|`8192`
+| <<plugins-inputs-udp-buffer_size>> |<<number,number>>|No|`65536`
 | <<plugins-inputs-udp-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-inputs-udp-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-udp-host>> |<<string,string>>|No|`"0.0.0.0"`
+| <<plugins-inputs-udp-id>> |<<string,string>>|No|
 | <<plugins-inputs-udp-port>> |<<number,number>>|Yes|
 | <<plugins-inputs-udp-queue_size>> |<<number,number>>|No|`2000`
+| <<plugins-inputs-udp-receive_buffer_bytes>> |<<number,number>>|No|
 | <<plugins-inputs-udp-tags>> |<<array,array>>|No|
 | <<plugins-inputs-udp-type>> |<<string,string>>|No|
 | <<plugins-inputs-udp-workers>> |<<number,number>>|No|`2`
 |=======================================================================
-
 
 
 ==== Details
@@ -60,7 +66,7 @@ Add a field to an event
 ===== `buffer_size` 
 
   * Value type is <<number,number>>
-  * Default value is `8192`
+  * Default value is `65536`
 
 The maximum packet size to read from the network
 
@@ -72,6 +78,16 @@ The maximum packet size to read from the network
 
 The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
 
+[[plugins-inputs-udp-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-inputs-udp-host]]
 ===== `host` 
 
@@ -79,6 +95,25 @@ The codec used for input data. Input codecs are a convenient method for decoding
   * Default value is `"0.0.0.0"`
 
 The address which logstash will listen on.
+
+[[plugins-inputs-udp-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-inputs-udp-port]]
 ===== `port` 
@@ -98,6 +133,17 @@ than 1024 (privileged ports) may require root or elevated privileges to use.
 
 This is the number of unprocessed UDP packets you can hold in memory
 before packets will start dropping.
+
+[[plugins-inputs-udp-receive_buffer_bytes]]
+===== `receive_buffer_bytes` 
+
+  * Value type is <<number,number>>
+  * There is no default value for this setting.
+
+The socket receive buffer size in bytes.
+If option is not set, the operating system default is used.
+The operating system will use the max allowed value if receive_buffer_bytes is larger than allowed.
+Consult your operating system documentation if you need to increase this max allowed value.
 
 [[plugins-inputs-udp-tags]]
 ===== `tags` 

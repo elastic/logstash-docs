@@ -1,6 +1,11 @@
 [[plugins-outputs-file]]
 === file
 
+Version: 4.0.1
+Released on: 2016-09-15
+https://github.com/logstash-plugins/logstash-output-file/blob/master/CHANGELOG.md#401[Changelog]
+Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 This output writes events to files on disk. You can use fields
@@ -22,7 +27,6 @@ output {
 
 This plugin supports the following configuration options:
 
-
 Required configuration options:
 
 [source,json]
@@ -39,17 +43,18 @@ Available configuration options:
 [cols="<,<,<,<m",options="header",]
 |=======================================================================
 |Setting |Input type|Required|Default value
-| <<plugins-outputs-file-codec>> |<<codec,codec>>|No|`"json_lines"`
+| <<plugins-outputs-file-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-outputs-file-create_if_deleted>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-file-dir_mode>> |<<number,number>>|No|`-1`
+| <<plugins-outputs-file-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-file-file_mode>> |<<number,number>>|No|`-1`
 | <<plugins-outputs-file-filename_failure>> |<<string,string>>|No|`"_filepath_failures"`
 | <<plugins-outputs-file-flush_interval>> |<<number,number>>|No|`2`
 | <<plugins-outputs-file-gzip>> |<<boolean,boolean>>|No|`false`
+| <<plugins-outputs-file-id>> |<<string,string>>|No|
 | <<plugins-outputs-file-path>> |<<string,string>>|Yes|
-| <<plugins-outputs-file-workers>> |<<number,number>>|No|`1`
+| <<plugins-outputs-file-workers>> |<<,>>|No|`1`
 |=======================================================================
-
 
 
 ==== Details
@@ -60,7 +65,7 @@ Available configuration options:
 ===== `codec` 
 
   * Value type is <<codec,codec>>
-  * Default value is `"json_lines"`
+  * Default value is `"plain"`
 
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
 
@@ -70,8 +75,8 @@ The codec used for output data. Output codecs are a convenient method for encodi
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-If the a file is deleted, but an event is comming with the need to be stored
-in such a file, the plugin will created a gain this file. Default => true
+If the configured file is deleted, but an event is handled by the plugin, 
+the plugin will recreate the file. Default => true
 
 [[plugins-outputs-file-dir_mode]]
 ===== `dir_mode` 
@@ -83,6 +88,16 @@ Dir access mode to use. Note that due to the bug in jruby system umask
 is ignored on linux: https://github.com/jruby/jruby/issues/3426
 Setting it to -1 uses default OS value.
 Example: `"dir_mode" => 0750`
+
+[[plugins-outputs-file-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
 
 [[plugins-outputs-file-file_mode]]
 ===== `file_mode` 
@@ -121,19 +136,24 @@ Flush interval (in seconds) for flushing writes to log files.
 
 Gzip the output stream before writing to disk.
 
-[[plugins-outputs-file-message_format]]
-===== `message_format`  (DEPRECATED)
+[[plugins-outputs-file-id]]
+===== `id` 
 
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The format to use when writing events to the file. This value
-supports any string and can include `%{name}` and other dynamic
-strings.
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
 
-If this setting is omitted, the full json representation of the
-event will be written as a single line.
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-file-path]]
 ===== `path` 
@@ -156,10 +176,11 @@ E.g: `/%{myfield}/`, `/test-%{myfield}/` are not valid paths
 [[plugins-outputs-file-workers]]
 ===== `workers` 
 
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * Default value is `1`
 
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
+TODO remove this in Logstash 6.0
+when we no longer support the :legacy type
+This is hacky, but it can only be herne
 
 

@@ -1,6 +1,11 @@
 [[plugins-inputs-twitter]]
 === twitter
 
+Version: 3.0.3
+Released on: 2016-10-13
+https://github.com/logstash-plugins/logstash-input-twitter/blob/master/CHANGELOG.md#303[Changelog]
+Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 Ingest events from the Twitter Streaming API.
@@ -10,7 +15,6 @@ Ingest events from the Twitter Streaming API.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -35,8 +39,10 @@ Available configuration options:
 | <<plugins-inputs-twitter-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-inputs-twitter-consumer_key>> |<<string,string>>|Yes|
 | <<plugins-inputs-twitter-consumer_secret>> |<<password,password>>|Yes|
+| <<plugins-inputs-twitter-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-twitter-follows>> |<<array,array>>|No|
 | <<plugins-inputs-twitter-full_tweet>> |<<boolean,boolean>>|No|`false`
+| <<plugins-inputs-twitter-id>> |<<string,string>>|No|
 | <<plugins-inputs-twitter-ignore_retweets>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-twitter-keywords>> |<<array,array>>|No|
 | <<plugins-inputs-twitter-languages>> |<<array,array>>|No|
@@ -45,12 +51,12 @@ Available configuration options:
 | <<plugins-inputs-twitter-oauth_token_secret>> |<<password,password>>|Yes|
 | <<plugins-inputs-twitter-proxy_address>> |<<string,string>>|No|`"127.0.0.1"`
 | <<plugins-inputs-twitter-proxy_port>> |<<number,number>>|No|`3128`
+| <<plugins-inputs-twitter-rate_limit_reset_in>> |<<number,number>>|No|`300`
 | <<plugins-inputs-twitter-tags>> |<<array,array>>|No|
 | <<plugins-inputs-twitter-type>> |<<string,string>>|No|
 | <<plugins-inputs-twitter-use_proxy>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-twitter-use_samples>> |<<boolean,boolean>>|No|`false`
 |=======================================================================
-
 
 
 ==== Details
@@ -98,6 +104,16 @@ If you don't have one of these, you can create one by
 registering a new application with Twitter:
 <https://dev.twitter.com/apps/new>
 
+[[plugins-inputs-twitter-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-inputs-twitter-follows]]
 ===== `follows` 
 
@@ -116,6 +132,25 @@ for more details.
   * Default value is `false`
 
 Record full tweet object as given to us by the Twitter Streaming API.
+
+[[plugins-inputs-twitter-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-inputs-twitter-ignore_retweets]]
 ===== `ignore_retweets` 
@@ -211,6 +246,16 @@ Location of the proxy, by default the same machine as the one running this LS in
   * Default value is `3128`
 
 Port where the proxy is listening, by default 3128 (squid)
+
+[[plugins-inputs-twitter-rate_limit_reset_in]]
+===== `rate_limit_reset_in` 
+
+  * Value type is <<number,number>>
+  * Default value is `300`
+
+Duration in seconds to wait before retrying a connection when twitter responds with a 429 TooManyRequests
+In some cases the 'x-rate-limit-reset' header is not set in the response and <error>.rate_limit.reset_in
+is nil. If this occurs then we use the integer specified here. The default is 5 minutes.
 
 [[plugins-inputs-twitter-tags]]
 ===== `tags` 
