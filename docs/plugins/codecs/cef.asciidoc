@@ -1,9 +1,9 @@
 [[plugins-codecs-cef]]
 === cef
 
-* Version: 4.1.0
-* Released on: 2016-12-03
-* https://github.com/logstash-plugins/logstash-codec-cef/blob/master/CHANGELOG.md#410[Changelog]
+* Version: 4.1.2
+* Released on: 2016-12-26
+* https://github.com/logstash-plugins/logstash-codec-cef/blob/master/CHANGELOG.md#412[Changelog]
 * Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
 
@@ -69,7 +69,7 @@ For example, with the TCP input, you probably want to put this:
     input {
       tcp {
         codec => cef { delimiter => "\r\n" }
-        # ... 
+        # ...
       }
     }
 
@@ -85,7 +85,7 @@ This setting allows the following character sequences to have special meaning:
   * Value type is <<boolean,boolean>>
   * There is no default value for this setting.
 
-Set this flag if you want to have both v1 and v2 fields indexed at the same time. Note that this option will increase 
+Set this flag if you want to have both v1 and v2 fields indexed at the same time. Note that this option will increase
 the index size and data stored in outputs like Elasticsearch
 This option is available to ease transition to new schema
 

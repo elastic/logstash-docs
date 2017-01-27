@@ -1,9 +1,9 @@
 [[plugins-codecs-netflow]]
 === netflow
 
-* Version: 3.1.2
-* Released on: 2016-07-14
-* https://github.com/logstash-plugins/logstash-codec-netflow/blob/master/CHANGELOG.md#312[Changelog]
+* Version: 3.2.2
+* Released on: 2016-12-25
+* https://github.com/logstash-plugins/logstash-codec-netflow/blob/master/CHANGELOG.md#322[Changelog]
 * Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
 
@@ -16,13 +16,18 @@ The following Netflow/IPFIX exporters are known to work with the most recent ver
 
 [cols="6,^2,^2,^2,12",options="header"]
 |===========================================================================================
-|Netflow exporter | v5 | v9 | IPFIX | Remarks
-|Softflowd        |  y | y  |   y   | IPFIX supported in https://github.com/djmdjm/softflowd
-|nProbe           |  y | y  |   y   |  
-|ipt_NETFLOW      |  y | y  |   y   |
-|Cisco ASA        |    | y  |       |  
-|Cisco IOS 12.x   |    | y  |       |  
-|fprobe           |  y |    |       |
+|Netflow exporter      | v5 | v9 | IPFIX | Remarks
+|Softflowd             |  y | y  |   y   | IPFIX supported in https://github.com/djmdjm/softflowd
+|nProbe                |  y | y  |   y   |  
+|ipt_NETFLOW           |  y | y  |   y   |
+|Cisco ASA             |    | y  |       |  
+|Cisco IOS 12.x        |    | y  |       |  
+|fprobe                |  y |    |       |
+|Juniper MX80          |  y |    |       | SW > 12.3R8
+|OpenBSD pflow         |  y | n  |   y   | http://man.openbsd.org/OpenBSD-current/man4/pflow.4
+|Mikrotik 6.35.4       |  y |    |   n   | http://wiki.mikrotik.com/wiki/Manual:IP/Traffic_Flow
+|Ubiquiti Edgerouter X |    | y  |       | With MPLS labels
+|Citrix Netscaler      |    |    |   y   | Still some unknown fields, labeled netscalerUnknown<id>
 |===========================================================================================
 
 ==== Usage
@@ -82,9 +87,11 @@ Available configuration options:
 [cols="<,<,<,<m",options="header",]
 |=======================================================================
 |Setting |Input type|Required|Default value
+| <<plugins-codecs-netflow-cache_save_path>> |a valid filesystem path|No|
 | <<plugins-codecs-netflow-cache_ttl>> |<<number,number>>|No|`4000`
 | <<plugins-codecs-netflow-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-codecs-netflow-id>> |<<string,string>>|No|
+| <<plugins-codecs-netflow-include_flowset_id>> |<<boolean,boolean>>|No|`false`
 | <<plugins-codecs-netflow-ipfix_definitions>> |a valid filesystem path|No|
 | <<plugins-codecs-netflow-netflow_definitions>> |a valid filesystem path|No|
 | <<plugins-codecs-netflow-target>> |<<string,string>>|No|`"netflow"`
@@ -96,13 +103,24 @@ Available configuration options:
 
 &nbsp;
 
+[[plugins-codecs-netflow-cache_save_path]]
+===== `cache_save_path` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+Where to save the template cache
+This helps speed up processing when restarting logstash
+(So you don't have to await the arrival of templates)
+cache will save as path/netflow_templates.cache and/or path/ipfix_templates.cache
+
 [[plugins-codecs-netflow-cache_ttl]]
 ===== `cache_ttl` 
 
   * Value type is <<number,number>>
   * Default value is `4000`
 
-Netflow v9 template cache TTL (minutes)
+Netflow v9/v10 template cache TTL (minutes)
 
 [[plugins-codecs-netflow-enable_metric]]
 ===== `enable_metric` 
@@ -132,6 +150,16 @@ output {
 ```
 
 If you don't explicitely set this variable Logstash will generate a unique name.
+
+[[plugins-codecs-netflow-include_flowset_id]]
+===== `include_flowset_id` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Only makes sense for ipfix, v9 already includes this
+Setting to true will include the flowset_id in events
+Allows you to work with sequences, for instance with the aggregate filter
 
 [[plugins-codecs-netflow-ipfix_definitions]]
 ===== `ipfix_definitions` 
@@ -198,4 +226,5 @@ Specify into what field you want the Netflow data.
   * Default value is `[5, 9, 10]`
 
 Specify which Netflow versions you will accept.
+
 
