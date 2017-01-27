@@ -1,6 +1,13 @@
 [[plugins-outputs-opentsdb]]
 === opentsdb
 
+* Version: 3.1.1
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-output-opentsdb/blob/master/CHANGELOG.md#311[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
+
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-opentsdb`.
 
 
 This output allows you to pull metrics from your logs and ship them to
@@ -12,7 +19,6 @@ opentsdb. Opentsdb is an open source tool for storing and graphing metrics.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -31,12 +37,13 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-outputs-opentsdb-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-outputs-opentsdb-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-opentsdb-host>> |<<string,string>>|No|`"localhost"`
+| <<plugins-outputs-opentsdb-id>> |<<string,string>>|No|
 | <<plugins-outputs-opentsdb-metrics>> |<<array,array>>|Yes|
 | <<plugins-outputs-opentsdb-port>> |<<number,number>>|No|`4242`
-| <<plugins-outputs-opentsdb-workers>> |<<number,number>>|No|`1`
+| <<plugins-outputs-opentsdb-workers>> |<<,>>|No|`1`
 |=======================================================================
-
 
 
 ==== Details
@@ -51,14 +58,15 @@ Available configuration options:
 
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
 
-[[plugins-outputs-opentsdb-debug]]
-===== `debug`  (DEPRECATED)
+[[plugins-outputs-opentsdb-enable_metric]]
+===== `enable_metric` 
 
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
   * Value type is <<boolean,boolean>>
-  * Default value is `false`
+  * Default value is `true`
 
-Enable debugging.
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
 
 [[plugins-outputs-opentsdb-host]]
 ===== `host` 
@@ -67,6 +75,25 @@ Enable debugging.
   * Default value is `"localhost"`
 
 The address of the opentsdb server.
+
+[[plugins-outputs-opentsdb-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-opentsdb-metrics]]
 ===== `metrics` 
@@ -102,10 +129,11 @@ The port to connect on your graphite server.
 [[plugins-outputs-opentsdb-workers]]
 ===== `workers` 
 
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * Default value is `1`
 
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
+TODO remove this in Logstash 6.0
+when we no longer support the :legacy type
+This is hacky, but it can only be herne
 
 

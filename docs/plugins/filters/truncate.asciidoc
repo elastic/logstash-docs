@@ -1,19 +1,20 @@
-[[plugins-filters-syslog_pri]]
-=== syslog_pri
+[[plugins-filters-truncate]]
+=== truncate
 
-* Version: 3.0.2
-* Released on: 2016-07-14
-* https://github.com/logstash-plugins/logstash-filter-syslog_pri/blob/master/CHANGELOG.md#302[Changelog]
+* Version: 1.0.0
+* Released on: 2016-11-29
+* https://github.com/logstash-plugins/logstash-filter-truncate/blob/master/CHANGELOG.md#100[Changelog]
 * Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
 
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-truncate`.
 
-Filter plugin for logstash to parse the `PRI` field from the front
-of a Syslog (RFC3164) message.  If no priority is set, it will
-default to 13 (per RFC).
 
-This filter is based on the original `syslog.rb` code shipped
-with logstash.
+Allows you to truncate fields longer than a given length.
+
+This truncates on bytes values, not character count.  In practice, this
+should mean that the truncated length is somewhere between `length_bytes` and
+`length_bytes - 6` (UTF-8 supports up to 6-byte characters).
 
 &nbsp;
 
@@ -25,7 +26,8 @@ Required configuration options:
 
 [source,json]
 --------------------------
-syslog_pri {
+truncate {
+    length_bytes => ...
 }
 --------------------------
 
@@ -36,17 +38,15 @@ Available configuration options:
 [cols="<,<,<,<m",options="header",]
 |=======================================================================
 |Setting |Input type|Required|Default value
-| <<plugins-filters-syslog_pri-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-syslog_pri-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-syslog_pri-enable_metric>> |<<boolean,boolean>>|No|`true`
-| <<plugins-filters-syslog_pri-facility_labels>> |<<array,array>>|No|`["kernel", "user-level", "mail", "daemon", "security/authorization", "syslogd", "line printer", "network news", "uucp", "clock", "security/authorization", "ftp", "ntp", "log audit", "log alert", "clock", "local0", "local1", "local2", "local3", "local4", "local5", "local6", "local7"]`
-| <<plugins-filters-syslog_pri-id>> |<<string,string>>|No|
-| <<plugins-filters-syslog_pri-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-syslog_pri-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-syslog_pri-remove_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-syslog_pri-severity_labels>> |<<array,array>>|No|`["emergency", "alert", "critical", "error", "warning", "notice", "informational", "debug"]`
-| <<plugins-filters-syslog_pri-syslog_pri_field_name>> |<<string,string>>|No|`"syslog_pri"`
-| <<plugins-filters-syslog_pri-use_labels>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-truncate-add_field>> |<<hash,hash>>|No|`{}`
+| <<plugins-filters-truncate-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-truncate-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-truncate-fields>> |<<string,string>>|No|
+| <<plugins-filters-truncate-id>> |<<string,string>>|No|
+| <<plugins-filters-truncate-length_bytes>> |<<number,number>>|Yes|
+| <<plugins-filters-truncate-periodic_flush>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-truncate-remove_field>> |<<array,array>>|No|`[]`
+| <<plugins-filters-truncate-remove_tag>> |<<array,array>>|No|`[]`
 |=======================================================================
 
 
@@ -54,7 +54,7 @@ Available configuration options:
 
 &nbsp;
 
-[[plugins-filters-syslog_pri-add_field]]
+[[plugins-filters-truncate-add_field]]
 ===== `add_field` 
 
   * Value type is <<hash,hash>>
@@ -66,14 +66,14 @@ Field names can be dynamic and include parts of the event using the `%{field}`.
 Example:
 [source,ruby]
     filter {
-      syslog_pri {
+      truncate {
         add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
       }
     }
 [source,ruby]
     # You can also add multiple fields at once:
     filter {
-      syslog_pri {
+      truncate {
         add_field => {
           "foo_%{somefield}" => "Hello world, from %{host}"
           "new_field" => "new_static_value"
@@ -86,7 +86,7 @@ would add field `foo_hello` if it is present, with the
 value above and the `%{host}` piece replaced with that value from the
 event. The second example would also add a hardcoded field.
 
-[[plugins-filters-syslog_pri-add_tag]]
+[[plugins-filters-truncate-add_tag]]
 ===== `add_tag` 
 
   * Value type is <<array,array>>
@@ -99,14 +99,14 @@ syntax.
 Example:
 [source,ruby]
     filter {
-      syslog_pri {
+      truncate {
         add_tag => [ "foo_%{somefield}" ]
       }
     }
 [source,ruby]
     # You can also add multiple tags at once:
     filter {
-      syslog_pri {
+      truncate {
         add_tag => [ "foo_%{somefield}", "taggedy_tag"]
       }
     }
@@ -114,7 +114,7 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
 
-[[plugins-filters-syslog_pri-enable_metric]]
+[[plugins-filters-truncate-enable_metric]]
 ===== `enable_metric` 
 
   * Value type is <<boolean,boolean>>
@@ -124,15 +124,27 @@ Disable or enable metric logging for this specific plugin instance
 by default we record all the metrics we can, but you can disable metrics collection
 for a specific plugin.
 
-[[plugins-filters-syslog_pri-facility_labels]]
-===== `facility_labels` 
+[[plugins-filters-truncate-fields]]
+===== `fields` 
 
-  * Value type is <<array,array>>
-  * Default value is `["kernel", "user-level", "mail", "daemon", "security/authorization", "syslogd", "line printer", "network news", "uucp", "clock", "security/authorization", "ftp", "ntp", "log audit", "log alert", "clock", "local0", "local1", "local2", "local3", "local4", "local5", "local6", "local7"]`
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
 
-Labels for facility levels. This comes from RFC3164.
+A list of fieldrefs to truncate if they are too long.
 
-[[plugins-filters-syslog_pri-id]]
+If not specified, the default behavior will be to attempt truncation on all
+strings in the event. This default behavior could be computationally
+expensive, so if you know exactly which fields you wish to truncate, it is
+advised that you be specific and configure the fields you want truncated.
+
+Special behaviors for non-string fields:
+
+* Numbers: No action
+* Array: this plugin will attempt truncation on all elements of that array.
+* Hash: truncate will try all values of the hash (recursively, if this hash
+contains other hashes).
+
+[[plugins-filters-truncate-id]]
 ===== `id` 
 
   * Value type is <<string,string>>
@@ -151,7 +163,22 @@ output {
 
 If you don't explicitely set this variable Logstash will generate a unique name.
 
-[[plugins-filters-syslog_pri-periodic_flush]]
+[[plugins-filters-truncate-length_bytes]]
+===== `length_bytes` 
+
+  * This is a required setting.
+  * Value type is <<number,number>>
+  * There is no default value for this setting.
+
+Fields over this length will be truncated to this length.
+
+Truncation happens from the end of the text (the start will be kept).
+
+As an example, if you set `length_bytes => 10` and a field contains "hello
+world, how are you?", then this field will be truncated and have this value:
+"hello worl"
+
+[[plugins-filters-truncate-periodic_flush]]
 ===== `periodic_flush` 
 
   * Value type is <<boolean,boolean>>
@@ -160,7 +187,7 @@ If you don't explicitely set this variable Logstash will generate a unique name.
 Call the filter flush method at regular interval.
 Optional.
 
-[[plugins-filters-syslog_pri-remove_field]]
+[[plugins-filters-truncate-remove_field]]
 ===== `remove_field` 
 
   * Value type is <<array,array>>
@@ -171,14 +198,14 @@ Fields names can be dynamic and include parts of the event using the %{field}
 Example:
 [source,ruby]
     filter {
-      syslog_pri {
+      truncate {
         remove_field => [ "foo_%{somefield}" ]
       }
     }
 [source,ruby]
     # You can also remove multiple fields at once:
     filter {
-      syslog_pri {
+      truncate {
         remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
       }
     }
@@ -187,7 +214,7 @@ If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the field with name `foo_hello` if it is present. The second
 example would remove an additional, non-dynamic field.
 
-[[plugins-filters-syslog_pri-remove_tag]]
+[[plugins-filters-truncate-remove_tag]]
 ===== `remove_tag` 
 
   * Value type is <<array,array>>
@@ -200,14 +227,14 @@ syntax.
 Example:
 [source,ruby]
     filter {
-      syslog_pri {
+      truncate {
         remove_tag => [ "foo_%{somefield}" ]
       }
     }
 [source,ruby]
     # You can also remove multiple tags at once:
     filter {
-      syslog_pri {
+      truncate {
         remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
       }
     }
@@ -215,30 +242,5 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the tag `foo_hello` if it is present. The second example
 would remove a sad, unwanted tag as well.
-
-[[plugins-filters-syslog_pri-severity_labels]]
-===== `severity_labels` 
-
-  * Value type is <<array,array>>
-  * Default value is `["emergency", "alert", "critical", "error", "warning", "notice", "informational", "debug"]`
-
-Labels for severity levels. This comes from RFC3164.
-
-[[plugins-filters-syslog_pri-syslog_pri_field_name]]
-===== `syslog_pri_field_name` 
-
-  * Value type is <<string,string>>
-  * Default value is `"syslog_pri"`
-
-Name of field which passes in the extracted PRI part of the syslog message
-
-[[plugins-filters-syslog_pri-use_labels]]
-===== `use_labels` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-set the status to experimental/beta/stable
-Add human-readable names after parsing severity and facility from PRI
 
 

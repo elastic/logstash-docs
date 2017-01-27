@@ -1,10 +1,10 @@
 [[plugins-outputs-elasticsearch]]
 === elasticsearch
 
-Version: 6.2.4
-Released on: 2017-01-21
-https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/master/CHANGELOG.md#624[Changelog]
-Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+* Version: 6.2.4
+* Released on: 2017-01-21
+* https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/master/CHANGELOG.md#624[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
 
 

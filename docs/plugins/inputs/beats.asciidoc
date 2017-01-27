@@ -1,10 +1,10 @@
 [[plugins-inputs-beats]]
 === beats
 
-Version: 3.1.12
-Released on: 2016-11-30
-https://github.com/logstash-plugins/logstash-input-beats/blob/master/CHANGELOG.md#3112[Changelog]
-Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+* Version: 3.1.12
+* Released on: 2016-11-30
+* https://github.com/logstash-plugins/logstash-input-beats/blob/master/CHANGELOG.md#3112[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
 
 
@@ -61,7 +61,7 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-inputs-beats-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-beats-cipher_suites>> |<<array,array>>|No|`java.lang.String[TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256]@49983c54`
+| <<plugins-inputs-beats-cipher_suites>> |<<array,array>>|No|`java.lang.String[TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256]@2975fda`
 | <<plugins-inputs-beats-client_inactivity_timeout>> |<<number,number>>|No|`60`
 | <<plugins-inputs-beats-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-inputs-beats-enable_metric>> |<<boolean,boolean>>|No|`true`
@@ -99,7 +99,7 @@ Add a field to an event
 ===== `cipher_suites` 
 
   * Value type is <<array,array>>
-  * Default value is `java.lang.String[TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256]@49983c54`
+  * Default value is `java.lang.String[TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256]@2975fda`
 
 The list of ciphers suite to use, listed by priorities.
 

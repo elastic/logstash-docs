@@ -1,10 +1,10 @@
 [[plugins-outputs-file]]
 === file
 
-Version: 4.0.1
-Released on: 2016-09-15
-https://github.com/logstash-plugins/logstash-output-file/blob/master/CHANGELOG.md#401[Changelog]
-Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+* Version: 4.0.1
+* Released on: 2016-09-15
+* https://github.com/logstash-plugins/logstash-output-file/blob/master/CHANGELOG.md#401[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
 
 

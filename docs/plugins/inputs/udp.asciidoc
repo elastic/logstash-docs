@@ -1,10 +1,10 @@
 [[plugins-inputs-udp]]
 === udp
 
-Version: 3.1.0
-Released on: 2016-11-24
-https://github.com/logstash-plugins/logstash-input-udp/blob/master/CHANGELOG.md#310[Changelog]
-Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+* Version: 3.1.0
+* Released on: 2016-11-24
+* https://github.com/logstash-plugins/logstash-input-udp/blob/master/CHANGELOG.md#310[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
 
 

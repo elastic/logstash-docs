@@ -1,10 +1,10 @@
 [[plugins-filters-grok]]
 === grok
 
-Version: 3.3.1
-Released on: 2016-12-26
-https://github.com/logstash-plugins/logstash-filter-grok/blob/master/CHANGELOG.md#331[Changelog]
-Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+* Version: 3.3.1
+* Released on: 2016-12-26
+* https://github.com/logstash-plugins/logstash-filter-grok/blob/master/CHANGELOG.md#331[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
 
 

@@ -1,10 +1,10 @@
 [[plugins-inputs-kafka]]
 === kafka
 
-Version: 5.1.4
-Released on: 2017-01-10
-https://github.com/logstash-plugins/logstash-input-kafka/blob/master/CHANGELOG.md#514[Changelog]
-Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+* Version: 5.1.4
+* Released on: 2017-01-10
+* https://github.com/logstash-plugins/logstash-input-kafka/blob/master/CHANGELOG.md#514[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
 
 
