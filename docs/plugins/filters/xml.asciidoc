@@ -1,6 +1,11 @@
 [[plugins-filters-xml]]
 === xml
 
+* Version: 4.0.2
+* Released on: 2016-10-31
+* https://github.com/logstash-plugins/logstash-filter-xml/blob/master/CHANGELOG.md#402[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 XML filter. Takes a field that contains XML and expands it into
@@ -11,7 +16,6 @@ an actual datastructure.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -31,8 +35,10 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-filters-xml-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-xml-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-xml-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-filters-xml-force_array>> |<<boolean,boolean>>|No|`true`
 | <<plugins-filters-xml-force_content>> |<<boolean,boolean>>|No|`false`
+| <<plugins-filters-xml-id>> |<<string,string>>|No|
 | <<plugins-filters-xml-namespaces>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-xml-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-xml-remove_field>> |<<array,array>>|No|`[]`
@@ -44,7 +50,6 @@ Available configuration options:
 | <<plugins-filters-xml-target>> |<<string,string>>|No|
 | <<plugins-filters-xml-xpath>> |<<hash,hash>>|No|`{}`
 |=======================================================================
-
 
 
 ==== Details
@@ -111,6 +116,16 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
 
+[[plugins-filters-xml-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-filters-xml-force_array]]
 ===== `force_array` 
 
@@ -126,9 +141,28 @@ false will prevent storing single elements in arrays.
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
-By default the filter will expand attributes differently from content inside 
-of tags. This option allows you to force text content and attributes to always 
+By default the filter will expand attributes differently from content inside
+of tags. This option allows you to force text content and attributes to always
 parse to a hash value.
+
+[[plugins-filters-xml-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-xml-namespaces]]
 ===== `namespaces` 
@@ -262,8 +296,8 @@ field as described above. Setting this to false will prevent that.
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-By default, output nothing if the element is empty. If set to `false`, empty element 
-will result in an empty hash object.
+By default, output nothing if the element is empty.
+If set to `false`, empty element will result in an empty hash object.
 
 [[plugins-filters-xml-target]]
 ===== `target` 

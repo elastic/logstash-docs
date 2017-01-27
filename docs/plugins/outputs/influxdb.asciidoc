@@ -1,8 +1,13 @@
 [[plugins-outputs-influxdb]]
 === influxdb
 
+* Version: 4.0.0
+* Released on: 2016-09-09
+* https://github.com/logstash-plugins/logstash-output-influxdb/blob/master/CHANGELOG.md#400[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-influxdb`.
+
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-influxdb`.
 
 
 This output lets you output Metrics to InfluxDB (>= 0.9.0-rc31)
@@ -21,7 +26,6 @@ You can learn more at http://influxdb.com[InfluxDB homepage]
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -45,21 +49,23 @@ Available configuration options:
 | <<plugins-outputs-influxdb-coerce_values>> |<<hash,hash>>|No|`{}`
 | <<plugins-outputs-influxdb-data_points>> |<<hash,hash>>|Yes|`{}`
 | <<plugins-outputs-influxdb-db>> |<<string,string>>|No|`"statistics"`
+| <<plugins-outputs-influxdb-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-influxdb-exclude_fields>> |<<array,array>>|No|`["@timestamp", "@version", "sequence", "message", "type"]`
 | <<plugins-outputs-influxdb-flush_size>> |<<number,number>>|No|`100`
 | <<plugins-outputs-influxdb-host>> |<<string,string>>|Yes|
+| <<plugins-outputs-influxdb-id>> |<<string,string>>|No|
 | <<plugins-outputs-influxdb-idle_flush_time>> |<<number,number>>|No|`1`
 | <<plugins-outputs-influxdb-measurement>> |<<string,string>>|No|`"logstash"`
 | <<plugins-outputs-influxdb-password>> |<<password,password>>|No|`nil`
 | <<plugins-outputs-influxdb-port>> |<<number,number>>|No|`8086`
 | <<plugins-outputs-influxdb-retention_policy>> |<<string,string>>|No|`"default"`
 | <<plugins-outputs-influxdb-send_as_tags>> |<<array,array>>|No|`["host"]`
+| <<plugins-outputs-influxdb-ssl>> |<<boolean,boolean>>|No|`false`
 | <<plugins-outputs-influxdb-time_precision>> |<<string,string>>, one of `["n", "u", "ms", "s", "m", "h"]`|No|`"ms"`
 | <<plugins-outputs-influxdb-use_event_fields_for_data_points>> |<<boolean,boolean>>|No|`false`
 | <<plugins-outputs-influxdb-user>> |<<string,string>>|No|`nil`
-| <<plugins-outputs-influxdb-workers>> |<<number,number>>|No|`1`
+| <<plugins-outputs-influxdb-workers>> |<<,>>|No|`1`
 |=======================================================================
-
 
 
 ==== Details
@@ -123,7 +129,17 @@ Both keys and values support sprintf formatting
   * Value type is <<string,string>>
   * Default value is `"statistics"`
 
-The database to write
+The database to write - supports sprintf formatting
+
+[[plugins-outputs-influxdb-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
 
 [[plugins-outputs-influxdb-exclude_fields]]
 ===== `exclude_fields` 
@@ -157,6 +173,25 @@ of events. Note that these are only batched for the same measurement
   * There is no default value for this setting.
 
 The hostname or IP address to reach your InfluxDB instance
+
+[[plugins-outputs-influxdb-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-influxdb-idle_flush_time]]
 ===== `idle_flush_time` 
@@ -216,6 +251,14 @@ An array containing the names of fields to send to Influxdb as tags instead
 of fields. Influxdb 0.9 convention is that values that do not change every
 request should be considered metadata and given as tags.
 
+[[plugins-outputs-influxdb-ssl]]
+===== `ssl` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Enable SSL/TLS secured communication to InfluxDB
+
 [[plugins-outputs-influxdb-time_precision]]
 ===== `time_precision` 
 
@@ -245,10 +288,11 @@ The user who has access to the named database
 [[plugins-outputs-influxdb-workers]]
 ===== `workers` 
 
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * Default value is `1`
 
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
+TODO remove this in Logstash 6.0
+when we no longer support the :legacy type
+This is hacky, but it can only be herne
 
 

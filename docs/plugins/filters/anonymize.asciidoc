@@ -1,6 +1,13 @@
 [[plugins-filters-anonymize]]
 === anonymize
 
+* Version: 3.0.2
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-filter-anonymize/blob/master/CHANGELOG.md#302[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
+
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-anonymize`.
 
 
 Anonymize fields using by replacing values with a consistent hash.
@@ -10,7 +17,6 @@ Anonymize fields using by replacing values with a consistent hash.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -33,13 +39,14 @@ Available configuration options:
 | <<plugins-filters-anonymize-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-anonymize-add_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-anonymize-algorithm>> |<<string,string>>, one of `["SHA1", "SHA256", "SHA384", "SHA512", "MD5", "MURMUR3", "IPV4_NETWORK"]`|Yes|`"SHA1"`
+| <<plugins-filters-anonymize-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-filters-anonymize-fields>> |<<array,array>>|Yes|
+| <<plugins-filters-anonymize-id>> |<<string,string>>|No|
 | <<plugins-filters-anonymize-key>> |<<string,string>>|Yes|
 | <<plugins-filters-anonymize-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-anonymize-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-anonymize-remove_tag>> |<<array,array>>|No|`[]`
 |=======================================================================
-
 
 
 ==== Details
@@ -115,6 +122,16 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
 
 digest/hash type
 
+[[plugins-filters-anonymize-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-filters-anonymize-fields]]
 ===== `fields` 
 
@@ -123,6 +140,25 @@ digest/hash type
   * There is no default value for this setting.
 
 The fields to be anonymized
+
+[[plugins-filters-anonymize-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-anonymize-key]]
 ===== `key` 

@@ -1,6 +1,11 @@
 [[plugins-filters-json]]
 === json
 
+* Version: 3.0.2
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-filter-json/blob/master/CHANGELOG.md#302[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 This is a JSON parsing filter. It takes an existing field which contains JSON and
@@ -10,12 +15,20 @@ By default it will place the parsed JSON in the root (top level) of the Logstash
 filter can be configured to place the JSON into any arbitrary event field, using the
 `target` configuration.
 
+This plugin has a few fallback scenario when something bad happen during the parsing of the event.
+If the JSON parsing fails on the data, the event will be untouched and it will be tagged with a
+`_jsonparsefailure` then you can use conditionals to clean the data. You can configured this tag with then
+`tag_on_failure` option.
+
+If the parsed data contains a `@timestamp` field, we will try to use it for the event's `@timestamp`, if the
+parsing fails, the field will be renamed to `_@timestamp` and the event will be tagged with a
+`_timestampparsefailure`.
+
 &nbsp;
 
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -35,13 +48,16 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-filters-json-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-json-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-json-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-json-id>> |<<string,string>>|No|
 | <<plugins-filters-json-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-json-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-json-remove_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-json-skip_on_invalid_json>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-json-source>> |<<string,string>>|Yes|
+| <<plugins-filters-json-tag_on_failure>> |<<array,array>>|No|`["_jsonparsefailure"]`
 | <<plugins-filters-json-target>> |<<string,string>>|No|
 |=======================================================================
-
 
 
 ==== Details
@@ -108,6 +124,35 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
 
+[[plugins-filters-json-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-filters-json-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
+
 [[plugins-filters-json-periodic_flush]]
 ===== `periodic_flush` 
 
@@ -173,6 +218,14 @@ If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the tag `foo_hello` if it is present. The second example
 would remove a sad, unwanted tag as well.
 
+[[plugins-filters-json-skip_on_invalid_json]]
+===== `skip_on_invalid_json` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Allow to skip filter on invalid json (allows to handle json and non-json data without warnings)
+
 [[plugins-filters-json-source]]
 ===== `source` 
 
@@ -193,6 +246,15 @@ For example, if you have JSON data in the `message` field:
     }
 
 The above would parse the json from the `message` field
+
+[[plugins-filters-json-tag_on_failure]]
+===== `tag_on_failure` 
+
+  * Value type is <<array,array>>
+  * Default value is `["_jsonparsefailure"]`
+
+Append values to the `tags` field when there has been no
+successful match
 
 [[plugins-filters-json-target]]
 ===== `target` 

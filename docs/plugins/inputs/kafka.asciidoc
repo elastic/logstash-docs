@@ -1,31 +1,38 @@
 [[plugins-inputs-kafka]]
 === kafka
 
-* Version: 5.1.0
-* Released on: 2016-11-17
-* https://github.com/logstash-plugins/logstash-input-kafka/blob/master/CHANGELOG.md#510[Changelog]
-* Compatible: 5.1.2, 5.1.1, 5.0.0, 2.4.1, 2.4.0
+* Version: 5.1.4
+* Released on: 2017-01-10
+* https://github.com/logstash-plugins/logstash-input-kafka/blob/master/CHANGELOG.md#514[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
 
 
-This input will read events from a Kafka topic. It uses the the newly designed
-0.10 version of consumer API provided by Kafka to read messages from the broker.
+This input will read events from a Kafka topic. It uses the 0.10 version of the
+consumer API provided by Kafka to read messages from the broker.
 
 Here's a compatibility matrix that shows the Kafka client versions that are compatible with each combination
 of Logstash and the Kafka input plugin: 
 
 [options="header"]
 |==========================================================
-|Kafka Client Version |Logstash Version |Plugin Version |Security Features |Why?
-|0.8       |2.0.0 - 2.x.x   |<3.0.0 | |Legacy, 0.8 is still popular 
-|0.9       |2.0.0 - 2.3.x   | 3.x.x |Basic Auth, SSL |Works with the old Ruby Event API (`event['product']['price'] = 10`)  
-|0.9       |2.4.0 - 5.0.x   | 4.x.x |Basic Auth, SSL |Works with the new getter/setter APIs (`event.set('[product][price]', 10)`)
-|0.10      |2.4.0 - 5.0.x   | 5.x.x |Basic Auth, SSL |Not compatible with the 0.9 broker 
+|Kafka Client Version |Logstash Version |Plugin Version |Why?
+|0.8       |2.0.0 - 2.x.x   |<3.0.0 |Legacy, 0.8 is still popular 
+|0.9       |2.0.0 - 2.3.x   | 3.x.x |Works with the old Ruby Event API (`event['product']['price'] = 10`)  
+|0.9       |2.4.x - 5.x.x   | 4.x.x |Works with the new getter/setter APIs (`event.set('[product][price]', 10)`)
+|0.10.0.x  |2.4.x - 5.x.x   | 5.x.x |Not compatible with the <= 0.9 broker
 |==========================================================
 
 NOTE: We recommended that you use matching Kafka client and broker versions. During upgrades, you should
 upgrade brokers before clients because brokers target backwards compatibility. For example, the 0.9 broker
 is compatible with both the 0.8 consumer and 0.9 consumer APIs, but not the other way around.
+
+This input supports connecting to Kafka over:
+
+* SSL (requires plugin version 3.0.0 or later)
+* Kerberos SASL (requires plugin version 5.1.0 or later) 
+
+By default security is disabled but can be turned on as needed.
 
 The Logstash Kafka consumer handles group management and uses the default offset management
 strategy using Kafka topics.
@@ -42,9 +49,6 @@ more threads than partitions means that some threads will be idle
 For more information see http://kafka.apache.org/documentation.html#theconsumer
 
 Kafka consumer configuration: http://kafka.apache.org/documentation.html#consumerconfigs
-
-This version also adds support for SSL/TLS security connection to Kafka. By default SSL is
-disabled but can be turned on as needed.
 
 
 &nbsp;
@@ -238,8 +242,8 @@ which the consumption will begin.
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-Disable or enable metric collection and reporting for this specific plugin instance. 
-By default we record metrics from all plugins, but you can disable metrics collection
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
 for a specific plugin.
 
 [[plugins-inputs-kafka-exclude_internal_topics]]
@@ -299,20 +303,18 @@ It can be adjusted even lower to control the expected time for normal rebalances
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Add a unique named `ID` to the plugin instance. This `ID` is used for tracking
-information for a specific configuration of the plugin and will be useful for 
-debugging purposes.
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
 
-[source,sh]
---------------------------------------------------
+```
 output {
  stdout {
-   id => "debug_stdout"
+   id => "ABC"
  }
 }
---------------------------------------------------
+```
 
-If you don't explicitly set this field, Logstash will generate a unique name.
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-inputs-kafka-jaas_path]]
 ===== `jaas_path` 

@@ -1,6 +1,11 @@
 [[plugins-filters-mutate]]
 === mutate
 
+* Version: 3.1.3
+* Released on: 2016-09-29
+* https://github.com/logstash-plugins/logstash-filter-mutate/blob/master/CHANGELOG.md#313[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 The mutate filter allows you to perform general mutations on fields. You
@@ -11,7 +16,6 @@ can rename, remove, replace, and modify fields in your events.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -31,7 +35,9 @@ Available configuration options:
 | <<plugins-filters-mutate-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-mutate-add_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-mutate-convert>> |<<hash,hash>>|No|
+| <<plugins-filters-mutate-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-filters-mutate-gsub>> |<<array,array>>|No|
+| <<plugins-filters-mutate-id>> |<<string,string>>|No|
 | <<plugins-filters-mutate-join>> |<<hash,hash>>|No|
 | <<plugins-filters-mutate-lowercase>> |<<array,array>>|No|
 | <<plugins-filters-mutate-merge>> |<<hash,hash>>|No|
@@ -45,7 +51,6 @@ Available configuration options:
 | <<plugins-filters-mutate-update>> |<<hash,hash>>|No|
 | <<plugins-filters-mutate-uppercase>> |<<array,array>>|No|
 |=======================================================================
-
 
 
 ==== Details
@@ -140,6 +145,16 @@ Example:
       }
     }
 
+[[plugins-filters-mutate-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-filters-mutate-gsub]]
 ===== `gsub` 
 
@@ -168,6 +183,25 @@ Example:
       }
     }
 
+
+[[plugins-filters-mutate-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-mutate-join]]
 ===== `join` 
@@ -230,26 +264,6 @@ Example:
 
 Call the filter flush method at regular interval.
 Optional.
-
-[[plugins-filters-mutate-remove]]
-===== `remove`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
-
-Remove one or more fields.
-
-Example:
-[source,ruby]
-    filter {
-      mutate {
-        remove => [ "client" ]  # Removes the 'client' field
-      }
-    }
-
-This option is deprecated, instead use `remove_field` option available in all
-filters.
 
 [[plugins-filters-mutate-remove_field]]
 ===== `remove_field` 

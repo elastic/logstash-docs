@@ -1,8 +1,13 @@
 [[plugins-filters-environment]]
 === environment
 
+* Version: 3.0.0
+* Released on: 2016-11-17
+* https://github.com/logstash-plugins/logstash-filter-environment/blob/master/CHANGELOG.md#300[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-environment`.
+
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-environment`.
 
 
 This filter stores environment variables as subfields in the `@metadata` field.
@@ -11,7 +16,7 @@ You can then use these values in other parts of the pipeline.
 Adding environment variables is as easy as:
    filter {
      environment {
-       add_metadata_from_env { "field_name" => "ENV_VAR_NAME" }
+       add_metadata_from_env => { "field_name" => "ENV_VAR_NAME" }
      }
    }
 
@@ -33,7 +38,6 @@ the older versions to `add_metadata_from_env` in the newer version.
 
 This plugin supports the following configuration options:
 
-
 Required configuration options:
 
 [source,json]
@@ -52,11 +56,12 @@ Available configuration options:
 | <<plugins-filters-environment-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-environment-add_metadata_from_env>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-environment-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-environment-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-environment-id>> |<<string,string>>|No|
 | <<plugins-filters-environment-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-environment-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-environment-remove_tag>> |<<array,array>>|No|`[]`
 |=======================================================================
-
 
 
 ==== Details
@@ -104,11 +109,11 @@ event. The second example would also add a hardcoded field.
 Specify a hash of field names and the environment variable name with the
 value you want imported into Logstash. For example:
 
-   add_metadata_from_env { "field_name" => "ENV_VAR_NAME" }
+   add_metadata_from_env => { "field_name" => "ENV_VAR_NAME" }
 
 or
 
-   add_metadata_from_env {
+   add_metadata_from_env => {
      "field1" => "ENV1"
      "field2" => "ENV2"
      # "field_n" => "ENV_n"
@@ -141,6 +146,35 @@ Example:
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
+
+[[plugins-filters-environment-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-filters-environment-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-environment-periodic_flush]]
 ===== `periodic_flush` 

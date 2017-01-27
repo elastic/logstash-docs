@@ -1,8 +1,13 @@
 [[plugins-inputs-puppet_facter]]
 === puppet_facter
 
+* Version: 3.0.0
+* Released on: 2016-09-09
+* https://github.com/logstash-plugins/logstash-input-puppet_facter/blob/master/CHANGELOG.md#300[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-input-puppet_facter`.
+
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-input-puppet_facter`.
 
 
 Connects to a puppet server and requests facts
@@ -12,7 +17,6 @@ Connects to a puppet server and requests facts
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -31,8 +35,10 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-inputs-puppet_facter-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-inputs-puppet_facter-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-inputs-puppet_facter-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-puppet_facter-environment>> |<<string,string>>|No|`"production"`
 | <<plugins-inputs-puppet_facter-host>> |<<string,string>>|No|`"0.0.0.0"`
+| <<plugins-inputs-puppet_facter-id>> |<<string,string>>|No|
 | <<plugins-inputs-puppet_facter-interval>> |<<number,number>>|No|`600`
 | <<plugins-inputs-puppet_facter-port>> |<<number,number>>|No|`8140`
 | <<plugins-inputs-puppet_facter-private_key>> |a valid filesystem path|No|
@@ -41,7 +47,6 @@ Available configuration options:
 | <<plugins-inputs-puppet_facter-tags>> |<<array,array>>|No|
 | <<plugins-inputs-puppet_facter-type>> |<<string,string>>|No|
 |=======================================================================
-
 
 
 ==== Details
@@ -64,6 +69,16 @@ Add a field to an event
 
 The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
 
+[[plugins-inputs-puppet_facter-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-inputs-puppet_facter-environment]]
 ===== `environment` 
 
@@ -79,6 +94,25 @@ The codec used for input data. Input codecs are a convenient method for decoding
   * Default value is `"0.0.0.0"`
 
 
+
+[[plugins-inputs-puppet_facter-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-inputs-puppet_facter-interval]]
 ===== `interval` 

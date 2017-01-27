@@ -1,7 +1,13 @@
 [[plugins-filters-tld]]
 === tld
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-tld`.
+* Version: 3.0.0
+* Released on: 2016-10-22
+* https://github.com/logstash-plugins/logstash-filter-tld/blob/master/CHANGELOG.md#300[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
+
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-tld`.
 
 
 This example filter will replace the contents of the default 
@@ -58,14 +64,14 @@ Field names can be dynamic and include parts of the event using the `%{field}`.
 Example:
 [source,ruby]
     filter {
-      %PLUGIN% {
+      tld {
         add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
       }
     }
 [source,ruby]
     # You can also add multiple fields at once:
     filter {
-      %PLUGIN% {
+      tld {
         add_field => {
           "foo_%{somefield}" => "Hello world, from %{host}"
           "new_field" => "new_static_value"
@@ -91,14 +97,14 @@ syntax.
 Example:
 [source,ruby]
     filter {
-      %PLUGIN% {
+      tld {
         add_tag => [ "foo_%{somefield}" ]
       }
     }
 [source,ruby]
     # You can also add multiple tags at once:
     filter {
-      %PLUGIN% {
+      tld {
         add_tag => [ "foo_%{somefield}", "taggedy_tag"]
       }
     }
@@ -155,14 +161,14 @@ Fields names can be dynamic and include parts of the event using the %{field}
 Example:
 [source,ruby]
     filter {
-      %PLUGIN% {
+      tld {
         remove_field => [ "foo_%{somefield}" ]
       }
     }
 [source,ruby]
     # You can also remove multiple fields at once:
     filter {
-      %PLUGIN% {
+      tld {
         remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
       }
     }
@@ -184,14 +190,14 @@ syntax.
 Example:
 [source,ruby]
     filter {
-      %PLUGIN% {
+      tld {
         remove_tag => [ "foo_%{somefield}" ]
       }
     }
 [source,ruby]
     # You can also remove multiple tags at once:
     filter {
-      %PLUGIN% {
+      tld {
         remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
       }
     }

@@ -1,7 +1,14 @@
 [[plugins-outputs-gelf]]
 === gelf
 
-NOTE: This is a community-maintained plugin!
+* Version: 3.1.2
+* Released on: 2016-11-14
+* https://github.com/logstash-plugins/logstash-output-gelf/blob/master/CHANGELOG.md#312[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
+
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-gelf`.
+
 
 This output generates messages in GELF format. This is most useful if you
 want to use Logstash to output events to Graylog2.
@@ -13,7 +20,6 @@ More information at http://graylog2.org/gelf#specs[The Graylog2 GELF specs page]
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -34,8 +40,10 @@ Available configuration options:
 | <<plugins-outputs-gelf-chunksize>> |<<number,number>>|No|`1420`
 | <<plugins-outputs-gelf-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-outputs-gelf-custom_fields>> |<<hash,hash>>|No|`{}`
+| <<plugins-outputs-gelf-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-gelf-full_message>> |<<string,string>>|No|`"%{message}"`
 | <<plugins-outputs-gelf-host>> |<<string,string>>|Yes|
+| <<plugins-outputs-gelf-id>> |<<string,string>>|No|
 | <<plugins-outputs-gelf-ignore_metadata>> |<<array,array>>|No|`["@timestamp", "@version", "severity", "host", "source_host", "source_path", "short_message"]`
 | <<plugins-outputs-gelf-level>> |<<array,array>>|No|`["%{severity}", "INFO"]`
 | <<plugins-outputs-gelf-port>> |<<number,number>>|No|`12201`
@@ -43,9 +51,8 @@ Available configuration options:
 | <<plugins-outputs-gelf-ship_metadata>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-gelf-ship_tags>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-gelf-short_message>> |<<string,string>>|No|`"short_message"`
-| <<plugins-outputs-gelf-workers>> |<<number,number>>|No|`1`
+| <<plugins-outputs-gelf-workers>> |<<,>>|No|`1`
 |=======================================================================
-
 
 
 ==== Details
@@ -79,27 +86,15 @@ fields. This exposes that. Exclude the `_` portion of the field name
 e.g. `custom_fields => ['foo_field', 'some_value']`
 sets `_foo_field` = `some_value`.
 
-[[plugins-outputs-gelf-facility]]
-===== `facility`  (DEPRECATED)
+[[plugins-outputs-gelf-enable_metric]]
+===== `enable_metric` 
 
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
 
-The GELF facility. Dynamic values like `%{foo}` are permitted here; this
-is useful if you need to use a value from the event as the facility name.
-Should now be sent as an underscored "additional field" (e.g. `\_facility`)
-
-[[plugins-outputs-gelf-file]]
-===== `file`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-The GELF file; this is usually the source code file in your program where
-the log event originated. Dynamic values like `%{foo}` are permitted here.
-Should now be sent as an underscored "additional field" (e.g. `\_file`).
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
 
 [[plugins-outputs-gelf-full_message]]
 ===== `full_message` 
@@ -117,6 +112,25 @@ The GELF full message. Dynamic values like `%{foo}` are permitted here.
   * There is no default value for this setting.
 
 Graylog2 server IP address or hostname.
+
+[[plugins-outputs-gelf-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-gelf-ignore_metadata]]
 ===== `ignore_metadata` 
@@ -144,18 +158,6 @@ Single-character versions of these are also valid, "d", "i", "w", "e", "f",
 The following additional severity\_labels from Logstash's  syslog\_pri filter
 are accepted: "emergency", "alert", "critical",  "warning", "notice", and
 "informational".
-
-[[plugins-outputs-gelf-line]]
-===== `line`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-The GELF line number; this is usually the line number in your program where
-the log event originated. Dynamic values like `%{foo}` are permitted here, but the
-value should be a number.
-Should now be sent as an underscored "additional field" (e.g. `\_line`).
 
 [[plugins-outputs-gelf-port]]
 ===== `port` 
@@ -207,10 +209,11 @@ the event message is taken instead.
 [[plugins-outputs-gelf-workers]]
 ===== `workers` 
 
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * Default value is `1`
 
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
+TODO remove this in Logstash 6.0
+when we no longer support the :legacy type
+This is hacky, but it can only be herne
 
 

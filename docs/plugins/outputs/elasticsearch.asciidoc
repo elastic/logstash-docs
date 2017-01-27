@@ -1,6 +1,13 @@
 [[plugins-outputs-elasticsearch]]
 === elasticsearch
 
+* Version: 6.2.4
+* Released on: 2017-01-21
+* https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/master/CHANGELOG.md#624[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
+
+
 This plugin is the recommended method of storing logs in Elasticsearch.
 If you plan on using the Kibana web interface, you'll want to use this output.
 
@@ -12,16 +19,16 @@ to upgrade Logstash in lock-step.
 You can learn more about Elasticsearch at <https://www.elastic.co/products/elasticsearch>
 
 ==== Template management for Elasticsearch 5.x
-Index template for this version (Logstash 5.0) has been changed to reflect Elasticsearch's mapping changes in version 5.0. 
-Most importantly, the subfield for string multi-fields has changed from `.raw` to `.keyword` to match ES default 
+Index template for this version (Logstash 5.0) has been changed to reflect Elasticsearch's mapping changes in version 5.0.
+Most importantly, the subfield for string multi-fields has changed from `.raw` to `.keyword` to match ES default
 behavior.
 
 ** Users installing ES 5.x and LS 5.x **
 This change will not affect you and you will continue to use the ES defaults.
 
 ** Users upgrading from LS 2.x to LS 5.x with ES 5.x **
-LS will not force upgrade the template, if `logstash` template already exists. This means you will still use 
-`.raw` for sub-fields coming from 2.x. If you choose to use the new template, you will have to reindex your data after 
+LS will not force upgrade the template, if `logstash` template already exists. This means you will still use
+`.raw` for sub-fields coming from 2.x. If you choose to use the new template, you will have to reindex your data after
 the new template is installed.
 
 ==== Retry Policy
@@ -38,6 +45,10 @@ The following errors are retried infinitely:
 
 NOTE: 409 exceptions are no longer retried. Please set a higher `retry_on_conflict` value if you experience 409 exceptions.
 It is more performant for Elasticsearch to retry these exceptions than this plugin.
+
+==== Batch Sizes ====
+This plugin attempts to send batches of events as a single request. However, if
+a request exceeds 20MB we will break it up until multiple batch requests. If a single document exceeds 20MB it will be sent as a single request.
 
 ==== DNS Caching
 
@@ -71,28 +82,32 @@ Available configuration options:
 [cols="<,<,<,<m",options="header",]
 |=======================================================================
 |Setting |Input type|Required|Default value
+| <<plugins-outputs-elasticsearch-absolute_healthcheck_path>> |<<boolean,boolean>>|No|`false`
 | <<plugins-outputs-elasticsearch-action>> |<<string,string>>|No|`"index"`
 | <<plugins-outputs-elasticsearch-cacert>> |a valid filesystem path|No|
 | <<plugins-outputs-elasticsearch-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-outputs-elasticsearch-doc_as_upsert>> |<<boolean,boolean>>|No|`false`
 | <<plugins-outputs-elasticsearch-document_id>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-document_type>> |<<string,string>>|No|
+| <<plugins-outputs-elasticsearch-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-elasticsearch-failure_type_logging_whitelist>> |<<array,array>>|No|`[]`
-| <<plugins-outputs-elasticsearch-flush_size>> |<<number,number>>|No|`500`
+| <<plugins-outputs-elasticsearch-flush_size>> |<<number,number>>|No|
 | <<plugins-outputs-elasticsearch-healthcheck_path>> |<<string,string>>|No|`"/"`
-| <<plugins-outputs-elasticsearch-hosts>> |<<array,array>>|No|`["127.0.0.1"]`
+| <<plugins-outputs-elasticsearch-hosts>> |<<uri,uri>>|No|`[//127.0.0.1]`
+| <<plugins-outputs-elasticsearch-id>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-idle_flush_time>> |<<number,number>>|No|`1`
 | <<plugins-outputs-elasticsearch-index>> |<<string,string>>|No|`"logstash-%{+YYYY.MM.dd}"`
 | <<plugins-outputs-elasticsearch-keystore>> |a valid filesystem path|No|
 | <<plugins-outputs-elasticsearch-keystore_password>> |<<password,password>>|No|
 | <<plugins-outputs-elasticsearch-manage_template>> |<<boolean,boolean>>|No|`true`
+| <<plugins-outputs-elasticsearch-parameters>> |<<hash,hash>>|No|
 | <<plugins-outputs-elasticsearch-parent>> |<<string,string>>|No|`nil`
 | <<plugins-outputs-elasticsearch-password>> |<<password,password>>|No|
 | <<plugins-outputs-elasticsearch-path>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-pipeline>> |<<string,string>>|No|`nil`
 | <<plugins-outputs-elasticsearch-pool_max>> |<<number,number>>|No|`1000`
 | <<plugins-outputs-elasticsearch-pool_max_per_route>> |<<number,number>>|No|`100`
-| <<plugins-outputs-elasticsearch-proxy>> |<<,>>|No|
+| <<plugins-outputs-elasticsearch-proxy>> |<<uri,uri>>|No|
 | <<plugins-outputs-elasticsearch-resurrect_delay>> |<<number,number>>|No|`5`
 | <<plugins-outputs-elasticsearch-retry_initial_interval>> |<<number,number>>|No|`2`
 | <<plugins-outputs-elasticsearch-retry_max_interval>> |<<number,number>>|No|`64`
@@ -116,6 +131,8 @@ Available configuration options:
 | <<plugins-outputs-elasticsearch-upsert>> |<<string,string>>|No|`""`
 | <<plugins-outputs-elasticsearch-user>> |<<string,string>>|No|
 | <<plugins-outputs-elasticsearch-validate_after_inactivity>> |<<number,number>>|No|`10000`
+| <<plugins-outputs-elasticsearch-version>> |<<string,string>>|No|
+| <<plugins-outputs-elasticsearch-version_type>> |<<string,string>>, one of `["internal", "external", "external_gt", "external_gte", "force"]`|No|
 | <<plugins-outputs-elasticsearch-workers>> |<<,>>|No|`1`
 |=======================================================================
 
@@ -123,6 +140,17 @@ Available configuration options:
 ==== Details
 
 &nbsp;
+
+[[plugins-outputs-elasticsearch-absolute_healthcheck_path]]
+===== `absolute_healthcheck_path` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+When a `healthcheck_path` config is provided, this additional flag can be used to 
+specify whether it is an absolute URI or a relative path. 
+If this flag is true, `healthcheck_path` is expected to be a fully formed URL 
+with any basic auth credentials provided in the URL itself.
 
 [[plugins-outputs-elasticsearch-action]]
 ===== `action` 
@@ -190,13 +218,23 @@ similar events to the same 'type'. String expansion `%{foo}` works here.
 Unless you set 'document_type', the event 'type' will be used if it exists
 otherwise the document type will be assigned the value of 'logs'
 
+[[plugins-outputs-elasticsearch-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-outputs-elasticsearch-failure_type_logging_whitelist]]
 ===== `failure_type_logging_whitelist` 
 
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Set the Elasticsearch errors in the whitelist that you don't want to log. 
+Set the Elasticsearch errors in the whitelist that you don't want to log.
 A useful example is when you want to skip all 409 errors
 which are `document_already_exists_exception`.
 
@@ -204,11 +242,11 @@ which are `document_already_exists_exception`.
 ===== `flush_size` 
 
   * Value type is <<number,number>>
-  * Default value is `500`
+  * There is no default value for this setting.
 
 This plugin uses the bulk index API for improved indexing performance.
-This setting defines the maximum sized bulk request Logstash will make
-You you may want to increase this to be in line with your pipeline's batch size.
+This setting defines the maximum sized bulk request Logstash will make.
+You may want to increase this to be in line with your pipeline's batch size.
 If you specify a number larger than the batch size of your pipeline it will have no effect,
 save for the case where a filter increases the size of an inflight batch by outputting
 events.
@@ -227,8 +265,8 @@ this
 [[plugins-outputs-elasticsearch-hosts]]
 ===== `hosts` 
 
-  * Value type is <<array,array>>
-  * Default value is `["127.0.0.1"]`
+  * Value type is <<uri,uri>>
+  * Default value is `[//127.0.0.1]`
 
 Sets the host(s) of the remote instance. If given an array it will load balance requests across the hosts specified in the `hosts` parameter.
 Remember the `http` protocol uses the http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-http.html#modules-http[http] address (eg. 9200, not 9300).
@@ -239,6 +277,27 @@ Remember the `http` protocol uses the http://www.elastic.co/guide/en/elasticsear
     `["https://127.0.0.1:9200/mypath"]` (If using a proxy on a subpath)
 It is important to exclude http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html[dedicated master nodes] from the `hosts` list
 to prevent LS from sending bulk requests to the master nodes.  So this parameter should only reference either data or client nodes in Elasticsearch.
+
+Any special characters present in the URLs here MUST be URL escaped! This means `#` should be put in as `%23` for instance.
+
+[[plugins-outputs-elasticsearch-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-elasticsearch-idle_flush_time]]
 ===== `idle_flush_time` 
@@ -293,15 +352,28 @@ Set the truststore password
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-Starting in Logstash 1.3 (unless you set option `manage_template` to false)
-a default mapping template for Elasticsearch will be applied, if you do not
-already have one set to match the index pattern defined (default of
-`logstash-%{+YYYY.MM.dd}`), minus any variables.  For example, in this case
-the template will be applied to all indices starting with `logstash-*`
+From Logstash 1.3 onwards, a template is applied to Elasticsearch during
+Logstash's startup if one with the name `template_name` does not already exist.
+By default, the contents of this template is the default template for
+`logstash-%{+YYYY.MM.dd}` which always matches indices based on the pattern
+`logstash-*`.  Should you require support for other index names, or would like
+to change the mappings in the template in general, a custom template can be
+specified by setting `template` to the path of a template file.
 
-If you have dynamic templating (e.g. creating indices based on field names)
-then you should set `manage_template` to false and use the REST API to upload
-your templates manually.
+Setting `manage_template` to false disables this feature.  If you require more
+control over template creation, (e.g. creating indices dynamically based on
+field names) you should set `manage_template` to false and use the REST
+API to apply your templates manually.
+
+[[plugins-outputs-elasticsearch-parameters]]
+===== `parameters` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+Pass a set of key value pairs as the URL query string. This query string is added
+to every host listed in the 'hosts' configuration. If the 'hosts' list contains
+urls that already have query strings, the one specified here will be appended.
 
 [[plugins-outputs-elasticsearch-parent]]
 ===== `parent` 
@@ -337,7 +409,8 @@ not also set this field. That will raise an error at startup
   * Value type is <<string,string>>
   * Default value is `nil`
 
-Set which ingest pipeline you wish to execute for an event
+Set which ingest pipeline you wish to execute for an event. You can also use event dependent configuration
+here like `pipeline => "%{INGEST_PIPELINE}"`
 
 [[plugins-outputs-elasticsearch-pool_max]]
 ===== `pool_max` 
@@ -364,13 +437,12 @@ which is bad.
 [[plugins-outputs-elasticsearch-proxy]]
 ===== `proxy` 
 
-  * Value type is <<string,string>>
+  * Value type is <<uri,uri>>
   * There is no default value for this setting.
 
 Set the address of a forward HTTP proxy.
-Can be either a string, such as `http://localhost:123` or a hash in the form
-of `{host: 'proxy.org' port: 80 scheme: 'http'}`.
-Note, this is NOT a SOCKS proxy, but a plain HTTP proxy
+This used to accept hashes as arguments but now only accepts
+arguments of the URI type to prevent leaking credentials.
 
 [[plugins-outputs-elasticsearch-resurrect_delay]]
 ===== `resurrect_delay` 
@@ -598,12 +670,33 @@ this method disables connection validation. This check helps detect connections 
 have become stale (half-closed) while kept inactive in the pool.'
 See https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/org/apache/http/impl/conn/PoolingHttpClientConnectionManager.html#setValidateAfterInactivity(int)[these docs for more info]
 
+[[plugins-outputs-elasticsearch-version]]
+===== `version` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The version to use for indexing. Use sprintf syntax like `%{my_version}` to use a field value here.
+See https://www.elastic.co/blog/elasticsearch-versioning-support.
+
+[[plugins-outputs-elasticsearch-version_type]]
+===== `version_type` 
+
+  * Value can be any of: `internal`, `external`, `external_gt`, `external_gte`, `force`
+  * There is no default value for this setting.
+
+The version_type to use for indexing.
+See https://www.elastic.co/blog/elasticsearch-versioning-support.
+See also https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html#_version_types
+
 [[plugins-outputs-elasticsearch-workers]]
 ===== `workers` 
 
   * Value type is <<string,string>>
   * Default value is `1`
 
-Output workers are no longer supported. Please use plugin workers
+TODO remove this in Logstash 6.0
+when we no longer support the :legacy type
+This is hacky, but it can only be herne
 
 

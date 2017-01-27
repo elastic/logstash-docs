@@ -1,8 +1,13 @@
 [[plugins-inputs-rss]]
 === rss
 
+* Version: 3.0.1
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-input-rss/blob/master/CHANGELOG.md#301[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-input-rss`.
+
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-input-rss`.
 
 
 Run command line tools and capture the whole output as an event.
@@ -19,7 +24,6 @@ Notes:
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -40,12 +44,13 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-inputs-rss-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-inputs-rss-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-inputs-rss-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-inputs-rss-id>> |<<string,string>>|No|
 | <<plugins-inputs-rss-interval>> |<<number,number>>|Yes|
 | <<plugins-inputs-rss-tags>> |<<array,array>>|No|
 | <<plugins-inputs-rss-type>> |<<string,string>>|No|
 | <<plugins-inputs-rss-url>> |<<string,string>>|Yes|
 |=======================================================================
-
 
 
 ==== Details
@@ -67,6 +72,35 @@ Add a field to an event
   * Default value is `"plain"`
 
 The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
+
+[[plugins-inputs-rss-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-inputs-rss-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-inputs-rss-interval]]
 ===== `interval` 

@@ -1,8 +1,13 @@
 [[plugins-inputs-github]]
 === github
 
+* Version: 3.0.1
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-input-github/blob/master/CHANGELOG.md#301[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-input-github`.
+
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-input-github`.
 
 
 Read events from github webhooks
@@ -12,7 +17,6 @@ Read events from github webhooks
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -32,14 +36,15 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-inputs-github-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-inputs-github-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-inputs-github-drop_invalid>> |<<boolean,boolean>>|No|
+| <<plugins-inputs-github-drop_invalid>> |<<boolean,boolean>>|No|`false`
+| <<plugins-inputs-github-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-inputs-github-id>> |<<string,string>>|No|
 | <<plugins-inputs-github-ip>> |<<string,string>>|No|`"0.0.0.0"`
 | <<plugins-inputs-github-port>> |<<number,number>>|Yes|
 | <<plugins-inputs-github-secret_token>> |<<string,string>>|No|
 | <<plugins-inputs-github-tags>> |<<array,array>>|No|
 | <<plugins-inputs-github-type>> |<<string,string>>|No|
 |=======================================================================
-
 
 
 ==== Details
@@ -66,10 +71,39 @@ The codec used for input data. Input codecs are a convenient method for decoding
 ===== `drop_invalid` 
 
   * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+If Secret is defined, we drop the events that don't match.
+Otherwise, we'll just add an invalid tag
+
+[[plugins-inputs-github-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-inputs-github-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
   * There is no default value for this setting.
 
-If Secret is defined, we drop the events that don't match. 
-Otherwise, we'll just add a invalid tag
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-inputs-github-ip]]
 ===== `ip` 
