@@ -1,8 +1,13 @@
 [[plugins-outputs-syslog]]
 === syslog
 
+* Version: 3.0.1
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-output-syslog/blob/master/CHANGELOG.md#301[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-syslog`.
+
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-syslog`.
 
 
 Send events to a syslog server.
@@ -22,16 +27,13 @@ configuration option.
 
 This plugin supports the following configuration options:
 
-
 Required configuration options:
 
 [source,json]
 --------------------------
 syslog {
-    facility => ...
     host => ...
     port => ...
-    severity => ...
 }
 --------------------------
 
@@ -44,19 +46,28 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-outputs-syslog-appname>> |<<string,string>>|No|`"LOGSTASH"`
 | <<plugins-outputs-syslog-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-syslog-facility>> |<<string,string>>, one of `["kernel", "user-level", "mail", "daemon", "security/authorization", "syslogd", "line printer", "network news", "uucp", "clock", "security/authorization", "ftp", "ntp", "log audit", "log alert", "clock", "local0", "local1", "local2", "local3", "local4", "local5", "local6", "local7"]`|Yes|
+| <<plugins-outputs-syslog-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-outputs-syslog-facility>> |<<string,string>>|No|`"user-level"`
 | <<plugins-outputs-syslog-host>> |<<string,string>>|Yes|
+| <<plugins-outputs-syslog-id>> |<<string,string>>|No|
 | <<plugins-outputs-syslog-message>> |<<string,string>>|No|`"%{message}"`
 | <<plugins-outputs-syslog-msgid>> |<<string,string>>|No|`"-"`
 | <<plugins-outputs-syslog-port>> |<<number,number>>|Yes|
+| <<plugins-outputs-syslog-priority>> |<<string,string>>|No|`"%{syslog_pri}"`
 | <<plugins-outputs-syslog-procid>> |<<string,string>>|No|`"-"`
-| <<plugins-outputs-syslog-protocol>> |<<string,string>>, one of `["tcp", "udp"]`|No|`"udp"`
+| <<plugins-outputs-syslog-protocol>> |<<string,string>>, one of `["tcp", "udp", "ssl-tcp"]`|No|`"udp"`
+| <<plugins-outputs-syslog-reconnect_interval>> |<<number,number>>|No|`1`
 | <<plugins-outputs-syslog-rfc>> |<<string,string>>, one of `["rfc3164", "rfc5424"]`|No|`"rfc3164"`
-| <<plugins-outputs-syslog-severity>> |<<string,string>>, one of `["emergency", "alert", "critical", "error", "warning", "notice", "informational", "debug"]`|Yes|
+| <<plugins-outputs-syslog-severity>> |<<string,string>>|No|`"notice"`
 | <<plugins-outputs-syslog-sourcehost>> |<<string,string>>|No|`"%{host}"`
-| <<plugins-outputs-syslog-workers>> |<<number,number>>|No|`1`
+| <<plugins-outputs-syslog-ssl_cacert>> |a valid filesystem path|No|
+| <<plugins-outputs-syslog-ssl_cert>> |a valid filesystem path|No|
+| <<plugins-outputs-syslog-ssl_key>> |a valid filesystem path|No|
+| <<plugins-outputs-syslog-ssl_key_passphrase>> |<<password,password>>|No|`nil`
+| <<plugins-outputs-syslog-ssl_verify>> |<<boolean,boolean>>|No|`false`
+| <<plugins-outputs-syslog-use_labels>> |<<boolean,boolean>>|No|`true`
+| <<plugins-outputs-syslog-workers>> |<<,>>|No|`1`
 |=======================================================================
-
 
 
 ==== Details
@@ -69,7 +80,8 @@ Available configuration options:
   * Value type is <<string,string>>
   * Default value is `"LOGSTASH"`
 
-application name for syslog message
+application name for syslog message. The new value can include `%{foo}` strings
+to help you build a new value from other parts of the event.
 
 [[plugins-outputs-syslog-codec]]
 ===== `codec` 
@@ -79,14 +91,26 @@ application name for syslog message
 
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
 
+[[plugins-outputs-syslog-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-outputs-syslog-facility]]
 ===== `facility` 
 
-  * This is a required setting.
-  * Value can be any of: `kernel`, `user-level`, `mail`, `daemon`, `security/authorization`, `syslogd`, `line printer`, `network news`, `uucp`, `clock`, `security/authorization`, `ftp`, `ntp`, `log audit`, `log alert`, `clock`, `local0`, `local1`, `local2`, `local3`, `local4`, `local5`, `local6`, `local7`
-  * There is no default value for this setting.
+  * Value type is <<string,string>>
+  * Default value is `"user-level"`
 
 facility label for syslog message
+default fallback to user-level as in rfc3164
+The new value can include `%{foo}` strings
+to help you build a new value from other parts of the event.
 
 [[plugins-outputs-syslog-host]]
 ===== `host` 
@@ -97,13 +121,33 @@ facility label for syslog message
 
 syslog server address to connect to
 
+[[plugins-outputs-syslog-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
+
 [[plugins-outputs-syslog-message]]
 ===== `message` 
 
   * Value type is <<string,string>>
   * Default value is `"%{message}"`
 
-message text to log
+message text to log. The new value can include `%{foo}` strings
+to help you build a new value from other parts of the event.
 
 [[plugins-outputs-syslog-msgid]]
 ===== `msgid` 
@@ -111,7 +155,8 @@ message text to log
   * Value type is <<string,string>>
   * Default value is `"-"`
 
-message id for syslog message
+message id for syslog message. The new value can include `%{foo}` strings
+to help you build a new value from other parts of the event.
 
 [[plugins-outputs-syslog-port]]
 ===== `port` 
@@ -122,21 +167,40 @@ message id for syslog message
 
 syslog server port to connect to
 
+[[plugins-outputs-syslog-priority]]
+===== `priority` 
+
+  * Value type is <<string,string>>
+  * Default value is `"%{syslog_pri}"`
+
+syslog priority
+The new value can include `%{foo}` strings
+to help you build a new value from other parts of the event.
+
 [[plugins-outputs-syslog-procid]]
 ===== `procid` 
 
   * Value type is <<string,string>>
   * Default value is `"-"`
 
-process id for syslog message
+process id for syslog message. The new value can include `%{foo}` strings
+to help you build a new value from other parts of the event.
 
 [[plugins-outputs-syslog-protocol]]
 ===== `protocol` 
 
-  * Value can be any of: `tcp`, `udp`
+  * Value can be any of: `tcp`, `udp`, `ssl-tcp`
   * Default value is `"udp"`
 
-syslog server protocol. you can choose between udp and tcp
+syslog server protocol. you can choose between udp, tcp and ssl/tls over tcp
+
+[[plugins-outputs-syslog-reconnect_interval]]
+===== `reconnect_interval` 
+
+  * Value type is <<number,number>>
+  * Default value is `1`
+
+when connection fails, retry interval in sec.
 
 [[plugins-outputs-syslog-rfc]]
 ===== `rfc` 
@@ -149,11 +213,13 @@ syslog message format: you can choose between rfc3164 or rfc5424
 [[plugins-outputs-syslog-severity]]
 ===== `severity` 
 
-  * This is a required setting.
-  * Value can be any of: `emergency`, `alert`, `critical`, `error`, `warning`, `notice`, `informational`, `debug`
-  * There is no default value for this setting.
+  * Value type is <<string,string>>
+  * Default value is `"notice"`
 
 severity label for syslog message
+default fallback to notice as in rfc3164
+The new value can include `%{foo}` strings
+to help you build a new value from other parts of the event.
 
 [[plugins-outputs-syslog-sourcehost]]
 ===== `sourcehost` 
@@ -161,24 +227,66 @@ severity label for syslog message
   * Value type is <<string,string>>
   * Default value is `"%{host}"`
 
-source host for syslog message
+source host for syslog message. The new value can include `%{foo}` strings
+to help you build a new value from other parts of the event.
 
-[[plugins-outputs-syslog-timestamp]]
-===== `timestamp`  (DEPRECATED)
+[[plugins-outputs-syslog-ssl_cacert]]
+===== `ssl_cacert` 
 
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `"%{@timestamp}"`
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
 
-timestamp for syslog message
+The SSL CA certificate, chainfile or CA path. The system CA path is automatically included.
+
+[[plugins-outputs-syslog-ssl_cert]]
+===== `ssl_cert` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+SSL certificate path
+
+[[plugins-outputs-syslog-ssl_key]]
+===== `ssl_key` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+SSL key path
+
+[[plugins-outputs-syslog-ssl_key_passphrase]]
+===== `ssl_key_passphrase` 
+
+  * Value type is <<password,password>>
+  * Default value is `nil`
+
+SSL key passphrase
+
+[[plugins-outputs-syslog-ssl_verify]]
+===== `ssl_verify` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Verify the identity of the other end of the SSL connection against the CA.
+
+[[plugins-outputs-syslog-use_labels]]
+===== `use_labels` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+use label parsing for severity and facility levels
+use priority field if set to false
 
 [[plugins-outputs-syslog-workers]]
 ===== `workers` 
 
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * Default value is `1`
 
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
+TODO remove this in Logstash 6.0
+when we no longer support the :legacy type
+This is hacky, but it can only be herne
 
 

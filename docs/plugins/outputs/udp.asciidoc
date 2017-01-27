@@ -1,6 +1,11 @@
 [[plugins-outputs-udp]]
 === udp
 
+* Version: 3.0.2
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-output-udp/blob/master/CHANGELOG.md#302[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 Send events over UDP
@@ -12,7 +17,6 @@ Keep in mind that UDP will lose messages.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -31,12 +35,13 @@ Available configuration options:
 [cols="<,<,<,<m",options="header",]
 |=======================================================================
 |Setting |Input type|Required|Default value
-| <<plugins-outputs-udp-codec>> |<<codec,codec>>|No|`"json"`
+| <<plugins-outputs-udp-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-outputs-udp-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-udp-host>> |<<string,string>>|Yes|
+| <<plugins-outputs-udp-id>> |<<string,string>>|No|
 | <<plugins-outputs-udp-port>> |<<number,number>>|Yes|
-| <<plugins-outputs-udp-workers>> |<<number,number>>|No|`1`
+| <<plugins-outputs-udp-workers>> |<<,>>|No|`1`
 |=======================================================================
-
 
 
 ==== Details
@@ -47,9 +52,19 @@ Available configuration options:
 ===== `codec` 
 
   * Value type is <<codec,codec>>
-  * Default value is `"json"`
+  * Default value is `"plain"`
 
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
+
+[[plugins-outputs-udp-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
 
 [[plugins-outputs-udp-host]]
 ===== `host` 
@@ -59,6 +74,25 @@ The codec used for output data. Output codecs are a convenient method for encodi
   * There is no default value for this setting.
 
 The address to send messages to
+
+[[plugins-outputs-udp-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-udp-port]]
 ===== `port` 
@@ -72,10 +106,11 @@ The port to send messages on
 [[plugins-outputs-udp-workers]]
 ===== `workers` 
 
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * Default value is `1`
 
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
+TODO remove this in Logstash 6.0
+when we no longer support the :legacy type
+This is hacky, but it can only be herne
 
 

@@ -29,8 +29,8 @@ The following Netflow/IPFIX exporters are known to work with the most recent ver
 
 Example Logstash configuration:
 
-[source,json]
---------------------------
+[source, ruby]
+-----------------------------
 input {
   udp {
     host => localhost
@@ -59,7 +59,7 @@ input {
     type => ipfix
   }
 }
---------------------------
+-----------------------------
 
 &nbsp;
 
@@ -144,7 +144,7 @@ Override YAML file containing IPFIX field definitions
 Very similar to the Netflow version except there is a top level Private
 Enterprise Number (PEN) key added:
 
-[source,json]
+[source,yaml]
 --------------------------
 pen:
  id:

@@ -11,7 +11,7 @@
 Read events from standard input.
 
 By default, each event is assumed to be one line. If you
-want to join lines, you'll want to use the multiline codec.
+want to join lines, you'll want to use the multiline filter.
 
 &nbsp;
 
