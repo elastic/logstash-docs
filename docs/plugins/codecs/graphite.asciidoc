@@ -1,6 +1,11 @@
 [[plugins-codecs-graphite]]
 === graphite
 
+* Version: 3.0.2
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-codec-graphite/blob/master/CHANGELOG.md#302[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 This codec will encode and decode Graphite formated lines.
@@ -10,7 +15,6 @@ This codec will encode and decode Graphite formated lines.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -27,18 +31,29 @@ Available configuration options:
 [cols="<,<,<,<m",options="header",]
 |=======================================================================
 |Setting |Input type|Required|Default value
+| <<plugins-codecs-graphite-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-codecs-graphite-exclude_metrics>> |<<array,array>>|No|`["%{[^}]+}"]`
 | <<plugins-codecs-graphite-fields_are_metrics>> |<<boolean,boolean>>|No|`false`
+| <<plugins-codecs-graphite-id>> |<<string,string>>|No|
 | <<plugins-codecs-graphite-include_metrics>> |<<array,array>>|No|`[".*"]`
 | <<plugins-codecs-graphite-metrics>> |<<hash,hash>>|No|`{}`
 | <<plugins-codecs-graphite-metrics_format>> |<<string,string>>|No|`"*"`
 |=======================================================================
 
 
-
 ==== Details
 
 &nbsp;
+
+[[plugins-codecs-graphite-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
 
 [[plugins-codecs-graphite-exclude_metrics]]
 ===== `exclude_metrics` 
@@ -55,6 +70,25 @@ Exclude regex matched metric names, by default exclude unresolved %{field} strin
   * Default value is `false`
 
 Indicate that the event @fields should be treated as metrics and will be sent as is to graphite
+
+[[plugins-codecs-graphite-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-codecs-graphite-include_metrics]]
 ===== `include_metrics` 

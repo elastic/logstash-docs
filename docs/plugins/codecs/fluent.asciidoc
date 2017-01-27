@@ -1,6 +1,11 @@
 [[plugins-codecs-fluent]]
 === fluent
 
+* Version: 3.0.2
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-codec-fluent/blob/master/CHANGELOG.md#302[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 This codec handles fluentd's msgpack schema.
@@ -29,16 +34,59 @@ Notes:
 
 ==== Synopsis
 
-This plugin has no configuration options.
+This plugin supports the following configuration options:
 
-
-Complete configuration example:
+Required configuration options:
 
 [source,json]
 --------------------------
 fluent {
-}
+  }
 --------------------------
 
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-codecs-fluent-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-codecs-fluent-id>> |<<string,string>>|No|
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-codecs-fluent-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-codecs-fluent-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 
