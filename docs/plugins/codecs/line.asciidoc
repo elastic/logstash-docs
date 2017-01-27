@@ -106,3 +106,4 @@ output {
 
 If you don't explicitely set this variable Logstash will generate a unique name.
 
+
