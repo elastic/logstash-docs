@@ -1,26 +1,28 @@
 [[plugins-filters-dissect]]
 === dissect
 
+* Version: 1.0.8
+* Released on: 2016-10-22
+* https://github.com/logstash-plugins/logstash-filter-dissect/blob/master/CHANGELOG.md#108[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
+
 NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-dissect`.
 
 
-The Dissect filter can be used to extract fields from unstructured data. Dissect is different from the Grok filter.
+==== *Dissect or how to de-structure text*
 
-Dissect does not use regexes and it is not designed to be a Grok replacement, but rather an alternative approach for certain types of data. 
-Dissect can also be complementary to Grok -- you can use Dissect as a pre-step before sending the remaining unstructured blob to a Grok filter. 
-The Dissect filter is a kind of split operation. Unlike a regular split operation where one delimiter is applied to the whole string, this operation applies 
-a set of delimiters # to a string value.
-
-However, if the structure of your text varies from line to line then Grok is more suitable.
-There is a hybrid case where Dissect can be used to de-structure the section of the line that is reliably repeated and 
-then Grok can be used on the remaining field values with # more regex predictability and less overall work to do.
+The Dissect filter is a kind of split operation. Unlike a regular split operation where one delimiter is applied to the whole string, this operation applies a set of delimiters # to a string value. +
+Dissect does not use regular expressions and is very fast. +
+However, if the structure of your text varies from line to line then Grok is more suitable. +
+There is a hybrid case where Dissect can be used to de-structure the section of the line that is reliably repeated and then Grok can be used on the remaining field values with # more regex predictability and less overall work to do. +
 
 A set of fields and delimiters is called a *dissection*.
 
 The dissection is described using a set of `%{}` sections:
-["source","ruby"]
+....
 %{a} - %{b} - %{c}
-
+....
 
 A *field* is the text from `%` to `}` inclusive.
 
@@ -30,8 +32,7 @@ A *delimiter* is the text between `}` and `%` characters.
 delimiters can't contain these `}{%` characters.
 
 The config might look like this:
-["source","ruby"]
---------------------------------------------------
+....
   filter {
     dissect {
       mapping => {
@@ -39,14 +40,11 @@ The config might look like this:
       }
     }
   }
---------------------------------------------------
-When dissecting a string from left to right, text is captured upto the first delimiter - this captured text 
-is stored in the first field. This is repeated for each field/# delimiter pair thereafter until the last delimiter 
-is reached, then *the remaining text is stored in the last field*. +
+....
+When dissecting a string from left to right, text is captured upto the first delimiter - this captured text is stored in the first field. This is repeated for each field/# delimiter pair thereafter until the last delimiter is reached, then *the remaining text is stored in the last field*. +
 
-*The Key:*
-The key is the text between the `%{` and `}`, exclusive of the ?, +, & prefixes and the ordinal suffix.
-
+*The Key:* +
+The key is the text between the `%{` and `}`, exclusive of the ?, +, & prefixes and the ordinal suffix. +
 `%{?aaa}` - key is `aaa` +
 `%{+bbb/3}` - key is `bbb` +
 `%{&ccc}` - key is `ccc` +
@@ -69,8 +67,10 @@ The key is prefixed with a `+`. +
 The final value is stored in the Event using the key. +
 
 [NOTE]
+====
 The delimiter found before the field is appended with the value. +
 If no delimiter is found before the field, a single space character is used.
+====
 
 `%{+some_field}` is an append field. +
 `%{+some_field/2}` is an append field with an order modifier.
@@ -116,9 +116,8 @@ You probably want to use this filter inside an `if` block. +
 This ensures that the event contains a field value with a suitable structure for the dissection.
 ====
 
-For example:
-["source","ruby"]
---------------------------------------------------
+For example...
+....
 filter {
   if [type] == "syslog" or "syslog" in [tags] {
     dissect {
@@ -128,8 +127,7 @@ filter {
     }
   }
 }
---------------------------------------------------
-
+....
 
 &nbsp;
 
@@ -249,7 +247,6 @@ filter {
     }
   }
 }
-
 
 [[plugins-filters-dissect-enable_metric]]
 ===== `enable_metric` 

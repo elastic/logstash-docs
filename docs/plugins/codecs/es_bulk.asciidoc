@@ -1,6 +1,11 @@
 [[plugins-codecs-es_bulk]]
 === es_bulk
 
+* Version: 3.0.3
+* Released on: 2016-11-17
+* https://github.com/logstash-plugins/logstash-codec-es_bulk/blob/master/CHANGELOG.md#303[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 This codec will decode the http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk.html[Elasticsearch bulk format]
@@ -13,16 +18,59 @@ output submits Logstash events in bulk format.
 
 ==== Synopsis
 
-This plugin has no configuration options.
+This plugin supports the following configuration options:
 
-
-Complete configuration example:
+Required configuration options:
 
 [source,json]
 --------------------------
 es_bulk {
-}
+  }
 --------------------------
 
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-codecs-es_bulk-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-codecs-es_bulk-id>> |<<string,string>>|No|
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-codecs-es_bulk-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-codecs-es_bulk-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 

@@ -1,6 +1,13 @@
 [[plugins-outputs-kafka]]
 === kafka
 
+* Version: 5.1.1
+* Released on: 2016-11-25
+* https://github.com/logstash-plugins/logstash-output-kafka/blob/master/CHANGELOG.md#511[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
+
+
 Write events to a Kafka topic. This uses the Kafka Producer API to write messages to a topic on
 the broker.
 
@@ -11,22 +18,27 @@ of Logstash and the Kafka output plugin:
 |==========================================================
 |Kafka Client Version |Logstash Version |Plugin Version |Security Features |Why?
 |0.8       |2.0.0 - 2.x.x   |<3.0.0 | |Legacy, 0.8 is still popular 
-|0.9       |2.0.0 - 2.3.x   | 3.x.x |SSL |Works with the old Ruby Event API (`event['product']['price'] = 10`)  
-|0.9       |2.4.0 - 5.0.x   | 4.x.x |SSL |Works with the new getter/setter APIs (`event.set('[product][price]', 10)`)
-|0.10.0.1  |2.4.0 - 5.0.x   | 5.x.x |SSL |Not compatible with the 0.9 broker
-|0.10.1.0  |2.4.0 - 5.x.x   | 6.x.x |SSL |Not compatible with the 0.10.0.1 broker
+|0.9       |2.0.0 - 2.3.x   | 3.x.x |Basic Auth, SSL |Works with the old Ruby Event API (`event['product']['price'] = 10`)  
+|0.9       |2.4.0 - 5.0.x   | 4.x.x |Basic Auth, SSL |Works with the new getter/setter APIs (`event.set('[product][price]', 10)`)
+|0.10      |2.4.0 - 5.0.x   | 5.x.x |Basic Auth, SSL |Not compatible with the 0.9 broker 
 |==========================================================
 
-NOTE: We recommended that you use matching Kafka client and broker versions. During upgrades, you should upgrade brokers before clients because brokers target backwards compatibility. For example, the 0.9 broker is compatible with both the 0.8 consumer and 0.9 consumer APIs, but not the other way around.
+NOTE: We recommended that you use matching Kafka client and broker versions. During upgrades, you should
+upgrade brokers before clients because brokers target backwards compatibility. For example, the 0.9 broker
+is compatible with both the 0.8 consumer and 0.9 consumer APIs, but not the other way around.
 
-The only required configuration is the topic name. The default codec is plain,
-so events will be persisted on the broker in the plain format. Logstash will encode your messages with not only the message but also with a timestamp and hostname. If you do not want anything but your message passing through, you should make the output configuration something like:
+The only required configuration is the topic_id. The default codec is plain,
+so events will be persisted on the broker in json format. If you select a codec of plain,
+Logstash will encode your messages with not only the message but also with a timestamp and
+hostname. If you do not want anything but your message passing through, you should make the output
+configuration something like:
 [source,ruby]
     output {
       kafka {
         codec => plain {
            format => "%{message}"
         }
+        topic_id => "mytopic"
       }
     }
 For more information see http://kafka.apache.org/documentation.html#theproducer
@@ -38,7 +50,6 @@ Kafka producer configuration: http://kafka.apache.org/documentation.html#newprod
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -62,7 +73,11 @@ Available configuration options:
 | <<plugins-outputs-kafka-buffer_memory>> |<<number,number>>|No|`33554432`
 | <<plugins-outputs-kafka-client_id>> |<<string,string>>|No|
 | <<plugins-outputs-kafka-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-kafka-compression_type>> |<<string,string>>, one of `["none", "gzip", "snappy"]`|No|`"none"`
+| <<plugins-outputs-kafka-compression_type>> |<<string,string>>, one of `["none", "gzip", "snappy", "lz4"]`|No|`"none"`
+| <<plugins-outputs-kafka-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-outputs-kafka-id>> |<<string,string>>|No|
+| <<plugins-outputs-kafka-jaas_path>> |a valid filesystem path|No|
+| <<plugins-outputs-kafka-kerberos_config>> |a valid filesystem path|No|
 | <<plugins-outputs-kafka-key_serializer>> |<<string,string>>|No|`"org.apache.kafka.common.serialization.StringSerializer"`
 | <<plugins-outputs-kafka-linger_ms>> |<<number,number>>|No|`0`
 | <<plugins-outputs-kafka-max_request_size>> |<<number,number>>|No|`1048576`
@@ -74,17 +89,21 @@ Available configuration options:
 | <<plugins-outputs-kafka-request_timeout_ms>> |<<string,string>>|No|
 | <<plugins-outputs-kafka-retries>> |<<number,number>>|No|`0`
 | <<plugins-outputs-kafka-retry_backoff_ms>> |<<number,number>>|No|`100`
+| <<plugins-outputs-kafka-sasl_kerberos_service_name>> |<<string,string>>|No|
+| <<plugins-outputs-kafka-sasl_mechanism>> |<<string,string>>|No|`"GSSAPI"`
+| <<plugins-outputs-kafka-security_protocol>> |<<string,string>>, one of `["PLAINTEXT", "SSL", "SASL_PLAINTEXT", "SASL_SSL"]`|No|`"PLAINTEXT"`
 | <<plugins-outputs-kafka-send_buffer_bytes>> |<<number,number>>|No|`131072`
-| <<plugins-outputs-kafka-ssl>> |<<boolean,boolean>>|No|`false`
+| <<plugins-outputs-kafka-ssl_key_password>> |<<password,password>>|No|
 | <<plugins-outputs-kafka-ssl_keystore_location>> |a valid filesystem path|No|
 | <<plugins-outputs-kafka-ssl_keystore_password>> |<<password,password>>|No|
+| <<plugins-outputs-kafka-ssl_keystore_type>> |<<string,string>>|No|
 | <<plugins-outputs-kafka-ssl_truststore_location>> |a valid filesystem path|No|
 | <<plugins-outputs-kafka-ssl_truststore_password>> |<<password,password>>|No|
+| <<plugins-outputs-kafka-ssl_truststore_type>> |<<string,string>>|No|
 | <<plugins-outputs-kafka-topic_id>> |<<string,string>>|Yes|
 | <<plugins-outputs-kafka-value_serializer>> |<<string,string>>|No|`"org.apache.kafka.common.serialization.StringSerializer"`
-| <<plugins-outputs-kafka-workers>> |<<number,number>>|No|`1`
+| <<plugins-outputs-kafka-workers>> |<<,>>|No|`1`
 |=======================================================================
-
 
 
 ==== Details
@@ -167,11 +186,71 @@ The codec used for output data. Output codecs are a convenient method for encodi
 [[plugins-outputs-kafka-compression_type]]
 ===== `compression_type` 
 
-  * Value can be any of: `none`, `gzip`, `snappy`
+  * Value can be any of: `none`, `gzip`, `snappy`, `lz4`
   * Default value is `"none"`
 
 The compression type for all data generated by the producer.
 The default is none (i.e. no compression). Valid values are none, gzip, or snappy.
+
+[[plugins-outputs-kafka-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-outputs-kafka-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
+
+[[plugins-outputs-kafka-jaas_path]]
+===== `jaas_path` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+The Java Authentication and Authorization Service (JAAS) API supplies user authentication and authorization 
+services for Kafka. This setting provides the path to the JAAS file. Sample JAAS file for Kafka client:
+[source,java]
+----------------------------------
+KafkaClient {
+  com.sun.security.auth.module.Krb5LoginModule required
+  useTicketCache=true
+  renewTicket=true
+  serviceName="kafka";
+  };
+----------------------------------
+
+Please note that specifying `jaas_path` and `kerberos_config` in the config file will add these 
+to the global JVM system properties. This means if you have multiple Kafka inputs, all of them would be sharing the same 
+`jaas_path` and `kerberos_config`. If this is not desirable, you would have to run separate instances of Logstash on 
+different JVM instances.
+
+[[plugins-outputs-kafka-kerberos_config]]
+===== `kerberos_config` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+Optional path to kerberos config file. This is krb5.conf style as detailed in https://web.mit.edu/kerberos/krb5-1.12/doc/admin/conf_files/krb5_conf.html
 
 [[plugins-outputs-kafka-key_serializer]]
 ===== `key_serializer` 
@@ -271,6 +350,33 @@ resend any record whose send fails with a potentially transient error.
 
 The amount of time to wait before attempting to retry a failed produce request to a given topic partition.
 
+[[plugins-outputs-kafka-sasl_kerberos_service_name]]
+===== `sasl_kerberos_service_name` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The Kerberos principal name that Kafka broker runs as. 
+This can be defined either in Kafka's JAAS config or in Kafka's config.
+
+[[plugins-outputs-kafka-sasl_mechanism]]
+===== `sasl_mechanism` 
+
+  * Value type is <<string,string>>
+  * Default value is `"GSSAPI"`
+
+http://kafka.apache.org/documentation.html#security_sasl[SASL mechanism] used for client connections. 
+This may be any mechanism for which a security provider is available.
+GSSAPI is the default mechanism.
+
+[[plugins-outputs-kafka-security_protocol]]
+===== `security_protocol` 
+
+  * Value can be any of: `PLAINTEXT`, `SSL`, `SASL_PLAINTEXT`, `SASL_SSL`
+  * Default value is `"PLAINTEXT"`
+
+Security protocol to use, which can be either of PLAINTEXT,SSL,SASL_PLAINTEXT,SASL_SSL
+
 [[plugins-outputs-kafka-send_buffer_bytes]]
 ===== `send_buffer_bytes` 
 
@@ -280,13 +386,21 @@ The amount of time to wait before attempting to retry a failed produce request t
 The size of the TCP send buffer to use when sending data.
 
 [[plugins-outputs-kafka-ssl]]
-===== `ssl` 
+===== `ssl`  (DEPRECATED)
 
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
-Enable SSL/TLS secured communication to Kafka broker. Note that secure communication 
-is only available with a broker running v0.9 of Kafka.
+Enable SSL/TLS secured communication to Kafka broker.
+
+[[plugins-outputs-kafka-ssl_key_password]]
+===== `ssl_key_password` 
+
+  * Value type is <<password,password>>
+  * There is no default value for this setting.
+
+The password of the private key in the key store file.
 
 [[plugins-outputs-kafka-ssl_keystore_location]]
 ===== `ssl_keystore_location` 
@@ -304,6 +418,14 @@ If client authentication is required, this setting stores the keystore path.
 
 If client authentication is required, this setting stores the keystore password
 
+[[plugins-outputs-kafka-ssl_keystore_type]]
+===== `ssl_keystore_type` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The keystore type.
+
 [[plugins-outputs-kafka-ssl_truststore_location]]
 ===== `ssl_truststore_location` 
 
@@ -319,6 +441,14 @@ The JKS truststore path to validate the Kafka broker's certificate.
   * There is no default value for this setting.
 
 The truststore password
+
+[[plugins-outputs-kafka-ssl_truststore_type]]
+===== `ssl_truststore_type` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The truststore type.
 
 [[plugins-outputs-kafka-timeout_ms]]
 ===== `timeout_ms`  (DEPRECATED)
@@ -353,10 +483,11 @@ Serializer class for the value of the message
 [[plugins-outputs-kafka-workers]]
 ===== `workers` 
 
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * Default value is `1`
 
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
+TODO remove this in Logstash 6.0
+when we no longer support the :legacy type
+This is hacky, but it can only be herne
 
 

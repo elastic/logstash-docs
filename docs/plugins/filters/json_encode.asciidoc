@@ -1,8 +1,13 @@
 [[plugins-filters-json_encode]]
 === json_encode
 
+* Version: 3.0.0
+* Released on: 2016-11-13
+* https://github.com/logstash-plugins/logstash-filter-json_encode/blob/master/CHANGELOG.md#300[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-json_encode`.
+
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-json_encode`.
 
 
 JSON encode filter. Takes a field and serializes it into JSON
@@ -26,7 +31,6 @@ JSON encoded string in `bar`, do this:
 
 This plugin supports the following configuration options:
 
-
 Required configuration options:
 
 [source,json]
@@ -45,13 +49,14 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-filters-json_encode-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-json_encode-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-json_encode-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-json_encode-id>> |<<string,string>>|No|
 | <<plugins-filters-json_encode-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-json_encode-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-json_encode-remove_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-json_encode-source>> |<<string,string>>|Yes|
 | <<plugins-filters-json_encode-target>> |<<string,string>>|No|
 |=======================================================================
-
 
 
 ==== Details
@@ -117,6 +122,35 @@ Example:
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
+
+[[plugins-filters-json_encode-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-filters-json_encode-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-json_encode-periodic_flush]]
 ===== `periodic_flush` 

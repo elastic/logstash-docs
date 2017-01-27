@@ -1,6 +1,13 @@
 [[plugins-outputs-email]]
 === email
 
+* Version: 4.0.3
+* Released on: 2016-08-04
+* https://github.com/logstash-plugins/logstash-output-email/blob/master/CHANGELOG.md#403[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
+
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-email`.
 
 
 Send email when an output is received. Alternatively, you may include or
@@ -11,7 +18,6 @@ exclude the email output execution using conditionals.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -38,8 +44,10 @@ Available configuration options:
 | <<plugins-outputs-email-contenttype>> |<<string,string>>|No|`"text/html; charset=UTF-8"`
 | <<plugins-outputs-email-debug>> |<<boolean,boolean>>|No|`false`
 | <<plugins-outputs-email-domain>> |<<string,string>>|No|`"localhost"`
+| <<plugins-outputs-email-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-email-from>> |<<string,string>>|No|`"logstash.alert@nowhere.com"`
 | <<plugins-outputs-email-htmlbody>> |<<string,string>>|No|`""`
+| <<plugins-outputs-email-id>> |<<string,string>>|No|
 | <<plugins-outputs-email-password>> |<<string,string>>|No|
 | <<plugins-outputs-email-port>> |<<number,number>>|No|`25`
 | <<plugins-outputs-email-replyto>> |<<string,string>>|No|
@@ -48,9 +56,8 @@ Available configuration options:
 | <<plugins-outputs-email-use_tls>> |<<boolean,boolean>>|No|`false`
 | <<plugins-outputs-email-username>> |<<string,string>>|No|
 | <<plugins-outputs-email-via>> |<<string,string>>|No|`"smtp"`
-| <<plugins-outputs-email-workers>> |<<number,number>>|No|`1`
+| <<plugins-outputs-email-workers>> |<<,>>|No|`1`
 |=======================================================================
-
 
 
 ==== Details
@@ -133,6 +140,16 @@ Run the mail relay in debug mode
 
 Domain used to send the email messages
 
+[[plugins-outputs-email-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-outputs-email-from]]
 ===== `from` 
 
@@ -148,6 +165,25 @@ The fully-qualified email address for the From: field in the email.
   * Default value is `""`
 
 HTML Body for the email, which may contain HTML markup.
+
+[[plugins-outputs-email-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-email-password]]
 ===== `password` 
@@ -222,10 +258,11 @@ How Logstash should send the email, either via SMTP or by invoking sendmail.
 [[plugins-outputs-email-workers]]
 ===== `workers` 
 
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * Default value is `1`
 
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
+TODO remove this in Logstash 6.0
+when we no longer support the :legacy type
+This is hacky, but it can only be herne
 
 

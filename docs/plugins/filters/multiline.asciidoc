@@ -1,8 +1,14 @@
 [[plugins-filters-multiline]]
 === multiline
 
-NOTE: This filter has been deprecated in favor of multiline-codec. Multiline filter
-is not thread-safe and cannot handle messages from multiple streams.
+* Version: 3.0.2
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-filter-multiline/blob/master/CHANGELOG.md#302[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
+
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-multiline`.
+
 
 
 This filter will collapse multiline messages from a single source into one Logstash event.
@@ -17,15 +23,15 @@ The config looks like this:
 [source,ruby]
     filter {
       multiline {
-        type => "type"
         pattern => "pattern, a regexp"
         negate => boolean
         what => "previous" or "next"
       }
     }
 
-The `pattern` should be a regexp which matches what you believe to be an indicator
-that the field is part of an event consisting of multiple lines of log data.
+The `pattern` should be a regexp (<<plugins-filters-grok,grok>> patterns are
+supported) which matches what you believe to be an indicator that the field
+is part of an event consisting of multiple lines of log data.
 
 The `what` must be `previous` or `next` and indicates the relation
 to the multi-line event.
@@ -39,7 +45,6 @@ starting at the far-left, with each subsequent line indented. Do this:
 [source,ruby]
     filter {
       multiline {
-        type => "somefiletype"
         pattern => "^\s"
         what => "previous"
       }
@@ -51,7 +56,6 @@ Another example is C line continuations (backslash). Here's how to do that:
 [source,ruby]
     filter {
       multiline {
-        type => "somefiletype "
         pattern => "\\$"
         what => "next"
       }
@@ -66,7 +70,6 @@ following line.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -88,6 +91,8 @@ Available configuration options:
 | <<plugins-filters-multiline-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-multiline-add_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-multiline-allow_duplicates>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-multiline-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-multiline-id>> |<<string,string>>|No|
 | <<plugins-filters-multiline-max_age>> |<<number,number>>|No|`5`
 | <<plugins-filters-multiline-negate>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-multiline-pattern>> |<<string,string>>|Yes|
@@ -99,7 +104,6 @@ Available configuration options:
 | <<plugins-filters-multiline-stream_identity>> |<<string,string>>|No|`"%{host}.%{path}.%{type}"`
 | <<plugins-filters-multiline-what>> |<<string,string>>, one of `["previous", "next"]`|Yes|
 |=======================================================================
-
 
 
 ==== Details
@@ -174,6 +178,35 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
 
 Allow duplcate values on the source field.
 
+[[plugins-filters-multiline-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-filters-multiline-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
+
 [[plugins-filters-multiline-max_age]]
 ===== `max_age` 
 
@@ -198,7 +231,9 @@ Negate the regexp pattern ('if not matched')
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The regular expression to match.
+The expression to match. The same matching engine as the
+<<plugins-filters-grok,grok filter>> is used, so the expression can contain
+a plain regular expression or one that also contains grok patterns.
 
 [[plugins-filters-multiline-patterns_dir]]
 ===== `patterns_dir` 

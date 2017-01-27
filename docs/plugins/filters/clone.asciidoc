@@ -1,7 +1,12 @@
 [[plugins-filters-clone]]
 === clone
 
-NOTE: This is a community-maintained plugin!
+* Version: 3.0.2
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-filter-clone/blob/master/CHANGELOG.md#302[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
+
 
 The clone filter is for duplicating events.
 A clone will be made for each type in the clone list.
@@ -12,7 +17,6 @@ The original event is left unchanged.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -32,11 +36,12 @@ Available configuration options:
 | <<plugins-filters-clone-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-clone-add_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-clone-clones>> |<<array,array>>|No|`[]`
+| <<plugins-filters-clone-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-clone-id>> |<<string,string>>|No|
 | <<plugins-filters-clone-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-clone-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-clone-remove_tag>> |<<array,array>>|No|`[]`
 |=======================================================================
-
 
 
 ==== Details
@@ -110,6 +115,35 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
   * Default value is `[]`
 
 A new clone will be created with the given type for each type in this list.
+
+[[plugins-filters-clone-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-filters-clone-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-clone-periodic_flush]]
 ===== `periodic_flush` 

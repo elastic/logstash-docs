@@ -1,11 +1,16 @@
 [[plugins-outputs-cloudwatch]]
 === cloudwatch
 
+* Version: 3.0.3
+* Released on: 2016-09-15
+* https://github.com/logstash-plugins/logstash-output-cloudwatch/blob/master/CHANGELOG.md#303[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 This output lets you aggregate and send metric data to AWS CloudWatch
 
-#### Summary:
+==== Summary:
 This plugin is intended to be used on a logstash indexer agent (but that
 is not the only way, see below.)  In the intended scenario, one cloudwatch
 output plugin is configured, on the logstash indexer node, with just AWS API
@@ -29,7 +34,7 @@ Note: when logstash is stopped the queue is destroyed before it can be processed
 This is a known limitation of logstash and will hopefully be addressed in a
 future version.
 
-#### Details:
+==== Details:
 There are two ways to configure this plugin, and they can be used in
 combination: event fields & per-output defaults
 
@@ -67,7 +72,6 @@ http://docs.amazonwebservices.com/AmazonCloudWatch/latest/APIReference/API_PutMe
 
 This plugin supports the following configuration options:
 
-
 Required configuration options:
 
 [source,json]
@@ -85,27 +89,28 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-outputs-cloudwatch-access_key_id>> |<<string,string>>|No|
 | <<plugins-outputs-cloudwatch-aws_credentials_file>> |<<string,string>>|No|
+| <<plugins-outputs-cloudwatch-batch_size>> |<<number,number>>|No|`20`
 | <<plugins-outputs-cloudwatch-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-outputs-cloudwatch-dimensions>> |<<hash,hash>>|No|
+| <<plugins-outputs-cloudwatch-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-cloudwatch-field_dimensions>> |<<string,string>>|No|`"CW_dimensions"`
 | <<plugins-outputs-cloudwatch-field_metricname>> |<<string,string>>|No|`"CW_metricname"`
 | <<plugins-outputs-cloudwatch-field_namespace>> |<<string,string>>|No|`"CW_namespace"`
 | <<plugins-outputs-cloudwatch-field_unit>> |<<string,string>>|No|`"CW_unit"`
 | <<plugins-outputs-cloudwatch-field_value>> |<<string,string>>|No|`"CW_value"`
+| <<plugins-outputs-cloudwatch-id>> |<<string,string>>|No|
 | <<plugins-outputs-cloudwatch-metricname>> |<<string,string>>|No|
 | <<plugins-outputs-cloudwatch-namespace>> |<<string,string>>|No|`"Logstash"`
 | <<plugins-outputs-cloudwatch-proxy_uri>> |<<string,string>>|No|
 | <<plugins-outputs-cloudwatch-queue_size>> |<<number,number>>|No|`10000`
-| <<plugins-outputs-cloudwatch-region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "sa-east-1", "us-gov-west-1", "cn-north-1"]`|No|`"us-east-1"`
+| <<plugins-outputs-cloudwatch-region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ap-northeast-2", "sa-east-1", "us-gov-west-1", "cn-north-1", "ap-south-1"]`|No|`"us-east-1"`
 | <<plugins-outputs-cloudwatch-secret_access_key>> |<<string,string>>|No|
 | <<plugins-outputs-cloudwatch-session_token>> |<<string,string>>|No|
 | <<plugins-outputs-cloudwatch-timeframe>> |<<string,string>>|No|`"1m"`
 | <<plugins-outputs-cloudwatch-unit>> |<<string,string>>, one of `["Seconds", "Microseconds", "Milliseconds", "Bytes", "Kilobytes", "Megabytes", "Gigabytes", "Terabytes", "Bits", "Kilobits", "Megabits", "Gigabits", "Terabits", "Percent", "Count", "Bytes/Second", "Kilobytes/Second", "Megabytes/Second", "Gigabytes/Second", "Terabytes/Second", "Bits/Second", "Kilobits/Second", "Megabits/Second", "Gigabits/Second", "Terabits/Second", "Count/Second", "None"]`|No|`"Count"`
-| <<plugins-outputs-cloudwatch-use_ssl>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-cloudwatch-value>> |<<string,string>>|No|`"1"`
-| <<plugins-outputs-cloudwatch-workers>> |<<number,number>>|No|`1`
+| <<plugins-outputs-cloudwatch-workers>> |<<,>>|No|`1`
 |=======================================================================
-
 
 
 ==== Details
@@ -139,9 +144,18 @@ file should look like this:
 
 [source,ruby]
 ----------------------------------
- :access_key_id: "12345"
- :secret_access_key: "54321"
+    :access_key_id: "12345"
+    :secret_access_key: "54321"
 ----------------------------------
+
+
+[[plugins-outputs-cloudwatch-batch_size]]
+===== `batch_size` 
+
+  * Value type is <<number,number>>
+  * Default value is `20`
+
+How many data points can be given in one call to the CloudWatch API
 
 [[plugins-outputs-cloudwatch-codec]]
 ===== `codec` 
@@ -158,6 +172,16 @@ The codec used for output data. Output codecs are a convenient method for encodi
   * There is no default value for this setting.
 
 The default dimensions [ name, value, ... ] to use for events which do not have a `CW_dimensions` field
+
+[[plugins-outputs-cloudwatch-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
 
 [[plugins-outputs-cloudwatch-field_dimensions]]
 ===== `field_dimensions` 
@@ -212,6 +236,25 @@ The name of the field used to set the unit on an event metric
 
 The name of the field used to set the value (float) on an event metric
 
+[[plugins-outputs-cloudwatch-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
+
 [[plugins-outputs-cloudwatch-metricname]]
 ===== `metricname` 
 
@@ -238,7 +281,7 @@ The default namespace to use for events which do not have a `CW_namespace` field
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-URI to proxy server if required 
+URI to proxy server if required
 
 [[plugins-outputs-cloudwatch-queue_size]]
 ===== `queue_size` 
@@ -252,10 +295,10 @@ Set this to the number of events-per-timeframe you will be sending to CloudWatch
 [[plugins-outputs-cloudwatch-region]]
 ===== `region` 
 
-  * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`
+  * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `ap-northeast-2`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`, `ap-south-1`
   * Default value is `"us-east-1"`
 
-
+The AWS Region
 
 [[plugins-outputs-cloudwatch-secret_access_key]]
 ===== `secret_access_key` 
@@ -271,7 +314,7 @@ The AWS Secret Access Key
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The AWS Session token for temporary credentials
+The AWS Session token for temporary credential
 
 [[plugins-outputs-cloudwatch-timeframe]]
 ===== `timeframe` 
@@ -299,14 +342,6 @@ See the Rufus Scheduler docs for an https://github.com/jmettraux/rufus-scheduler
 The default unit to use for events which do not have a `CW_unit` field
 If you set this option you should probably set the "value" option along with it
 
-[[plugins-outputs-cloudwatch-use_ssl]]
-===== `use_ssl` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-
-
 [[plugins-outputs-cloudwatch-value]]
 ===== `value` 
 
@@ -321,10 +356,11 @@ If you set this option you should probably set the `unit` option along with it
 [[plugins-outputs-cloudwatch-workers]]
 ===== `workers` 
 
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * Default value is `1`
 
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
+TODO remove this in Logstash 6.0
+when we no longer support the :legacy type
+This is hacky, but it can only be herne
 
 

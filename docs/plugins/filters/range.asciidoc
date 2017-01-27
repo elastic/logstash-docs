@@ -1,8 +1,13 @@
 [[plugins-filters-range]]
 === range
 
+* Version: 3.0.0
+* Released on: 2016-09-08
+* https://github.com/logstash-plugins/logstash-filter-range/blob/master/CHANGELOG.md#300[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-range`.
+
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-range`.
 
 
 This filter is used to check that certain fields are within expected size/length ranges.
@@ -22,7 +27,6 @@ or for finding anomaly values in fields or too big events that should be dropped
 
 This plugin supports the following configuration options:
 
-
 Required configuration options:
 
 [source,json]
@@ -40,13 +44,14 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-filters-range-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-range-add_tag>> |<<array,array>>|No|`[]`
+| <<plugins-filters-range-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-range-id>> |<<string,string>>|No|
 | <<plugins-filters-range-negate>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-range-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-range-ranges>> |<<array,array>>|No|`[]`
 | <<plugins-filters-range-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-range-remove_tag>> |<<array,array>>|No|`[]`
 |=======================================================================
-
 
 
 ==== Details
@@ -113,6 +118,35 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
 
+[[plugins-filters-range-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-filters-range-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
+
 [[plugins-filters-range-negate]]
 ===== `negate` 
 
@@ -144,11 +178,11 @@ Example:
         ranges => [ "message", 0, 10, "tag:short",
                     "message", 11, 100, "tag:medium",
                     "message", 101, 1000, "tag:long",
-                    "message", 1001, 100000, "drop",
+                    "message", 1001, 1e1000, "drop",
                     "duration", 0, 100, "field:latency:fast",
                     "duration", 101, 200, "field:latency:normal",
                     "duration", 201, 1000, "field:latency:slow",
-                    "duration", 1001, 100000, "field:latency:outlier",
+                    "duration", 1001, 1e1000, "field:latency:outlier",
                     "requests", 0, 10, "tag:too_few_%{host}_requests" ]
       }
     }

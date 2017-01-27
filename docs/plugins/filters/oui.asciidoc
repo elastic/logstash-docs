@@ -1,7 +1,13 @@
 [[plugins-filters-oui]]
 === oui
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-oui`.
+* Version: 3.0.0
+* Released on: 2016-11-28
+* https://github.com/logstash-plugins/logstash-filter-oui/blob/master/CHANGELOG.md#300[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
+
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-oui`.
 
 
 Logstash filter to parse OUI data from MAC addresses
@@ -44,7 +50,7 @@ Available configuration options:
 &nbsp;
 
 [[plugins-filters-oui-add_field]]
-===== `add_field`
+===== `add_field` 
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
@@ -76,7 +82,7 @@ value above and the `%{host}` piece replaced with that value from the
 event. The second example would also add a hardcoded field.
 
 [[plugins-filters-oui-add_tag]]
-===== `add_tag`
+===== `add_tag` 
 
   * Value type is <<array,array>>
   * Default value is `[]`
@@ -104,7 +110,7 @@ If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
 
 [[plugins-filters-oui-enable_metric]]
-===== `enable_metric`
+===== `enable_metric` 
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -114,7 +120,7 @@ by default we record all the metrics we can, but you can disable metrics collect
 for a specific plugin.
 
 [[plugins-filters-oui-id]]
-===== `id`
+===== `id` 
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -133,7 +139,7 @@ output {
 If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-oui-periodic_flush]]
-===== `periodic_flush`
+===== `periodic_flush` 
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -142,7 +148,7 @@ Call the filter flush method at regular interval.
 Optional.
 
 [[plugins-filters-oui-remove_field]]
-===== `remove_field`
+===== `remove_field` 
 
   * Value type is <<array,array>>
   * Default value is `[]`
@@ -169,7 +175,7 @@ would remove the field with name `foo_hello` if it is present. The second
 example would remove an additional, non-dynamic field.
 
 [[plugins-filters-oui-remove_tag]]
-===== `remove_tag`
+===== `remove_tag` 
 
   * Value type is <<array,array>>
   * Default value is `[]`
@@ -198,7 +204,7 @@ would remove the tag `foo_hello` if it is present. The second example
 would remove a sad, unwanted tag as well.
 
 [[plugins-filters-oui-source]]
-===== `source`
+===== `source` 
 
   * Value type is <<string,string>>
   * Default value is `"message"`
@@ -215,7 +221,7 @@ filter {
 The source field to parse
 
 [[plugins-filters-oui-target]]
-===== `target`
+===== `target` 
 
   * Value type is <<string,string>>
   * Default value is `"oui"`

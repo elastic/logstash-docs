@@ -1,7 +1,14 @@
 [[plugins-filters-checksum]]
 === checksum
 
-NOTE: This is a community-maintained plugin!
+* Version: 3.0.2
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-filter-checksum/blob/master/CHANGELOG.md#302[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
+
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-checksum`.
+
 
 This filter let's you create a checksum based on various parts
 of the logstash event.
@@ -15,7 +22,6 @@ This is VERY experimental and is largely a proof-of-concept
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -35,12 +41,13 @@ Available configuration options:
 | <<plugins-filters-checksum-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-checksum-add_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-checksum-algorithm>> |<<string,string>>, one of `["md5", "sha", "sha1", "sha256", "sha384"]`|No|`"sha256"`
+| <<plugins-filters-checksum-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-checksum-id>> |<<string,string>>|No|
 | <<plugins-filters-checksum-keys>> |<<array,array>>|No|`["message", "@timestamp", "type"]`
 | <<plugins-filters-checksum-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-checksum-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-checksum-remove_tag>> |<<array,array>>|No|`[]`
 |=======================================================================
-
 
 
 ==== Details
@@ -114,6 +121,35 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
   * Default value is `"sha256"`
 
 
+
+[[plugins-filters-checksum-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-filters-checksum-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-checksum-keys]]
 ===== `keys` 
