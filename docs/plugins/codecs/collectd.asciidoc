@@ -1,46 +1,20 @@
 [[plugins-codecs-collectd]]
 === collectd
 
+* Version: 3.0.2
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-codec-collectd/blob/master/CHANGELOG.md#302[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
 
-Read events from the collectd binary protocol over the network via udp.
-See https://collectd.org/wiki/index.php/Binary_protocol
 
-Configuration in your Logstash configuration file can be as simple as:
-[source,ruby]
-    input {
-      udp {
-        port => 25826
-        buffer_size => 1452
-        codec => collectd { }
-      }
-    }
-
-A sample `collectd.conf` to send to Logstash might be:
-[source,xml]
-    Hostname    "host.example.com"
-    LoadPlugin interface
-    LoadPlugin load
-    LoadPlugin memory
-    LoadPlugin network
-    <Plugin interface>
-        Interface "eth0"
-        IgnoreSelected false
-    </Plugin>
-    <Plugin network>
-        <Server "10.0.0.1" "25826">
-        </Server>
-    </Plugin>
-
-Be sure to replace `10.0.0.1` with the IP of your Logstash instance.
-
+encoding utf-8
 
 &nbsp;
 
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -58,6 +32,8 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-codecs-collectd-authfile>> |<<string,string>>|No|
+| <<plugins-codecs-collectd-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-codecs-collectd-id>> |<<string,string>>|No|
 | <<plugins-codecs-collectd-nan_handling>> |<<string,string>>, one of `["change_value", "warn", "drop"]`|No|`"change_value"`
 | <<plugins-codecs-collectd-nan_tag>> |<<string,string>>|No|`"_collectdNaN"`
 | <<plugins-codecs-collectd-nan_value>> |<<number,number>>|No|`0`
@@ -65,7 +41,6 @@ Available configuration options:
 | <<plugins-codecs-collectd-security_level>> |<<string,string>>, one of `["None", "Sign", "Encrypt"]`|No|`"None"`
 | <<plugins-codecs-collectd-typesdb>> |<<array,array>>|No|
 |=======================================================================
-
 
 
 ==== Details
@@ -82,6 +57,35 @@ Path to the authentication file. This file should have the same format as
 the http://collectd.org/documentation/manpages/collectd.conf.5.shtml#authfile_filename[AuthFile]
 in collectd. You only need to set this option if the `security_level` is set to
 `Sign` or `Encrypt`
+
+[[plugins-codecs-collectd-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-codecs-collectd-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-codecs-collectd-nan_handling]]
 ===== `nan_handling` 

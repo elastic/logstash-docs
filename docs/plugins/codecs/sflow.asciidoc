@@ -1,0 +1,128 @@
+[[plugins-codecs-sflow]]
+=== sflow
+
+* Version: 2.0.0
+* Released on: 2016-11-02
+* https://github.com/logstash-plugins/logstash-codec-sflow/blob/master/CHANGELOG.md#200[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
+
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-codec-sflow`.
+
+
+The "sflow" codec is for decoding sflow v5 flows.
+
+&nbsp;
+
+==== Synopsis
+
+This plugin supports the following configuration options:
+
+Required configuration options:
+
+[source,json]
+--------------------------
+sflow {
+  }
+--------------------------
+
+
+
+Available configuration options:
+
+[cols="<,<,<,<m",options="header",]
+|=======================================================================
+|Setting |Input type|Required|Default value
+| <<plugins-codecs-sflow-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-codecs-sflow-id>> |<<string,string>>|No|
+| <<plugins-codecs-sflow-interface_cache_size>> |<<number,number>>|No|`1000`
+| <<plugins-codecs-sflow-interface_cache_ttl>> |<<number,number>>|No|`3600`
+| <<plugins-codecs-sflow-optional_removed_field>> |<<array,array>>|No|`["sflow_version", "header_size", "ip_header_length", "ip_dscp", "ip_ecn", "ip_total_length", "ip_identification", "ip_flags", "ip_fragment_offset", "ip_ttl", "ip_checksum", "ip_options", "tcp_seq_number", "tcp_ack_number", "tcp_header_length", "tcp_reserved", "tcp_is_nonce", "tcp_is_cwr", "tcp_is_ecn_echo", "tcp_is_urgent", "tcp_is_ack", "tcp_is_push", "tcp_is_reset", "tcp_is_syn", "tcp_is_fin", "tcp_window_size", "tcp_checksum", "tcp_urgent_pointer", "tcp_options", "vlan_cfi", "sequence_number", "flow_sequence_number", "vlan_type", "udp_length", "udp_checksum"]`
+| <<plugins-codecs-sflow-snmp_community>> |<<string,string>>|No|`"public"`
+| <<plugins-codecs-sflow-snmp_interface>> |<<boolean,boolean>>|No|`false`
+| <<plugins-codecs-sflow-versions>> |<<array,array>>|No|`[5]`
+|=======================================================================
+
+
+==== Details
+
+&nbsp;
+
+[[plugins-codecs-sflow-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-codecs-sflow-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
+
+[[plugins-codecs-sflow-interface_cache_size]]
+===== `interface_cache_size` 
+
+  * Value type is <<number,number>>
+  * Default value is `1000`
+
+Specify the max number of element in the interface resolution local cache (only if snmp_interface true)
+
+[[plugins-codecs-sflow-interface_cache_ttl]]
+===== `interface_cache_ttl` 
+
+  * Value type is <<number,number>>
+  * Default value is `3600`
+
+Specify the duration for each element in the interface resolution local cache (only if snmp_interface true)
+
+[[plugins-codecs-sflow-optional_removed_field]]
+===== `optional_removed_field` 
+
+  * Value type is <<array,array>>
+  * Default value is `["sflow_version", "header_size", "ip_header_length", "ip_dscp", "ip_ecn", "ip_total_length", "ip_identification", "ip_flags", "ip_fragment_offset", "ip_ttl", "ip_checksum", "ip_options", "tcp_seq_number", "tcp_ack_number", "tcp_header_length", "tcp_reserved", "tcp_is_nonce", "tcp_is_cwr", "tcp_is_ecn_echo", "tcp_is_urgent", "tcp_is_ack", "tcp_is_push", "tcp_is_reset", "tcp_is_syn", "tcp_is_fin", "tcp_window_size", "tcp_checksum", "tcp_urgent_pointer", "tcp_options", "vlan_cfi", "sequence_number", "flow_sequence_number", "vlan_type", "udp_length", "udp_checksum"]`
+
+Specify which sflow fields must not be send in the event
+
+[[plugins-codecs-sflow-snmp_community]]
+===== `snmp_community` 
+
+  * Value type is <<string,string>>
+  * Default value is `"public"`
+
+Specify if codec must perform SNMP call so agent_ip for interface resolution.
+
+[[plugins-codecs-sflow-snmp_interface]]
+===== `snmp_interface` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Specify if codec must perform SNMP call so agent_ip for interface resolution.
+
+[[plugins-codecs-sflow-versions]]
+===== `versions` 
+
+  * Value type is <<array,array>>
+  * Default value is `[5]`
+
+Specify which Sflow versions you will accept.
+
+

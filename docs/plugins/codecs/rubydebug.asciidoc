@@ -1,6 +1,11 @@
 [[plugins-codecs-rubydebug]]
 === rubydebug
 
+* Version: 3.0.2
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-codec-rubydebug/blob/master/CHANGELOG.md#302[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 The rubydebug codec will output your Logstash event data using
@@ -12,7 +17,6 @@ the Ruby Awesome Print library.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -29,14 +33,44 @@ Available configuration options:
 [cols="<,<,<,<m",options="header",]
 |=======================================================================
 |Setting |Input type|Required|Default value
+| <<plugins-codecs-rubydebug-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-codecs-rubydebug-id>> |<<string,string>>|No|
 | <<plugins-codecs-rubydebug-metadata>> |<<boolean,boolean>>|No|`false`
 |=======================================================================
-
 
 
 ==== Details
 
 &nbsp;
+
+[[plugins-codecs-rubydebug-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-codecs-rubydebug-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-codecs-rubydebug-metadata]]
 ===== `metadata` 

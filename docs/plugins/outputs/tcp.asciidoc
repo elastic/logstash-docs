@@ -1,6 +1,11 @@
 [[plugins-outputs-tcp]]
 === tcp
 
+Version: 4.0.0
+Released on: 2016-09-13
+https://github.com/logstash-plugins/logstash-output-tcp/blob/master/CHANGELOG.md#400[Changelog]
+Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 Write events over a TCP socket.
@@ -15,7 +20,6 @@ depending on `mode`.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -34,8 +38,10 @@ Available configuration options:
 [cols="<,<,<,<m",options="header",]
 |=======================================================================
 |Setting |Input type|Required|Default value
-| <<plugins-outputs-tcp-codec>> |<<codec,codec>>|No|`"json"`
+| <<plugins-outputs-tcp-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-outputs-tcp-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-tcp-host>> |<<string,string>>|Yes|
+| <<plugins-outputs-tcp-id>> |<<string,string>>|No|
 | <<plugins-outputs-tcp-mode>> |<<string,string>>, one of `["server", "client"]`|No|`"client"`
 | <<plugins-outputs-tcp-port>> |<<number,number>>|Yes|
 | <<plugins-outputs-tcp-reconnect_interval>> |<<number,number>>|No|`10`
@@ -45,9 +51,8 @@ Available configuration options:
 | <<plugins-outputs-tcp-ssl_key>> |a valid filesystem path|No|
 | <<plugins-outputs-tcp-ssl_key_passphrase>> |<<password,password>>|No|`nil`
 | <<plugins-outputs-tcp-ssl_verify>> |<<boolean,boolean>>|No|`false`
-| <<plugins-outputs-tcp-workers>> |<<number,number>>|No|`1`
+| <<plugins-outputs-tcp-workers>> |<<,>>|No|`1`
 |=======================================================================
-
 
 
 ==== Details
@@ -58,9 +63,19 @@ Available configuration options:
 ===== `codec` 
 
   * Value type is <<codec,codec>>
-  * Default value is `"json"`
+  * Default value is `"plain"`
 
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
+
+[[plugins-outputs-tcp-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
 
 [[plugins-outputs-tcp-host]]
 ===== `host` 
@@ -71,6 +86,25 @@ The codec used for output data. Output codecs are a convenient method for encodi
 
 When mode is `server`, the address to listen on.
 When mode is `client`, the address to connect to.
+
+[[plugins-outputs-tcp-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-tcp-message_format]]
 ===== `message_format`  (DEPRECATED)
@@ -165,10 +199,11 @@ For input, sets the field `sslsubject` to that of the client certificate.
 [[plugins-outputs-tcp-workers]]
 ===== `workers` 
 
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * Default value is `1`
 
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
+TODO remove this in Logstash 6.0
+when we no longer support the :legacy type
+This is hacky, but it can only be herne
 
 
