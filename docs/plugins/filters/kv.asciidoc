@@ -1,6 +1,11 @@
 [[plugins-filters-kv]]
 === kv
 
+* Version: 3.1.1
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-filter-kv/blob/master/CHANGELOG.md#311[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 This filter helps automatically parse messages (or specific event fields)
@@ -33,7 +38,6 @@ For example, this filter can also be used to parse query parameters like
 
 This plugin supports the following configuration options:
 
-
 Required configuration options:
 
 [source,json]
@@ -53,8 +57,10 @@ Available configuration options:
 | <<plugins-filters-kv-add_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-kv-allow_duplicate_values>> |<<boolean,boolean>>|No|`true`
 | <<plugins-filters-kv-default_keys>> |<<hash,hash>>|No|`{}`
+| <<plugins-filters-kv-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-filters-kv-exclude_keys>> |<<array,array>>|No|`[]`
 | <<plugins-filters-kv-field_split>> |<<string,string>>|No|`" "`
+| <<plugins-filters-kv-id>> |<<string,string>>|No|
 | <<plugins-filters-kv-include_brackets>> |<<boolean,boolean>>|No|`true`
 | <<plugins-filters-kv-include_keys>> |<<array,array>>|No|`[]`
 | <<plugins-filters-kv-periodic_flush>> |<<boolean,boolean>>|No|`false`
@@ -64,11 +70,12 @@ Available configuration options:
 | <<plugins-filters-kv-remove_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-kv-source>> |<<string,string>>|No|`"message"`
 | <<plugins-filters-kv-target>> |<<string,string>>|No|
+| <<plugins-filters-kv-transform_key>> |<<string,string>>, one of `["lowercase", "uppercase", "capitalize"]`|No|
+| <<plugins-filters-kv-transform_value>> |<<string,string>>, one of `["lowercase", "uppercase", "capitalize"]`|No|
 | <<plugins-filters-kv-trim>> |<<string,string>>|No|
 | <<plugins-filters-kv-trimkey>> |<<string,string>>|No|
 | <<plugins-filters-kv-value_split>> |<<string,string>>|No|`"="`
 |=======================================================================
-
 
 
 ==== Details
@@ -170,6 +177,16 @@ in case these keys do not exist in the source field being parsed.
       }
     }
 
+[[plugins-filters-kv-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-filters-kv-exclude_keys]]
 ===== `exclude_keys` 
 
@@ -219,14 +236,33 @@ fields:
 * `oq: bobo`
 * `ss: 12345`
 
+[[plugins-filters-kv-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
+
 [[plugins-filters-kv-include_brackets]]
 ===== `include_brackets` 
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-A boolean specifying whether to include brackets as value `wrappers`
-(the default is true)
+A boolean specifying whether to treat square brackets, angle brackets,
+and parentheses as value "wrappers" that should be removed from the value.
 [source,ruby]
     filter {
       kv {
@@ -235,15 +271,20 @@ A boolean specifying whether to include brackets as value `wrappers`
     }
 
 For example, the result of this line:
-`bracketsone=(hello world) bracketstwo=[hello world]`
+`bracketsone=(hello world) bracketstwo=[hello world] bracketsthree=<hello world>`
 
 will be:
+
 * bracketsone: hello world
 * bracketstwo: hello world
+* bracketsthree: hello world
 
 instead of:
+
 * bracketsone: (hello
 * bracketstwo: [hello
+* bracketsthree: <hello
+
 
 [[plugins-filters-kv-include_keys]]
 ===== `include_keys` 
@@ -386,12 +427,45 @@ For example, to place all keys into the event field kv:
 [source,ruby]
     filter { kv { target => "kv" } }
 
+[[plugins-filters-kv-transform_key]]
+===== `transform_key` 
+
+  * Value can be any of: `lowercase`, `uppercase`, `capitalize`
+  * There is no default value for this setting.
+
+Transform keys to lower case, upper case or capitals.
+
+For example, to lowercase all keys:
+[source,ruby]
+    filter {
+      kv {
+        transform_key => "lowercase"
+      }
+    }
+
+[[plugins-filters-kv-transform_value]]
+===== `transform_value` 
+
+  * Value can be any of: `lowercase`, `uppercase`, `capitalize`
+  * There is no default value for this setting.
+
+Transform values to lower case, upper case or capitals.
+
+For example, to capitalize all values:
+[source,ruby]
+    filter {
+      kv {
+        transform_value => "capitalize"
+      }
+    }
+
 [[plugins-filters-kv-trim]]
 ===== `trim` 
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
+Constants used for transform check
 A string of characters to trim from the value. This is useful if your
 values are wrapped in brackets or are terminated with commas (like postfix
 logs).
@@ -433,7 +507,7 @@ For example, to strip `<` `>` `[` `]` and `,` characters from keys:
   * Value type is <<string,string>>
   * Default value is `"="`
 
-A string of characters to use as delimiters for identifying key-value relations.
+A non-empty string of characters to use as delimiters for identifying key-value relations.
 
 These characters form a regex character class and thus you must escape special regex
 characters like `[` or `]` using `\`.

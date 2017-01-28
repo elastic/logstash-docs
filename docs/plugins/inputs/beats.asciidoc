@@ -4,7 +4,7 @@
 * Version: 3.1.12
 * Released on: 2016-11-30
 * https://github.com/logstash-plugins/logstash-input-beats/blob/master/CHANGELOG.md#3112[Changelog]
-* Compatible: 5.1.2, 5.1.1, 5.0.0, 2.4.1, 2.4.0
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
 
 
@@ -61,7 +61,7 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-inputs-beats-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-beats-cipher_suites>> |<<array,array>>|No|`java.lang.String[TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256]@16f8ee2b`
+| <<plugins-inputs-beats-cipher_suites>> |<<array,array>>|No|`java.lang.String[TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256]@27c9aca7`
 | <<plugins-inputs-beats-client_inactivity_timeout>> |<<number,number>>|No|`60`
 | <<plugins-inputs-beats-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-inputs-beats-enable_metric>> |<<boolean,boolean>>|No|`true`
@@ -99,7 +99,7 @@ Add a field to an event
 ===== `cipher_suites` 
 
   * Value type is <<array,array>>
-  * Default value is `java.lang.String[TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256]@16f8ee2b`
+  * Default value is `java.lang.String[TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256]@27c9aca7`
 
 The list of ciphers suite to use, listed by priorities.
 
@@ -135,8 +135,8 @@ This option is useful to control how much time to wait if something is blocking 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-Disable or enable metric collection and reporting for this specific plugin instance. 
-By default we record metrics from all plugins, but you can disable metrics collection
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
 for a specific plugin.
 
 [[plugins-inputs-beats-host]]
@@ -153,20 +153,18 @@ The IP address to listen on.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Add a unique named `ID` to the plugin instance. This `ID` is used for tracking
-information for a specific configuration of the plugin and will be useful for 
-debugging purposes.
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
 
-[source,sh]
---------------------------------------------------
+```
 output {
  stdout {
-   id => "debug_stdout"
+   id => "ABC"
  }
 }
---------------------------------------------------
+```
 
-If you don't explicitly set this field, Logstash will generate a unique name.
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-inputs-beats-include_codec_tag]]
 ===== `include_codec_tag` 

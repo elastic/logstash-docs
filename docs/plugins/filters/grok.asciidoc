@@ -1,6 +1,11 @@
 [[plugins-filters-grok]]
 === grok
 
+* Version: 3.3.0
+* Released on: 2016-11-10
+* https://github.com/logstash-plugins/logstash-filter-grok/blob/master/CHANGELOG.md#330[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 Parse arbitrary text and structure it.
@@ -141,7 +146,6 @@ The `timestamp`, `logsource`, `program`, and `pid` fields come from the
 
 This plugin supports the following configuration options:
 
-
 Required configuration options:
 
 [source,json]
@@ -160,6 +164,8 @@ Available configuration options:
 | <<plugins-filters-grok-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-grok-add_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-grok-break_on_match>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-grok-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-grok-id>> |<<string,string>>|No|
 | <<plugins-filters-grok-keep_empty_captures>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-grok-match>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-grok-named_captures_only>> |<<boolean,boolean>>|No|`true`
@@ -171,9 +177,8 @@ Available configuration options:
 | <<plugins-filters-grok-remove_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-grok-tag_on_failure>> |<<array,array>>|No|`["_grokparsefailure"]`
 | <<plugins-filters-grok-tag_on_timeout>> |<<string,string>>|No|`"_groktimeout"`
-| <<plugins-filters-grok-timeout_millis>> |<<number,number>>|No|`2000`
+| <<plugins-filters-grok-timeout_millis>> |<<number,number>>|No|`30000`
 |=======================================================================
-
 
 
 ==== Details
@@ -249,6 +254,35 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
 Break on first match. The first successful match by grok will result in the
 filter being finished. If you want grok to try all patterns (maybe you are
 parsing different things), then set this to false.
+
+[[plugins-filters-grok-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-filters-grok-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-grok-keep_empty_captures]]
 ===== `keep_empty_captures` 
@@ -428,11 +462,12 @@ Tag to apply if a grok regexp times out.
 ===== `timeout_millis` 
 
   * Value type is <<number,number>>
-  * Default value is `2000`
+  * Default value is `30000`
 
 Attempt to terminate regexps after this amount of time.
 This applies per pattern if multiple patterns are applied
 This will never timeout early, but may take a little longer to timeout.
 Actual timeout is approximate based on a 250ms quantization.
+Set to 0 to disable timeouts
 
 

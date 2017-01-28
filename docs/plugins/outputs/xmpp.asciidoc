@@ -1,6 +1,11 @@
 [[plugins-outputs-xmpp]]
 === xmpp
 
+* Version: 3.0.2
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-output-xmpp/blob/master/CHANGELOG.md#302[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 This output allows you ship events over XMPP/Jabber.
@@ -13,7 +18,6 @@ use it for PubSub or general message passing for logstash to logstash.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -34,15 +38,16 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-outputs-xmpp-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-outputs-xmpp-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-xmpp-host>> |<<string,string>>|No|
+| <<plugins-outputs-xmpp-id>> |<<string,string>>|No|
 | <<plugins-outputs-xmpp-message>> |<<string,string>>|Yes|
 | <<plugins-outputs-xmpp-password>> |<<password,password>>|Yes|
 | <<plugins-outputs-xmpp-rooms>> |<<array,array>>|No|
 | <<plugins-outputs-xmpp-user>> |<<string,string>>|Yes|
 | <<plugins-outputs-xmpp-users>> |<<array,array>>|No|
-| <<plugins-outputs-xmpp-workers>> |<<number,number>>|No|`1`
+| <<plugins-outputs-xmpp-workers>> |<<,>>|No|`1`
 |=======================================================================
-
 
 
 ==== Details
@@ -57,6 +62,16 @@ Available configuration options:
 
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
 
+[[plugins-outputs-xmpp-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-outputs-xmpp-host]]
 ===== `host` 
 
@@ -65,6 +80,25 @@ The codec used for output data. Output codecs are a convenient method for encodi
 
 The xmpp server to connect to. This is optional. If you omit this setting,
 the host on the user/identity is used. (foo.com for user@foo.com)
+
+[[plugins-outputs-xmpp-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-xmpp-message]]
 ===== `message` 
@@ -113,10 +147,11 @@ The users to send messages to
 [[plugins-outputs-xmpp-workers]]
 ===== `workers` 
 
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * Default value is `1`
 
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
+TODO remove this in Logstash 6.0
+when we no longer support the :legacy type
+This is hacky, but it can only be herne
 
 

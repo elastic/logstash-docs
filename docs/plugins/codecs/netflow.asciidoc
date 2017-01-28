@@ -1,16 +1,71 @@
 [[plugins-codecs-netflow]]
 === netflow
 
-NOTE: This is a community-maintained plugin!
+* Version: 3.1.2
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-codec-netflow/blob/master/CHANGELOG.md#312[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
-The "netflow" codec is for decoding Netflow v5/v9 flows.
+
+
+The "netflow" codec is used for decoding Netflow v5/v9/v10 (IPFIX) flows.
+
+==== Supported Netflow/IPFIX exporters
+
+The following Netflow/IPFIX exporters are known to work with the most recent version of the netflow codec:
+
+[cols="6,^2,^2,^2,12",options="header"]
+|===========================================================================================
+|Netflow exporter | v5 | v9 | IPFIX | Remarks
+|Softflowd        |  y | y  |   y   | IPFIX supported in https://github.com/djmdjm/softflowd
+|nProbe           |  y | y  |   y   |  
+|ipt_NETFLOW      |  y | y  |   y   |
+|Cisco ASA        |    | y  |       |  
+|Cisco IOS 12.x   |    | y  |       |  
+|fprobe           |  y |    |       |
+|===========================================================================================
+
+==== Usage
+
+Example Logstash configuration:
+
+[source, ruby]
+-----------------------------
+input {
+  udp {
+    host => localhost
+    port => 2055
+    codec => netflow {
+      versions => [5, 9]
+    }
+    type => netflow
+  }
+  udp {
+    host => localhost
+    port => 4739
+    codec => netflow {
+      versions => [10]
+      target => ipfix
+    }
+    type => ipfix
+  }
+  tcp {
+    host => localhost
+    port => 4739
+    codec => netflow {
+      versions => [10]
+      target => ipfix
+    }
+    type => ipfix
+  }
+}
+-----------------------------
 
 &nbsp;
 
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -28,11 +83,13 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-codecs-netflow-cache_ttl>> |<<number,number>>|No|`4000`
-| <<plugins-codecs-netflow-definitions>> |a valid filesystem path|No|
+| <<plugins-codecs-netflow-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-codecs-netflow-id>> |<<string,string>>|No|
+| <<plugins-codecs-netflow-ipfix_definitions>> |a valid filesystem path|No|
+| <<plugins-codecs-netflow-netflow_definitions>> |a valid filesystem path|No|
 | <<plugins-codecs-netflow-target>> |<<string,string>>|No|`"netflow"`
-| <<plugins-codecs-netflow-versions>> |<<array,array>>|No|`[5, 9]`
+| <<plugins-codecs-netflow-versions>> |<<array,array>>|No|`[5, 9, 10]`
 |=======================================================================
-
 
 
 ==== Details
@@ -47,8 +104,62 @@ Available configuration options:
 
 Netflow v9 template cache TTL (minutes)
 
-[[plugins-codecs-netflow-definitions]]
-===== `definitions` 
+[[plugins-codecs-netflow-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-codecs-netflow-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
+
+[[plugins-codecs-netflow-ipfix_definitions]]
+===== `ipfix_definitions` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+Override YAML file containing IPFIX field definitions
+
+Very similar to the Netflow version except there is a top level Private
+Enterprise Number (PEN) key added:
+
+[source,yaml]
+--------------------------
+pen:
+ id:
+ - :uintN or :ip4_addr or :ip6_addr or :mac_addr or :string
+ - :name
+ id:
+ - :skip
+--------------------------
+
+There is an implicit PEN 0 for the standard fields.
+
+See <https://github.com/logstash-plugins/logstash-codec-netflow/blob/master/lib/logstash/codecs/netflow/ipfix.yaml> for the base set.
+
+[[plugins-codecs-netflow-netflow_definitions]]
+===== `netflow_definitions` 
 
   * Value type is <<path,path>>
   * There is no default value for this setting.
@@ -57,15 +168,18 @@ Override YAML file containing Netflow field definitions
 
 Each Netflow field is defined like so:
 
-   ---
-   id:
-   - default length in bytes
-   - :name
-   id:
-   - :uintN or :ip4_addr or :ip6_addr or :mac_addr or :string
-   - :name
-   id:
-   - :skip
+[source,yaml]
+--------------------------
+---
+id:
+- default length in bytes
+- :name
+id:
+- :uintN or :ip4_addr or :ip6_addr or :mac_addr or :string
+- :name
+id:
+- :skip
+--------------------------
 
 See <https://github.com/logstash-plugins/logstash-codec-netflow/blob/master/lib/logstash/codecs/netflow/netflow.yaml> for the base set.
 
@@ -81,7 +195,7 @@ Specify into what field you want the Netflow data.
 ===== `versions` 
 
   * Value type is <<array,array>>
-  * Default value is `[5, 9]`
+  * Default value is `[5, 9, 10]`
 
 Specify which Netflow versions you will accept.
 

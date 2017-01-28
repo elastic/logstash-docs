@@ -4,14 +4,14 @@
 * Version: 3.0.2
 * Released on: 2016-07-14
 * https://github.com/logstash-plugins/logstash-input-pipe/blob/master/CHANGELOG.md#302[Changelog]
-* Compatible: 5.1.2, 5.1.1, 5.0.0, 2.4.1, 2.4.0
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
 
 
 Stream events from a long running command pipe.
 
 By default, each event is assumed to be one line. If you
-want to join lines, you'll want to use the multiline codec.
+want to join lines, you'll want to use the multiline filter.
 
 
 &nbsp;
@@ -87,8 +87,8 @@ Example:
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-Disable or enable metric collection and reporting for this specific plugin instance. 
-By default we record metrics from all plugins, but you can disable metrics collection
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
 for a specific plugin.
 
 [[plugins-inputs-pipe-id]]
@@ -97,20 +97,18 @@ for a specific plugin.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Add a unique named `ID` to the plugin instance. This `ID` is used for tracking
-information for a specific configuration of the plugin and will be useful for 
-debugging purposes.
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
 
-[source,sh]
---------------------------------------------------
+```
 output {
  stdout {
-   id => "debug_stdout"
+   id => "ABC"
  }
 }
---------------------------------------------------
+```
 
-If you don't explicitly set this field, Logstash will generate a unique name.
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-inputs-pipe-tags]]
 ===== `tags` 

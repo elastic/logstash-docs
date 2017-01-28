@@ -1,29 +1,44 @@
 [[plugins-outputs-exec]]
 === exec
 
+* Version: 3.1.0
+* Released on: 2016-12-06
+* https://github.com/logstash-plugins/logstash-output-exec/blob/master/CHANGELOG.md#310[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
 
-This output will run a command for any matching event.
-Example:
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-exec`.
+
+
+The exec output will run a command for each event received. Ruby's
+`system()` function will be used, i.e. the command string will
+be passed to a shell. You can use `%{name}` and other dynamic strings
+in the command to pass select fields from the event to the child
+process. Example:
 [source,ruby]
     output {
-      exec {
-        type => abuse
-        command => "iptables -A INPUT -s %{clientip} -j DROP"
+      if [type] == "abuse" {
+        exec {
+          command => "iptables -A INPUT -s %{clientip} -j DROP"
+        }
       }
     }
 
-Run subprocesses via system ruby function
+WARNING: If you want it non-blocking you should use `&` or `dtach`
+or other such techniques. There is no timeout for the commands being
+run so misbehaving commands could otherwise stall the Logstash
+pipeline indefinitely.
 
-WARNING: if you want it non-blocking you should use & or dtach or other such
-techniques
+WARNING: Exercise great caution with `%{name}` field placeholders.
+The contents of the field will be included verbatim without any
+sanitization, i.e. any shell metacharacters from the field values
+will be passed straight to the shell.
 
 &nbsp;
 
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -43,9 +58,11 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-outputs-exec-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-outputs-exec-command>> |<<string,string>>|Yes|
-| <<plugins-outputs-exec-workers>> |<<number,number>>|No|`1`
+| <<plugins-outputs-exec-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-outputs-exec-id>> |<<string,string>>|No|
+| <<plugins-outputs-exec-quiet>> |<<boolean,boolean>>|No|`false`
+| <<plugins-outputs-exec-workers>> |<<,>>|No|`1`
 |=======================================================================
-
 
 
 ==== Details
@@ -67,15 +84,55 @@ The codec used for output data. Output codecs are a convenient method for encodi
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Command line to execute via subprocess. Use dtach or screen to make it non blocking
+Command line to execute via subprocess. Use `dtach` or `screen` to
+make it non blocking. This value can include `%{name}` and other
+dynamic strings.
+
+[[plugins-outputs-exec-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-outputs-exec-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
+
+[[plugins-outputs-exec-quiet]]
+===== `quiet` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+display the result of the command to the terminal
 
 [[plugins-outputs-exec-workers]]
 ===== `workers` 
 
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * Default value is `1`
 
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
+TODO remove this in Logstash 6.0
+when we no longer support the :legacy type
+This is hacky, but it can only be herne
 
 

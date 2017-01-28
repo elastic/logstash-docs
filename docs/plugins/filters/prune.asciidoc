@@ -1,8 +1,13 @@
 [[plugins-filters-prune]]
 === prune
 
+* Version: 3.0.0
+* Released on: 2017-01-04
+* https://github.com/logstash-plugins/logstash-filter-prune/blob/master/CHANGELOG.md#300[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-prune`.
+
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-prune`.
 
 
 The prune filter is for removing fields from events based on
@@ -14,12 +19,38 @@ or <<plugins-filters-kv,kv>> filter that creates a number of fields
 with names that you don't necessarily know the names of beforehand,
 and you only want to keep a subset of them.
 
+Usage help:
+To specify a exact field name or value use the regular expression syntax `^some_name_or_value$`.
+Example usage: Input data `{ "msg":"hello world", "msg_short":"hw" }`
+[source,ruby]
+    filter {
+      prune {
+        whitelist_names => [ "msg" ]
+      }
+    }
+Allows both `"msg"` and `"msg_short"` through.
+
+While:
+[source,ruby]
+    filter {
+      prune {
+        whitelist_names => ["^msg$"]
+      }
+    }
+Allows only `"msg"` through.
+
+Logstash stores an event's `tags` as a field which is subject to pruning. Remember to `whitelist_names => [ "^tags$" ]`
+to maintain `tags` after pruning or use `blacklist_values => [ "^tag_name$" ]` to eliminate a specific `tag`.
+
+NOTE: This filter currently only support operations on top-level fields,
+i.e. whitelisting and blacklisting of subfields based on name or value
+does not work.
+
 &nbsp;
 
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -40,6 +71,8 @@ Available configuration options:
 | <<plugins-filters-prune-add_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-prune-blacklist_names>> |<<array,array>>|No|`["%{[^}]+}"]`
 | <<plugins-filters-prune-blacklist_values>> |<<hash,hash>>|No|`{}`
+| <<plugins-filters-prune-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-filters-prune-id>> |<<string,string>>|No|
 | <<plugins-filters-prune-interpolate>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-prune-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-prune-remove_field>> |<<array,array>>|No|`[]`
@@ -47,7 +80,6 @@ Available configuration options:
 | <<plugins-filters-prune-whitelist_names>> |<<array,array>>|No|`[]`
 | <<plugins-filters-prune-whitelist_values>> |<<hash,hash>>|No|`{}`
 |=======================================================================
-
 
 
 ==== Details
@@ -122,8 +154,8 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
 
 Exclude fields whose names match specified regexps, by default exclude unresolved `%{field}` strings.
 [source,ruby]
-    filter { 
-      prune { 
+    filter {
+      prune {
         blacklist_names => [ "method", "(referrer|status)", "${some}_field" ]
       }
     }
@@ -137,13 +169,42 @@ Exclude fields whose names match specified regexps, by default exclude unresolve
 Exclude specified fields if their values match one of the supplied regular expressions.
 In case field values are arrays, each array item is matched against the regular expressions and matching array items will be excluded.
 [source,ruby]
-    filter { 
-      prune { 
+    filter {
+      prune {
         blacklist_values => [ "uripath", "/index.php",
                               "method", "(HEAD|OPTIONS)",
                               "status", "^[^2]" ]
       }
     }
+
+[[plugins-filters-prune-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-filters-prune-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-prune-interpolate]]
 ===== `interpolate` 
@@ -152,7 +213,7 @@ In case field values are arrays, each array item is matched against the regular 
   * Default value is `false`
 
 Trigger whether configuration fields and values should be interpolated for
-dynamic values.
+dynamic values (when resolving `%{some_field}`).
 Probably adds some performance overhead. Defaults to false.
 
 [[plugins-filters-prune-periodic_flush]]
@@ -227,9 +288,9 @@ would remove a sad, unwanted tag as well.
   * Default value is `[]`
 
 Include only fields only if their names match specified regexps, default to empty list which means include everything.
-[source,ruby] 
-    filter { 
-      prune { 
+[source,ruby]
+    filter {
+      prune {
         whitelist_names => [ "method", "(referrer|status)", "${some}_field" ]
       }
     }
@@ -243,8 +304,8 @@ Include only fields only if their names match specified regexps, default to empt
 Include specified fields only if their values match one of the supplied regular expressions.
 In case field values are arrays, each array item is matched against the regular expressions and only matching array items will be included.
 [source,ruby]
-    filter { 
-      prune { 
+    filter {
+      prune {
         whitelist_values => [ "uripath", "/index.php",
                               "method", "(GET|POST)",
                               "status", "^[^2]" ]

@@ -1,8 +1,13 @@
 [[plugins-outputs-solr_http]]
 === solr_http
 
+* Version: 3.0.1
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-output-solr_http/blob/master/CHANGELOG.md#301[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-solr_http`.
+
+NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-solr_http`.
 
 
 This output lets you index&store your logs in Solr. If you want to get
@@ -24,7 +29,6 @@ You can learn more at https://lucene.apache.org/solr/[the Solr home page]
 
 This plugin supports the following configuration options:
 
-
 Required configuration options:
 
 [source,json]
@@ -42,12 +46,13 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-outputs-solr_http-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-outputs-solr_http-document_id>> |<<string,string>>|No|`nil`
+| <<plugins-outputs-solr_http-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-solr_http-flush_size>> |<<number,number>>|No|`100`
+| <<plugins-outputs-solr_http-id>> |<<string,string>>|No|
 | <<plugins-outputs-solr_http-idle_flush_time>> |<<number,number>>|No|`1`
 | <<plugins-outputs-solr_http-solr_url>> |<<string,string>>|No|`"http://localhost:8983/solr"`
-| <<plugins-outputs-solr_http-workers>> |<<number,number>>|No|`1`
+| <<plugins-outputs-solr_http-workers>> |<<,>>|No|`1`
 |=======================================================================
-
 
 
 ==== Details
@@ -71,6 +76,16 @@ The codec used for output data. Output codecs are a convenient method for encodi
 Solr document ID for events. You'd typically have a variable here, like
 '%{foo}' so you can assign your own IDs
 
+[[plugins-outputs-solr_http-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-outputs-solr_http-flush_size]]
 ===== `flush_size` 
 
@@ -78,6 +93,25 @@ Solr document ID for events. You'd typically have a variable here, like
   * Default value is `100`
 
 Number of events to queue up before writing to Solr
+
+[[plugins-outputs-solr_http-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-solr_http-idle_flush_time]]
 ===== `idle_flush_time` 
@@ -99,10 +133,11 @@ URL used to connect to Solr
 [[plugins-outputs-solr_http-workers]]
 ===== `workers` 
 
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * Default value is `1`
 
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
+TODO remove this in Logstash 6.0
+when we no longer support the :legacy type
+This is hacky, but it can only be herne
 
 

@@ -1,6 +1,11 @@
 [[plugins-outputs-stdout]]
 === stdout
 
+* Version: 3.1.0
+* Released on: 2016-08-22
+* https://github.com/logstash-plugins/logstash-output-stdout/blob/master/CHANGELOG.md#310[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 A simple output which prints to the STDOUT of the shell running
@@ -10,7 +15,7 @@ data after it has passed through the inputs and filters.
 
 For example, the following output configuration, in conjunction with the
 Logstash `-e` command-line flag, will allow you to see the results
-of your event pipeline for quick iteration. 
+of your event pipeline for quick iteration.
 [source,ruby]
     output {
       stdout {}
@@ -39,7 +44,6 @@ http://rubygems.org/gems/awesome_print[library]
 
 This plugin supports the following configuration options:
 
-
 Required configuration options:
 
 [source,json]
@@ -55,10 +59,11 @@ Available configuration options:
 [cols="<,<,<,<m",options="header",]
 |=======================================================================
 |Setting |Input type|Required|Default value
-| <<plugins-outputs-stdout-codec>> |<<codec,codec>>|No|`"line"`
-| <<plugins-outputs-stdout-workers>> |<<number,number>>|No|`1`
+| <<plugins-outputs-stdout-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-outputs-stdout-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-outputs-stdout-id>> |<<string,string>>|No|
+| <<plugins-outputs-stdout-workers>> |<<,>>|No|`1`
 |=======================================================================
-
 
 
 ==== Details
@@ -69,17 +74,47 @@ Available configuration options:
 ===== `codec` 
 
   * Value type is <<codec,codec>>
-  * Default value is `"line"`
+  * Default value is `"plain"`
 
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
+
+[[plugins-outputs-stdout-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-outputs-stdout-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-stdout-workers]]
 ===== `workers` 
 
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * Default value is `1`
 
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
+TODO remove this in Logstash 6.0
+when we no longer support the :legacy type
+This is hacky, but it can only be herne
 
 

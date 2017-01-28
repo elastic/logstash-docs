@@ -1,7 +1,12 @@
 [[plugins-outputs-sqs]]
 === sqs
 
-NOTE: This is a community-maintained plugin!
+* Version: 3.0.2
+* Released on: 2016-07-14
+* https://github.com/logstash-plugins/logstash-output-sqs/blob/master/CHANGELOG.md#302[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
+
 
 Push events to an Amazon Web Services Simple Queue Service (SQS) queue.
 
@@ -39,12 +44,11 @@ A sample policy is as follows:
            "Action": [
              "sqs:ChangeMessageVisibility",
              "sqs:ChangeMessageVisibilityBatch",
-             "sqs:DeleteMessage",
-             "sqs:DeleteMessageBatch",
              "sqs:GetQueueAttributes",
              "sqs:GetQueueUrl",
              "sqs:ListQueues",
-             "sqs:ReceiveMessage"
+             "sqs:SendMessage",
+             "sqs:SendMessageBatch"
            ],
            "Effect": "Allow",
            "Resource": [
@@ -62,7 +66,6 @@ See http://aws.amazon.com/iam/ for more details on setting up AWS identities.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -86,15 +89,16 @@ Available configuration options:
 | <<plugins-outputs-sqs-batch_events>> |<<number,number>>|No|`10`
 | <<plugins-outputs-sqs-batch_timeout>> |<<number,number>>|No|`5`
 | <<plugins-outputs-sqs-codec>> |<<codec,codec>>|No|`"plain"`
+| <<plugins-outputs-sqs-enable_metric>> |<<boolean,boolean>>|No|`true`
+| <<plugins-outputs-sqs-id>> |<<string,string>>|No|
 | <<plugins-outputs-sqs-proxy_uri>> |<<string,string>>|No|
 | <<plugins-outputs-sqs-queue>> |<<string,string>>|Yes|
-| <<plugins-outputs-sqs-region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "sa-east-1", "us-gov-west-1", "cn-north-1"]`|No|`"us-east-1"`
+| <<plugins-outputs-sqs-region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ap-northeast-2", "sa-east-1", "us-gov-west-1", "cn-north-1", "ap-south-1"]`|No|`"us-east-1"`
 | <<plugins-outputs-sqs-secret_access_key>> |<<string,string>>|No|
 | <<plugins-outputs-sqs-session_token>> |<<string,string>>|No|
 | <<plugins-outputs-sqs-use_ssl>> |<<boolean,boolean>>|No|`true`
-| <<plugins-outputs-sqs-workers>> |<<number,number>>|No|`1`
+| <<plugins-outputs-sqs-workers>> |<<,>>|No|`1`
 |=======================================================================
-
 
 
 ==== Details
@@ -128,9 +132,10 @@ file should look like this:
 
 [source,ruby]
 ----------------------------------
- :access_key_id: "12345"
- :secret_access_key: "54321"
+    :access_key_id: "12345"
+    :secret_access_key: "54321"
 ----------------------------------
+
 
 [[plugins-outputs-sqs-batch]]
 ===== `batch` 
@@ -165,6 +170,35 @@ If `batch` is set to true, the maximum amount of time between `batch_send` comma
 
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
 
+[[plugins-outputs-sqs-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-outputs-sqs-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin instance, this `ID` is used for tracking
+information for a specific configuration of the plugin.
+
+```
+output {
+ stdout {
+   id => "ABC"
+ }
+}
+```
+
+If you don't explicitely set this variable Logstash will generate a unique name.
+
 [[plugins-outputs-sqs-proxy_uri]]
 ===== `proxy_uri` 
 
@@ -185,10 +219,10 @@ Name of SQS queue to push messages into. Note that this is just the name of the 
 [[plugins-outputs-sqs-region]]
 ===== `region` 
 
-  * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`
+  * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `ap-northeast-2`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`, `ap-south-1`
   * Default value is `"us-east-1"`
 
-
+The AWS Region
 
 [[plugins-outputs-sqs-secret_access_key]]
 ===== `secret_access_key` 
@@ -204,7 +238,7 @@ The AWS Secret Access Key
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The AWS Session token for temporary credentials
+The AWS Session token for temporary credential
 
 [[plugins-outputs-sqs-use_ssl]]
 ===== `use_ssl` 
@@ -212,15 +246,17 @@ The AWS Session token for temporary credentials
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-
+Should we require (true) or disable (false) using SSL for communicating with the AWS API
+The AWS SDK for Ruby defaults to SSL so we preserve that
 
 [[plugins-outputs-sqs-workers]]
 ===== `workers` 
 
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * Default value is `1`
 
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
+TODO remove this in Logstash 6.0
+when we no longer support the :legacy type
+This is hacky, but it can only be herne
 
 

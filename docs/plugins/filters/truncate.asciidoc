@@ -1,10 +1,10 @@
 [[plugins-filters-truncate]]
 === truncate
 
-Version: 1.0.0
-Released on: 2016-11-29
-https://github.com/logstash-plugins/logstash-filter-truncate/blob/master/CHANGELOG.md#100[Changelog]
-Compatible: 5.1.2, 5.1.1, 5.0.0, 2.4.1, 2.4.0
+* Version: 1.0.0
+* Released on: 2016-11-29
+* https://github.com/logstash-plugins/logstash-filter-truncate/blob/master/CHANGELOG.md#100[Changelog]
+* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
 
 NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-truncate`.
