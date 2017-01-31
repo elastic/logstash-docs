@@ -158,4 +158,3 @@ include::static/glossary.asciidoc[]
 pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/static/releasenotes.asciidoc ?>]
 include::static/releasenotes.asciidoc[]
 
-
