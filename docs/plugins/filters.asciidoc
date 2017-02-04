@@ -86,87 +86,87 @@ The following filter plugins are available:
 |&nbsp;
 |=======================================================================
 
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-aggregate/edit/master/lib/logstash/filters/aggregate.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-aggregate/edit/master/lib/logstash/filters/aggregate.rb
 include::filters/aggregate.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-alter/edit/master/lib/logstash/filters/alter.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-alter/edit/master/lib/logstash/filters/alter.rb
 include::filters/alter.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-anonymize/edit/master/lib/logstash/filters/anonymize.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-anonymize/edit/master/lib/logstash/filters/anonymize.rb
 include::filters/anonymize.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-collate/edit/master/lib/logstash/filters/collate.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-collate/edit/master/lib/logstash/filters/collate.rb
 include::filters/collate.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-csv/edit/master/lib/logstash/filters/csv.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-csv/edit/master/lib/logstash/filters/csv.rb
 include::filters/csv.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-cidr/edit/master/lib/logstash/filters/cidr.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-cidr/edit/master/lib/logstash/filters/cidr.rb
 include::filters/cidr.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-clone/edit/master/lib/logstash/filters/clone.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-clone/edit/master/lib/logstash/filters/clone.rb
 include::filters/clone.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-cipher/edit/master/lib/logstash/filters/cipher.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-cipher/edit/master/lib/logstash/filters/cipher.rb
 include::filters/cipher.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-checksum/edit/master/lib/logstash/filters/checksum.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-checksum/edit/master/lib/logstash/filters/checksum.rb
 include::filters/checksum.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-date/edit/master/lib/logstash/filters/date.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-date/edit/master/lib/logstash/filters/date.rb
 include::filters/date.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-dns/edit/master/lib/logstash/filters/dns.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-dns/edit/master/lib/logstash/filters/dns.rb
 include::filters/dns.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-drop/edit/master/lib/logstash/filters/drop.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-drop/edit/master/lib/logstash/filters/drop.rb
 include::filters/drop.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-elasticsearch/edit/master/lib/logstash/filters/elasticsearch.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/edit/master/lib/logstash/filters/elasticsearch.rb
 include::filters/elasticsearch.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-extractnumbers/edit/master/lib/logstash/filters/extractnumbers.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-extractnumbers/edit/master/lib/logstash/filters/extractnumbers.rb
 include::filters/extractnumbers.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-environment/edit/master/lib/logstash/filters/environment.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-environment/edit/master/lib/logstash/filters/environment.rb
 include::filters/environment.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-elapsed/edit/master/lib/logstash/filters/elapsed.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-elapsed/edit/master/lib/logstash/filters/elapsed.rb
 include::filters/elapsed.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-fingerprint/edit/master/lib/logstash/filters/fingerprint.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-fingerprint/edit/master/lib/logstash/filters/fingerprint.rb
 include::filters/fingerprint.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-geoip/edit/master/lib/logstash/filters/geoip.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-geoip/edit/master/lib/logstash/filters/geoip.rb
 include::filters/geoip.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-grok/edit/master/lib/logstash/filters/grok.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-grok/edit/master/lib/logstash/filters/grok.rb
 include::filters/grok.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-i18n/edit/master/lib/logstash/filters/i18n.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-i18n/edit/master/lib/logstash/filters/i18n.rb
 include::filters/i18n.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-json/edit/master/lib/logstash/filters/json.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-json/edit/master/lib/logstash/filters/json.rb
 include::filters/json.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-json_encode/edit/master/lib/logstash/filters/json_encode.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-json_encode/edit/master/lib/logstash/filters/json_encode.rb
 include::filters/json_encode.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-kv/edit/master/lib/logstash/filters/kv.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-kv/edit/master/lib/logstash/filters/kv.rb
 include::filters/kv.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-mutate/edit/master/lib/logstash/filters/mutate.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-mutate/edit/master/lib/logstash/filters/mutate.rb
 include::filters/mutate.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-metrics/edit/master/lib/logstash/filters/metrics.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-metrics/edit/master/lib/logstash/filters/metrics.rb
 include::filters/metrics.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-multiline/edit/master/lib/logstash/filters/multiline.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-multiline/edit/master/lib/logstash/filters/multiline.rb
 include::filters/multiline.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-metaevent/edit/master/lib/logstash/filters/metaevent.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-metaevent/edit/master/lib/logstash/filters/metaevent.rb
 include::filters/metaevent.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-prune/edit/master/lib/logstash/filters/prune.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-prune/edit/master/lib/logstash/filters/prune.rb
 include::filters/prune.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-punct/edit/master/lib/logstash/filters/punct.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-punct/edit/master/lib/logstash/filters/punct.rb
 include::filters/punct.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-ruby/edit/master/lib/logstash/filters/ruby.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-ruby/edit/master/lib/logstash/filters/ruby.rb
 include::filters/ruby.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-range/edit/master/lib/logstash/filters/range.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-range/edit/master/lib/logstash/filters/range.rb
 include::filters/range.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-syslog_pri/edit/master/lib/logstash/filters/syslog_pri.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-syslog_pri/edit/master/lib/logstash/filters/syslog_pri.rb
 include::filters/syslog_pri.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-sleep/edit/master/lib/logstash/filters/sleep.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-sleep/edit/master/lib/logstash/filters/sleep.rb
 include::filters/sleep.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-split/edit/master/lib/logstash/filters/split.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-split/edit/master/lib/logstash/filters/split.rb
 include::filters/split.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-throttle/edit/master/lib/logstash/filters/throttle.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-throttle/edit/master/lib/logstash/filters/throttle.rb
 include::filters/throttle.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-translate/edit/master/lib/logstash/filters/translate.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-translate/edit/master/lib/logstash/filters/translate.rb
 include::filters/translate.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-uuid/edit/master/lib/logstash/filters/uuid.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-uuid/edit/master/lib/logstash/filters/uuid.rb
 include::filters/uuid.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-urldecode/edit/master/lib/logstash/filters/urldecode.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-urldecode/edit/master/lib/logstash/filters/urldecode.rb
 include::filters/urldecode.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-useragent/edit/master/lib/logstash/filters/useragent.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-useragent/edit/master/lib/logstash/filters/useragent.rb
 include::filters/useragent.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-xml/edit/master/lib/logstash/filters/xml.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-xml/edit/master/lib/logstash/filters/xml.rb
 include::filters/xml.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-filter-zeromq/edit/master/lib/logstash/filters/zeromq.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-zeromq/edit/master/lib/logstash/filters/zeromq.rb
 include::filters/zeromq.asciidoc[]
 
-pass::[<?edit_url?>]
+:edit_url: 
