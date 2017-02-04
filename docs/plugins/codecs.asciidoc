@@ -35,55 +35,55 @@ The following codec plugins are available:
 | <<plugins-codecs-spool,spool>> | Collects events and transmits in batches | https://github.com/logstash-plugins/logstash-codec-spool[logstash-codec-spool]
 |=======================================================================
 
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-avro/edit/master/lib/logstash/codecs/avro.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-avro/edit/master/lib/logstash/codecs/avro.rb
 include::codecs/avro.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-cef/edit/master/lib/logstash/codecs/cef.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-cef/edit/master/lib/logstash/codecs/cef.rb
 include::codecs/cef.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-compress_spooler/edit/master/lib/logstash/codecs/compress_spooler.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-compress_spooler/edit/master/lib/logstash/codecs/compress_spooler.rb
 include::codecs/compress_spooler.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-cloudtrail/edit/master/lib/logstash/codecs/cloudtrail.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-cloudtrail/edit/master/lib/logstash/codecs/cloudtrail.rb
 include::codecs/cloudtrail.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-cloudfront/edit/master/lib/logstash/codecs/cloudfront.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-cloudfront/edit/master/lib/logstash/codecs/cloudfront.rb
 include::codecs/cloudfront.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-collectd/edit/master/lib/logstash/codecs/collectd.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-collectd/edit/master/lib/logstash/codecs/collectd.rb
 include::codecs/collectd.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-dots/edit/master/lib/logstash/codecs/dots.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-dots/edit/master/lib/logstash/codecs/dots.rb
 include::codecs/dots.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-edn_lines/edit/master/lib/logstash/codecs/edn_lines.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-edn_lines/edit/master/lib/logstash/codecs/edn_lines.rb
 include::codecs/edn_lines.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-edn/edit/master/lib/logstash/codecs/edn.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-edn/edit/master/lib/logstash/codecs/edn.rb
 include::codecs/edn.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-es_bulk/edit/master/lib/logstash/codecs/es_bulk.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-es_bulk/edit/master/lib/logstash/codecs/es_bulk.rb
 include::codecs/es_bulk.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-fluent/edit/master/lib/logstash/codecs/fluent.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-fluent/edit/master/lib/logstash/codecs/fluent.rb
 include::codecs/fluent.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-gzip_lines/edit/master/lib/logstash/codecs/gzip_lines.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-gzip_lines/edit/master/lib/logstash/codecs/gzip_lines.rb
 include::codecs/gzip_lines.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-graphite/edit/master/lib/logstash/codecs/graphite.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-graphite/edit/master/lib/logstash/codecs/graphite.rb
 include::codecs/graphite.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-json_lines/edit/master/lib/logstash/codecs/json_lines.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-json_lines/edit/master/lib/logstash/codecs/json_lines.rb
 include::codecs/json_lines.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-json/edit/master/lib/logstash/codecs/json.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-json/edit/master/lib/logstash/codecs/json.rb
 include::codecs/json.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-line/edit/master/lib/logstash/codecs/line.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-line/edit/master/lib/logstash/codecs/line.rb
 include::codecs/line.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-msgpack/edit/master/lib/logstash/codecs/msgpack.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-msgpack/edit/master/lib/logstash/codecs/msgpack.rb
 include::codecs/msgpack.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-multiline/edit/master/lib/logstash/codecs/multiline.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-multiline/edit/master/lib/logstash/codecs/multiline.rb
 include::codecs/multiline.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-netflow/edit/master/lib/logstash/codecs/netflow.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-netflow/edit/master/lib/logstash/codecs/netflow.rb
 include::codecs/netflow.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-nmap/edit/master/lib/logstash/codecs/nmap.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-nmap/edit/master/lib/logstash/codecs/nmap.rb
 include::codecs/nmap.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-oldlogstashjson/edit/master/lib/logstash/codecs/oldlogstashjson.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-oldlogstashjson/edit/master/lib/logstash/codecs/oldlogstashjson.rb
 include::codecs/oldlogstashjson.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-plain/edit/master/lib/logstash/codecs/plain.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-plain/edit/master/lib/logstash/codecs/plain.rb
 include::codecs/plain.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-rubydebug/edit/master/lib/logstash/codecs/rubydebug.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-rubydebug/edit/master/lib/logstash/codecs/rubydebug.rb
 include::codecs/rubydebug.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-s3_plain/edit/master/lib/logstash/codecs/s3_plain.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-s3_plain/edit/master/lib/logstash/codecs/s3_plain.rb
 include::codecs/s3_plain.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-codec-spool/edit/master/lib/logstash/codecs/spool.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-codec-spool/edit/master/lib/logstash/codecs/spool.rb
 include::codecs/spool.asciidoc[]
 
-pass::[<?edit_url?>]
+:edit_url: 
