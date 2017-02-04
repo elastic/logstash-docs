@@ -10,16 +10,10 @@
 :shield:                https://www.elastic.co/guide/en/shield/shield-1.3/
 :logstash:              https://www.elastic.co/guide/en/logstash/1.5/
 
-.
+/////
+Introduction
+/////
 
-// preceding period is magic, do not delete
-
-// Glossary and core concepts go here
-
-// The pass blocks here point to the correct repository for the edit links in
-// the guide.
-
-// Introduction
 :edit_url: https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/introduction.asciidoc
 include::static/introduction.asciidoc[]
 
@@ -61,7 +55,7 @@ include::static/life-of-an-event.asciidoc[]
 include::static/contributing-to-logstash.asciidoc[]
 
 // A space is necessary here ^^^
-:edit_url: 
+:edit_url:
 
 // This is in the pluginbody.asciidoc itself
 // :edit_url: https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/include/pluginbody.asciidoc
@@ -71,10 +65,10 @@ include::static/filter.asciidoc[]
 include::static/output.asciidoc[]
 
 // This is in the pluginbody.asciidoc itself
-// :edit_url: 
+// :edit_url:
 
 // These files do their own pass blocks
-:edit_url: 
+:edit_url:
 include::plugins/inputs.asciidoc[]
 include::plugins/outputs.asciidoc[]
 include::plugins/filters.asciidoc[]
