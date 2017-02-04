@@ -61,109 +61,109 @@ The following input plugins are available below. For a list of Elastic supported
 | <<plugins-inputs-zeromq,zeromq>> | Reads events from a ZeroMQ SUB socket | https://github.com/logstash-plugins/logstash-input-zeromq[logstash-input-zeromq]
 |=======================================================================
 
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-beats/edit/master/lib/logstash/inputs/beats.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-beats/edit/master/lib/logstash/inputs/beats.rb
 include::inputs/beats.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-cloudwatch/edit/master/lib/logstash/inputs/cloudwatch.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-cloudwatch/edit/master/lib/logstash/inputs/cloudwatch.rb
 include::inputs/cloudwatch.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-couchdb_changes/edit/master/lib/logstash/inputs/couchdb_changes.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-couchdb_changes/edit/master/lib/logstash/inputs/couchdb_changes.rb
 include::inputs/couchdb_changes.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-drupal_dblog/edit/master/lib/logstash/inputs/drupal_dblog.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-drupal_dblog/edit/master/lib/logstash/inputs/drupal_dblog.rb
 include::inputs/drupal_dblog.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-elasticsearch/edit/master/lib/logstash/inputs/elasticsearch.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/edit/master/lib/logstash/inputs/elasticsearch.rb
 include::inputs/elasticsearch.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-eventlog/edit/master/lib/logstash/inputs/eventlog.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-eventlog/edit/master/lib/logstash/inputs/eventlog.rb
 include::inputs/eventlog.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-exec/edit/master/lib/logstash/inputs/exec.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-exec/edit/master/lib/logstash/inputs/exec.rb
 include::inputs/exec.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-file/edit/master/lib/logstash/inputs/file.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-file/edit/master/lib/logstash/inputs/file.rb
 include::inputs/file.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-ganglia/edit/master/lib/logstash/inputs/ganglia.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-ganglia/edit/master/lib/logstash/inputs/ganglia.rb
 include::inputs/ganglia.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-gelf/edit/master/lib/logstash/inputs/gelf.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-gelf/edit/master/lib/logstash/inputs/gelf.rb
 include::inputs/gelf.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-gemfire/edit/master/lib/logstash/inputs/gemfire.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-gemfire/edit/master/lib/logstash/inputs/gemfire.rb
 include::inputs/gemfire.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-generator/edit/master/lib/logstash/inputs/generator.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-generator/edit/master/lib/logstash/inputs/generator.rb
 include::inputs/generator.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-github/edit/master/lib/logstash/inputs/github.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-github/edit/master/lib/logstash/inputs/github.rb
 include::inputs/github.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-graphite/edit/master/lib/logstash/inputs/graphite.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-graphite/edit/master/lib/logstash/inputs/graphite.rb
 include::inputs/graphite.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-heartbeat/edit/master/lib/logstash/inputs/heartbeat.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-heartbeat/edit/master/lib/logstash/inputs/heartbeat.rb
 include::inputs/heartbeat.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-heroku/edit/master/lib/logstash/inputs/heroku.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-heroku/edit/master/lib/logstash/inputs/heroku.rb
 include::inputs/heroku.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-http/edit/master/lib/logstash/inputs/http.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-http/edit/master/lib/logstash/inputs/http.rb
 include::inputs/http.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-http_poller/edit/master/lib/logstash/inputs/http_poller.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-http_poller/edit/master/lib/logstash/inputs/http_poller.rb
 include::inputs/http_poller.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-imap/edit/master/lib/logstash/inputs/imap.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-imap/edit/master/lib/logstash/inputs/imap.rb
 include::inputs/imap.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-irc/edit/master/lib/logstash/inputs/irc.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-irc/edit/master/lib/logstash/inputs/irc.rb
 include::inputs/irc.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-jdbc/edit/master/lib/logstash/inputs/jdbc.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-jdbc/edit/master/lib/logstash/inputs/jdbc.rb
 include::inputs/jdbc.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-jmx/edit/master/lib/logstash/inputs/jmx.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-jmx/edit/master/lib/logstash/inputs/jmx.rb
 include::inputs/jmx.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-kafka/edit/master/lib/logstash/inputs/kafka.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-kafka/edit/master/lib/logstash/inputs/kafka.rb
 include::inputs/kafka.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-kinesis/edit/master/lib/logstash/inputs/kinesis.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-kinesis/edit/master/lib/logstash/inputs/kinesis.rb
 include::inputs/kinesis.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-log4j/edit/master/lib/logstash/inputs/log4j.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-log4j/edit/master/lib/logstash/inputs/log4j.rb
 include::inputs/log4j.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-lumberjack/edit/master/lib/logstash/inputs/lumberjack.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-lumberjack/edit/master/lib/logstash/inputs/lumberjack.rb
 include::inputs/lumberjack.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-meetup/edit/master/lib/logstash/inputs/meetup.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-meetup/edit/master/lib/logstash/inputs/meetup.rb
 include::inputs/meetup.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-pipe/edit/master/lib/logstash/inputs/pipe.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-pipe/edit/master/lib/logstash/inputs/pipe.rb
 include::inputs/pipe.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-puppet_facter/edit/master/lib/logstash/inputs/puppet_facter.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-puppet_facter/edit/master/lib/logstash/inputs/puppet_facter.rb
 include::inputs/puppet_facter.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-rabbitmq/edit/master/lib/logstash/inputs/rabbitmq.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-rabbitmq/edit/master/lib/logstash/inputs/rabbitmq.rb
 include::inputs/rabbitmq.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-rackspace/edit/master/lib/logstash/inputs/rackspace.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-rackspace/edit/master/lib/logstash/inputs/rackspace.rb
 include::inputs/rackspace.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-redis/edit/master/lib/logstash/inputs/redis.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-redis/edit/master/lib/logstash/inputs/redis.rb
 include::inputs/redis.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-relp/edit/master/lib/logstash/inputs/relp.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-relp/edit/master/lib/logstash/inputs/relp.rb
 include::inputs/relp.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-rss/edit/master/lib/logstash/inputs/rss.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-rss/edit/master/lib/logstash/inputs/rss.rb
 include::inputs/rss.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-s3/edit/master/lib/logstash/inputs/s3.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-s3/edit/master/lib/logstash/inputs/s3.rb
 include::inputs/s3.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-salesforce/edit/master/lib/logstash/inputs/salesforce.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-salesforce/edit/master/lib/logstash/inputs/salesforce.rb
 include::inputs/salesforce.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-snmptrap/edit/master/lib/logstash/inputs/snmptrap.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-snmptrap/edit/master/lib/logstash/inputs/snmptrap.rb
 include::inputs/snmptrap.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-sqlite/edit/master/lib/logstash/inputs/sqlite.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-sqlite/edit/master/lib/logstash/inputs/sqlite.rb
 include::inputs/sqlite.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-sqs/edit/master/lib/logstash/inputs/sqs.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-sqs/edit/master/lib/logstash/inputs/sqs.rb
 include::inputs/sqs.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-stdin/edit/master/lib/logstash/inputs/stdin.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-stdin/edit/master/lib/logstash/inputs/stdin.rb
 include::inputs/stdin.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-stomp/edit/master/lib/logstash/inputs/stomp.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-stomp/edit/master/lib/logstash/inputs/stomp.rb
 include::inputs/stomp.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-syslog/edit/master/lib/logstash/inputs/syslog.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-syslog/edit/master/lib/logstash/inputs/syslog.rb
 include::inputs/syslog.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-tcp/edit/master/lib/logstash/inputs/tcp.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-tcp/edit/master/lib/logstash/inputs/tcp.rb
 include::inputs/tcp.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-twitter/edit/master/lib/logstash/inputs/twitter.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-twitter/edit/master/lib/logstash/inputs/twitter.rb
 include::inputs/twitter.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-udp/edit/master/lib/logstash/inputs/udp.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-udp/edit/master/lib/logstash/inputs/udp.rb
 include::inputs/udp.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-unix/edit/master/lib/logstash/inputs/unix.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-unix/edit/master/lib/logstash/inputs/unix.rb
 include::inputs/unix.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-varnishlog/edit/master/lib/logstash/inputs/varnishlog.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-varnishlog/edit/master/lib/logstash/inputs/varnishlog.rb
 include::inputs/varnishlog.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-websocket/edit/master/lib/logstash/inputs/websocket.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-websocket/edit/master/lib/logstash/inputs/websocket.rb
 include::inputs/websocket.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-wmi/edit/master/lib/logstash/inputs/wmi.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-wmi/edit/master/lib/logstash/inputs/wmi.rb
 include::inputs/wmi.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-xmpp/edit/master/lib/logstash/inputs/xmpp.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-xmpp/edit/master/lib/logstash/inputs/xmpp.rb
 include::inputs/xmpp.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-zenoss/edit/master/lib/logstash/inputs/zenoss.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-zenoss/edit/master/lib/logstash/inputs/zenoss.rb
 include::inputs/zenoss.asciidoc[]
-pass::[<?edit_url https://github.com/logstash-plugins/logstash-input-zeromq/edit/master/lib/logstash/inputs/zeromq.rb ?>]
+:edit_url: https://github.com/logstash-plugins/logstash-input-zeromq/edit/master/lib/logstash/inputs/zeromq.rb
 include::inputs/zeromq.asciidoc[]
 
-pass::[<?edit_url?>]
+:edit_url: 
