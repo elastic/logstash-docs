@@ -149,4 +149,4 @@ include::filters/yaml.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-zeromq/edit/master/lib/logstash/filters/zeromq.rb
 include::filters/zeromq.asciidoc[]
 
-pass::[<?edit_url?>]
+:edit_url: 

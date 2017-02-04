@@ -114,7 +114,7 @@ include::static/monitoring-apis.asciidoc[]
 include::static/plugin-manager.asciidoc[]
 
 // These files do their own pass blocks
-pass::[<?edit_url?>]
+:edit_url: 
 include::plugins/inputs.asciidoc[]
 include::plugins/outputs.asciidoc[]
 include::plugins/filters.asciidoc[]
@@ -140,7 +140,7 @@ include::static/contributing-patch.asciidoc[]
 include::static/maintainer-guide.asciidoc[]
 
 // A space is necessary here ^^^
-pass::[<?edit_url?>]
+:edit_url: 
 
 // Submitting a Plugin
 :edit_url: https://github.com/elastic/logstash/edit/master/docs/static/submitting-a-plugin.asciidoc
@@ -151,5 +151,5 @@ include::static/submitting-a-plugin.asciidoc[]
 include::static/glossary.asciidoc[]
 
 // This is in the pluginbody.asciidoc itself
-// pass::[<?edit_url?>]
+// :edit_url: 
 

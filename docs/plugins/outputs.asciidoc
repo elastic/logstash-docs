@@ -175,4 +175,4 @@ include::outputs/zabbix.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-output-zeromq/edit/master/lib/logstash/outputs/zeromq.rb
 include::outputs/zeromq.asciidoc[]
 
-pass::[<?edit_url?>]
+:edit_url: 

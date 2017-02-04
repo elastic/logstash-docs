@@ -89,4 +89,4 @@ include::codecs/s3_plain.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-codec-sflow/edit/master/lib/logstash/codecs/sflow.rb
 include::codecs/sflow.asciidoc[]
 
-pass::[<?edit_url?>]
+:edit_url: 

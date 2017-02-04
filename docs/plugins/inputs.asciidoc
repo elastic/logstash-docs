@@ -166,4 +166,4 @@ include::inputs/zenoss.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-input-zeromq/edit/master/lib/logstash/inputs/zeromq.rb
 include::inputs/zeromq.asciidoc[]
 
-pass::[<?edit_url?>]
+:edit_url: 
