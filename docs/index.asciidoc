@@ -25,76 +25,76 @@ volume and variety of data.
 // The pass blocks here point to the correct repository for the edit links in the guide.
 
 // Introduction
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/introduction.asciidoc ?>]
+:edit_url: https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/introduction.asciidoc
 include::static/introduction.asciidoc[]
 
 // Glossary and core concepts go here
 
 // Getting Started with Logstash
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/getting-started-with-logstash.asciidoc ?>]
+:edit_url: https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/getting-started-with-logstash.asciidoc
 include::static/getting-started-with-logstash.asciidoc[]
 
 // Advanced LS Pipelines
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/advanced-pipeline.asciidoc ?>]
+:edit_url: https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/advanced-pipeline.asciidoc
 include::static/advanced-pipeline.asciidoc[]
 
 // Processing Pipeline
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/life-of-an-event.asciidoc ?>]
+:edit_url: https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/life-of-an-event.asciidoc
 include::static/life-of-an-event.asciidoc[]
 
 // Installing from a Repository
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/repositories.asciidoc ?>]
+:edit_url: https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/repositories.asciidoc
 include::static/repositories.asciidoc[]
 
 // Breaking Changes
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/breaking-changes.asciidoc ?>]
+:edit_url: https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/breaking-changes.asciidoc
 include::static/breaking-changes.asciidoc[]
 
 // Upgrading Logstash
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/upgrading.asciidoc ?>]
+:edit_url: https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/upgrading.asciidoc
 include::static/upgrading.asciidoc[]
 
 // Configuring Logstash
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/configuration.asciidoc ?>]
+:edit_url: https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/configuration.asciidoc
 include::static/configuration.asciidoc[]
 
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/command-line-flags.asciidoc ?>]
+:edit_url: https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/command-line-flags.asciidoc
 include::static/command-line-flags.asciidoc[]
 
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/managing-multiline-events.asciidoc ?>]
+:edit_url: https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/managing-multiline-events.asciidoc
 include::static/managing-multiline-events.asciidoc[]
 
 // Deploying & Scaling
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/deploying.asciidoc ?>]
+:edit_url: https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/deploying.asciidoc
 include::static/deploying.asciidoc[]
 
 // Working with Plugins
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/plugin-manager.asciidoc ?>]
+:edit_url: https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/plugin-manager.asciidoc
 include::static/plugin-manager.asciidoc[]
 
 // Contributing to Logstash
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/contributing-to-logstash.asciidoc ?>]
+:edit_url: https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/contributing-to-logstash.asciidoc
 include::static/contributing-to-logstash.asciidoc[]
 
 // Logstash Community Maintainer Guide
-pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/maintainer-guide.asciidoc ?>]
+:edit_url: https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/maintainer-guide.asciidoc
 include::static/maintainer-guide.asciidoc[]
 
 // A space is necessary here ^^^
-pass::[<?edit_url?>]
+:edit_url: 
 
 // This is in the pluginbody.asciidoc itself
-// pass::[<?edit_url https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/include/pluginbody.asciidoc ?>]
+// :edit_url: https://github.com/elastic/logstash/edit/master/docs/asciidoc/static/include/pluginbody.asciidoc
 include::static/input.asciidoc[]
 include::static/codec.asciidoc[]
 include::static/filter.asciidoc[]
 include::static/output.asciidoc[]
 
 // This is in the pluginbody.asciidoc itself
-// pass::[<?edit_url?>]
+// :edit_url: 
 
 // These files do their own pass blocks
-pass::[<?edit_url?>]
+:edit_url: 
 include::plugins/inputs.asciidoc[]
 include::plugins/outputs.asciidoc[]
 include::plugins/filters.asciidoc[]
