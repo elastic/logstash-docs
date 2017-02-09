@@ -4,7 +4,7 @@
 * Version: 2.5.1
 * Released on: 2017-01-08
 * https://github.com/logstash-plugins/logstash-filter-aggregate/blob/master/CHANGELOG.md#251[Changelog]
-* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
 
 
 NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-aggregate`.
