@@ -1,10 +1,9 @@
 [[plugins-filters-date]]
 === date
 
-* Version: 3.1.1
-* Released on: 2016-11-17
-* https://github.com/logstash-plugins/logstash-filter-date/blob/master/CHANGELOG.md#311[Changelog]
-* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+* Version: 3.1.3
+* Released on: 2017-02-07
+* https://github.com/logstash-plugins/logstash-filter-date/blob/master/CHANGELOG.md#313[Changelog]
 
 
 
@@ -142,18 +141,20 @@ for a specific plugin.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Add a unique `ID` to the plugin instance, this `ID` is used for tracking
-information for a specific configuration of the plugin.
+Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
+It is strongly recommended to set this ID in your configuration. This is particularly useful 
+when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
+Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
 
-```
+[source,ruby]
+---------------------------------------------------------------------------------------------------
 output {
  stdout {
-   id => "ABC"
+   id => "my_plugin_id"
  }
 }
-```
+---------------------------------------------------------------------------------------------------
 
-If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-date-locale]]
 ===== `locale` 
@@ -181,8 +182,8 @@ formats... ]`
 
 If your time field has multiple possible formats, you can do this:
 [source,ruby]
-    match => [ "logdate", "MMM dd YYY HH:mm:ss",
-              "MMM  d YYY HH:mm:ss", "ISO8601" ]
+    match => [ "logdate", "MMM dd yyyy HH:mm:ss",
+              "MMM  d yyyy HH:mm:ss", "ISO8601" ]
 
 The above will match a syslog (rfc3164) or `iso8601` timestamp.
 
@@ -200,7 +201,7 @@ For example, if you have a field `logdate`, with a value that looks like
 [source,ruby]
     filter {
       date {
-        match => [ "logdate", "MMM dd YYYY HH:mm:ss" ]
+        match => [ "logdate", "MMM dd yyyy HH:mm:ss" ]
       }
     }
 

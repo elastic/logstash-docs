@@ -1,10 +1,9 @@
 [[plugins-inputs-kafka]]
 === kafka
 
-* Version: 5.1.4
-* Released on: 2017-01-10
-* https://github.com/logstash-plugins/logstash-input-kafka/blob/master/CHANGELOG.md#514[Changelog]
-* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+* Version: 5.1.6
+* Released on: 2017-01-25
+* https://github.com/logstash-plugins/logstash-input-kafka/blob/master/CHANGELOG.md#516[Changelog]
 
 
 
@@ -303,18 +302,20 @@ It can be adjusted even lower to control the expected time for normal rebalances
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Add a unique `ID` to the plugin instance, this `ID` is used for tracking
-information for a specific configuration of the plugin.
+Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
+It is strongly recommended to set this ID in your configuration. This is particularly useful 
+when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
+Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
 
-```
+[source,ruby]
+---------------------------------------------------------------------------------------------------
 output {
  stdout {
-   id => "ABC"
+   id => "my_plugin_id"
  }
 }
-```
+---------------------------------------------------------------------------------------------------
 
-If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-inputs-kafka-jaas_path]]
 ===== `jaas_path` 
