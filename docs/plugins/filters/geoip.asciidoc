@@ -6,12 +6,24 @@
 * https://github.com/logstash-plugins/logstash-filter-geoip/blob/master/CHANGELOG.md#404[Changelog]
 * Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
+The GeoIP filter adds information about the geographical location of IP addresses,
+based on data from the Maxmind GeoLite2 database.
 
+A `[geoip][location]` field is created if
+the GeoIP lookup returns a latitude and longitude. The field is stored in
+http://geojson.org/geojson-spec.html[GeoJSON] format. Additionally,
+the default Elasticsearch template provided with the
+<<plugins-outputs-elasticsearch,`elasticsearch` output>> maps
+the `[geoip][location]` field to an http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/mapping-geo-point-type.html#_mapping_options[Elasticsearch geo_point].
 
-always re-set to old value, even if block raises an exception
-create a new instance of the Java class File without shadowing the Ruby version of the File class
+As this field is a `geo_point` _and_ it is still valid GeoJSON, you get
+the awesomeness of Elasticsearch's geospatial query, facet and filter functions
+and the flexibility of having GeoJSON for all other applications (like Kibana's
+map visualization).
 
-&nbsp;
+Note: This product includes GeoLite2 data created by MaxMind, available from
+http://www.maxmind.com. This database is licensed under
+http://creativecommons.org/licenses/by-sa/4.0/[Creative Commons Attribution-ShareAlike 4.0 International License]
 
 ==== Synopsis
 
