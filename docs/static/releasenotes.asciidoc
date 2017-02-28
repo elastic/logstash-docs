@@ -37,9 +37,6 @@ This section summarizes the changes in the following releases:
 [[logstash-5-2-1]]
 === Logstash 5.2.1 Release Notes
 
-[[logstash-5-2-1]]
-=== Logstash 5.2.1 Release Notes
-
 * Restored messages that provide shutdown information when Logstash process is shutdown ({lsissue}6507[Issue 6507]).
 
 [float]
