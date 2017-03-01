@@ -2,10 +2,17 @@
 === es_bulk
 
 * Version: 3.0.3
-* Released on: 2016-11-17
+* Released on: November 17, 2016
 * https://github.com/logstash-plugins/logstash-codec-es_bulk/blob/master/CHANGELOG.md#303[Changelog]
 
 
+
+==== Getting Help
+
+For questions about the plugin, open a topic in the http://discuss.elastic.co[Discuss] forums. For bugs or feature requests, open an issue in https://github.com/elastic/logstash[Github].
+For the list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Elastic Support Matrix].
+
+==== Description
 
 This codec will decode the http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk.html[Elasticsearch bulk format]
 into individual events, plus metadata into the `@metadata` field.
@@ -31,11 +38,11 @@ es_bulk {
 
 Available configuration options:
 
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-codecs-es_bulk-enable_metric>> |<<boolean,boolean>>|No|`true`
-| <<plugins-codecs-es_bulk-id>> |<<string,string>>|No|
+|Setting |Input type|Required
+| <<plugins-codecs-es_bulk-enable_metric>> |<<boolean,boolean>>|No
+| <<plugins-codecs-es_bulk-id>> |<<string,string>>|No
 |=======================================================================
 
 
@@ -60,7 +67,7 @@ for a specific plugin.
   * There is no default value for this setting.
 
 Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
-It is strongly recommended to set this ID in your configuration. This is particularly useful 
+It is strongly recommended to set this ID in your configuration. This is particulary useful 
 when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
 Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
 

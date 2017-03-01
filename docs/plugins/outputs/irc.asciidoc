@@ -2,10 +2,17 @@
 === irc
 
 * Version: 3.0.2
-* Released on: 2016-07-14
+* Released on: July 14, 2016
 * https://github.com/logstash-plugins/logstash-output-irc/blob/master/CHANGELOG.md#302[Changelog]
 
 
+
+==== Getting Help
+
+For questions about the plugin, open a topic in the http://discuss.elastic.co[Discuss] forums. For bugs or feature requests, open an issue in https://github.com/elastic/logstash[Github].
+For the list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Elastic Support Matrix].
+
+==== Description
 
 Write events to IRC
 
@@ -30,25 +37,25 @@ irc {
 
 Available configuration options:
 
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-outputs-irc-channels>> |<<array,array>>|Yes|
-| <<plugins-outputs-irc-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-irc-enable_metric>> |<<boolean,boolean>>|No|`true`
-| <<plugins-outputs-irc-format>> |<<string,string>>|No|`"%{message}"`
-| <<plugins-outputs-irc-host>> |<<string,string>>|Yes|
-| <<plugins-outputs-irc-id>> |<<string,string>>|No|
-| <<plugins-outputs-irc-messages_per_second>> |<<number,number>>|No|`0.5`
-| <<plugins-outputs-irc-nick>> |<<string,string>>|No|`"logstash"`
-| <<plugins-outputs-irc-password>> |<<password,password>>|No|
-| <<plugins-outputs-irc-port>> |<<number,number>>|No|`6667`
-| <<plugins-outputs-irc-post_string>> |<<string,string>>|No|
-| <<plugins-outputs-irc-pre_string>> |<<string,string>>|No|
-| <<plugins-outputs-irc-real>> |<<string,string>>|No|`"logstash"`
-| <<plugins-outputs-irc-secure>> |<<boolean,boolean>>|No|`false`
-| <<plugins-outputs-irc-user>> |<<string,string>>|No|`"logstash"`
-| <<plugins-outputs-irc-workers>> |<<,>>|No|`1`
+|Setting |Input type|Required
+| <<plugins-outputs-irc-channels>> |<<array,array>>|Yes
+| <<plugins-outputs-irc-codec>> |<<codec,codec>>|No
+| <<plugins-outputs-irc-enable_metric>> |<<boolean,boolean>>|No
+| <<plugins-outputs-irc-format>> |<<string,string>>|No
+| <<plugins-outputs-irc-host>> |<<string,string>>|Yes
+| <<plugins-outputs-irc-id>> |<<string,string>>|No
+| <<plugins-outputs-irc-messages_per_second>> |<<number,number>>|No
+| <<plugins-outputs-irc-nick>> |<<string,string>>|No
+| <<plugins-outputs-irc-password>> |<<password,password>>|No
+| <<plugins-outputs-irc-port>> |<<number,number>>|No
+| <<plugins-outputs-irc-post_string>> |<<string,string>>|No
+| <<plugins-outputs-irc-pre_string>> |<<string,string>>|No
+| <<plugins-outputs-irc-real>> |<<string,string>>|No
+| <<plugins-outputs-irc-secure>> |<<boolean,boolean>>|No
+| <<plugins-outputs-irc-user>> |<<string,string>>|No
+| <<plugins-outputs-irc-workers>> |<<,>>|No
 |=======================================================================
 
 
@@ -110,7 +117,7 @@ Address of the host to connect to
   * There is no default value for this setting.
 
 Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
-It is strongly recommended to set this ID in your configuration. This is particularly useful 
+It is strongly recommended to set this ID in your configuration. This is particulary useful 
 when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
 Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
 

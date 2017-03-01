@@ -2,10 +2,17 @@
 === webhdfs
 
 * Version: 3.0.2
-* Released on: 2016-07-14
+* Released on: July 14, 2016
 * https://github.com/logstash-plugins/logstash-output-webhdfs/blob/master/CHANGELOG.md#302[Changelog]
 
 
+
+==== Getting Help
+
+For questions about the plugin, open a topic in the http://discuss.elastic.co[Discuss] forums. For bugs or feature requests, open an issue in https://github.com/elastic/logstash[Github].
+For the list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Elastic Support Matrix].
+
+==== Description
 
 This plugin sends Logstash events into files in HDFS via
 the https://hadoop.apache.org/docs/r1.0.4/webhdfs.html[webhdfs] REST API.
@@ -65,31 +72,31 @@ webhdfs {
 
 Available configuration options:
 
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-outputs-webhdfs-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-webhdfs-compression>> |<<string,string>>, one of `["none", "snappy", "gzip"]`|No|`"none"`
-| <<plugins-outputs-webhdfs-enable_metric>> |<<boolean,boolean>>|No|`true`
-| <<plugins-outputs-webhdfs-flush_size>> |<<number,number>>|No|`500`
-| <<plugins-outputs-webhdfs-host>> |<<string,string>>|Yes|
-| <<plugins-outputs-webhdfs-id>> |<<string,string>>|No|
-| <<plugins-outputs-webhdfs-idle_flush_time>> |<<number,number>>|No|`1`
-| <<plugins-outputs-webhdfs-open_timeout>> |<<number,number>>|No|`30`
-| <<plugins-outputs-webhdfs-path>> |<<string,string>>|Yes|
-| <<plugins-outputs-webhdfs-port>> |<<number,number>>|No|`50070`
-| <<plugins-outputs-webhdfs-read_timeout>> |<<number,number>>|No|`30`
-| <<plugins-outputs-webhdfs-retry_interval>> |<<number,number>>|No|`0.5`
-| <<plugins-outputs-webhdfs-retry_known_errors>> |<<boolean,boolean>>|No|`true`
-| <<plugins-outputs-webhdfs-retry_times>> |<<number,number>>|No|`5`
-| <<plugins-outputs-webhdfs-single_file_per_thread>> |<<boolean,boolean>>|No|`false`
-| <<plugins-outputs-webhdfs-snappy_bufsize>> |<<number,number>>|No|`32768`
-| <<plugins-outputs-webhdfs-snappy_format>> |<<string,string>>, one of `["stream", "file"]`|No|`"stream"`
-| <<plugins-outputs-webhdfs-standby_host>> |<<string,string>>|No|`false`
-| <<plugins-outputs-webhdfs-standby_port>> |<<number,number>>|No|`50070`
-| <<plugins-outputs-webhdfs-use_httpfs>> |<<boolean,boolean>>|No|`false`
-| <<plugins-outputs-webhdfs-user>> |<<string,string>>|Yes|
-| <<plugins-outputs-webhdfs-workers>> |<<,>>|No|`1`
+|Setting |Input type|Required
+| <<plugins-outputs-webhdfs-codec>> |<<codec,codec>>|No
+| <<plugins-outputs-webhdfs-compression>> |<<string,string>>, one of `["none", "snappy", "gzip"]`|No
+| <<plugins-outputs-webhdfs-enable_metric>> |<<boolean,boolean>>|No
+| <<plugins-outputs-webhdfs-flush_size>> |<<number,number>>|No
+| <<plugins-outputs-webhdfs-host>> |<<string,string>>|Yes
+| <<plugins-outputs-webhdfs-id>> |<<string,string>>|No
+| <<plugins-outputs-webhdfs-idle_flush_time>> |<<number,number>>|No
+| <<plugins-outputs-webhdfs-open_timeout>> |<<number,number>>|No
+| <<plugins-outputs-webhdfs-path>> |<<string,string>>|Yes
+| <<plugins-outputs-webhdfs-port>> |<<number,number>>|No
+| <<plugins-outputs-webhdfs-read_timeout>> |<<number,number>>|No
+| <<plugins-outputs-webhdfs-retry_interval>> |<<number,number>>|No
+| <<plugins-outputs-webhdfs-retry_known_errors>> |<<boolean,boolean>>|No
+| <<plugins-outputs-webhdfs-retry_times>> |<<number,number>>|No
+| <<plugins-outputs-webhdfs-single_file_per_thread>> |<<boolean,boolean>>|No
+| <<plugins-outputs-webhdfs-snappy_bufsize>> |<<number,number>>|No
+| <<plugins-outputs-webhdfs-snappy_format>> |<<string,string>>, one of `["stream", "file"]`|No
+| <<plugins-outputs-webhdfs-standby_host>> |<<string,string>>|No
+| <<plugins-outputs-webhdfs-standby_port>> |<<number,number>>|No
+| <<plugins-outputs-webhdfs-use_httpfs>> |<<boolean,boolean>>|No
+| <<plugins-outputs-webhdfs-user>> |<<string,string>>|Yes
+| <<plugins-outputs-webhdfs-workers>> |<<,>>|No
 |=======================================================================
 
 
@@ -147,7 +154,7 @@ The server name for webhdfs/httpfs connections.
   * There is no default value for this setting.
 
 Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
-It is strongly recommended to set this ID in your configuration. This is particularly useful 
+It is strongly recommended to set this ID in your configuration. This is particulary useful 
 when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
 Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
 

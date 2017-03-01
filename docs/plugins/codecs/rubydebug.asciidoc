@@ -2,10 +2,17 @@
 === rubydebug
 
 * Version: 3.0.2
-* Released on: 2016-07-14
+* Released on: July 14, 2016
 * https://github.com/logstash-plugins/logstash-codec-rubydebug/blob/master/CHANGELOG.md#302[Changelog]
 
 
+
+==== Getting Help
+
+For questions about the plugin, open a topic in the http://discuss.elastic.co[Discuss] forums. For bugs or feature requests, open an issue in https://github.com/elastic/logstash[Github].
+For the list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Elastic Support Matrix].
+
+==== Description
 
 The rubydebug codec will output your Logstash event data using
 the Ruby Awesome Print library.
@@ -29,12 +36,12 @@ rubydebug {
 
 Available configuration options:
 
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-codecs-rubydebug-enable_metric>> |<<boolean,boolean>>|No|`true`
-| <<plugins-codecs-rubydebug-id>> |<<string,string>>|No|
-| <<plugins-codecs-rubydebug-metadata>> |<<boolean,boolean>>|No|`false`
+|Setting |Input type|Required
+| <<plugins-codecs-rubydebug-enable_metric>> |<<boolean,boolean>>|No
+| <<plugins-codecs-rubydebug-id>> |<<string,string>>|No
+| <<plugins-codecs-rubydebug-metadata>> |<<boolean,boolean>>|No
 |=======================================================================
 
 
@@ -59,7 +66,7 @@ for a specific plugin.
   * There is no default value for this setting.
 
 Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
-It is strongly recommended to set this ID in your configuration. This is particularly useful 
+It is strongly recommended to set this ID in your configuration. This is particulary useful 
 when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
 Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
 
