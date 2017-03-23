@@ -72,7 +72,7 @@ Available configuration options:
 &nbsp;
 
 [[plugins-outputs-nagios_nsca-codec]]
-===== `codec` 
+===== `codec`
 
   * Value type is <<codec,codec>>
   * Default value is `"plain"`
@@ -80,7 +80,7 @@ Available configuration options:
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
 
 [[plugins-outputs-nagios_nsca-enable_metric]]
-===== `enable_metric` 
+===== `enable_metric`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -90,7 +90,7 @@ by default we record all the metrics we can, but you can disable metrics collect
 for a specific plugin.
 
 [[plugins-outputs-nagios_nsca-host]]
-===== `host` 
+===== `host`
 
   * Value type is <<string,string>>
   * Default value is `"localhost"`
@@ -98,7 +98,7 @@ for a specific plugin.
 The nagios host or IP to send logs to. It should have a NSCA daemon running.
 
 [[plugins-outputs-nagios_nsca-id]]
-===== `id` 
+===== `id`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -117,7 +117,7 @@ output {
 If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-nagios_nsca-message_format]]
-===== `message_format` 
+===== `message_format`
 
   * Value type is <<string,string>>
   * Default value is `"%{@timestamp} %{host}: %{message}"`
@@ -127,7 +127,7 @@ supports any string and can include `%{name}` and other dynamic
 strings.
 
 [[plugins-outputs-nagios_nsca-nagios_host]]
-===== `nagios_host` 
+===== `nagios_host`
 
   * Value type is <<string,string>>
   * Default value is `"%{host}"`
@@ -137,7 +137,7 @@ parameter accepts interpolation, e.g. you can use `@source_host` or other
 logstash internal variables.
 
 [[plugins-outputs-nagios_nsca-nagios_service]]
-===== `nagios_service` 
+===== `nagios_service`
 
   * Value type is <<string,string>>
   * Default value is `"LOGSTASH"`
@@ -147,7 +147,7 @@ parameter accepts interpolation, e.g. you can use `@source_host` or other
 logstash internal variables.
 
 [[plugins-outputs-nagios_nsca-nagios_status]]
-===== `nagios_status` 
+===== `nagios_status`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -156,7 +156,7 @@ logstash internal variables.
 The status to send to nagios. Should be 0 = OK, 1 = WARNING, 2 = CRITICAL, 3 = UNKNOWN
 
 [[plugins-outputs-nagios_nsca-port]]
-===== `port` 
+===== `port`
 
   * Value type is <<number,number>>
   * Default value is `5667`
@@ -164,7 +164,7 @@ The status to send to nagios. Should be 0 = OK, 1 = WARNING, 2 = CRITICAL, 3 = U
 The port where the NSCA daemon on the nagios host listens.
 
 [[plugins-outputs-nagios_nsca-send_nsca_bin]]
-===== `send_nsca_bin` 
+===== `send_nsca_bin`
 
   * Value type is <<string,string>>
   * Default value is `"/usr/sbin/send_nsca"`
@@ -172,7 +172,7 @@ The port where the NSCA daemon on the nagios host listens.
 The path to the 'send_nsca' binary on the local host.
 
 [[plugins-outputs-nagios_nsca-send_nsca_config]]
-===== `send_nsca_config` 
+===== `send_nsca_config`
 
   * Value type is <<path,path>>
   * There is no default value for this setting.
@@ -181,13 +181,11 @@ The path to the send_nsca config file on the local host.
 Leave blank if you don't want to provide a config file.
 
 [[plugins-outputs-nagios_nsca-workers]]
-===== `workers` 
+===== `workers`
 
   * Value type is <<string,string>>
   * Default value is `1`
 
-TODO remove this in Logstash 6.0
-when we no longer support the :legacy type
-This is hacky, but it can only be herne
+
 
 

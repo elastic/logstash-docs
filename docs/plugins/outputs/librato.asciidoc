@@ -53,7 +53,7 @@ Available configuration options:
 &nbsp;
 
 [[plugins-outputs-librato-account_id]]
-===== `account_id` 
+===== `account_id`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -67,7 +67,7 @@ Your Librato account
 usually an email address
 
 [[plugins-outputs-librato-annotation]]
-===== `annotation` 
+===== `annotation`
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
@@ -94,7 +94,7 @@ or
    }
 
 [[plugins-outputs-librato-api_token]]
-===== `api_token` 
+===== `api_token`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -103,7 +103,7 @@ or
 Your Librato API Token
 
 [[plugins-outputs-librato-batch_size]]
-===== `batch_size` 
+===== `batch_size`
 
   * Value type is <<string,string>>
   * Default value is `"10"`
@@ -113,7 +113,7 @@ Number of events to batch up before sending to Librato.
 
 
 [[plugins-outputs-librato-codec]]
-===== `codec` 
+===== `codec`
 
   * Value type is <<codec,codec>>
   * Default value is `"plain"`
@@ -121,7 +121,7 @@ Number of events to batch up before sending to Librato.
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
 
 [[plugins-outputs-librato-counter]]
-===== `counter` 
+===== `counter`
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
@@ -136,7 +136,7 @@ Example:
         "source" => "%{host}"
         "name" => "messages_received"
     }
-    
+
 Additionally, you can override the `measure_time` for the event. Must be a unix timestamp:
 [source,ruby]
     {
@@ -148,7 +148,7 @@ Additionally, you can override the `measure_time` for the event. Must be a unix 
 Default is to use the event's timestamp
 
 [[plugins-outputs-librato-enable_metric]]
-===== `enable_metric` 
+===== `enable_metric`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -158,7 +158,7 @@ by default we record all the metrics we can, but you can disable metrics collect
 for a specific plugin.
 
 [[plugins-outputs-librato-gauge]]
-===== `gauge` 
+===== `gauge`
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
@@ -184,7 +184,7 @@ Additionally, you can override the `measure_time` for the event. Must be a unix 
 Default is to use the event's timestamp
 
 [[plugins-outputs-librato-id]]
-===== `id` 
+===== `id`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -203,13 +203,11 @@ output {
 If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-librato-workers]]
-===== `workers` 
+===== `workers`
 
   * Value type is <<string,string>>
   * Default value is `1`
 
-TODO remove this in Logstash 6.0
-when we no longer support the :legacy type
-This is hacky, but it can only be herne
+
 
 

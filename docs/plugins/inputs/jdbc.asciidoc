@@ -72,7 +72,7 @@ Logstash configuration for this. The `schedule` option in this example will
 instruct the plugin to execute this input statement on the minute, every minute.
 
 [source,ruby]
---------------------------------------------------------------------------
+----------------------------------
 input {
   jdbc {
     jdbc_driver_library => "mysql-connector-java-5.1.36-bin.jar"
@@ -84,7 +84,7 @@ input {
     statement => "SELECT * from songs where artist = :favorite_artist"
   }
 }
---------------------------------------------------------------------------
+----------------------------------
 
 ==== Configuring SQL statement
 
@@ -107,7 +107,7 @@ this is set to Thursday, 1 January 1970, or 0 if `use_column_value` is true and
 
 Example:
 [source,ruby]
---------------------------------------------------------------------------
+----------------------------------
 input {
   jdbc {
     statement => "SELECT id, mycolumn1, mycolumn2 FROM my_table WHERE id > :sql_last_value"
@@ -116,7 +116,7 @@ input {
     # ... other configuration bits
   }
 }
---------------------------------------------------------------------------
+----------------------------------
 
 
 &nbsp;
@@ -238,7 +238,8 @@ input {
     ...
   }
 }
-----------------------------------
+----------------------------------- 
+ 
 this will only convert column0 that has ISO-8859-1 as an original encoding.
 
 [[plugins-inputs-jdbc-connection_retry_attempts]]
@@ -423,7 +424,7 @@ How often to validate a connection (in seconds)
 ===== `last_run_metadata_path` 
 
   * Value type is <<string,string>>
-  * Default value is `"/Users/suyog/.logstash_jdbc_last_run"`
+  * Default value is `"/Users/dedemorton/.logstash_jdbc_last_run"`
 
 Path to file with last run time
 
@@ -499,9 +500,9 @@ To use parameters, use named parameter syntax.
 For example:
 
 [source, ruby]
------------------------------------------------
+----------------------------------
 "SELECT * FROM MYTABLE WHERE id = :target_id"
------------------------------------------------
+----------------------------------
 
 here, `:target_id` is a named parameter. You can configure named parameters
 with the `parameters` setting.

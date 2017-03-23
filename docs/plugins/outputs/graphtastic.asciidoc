@@ -63,7 +63,7 @@ Available configuration options:
 &nbsp;
 
 [[plugins-outputs-graphtastic-batch_number]]
-===== `batch_number` 
+===== `batch_number`
 
   * Value type is <<number,number>>
   * Default value is `60`
@@ -72,7 +72,7 @@ the number of metrics to send to GraphTastic at one time. 60 seems to be the per
 amount for UDP, with default packet size.
 
 [[plugins-outputs-graphtastic-codec]]
-===== `codec` 
+===== `codec`
 
   * Value type is <<codec,codec>>
   * Default value is `"plain"`
@@ -80,7 +80,7 @@ amount for UDP, with default packet size.
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
 
 [[plugins-outputs-graphtastic-context]]
-===== `context` 
+===== `context`
 
   * Value type is <<string,string>>
   * Default value is `"graphtastic"`
@@ -93,7 +93,7 @@ Please consult your application server documentation for more on application
 contexts.
 
 [[plugins-outputs-graphtastic-enable_metric]]
-===== `enable_metric` 
+===== `enable_metric`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -103,7 +103,7 @@ by default we record all the metrics we can, but you can disable metrics collect
 for a specific plugin.
 
 [[plugins-outputs-graphtastic-error_file]]
-===== `error_file` 
+===== `error_file`
 
   * Value type is <<string,string>>
   * Default value is `""`
@@ -114,7 +114,7 @@ on how we reintegrate these error metrics
 NOT IMPLEMENTED!
 
 [[plugins-outputs-graphtastic-host]]
-===== `host` 
+===== `host`
 
   * Value type is <<string,string>>
   * Default value is `"127.0.0.1"`
@@ -122,7 +122,7 @@ NOT IMPLEMENTED!
 host for the graphtastic server - defaults to 127.0.0.1
 
 [[plugins-outputs-graphtastic-id]]
-===== `id` 
+===== `id`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -141,7 +141,7 @@ output {
 If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-graphtastic-integration]]
-===== `integration` 
+===== `integration`
 
   * Value can be any of: `udp`, `tcp`, `rmi`, `rest`
   * Default value is `"udp"`
@@ -149,7 +149,7 @@ If you don't explicitely set this variable Logstash will generate a unique name.
 options are udp(fastest - default) - rmi(faster) - rest(fast) - tcp(don't use TCP yet - some problems - errors out on linux)
 
 [[plugins-outputs-graphtastic-metrics]]
-===== `metrics` 
+===== `metrics`
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
@@ -168,7 +168,7 @@ metrics => [ "Response", "%{response}" ]
 NOTE: you can also use the dynamic fields for the key value as well as the actual value
 
 [[plugins-outputs-graphtastic-port]]
-===== `port` 
+===== `port`
 
   * Value type is <<number,number>>
   * There is no default value for this setting.
@@ -176,7 +176,7 @@ NOTE: you can also use the dynamic fields for the key value as well as the actua
 port for the graphtastic instance - defaults to 1199 for RMI, 1299 for TCP, 1399 for UDP, and 8080 for REST
 
 [[plugins-outputs-graphtastic-retries]]
-===== `retries` 
+===== `retries`
 
   * Value type is <<number,number>>
   * Default value is `1`
@@ -187,13 +187,11 @@ either by graphtastic utility or by this program after connectivity is
 ensured to be established.
 
 [[plugins-outputs-graphtastic-workers]]
-===== `workers` 
+===== `workers`
 
   * Value type is <<string,string>>
   * Default value is `1`
 
-TODO remove this in Logstash 6.0
-when we no longer support the :legacy type
-This is hacky, but it can only be herne
+
 
 

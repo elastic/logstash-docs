@@ -10,8 +10,7 @@
 NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-input-stomp`.
 
 
-Handle disconnects
-
+Creates events received with the STOMP protocol
 &nbsp;
 
 ==== Synopsis

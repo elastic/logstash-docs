@@ -274,7 +274,7 @@ This can help with processing later.
 ===== `temporary_directory` 
 
   * Value type is <<string,string>>
-  * Default value is `"/var/folders/_9/x4bq65rs6vd0rrjthct3zxjw0000gn/T/logstash"`
+  * Default value is `"/var/folders/s9/fp9p03r525d_cgclm9ps2n6r0000gn/T/logstash"`
 
 Set the directory where logstash will store the tmp files before processing them.
 default to the current OS temporary directory in linux /tmp/logstash

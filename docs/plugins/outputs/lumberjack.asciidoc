@@ -53,7 +53,7 @@ Available configuration options:
 &nbsp;
 
 [[plugins-outputs-lumberjack-codec]]
-===== `codec` 
+===== `codec`
 
   * Value type is <<codec,codec>>
   * Default value is `"plain"`
@@ -61,7 +61,7 @@ Available configuration options:
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
 
 [[plugins-outputs-lumberjack-enable_metric]]
-===== `enable_metric` 
+===== `enable_metric`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -71,7 +71,7 @@ by default we record all the metrics we can, but you can disable metrics collect
 for a specific plugin.
 
 [[plugins-outputs-lumberjack-flush_size]]
-===== `flush_size` 
+===== `flush_size`
 
   * Value type is <<number,number>>
   * Default value is `1024`
@@ -81,7 +81,7 @@ if the number of events exceed the number the declared `flush_size` we will
 send them to the logstash server.
 
 [[plugins-outputs-lumberjack-hosts]]
-===== `hosts` 
+===== `hosts`
 
   * This is a required setting.
   * Value type is <<array,array>>
@@ -90,7 +90,7 @@ send them to the logstash server.
 list of addresses lumberjack can send to
 
 [[plugins-outputs-lumberjack-id]]
-===== `id` 
+===== `id`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -109,7 +109,7 @@ output {
 If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-lumberjack-idle_flush_time]]
-===== `idle_flush_time` 
+===== `idle_flush_time`
 
   * Value type is <<number,number>>
   * Default value is `1`
@@ -125,7 +125,7 @@ This helps keep both fast and slow log streams moving along in
 near-real-time.
 
 [[plugins-outputs-lumberjack-port]]
-===== `port` 
+===== `port`
 
   * This is a required setting.
   * Value type is <<number,number>>
@@ -134,7 +134,7 @@ near-real-time.
 the port to connect to
 
 [[plugins-outputs-lumberjack-ssl_certificate]]
-===== `ssl_certificate` 
+===== `ssl_certificate`
 
   * This is a required setting.
   * Value type is <<path,path>>
@@ -143,13 +143,11 @@ the port to connect to
 ssl certificate to use
 
 [[plugins-outputs-lumberjack-workers]]
-===== `workers` 
+===== `workers`
 
   * Value type is <<string,string>>
   * Default value is `1`
 
-TODO remove this in Logstash 6.0
-when we no longer support the :legacy type
-This is hacky, but it can only be herne
+
 
 

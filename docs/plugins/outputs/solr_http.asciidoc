@@ -60,7 +60,7 @@ Available configuration options:
 &nbsp;
 
 [[plugins-outputs-solr_http-codec]]
-===== `codec` 
+===== `codec`
 
   * Value type is <<codec,codec>>
   * Default value is `"plain"`
@@ -68,7 +68,7 @@ Available configuration options:
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
 
 [[plugins-outputs-solr_http-document_id]]
-===== `document_id` 
+===== `document_id`
 
   * Value type is <<string,string>>
   * Default value is `nil`
@@ -77,7 +77,7 @@ Solr document ID for events. You'd typically have a variable here, like
 '%{foo}' so you can assign your own IDs
 
 [[plugins-outputs-solr_http-enable_metric]]
-===== `enable_metric` 
+===== `enable_metric`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -87,7 +87,7 @@ by default we record all the metrics we can, but you can disable metrics collect
 for a specific plugin.
 
 [[plugins-outputs-solr_http-flush_size]]
-===== `flush_size` 
+===== `flush_size`
 
   * Value type is <<number,number>>
   * Default value is `100`
@@ -95,7 +95,7 @@ for a specific plugin.
 Number of events to queue up before writing to Solr
 
 [[plugins-outputs-solr_http-id]]
-===== `id` 
+===== `id`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -114,7 +114,7 @@ output {
 If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-solr_http-idle_flush_time]]
-===== `idle_flush_time` 
+===== `idle_flush_time`
 
   * Value type is <<number,number>>
   * Default value is `1`
@@ -123,7 +123,7 @@ Amount of time since the last flush before a flush is done even if
 the number of buffered events is smaller than flush_size
 
 [[plugins-outputs-solr_http-solr_url]]
-===== `solr_url` 
+===== `solr_url`
 
   * Value type is <<string,string>>
   * Default value is `"http://localhost:8983/solr"`
@@ -131,13 +131,11 @@ the number of buffered events is smaller than flush_size
 URL used to connect to Solr
 
 [[plugins-outputs-solr_http-workers]]
-===== `workers` 
+===== `workers`
 
   * Value type is <<string,string>>
   * Default value is `1`
 
-TODO remove this in Logstash 6.0
-when we no longer support the :legacy type
-This is hacky, but it can only be herne
+
 
 

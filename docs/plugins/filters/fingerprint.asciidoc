@@ -14,7 +14,7 @@ For the list of Elastic supported plugins, please consult the https://www.elasti
 
 ==== Description
 
- Fingerprint fields using by replacing values with a consistent hash.
+Fingerprint fields using by replacing values with a consistent hash.
 
 &nbsp;
 

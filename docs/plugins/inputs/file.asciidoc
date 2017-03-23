@@ -76,7 +76,6 @@ written to the end of the file between the last read operation prior
 to the rotation and its reopening under the new name (an interval
 determined by the `stat_interval` and `discover_interval` options)
 will not get picked up.
-TODO - move this to core
 
 &nbsp;
 

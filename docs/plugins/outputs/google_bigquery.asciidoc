@@ -9,7 +9,8 @@
 
 NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-google_bigquery`.
 
-
+[source,txt]
+-----
 Author: Rodrigo De Castro <rdc@google.com>
 Date: 2013-09-20
 
@@ -26,16 +27,20 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+-----
+
 Summary: plugin to upload log events to Google BigQuery (BQ), rolling
 files based on the date pattern provided as a configuration setting. Events
 are written to files locally and, once file is closed, this plugin uploads
 it to the configured BigQuery dataset.
 
 VERY IMPORTANT:
-1 - To make good use of BigQuery, your log events should be parsed and
+
+. To make good use of BigQuery, your log events should be parsed and
 structured. Consider using grok to parse your events into fields that can
 be uploaded to BQ.
-2 - You must configure your plugin so it gets events with the same structure,
+
+. You must configure your plugin so it gets events with the same structure,
 so the BigQuery schema suits them. In case you want to upload log events
 with different structures, you can utilize multiple configuration blocks,
 separating different log events with Logstash conditionals. More details on
@@ -50,14 +55,16 @@ more information, please refer to:
 https://developers.google.com/storage/docs/authentication#service_accounts
 
 Recommendations:
-a - Experiment with the settings depending on how much log data you generate,
+
+. Experiment with the settings depending on how much log data you generate,
 your needs to see "fresh" data, and how much data you could lose in the event
 of crash. For instance, if you want to see recent data in BQ quickly, you
 could configure the plugin to upload data every minute or so (provided you
 have enough log events to justify that). Note also, that if uploads are too
 frequent, there is no guarantee that they will be imported in the same order,
 so later data may be available before earlier data.
-b - BigQuery charges for storage and for queries, depending on how much data
+
+. BigQuery charges for storage and for queries, depending on how much data
 it reads to perform a query. These are other aspects to consider when
 considering the date pattern which will be used to create new tables and also
 how to compose the queries when using BQ. For more info on BigQuery Pricing,
@@ -67,11 +74,13 @@ https://developers.google.com/bigquery/pricing
 USAGE:
 This is an example of logstash config:
 
+[source,json]
+--------------------------
 output {
    google_bigquery {
      project_id => "folkloric-guru-278"                        (required)
      dataset => "logs"                                         (required)
-     csv_schema => "path:STRING,status:INTEGER,score:FLOAT"    (required*)
+     csv_schema => "path:STRING,status:INTEGER,score:FLOAT"    (required) <1>
      key_path => "/path/to/privatekey.p12"                     (required)
      key_password => "notasecret"                              (optional)
      service_account => "1234@developer.gserviceaccount.com"   (required)
@@ -83,13 +92,15 @@ output {
      deleter_interval_secs => 60                               (optional)
    }
 }
+--------------------------
 
-* Specify either a csv_schema or a json_schema.
+<1> Specify either a csv_schema or a json_schema.
 
 Improvements TODO list:
-- Refactor common code between Google BQ and GCS plugins.
-- Turn Google API code into a Plugin Mixin (like AwsConfig).
-- There's no recover method, so if logstash/plugin crashes, files may not
+
+* Refactor common code between Google BQ and GCS plugins.
+* Turn Google API code into a Plugin Mixin (like AwsConfig).
+* There's no recover method, so if logstash/plugin crashes, files may not
 be uploaded to BQ.
 
 &nbsp;
@@ -145,7 +156,7 @@ Available configuration options:
 &nbsp;
 
 [[plugins-outputs-google_bigquery-codec]]
-===== `codec` 
+===== `codec`
 
   * Value type is <<codec,codec>>
   * Default value is `"plain"`
@@ -153,7 +164,7 @@ Available configuration options:
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
 
 [[plugins-outputs-google_bigquery-csv_schema]]
-===== `csv_schema` 
+===== `csv_schema`
 
   * Value type is <<string,string>>
   * Default value is `nil`
@@ -163,7 +174,7 @@ Schema for log data. It must follow this format:
 Example: path:STRING,status:INTEGER,score:FLOAT
 
 [[plugins-outputs-google_bigquery-dataset]]
-===== `dataset` 
+===== `dataset`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -172,7 +183,7 @@ Example: path:STRING,status:INTEGER,score:FLOAT
 BigQuery dataset to which these events will be added to.
 
 [[plugins-outputs-google_bigquery-date_pattern]]
-===== `date_pattern` 
+===== `date_pattern`
 
   * Value type is <<string,string>>
   * Default value is `"%Y-%m-%dT%H:00"`
@@ -181,7 +192,7 @@ Time pattern for BigQuery table, defaults to hourly tables.
 Must Time.strftime patterns: www.ruby-doc.org/core-2.0/Time.html#method-i-strftime
 
 [[plugins-outputs-google_bigquery-deleter_interval_secs]]
-===== `deleter_interval_secs` 
+===== `deleter_interval_secs`
 
   * Value type is <<number,number>>
   * Default value is `60`
@@ -190,7 +201,7 @@ Deleter interval when checking if upload jobs are done for file deletion.
 This only affects how long files are on the hard disk after the job is done.
 
 [[plugins-outputs-google_bigquery-enable_metric]]
-===== `enable_metric` 
+===== `enable_metric`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -200,7 +211,7 @@ by default we record all the metrics we can, but you can disable metrics collect
 for a specific plugin.
 
 [[plugins-outputs-google_bigquery-flush_interval_secs]]
-===== `flush_interval_secs` 
+===== `flush_interval_secs`
 
   * Value type is <<number,number>>
   * Default value is `2`
@@ -209,7 +220,7 @@ Flush interval in seconds for flushing writes to log files. 0 will flush
 on every message.
 
 [[plugins-outputs-google_bigquery-id]]
-===== `id` 
+===== `id`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -228,7 +239,7 @@ output {
 If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-google_bigquery-ignore_unknown_values]]
-===== `ignore_unknown_values` 
+===== `ignore_unknown_values`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -237,7 +248,7 @@ Indicates if BigQuery should allow extra values that are not represented in the 
 If true, the extra values are ignored. If false, records with extra columns are treated as bad records, and if there are too many bad records, an invalid error is returned in the job result. The default value is false.
 
 [[plugins-outputs-google_bigquery-json_schema]]
-===== `json_schema` 
+===== `json_schema`
 
   * Value type is <<hash,hash>>
   * Default value is `nil`
@@ -257,7 +268,7 @@ json_schema => {
 }
 
 [[plugins-outputs-google_bigquery-key_password]]
-===== `key_password` 
+===== `key_password`
 
   * Value type is <<string,string>>
   * Default value is `"notasecret"`
@@ -265,7 +276,7 @@ json_schema => {
 Private key password for service account private key.
 
 [[plugins-outputs-google_bigquery-key_path]]
-===== `key_path` 
+===== `key_path`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -274,7 +285,7 @@ Private key password for service account private key.
 Path to private key file for Google Service Account.
 
 [[plugins-outputs-google_bigquery-project_id]]
-===== `project_id` 
+===== `project_id`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -283,7 +294,7 @@ Path to private key file for Google Service Account.
 Google Cloud Project ID (number, not Project Name!).
 
 [[plugins-outputs-google_bigquery-service_account]]
-===== `service_account` 
+===== `service_account`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -292,7 +303,7 @@ Google Cloud Project ID (number, not Project Name!).
 Service account to access Google APIs.
 
 [[plugins-outputs-google_bigquery-table_prefix]]
-===== `table_prefix` 
+===== `table_prefix`
 
   * Value type is <<string,string>>
   * Default value is `"logstash"`
@@ -301,7 +312,7 @@ BigQuery table ID prefix to be used when creating new tables for log data.
 Table name will be <table_prefix><table_separator><date>
 
 [[plugins-outputs-google_bigquery-table_separator]]
-===== `table_separator` 
+===== `table_separator`
 
   * Value type is <<string,string>>
   * Default value is `"_"`
@@ -310,7 +321,7 @@ BigQuery table separator to be added between the table_prefix and the
 date suffix.
 
 [[plugins-outputs-google_bigquery-temp_directory]]
-===== `temp_directory` 
+===== `temp_directory`
 
   * Value type is <<string,string>>
   * Default value is `""`
@@ -319,7 +330,7 @@ Directory where temporary files are stored.
 Defaults to /tmp/logstash-bq-<random-suffix>
 
 [[plugins-outputs-google_bigquery-temp_file_prefix]]
-===== `temp_file_prefix` 
+===== `temp_file_prefix`
 
   * Value type is <<string,string>>
   * Default value is `"logstash_bq"`
@@ -328,7 +339,7 @@ Temporary local file prefix. Log file will follow the format:
 <prefix>_hostname_date.part?.log
 
 [[plugins-outputs-google_bigquery-uploader_interval_secs]]
-===== `uploader_interval_secs` 
+===== `uploader_interval_secs`
 
   * Value type is <<number,number>>
   * Default value is `60`
@@ -338,13 +349,11 @@ on your time pattern (for example, for hourly files, this interval can be
 around one hour).
 
 [[plugins-outputs-google_bigquery-workers]]
-===== `workers` 
+===== `workers`
 
   * Value type is <<string,string>>
   * Default value is `1`
 
-TODO remove this in Logstash 6.0
-when we no longer support the :legacy type
-This is hacky, but it can only be herne
+
 
 

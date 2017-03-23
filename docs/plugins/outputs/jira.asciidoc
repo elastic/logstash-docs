@@ -8,11 +8,13 @@ NOTE: This is a community-maintained plugin! It does not ship with Logstash by d
 Origin https://groups.google.com/forum/#!msg/logstash-users/exgrB4iQ-mw/R34apku5nXsJ
 and https://botbot.me/freenode/logstash/msg/4169496/ 
 via https://gist.github.com/electrical/4660061e8fff11cdcf37#file-jira-rb
+
 Uses jiralicious as the bridge to JIRA
+
 By Martin Cleaver, Blended Perspectives
 with a lot of help from 'electrical' in #logstash
 
-This is so is most useful so you can use logstash to parse and structure
+This is most useful so you can use logstash to parse and structure
 your logs and ship structured, json events to JIRA
 
 To use this, you'll need to ensure your JIRA instance allows REST calls

@@ -58,7 +58,7 @@ Available configuration options:
 &nbsp;
 
 [[plugins-outputs-datadog_metrics-api_key]]
-===== `api_key` 
+===== `api_key`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -67,7 +67,7 @@ Available configuration options:
 Your DatadogHQ API key. https://app.datadoghq.com/account/settings#api
 
 [[plugins-outputs-datadog_metrics-codec]]
-===== `codec` 
+===== `codec`
 
   * Value type is <<codec,codec>>
   * Default value is `"plain"`
@@ -75,7 +75,7 @@ Your DatadogHQ API key. https://app.datadoghq.com/account/settings#api
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
 
 [[plugins-outputs-datadog_metrics-dd_tags]]
-===== `dd_tags` 
+===== `dd_tags`
 
   * Value type is <<array,array>>
   * There is no default value for this setting.
@@ -84,7 +84,7 @@ Set any custom tags for this event,
 default are the Logstash tags if any.
 
 [[plugins-outputs-datadog_metrics-device]]
-===== `device` 
+===== `device`
 
   * Value type is <<string,string>>
   * Default value is `"%{metric_device}"`
@@ -92,7 +92,7 @@ default are the Logstash tags if any.
 The name of the device that produced the metric.
 
 [[plugins-outputs-datadog_metrics-enable_metric]]
-===== `enable_metric` 
+===== `enable_metric`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -102,7 +102,7 @@ by default we record all the metrics we can, but you can disable metrics collect
 for a specific plugin.
 
 [[plugins-outputs-datadog_metrics-host]]
-===== `host` 
+===== `host`
 
   * Value type is <<string,string>>
   * Default value is `"%{host}"`
@@ -110,7 +110,7 @@ for a specific plugin.
 The name of the host that produced the metric.
 
 [[plugins-outputs-datadog_metrics-id]]
-===== `id` 
+===== `id`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -129,7 +129,7 @@ output {
 If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-datadog_metrics-metric_name]]
-===== `metric_name` 
+===== `metric_name`
 
   * Value type is <<string,string>>
   * Default value is `"%{metric_name}"`
@@ -137,7 +137,7 @@ If you don't explicitely set this variable Logstash will generate a unique name.
 The name of the time series.
 
 [[plugins-outputs-datadog_metrics-metric_type]]
-===== `metric_type` 
+===== `metric_type`
 
   * Value can be any of: `gauge`, `counter`, `%{metric_type}`
   * Default value is `"%{metric_type}"`
@@ -145,7 +145,7 @@ The name of the time series.
 The type of the metric.
 
 [[plugins-outputs-datadog_metrics-metric_value]]
-===== `metric_value` 
+===== `metric_value`
 
   * Value type is <<string,string>>
   * Default value is `"%{metric_value}"`
@@ -153,7 +153,7 @@ The type of the metric.
 The value.
 
 [[plugins-outputs-datadog_metrics-queue_size]]
-===== `queue_size` 
+===== `queue_size`
 
   * Value type is <<number,number>>
   * Default value is `10`
@@ -162,7 +162,7 @@ How many events to queue before flushing to Datadog
 prior to schedule set in `@timeframe`
 
 [[plugins-outputs-datadog_metrics-timeframe]]
-===== `timeframe` 
+===== `timeframe`
 
   * Value type is <<number,number>>
   * Default value is `10`
@@ -170,13 +170,11 @@ prior to schedule set in `@timeframe`
 How often (in seconds) to flush queued events to Datadog
 
 [[plugins-outputs-datadog_metrics-workers]]
-===== `workers` 
+===== `workers`
 
   * Value type is <<string,string>>
   * Default value is `1`
 
-TODO remove this in Logstash 6.0
-when we no longer support the :legacy type
-This is hacky, but it can only be herne
+
 
 
