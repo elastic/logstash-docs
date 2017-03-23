@@ -76,7 +76,6 @@ written to the end of the file between the last read operation prior
 to the rotation and its reopening under the new name (an interval
 determined by the `stat_interval` and `discover_interval` options)
 will not get picked up.
-TODO - move this to core
 
 &nbsp;
 
@@ -204,7 +203,7 @@ You might want to exclude gzipped files:
   * There is no default value for this setting.
 
 Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
-It is strongly recommended to set this ID in your configuration. This is particulary useful 
+It is strongly recommended to set this ID in your configuration. This is particularly useful 
 when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
 Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
 

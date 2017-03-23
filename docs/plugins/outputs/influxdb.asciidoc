@@ -73,7 +73,7 @@ Available configuration options:
 &nbsp;
 
 [[plugins-outputs-influxdb-allow_time_override]]
-===== `allow_time_override` 
+===== `allow_time_override`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -88,7 +88,7 @@ Setting this to `true` allows you to explicitly set the `time` column yourself
 Note: **`time` must be an epoch value in either seconds, milliseconds or microseconds**
 
 [[plugins-outputs-influxdb-codec]]
-===== `codec` 
+===== `codec`
 
   * Value type is <<codec,codec>>
   * Default value is `"plain"`
@@ -96,7 +96,7 @@ Note: **`time` must be an epoch value in either seconds, milliseconds or microse
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
 
 [[plugins-outputs-influxdb-coerce_values]]
-===== `coerce_values` 
+===== `coerce_values`
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
@@ -111,7 +111,7 @@ currently supported datatypes are `integer` and `float`
 
 
 [[plugins-outputs-influxdb-data_points]]
-===== `data_points` 
+===== `data_points`
 
   * This is a required setting.
   * Value type is <<hash,hash>>
@@ -124,7 +124,7 @@ Events for the same measurement will be batched together where possible
 Both keys and values support sprintf formatting
 
 [[plugins-outputs-influxdb-db]]
-===== `db` 
+===== `db`
 
   * Value type is <<string,string>>
   * Default value is `"statistics"`
@@ -132,7 +132,7 @@ Both keys and values support sprintf formatting
 The database to write - supports sprintf formatting
 
 [[plugins-outputs-influxdb-enable_metric]]
-===== `enable_metric` 
+===== `enable_metric`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -142,22 +142,22 @@ by default we record all the metrics we can, but you can disable metrics collect
 for a specific plugin.
 
 [[plugins-outputs-influxdb-exclude_fields]]
-===== `exclude_fields` 
+===== `exclude_fields`
 
   * Value type is <<array,array>>
   * Default value is `["@timestamp", "@version", "sequence", "message", "type"]`
 
 An array containing the names of fields from the event to exclude from the
-data points 
+data points
 
 Events, in general, contain keys "@version" and "@timestamp". Other plugins
-may add others that you'll want to exclude (such as "command" from the 
+may add others that you'll want to exclude (such as "command" from the
 exec plugin).
 
 This only applies when use_event_fields_for_data_points is true.
 
 [[plugins-outputs-influxdb-flush_size]]
-===== `flush_size` 
+===== `flush_size`
 
   * Value type is <<number,number>>
   * Default value is `100`
@@ -166,7 +166,7 @@ This setting controls how many events will be buffered before sending a batch
 of events. Note that these are only batched for the same measurement
 
 [[plugins-outputs-influxdb-host]]
-===== `host` 
+===== `host`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -175,7 +175,7 @@ of events. Note that these are only batched for the same measurement
 The hostname or IP address to reach your InfluxDB instance
 
 [[plugins-outputs-influxdb-id]]
-===== `id` 
+===== `id`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -194,7 +194,7 @@ output {
 If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-influxdb-idle_flush_time]]
-===== `idle_flush_time` 
+===== `idle_flush_time`
 
   * Value type is <<number,number>>
   * Default value is `1`
@@ -210,7 +210,7 @@ This helps keep both fast and slow log streams moving along in
 near-real-time.
 
 [[plugins-outputs-influxdb-measurement]]
-===== `measurement` 
+===== `measurement`
 
   * Value type is <<string,string>>
   * Default value is `"logstash"`
@@ -218,7 +218,7 @@ near-real-time.
 Measurement name - supports sprintf formatting
 
 [[plugins-outputs-influxdb-password]]
-===== `password` 
+===== `password`
 
   * Value type is <<password,password>>
   * Default value is `nil`
@@ -226,7 +226,7 @@ Measurement name - supports sprintf formatting
 The password for the user who access to the named database
 
 [[plugins-outputs-influxdb-port]]
-===== `port` 
+===== `port`
 
   * Value type is <<number,number>>
   * Default value is `8086`
@@ -234,7 +234,7 @@ The password for the user who access to the named database
 The port for InfluxDB
 
 [[plugins-outputs-influxdb-retention_policy]]
-===== `retention_policy` 
+===== `retention_policy`
 
   * Value type is <<string,string>>
   * Default value is `"default"`
@@ -242,17 +242,17 @@ The port for InfluxDB
 The retention policy to use
 
 [[plugins-outputs-influxdb-send_as_tags]]
-===== `send_as_tags` 
+===== `send_as_tags`
 
   * Value type is <<array,array>>
   * Default value is `["host"]`
 
-An array containing the names of fields to send to Influxdb as tags instead 
+An array containing the names of fields to send to Influxdb as tags instead
 of fields. Influxdb 0.9 convention is that values that do not change every
 request should be considered metadata and given as tags.
 
 [[plugins-outputs-influxdb-ssl]]
-===== `ssl` 
+===== `ssl`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -260,7 +260,7 @@ request should be considered metadata and given as tags.
 Enable SSL/TLS secured communication to InfluxDB
 
 [[plugins-outputs-influxdb-time_precision]]
-===== `time_precision` 
+===== `time_precision`
 
   * Value can be any of: `n`, `u`, `ms`, `s`, `m`, `h`
   * Default value is `"ms"`
@@ -270,7 +270,7 @@ Set the level of precision of `time`
 only useful when overriding the time value
 
 [[plugins-outputs-influxdb-use_event_fields_for_data_points]]
-===== `use_event_fields_for_data_points` 
+===== `use_event_fields_for_data_points`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -278,7 +278,7 @@ only useful when overriding the time value
 Automatically use fields from the event as the data points sent to Influxdb
 
 [[plugins-outputs-influxdb-user]]
-===== `user` 
+===== `user`
 
   * Value type is <<string,string>>
   * Default value is `nil`
@@ -286,13 +286,11 @@ Automatically use fields from the event as the data points sent to Influxdb
 The user who has access to the named database
 
 [[plugins-outputs-influxdb-workers]]
-===== `workers` 
+===== `workers`
 
   * Value type is <<string,string>>
   * Default value is `1`
 
-TODO remove this in Logstash 6.0
-when we no longer support the :legacy type
-This is hacky, but it can only be herne
+
 
 

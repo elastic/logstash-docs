@@ -88,7 +88,7 @@ The address to send messages to
   * There is no default value for this setting.
 
 Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
-It is strongly recommended to set this ID in your configuration. This is particulary useful 
+It is strongly recommended to set this ID in your configuration. This is particularly useful 
 when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
 Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
 
@@ -116,9 +116,4 @@ The port to send messages on
 
   * Value type is <<string,string>>
   * Default value is `1`
-
-TODO remove this in Logstash 6.0
-when we no longer support the :legacy type
-This is hacky, but it can only be herne
-
 

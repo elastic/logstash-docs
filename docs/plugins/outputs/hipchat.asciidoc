@@ -58,7 +58,7 @@ Available configuration options:
 &nbsp;
 
 [[plugins-outputs-hipchat-codec]]
-===== `codec` 
+===== `codec`
 
   * Value type is <<codec,codec>>
   * Default value is `"plain"`
@@ -66,7 +66,7 @@ Available configuration options:
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
 
 [[plugins-outputs-hipchat-color]]
-===== `color` 
+===== `color`
 
   * Value type is <<string,string>>
   * Default value is `"yellow"`
@@ -76,7 +76,7 @@ HipChat currently supports one of "yellow", "red", "green", "purple",
 "gray", or "random". (default: yellow), support fieldref
 
 [[plugins-outputs-hipchat-enable_metric]]
-===== `enable_metric` 
+===== `enable_metric`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -86,7 +86,7 @@ by default we record all the metrics we can, but you can disable metrics collect
 for a specific plugin.
 
 [[plugins-outputs-hipchat-format]]
-===== `format` 
+===== `format`
 
   * Value type is <<string,string>>
   * Default value is `"%{message}"`
@@ -94,7 +94,7 @@ for a specific plugin.
 Message format to send, event tokens are usable here.
 
 [[plugins-outputs-hipchat-from]]
-===== `from` 
+===== `from`
 
   * Value type is <<string,string>>
   * Default value is `"logstash"`
@@ -102,7 +102,7 @@ Message format to send, event tokens are usable here.
 The name the message will appear be sent from, you can use fieldref
 
 [[plugins-outputs-hipchat-host]]
-===== `host` 
+===== `host`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -110,7 +110,7 @@ The name the message will appear be sent from, you can use fieldref
 HipChat host to use
 
 [[plugins-outputs-hipchat-id]]
-===== `id` 
+===== `id`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -129,7 +129,7 @@ output {
 If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-hipchat-message_format]]
-===== `message_format` 
+===== `message_format`
 
   * Value can be any of: `html`, `text`
   * Default value is `"html"`
@@ -137,7 +137,7 @@ If you don't explicitely set this variable Logstash will generate a unique name.
 Specify `Message Format`
 
 [[plugins-outputs-hipchat-room_id]]
-===== `room_id` 
+===== `room_id`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -146,7 +146,7 @@ Specify `Message Format`
 The ID or name of the room, support fieldref
 
 [[plugins-outputs-hipchat-token]]
-===== `token` 
+===== `token`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -155,7 +155,7 @@ The ID or name of the room, support fieldref
 The HipChat authentication token.
 
 [[plugins-outputs-hipchat-trigger_notify]]
-===== `trigger_notify` 
+===== `trigger_notify`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -163,13 +163,11 @@ The HipChat authentication token.
 Whether or not this message should trigger a notification for people in the room.
 
 [[plugins-outputs-hipchat-workers]]
-===== `workers` 
+===== `workers`
 
   * Value type is <<string,string>>
   * Default value is `1`
 
-TODO remove this in Logstash 6.0
-when we no longer support the :legacy type
-This is hacky, but it can only be herne
+
 
 

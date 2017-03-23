@@ -186,7 +186,7 @@ Ruby style regexp of keys to exclude from the bucket
   * There is no default value for this setting.
 
 Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
-It is strongly recommended to set this ID in your configuration. This is particulary useful 
+It is strongly recommended to set this ID in your configuration. This is particularly useful 
 when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
 Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
 
@@ -274,7 +274,7 @@ This can help with processing later.
 ===== `temporary_directory` 
 
   * Value type is <<string,string>>
-  * Default value is `"/var/folders/_9/x4bq65rs6vd0rrjthct3zxjw0000gn/T/logstash"`
+  * Default value is `"/var/folders/s9/fp9p03r525d_cgclm9ps2n6r0000gn/T/logstash"`
 
 Set the directory where logstash will store the tmp files before processing them.
 default to the current OS temporary directory in linux /tmp/logstash
