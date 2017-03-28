@@ -27,7 +27,6 @@ older than some threshold.
 [source,ruby]
 filter {
   age {}
-
   if [@metadata][age] > 86400 {
     drop {}
   }

@@ -24,6 +24,7 @@ The following filter plugins are available below. For a list of Elastic supporte
 | <<plugins-filters-drop,drop>> | Drops all events | https://github.com/logstash-plugins/logstash-filter-drop[logstash-filter-drop]
 | <<plugins-filters-elapsed,elapsed>> | Calculates the elapsed time between a pair of events | https://github.com/logstash-plugins/logstash-filter-elapsed[logstash-filter-elapsed]
 | <<plugins-filters-elasticsearch,elasticsearch>> | Copies fields from previous log events in Elasticsearch to current events  | https://github.com/logstash-plugins/logstash-filter-elasticsearch[logstash-filter-elasticsearch]
+| <<plugins-filters-emoji,emoji>> | Maps syslog severity to emojis  | https://github.com/logstash-plugins/logstash-filter-emoji[logstash-filter-emoji]
 | <<plugins-filters-environment,environment>> | Stores environment variables as metadata sub-fields | https://github.com/logstash-plugins/logstash-filter-environment[logstash-filter-environment]
 | <<plugins-filters-extractnumbers,extractnumbers>> | Extracts numbers from a string | https://github.com/logstash-plugins/logstash-filter-extractnumbers[logstash-filter-extractnumbers]
 | <<plugins-filters-fingerprint,fingerprint>> | Fingerprints fields by replacing values with a consistent hash | https://github.com/logstash-plugins/logstash-filter-fingerprint[logstash-filter-fingerprint]
@@ -89,6 +90,8 @@ include::filters/drop.asciidoc[]
 include::filters/elapsed.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/edit/master/lib/logstash/filters/elasticsearch.rb
 include::filters/elasticsearch.asciidoc[]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-emoji/edit/master/lib/logstash/filters/emoji.rb
+include::filters/emoji.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-environment/edit/master/lib/logstash/filters/environment.rb
 include::filters/environment.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-extractnumbers/edit/master/lib/logstash/filters/extractnumbers.rb
