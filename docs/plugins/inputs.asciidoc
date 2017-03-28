@@ -88,9 +88,9 @@ include::inputs/gemfire.asciidoc[]
 include::inputs/generator.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-input-github/edit/master/lib/logstash/inputs/github.rb
 include::inputs/github.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-input-graphite/edit/master/lib/logstash/inputs/graphite.rb
+:edit_url: https://github.com/logstash-plugins/logstash-input-graphite/edit/master/lib/logstash/inputs/google_pubsub.rb
 include::inputs/google_pubsub.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-input-google_pubsub/edit/master/lib/logstash/inputs/google_pubsub.rb
+:edit_url: https://github.com/logstash-plugins/logstash-input-google_pubsub/edit/master/lib/logstash/inputs/graphite.rb
 include::inputs/graphite.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-input-heartbeat/edit/master/lib/logstash/inputs/heartbeat.rb
 include::inputs/heartbeat.asciidoc[]
