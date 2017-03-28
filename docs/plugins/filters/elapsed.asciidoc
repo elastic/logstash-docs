@@ -5,8 +5,6 @@
 NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-elapsed`.
 
 
-elapsed filter
-
 This filter tracks a pair of start/end events and calculates the elapsed
 time between them.
 The elapsed filter tracks a pair of start/end events and uses their
