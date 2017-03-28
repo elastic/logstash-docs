@@ -1,7 +1,18 @@
 [[plugins-filters-mutate]]
 === mutate
 
+* Version: 3.1.3
+* Released on: September 29, 2016
+* https://github.com/logstash-plugins/logstash-filter-mutate/blob/master/CHANGELOG.md#313[Changelog]
 
+
+
+==== Getting Help
+
+For questions about the plugin, open a topic in the http://discuss.elastic.co[Discuss] forums. For bugs or feature requests, open an issue in https://github.com/elastic/logstash[Github].
+For the list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Elastic Support Matrix].
+
+==== Description
 
 The mutate filter allows you to perform general mutations on fields. You
 can rename, remove, replace, and modify fields in your events.
@@ -11,7 +22,6 @@ can rename, remove, replace, and modify fields in your events.
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -25,27 +35,28 @@ mutate {
 
 Available configuration options:
 
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-filters-mutate-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-mutate-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-mutate-convert>> |<<hash,hash>>|No|
-| <<plugins-filters-mutate-gsub>> |<<array,array>>|No|
-| <<plugins-filters-mutate-join>> |<<hash,hash>>|No|
-| <<plugins-filters-mutate-lowercase>> |<<array,array>>|No|
-| <<plugins-filters-mutate-merge>> |<<hash,hash>>|No|
-| <<plugins-filters-mutate-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-mutate-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-mutate-remove_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-mutate-rename>> |<<hash,hash>>|No|
-| <<plugins-filters-mutate-replace>> |<<hash,hash>>|No|
-| <<plugins-filters-mutate-split>> |<<hash,hash>>|No|
-| <<plugins-filters-mutate-strip>> |<<array,array>>|No|
-| <<plugins-filters-mutate-update>> |<<hash,hash>>|No|
-| <<plugins-filters-mutate-uppercase>> |<<array,array>>|No|
+|Setting |Input type|Required
+| <<plugins-filters-mutate-add_field>> |<<hash,hash>>|No
+| <<plugins-filters-mutate-add_tag>> |<<array,array>>|No
+| <<plugins-filters-mutate-convert>> |<<hash,hash>>|No
+| <<plugins-filters-mutate-enable_metric>> |<<boolean,boolean>>|No
+| <<plugins-filters-mutate-gsub>> |<<array,array>>|No
+| <<plugins-filters-mutate-id>> |<<string,string>>|No
+| <<plugins-filters-mutate-join>> |<<hash,hash>>|No
+| <<plugins-filters-mutate-lowercase>> |<<array,array>>|No
+| <<plugins-filters-mutate-merge>> |<<hash,hash>>|No
+| <<plugins-filters-mutate-periodic_flush>> |<<boolean,boolean>>|No
+| <<plugins-filters-mutate-remove_field>> |<<array,array>>|No
+| <<plugins-filters-mutate-remove_tag>> |<<array,array>>|No
+| <<plugins-filters-mutate-rename>> |<<hash,hash>>|No
+| <<plugins-filters-mutate-replace>> |<<hash,hash>>|No
+| <<plugins-filters-mutate-split>> |<<hash,hash>>|No
+| <<plugins-filters-mutate-strip>> |<<array,array>>|No
+| <<plugins-filters-mutate-update>> |<<hash,hash>>|No
+| <<plugins-filters-mutate-uppercase>> |<<array,array>>|No
 |=======================================================================
-
 
 
 ==== Details
@@ -140,6 +151,16 @@ Example:
       }
     }
 
+[[plugins-filters-mutate-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-filters-mutate-gsub]]
 ===== `gsub` 
 
@@ -167,6 +188,27 @@ Example:
         ]
       }
     }
+
+
+[[plugins-filters-mutate-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
+It is strongly recommended to set this ID in your configuration. This is particularly useful 
+when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
+Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
+
+[source,ruby]
+---------------------------------------------------------------------------------------------------
+output {
+ stdout {
+   id => "my_plugin_id"
+ }
+}
+---------------------------------------------------------------------------------------------------
 
 
 [[plugins-filters-mutate-join]]
@@ -230,26 +272,6 @@ Example:
 
 Call the filter flush method at regular interval.
 Optional.
-
-[[plugins-filters-mutate-remove]]
-===== `remove`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
-
-Remove one or more fields.
-
-Example:
-[source,ruby]
-    filter {
-      mutate {
-        remove => [ "client" ]  # Removes the 'client' field
-      }
-    }
-
-This option is deprecated, instead use `remove_field` option available in all
-filters.
 
 [[plugins-filters-mutate-remove_field]]
 ===== `remove_field` 

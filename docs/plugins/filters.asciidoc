@@ -8,6 +8,7 @@ The following filter plugins are available below. For a list of Elastic supporte
 
 |=======================================================================
 | Plugin | Description | Github repository
+| <<plugins-filters-age,age>> | Calculates the age of an event. | https://github.com/logstash-plugins/logstash-filter-age[logstash-filter-age]
 | <<plugins-filters-aggregate,aggregate>> | Aggregates information from several events originating with a single task | https://github.com/logstash-plugins/logstash-filter-aggregate[logstash-filter-aggregate]
 | <<plugins-filters-alter,alter>> | Performs general alterations to fields that the `mutate` filter does not handle | https://github.com/logstash-plugins/logstash-filter-alter[logstash-filter-alter]
 | <<plugins-filters-anonymize,anonymize>> | Replaces field values with a consistent hash | https://github.com/logstash-plugins/logstash-filter-anonymize[logstash-filter-anonymize]
@@ -29,6 +30,7 @@ The following filter plugins are available below. For a list of Elastic supporte
 | <<plugins-filters-geoip,geoip>> | Adds geographical information about an IP address | https://github.com/logstash-plugins/logstash-filter-geoip[logstash-filter-geoip]
 | <<plugins-filters-grok,grok>> | Parses unstructured event data into fields | https://github.com/logstash-plugins/logstash-filter-grok[logstash-filter-grok]
 | <<plugins-filters-i18n,i18n>> | Removes special characters from a field | https://github.com/logstash-plugins/logstash-filter-i18n[logstash-filter-i18n]
+| <<plugins-filters-jdbc_streaming,jdbc_streaming>> | Enrich events with your database data | https://github.com/logstash-plugins/logstash-filter-jdbc_streaming[logstash-filter-jdbc_streaming]
 | <<plugins-filters-json,json>> | Parses JSON events | https://github.com/logstash-plugins/logstash-filter-json[logstash-filter-json]
 | <<plugins-filters-json_encode,json_encode>> | Serializes a field to JSON | https://github.com/logstash-plugins/logstash-filter-json_encode[logstash-filter-json_encode]
 | <<plugins-filters-kv,kv>> | Parses key-value pairs | https://github.com/logstash-plugins/logstash-filter-kv[logstash-filter-kv]
@@ -55,6 +57,8 @@ The following filter plugins are available below. For a list of Elastic supporte
 | <<plugins-filters-zeromq,zeromq>> | Sends an event to ZeroMQ | https://github.com/logstash-plugins/logstash-filter-zeromq[logstash-filter-zeromq]
 |=======================================================================
 
+:edit_url: https://github.com/logstash-plugins/logstash-filter-age/edit/master/lib/logstash/filters/age.rb
+include::filters/age.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-aggregate/edit/master/lib/logstash/filters/aggregate.rb
 include::filters/aggregate.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-alter/edit/master/lib/logstash/filters/alter.rb
@@ -97,6 +101,8 @@ include::filters/geoip.asciidoc[]
 include::filters/grok.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-i18n/edit/master/lib/logstash/filters/i18n.rb
 include::filters/i18n.asciidoc[]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-jdbc_streaming/edit/master/lib/logstash/filters/jdbc_streaming.rb
+include::filters/jdbc_streaming.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-json/edit/master/lib/logstash/filters/json.rb
 include::filters/json.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-json_encode/edit/master/lib/logstash/filters/json_encode.rb

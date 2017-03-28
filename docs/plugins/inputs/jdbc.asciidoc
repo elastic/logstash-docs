@@ -1,7 +1,18 @@
 [[plugins-inputs-jdbc]]
 === jdbc
 
+* Version: 4.1.3
+* Released on: October 20, 2016
+* https://github.com/logstash-plugins/logstash-input-jdbc/blob/master/CHANGELOG.md#413[Changelog]
 
+
+
+==== Getting Help
+
+For questions about the plugin, open a topic in the http://discuss.elastic.co[Discuss] forums. For bugs or feature requests, open an issue in https://github.com/elastic/logstash[Github].
+For the list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Elastic Support Matrix].
+
+==== Description
 
 This plugin was created as a way to ingest data in any database
 with a JDBC interface into Logstash. You can periodically schedule ingestion
@@ -89,7 +100,8 @@ Some parameters are built-in and can be used from within your queries.
 Here is the list:
 
 |==========================================================
-|sql_last_value | The value used to calculate which rows to query. Before any query is run, this is set to Thursday, 1 January 1970, or 0 if `use_column_value` is true and
+|sql_last_value | The value used to calculate which rows to query. Before any query is run,
+this is set to Thursday, 1 January 1970, or 0 if `use_column_value` is true and
 `tracking_column` is set. It is updated accordingly after subsequent queries are run.
 |==========================================================
 
@@ -106,12 +118,12 @@ input {
 }
 ----------------------------------
 
+
 &nbsp;
 
 ==== Synopsis
 
 This plugin supports the following configuration options:
-
 
 Required configuration options:
 
@@ -128,41 +140,46 @@ jdbc {
 
 Available configuration options:
 
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-inputs-jdbc-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-jdbc-clean_run>> |<<boolean,boolean>>|No|`false`
-| <<plugins-inputs-jdbc-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-inputs-jdbc-jdbc_connection_string>> |<<string,string>>|Yes|
-| <<plugins-inputs-jdbc-jdbc_default_timezone>> |<<string,string>>|No|
-| <<plugins-inputs-jdbc-jdbc_driver_class>> |<<string,string>>|Yes|
-| <<plugins-inputs-jdbc-jdbc_driver_library>> |<<string,string>>|No|
-| <<plugins-inputs-jdbc-jdbc_fetch_size>> |<<number,number>>|No|
-| <<plugins-inputs-jdbc-jdbc_page_size>> |<<number,number>>|No|`100000`
-| <<plugins-inputs-jdbc-jdbc_paging_enabled>> |<<boolean,boolean>>|No|`false`
-| <<plugins-inputs-jdbc-jdbc_password>> |<<password,password>>|No|
-| <<plugins-inputs-jdbc-jdbc_pool_timeout>> |<<number,number>>|No|`5`
-| <<plugins-inputs-jdbc-jdbc_user>> |<<string,string>>|Yes|
-| <<plugins-inputs-jdbc-jdbc_validate_connection>> |<<boolean,boolean>>|No|`false`
-| <<plugins-inputs-jdbc-jdbc_validation_timeout>> |<<number,number>>|No|`3600`
-| <<plugins-inputs-jdbc-last_run_metadata_path>> |<<string,string>>|No|`"$USER_HOME/.logstash_jdbc_last_run"`
-| <<plugins-inputs-jdbc-lowercase_column_names>> |<<boolean,boolean>>|No|`true`
-| <<plugins-inputs-jdbc-parameters>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-jdbc-record_last_run>> |<<boolean,boolean>>|No|`true`
-| <<plugins-inputs-jdbc-connection_retry_attempts>> |<<number,number>>|No|`1`
-| <<plugins-inputs-jdbc-connection_retry_attempts_wait_time>> |<<number,number>>|No|`0.5`
-| <<plugins-inputs-jdbc-schedule>> |<<string,string>>|No|
-| <<plugins-inputs-jdbc-sequel_opts>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-jdbc-sql_log_level>> |<<string,string>>, one of `["fatal", "error", "warn", "info", "debug"]`|No|`"info"`
-| <<plugins-inputs-jdbc-statement>> |<<string,string>>|No|
-| <<plugins-inputs-jdbc-statement_filepath>> |a valid filesystem path|No|
-| <<plugins-inputs-jdbc-tags>> |<<array,array>>|No|
-| <<plugins-inputs-jdbc-tracking_column>> |<<string,string>>|No|
-| <<plugins-inputs-jdbc-type>> |<<string,string>>|No|
-| <<plugins-inputs-jdbc-use_column_value>> |<<boolean,boolean>>|No|`false`
+|Setting |Input type|Required
+| <<plugins-inputs-jdbc-add_field>> |<<hash,hash>>|No
+| <<plugins-inputs-jdbc-charset>> |<<string,string>>|No
+| <<plugins-inputs-jdbc-clean_run>> |<<boolean,boolean>>|No
+| <<plugins-inputs-jdbc-codec>> |<<codec,codec>>|No
+| <<plugins-inputs-jdbc-columns_charset>> |<<hash,hash>>|No
+| <<plugins-inputs-jdbc-connection_retry_attempts>> |<<number,number>>|No
+| <<plugins-inputs-jdbc-connection_retry_attempts_wait_time>> |<<number,number>>|No
+| <<plugins-inputs-jdbc-enable_metric>> |<<boolean,boolean>>|No
+| <<plugins-inputs-jdbc-id>> |<<string,string>>|No
+| <<plugins-inputs-jdbc-jdbc_connection_string>> |<<string,string>>|Yes
+| <<plugins-inputs-jdbc-jdbc_default_timezone>> |<<string,string>>|No
+| <<plugins-inputs-jdbc-jdbc_driver_class>> |<<string,string>>|Yes
+| <<plugins-inputs-jdbc-jdbc_driver_library>> |<<string,string>>|No
+| <<plugins-inputs-jdbc-jdbc_fetch_size>> |<<number,number>>|No
+| <<plugins-inputs-jdbc-jdbc_page_size>> |<<number,number>>|No
+| <<plugins-inputs-jdbc-jdbc_paging_enabled>> |<<boolean,boolean>>|No
+| <<plugins-inputs-jdbc-jdbc_password>> |<<password,password>>|No
+| <<plugins-inputs-jdbc-jdbc_password_filepath>> |a valid filesystem path|No
+| <<plugins-inputs-jdbc-jdbc_pool_timeout>> |<<number,number>>|No
+| <<plugins-inputs-jdbc-jdbc_user>> |<<string,string>>|Yes
+| <<plugins-inputs-jdbc-jdbc_validate_connection>> |<<boolean,boolean>>|No
+| <<plugins-inputs-jdbc-jdbc_validation_timeout>> |<<number,number>>|No
+| <<plugins-inputs-jdbc-last_run_metadata_path>> |<<string,string>>|No
+| <<plugins-inputs-jdbc-lowercase_column_names>> |<<boolean,boolean>>|No
+| <<plugins-inputs-jdbc-parameters>> |<<hash,hash>>|No
+| <<plugins-inputs-jdbc-record_last_run>> |<<boolean,boolean>>|No
+| <<plugins-inputs-jdbc-schedule>> |<<string,string>>|No
+| <<plugins-inputs-jdbc-sequel_opts>> |<<hash,hash>>|No
+| <<plugins-inputs-jdbc-sql_log_level>> |<<string,string>>, one of `["fatal", "error", "warn", "info", "debug"]`|No
+| <<plugins-inputs-jdbc-statement>> |<<string,string>>|No
+| <<plugins-inputs-jdbc-statement_filepath>> |a valid filesystem path|No
+| <<plugins-inputs-jdbc-tags>> |<<array,array>>|No
+| <<plugins-inputs-jdbc-tracking_column>> |<<string,string>>|No
+| <<plugins-inputs-jdbc-tracking_column_type>> |<<string,string>>, one of `["numeric", "timestamp"]`|No
+| <<plugins-inputs-jdbc-type>> |<<string,string>>|No
+| <<plugins-inputs-jdbc-use_column_value>> |<<boolean,boolean>>|No
 |=======================================================================
-
 
 
 ==== Details
@@ -170,15 +187,24 @@ Available configuration options:
 &nbsp;
 
 [[plugins-inputs-jdbc-add_field]]
-===== `add_field`
+===== `add_field` 
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
 
 Add a field to an event
 
+[[plugins-inputs-jdbc-charset]]
+===== `charset` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The character encoding of all columns, leave empty if the columns are already properly UTF-8 
+encoded. Specific columns charsets using :columns_charset can override this setting.
+
 [[plugins-inputs-jdbc-clean_run]]
-===== `clean_run`
+===== `clean_run` 
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -186,12 +212,34 @@ Add a field to an event
 Whether the previous run state should be preserved
 
 [[plugins-inputs-jdbc-codec]]
-===== `codec`
+===== `codec` 
 
   * Value type is <<codec,codec>>
   * Default value is `"plain"`
 
 The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
+
+[[plugins-inputs-jdbc-columns_charset]]
+===== `columns_charset` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+The character encoding for specific columns. This option will override the `:charset` option 
+for the specified columns.
+
+Example:
+[source,ruby]
+----------------------------------
+input {
+  jdbc {
+    ...
+    columns_charset => { "column0" => "ISO-8859-1" }
+    ...
+  }
+}
+-----------------------------------
+this will only convert column0 that has ISO-8859-1 as an original encoding.
 
 [[plugins-inputs-jdbc-connection_retry_attempts]]
 ===== `connection_retry_attempts` 
@@ -199,14 +247,49 @@ The codec used for input data. Input codecs are a convenient method for decoding
   * Value type is <<number,number>>
   * Default value is `1`
 
+Maximum number of times to try connecting to database
+
 [[plugins-inputs-jdbc-connection_retry_attempts_wait_time]]
 ===== `connection_retry_attempts_wait_time` 
 
   * Value type is <<number,number>>
   * Default value is `0.5`
 
+Number of seconds to sleep between connection attempts
+
+[[plugins-inputs-jdbc-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-inputs-jdbc-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
+It is strongly recommended to set this ID in your configuration. This is particularly useful 
+when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
+Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
+
+[source,ruby]
+---------------------------------------------------------------------------------------------------
+output {
+ stdout {
+   id => "my_plugin_id"
+ }
+}
+---------------------------------------------------------------------------------------------------
+
+
 [[plugins-inputs-jdbc-jdbc_connection_string]]
-===== `jdbc_connection_string`
+===== `jdbc_connection_string` 
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -215,33 +298,47 @@ The codec used for input data. Input codecs are a convenient method for decoding
 JDBC connection string
 
 [[plugins-inputs-jdbc-jdbc_default_timezone]]
-===== `jdbc_default_timezone`
+===== `jdbc_default_timezone` 
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
+Timezone conversion.
+SQL does not allow for timezone data in timestamp fields.  This plugin will automatically
+convert your SQL timestamp fields to Logstash timestamps, in relative UTC time in ISO8601 format.
 
+Using this setting will manually assign a specified timezone offset, instead
+of using the timezone setting of the local machine.  You must use a canonical
+timezone, *America/Denver*, for example.
 
 [[plugins-inputs-jdbc-jdbc_driver_class]]
-===== `jdbc_driver_class`
+===== `jdbc_driver_class` 
 
   * This is a required setting.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-JDBC driver class to load, for example, `"org.apache.derby.jdbc.ClientDriver"`. If you are using
-the Oracle JDBC driver (`ojdbc6.jar`) the correct `jdbc_driver_class` is `"Java::oracle.jdbc.driver.OracleDriver"`
+JDBC driver class to load, for exmaple, "org.apache.derby.jdbc.ClientDriver"
+NB per https://github.com/logstash-plugins/logstash-input-jdbc/issues/43 if you are using
+the Oracle JDBC driver (ojdbc6.jar) the correct `jdbc_driver_class` is `"Java::oracle.jdbc.driver.OracleDriver"`
 
 [[plugins-inputs-jdbc-jdbc_driver_library]]
-===== `jdbc_driver_library`
+===== `jdbc_driver_library` 
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-JDBC driver library path to third party driver library. If not provided, Plugin will look for the driver class in the Logstash Java classpath.
+Tentative of abstracting JDBC logic to a mixin
+for potential reuse in other plugins (input/output)
+This method is called when someone includes this module
+Add these methods to the 'base' given.
+JDBC driver library path to third party driver library. In case of multiple libraries being
+required you can pass them separated by a comma.
+
+If not provided, Plugin will look for the driver class in the Logstash Java classpath.
 
 [[plugins-inputs-jdbc-jdbc_fetch_size]]
-===== `jdbc_fetch_size`
+===== `jdbc_fetch_size` 
 
   * Value type is <<number,number>>
   * There is no default value for this setting.
@@ -249,7 +346,7 @@ JDBC driver library path to third party driver library. If not provided, Plugin 
 JDBC fetch size. if not provided, respective driver's default will be used
 
 [[plugins-inputs-jdbc-jdbc_page_size]]
-===== `jdbc_page_size`
+===== `jdbc_page_size` 
 
   * Value type is <<number,number>>
   * Default value is `100000`
@@ -257,64 +354,81 @@ JDBC fetch size. if not provided, respective driver's default will be used
 JDBC page size
 
 [[plugins-inputs-jdbc-jdbc_paging_enabled]]
-===== `jdbc_paging_enabled`
+===== `jdbc_paging_enabled` 
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
-JDBC enable paging. This will cause a sql statement to be broken up into multiple queries. Each query will use limits and offsets to collectively retrieve the full result-set. The limit size is set with `jdbc_page_size`.
+JDBC enable paging
+
+This will cause a sql statement to be broken up into multiple queries.
+Each query will use limits and offsets to collectively retrieve the full
+result-set. The limit size is set with `jdbc_page_size`.
+
+Be aware that ordering is not guaranteed between queries.
 
 [[plugins-inputs-jdbc-jdbc_password]]
-===== `jdbc_password`
+===== `jdbc_password` 
 
   * Value type is <<password,password>>
   * There is no default value for this setting.
 
+JDBC password
 
+[[plugins-inputs-jdbc-jdbc_password_filepath]]
+===== `jdbc_password_filepath` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+JDBC password filename
 
 [[plugins-inputs-jdbc-jdbc_pool_timeout]]
-===== `jdbc_pool_timeout`
+===== `jdbc_pool_timeout` 
 
   * Value type is <<number,number>>
   * Default value is `5`
 
-
+Connection pool configuration.
+The amount of seconds to wait to acquire a connection before raising a PoolTimeoutError (default 5)
 
 [[plugins-inputs-jdbc-jdbc_user]]
-===== `jdbc_user`
+===== `jdbc_user` 
 
   * This is a required setting.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-
+JDBC user
 
 [[plugins-inputs-jdbc-jdbc_validate_connection]]
-===== `jdbc_validate_connection`
+===== `jdbc_validate_connection` 
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
-Connection pool configuration. Validate connection before use.
+Connection pool configuration.
+Validate connection before use.
 
 [[plugins-inputs-jdbc-jdbc_validation_timeout]]
-===== `jdbc_validation_timeout`
+===== `jdbc_validation_timeout` 
 
   * Value type is <<number,number>>
   * Default value is `3600`
 
-Connection pool configuration. How often to validate a connection (in seconds)
+Connection pool configuration.
+How often to validate a connection (in seconds)
 
 [[plugins-inputs-jdbc-last_run_metadata_path]]
-===== `last_run_metadata_path`
+===== `last_run_metadata_path` 
 
   * Value type is <<string,string>>
-  * Default value is `$USER_HOME/.logstash_jdbc_last_run`
+  * Default value is `"/Users/suyog/.logstash_jdbc_last_run"`
 
 Path to file with last run time
 
 [[plugins-inputs-jdbc-lowercase_column_names]]
-===== `lowercase_column_names`
+===== `lowercase_column_names` 
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -322,7 +436,7 @@ Path to file with last run time
 Whether to force the lowercasing of identifier fields
 
 [[plugins-inputs-jdbc-parameters]]
-===== `parameters`
+===== `parameters` 
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
@@ -330,7 +444,7 @@ Whether to force the lowercasing of identifier fields
 Hash of query parameter, for example `{ "target_id" => "321" }`
 
 [[plugins-inputs-jdbc-record_last_run]]
-===== `record_last_run`
+===== `record_last_run` 
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -338,7 +452,7 @@ Hash of query parameter, for example `{ "target_id" => "321" }`
 Whether to save state or not in last_run_metadata_path
 
 [[plugins-inputs-jdbc-schedule]]
-===== `schedule`
+===== `schedule` 
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -350,18 +464,21 @@ There is no schedule by default. If no schedule is given, then the statement is 
 exactly once.
 
 [[plugins-inputs-jdbc-sequel_opts]]
-===== `sequel_opts`
+===== `sequel_opts` 
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
 
-General/Vendor-specific Sequel configuration options. An example of an optional connection pool configuration
-`max_connections` - The maximum number of connections the connection pool examples of
-vendor-specific options can be found in this documentation
-page: https://github.com/jeremyevans/sequel/blob/master/doc/opening_databases.rdoc
+General/Vendor-specific Sequel configuration options.
+
+An example of an optional connection pool configuration
+   max_connections - The maximum number of connections the connection pool
+
+examples of vendor-specific options can be found in this
+documentation page: https://github.com/jeremyevans/sequel/blob/master/doc/opening_databases.rdoc
 
 [[plugins-inputs-jdbc-sql_log_level]]
-===== `sql_log_level`
+===== `sql_log_level` 
 
   * Value can be any of: `fatal`, `error`, `warn`, `info`, `debug`
   * Default value is `"info"`
@@ -370,11 +487,12 @@ Log level at which to log SQL queries, the accepted values are the common ones f
 info and debug. The default value is info.
 
 [[plugins-inputs-jdbc-statement]]
-===== `statement`
+===== `statement` 
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
+If undefined, Logstash will complain, even if codec is unused.
 Statement to execute
 
 To use parameters, use named parameter syntax.
@@ -389,7 +507,7 @@ here, ":target_id" is a named parameter. You can configure named parameters
 with the `parameters` setting.
 
 [[plugins-inputs-jdbc-statement_filepath]]
-===== `statement_filepath`
+===== `statement_filepath` 
 
   * Value type is <<path,path>>
   * There is no default value for this setting.
@@ -397,7 +515,7 @@ with the `parameters` setting.
 Path of file containing statement to execute
 
 [[plugins-inputs-jdbc-tags]]
-===== `tags`
+===== `tags` 
 
   * Value type is <<array,array>>
   * There is no default value for this setting.
@@ -407,19 +525,28 @@ Add any number of arbitrary tags to your event.
 This can help with processing later.
 
 [[plugins-inputs-jdbc-tracking_column]]
-===== `tracking_column`
+===== `tracking_column` 
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
 If tracking column value rather than timestamp, the column whose value is to be tracked
 
+[[plugins-inputs-jdbc-tracking_column_type]]
+===== `tracking_column_type` 
+
+  * Value can be any of: `numeric`, `timestamp`
+  * Default value is `"numeric"`
+
+Type of tracking column. Currently only "numeric" and "timestamp"
+
 [[plugins-inputs-jdbc-type]]
-===== `type`
+===== `type` 
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
+This is the base class for Logstash inputs.
 Add a `type` field to all events handled by this input.
 
 Types are used mainly for filter activation.
@@ -434,10 +561,11 @@ the shipper stays with that event for its life even
 when sent to another Logstash server.
 
 [[plugins-inputs-jdbc-use_column_value]]
-===== `use_column_value`
+===== `use_column_value` 
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
 Use an incremental column value rather than a timestamp
+
 

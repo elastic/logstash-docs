@@ -1,17 +1,27 @@
 [[plugins-filters-dns]]
 === dns
 
+* Version: 3.0.3
+* Released on: July 14, 2016
+* https://github.com/logstash-plugins/logstash-filter-dns/blob/master/CHANGELOG.md#303[Changelog]
 
+
+
+==== Getting Help
+
+For questions about the plugin, open a topic in the http://discuss.elastic.co[Discuss] forums. For bugs or feature requests, open an issue in https://github.com/elastic/logstash[Github].
+For the list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Elastic Support Matrix].
+
+==== Description
 
 The DNS filter performs a lookup (either an A record/CNAME record lookup
 or a reverse lookup at the PTR record) on records specified under the
-`reverse` and `resolve` arrays.
+`reverse` arrays or respectively under the `resolve` arrays.
 
 The config should look like this:
 [source,ruby]
     filter {
       dns {
-        type => 'type'
         reverse => [ "source_host", "field_with_address" ]
         resolve => [ "field_with_fqdn" ]
         action => "replace"
@@ -30,7 +40,6 @@ worker is 500 events per second (1000 milliseconds / 2 milliseconds).
 
 This plugin supports the following configuration options:
 
-
 Required configuration options:
 
 [source,json]
@@ -43,26 +52,28 @@ dns {
 
 Available configuration options:
 
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-filters-dns-action>> |<<string,string>>, one of `["append", "replace"]`|No|`"append"`
-| <<plugins-filters-dns-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-dns-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-dns-failed_cache_size>> |<<number,number>>|No|`0`
-| <<plugins-filters-dns-failed_cache_ttl>> |<<number,number>>|No|`5`
-| <<plugins-filters-dns-hit_cache_size>> |<<number,number>>|No|`0`
-| <<plugins-filters-dns-hit_cache_ttl>> |<<number,number>>|No|`60`
-| <<plugins-filters-dns-max_retries>> |<<number,number>>|No|`2`
-| <<plugins-filters-dns-nameserver>> |<<array,array>>|No|
-| <<plugins-filters-dns-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-dns-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-dns-remove_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-dns-resolve>> |<<array,array>>|No|
-| <<plugins-filters-dns-reverse>> |<<array,array>>|No|
-| <<plugins-filters-dns-timeout>> |<<number,number>>|No|`0.5`
+|Setting |Input type|Required
+| <<plugins-filters-dns-action>> |<<string,string>>, one of `["append", "replace"]`|No
+| <<plugins-filters-dns-add_field>> |<<hash,hash>>|No
+| <<plugins-filters-dns-add_tag>> |<<array,array>>|No
+| <<plugins-filters-dns-enable_metric>> |<<boolean,boolean>>|No
+| <<plugins-filters-dns-failed_cache_size>> |<<number,number>>|No
+| <<plugins-filters-dns-failed_cache_ttl>> |<<number,number>>|No
+| <<plugins-filters-dns-hit_cache_size>> |<<number,number>>|No
+| <<plugins-filters-dns-hit_cache_ttl>> |<<number,number>>|No
+| <<plugins-filters-dns-hostsfile>> |<<array,array>>|No
+| <<plugins-filters-dns-id>> |<<string,string>>|No
+| <<plugins-filters-dns-max_retries>> |<<number,number>>|No
+| <<plugins-filters-dns-nameserver>> |<<array,array>>|No
+| <<plugins-filters-dns-periodic_flush>> |<<boolean,boolean>>|No
+| <<plugins-filters-dns-remove_field>> |<<array,array>>|No
+| <<plugins-filters-dns-remove_tag>> |<<array,array>>|No
+| <<plugins-filters-dns-resolve>> |<<array,array>>|No
+| <<plugins-filters-dns-reverse>> |<<array,array>>|No
+| <<plugins-filters-dns-timeout>> |<<number,number>>|No
 |=======================================================================
-
 
 
 ==== Details
@@ -138,6 +149,16 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
 
+[[plugins-filters-dns-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
 [[plugins-filters-dns-failed_cache_size]]
 ===== `failed_cache_size` 
 
@@ -169,6 +190,35 @@ set the size of cache for successful requests
   * Default value is `60`
 
 how long to cache successful requests (in seconds)
+
+[[plugins-filters-dns-hostsfile]]
+===== `hostsfile` 
+
+  * Value type is <<array,array>>
+  * There is no default value for this setting.
+
+Use custom hosts file(s). For example: `["/var/db/my_custom_hosts"]`
+
+[[plugins-filters-dns-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
+It is strongly recommended to set this ID in your configuration. This is particularly useful 
+when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
+Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
+
+[source,ruby]
+---------------------------------------------------------------------------------------------------
+output {
+ stdout {
+   id => "my_plugin_id"
+ }
+}
+---------------------------------------------------------------------------------------------------
+
 
 [[plugins-filters-dns-max_retries]]
 ===== `max_retries` 
@@ -265,8 +315,6 @@ Forward resolve one or more fields.
   * Value type is <<array,array>>
   * There is no default value for this setting.
 
-TODO(sissel): The timeout limitation does seem to be fixed in here: http://redmine.ruby-lang.org/issues/5100 # but isn't currently in JRuby.
-TODO(sissel): make `action` required? This was always the intent, but it
 due to a typo it was never enforced. Thus the default behavior in past
 versions was `append` by accident.
 Reverse resolve one or more fields.
