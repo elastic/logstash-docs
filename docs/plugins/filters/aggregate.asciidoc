@@ -1,15 +1,7 @@
 [[plugins-filters-aggregate]]
 === aggregate
 
-* Version: 2.5.1
-* Released on: 2017-01-08
-* https://github.com/logstash-plugins/logstash-filter-aggregate/blob/master/CHANGELOG.md#251[Changelog]
-* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
-
-
-NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-aggregate`.
-
-
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-aggregate`.
 
 The aim of this filter is to aggregate information available among several events (typically log lines) belonging to a same task,
 and finally push aggregated information into final task event.
@@ -199,7 +191,7 @@ In that case, you don't want to wait task timeout to flush aggregation map.
           map['town_name'] ||= []
           event.to_hash.each do |key,value|
             map[key] = value unless map.has_key?(key)
-            map[key] << value if map[key].is_a?(Array) and !value.is_a?(Array)
+            map[key] << value if map[key].is_a?(Array)
           end
          "
          push_previous_map_as_event => true
@@ -574,5 +566,4 @@ This field has no default value and will not be set on the event if not configur
 Example:
 
 If the task_id is "12345" and this field is set to "my_id", the generated timeout event will contain `'my_id'` key with `'12345'` value.
-
 

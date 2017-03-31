@@ -1,13 +1,6 @@
 [[plugins-outputs-lumberjack]]
 === lumberjack
 
-* Version: 3.1.2
-* Released on: 2016-09-15
-* https://github.com/logstash-plugins/logstash-output-lumberjack/blob/master/CHANGELOG.md#312[Changelog]
-* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
-
-
-NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-lumberjack`.
 
 
 
@@ -17,6 +10,7 @@ NOTE: This plugin does not ship with Logstash by default, but it is easy to inst
 ==== Synopsis
 
 This plugin supports the following configuration options:
+
 
 Required configuration options:
 
@@ -37,15 +31,14 @@ Available configuration options:
 |=======================================================================
 |Setting |Input type|Required|Default value
 | <<plugins-outputs-lumberjack-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-lumberjack-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-lumberjack-flush_size>> |<<number,number>>|No|`1024`
 | <<plugins-outputs-lumberjack-hosts>> |<<array,array>>|Yes|
-| <<plugins-outputs-lumberjack-id>> |<<string,string>>|No|
 | <<plugins-outputs-lumberjack-idle_flush_time>> |<<number,number>>|No|`1`
 | <<plugins-outputs-lumberjack-port>> |<<number,number>>|Yes|
 | <<plugins-outputs-lumberjack-ssl_certificate>> |a valid filesystem path|Yes|
-| <<plugins-outputs-lumberjack-workers>> |<<,>>|No|`1`
+| <<plugins-outputs-lumberjack-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -59,16 +52,6 @@ Available configuration options:
   * Default value is `"plain"`
 
 The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-lumberjack-enable_metric]]
-===== `enable_metric` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Disable or enable metric logging for this specific plugin instance
-by default we record all the metrics we can, but you can disable metrics collection
-for a specific plugin.
 
 [[plugins-outputs-lumberjack-flush_size]]
 ===== `flush_size` 
@@ -88,25 +71,6 @@ send them to the logstash server.
   * There is no default value for this setting.
 
 list of addresses lumberjack can send to
-
-[[plugins-outputs-lumberjack-id]]
-===== `id` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a unique `ID` to the plugin instance, this `ID` is used for tracking
-information for a specific configuration of the plugin.
-
-```
-output {
- stdout {
-   id => "ABC"
- }
-}
-```
-
-If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-lumberjack-idle_flush_time]]
 ===== `idle_flush_time` 
@@ -142,14 +106,22 @@ the port to connect to
 
 ssl certificate to use
 
+[[plugins-outputs-lumberjack-window_size]]
+===== `window_size`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<number,number>>
+  * There is no default value for this setting.
+
+window size
+
 [[plugins-outputs-lumberjack-workers]]
 ===== `workers` 
 
-  * Value type is <<string,string>>
+  * Value type is <<number,number>>
   * Default value is `1`
 
-TODO remove this in Logstash 6.0
-when we no longer support the :legacy type
-This is hacky, but it can only be herne
+The number of workers to use for this output.
+Note that this setting may not be useful for all outputs.
 
 

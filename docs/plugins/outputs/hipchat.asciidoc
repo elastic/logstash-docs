@@ -1,14 +1,7 @@
 [[plugins-outputs-hipchat]]
 === hipchat
 
-* Version: 4.0.2
-* Released on: 2016-07-14
-* https://github.com/logstash-plugins/logstash-output-hipchat/blob/master/CHANGELOG.md#402[Changelog]
-* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
-
-
-NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-hipchat`.
-
+NOTE: This is a community-maintained plugin!
 
 This output allows you to write events to https://www.hipchat.com/[HipChat].
 
@@ -20,6 +13,7 @@ sending  messages.
 ==== Synopsis
 
 This plugin supports the following configuration options:
+
 
 Required configuration options:
 
@@ -40,17 +34,16 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-outputs-hipchat-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-outputs-hipchat-color>> |<<string,string>>|No|`"yellow"`
-| <<plugins-outputs-hipchat-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-hipchat-format>> |<<string,string>>|No|`"%{message}"`
 | <<plugins-outputs-hipchat-from>> |<<string,string>>|No|`"logstash"`
 | <<plugins-outputs-hipchat-host>> |<<string,string>>|No|
-| <<plugins-outputs-hipchat-id>> |<<string,string>>|No|
 | <<plugins-outputs-hipchat-message_format>> |<<string,string>>, one of `["html", "text"]`|No|`"html"`
 | <<plugins-outputs-hipchat-room_id>> |<<string,string>>|Yes|
 | <<plugins-outputs-hipchat-token>> |<<string,string>>|Yes|
 | <<plugins-outputs-hipchat-trigger_notify>> |<<boolean,boolean>>|No|`false`
-| <<plugins-outputs-hipchat-workers>> |<<,>>|No|`1`
+| <<plugins-outputs-hipchat-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -75,16 +68,6 @@ Background color for message.
 HipChat currently supports one of "yellow", "red", "green", "purple",
 "gray", or "random". (default: yellow), support fieldref
 
-[[plugins-outputs-hipchat-enable_metric]]
-===== `enable_metric` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Disable or enable metric logging for this specific plugin instance
-by default we record all the metrics we can, but you can disable metrics collection
-for a specific plugin.
-
 [[plugins-outputs-hipchat-format]]
 ===== `format` 
 
@@ -108,25 +91,6 @@ The name the message will appear be sent from, you can use fieldref
   * There is no default value for this setting.
 
 HipChat host to use
-
-[[plugins-outputs-hipchat-id]]
-===== `id` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a unique `ID` to the plugin instance, this `ID` is used for tracking
-information for a specific configuration of the plugin.
-
-```
-output {
- stdout {
-   id => "ABC"
- }
-}
-```
-
-If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-hipchat-message_format]]
 ===== `message_format` 
@@ -165,11 +129,10 @@ Whether or not this message should trigger a notification for people in the room
 [[plugins-outputs-hipchat-workers]]
 ===== `workers` 
 
-  * Value type is <<string,string>>
+  * Value type is <<number,number>>
   * Default value is `1`
 
-TODO remove this in Logstash 6.0
-when we no longer support the :legacy type
-This is hacky, but it can only be herne
+The number of workers to use for this output.
+Note that this setting may not be useful for all outputs.
 
 

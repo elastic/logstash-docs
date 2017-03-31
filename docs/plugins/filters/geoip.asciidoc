@@ -2,10 +2,20 @@
 === geoip
 
 * Version: 4.0.4
-* Released on: 2016-11-30
+* Released on: November 30, 2016
 * https://github.com/logstash-plugins/logstash-filter-geoip/blob/master/CHANGELOG.md#404[Changelog]
-* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
+
+
+==== Getting Help
+
+For questions about the plugin, open a topic in the http://discuss.elastic.co[Discuss] forums. For bugs or feature requests, open an issue in https://github.com/elastic/logstash[Github].
+For the list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Elastic Support Matrix].
+
+==== Description
+
+always re-set to old value, even if block raises an exception
+create a new instance of the Java class File without shadowing the Ruby version of the File class
 The GeoIP filter adds information about the geographical location of IP addresses,
 based on data from the Maxmind GeoLite2 database.
 
@@ -25,6 +35,8 @@ Note: This product includes GeoLite2 data created by MaxMind, available from
 http://www.maxmind.com. This database is licensed under
 http://creativecommons.org/licenses/by-sa/4.0/[Creative Commons Attribution-ShareAlike 4.0 International License]
 
+&nbsp;
+
 ==== Synopsis
 
 This plugin supports the following configuration options:
@@ -42,23 +54,23 @@ geoip {
 
 Available configuration options:
 
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-filters-geoip-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-geoip-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-geoip-cache_size>> |<<number,number>>|No|`1000`
-| <<plugins-filters-geoip-database>> |a valid filesystem path|No|
-| <<plugins-filters-geoip-enable_metric>> |<<boolean,boolean>>|No|`true`
-| <<plugins-filters-geoip-fields>> |<<array,array>>|No|`["city_name", "continent_code", "country_code2", "country_code3", "country_name", "dma_code", "ip", "latitude", "longitude", "postal_code", "region_name", "region_code", "timezone", "location"]`
-| <<plugins-filters-geoip-id>> |<<string,string>>|No|
-| <<plugins-filters-geoip-lru_cache_size>> |<<number,number>>|No|`1000`
-| <<plugins-filters-geoip-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-geoip-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-geoip-remove_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-geoip-source>> |<<string,string>>|Yes|
-| <<plugins-filters-geoip-tag_on_failure>> |<<array,array>>|No|`["_geoip_lookup_failure"]`
-| <<plugins-filters-geoip-target>> |<<string,string>>|No|`"geoip"`
+|Setting |Input type|Required
+| <<plugins-filters-geoip-add_field>> |<<hash,hash>>|No
+| <<plugins-filters-geoip-add_tag>> |<<array,array>>|No
+| <<plugins-filters-geoip-cache_size>> |<<number,number>>|No
+| <<plugins-filters-geoip-database>> |a valid filesystem path|No
+| <<plugins-filters-geoip-enable_metric>> |<<boolean,boolean>>|No
+| <<plugins-filters-geoip-fields>> |<<array,array>>|No
+| <<plugins-filters-geoip-id>> |<<string,string>>|No
+| <<plugins-filters-geoip-lru_cache_size>> |<<number,number>>|No
+| <<plugins-filters-geoip-periodic_flush>> |<<boolean,boolean>>|No
+| <<plugins-filters-geoip-remove_field>> |<<array,array>>|No
+| <<plugins-filters-geoip-remove_tag>> |<<array,array>>|No
+| <<plugins-filters-geoip-source>> |<<string,string>>|Yes
+| <<plugins-filters-geoip-tag_on_failure>> |<<array,array>>|No
+| <<plugins-filters-geoip-target>> |<<string,string>>|No
 |=======================================================================
 
 
@@ -189,18 +201,20 @@ For the built-in GeoLite2 City database, the following are available:
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Add a unique `ID` to the plugin instance, this `ID` is used for tracking
-information for a specific configuration of the plugin.
+Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
+It is strongly recommended to set this ID in your configuration. This is particularly useful 
+when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
+Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
 
-```
+[source,ruby]
+---------------------------------------------------------------------------------------------------
 output {
  stdout {
-   id => "ABC"
+   id => "my_plugin_id"
  }
 }
-```
+---------------------------------------------------------------------------------------------------
 
-If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-geoip-lru_cache_size]]
 ===== `lru_cache_size` 

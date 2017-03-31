@@ -1,22 +1,18 @@
 [[plugins-inputs-stomp]]
 === stomp
 
-* Version: 3.0.2
-* Released on: 2016-10-11
-* https://github.com/logstash-plugins/logstash-input-stomp/blob/master/CHANGELOG.md#302[Changelog]
-* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-input-stomp`.
 
 
-NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-input-stomp`.
 
-
-Handle disconnects
 
 &nbsp;
 
 ==== Synopsis
 
 This plugin supports the following configuration options:
+
 
 Required configuration options:
 
@@ -39,18 +35,15 @@ Available configuration options:
 | <<plugins-inputs-stomp-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-inputs-stomp-debug>> |<<boolean,boolean>>|No|`false`
 | <<plugins-inputs-stomp-destination>> |<<string,string>>|Yes|
-| <<plugins-inputs-stomp-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-inputs-stomp-host>> |<<string,string>>|Yes|`"localhost"`
-| <<plugins-inputs-stomp-id>> |<<string,string>>|No|
 | <<plugins-inputs-stomp-password>> |<<password,password>>|No|`""`
 | <<plugins-inputs-stomp-port>> |<<number,number>>|No|`61613`
-| <<plugins-inputs-stomp-reconnect>> |<<boolean,boolean>>|No|`true`
-| <<plugins-inputs-stomp-reconnect_interval>> |<<number,number>>|No|`30`
 | <<plugins-inputs-stomp-tags>> |<<array,array>>|No|
 | <<plugins-inputs-stomp-type>> |<<string,string>>|No|
 | <<plugins-inputs-stomp-user>> |<<string,string>>|No|`""`
 | <<plugins-inputs-stomp-vhost>> |<<string,string>>|No|`nil`
 |=======================================================================
+
 
 
 ==== Details
@@ -92,16 +85,6 @@ The destination to read events from.
 
 Example: `/topic/logstash`
 
-[[plugins-inputs-stomp-enable_metric]]
-===== `enable_metric` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Disable or enable metric logging for this specific plugin instance
-by default we record all the metrics we can, but you can disable metrics collection
-for a specific plugin.
-
 [[plugins-inputs-stomp-host]]
 ===== `host` 
 
@@ -110,25 +93,6 @@ for a specific plugin.
   * Default value is `"localhost"`
 
 The address of the STOMP server.
-
-[[plugins-inputs-stomp-id]]
-===== `id` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a unique `ID` to the plugin instance, this `ID` is used for tracking
-information for a specific configuration of the plugin.
-
-```
-output {
- stdout {
-   id => "ABC"
- }
-}
-```
-
-If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-inputs-stomp-password]]
 ===== `password` 
@@ -145,22 +109,6 @@ The password to authenticate with.
   * Default value is `61613`
 
 The port to connet to on your STOMP server.
-
-[[plugins-inputs-stomp-reconnect]]
-===== `reconnect` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Auto reconnect
-
-[[plugins-inputs-stomp-reconnect_interval]]
-===== `reconnect_interval` 
-
-  * Value type is <<number,number>>
-  * Default value is `30`
-
-
 
 [[plugins-inputs-stomp-tags]]
 ===== `tags` 

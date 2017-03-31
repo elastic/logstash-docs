@@ -2,13 +2,49 @@
 === collectd
 
 * Version: 3.0.3
-* Released on: 2016-12-26
+* Released on: December 26, 2016
 * https://github.com/logstash-plugins/logstash-codec-collectd/blob/master/CHANGELOG.md#303[Changelog]
-* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
 
 
-encoding utf-8
+==== Getting Help
+
+For questions about the plugin, open a topic in the http://discuss.elastic.co[Discuss] forums. For bugs or feature requests, open an issue in https://github.com/elastic/logstash[Github].
+For the list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Elastic Support Matrix].
+
+==== Description
+
+Read events from the collectd binary protocol over the network via udp.
+See https://collectd.org/wiki/index.php/Binary_protocol
+
+Configuration in your Logstash configuration file can be as simple as:
+[source,ruby]
+    input {
+      udp {
+        port => 25826
+        buffer_size => 1452
+        codec => collectd { }
+      }
+    }
+
+A sample `collectd.conf` to send to Logstash might be:
+[source,xml]
+    Hostname    "host.example.com"
+    LoadPlugin interface
+    LoadPlugin load
+    LoadPlugin memory
+    LoadPlugin network
+    <Plugin interface>
+        Interface "eth0"
+        IgnoreSelected false
+    </Plugin>
+    <Plugin network>
+        <Server "10.0.0.1" "25826">
+        </Server>
+    </Plugin>
+
+Be sure to replace `10.0.0.1` with the IP of your Logstash instance.
+
 
 &nbsp;
 
@@ -28,18 +64,18 @@ collectd {
 
 Available configuration options:
 
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-codecs-collectd-authfile>> |<<string,string>>|No|
-| <<plugins-codecs-collectd-enable_metric>> |<<boolean,boolean>>|No|`true`
-| <<plugins-codecs-collectd-id>> |<<string,string>>|No|
-| <<plugins-codecs-collectd-nan_handling>> |<<string,string>>, one of `["change_value", "warn", "drop"]`|No|`"change_value"`
-| <<plugins-codecs-collectd-nan_tag>> |<<string,string>>|No|`"_collectdNaN"`
-| <<plugins-codecs-collectd-nan_value>> |<<number,number>>|No|`0`
-| <<plugins-codecs-collectd-prune_intervals>> |<<boolean,boolean>>|No|`true`
-| <<plugins-codecs-collectd-security_level>> |<<string,string>>, one of `["None", "Sign", "Encrypt"]`|No|`"None"`
-| <<plugins-codecs-collectd-typesdb>> |<<array,array>>|No|
+|Setting |Input type|Required
+| <<plugins-codecs-collectd-authfile>> |<<string,string>>|No
+| <<plugins-codecs-collectd-enable_metric>> |<<boolean,boolean>>|No
+| <<plugins-codecs-collectd-id>> |<<string,string>>|No
+| <<plugins-codecs-collectd-nan_handling>> |<<string,string>>, one of `["change_value", "warn", "drop"]`|No
+| <<plugins-codecs-collectd-nan_tag>> |<<string,string>>|No
+| <<plugins-codecs-collectd-nan_value>> |<<number,number>>|No
+| <<plugins-codecs-collectd-prune_intervals>> |<<boolean,boolean>>|No
+| <<plugins-codecs-collectd-security_level>> |<<string,string>>, one of `["None", "Sign", "Encrypt"]`|No
+| <<plugins-codecs-collectd-typesdb>> |<<array,array>>|No
 |=======================================================================
 
 
@@ -74,18 +110,20 @@ for a specific plugin.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Add a unique `ID` to the plugin instance, this `ID` is used for tracking
-information for a specific configuration of the plugin.
+Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
+It is strongly recommended to set this ID in your configuration. This is particularly useful 
+when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
+Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
 
-```
+[source,ruby]
+---------------------------------------------------------------------------------------------------
 output {
  stdout {
-   id => "ABC"
+   id => "my_plugin_id"
  }
 }
-```
+---------------------------------------------------------------------------------------------------
 
-If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-codecs-collectd-nan_handling]]
 ===== `nan_handling` 

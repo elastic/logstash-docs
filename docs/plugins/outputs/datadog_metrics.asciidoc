@@ -1,25 +1,18 @@
 [[plugins-outputs-datadog_metrics]]
 === datadog_metrics
 
-* Version: 3.0.0
-* Released on: 2016-09-09
-* https://github.com/logstash-plugins/logstash-output-datadog_metrics/blob/master/CHANGELOG.md#300[Changelog]
-* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
+
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-datadog_metrics`.
 
 
-NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-datadog_metrics`.
 
-
-This output lets you send metrics to
-DataDogHQ based on Logstash events.
-Default `queue_size` and `timeframe` are low in order to provide near realtime alerting.
-If you do not use Datadog for alerting, consider raising these thresholds.
 
 &nbsp;
 
 ==== Synopsis
 
 This plugin supports the following configuration options:
+
 
 Required configuration options:
 
@@ -41,16 +34,15 @@ Available configuration options:
 | <<plugins-outputs-datadog_metrics-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-outputs-datadog_metrics-dd_tags>> |<<array,array>>|No|
 | <<plugins-outputs-datadog_metrics-device>> |<<string,string>>|No|`"%{metric_device}"`
-| <<plugins-outputs-datadog_metrics-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-datadog_metrics-host>> |<<string,string>>|No|`"%{host}"`
-| <<plugins-outputs-datadog_metrics-id>> |<<string,string>>|No|
 | <<plugins-outputs-datadog_metrics-metric_name>> |<<string,string>>|No|`"%{metric_name}"`
 | <<plugins-outputs-datadog_metrics-metric_type>> |<<string,string>>, one of `["gauge", "counter", "%{metric_type}"]`|No|`"%{metric_type}"`
 | <<plugins-outputs-datadog_metrics-metric_value>> |<<,>>|No|`"%{metric_value}"`
 | <<plugins-outputs-datadog_metrics-queue_size>> |<<number,number>>|No|`10`
 | <<plugins-outputs-datadog_metrics-timeframe>> |<<number,number>>|No|`10`
-| <<plugins-outputs-datadog_metrics-workers>> |<<,>>|No|`1`
+| <<plugins-outputs-datadog_metrics-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -91,16 +83,6 @@ default are the Logstash tags if any.
 
 The name of the device that produced the metric.
 
-[[plugins-outputs-datadog_metrics-enable_metric]]
-===== `enable_metric` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Disable or enable metric logging for this specific plugin instance
-by default we record all the metrics we can, but you can disable metrics collection
-for a specific plugin.
-
 [[plugins-outputs-datadog_metrics-host]]
 ===== `host` 
 
@@ -108,25 +90,6 @@ for a specific plugin.
   * Default value is `"%{host}"`
 
 The name of the host that produced the metric.
-
-[[plugins-outputs-datadog_metrics-id]]
-===== `id` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a unique `ID` to the plugin instance, this `ID` is used for tracking
-information for a specific configuration of the plugin.
-
-```
-output {
- stdout {
-   id => "ABC"
- }
-}
-```
-
-If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-datadog_metrics-metric_name]]
 ===== `metric_name` 
@@ -147,7 +110,7 @@ The type of the metric.
 [[plugins-outputs-datadog_metrics-metric_value]]
 ===== `metric_value` 
 
-  * Value type is <<string,string>>
+  <li> Value type is <<string,string>>
   * Default value is `"%{metric_value}"`
 
 The value.
@@ -172,11 +135,10 @@ How often (in seconds) to flush queued events to Datadog
 [[plugins-outputs-datadog_metrics-workers]]
 ===== `workers` 
 
-  * Value type is <<string,string>>
+  * Value type is <<number,number>>
   * Default value is `1`
 
-TODO remove this in Logstash 6.0
-when we no longer support the :legacy type
-This is hacky, but it can only be herne
+The number of workers to use for this output.
+Note that this setting may not be useful for all outputs.
 
 

@@ -1,13 +1,8 @@
 [[plugins-filters-de_dot]]
 === de_dot
 
-* Version: 1.0.0
-* Released on: 2016-10-26
-* https://github.com/logstash-plugins/logstash-filter-de_dot/blob/master/CHANGELOG.md#100[Changelog]
-* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
-
-NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-de_dot`.
+NOTE: This does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-de_dot`.
 
 
 This filter _appears_ to rename fields by replacing `.` characters with a different
@@ -22,6 +17,7 @@ It should only be used if no other options are available.
 ==== Synopsis
 
 This plugin supports the following configuration options:
+
 
 Required configuration options:
 
@@ -40,15 +36,14 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-filters-de_dot-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-de_dot-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-de_dot-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-filters-de_dot-fields>> |<<array,array>>|No|
-| <<plugins-filters-de_dot-id>> |<<string,string>>|No|
 | <<plugins-filters-de_dot-nested>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-de_dot-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-de_dot-remove_field>> |<<array,array>>|No|`[]`
 | <<plugins-filters-de_dot-remove_tag>> |<<array,array>>|No|`[]`
 | <<plugins-filters-de_dot-separator>> |<<string,string>>|No|`"_"`
 |=======================================================================
+
 
 
 ==== Details
@@ -115,16 +110,6 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
 
-[[plugins-filters-de_dot-enable_metric]]
-===== `enable_metric` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Disable or enable metric logging for this specific plugin instance
-by default we record all the metrics we can, but you can disable metrics collection
-for a specific plugin.
-
 [[plugins-filters-de_dot-fields]]
 ===== `fields` 
 
@@ -138,25 +123,6 @@ will result in "field_suffix" and nested or sub field ["foo"]["bar_suffix"]
 
 WARNING: This is an expensive operation.
 
-
-[[plugins-filters-de_dot-id]]
-===== `id` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a unique `ID` to the plugin instance, this `ID` is used for tracking
-information for a specific configuration of the plugin.
-
-```
-output {
- stdout {
-   id => "ABC"
- }
-}
-```
-
-If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-de_dot-nested]]
 ===== `nested` 

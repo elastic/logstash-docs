@@ -30,10 +30,8 @@ The following codec plugins are available below. For a list of Elastic supported
 | <<plugins-codecs-nmap,nmap>> | Reads Nmap data in XML format | https://github.com/logstash-plugins/logstash-codec-nmap[logstash-codec-nmap]
 | <<plugins-codecs-oldlogstashjson,oldlogstashjson>> | Reads Logstash JSON in the schema used by Logstash versions earlier than 1.2.0 | https://github.com/logstash-plugins/logstash-codec-oldlogstashjson[logstash-codec-oldlogstashjson]
 | <<plugins-codecs-plain,plain>> | Reads plaintext with no delimiting between events | https://github.com/logstash-plugins/logstash-codec-plain[logstash-codec-plain]
-| <<plugins-codecs-protobuf,protobuf>> | Converts protobuf encoded messages into logstash events | https://github.com/logstash-plugins/logstash-codec-protobuf[logstash-codec-protobuf]
 | <<plugins-codecs-rubydebug,rubydebug>> | Applies the Ruby Awesome Print library to Logstash events | https://github.com/logstash-plugins/logstash-codec-rubydebug[logstash-codec-rubydebug]
 | <<plugins-codecs-s3_plain,s3_plain>> | Provides backwards compatibility with earlier versions of S3 Output  | https://github.com/logstash-plugins/logstash-codec-s3_plain[logstash-codec-s3_plain]
-| <<plugins-codecs-sflow,sflow>> | Decodes sflow v5 flows  | https://github.com/logstash-plugins/logstash-codec-sflow[logstash-codec-sflow]
 |=======================================================================
 
 :edit_url: https://github.com/logstash-plugins/logstash-codec-avro/edit/master/lib/logstash/codecs/avro.rb
@@ -80,13 +78,9 @@ include::codecs/nmap.asciidoc[]
 include::codecs/oldlogstashjson.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-codec-plain/edit/master/lib/logstash/codecs/plain.rb
 include::codecs/plain.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-codec-protobuf/edit/master/lib/logstash/codecs/protobuf.rb
-include::codecs/protobuf.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-codec-rubydebug/edit/master/lib/logstash/codecs/rubydebug.rb
 include::codecs/rubydebug.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-codec-s3_plain/edit/master/lib/logstash/codecs/s3_plain.rb
 include::codecs/s3_plain.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-codec-sflow/edit/master/lib/logstash/codecs/sflow.rb
-include::codecs/sflow.asciidoc[]
 
 :edit_url: 

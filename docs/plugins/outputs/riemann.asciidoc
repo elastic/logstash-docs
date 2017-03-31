@@ -1,13 +1,8 @@
 [[plugins-outputs-riemann]]
 === riemann
 
-* Version: 3.0.0
-* Released on: 2016-11-11
-* https://github.com/logstash-plugins/logstash-output-riemann/blob/master/CHANGELOG.md#300[Changelog]
-* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
-
-NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-riemann`.
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-riemann`.
 
 
 Riemann is a network event stream processing system.
@@ -31,6 +26,7 @@ You can see the author talk about it here:
 
 This plugin supports the following configuration options:
 
+
 Required configuration options:
 
 [source,json]
@@ -48,16 +44,15 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-outputs-riemann-codec>> |<<codec,codec>>|No|`"plain"`
 | <<plugins-outputs-riemann-debug>> |<<boolean,boolean>>|No|`false`
-| <<plugins-outputs-riemann-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-outputs-riemann-host>> |<<string,string>>|No|`"localhost"`
-| <<plugins-outputs-riemann-id>> |<<string,string>>|No|
 | <<plugins-outputs-riemann-map_fields>> |<<boolean,boolean>>|No|`false`
 | <<plugins-outputs-riemann-port>> |<<number,number>>|No|`5555`
 | <<plugins-outputs-riemann-protocol>> |<<string,string>>, one of `["tcp", "udp"]`|No|`"tcp"`
 | <<plugins-outputs-riemann-riemann_event>> |<<hash,hash>>|No|
 | <<plugins-outputs-riemann-sender>> |<<string,string>>|No|`"%{host}"`
-| <<plugins-outputs-riemann-workers>> |<<,>>|No|`1`
+| <<plugins-outputs-riemann-workers>> |<<number,number>>|No|`1`
 |=======================================================================
+
 
 
 ==== Details
@@ -81,16 +76,6 @@ The codec used for output data. Output codecs are a convenient method for encodi
 
 Enable debugging output?
 
-[[plugins-outputs-riemann-enable_metric]]
-===== `enable_metric` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Disable or enable metric logging for this specific plugin instance
-by default we record all the metrics we can, but you can disable metrics collection
-for a specific plugin.
-
 [[plugins-outputs-riemann-host]]
 ===== `host` 
 
@@ -98,25 +83,6 @@ for a specific plugin.
   * Default value is `"localhost"`
 
 The address of the Riemann server.
-
-[[plugins-outputs-riemann-id]]
-===== `id` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a unique `ID` to the plugin instance, this `ID` is used for tracking
-information for a specific configuration of the plugin.
-
-```
-output {
- stdout {
-   id => "ABC"
- }
-}
-```
-
-If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-outputs-riemann-map_fields]]
 ===== `map_fields` 
@@ -219,11 +185,10 @@ in the Riemann event
 [[plugins-outputs-riemann-workers]]
 ===== `workers` 
 
-  * Value type is <<string,string>>
+  * Value type is <<number,number>>
   * Default value is `1`
 
-TODO remove this in Logstash 6.0
-when we no longer support the :legacy type
-This is hacky, but it can only be herne
+The number of workers to use for this output.
+Note that this setting may not be useful for all outputs.
 
 

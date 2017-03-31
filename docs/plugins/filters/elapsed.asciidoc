@@ -1,16 +1,9 @@
 [[plugins-filters-elapsed]]
 === elapsed
 
-* Version: 4.0.0
-* Released on: 2016-11-29
-* https://github.com/logstash-plugins/logstash-filter-elapsed/blob/master/CHANGELOG.md#400[Changelog]
-* Compatible: 5.1.1.1, 5.0.0, 2.4.1, 2.4.0, 2.3.4
 
+NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-elapsed`.
 
-NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-elapsed`.
-
-
-elapsed filter
 
 This filter tracks a pair of start/end events and calculates the elapsed
 time between them.
@@ -44,13 +37,13 @@ An example of configuration can be:
 [source,ruby]
     filter {
       grok {
-        match => { "message" => "%{TIMESTAMP_ISO8601} START id: (?<task_id>.*)" }
+        match => ["message", "%{TIMESTAMP_ISO8601} START id: (?<task_id>.*)"]
         add_tag => [ "taskStarted" ]
       }
 
       grok {
-        match => { "message" => "%{TIMESTAMP_ISO8601} END id: (?<task_id>.*)" }
-        add_tag => [ "taskTerminated" ]
+        match => ["message", "%{TIMESTAMP_ISO8601} END id: (?<task_id>.*)"]
+        add_tag => [ "taskTerminated"]
       }
 
       elapsed {
@@ -70,21 +63,21 @@ tells where to insert the elapsed information: they can be added to the
 "end event" or a new "match event" can be created. Both events store the
 following information:
 
-* the tags `elapsed` and `elapsed_match`
-* the field `elapsed_time` with the difference, in seconds, between
+* the tags `elapsed` and `elapsed.match`
+* the field `elapsed.time` with the difference, in seconds, between
   the two events timestamps
 * an ID filed with the task ID
-* the field `elapsed_timestamp_start` with the timestamp of the start event
+* the field `elapsed.timestamp_start` with the timestamp of the start event
 
 If the "end event" does not arrive before "timeout" seconds, the
 "start event" is discarded and an "expired event" is generated. This event
 contains:
 
-* the tags `elapsed` and `elapsed_expired_error`
-* a field called `elapsed_time` with the age, in seconds, of the
+* the tags `elapsed` and `elapsed.expired_error`
+* a field called `elapsed.time` with the age, in seconds, of the
   "start event"
 * an ID filed with the task ID
-* the field `elapsed_timestamp_start` with the timestamp of the "start event"
+* the field `elapsed.timestamp_start` with the timestamp of the "start event"
 
 
 &nbsp;
@@ -92,6 +85,7 @@ contains:
 ==== Synopsis
 
 This plugin supports the following configuration options:
+
 
 Required configuration options:
 
@@ -113,9 +107,7 @@ Available configuration options:
 |Setting |Input type|Required|Default value
 | <<plugins-filters-elapsed-add_field>> |<<hash,hash>>|No|`{}`
 | <<plugins-filters-elapsed-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-elapsed-enable_metric>> |<<boolean,boolean>>|No|`true`
 | <<plugins-filters-elapsed-end_tag>> |<<string,string>>|Yes|
-| <<plugins-filters-elapsed-id>> |<<string,string>>|No|
 | <<plugins-filters-elapsed-new_event_on_match>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-elapsed-periodic_flush>> |<<boolean,boolean>>|No|`false`
 | <<plugins-filters-elapsed-remove_field>> |<<array,array>>|No|`[]`
@@ -124,6 +116,7 @@ Available configuration options:
 | <<plugins-filters-elapsed-timeout>> |<<number,number>>|No|`1800`
 | <<plugins-filters-elapsed-unique_id_field>> |<<string,string>>|Yes|
 |=======================================================================
+
 
 
 ==== Details
@@ -190,16 +183,6 @@ Example:
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
 
-[[plugins-filters-elapsed-enable_metric]]
-===== `enable_metric` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Disable or enable metric logging for this specific plugin instance
-by default we record all the metrics we can, but you can disable metrics collection
-for a specific plugin.
-
 [[plugins-filters-elapsed-end_tag]]
 ===== `end_tag` 
 
@@ -208,25 +191,6 @@ for a specific plugin.
   * There is no default value for this setting.
 
 The name of the tag identifying the "end event"
-
-[[plugins-filters-elapsed-id]]
-===== `id` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a unique `ID` to the plugin instance, this `ID` is used for tracking
-information for a specific configuration of the plugin.
-
-```
-output {
- stdout {
-   id => "ABC"
- }
-}
-```
-
-If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-elapsed-new_event_on_match]]
 ===== `new_event_on_match` 
