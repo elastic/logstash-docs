@@ -50,6 +50,7 @@ The following filter plugins are available below. For a list of Elastic supporte
 | <<plugins-filters-throttle,throttle>> | Throttles the number of events | https://github.com/logstash-plugins/logstash-filter-throttle[logstash-filter-throttle]
 | <<plugins-filters-tld,tld>> | Replaces the contents of the default message field with whatever you specify in the configuration | https://github.com/logstash-plugins/logstash-filter-tld[logstash-filter-tld]
 | <<plugins-filters-translate,translate>> | Replaces field contents based on a hash or YAML file | https://github.com/logstash-plugins/logstash-filter-translate[logstash-filter-translate]
+| <<plugins-filters-truncate,truncate>> | Truncates fields longer than a given length | https://github.com/logstash-plugins/logstash-filter-truncate[logstash-filter-truncate]
 | <<plugins-filters-urldecode,urldecode>> | Decodes URL-encoded fields | https://github.com/logstash-plugins/logstash-filter-urldecode[logstash-filter-urldecode]
 | <<plugins-filters-useragent,useragent>> | Parses user agent strings into fields  | https://github.com/logstash-plugins/logstash-filter-useragent[logstash-filter-useragent]
 | <<plugins-filters-uuid,uuid>> | Adds a UUID to events | https://github.com/logstash-plugins/logstash-filter-uuid[logstash-filter-uuid]
@@ -142,6 +143,8 @@ include::filters/throttle.asciidoc[]
 include::filters/tld.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-translate/edit/master/lib/logstash/filters/translate.rb
 include::filters/translate.asciidoc[]
+:edit_url: https://github.com/logstash-plugins/logstash-filter-truncate/edit/master/lib/logstash/filters/truncate.rb
+include::filters/truncate.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-urldecode/edit/master/lib/logstash/filters/urldecode.rb
 include::filters/urldecode.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-useragent/edit/master/lib/logstash/filters/useragent.rb
