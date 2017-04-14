@@ -1,9 +1,9 @@
 [[plugins-filters-anonymize]]
 === anonymize
 
+NOTE: We recommend that you use the <<plugins-filters-fingerprint,fingerprint filter plugin>> instead of anonymize.
 
-
-Anonymize fields using by replacing values with a consistent hash.
+Anonymize fields by replacing values with a consistent hash.
 
 &nbsp;
 
