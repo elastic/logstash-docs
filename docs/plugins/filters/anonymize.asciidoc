@@ -6,11 +6,11 @@
 * https://github.com/logstash-plugins/logstash-filter-anonymize/blob/master/CHANGELOG.md#302[Changelog]
 
 
-
 NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-anonymize`.
 
+NOTE: We recommend that you use the <<plugins-filters-fingerprint,fingerprint filter plugin>> instead of anonymize.
 
-Anonymize fields using by replacing values with a consistent hash.
+Anonymize fields by replacing values with a consistent hash.
 
 &nbsp;
 
