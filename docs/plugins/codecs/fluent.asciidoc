@@ -1,9 +1,9 @@
 [[plugins-codecs-fluent]]
 === fluent
 
-* Version: 3.1.1
-* Released on: March 15, 2017
-* https://github.com/logstash-plugins/logstash-codec-fluent/blob/master/CHANGELOG.md#311[Changelog]
+* Version: 3.0.2
+* Released on: July 14, 2016
+* https://github.com/logstash-plugins/logstash-codec-fluent/blob/master/CHANGELOG.md#302[Changelog]
 
 
 

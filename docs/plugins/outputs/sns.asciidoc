@@ -70,7 +70,7 @@ Available configuration options:
 | <<plugins-outputs-sns-id>> |<<string,string>>|No
 | <<plugins-outputs-sns-proxy_uri>> |<<string,string>>|No
 | <<plugins-outputs-sns-publish_boot_message_arn>> |<<string,string>>|No
-| <<plugins-outputs-sns-region>> |<<string,string>>, one of `["us-east-1", "us-east-2", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "eu-west-2", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ap-northeast-2", "sa-east-1", "us-gov-west-1", "cn-north-1", "ap-south-1", "ca-central-1"]`|No
+| <<plugins-outputs-sns-region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ap-northeast-2", "sa-east-1", "us-gov-west-1", "cn-north-1", "ap-south-1"]`|No
 | <<plugins-outputs-sns-secret_access_key>> |<<string,string>>|No
 | <<plugins-outputs-sns-session_token>> |<<string,string>>|No
 | <<plugins-outputs-sns-workers>> |<<,>>|No
@@ -185,7 +185,7 @@ Example: arn:aws:sns:us-east-1:770975001275:logstash-testing
 [[plugins-outputs-sns-region]]
 ===== `region` 
 
-  * Value can be any of: `us-east-1`, `us-east-2`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `eu-west-2`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `ap-northeast-2`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`, `ap-south-1`, `ca-central-1`
+  * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `ap-northeast-2`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`, `ap-south-1`
   * Default value is `"us-east-1"`
 
 The AWS Region

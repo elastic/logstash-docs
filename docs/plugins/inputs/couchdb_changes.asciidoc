@@ -1,9 +1,9 @@
 [[plugins-inputs-couchdb_changes]]
 === couchdb_changes
 
-* Version: 3.1.1
-* Released on: February 20, 2017
-* https://github.com/logstash-plugins/logstash-input-couchdb_changes/blob/master/CHANGELOG.md#311[Changelog]
+* Version: 3.1.0
+* Released on: October 13, 2016
+* https://github.com/logstash-plugins/logstash-input-couchdb_changes/blob/master/CHANGELOG.md#310[Changelog]
 
 
 

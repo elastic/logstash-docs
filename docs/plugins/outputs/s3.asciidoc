@@ -1,9 +1,9 @@
 [[plugins-outputs-s3]]
 === s3
 
-* Version: 4.0.6
-* Released on: February 23, 2017
-* https://github.com/logstash-plugins/logstash-output-s3/blob/master/CHANGELOG.md#406[Changelog]
+* Version: 4.0.5
+* Released on: January 18, 2017
+* https://github.com/logstash-plugins/logstash-output-s3/blob/master/CHANGELOG.md#405[Changelog]
 
 
 
@@ -26,12 +26,12 @@ S3 outputs create temporary files into the OS' temporary directory, you can spec
 
 S3 output files have the following format
 
-ls.s3.312bc026-2f5d-49bc-ae9f-5940cf4ad9a6.2013-04-18T10.00.tag_hello.part0.txt
+ls.s3.ip-10-228-27-95.2013-04-18T10.00.tag_hello.part0.txt
 
 
 |=======
 | ls.s3 | indicate logstash plugin s3 |
-| 312bc026-2f5d-49bc-ae9f-5940cf4ad9a6 | a new, random uuid per file. |
+| ip-10-228-27-95 | indicates the ip of your machine. |
 | 2013-04-18T10.00 | represents the time whenever you specify time_file. |
 | tag_hello | this indicates the event's tag. |
 | part0 | this means if you indicate size_file then it will generate more parts if you file.size > size_file. When a file is full it will be pushed to the bucket and then deleted from the temporary directory. If a file is empty, it is simply deleted.  Empty files will not be pushed |
@@ -94,7 +94,7 @@ Available configuration options:
 | <<plugins-outputs-s3-id>> |<<string,string>>|No
 | <<plugins-outputs-s3-prefix>> |<<string,string>>|No
 | <<plugins-outputs-s3-proxy_uri>> |<<string,string>>|No
-| <<plugins-outputs-s3-region>> |<<string,string>>, one of `["us-east-1", "us-east-2", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "eu-west-2", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ap-northeast-2", "sa-east-1", "us-gov-west-1", "cn-north-1", "ap-south-1", "ca-central-1"]`|No
+| <<plugins-outputs-s3-region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ap-northeast-2", "sa-east-1", "us-gov-west-1", "cn-north-1", "ap-south-1"]`|No
 | <<plugins-outputs-s3-restore>> |<<boolean,boolean>>|No
 | <<plugins-outputs-s3-rotation_strategy>> |<<string,string>>, one of `["size_and_time", "size", "time"]`|No
 | <<plugins-outputs-s3-secret_access_key>> |<<string,string>>|No
@@ -235,7 +235,7 @@ URI to proxy server if required
 [[plugins-outputs-s3-region]]
 ===== `region` 
 
-  * Value can be any of: `us-east-1`, `us-east-2`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `eu-west-2`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `ap-northeast-2`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`, `ap-south-1`, `ca-central-1`
+  * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `ap-northeast-2`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`, `ap-south-1`
   * Default value is `"us-east-1"`
 
 The AWS Region

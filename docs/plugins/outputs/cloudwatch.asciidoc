@@ -109,7 +109,7 @@ Available configuration options:
 | <<plugins-outputs-cloudwatch-namespace>> |<<string,string>>|No
 | <<plugins-outputs-cloudwatch-proxy_uri>> |<<string,string>>|No
 | <<plugins-outputs-cloudwatch-queue_size>> |<<number,number>>|No
-| <<plugins-outputs-cloudwatch-region>> |<<string,string>>, one of `["us-east-1", "us-east-2", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "eu-west-2", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ap-northeast-2", "sa-east-1", "us-gov-west-1", "cn-north-1", "ap-south-1", "ca-central-1"]`|No
+| <<plugins-outputs-cloudwatch-region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ap-northeast-2", "sa-east-1", "us-gov-west-1", "cn-north-1", "ap-south-1"]`|No
 | <<plugins-outputs-cloudwatch-secret_access_key>> |<<string,string>>|No
 | <<plugins-outputs-cloudwatch-session_token>> |<<string,string>>|No
 | <<plugins-outputs-cloudwatch-timeframe>> |<<string,string>>|No
@@ -303,7 +303,7 @@ Set this to the number of events-per-timeframe you will be sending to CloudWatch
 [[plugins-outputs-cloudwatch-region]]
 ===== `region` 
 
-  * Value can be any of: `us-east-1`, `us-east-2`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `eu-west-2`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `ap-northeast-2`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`, `ap-south-1`, `ca-central-1`
+  * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `ap-northeast-2`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`, `ap-south-1`
   * Default value is `"us-east-1"`
 
 The AWS Region

@@ -1,9 +1,9 @@
 [[plugins-outputs-csv]]
 === csv
 
-* Version: 3.0.3
-* Released on: February 20, 2017
-* https://github.com/logstash-plugins/logstash-output-csv/blob/master/CHANGELOG.md#303[Changelog]
+* Version: 3.0.2
+* Released on: July 14, 2016
+* https://github.com/logstash-plugins/logstash-output-csv/blob/master/CHANGELOG.md#302[Changelog]
 
 
 

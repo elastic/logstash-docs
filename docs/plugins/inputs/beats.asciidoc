@@ -1,9 +1,9 @@
 [[plugins-inputs-beats]]
 === beats
 
-* Version: 3.1.14
-* Released on: March 3, 2017
-* https://github.com/logstash-plugins/logstash-input-beats/blob/master/CHANGELOG.md#3114[Changelog]
+* Version: 3.1.12
+* Released on: November 30, 2016
+* https://github.com/logstash-plugins/logstash-input-beats/blob/master/CHANGELOG.md#3112[Changelog]
 
 
 
@@ -43,6 +43,10 @@ You cannot override this setting in the Logstash config. If you specify
 a setting for the <<plugins-inputs-beats-type,`type`>> config option in
 Logstash, it is ignored.
 
+This monkey patch add callback based
+flow to the codec until its shipped with core.
+This give greater flexibility to the implementation by
+sending more data to the actual block.
 
 &nbsp;
 
@@ -105,7 +109,7 @@ Add a field to an event
 ===== `cipher_suites` 
 
   * Value type is <<array,array>>
-  * Default value is `java.lang.String[TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256]@651f42c8`
+  * Default value is `java.lang.String[TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256]@73ae0026`
 
 The list of ciphers suite to use, listed by priorities.
 
@@ -236,7 +240,7 @@ Time in milliseconds for an incomplete ssl handshake to timeout
   * There is no default value for this setting.
 
 SSL key to use.
-NOTE: This key need to be in the PKCS8 format, you can convert it with https://www.openssl.org/docs/man1.1.0/apps/pkcs8.html[OpenSSL]
+NOTE: This key need to be in the PKCS8 format, you can convert it with https://www.openssl.org/docs/manmaster/apps/pkcs8.html[OpenSSL]
 for more information.
 
 [[plugins-inputs-beats-ssl_key_passphrase]]

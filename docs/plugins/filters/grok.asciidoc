@@ -1,9 +1,9 @@
 [[plugins-filters-grok]]
 === grok
 
-* Version: 3.4.0
-* Released on: March 1, 2017
-* https://github.com/logstash-plugins/logstash-filter-grok/blob/master/CHANGELOG.md#340[Changelog]
+* Version: 3.3.1
+* Released on: December 26, 2016
+* https://github.com/logstash-plugins/logstash-filter-grok/blob/master/CHANGELOG.md#331[Changelog]
 
 
 
@@ -146,11 +146,6 @@ The above will match and result in the following fields:
 The `timestamp`, `logsource`, `program`, and `pid` fields come from the
 `SYSLOGBASE` pattern which itself is defined by other patterns.
 
-Another option is to define patterns _inline_ in the filter using `pattern_definitions`.
-This is mostly for convenience and allows user to define a pattern which can be used just in that 
-filter. This newly defined patterns in `pattern_definitions` will not be available outside of that particular `grok` filter.
-
-
 &nbsp;
 
 ==== Synopsis
@@ -181,7 +176,6 @@ Available configuration options:
 | <<plugins-filters-grok-match>> |<<hash,hash>>|No
 | <<plugins-filters-grok-named_captures_only>> |<<boolean,boolean>>|No
 | <<plugins-filters-grok-overwrite>> |<<array,array>>|No
-| <<plugins-filters-grok-pattern_definitions>> |<<hash,hash>>|No
 | <<plugins-filters-grok-patterns_dir>> |<<array,array>>|No
 | <<plugins-filters-grok-patterns_files_glob>> |<<string,string>>|No
 | <<plugins-filters-grok-periodic_flush>> |<<boolean,boolean>>|No
@@ -357,17 +351,6 @@ overwrite the `message` field with part of the match like so:
 
 In this case, a line like `May 29 16:37:11 sadness logger: hello world`
 will be parsed and `hello world` will overwrite the original message.
-
-[[plugins-filters-grok-pattern_definitions]]
-===== `pattern_definitions` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-A hash of pattern-name and pattern tuples defining custom patterns to be used by 
-the current filter. Patterns matching existing names will override the pre-existing 
-definition. Think of this as inline patterns available just for this definition of 
-grok
 
 [[plugins-filters-grok-patterns_dir]]
 ===== `patterns_dir` 

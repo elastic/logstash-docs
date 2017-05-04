@@ -101,7 +101,7 @@ Available configuration options:
 | <<plugins-inputs-sqs-polling_frequency>> |<<number,number>>|No
 | <<plugins-inputs-sqs-proxy_uri>> |<<string,string>>|No
 | <<plugins-inputs-sqs-queue>> |<<string,string>>|Yes
-| <<plugins-inputs-sqs-region>> |<<string,string>>, one of `["us-east-1", "us-east-2", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "eu-west-2", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ap-northeast-2", "sa-east-1", "us-gov-west-1", "cn-north-1", "ap-south-1", "ca-central-1"]`|No
+| <<plugins-inputs-sqs-region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ap-northeast-2", "sa-east-1", "us-gov-west-1", "cn-north-1", "ap-south-1"]`|No
 | <<plugins-inputs-sqs-secret_access_key>> |<<string,string>>|No
 | <<plugins-inputs-sqs-sent_timestamp_field>> |<<string,string>>|No
 | <<plugins-inputs-sqs-session_token>> |<<string,string>>|No
@@ -238,7 +238,7 @@ Name of the SQS Queue name to pull messages from. Note that this is just the nam
 [[plugins-inputs-sqs-region]]
 ===== `region` 
 
-  * Value can be any of: `us-east-1`, `us-east-2`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `eu-west-2`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `ap-northeast-2`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`, `ap-south-1`, `ca-central-1`
+  * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `ap-northeast-2`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`, `ap-south-1`
   * Default value is `"us-east-1"`
 
 The AWS Region

@@ -1,9 +1,9 @@
 [[plugins-inputs-s3]]
 === s3
 
-* Version: 3.1.3
-* Released on: February 23, 2017
-* https://github.com/logstash-plugins/logstash-input-s3/blob/master/CHANGELOG.md#313[Changelog]
+* Version: 3.1.2
+* Released on: January 24, 2017
+* https://github.com/logstash-plugins/logstash-input-s3/blob/master/CHANGELOG.md#312[Changelog]
 
 
 
@@ -56,7 +56,7 @@ Available configuration options:
 | <<plugins-inputs-s3-interval>> |<<number,number>>|No
 | <<plugins-inputs-s3-prefix>> |<<string,string>>|No
 | <<plugins-inputs-s3-proxy_uri>> |<<string,string>>|No
-| <<plugins-inputs-s3-region>> |<<string,string>>, one of `["us-east-1", "us-east-2", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "eu-west-2", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ap-northeast-2", "sa-east-1", "us-gov-west-1", "cn-north-1", "ap-south-1", "ca-central-1"]`|No
+| <<plugins-inputs-s3-region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ap-northeast-2", "sa-east-1", "us-gov-west-1", "cn-north-1", "ap-south-1"]`|No
 | <<plugins-inputs-s3-secret_access_key>> |<<string,string>>|No
 | <<plugins-inputs-s3-session_token>> |<<string,string>>|No
 | <<plugins-inputs-s3-sincedb_path>> |<<string,string>>|No
@@ -228,7 +228,7 @@ URI to proxy server if required
 [[plugins-inputs-s3-region]]
 ===== `region` 
 
-  * Value can be any of: `us-east-1`, `us-east-2`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `eu-west-2`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `ap-northeast-2`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`, `ap-south-1`, `ca-central-1`
+  * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `ap-northeast-2`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`, `ap-south-1`
   * Default value is `"us-east-1"`
 
 The AWS Region
