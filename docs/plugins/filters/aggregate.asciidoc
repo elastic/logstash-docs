@@ -1,12 +1,28 @@
 [[plugins-filters-aggregate]]
 === aggregate
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-aggregate`.
+* Version: 2.5.2
+* Released on: March 25, 2017
+* https://github.com/logstash-plugins/logstash-filter-aggregate/blob/master/CHANGELOG.md#252[Changelog]
+
+
+==== Installation
+
+For plugins not bundled by default, it is easy to install by running `bin/logstash-plugin install logstash-filter-aggregate`. See <<working-with-plugins>> for more details.
+
+
+==== Getting Help
+
+For questions about the plugin, open a topic in the http://discuss.elastic.co[Discuss] forums. For bugs or feature requests, open an issue in https://github.com/elastic/logstash[Github].
+For the list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Elastic Support Matrix].
+
+==== Description
+
 
 The aim of this filter is to aggregate information available among several events (typically log lines) belonging to a same task,
 and finally push aggregated information into final task event.
 
-You should be very careful to set logstash filter workers to 1 (`-w 1` flag) for this filter to work correctly 
+You should be very careful to set Logstash filter workers to 1 (`-w 1` flag) for this filter to work correctly 
 otherwise events may be processed out of sequence and unexpected results will occur.
 
 ==== Example #1
@@ -178,35 +194,29 @@ In that case, you don't want to wait task timeout to flush aggregation map.
 * And you would like these 2 result events to push them into elasticsearch :
 [source,json]
 ----------------------------------
-  { "country_name": "France", "town_name": [ "Paris", "Marseille" ] }
-  { "country_name": "USA", "town_name": [ "New-York" ] }
+  { "country_name": "France", "towns": [ {"town_name": "Paris"}, {"town_name": "Marseille"} ] }
+  { "country_name": "USA", "towns": [ {"town_name": "New-York"} ] }
 ----------------------------------
 * You can do that using `push_previous_map_as_event` aggregate plugin option :
 [source,ruby]
 ----------------------------------
-     filter {
+   filter {
      aggregate {
-         task_id => "%{country_name}"
-         code => "
-          map['town_name'] ||= []
-          event.to_hash.each do |key,value|
-            map[key] = value unless map.has_key?(key)
-            map[key] << value if map[key].is_a?(Array)
-          end
-         "
-         push_previous_map_as_event => true
-         timeout => 5
-         timeout_tags => ['aggregated']
-     }
-
-     if "aggregated" not in [tags] {
-      drop {}
+       task_id => "%{country_name}"
+       code => "
+         map['country_name'] = event.get('country_name')
+         map['towns'] ||= []
+         map['towns'] << {'town_name' => event.get('town_name')}
+         event.cancel()
+       "
+       push_previous_map_as_event => true
+       timeout => 3
      }
    }
 ----------------------------------
-* The key point is that each time aggregate plugin detects a new `country_name`, it pushes previous aggregate map as a new logstash event (with 'aggregated' tag), and then creates a new empty map for the next country
+* The key point is that each time aggregate plugin detects a new `country_name`, it pushes previous aggregate map as a new Logstash event, and then creates a new empty map for the next country
 * When 5s timeout comes, the last aggregate map is pushed as a new event
-* Finally, initial events (which are not aggregated) are dropped because useless
+* Finally, initial events (which are not aggregated) are dropped because useless (thanks to `event.cancel()`)
 
 
 ==== How it works
@@ -214,7 +224,8 @@ In that case, you don't want to wait task timeout to flush aggregation map.
 * at the task beggining, filter creates a map, attached to task_id
 * for each event, you can execute code using 'event' and 'map' (for instance, copy an event field to map)
 * in the final event, you can execute a last code (for instance, add map data to final event)
-* after the final event, the map attached to task is deleted
+* after the final event, the map attached to task is deleted (thanks to `end_of_task => true`)
+* an aggregate map is tied to one task_id value which is tied to one task_id pattern. So if you have 2 filters with different task_id patterns, even if you have same task_id value, they won't share the same aggregate map.
 * in one filter configuration, it is recommanded to define a timeout option to protect the feature against unterminated tasks. It tells the filter to delete expired maps
 * if no timeout is defined, by default, all maps older than 1800 seconds are automatically deleted
 * all timeout options have to be defined in only one aggregate filter per task_id pattern. Timeout options are : timeout, timeout_code, push_map_as_event_on_timeout, push_previous_map_as_event, timeout_task_id_field, timeout_tags 
@@ -251,27 +262,27 @@ aggregate {
 
 Available configuration options:
 
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-filters-aggregate-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-aggregate-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-aggregate-aggregate_maps_path>> |<<string,string>>|No|
-| <<plugins-filters-aggregate-code>> |<<string,string>>|Yes|
-| <<plugins-filters-aggregate-enable_metric>> |<<boolean,boolean>>|No|`true`
-| <<plugins-filters-aggregate-end_of_task>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-aggregate-id>> |<<string,string>>|No|
-| <<plugins-filters-aggregate-map_action>> |<<string,string>>|No|`"create_or_update"`
-| <<plugins-filters-aggregate-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-aggregate-push_map_as_event_on_timeout>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-aggregate-push_previous_map_as_event>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-aggregate-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-aggregate-remove_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-aggregate-task_id>> |<<string,string>>|Yes|
-| <<plugins-filters-aggregate-timeout>> |<<number,number>>|No|
-| <<plugins-filters-aggregate-timeout_code>> |<<string,string>>|No|
-| <<plugins-filters-aggregate-timeout_tags>> |<<array,array>>|No|`[]`
-| <<plugins-filters-aggregate-timeout_task_id_field>> |<<string,string>>|No|
+|Setting |Input type|Required
+| <<plugins-filters-aggregate-add_field>> |<<hash,hash>>|No
+| <<plugins-filters-aggregate-add_tag>> |<<array,array>>|No
+| <<plugins-filters-aggregate-aggregate_maps_path>> |<<string,string>>|No
+| <<plugins-filters-aggregate-code>> |<<string,string>>|Yes
+| <<plugins-filters-aggregate-enable_metric>> |<<boolean,boolean>>|No
+| <<plugins-filters-aggregate-end_of_task>> |<<boolean,boolean>>|No
+| <<plugins-filters-aggregate-id>> |<<string,string>>|No
+| <<plugins-filters-aggregate-map_action>> |<<string,string>>|No
+| <<plugins-filters-aggregate-periodic_flush>> |<<boolean,boolean>>|No
+| <<plugins-filters-aggregate-push_map_as_event_on_timeout>> |<<boolean,boolean>>|No
+| <<plugins-filters-aggregate-push_previous_map_as_event>> |<<boolean,boolean>>|No
+| <<plugins-filters-aggregate-remove_field>> |<<array,array>>|No
+| <<plugins-filters-aggregate-remove_tag>> |<<array,array>>|No
+| <<plugins-filters-aggregate-task_id>> |<<string,string>>|Yes
+| <<plugins-filters-aggregate-timeout>> |<<number,number>>|No
+| <<plugins-filters-aggregate-timeout_code>> |<<string,string>>|No
+| <<plugins-filters-aggregate-timeout_tags>> |<<array,array>>|No
+| <<plugins-filters-aggregate-timeout_task_id_field>> |<<string,string>>|No
 |=======================================================================
 
 
@@ -345,13 +356,19 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The path to file where aggregate maps are stored when logstash stops
-and are loaded from when logstash starts.
+The path to file where aggregate maps are stored when Logstash stops
+and are loaded from when Logstash starts.
 
-If not defined, aggregate maps will not be stored at logstash stop and will be lost. 
+If not defined, aggregate maps will not be stored at Logstash stop and will be lost. 
 Must be defined in only one aggregate filter (as aggregate maps are global).
 
-Example value : `"/path/to/.aggregate_maps"`
+Example:
+[source,ruby]
+    filter {
+      aggregate {
+        aggregate_maps_path => "/path/to/.aggregate_maps"
+      }
+    }
 
 [[plugins-filters-aggregate-code]]
 ===== `code` 
@@ -366,7 +383,13 @@ Or on the contrary, the code to execute to update event, using current map.
 
 You will have a 'map' variable and an 'event' variable available (that is the event itself).
 
-Example value : `"map['sql_duration'] += event.get('duration')"`
+Example:
+[source,ruby]
+    filter {
+      aggregate {
+        code => "map['sql_duration'] += event.get('duration')"
+      }
+    }
 
 [[plugins-filters-aggregate-enable_metric]]
 ===== `enable_metric` 
@@ -392,18 +415,20 @@ Tell the filter that task is ended, and therefore, to delete aggregate map after
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Add a unique `ID` to the plugin instance, this `ID` is used for tracking
-information for a specific configuration of the plugin.
+Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
+It is strongly recommended to set this ID in your configuration. This is particulary useful 
+when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
+Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
 
-```
+[source,ruby]
+---------------------------------------------------------------------------------------------------
 output {
  stdout {
-   id => "ABC"
+   id => "my_plugin_id"
  }
 }
-```
+---------------------------------------------------------------------------------------------------
 
-If you don't explicitely set this variable Logstash will generate a unique name.
 
 [[plugins-filters-aggregate-map_action]]
 ===== `map_action` 
@@ -413,11 +438,11 @@ If you don't explicitely set this variable Logstash will generate a unique name.
 
 Tell the filter what to do with aggregate map.
 
-`create`: create the map, and execute the code only if map wasn't created before
+`"create"`: create the map, and execute the code only if map wasn't created before
 
-`update`: doesn't create the map, and execute the code only if map was created before
+`"update"`: doesn't create the map, and execute the code only if map was created before
 
-`create_or_update`: create the map if it wasn't created before, execute the code in all cases
+`"create_or_update"`: create the map if it wasn't created before, execute the code in all cases
 
 [[plugins-filters-aggregate-periodic_flush]]
 ===== `periodic_flush` 
@@ -434,8 +459,8 @@ Optional.
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
-When this option is enabled, each time a task timeout is detected, it pushes task aggregation map as a new logstash event.  
-This enables to detect and process task timeouts in logstash, but also to manage tasks that have no explicit end event.
+When this option is enabled, each time a task timeout is detected, it pushes task aggregation map as a new Logstash event.  
+This enables to detect and process task timeouts in Logstash, but also to manage tasks that have no explicit end event.
 
 [[plugins-filters-aggregate-push_previous_map_as_event]]
 ===== `push_previous_map_as_event` 
@@ -443,7 +468,7 @@ This enables to detect and process task timeouts in logstash, but also to manage
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
-When this option is enabled, each time aggregate plugin detects a new task id, it pushes previous aggregate map as a new logstash event, 
+When this option is enabled, each time aggregate plugin detects a new task id, it pushes previous aggregate map as a new Logstash event, 
 and then creates a new empty map for the next task.
 
 WARNING: this option works fine only if tasks come one after the other. It means : all task1 events, then all task2 events, etc...
@@ -511,11 +536,20 @@ would remove a sad, unwanted tag as well.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
+############## #
+CONFIG OPTIONS #
+############## #
 The expression defining task ID to correlate logs.
 
-This value must uniquely identify the task in the system.
+This value must uniquely identify the task.
 
-Example value : "%{application}%{my_task_id}"
+Example:
+[source,ruby]
+    filter {
+      aggregate {
+        task_id => "%{type}%{my_task_id}"
+      }
+    }
 
 [[plugins-filters-aggregate-timeout]]
 ===== `timeout` 
@@ -537,12 +571,18 @@ If no timeout is defined, default timeout will be applied : 1800 seconds.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The code to execute to complete timeout generated event, when 'push_map_as_event_on_timeout' or 'push_previous_map_as_event' is set to true. 
+The code to execute to complete timeout generated event, when `'push_map_as_event_on_timeout'` or `'push_previous_map_as_event'` is set to true. 
 The code block will have access to the newly generated timeout event that is pre-populated with the aggregation map. 
 
-If 'timeout_task_id_field' is set, the event is also populated with the task_id value 
+If `'timeout_task_id_field'` is set, the event is also populated with the task_id value 
 
-Example value: `"event.set('state', 'timeout')"`
+Example:
+[source,ruby]
+    filter {
+      aggregate {
+        timeout_code => "event.set('state', 'timeout')"
+      }
+    }
 
 [[plugins-filters-aggregate-timeout_tags]]
 ===== `timeout_tags` 
@@ -552,6 +592,14 @@ Example value: `"event.set('state', 'timeout')"`
 
 Defines tags to add when a timeout event is generated and yield
 
+Example:
+[source,ruby]
+    filter {
+      aggregate {
+        timeout_tags => ["aggregate_timeout']
+      }
+    }
+
 [[plugins-filters-aggregate-timeout_task_id_field]]
 ===== `timeout_task_id_field` 
 
@@ -559,11 +607,10 @@ Defines tags to add when a timeout event is generated and yield
   * There is no default value for this setting.
 
 This option indicates the timeout generated event's field for the "task_id" value. 
-The task id will then be set into the timeout event. This can help correlate which tasks have been timed out.  
+The task id will then be set into the timeout event. This can help correlate which tasks have been timed out.
 
-This field has no default value and will not be set on the event if not configured.
+For example, with option `timeout_task_id_field => "my_id"` ,when timeout task id is `"12345"`, the generated timeout event will contain `'my_id' => '12345'`.
 
-Example:
+By default, if this option is not set, task id value won't be set into timeout generated event.
 
-If the task_id is "12345" and this field is set to "my_id", the generated timeout event will contain `'my_id'` key with `'12345'` value.
 
