@@ -93,7 +93,7 @@ You may need to install the `apt-transport-https` package on Debian before proce
 sudo apt-get install apt-transport-https
 --------------------------------------------------
 
-Save the repository definition to  +/etc/apt/sources.list.d/elastic-{major-version}-prerelease.list+:
+Save the repository definition to  +/etc/apt/sources.list.d/elastic-{major-version}.list+:
 
 ["source","sh",subs="attributes,callouts"]
 --------------------------------------------------
