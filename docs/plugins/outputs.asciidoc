@@ -86,115 +86,115 @@ at Elastic, and the broader community.
 | <<plugins-outputs-zeromq,zeromq>> | Writes events to a ZeroMQ PUB socket | https://github.com/logstash-plugins/logstash-output-zeromq[logstash-output-zeromq]
 |=======================================================================
 
-:edit_url: https://github.com/logstash-plugins/logstash-output-boundary/edit/master/lib/logstash/outputs/boundary.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-boundary/edit/master/docs/index.asciidoc
 include::outputs/boundary.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-circonus/edit/master/lib/logstash/outputs/circonus.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-circonus/edit/master/docs/index.asciidoc
 include::outputs/circonus.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-cloudwatch/edit/master/lib/logstash/outputs/cloudwatch.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-cloudwatch/edit/master/docs/index.asciidoc
 include::outputs/cloudwatch.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-csv/edit/master/lib/logstash/outputs/csv.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-csv/edit/master/docs/index.asciidoc
 include::outputs/csv.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-datadog/edit/master/lib/logstash/outputs/datadog.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-datadog/edit/master/docs/index.asciidoc
 include::outputs/datadog.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-datadog_metrics/edit/master/lib/logstash/outputs/datadog_metrics.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-datadog_metrics/edit/master/docs/index.asciidoc
 include::outputs/datadog_metrics.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/edit/master/lib/logstash/outputs/elasticsearch.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/edit/master/docs/index.asciidoc
 include::outputs/elasticsearch.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-email/edit/master/lib/logstash/outputs/email.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-email/edit/master/docs/index.asciidoc
 include::outputs/email.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-exec/edit/master/lib/logstash/outputs/exec.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-exec/edit/master/docs/index.asciidoc
 include::outputs/exec.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-file/edit/master/lib/logstash/outputs/file.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-file/edit/master/docs/index.asciidoc
 include::outputs/file.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-ganglia/edit/master/lib/logstash/outputs/ganglia.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-ganglia/edit/master/docs/index.asciidoc
 include::outputs/ganglia.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-gelf/edit/master/lib/logstash/outputs/gelf.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-gelf/edit/master/docs/index.asciidoc
 include::outputs/gelf.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-google_bigquery/edit/master/lib/logstash/outputs/google_bigquery.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-google_bigquery/edit/master/docs/index.asciidoc
 include::outputs/google_bigquery.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-google_cloud_storage/edit/master/lib/logstash/outputs/google_cloud_storage.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-google_cloud_storage/edit/master/docs/index.asciidoc
 include::outputs/google_cloud_storage.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-graphite/edit/master/lib/logstash/outputs/graphite.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-graphite/edit/master/docs/index.asciidoc
 include::outputs/graphite.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-graphtastic/edit/master/lib/logstash/outputs/graphtastic.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-graphtastic/edit/master/docs/index.asciidoc
 include::outputs/graphtastic.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-hipchat/edit/master/lib/logstash/outputs/hipchat.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-hipchat/edit/master/docs/index.asciidoc
 include::outputs/hipchat.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-http/edit/master/lib/logstash/outputs/http.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-http/edit/master/docs/index.asciidoc
 include::outputs/http.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-influxdb/edit/master/lib/logstash/outputs/influxdb.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-influxdb/edit/master/docs/index.asciidoc
 include::outputs/influxdb.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-irc/edit/master/lib/logstash/outputs/irc.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-irc/edit/master/docs/index.asciidoc
 include::outputs/irc.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-jira/edit/master/lib/logstash/outputs/jira.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-jira/edit/master/docs/index.asciidoc
 include::outputs/jira.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-juggernaut/edit/master/lib/logstash/outputs/juggernaut.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-juggernaut/edit/master/docs/index.asciidoc
 include::outputs/juggernaut.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-kafka/edit/master/lib/logstash/outputs/kafka.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-kafka/edit/master/docs/index.asciidoc
 include::outputs/kafka.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-librato/edit/master/lib/logstash/outputs/librato.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-librato/edit/master/docs/index.asciidoc
 include::outputs/librato.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-loggly/edit/master/lib/logstash/outputs/loggly.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-loggly/edit/master/docs/index.asciidoc
 include::outputs/loggly.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-lumberjack/edit/master/lib/logstash/outputs/lumberjack.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-lumberjack/edit/master/docs/index.asciidoc
 include::outputs/lumberjack.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-metriccatcher/edit/master/lib/logstash/outputs/metriccatcher.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-metriccatcher/edit/master/docs/index.asciidoc
 include::outputs/metriccatcher.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-mongodb/edit/master/lib/logstash/outputs/mongodb.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-mongodb/edit/master/docs/index.asciidoc
 include::outputs/mongodb.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-nagios/edit/master/lib/logstash/outputs/nagios.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-nagios/edit/master/docs/index.asciidoc
 include::outputs/nagios.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-nagios_nsca/edit/master/lib/logstash/outputs/nagios_nsca.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-nagios_nsca/edit/master/docs/index.asciidoc
 include::outputs/nagios_nsca.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-newrelic/edit/master/lib/logstash/outputs/newrelic.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-newrelic/edit/master/docs/index.asciidoc
 include::outputs/newrelic.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-opentsdb/edit/master/lib/logstash/outputs/opentsdb.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-opentsdb/edit/master/docs/index.asciidoc
 include::outputs/opentsdb.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-pagerduty/edit/master/lib/logstash/outputs/pagerduty.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-pagerduty/edit/master/docs/index.asciidoc
 include::outputs/pagerduty.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-pipe/edit/master/lib/logstash/outputs/pipe.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-pipe/edit/master/docs/index.asciidoc
 include::outputs/pipe.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-rabbitmq/edit/master/lib/logstash/outputs/rabbitmq.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-rabbitmq/edit/master/docs/index.asciidoc
 include::outputs/rabbitmq.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-rackspace/edit/master/lib/logstash/outputs/rackspace.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-rackspace/edit/master/docs/index.asciidoc
 include::outputs/rackspace.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-redis/edit/master/lib/logstash/outputs/redis.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-redis/edit/master/docs/index.asciidoc
 include::outputs/redis.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-redmine/edit/master/lib/logstash/outputs/redmine.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-redmine/edit/master/docs/index.asciidoc
 include::outputs/redmine.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-riak/edit/master/lib/logstash/outputs/riak.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-riak/edit/master/docs/index.asciidoc
 include::outputs/riak.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-riemann/edit/master/lib/logstash/outputs/riemann.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-riemann/edit/master/docs/index.asciidoc
 include::outputs/riemann.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-s3/edit/master/lib/logstash/outputs/s3.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-s3/edit/master/docs/index.asciidoc
 include::outputs/s3.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-sns/edit/master/lib/logstash/outputs/sns.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-sns/edit/master/docs/index.asciidoc
 include::outputs/sns.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-solr_http/edit/master/lib/logstash/outputs/solr_http.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-solr_http/edit/master/docs/index.asciidoc
 include::outputs/solr_http.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-sqs/edit/master/lib/logstash/outputs/sqs.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-sqs/edit/master/docs/index.asciidoc
 include::outputs/sqs.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-statsd/edit/master/lib/logstash/outputs/statsd.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-statsd/edit/master/docs/index.asciidoc
 include::outputs/statsd.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-stdout/edit/master/lib/logstash/outputs/stdout.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-stdout/edit/master/docs/index.asciidoc
 include::outputs/stdout.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-stomp/edit/master/lib/logstash/outputs/stomp.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-stomp/edit/master/docs/index.asciidoc
 include::outputs/stomp.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-syslog/edit/master/lib/logstash/outputs/syslog.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-syslog/edit/master/docs/index.asciidoc
 include::outputs/syslog.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-tcp/edit/master/lib/logstash/outputs/tcp.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-tcp/edit/master/docs/index.asciidoc
 include::outputs/tcp.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-udp/edit/master/lib/logstash/outputs/udp.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-udp/edit/master/docs/index.asciidoc
 include::outputs/udp.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-webhdfs/edit/master/lib/logstash/outputs/webhdfs.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-webhdfs/edit/master/docs/index.asciidoc
 include::outputs/webhdfs.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-websocket/edit/master/lib/logstash/outputs/websocket.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-websocket/edit/master/docs/index.asciidoc
 include::outputs/websocket.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-xmpp/edit/master/lib/logstash/outputs/xmpp.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-xmpp/edit/master/docs/index.asciidoc
 include::outputs/xmpp.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-zabbix/edit/master/lib/logstash/outputs/zabbix.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-zabbix/edit/master/docs/index.asciidoc
 include::outputs/zabbix.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-output-zeromq/edit/master/lib/logstash/outputs/zeromq.rb
+:edit_url: https://github.com/logstash-plugins/logstash-output-zeromq/edit/master/docs/index.asciidoc
 include::outputs/zeromq.asciidoc[]
 
 :edit_url: 
