@@ -1,16 +1,22 @@
-[[plugins-inputs-elasticsearch]]
-=== elasticsearch
+:plugin: elasticsearch
+:type: input
 
-* Version: 4.0.2
-* Released on: February 7, 2017
-* https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/master/CHANGELOG.md#402[Changelog]
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}-{plugin}"]
 
+=== Elasticsearch input plugin
 
-==== Getting Help
-
-For questions about the plugin, open a topic in the http://discuss.elastic.co[Discuss] forums. For bugs or feature requests, open an issue in https://github.com/elastic/logstash[Github].
-For the list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Elastic Support Matrix].
+include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
@@ -23,7 +29,6 @@ are using Logstash 2.4 through 5.2, you need to update the Elasticsearch input
 plugin to version 4.0.2 or higher.
 
 ================================================================================
-
 
 Read from an Elasticsearch cluster, based on search query results.
 This is useful for replaying test logs, reindexing, etc.
@@ -50,61 +55,34 @@ This would create an Elasticsearch query with the following format:
     }'
 
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Elasticsearch Input Configuration Options
 
-==== Synopsis
-
-This plugin supports the following configuration options:
-
-Required configuration options:
-
-[source,json]
---------------------------
-elasticsearch {
-}
---------------------------
-
-
-
-Available configuration options:
+This plugin supports the following configuration options plus the <<plugins-{type}s-common-options>> described later.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<plugins-inputs-elasticsearch-add_field>> |<<hash,hash>>|No
-| <<plugins-inputs-elasticsearch-ca_file>> |a valid filesystem path|No
-| <<plugins-inputs-elasticsearch-codec>> |<<codec,codec>>|No
-| <<plugins-inputs-elasticsearch-docinfo>> |<<boolean,boolean>>|No
-| <<plugins-inputs-elasticsearch-docinfo_fields>> |<<array,array>>|No
-| <<plugins-inputs-elasticsearch-docinfo_target>> |<<string,string>>|No
-| <<plugins-inputs-elasticsearch-enable_metric>> |<<boolean,boolean>>|No
-| <<plugins-inputs-elasticsearch-hosts>> |<<array,array>>|No
-| <<plugins-inputs-elasticsearch-id>> |<<string,string>>|No
-| <<plugins-inputs-elasticsearch-index>> |<<string,string>>|No
-| <<plugins-inputs-elasticsearch-password>> |<<password,password>>|No
-| <<plugins-inputs-elasticsearch-query>> |<<string,string>>|No
-| <<plugins-inputs-elasticsearch-scroll>> |<<string,string>>|No
-| <<plugins-inputs-elasticsearch-size>> |<<number,number>>|No
-| <<plugins-inputs-elasticsearch-ssl>> |<<boolean,boolean>>|No
-| <<plugins-inputs-elasticsearch-tags>> |<<array,array>>|No
-| <<plugins-inputs-elasticsearch-type>> |<<string,string>>|No
-| <<plugins-inputs-elasticsearch-user>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-ca_file>> |a valid filesystem path|No
+| <<plugins-{type}s-{plugin}-docinfo>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-docinfo_fields>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-docinfo_target>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-hosts>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-index>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-password>> |<<password,password>>|No
+| <<plugins-{type}s-{plugin}-query>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-scroll>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-size>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-ssl>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-user>> |<<string,string>>|No
 |=======================================================================
 
-
-==== Details
+Also see <<plugins-{type}s-common-options>> for a list of options supported by all
+input plugins.
 
 &nbsp;
 
-[[plugins-inputs-elasticsearch-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-Add a field to an event
-
-[[plugins-inputs-elasticsearch-ca_file]]
+[id="plugins-{type}s-{plugin}-ca_file"]
 ===== `ca_file` 
 
   * Value type is <<path,path>>
@@ -112,15 +90,7 @@ Add a field to an event
 
 SSL Certificate Authority file in PEM encoded format, must also include any chain certificates as necessary 
 
-[[plugins-inputs-elasticsearch-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-inputs-elasticsearch-docinfo]]
+[id="plugins-{type}s-{plugin}-docinfo"]
 ===== `docinfo` 
 
   * Value type is <<boolean,boolean>>
@@ -150,13 +120,13 @@ Example
     output {
       elasticsearch {
         index => "copy-of-production.%{[@metadata][_index]}"
-        index_type => "%{[@metadata][_type]}"
+        document_type => "%{[@metadata][_type]}"
         document_id => "%{[@metadata][_id]}"
       }
     }
 
 
-[[plugins-inputs-elasticsearch-docinfo_fields]]
+[id="plugins-{type}s-{plugin}-docinfo_fields"]
 ===== `docinfo_fields` 
 
   * Value type is <<array,array>>
@@ -166,7 +136,7 @@ List of document metadata to move to the `docinfo_target` field
 To learn more about Elasticsearch metadata fields read
 http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_document_metadata.html
 
-[[plugins-inputs-elasticsearch-docinfo_target]]
+[id="plugins-{type}s-{plugin}-docinfo_target"]
 ===== `docinfo_target` 
 
   * Value type is <<string,string>>
@@ -174,17 +144,7 @@ http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_document_meta
 
 Where to move the Elasticsearch document information by default we use the @metadata field.
 
-[[plugins-inputs-elasticsearch-enable_metric]]
-===== `enable_metric` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Disable or enable metric logging for this specific plugin instance
-by default we record all the metrics we can, but you can disable metrics collection
-for a specific plugin.
-
-[[plugins-inputs-elasticsearch-hosts]]
+[id="plugins-{type}s-{plugin}-hosts"]
 ===== `hosts` 
 
   * Value type is <<array,array>>
@@ -194,28 +154,7 @@ List of elasticsearch hosts to use for querying.
 each host can be either IP, HOST, IP:port or HOST:port
 port defaults to 9200
 
-[[plugins-inputs-elasticsearch-id]]
-===== `id` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
-It is strongly recommended to set this ID in your configuration. This is particularly useful 
-when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
-Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
-
-[source,ruby]
----------------------------------------------------------------------------------------------------
-output {
- stdout {
-   id => "my_plugin_id"
- }
-}
----------------------------------------------------------------------------------------------------
-
-
-[[plugins-inputs-elasticsearch-index]]
+[id="plugins-{type}s-{plugin}-index"]
 ===== `index` 
 
   * Value type is <<string,string>>
@@ -223,7 +162,7 @@ output {
 
 The index or alias to search.
 
-[[plugins-inputs-elasticsearch-password]]
+[id="plugins-{type}s-{plugin}-password"]
 ===== `password` 
 
   * Value type is <<password,password>>
@@ -231,7 +170,7 @@ The index or alias to search.
 
 Basic Auth - password
 
-[[plugins-inputs-elasticsearch-query]]
+[id="plugins-{type}s-{plugin}-query"]
 ===== `query` 
 
   * Value type is <<string,string>>
@@ -241,7 +180,7 @@ The query to be executed. Read the Elasticsearch query DSL documentation
 for more info
 https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
 
-[[plugins-inputs-elasticsearch-scroll]]
+[id="plugins-{type}s-{plugin}-scroll"]
 ===== `scroll` 
 
   * Value type is <<string,string>>
@@ -251,7 +190,7 @@ This parameter controls the keepalive time in seconds of the scrolling
 request and initiates the scrolling process. The timeout applies per
 round trip (i.e. between the previous scroll request, to the next).
 
-[[plugins-inputs-elasticsearch-size]]
+[id="plugins-{type}s-{plugin}-size"]
 ===== `size` 
 
   * Value type is <<number,number>>
@@ -259,7 +198,7 @@ round trip (i.e. between the previous scroll request, to the next).
 
 This allows you to set the maximum number of hits returned per scroll.
 
-[[plugins-inputs-elasticsearch-ssl]]
+[id="plugins-{type}s-{plugin}-ssl"]
 ===== `ssl` 
 
   * Value type is <<boolean,boolean>>
@@ -267,37 +206,7 @@ This allows you to set the maximum number of hits returned per scroll.
 
 SSL
 
-[[plugins-inputs-elasticsearch-tags]]
-===== `tags` 
-
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
-
-Add any number of arbitrary tags to your event.
-
-This can help with processing later.
-
-[[plugins-inputs-elasticsearch-type]]
-===== `type` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-This is the base class for Logstash inputs.
-Add a `type` field to all events handled by this input.
-
-Types are used mainly for filter activation.
-
-The type is stored as part of the event itself, so you can
-also use the type to search for it in Kibana.
-
-If you try to set a type on an event that already has one (for
-example when you send an event from a shipper to an indexer) then
-a new input will not override the existing type. A type set at
-the shipper stays with that event for its life even
-when sent to another Logstash server.
-
-[[plugins-inputs-elasticsearch-user]]
+[id="plugins-{type}s-{plugin}-user"]
 ===== `user` 
 
   * Value type is <<string,string>>
@@ -306,3 +215,5 @@ when sent to another Logstash server.
 Basic Auth - username
 
 
+
+include::{include_path}/{type}.asciidoc[]

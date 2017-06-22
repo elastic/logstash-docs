@@ -1,16 +1,22 @@
-[[plugins-outputs-xmpp]]
-=== xmpp
+:plugin: xmpp
+:type: output
 
-* Version: 3.0.2
-* Released on: July 14, 2016
-* https://github.com/logstash-plugins/logstash-output-xmpp/blob/master/CHANGELOG.md#302[Changelog]
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}-{plugin}"]
 
+=== Xmpp output plugin
 
-==== Getting Help
-
-For questions about the plugin, open a topic in the http://discuss.elastic.co[Discuss] forums. For bugs or feature requests, open an issue in https://github.com/elastic/logstash[Github].
-For the list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Elastic Support Matrix].
+include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
@@ -19,66 +25,28 @@ This output allows you ship events over XMPP/Jabber.
 This plugin can be used for posting events to humans over XMPP, or you can
 use it for PubSub or general message passing for logstash to logstash.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Xmpp Output Configuration Options
 
-==== Synopsis
-
-This plugin supports the following configuration options:
-
-Required configuration options:
-
-[source,json]
---------------------------
-xmpp {
-    message => ...
-    password => ...
-    user => ...
-}
---------------------------
-
-
-
-Available configuration options:
+This plugin supports the following configuration options plus the <<plugins-{type}s-common-options>> described later.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<plugins-outputs-xmpp-codec>> |<<codec,codec>>|No
-| <<plugins-outputs-xmpp-enable_metric>> |<<boolean,boolean>>|No
-| <<plugins-outputs-xmpp-host>> |<<string,string>>|No
-| <<plugins-outputs-xmpp-id>> |<<string,string>>|No
-| <<plugins-outputs-xmpp-message>> |<<string,string>>|Yes
-| <<plugins-outputs-xmpp-password>> |<<password,password>>|Yes
-| <<plugins-outputs-xmpp-rooms>> |<<array,array>>|No
-| <<plugins-outputs-xmpp-user>> |<<string,string>>|Yes
-| <<plugins-outputs-xmpp-users>> |<<array,array>>|No
-| <<plugins-outputs-xmpp-workers>> |<<,>>|No
+| <<plugins-{type}s-{plugin}-host>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-message>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-password>> |<<password,password>>|Yes
+| <<plugins-{type}s-{plugin}-rooms>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-user>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-users>> |<<array,array>>|No
 |=======================================================================
 
-
-==== Details
+Also see <<plugins-{type}s-common-options>> for a list of options supported by all
+output plugins.
 
 &nbsp;
 
-[[plugins-outputs-xmpp-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-xmpp-enable_metric]]
-===== `enable_metric` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Disable or enable metric logging for this specific plugin instance
-by default we record all the metrics we can, but you can disable metrics collection
-for a specific plugin.
-
-[[plugins-outputs-xmpp-host]]
+[id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
   * Value type is <<string,string>>
@@ -87,28 +55,7 @@ for a specific plugin.
 The xmpp server to connect to. This is optional. If you omit this setting,
 the host on the user/identity is used. (foo.com for user@foo.com)
 
-[[plugins-outputs-xmpp-id]]
-===== `id` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
-It is strongly recommended to set this ID in your configuration. This is particularly useful 
-when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
-Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
-
-[source,ruby]
----------------------------------------------------------------------------------------------------
-output {
- stdout {
-   id => "my_plugin_id"
- }
-}
----------------------------------------------------------------------------------------------------
-
-
-[[plugins-outputs-xmpp-message]]
+[id="plugins-{type}s-{plugin}-message"]
 ===== `message` 
 
   * This is a required setting.
@@ -117,7 +64,7 @@ output {
 
 The message to send. This supports dynamic strings like `%{host}`
 
-[[plugins-outputs-xmpp-password]]
+[id="plugins-{type}s-{plugin}-password"]
 ===== `password` 
 
   * This is a required setting.
@@ -126,7 +73,7 @@ The message to send. This supports dynamic strings like `%{host}`
 
 The xmpp password for the user/identity.
 
-[[plugins-outputs-xmpp-rooms]]
+[id="plugins-{type}s-{plugin}-rooms"]
 ===== `rooms` 
 
   * Value type is <<array,array>>
@@ -135,7 +82,7 @@ The xmpp password for the user/identity.
 if muc/multi-user-chat required, give the name of the room that
 you want to join: room@conference.domain/nick
 
-[[plugins-outputs-xmpp-user]]
+[id="plugins-{type}s-{plugin}-user"]
 ===== `user` 
 
   * This is a required setting.
@@ -144,7 +91,7 @@ you want to join: room@conference.domain/nick
 
 The user or resource ID, like foo@example.com.
 
-[[plugins-outputs-xmpp-users]]
+[id="plugins-{type}s-{plugin}-users"]
 ===== `users` 
 
   * Value type is <<array,array>>
@@ -152,13 +99,6 @@ The user or resource ID, like foo@example.com.
 
 The users to send messages to
 
-[[plugins-outputs-xmpp-workers]]
-===== `workers` 
-
-  * Value type is <<string,string>>
-  * Default value is `1`
-
-when we no longer support the :legacy type
-This is hacky, but it can only be herne
 
 
+include::{include_path}/{type}.asciidoc[]
