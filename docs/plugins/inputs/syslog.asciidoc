@@ -7,7 +7,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: %VERSION%
 :release_date: %RELEASE_DATE%
 :changelog_url: %CHANGELOG_URL%
-:include_path: ../../../logstash/docs/include
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -40,7 +40,7 @@ Note: This input will start listeners on both TCP and UDP.
 [id="plugins-{type}s-{plugin}-options"]
 ==== Syslog Input Configuration Options
 
-This plugin supports the following configuration options plus the <<plugins-{type}s-common-options>> described later.
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
@@ -55,7 +55,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-use_labels>> |<<boolean,boolean>>|No
 |=======================================================================
 
-Also see <<plugins-{type}s-common-options>> for a list of options supported by all
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
 input plugins.
 
 &nbsp;
@@ -140,4 +140,5 @@ Use label parsing for severity and facility levels.
 
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]

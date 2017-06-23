@@ -7,7 +7,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: %VERSION%
 :release_date: %RELEASE_DATE%
 :changelog_url: %CHANGELOG_URL%
-:include_path: ../../../logstash/docs/include
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -30,7 +30,7 @@ starting from the filter that generated them (i.e. this plugin).
 [id="plugins-{type}s-{plugin}-options"]
 ==== Clone Filter Configuration Options
 
-This plugin supports the following configuration options plus the <<plugins-{type}s-common-options>> described later.
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
@@ -38,7 +38,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-clones>> |<<array,array>>|No
 |=======================================================================
 
-Also see <<plugins-{type}s-common-options>> for a list of options supported by all
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
 filter plugins.
 
 &nbsp;
@@ -53,4 +53,5 @@ A new clone will be created with the given type for each type in this list.
 
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]

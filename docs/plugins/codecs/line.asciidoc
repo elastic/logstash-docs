@@ -7,7 +7,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: %VERSION%
 :release_date: %RELEASE_DATE%
 :changelog_url: %CHANGELOG_URL%
-:include_path: ../../../logstash/docs/include
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -29,8 +29,6 @@ Encoding behavior: Each event will be emitted with a trailing newline.
 [id="plugins-{type}s-{plugin}-options"]
 ==== Line Codec Configuration Options
 
-This plugin supports the following configuration options plus the <<plugins-{type}s-common-options>> described later.
-
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
@@ -38,9 +36,6 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-delimiter>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-format>> |<<string,string>>|No
 |=======================================================================
-
-Also see <<plugins-{type}s-common-options>> for a list of options supported by all
-codec plugins.
 
 &nbsp;
 
@@ -75,5 +70,3 @@ Change the delimiter that separates lines
 Set the desired text format for encoding.
 
 
-
-include::{include_path}/{type}.asciidoc[]

@@ -7,7 +7,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: %VERSION%
 :release_date: %RELEASE_DATE%
 :changelog_url: %CHANGELOG_URL%
-:include_path: ../../../logstash/docs/include
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -53,7 +53,7 @@ There are two configuration options:
 [id="plugins-{type}s-{plugin}-options"]
 ==== Nagios Output Configuration Options
 
-This plugin supports the following configuration options plus the <<plugins-{type}s-common-options>> described later.
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
@@ -62,7 +62,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-nagios_level>> |<<string,string>>, one of `["0", "1", "2", "3"]`|No
 |=======================================================================
 
-Also see <<plugins-{type}s-common-options>> for a list of options supported by all
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
 output plugins.
 
 &nbsp;
@@ -86,4 +86,5 @@ The Nagios check level. Should be one of 0=OK, 1=WARNING, 2=CRITICAL,
 
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]

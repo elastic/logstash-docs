@@ -7,7 +7,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: %VERSION%
 :release_date: %RELEASE_DATE%
 :changelog_url: %CHANGELOG_URL%
-:include_path: ../../../logstash/docs/include
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -25,16 +25,11 @@ include::{include_path}/plugin_header.asciidoc[]
 [id="plugins-{type}s-{plugin}-options"]
 ==== Msgpack Codec Configuration Options
 
-This plugin supports the following configuration options plus the <<plugins-{type}s-common-options>> described later.
-
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-format>> |<<string,string>>|No
 |=======================================================================
-
-Also see <<plugins-{type}s-common-options>> for a list of options supported by all
-codec plugins.
 
 &nbsp;
 
@@ -47,5 +42,3 @@ codec plugins.
 
 
 
-
-include::{include_path}/{type}.asciidoc[]

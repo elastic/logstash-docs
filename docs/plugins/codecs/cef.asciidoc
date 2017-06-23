@@ -7,7 +7,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: %VERSION%
 :release_date: %RELEASE_DATE%
 :changelog_url: %CHANGELOG_URL%
-:include_path: ../../../logstash/docs/include
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -30,8 +30,6 @@ produce an event with the payload as the 'message' field and a '_cefparsefailure
 [id="plugins-{type}s-{plugin}-options"]
 ==== Cef Codec Configuration Options
 
-This plugin supports the following configuration options plus the <<plugins-{type}s-common-options>> described later.
-
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
@@ -44,9 +42,6 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-vendor>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-version>> |<<string,string>>|No
 |=======================================================================
-
-Also see <<plugins-{type}s-common-options>> for a list of options supported by all
-codec plugins.
 
 &nbsp;
 
@@ -167,5 +162,3 @@ Device version field in CEF header. The new value can include `%{foo}` strings
 to help you build a new value from other parts of the event.
 
 
-
-include::{include_path}/{type}.asciidoc[]

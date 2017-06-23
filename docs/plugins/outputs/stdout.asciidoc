@@ -7,7 +7,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: %VERSION%
 :release_date: %RELEASE_DATE%
 :changelog_url: %CHANGELOG_URL%
-:include_path: ../../../logstash/docs/include
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -53,11 +53,12 @@ http://rubygems.org/gems/awesome_print[library]
 [id="plugins-{type}s-{plugin}-options"]
 ==== Stdout Output Configuration Options
 
-This plugin supports the following configuration options plus the <<plugins-{type}s-common-options>> described later.
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
 |=======================================================================
 
+[id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]

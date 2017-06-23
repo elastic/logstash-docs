@@ -7,7 +7,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: %VERSION%
 :release_date: %RELEASE_DATE%
 :changelog_url: %CHANGELOG_URL%
-:include_path: ../../../logstash/docs/include
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -41,7 +41,7 @@ time of each read.
 [id="plugins-{type}s-{plugin}-options"]
 ==== Date Filter Configuration Options
 
-This plugin supports the following configuration options plus the <<plugins-{type}s-common-options>> described later.
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
@@ -53,7 +53,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-timezone>> |<<string,string>>|No
 |=======================================================================
 
-Also see <<plugins-{type}s-common-options>> for a list of options supported by all
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
 filter plugins.
 
 &nbsp;
@@ -211,4 +211,5 @@ This field can be dynamic and include parts of the event using the `%{field}` sy
 
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]

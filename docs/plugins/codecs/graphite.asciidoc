@@ -7,7 +7,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: %VERSION%
 :release_date: %RELEASE_DATE%
 :changelog_url: %CHANGELOG_URL%
-:include_path: ../../../logstash/docs/include
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -25,8 +25,6 @@ This codec will encode and decode Graphite formated lines.
 [id="plugins-{type}s-{plugin}-options"]
 ==== Graphite Codec Configuration Options
 
-This plugin supports the following configuration options plus the <<plugins-{type}s-common-options>> described later.
-
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
@@ -36,9 +34,6 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-metrics>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-metrics_format>> |<<string,string>>|No
 |=======================================================================
-
-Also see <<plugins-{type}s-common-options>> for a list of options supported by all
-codec plugins.
 
 &nbsp;
 
@@ -96,5 +91,3 @@ strings like `%{host}`.
 NOTE: If no metrics_format is defined the name of the metric will be used as fallback.
 
 
-
-include::{include_path}/{type}.asciidoc[]
