@@ -1,9 +1,24 @@
-[[plugins-codecs-avro]]
-=== avro
+:plugin: avro
+:type: codec
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-codec-avro`.
+[id="plugins-{type}-{plugin}"]
 
+=== Avro codec plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 Read serialized Avro records as Logstash events
 
@@ -31,10 +46,8 @@ Example usage with Kafka input.
 ----------------------------------
 input {
   kafka {
-    codec => {
-      avro => {
+    codec => avro {
         schema_uri => "/tmp/schema.avsc"
-      }
     }
   }
 }
@@ -46,39 +59,19 @@ output {
 }
 ----------------------------------
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Avro Codec Configuration Options
 
-==== Synopsis
-
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-avro {
-      schema_uri => ...
-  }
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-codecs-avro-schema_uri>> |<<string,string>>|Yes|
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-schema_uri>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-tag_on_failure>> |<<boolean,boolean>>|No
 |=======================================================================
-
-
-
-==== Details
 
 &nbsp;
 
-[[plugins-codecs-avro-schema_uri]]
+[id="plugins-{type}s-{plugin}-schema_uri"]
 ===== `schema_uri` 
 
   * This is a required setting.
@@ -91,5 +84,13 @@ example:
 
 * http - `http://example.com/schema.avsc`
 * file - `/path/to/schema.avsc`
+
+[id="plugins-{type}s-{plugin}-tag_on_failure"]
+===== `tag_on_failure` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+tag events with `_avroparsefailure` when decode fails
 
 

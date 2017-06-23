@@ -1,7 +1,24 @@
-[[plugins-inputs-heartbeat]]
-=== heartbeat
+:plugin: heartbeat
+:type: input
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}-{plugin}"]
+
+=== Heartbeat input plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 Generate heartbeat messages.
 
@@ -9,61 +26,26 @@ The general intention of this is to test the performance and
 availability of Logstash.
 
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Heartbeat Input Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-heartbeat {
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-inputs-heartbeat-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-heartbeat-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-inputs-heartbeat-count>> |<<number,number>>|No|`-1`
-| <<plugins-inputs-heartbeat-interval>> |<<number,number>>|No|`60`
-| <<plugins-inputs-heartbeat-message>> |<<string,string>>|No|`"ok"`
-| <<plugins-inputs-heartbeat-tags>> |<<array,array>>|No|
-| <<plugins-inputs-heartbeat-threads>> |<<number,number>>|No|`1`
-| <<plugins-inputs-heartbeat-type>> |<<string,string>>|No|
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-count>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-interval>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-message>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-threads>> |<<number,number>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
 
 &nbsp;
 
-[[plugins-inputs-heartbeat-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-Add a field to an event
-
-[[plugins-inputs-heartbeat-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-inputs-heartbeat-count]]
+[id="plugins-{type}s-{plugin}-count"]
 ===== `count` 
 
   * Value type is <<number,number>>
@@ -72,7 +54,7 @@ The codec used for input data. Input codecs are a convenient method for decoding
 How many times to iterate.
 This is typically used only for testing purposes.
 
-[[plugins-inputs-heartbeat-interval]]
+[id="plugins-{type}s-{plugin}-interval"]
 ===== `interval` 
 
   * Value type is <<number,number>>
@@ -82,7 +64,7 @@ Set how frequently messages should be sent.
 
 The default, `60`, means send a message every 60 seconds.
 
-[[plugins-inputs-heartbeat-message]]
+[id="plugins-{type}s-{plugin}-message"]
 ===== `message` 
 
   * Value type is <<string,string>>
@@ -101,17 +83,7 @@ output this value into a field called `clock`
 Otherwise, this value will be used verbatim as the event message. It
 will output this value into a field called `message`
 
-[[plugins-inputs-heartbeat-tags]]
-===== `tags` 
-
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
-
-Add any number of arbitrary tags to your event.
-
-This can help with processing later.
-
-[[plugins-inputs-heartbeat-threads]]
+[id="plugins-{type}s-{plugin}-threads"]
 ===== `threads` 
 
   * Value type is <<number,number>>
@@ -119,23 +91,7 @@ This can help with processing later.
 
 
 
-[[plugins-inputs-heartbeat-type]]
-===== `type` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a `type` field to all events handled by this input.
-
-Types are used mainly for filter activation.
-
-The type is stored as part of the event itself, so you can
-also use the type to search for it in Kibana.
-
-If you try to set a type on an event that already has one (for
-example when you send an event from a shipper to an indexer) then
-a new input will not override the existing type. A type set at
-the shipper stays with that event for its life even
-when sent to another Logstash server.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

@@ -1,9 +1,24 @@
-[[plugins-outputs-metriccatcher]]
-=== metriccatcher
+:plugin: metriccatcher
+:type: output
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-metriccatcher`.
+[id="plugins-{type}-{plugin}"]
 
+=== Metriccatcher output plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 This output ships metrics to MetricCatcher, allowing you to
 utilize Coda Hale's Metrics.
@@ -22,47 +37,30 @@ At Clearspring, we use it to count the response codes from Apache logs:
             }
     }
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Metriccatcher Output Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-metriccatcher {
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-outputs-metriccatcher-biased>> |<<hash,hash>>|No|
-| <<plugins-outputs-metriccatcher-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-metriccatcher-counter>> |<<hash,hash>>|No|
-| <<plugins-outputs-metriccatcher-gauge>> |<<hash,hash>>|No|
-| <<plugins-outputs-metriccatcher-host>> |<<string,string>>|No|`"localhost"`
-| <<plugins-outputs-metriccatcher-meter>> |<<hash,hash>>|No|
-| <<plugins-outputs-metriccatcher-port>> |<<number,number>>|No|`1420`
-| <<plugins-outputs-metriccatcher-timer>> |<<hash,hash>>|No|
-| <<plugins-outputs-metriccatcher-uniform>> |<<hash,hash>>|No|
-| <<plugins-outputs-metriccatcher-workers>> |<<number,number>>|No|`1`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-biased>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-counter>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-gauge>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-host>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-meter>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-timer>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-uniform>> |<<hash,hash>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
 
 &nbsp;
 
-[[plugins-outputs-metriccatcher-biased]]
+[id="plugins-{type}s-{plugin}-biased"]
 ===== `biased` 
 
   * Value type is <<hash,hash>>
@@ -75,15 +73,7 @@ of the metric name, value of the metric value.
 The value will be coerced to a floating point value. Values which cannot be
 coerced will zero (0)
 
-[[plugins-outputs-metriccatcher-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-metriccatcher-counter]]
+[id="plugins-{type}s-{plugin}-counter"]
 ===== `counter` 
 
   * Value type is <<hash,hash>>
@@ -98,7 +88,7 @@ of the metric name, value of the metric value. Example:
 The value will be coerced to a floating point value. Values which cannot be
 coerced will zero (0)
 
-[[plugins-outputs-metriccatcher-gauge]]
+[id="plugins-{type}s-{plugin}-gauge"]
 ===== `gauge` 
 
   * Value type is <<hash,hash>>
@@ -111,7 +101,7 @@ of the metric name, value of the metric value.
 The value will be coerced to a floating point value. Values which cannot be
 coerced will zero (0)
 
-[[plugins-outputs-metriccatcher-host]]
+[id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
   * Value type is <<string,string>>
@@ -119,7 +109,7 @@ coerced will zero (0)
 
 The address of the MetricCatcher
 
-[[plugins-outputs-metriccatcher-meter]]
+[id="plugins-{type}s-{plugin}-meter"]
 ===== `meter` 
 
   * Value type is <<hash,hash>>
@@ -132,7 +122,7 @@ of the metric name, value of the metric value.
 The value will be coerced to a floating point value. Values which cannot be
 coerced will zero (0)
 
-[[plugins-outputs-metriccatcher-port]]
+[id="plugins-{type}s-{plugin}-port"]
 ===== `port` 
 
   * Value type is <<number,number>>
@@ -140,7 +130,7 @@ coerced will zero (0)
 
 The port to connect on your MetricCatcher
 
-[[plugins-outputs-metriccatcher-timer]]
+[id="plugins-{type}s-{plugin}-timer"]
 ===== `timer` 
 
   * Value type is <<hash,hash>>
@@ -155,7 +145,7 @@ of the metric name, value of the metric value. Example:
 The value will be coerced to a floating point value. Values which cannot be
 coerced will zero (0)
 
-[[plugins-outputs-metriccatcher-uniform]]
+[id="plugins-{type}s-{plugin}-uniform"]
 ===== `uniform` 
 
   * Value type is <<hash,hash>>
@@ -168,13 +158,7 @@ of the metric name, value of the metric value.
 The value will be coerced to a floating point value. Values which cannot be
 coerced will zero (0)
 
-[[plugins-outputs-metriccatcher-workers]]
-===== `workers` 
-
-  * Value type is <<number,number>>
-  * Default value is `1`
-
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

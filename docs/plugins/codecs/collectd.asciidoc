@@ -1,7 +1,24 @@
-[[plugins-codecs-collectd]]
-=== collectd
+:plugin: collectd
+:type: codec
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}-{plugin}"]
+
+=== Collectd codec plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 Read events from the collectd binary protocol over the network via udp.
 See https://collectd.org/wiki/index.php/Binary_protocol
@@ -35,44 +52,24 @@ A sample `collectd.conf` to send to Logstash might be:
 Be sure to replace `10.0.0.1` with the IP of your Logstash instance.
 
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Collectd Codec Configuration Options
 
-==== Synopsis
-
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-collectd {
-  }
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-codecs-collectd-authfile>> |<<string,string>>|No|
-| <<plugins-codecs-collectd-nan_handling>> |<<string,string>>, one of `["change_value", "warn", "drop"]`|No|`"change_value"`
-| <<plugins-codecs-collectd-nan_tag>> |<<string,string>>|No|`"_collectdNaN"`
-| <<plugins-codecs-collectd-nan_value>> |<<number,number>>|No|`0`
-| <<plugins-codecs-collectd-prune_intervals>> |<<boolean,boolean>>|No|`true`
-| <<plugins-codecs-collectd-security_level>> |<<string,string>>, one of `["None", "Sign", "Encrypt"]`|No|`"None"`
-| <<plugins-codecs-collectd-typesdb>> |<<array,array>>|No|
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-authfile>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-nan_handling>> |<<string,string>>, one of `["change_value", "warn", "drop"]`|No
+| <<plugins-{type}s-{plugin}-nan_tag>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-nan_value>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-prune_intervals>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-security_level>> |<<string,string>>, one of `["None", "Sign", "Encrypt"]`|No
+| <<plugins-{type}s-{plugin}-typesdb>> |<<array,array>>|No
 |=======================================================================
-
-
-
-==== Details
 
 &nbsp;
 
-[[plugins-codecs-collectd-authfile]]
+[id="plugins-{type}s-{plugin}-authfile"]
 ===== `authfile` 
 
   * Value type is <<string,string>>
@@ -83,7 +80,7 @@ the http://collectd.org/documentation/manpages/collectd.conf.5.shtml#authfile_fi
 in collectd. You only need to set this option if the `security_level` is set to
 `Sign` or `Encrypt`
 
-[[plugins-codecs-collectd-nan_handling]]
+[id="plugins-{type}s-{plugin}-nan_handling"]
 ===== `nan_handling` 
 
   * Value can be any of: `change_value`, `warn`, `drop`
@@ -95,7 +92,7 @@ What to do when a value in the event is `NaN` (Not a Number)
 - warn: Change the `NaN` to the value of the nan_value option, print a warning to the log and add `nan_tag` as a tag
 - drop: Drop the event containing the `NaN` (this only drops the single event, not the whole packet)
 
-[[plugins-codecs-collectd-nan_tag]]
+[id="plugins-{type}s-{plugin}-nan_tag"]
 ===== `nan_tag` 
 
   * Value type is <<string,string>>
@@ -104,7 +101,7 @@ What to do when a value in the event is `NaN` (Not a Number)
 The tag to add to the event if a `NaN` value was found
 Set this to an empty string ('') if you don't want to tag
 
-[[plugins-codecs-collectd-nan_value]]
+[id="plugins-{type}s-{plugin}-nan_value"]
 ===== `nan_value` 
 
   * Value type is <<number,number>>
@@ -113,7 +110,7 @@ Set this to an empty string ('') if you don't want to tag
 Only relevant when `nan_handeling` is set to `change_value`
 Change NaN to this configured value
 
-[[plugins-codecs-collectd-prune_intervals]]
+[id="plugins-{type}s-{plugin}-prune_intervals"]
 ===== `prune_intervals` 
 
   * Value type is <<boolean,boolean>>
@@ -121,7 +118,7 @@ Change NaN to this configured value
 
 Prune interval records.  Defaults to `true`.
 
-[[plugins-codecs-collectd-security_level]]
+[id="plugins-{type}s-{plugin}-security_level"]
 ===== `security_level` 
 
   * Value can be any of: `None`, `Sign`, `Encrypt`
@@ -130,7 +127,7 @@ Prune interval records.  Defaults to `true`.
 Security Level. Default is `None`. This setting mirrors the setting from the
 collectd https://collectd.org/wiki/index.php/Plugin:Network[Network plugin]
 
-[[plugins-codecs-collectd-typesdb]]
+[id="plugins-{type}s-{plugin}-typesdb"]
 ===== `typesdb` 
 
   * Value type is <<array,array>>

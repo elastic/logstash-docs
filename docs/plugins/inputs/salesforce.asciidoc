@@ -1,9 +1,24 @@
-[[plugins-inputs-salesforce]]
-=== salesforce
+:plugin: salesforce
+:type: input
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-input-salesforce`.
+[id="plugins-{type}-{plugin}"]
 
+=== Salesforce input plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 This Logstash input plugin allows you to query Salesforce using SOQL and puts the results
 into Logstash, one row per event. You can configure it to pull entire sObjects or only
@@ -46,66 +61,33 @@ output {
 }
 ----------------------------------
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Salesforce Input Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-salesforce {
-    client_id => ...
-    client_secret => ...
-    password => ...
-    security_token => ...
-    sfdc_object_name => ...
-    username => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-inputs-salesforce-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-salesforce-api_version>> |<<string,string>>|No|
-| <<plugins-inputs-salesforce-client_id>> |<<string,string>>|Yes|
-| <<plugins-inputs-salesforce-client_secret>> |<<string,string>>|Yes|
-| <<plugins-inputs-salesforce-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-inputs-salesforce-password>> |<<string,string>>|Yes|
-| <<plugins-inputs-salesforce-security_token>> |<<string,string>>|Yes|
-| <<plugins-inputs-salesforce-sfdc_fields>> |<<array,array>>|No|`[]`
-| <<plugins-inputs-salesforce-sfdc_filters>> |<<string,string>>|No|`""`
-| <<plugins-inputs-salesforce-sfdc_object_name>> |<<string,string>>|Yes|
-| <<plugins-inputs-salesforce-tags>> |<<array,array>>|No|
-| <<plugins-inputs-salesforce-to_underscores>> |<<boolean,boolean>>|No|`false`
-| <<plugins-inputs-salesforce-type>> |<<string,string>>|No|
-| <<plugins-inputs-salesforce-use_test_sandbox>> |<<boolean,boolean>>|No|`false`
-| <<plugins-inputs-salesforce-username>> |<<string,string>>|Yes|
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-api_version>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-client_id>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-client_secret>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-password>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-security_token>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-sfdc_fields>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-sfdc_filters>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-sfdc_object_name>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-to_underscores>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-use_test_sandbox>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-username>> |<<string,string>>|Yes
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
 
 &nbsp;
 
-[[plugins-inputs-salesforce-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-Add a field to an event
-
-[[plugins-inputs-salesforce-api_version]]
+[id="plugins-{type}s-{plugin}-api_version"]
 ===== `api_version` 
 
   * Value type is <<string,string>>
@@ -114,7 +96,7 @@ Add a field to an event
 By default, this uses the default Restforce API version.
 To override this, set this to something like "32.0" for example
 
-[[plugins-inputs-salesforce-client_id]]
+[id="plugins-{type}s-{plugin}-client_id"]
 ===== `client_id` 
 
   * This is a required setting.
@@ -126,7 +108,7 @@ connected app with oath to use this output. More information
 can be found here:
 https://help.salesforce.com/apex/HTViewHelpDoc?id=connected_app_create.htm
 
-[[plugins-inputs-salesforce-client_secret]]
+[id="plugins-{type}s-{plugin}-client_secret"]
 ===== `client_secret` 
 
   * This is a required setting.
@@ -135,15 +117,7 @@ https://help.salesforce.com/apex/HTViewHelpDoc?id=connected_app_create.htm
 
 Consumer Secret from your oauth enabled connected app
 
-[[plugins-inputs-salesforce-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-inputs-salesforce-password]]
+[id="plugins-{type}s-{plugin}-password"]
 ===== `password` 
 
   * This is a required setting.
@@ -152,7 +126,7 @@ The codec used for input data. Input codecs are a convenient method for decoding
 
 The password used to login to sfdc
 
-[[plugins-inputs-salesforce-security_token]]
+[id="plugins-{type}s-{plugin}-security_token"]
 ===== `security_token` 
 
   * This is a required setting.
@@ -163,7 +137,7 @@ The security token for this account. For more information about
 generting a security token, see:
 https://help.salesforce.com/apex/HTViewHelpDoc?id=user_security_token.htm
 
-[[plugins-inputs-salesforce-sfdc_fields]]
+[id="plugins-{type}s-{plugin}-sfdc_fields"]
 ===== `sfdc_fields` 
 
   * Value type is <<array,array>>
@@ -172,7 +146,7 @@ https://help.salesforce.com/apex/HTViewHelpDoc?id=user_security_token.htm
 These are the field names to return in the Salesforce query
 If this is empty, all fields are returned.
 
-[[plugins-inputs-salesforce-sfdc_filters]]
+[id="plugins-{type}s-{plugin}-sfdc_filters"]
 ===== `sfdc_filters` 
 
   * Value type is <<string,string>>
@@ -182,7 +156,7 @@ These options will be added to the WHERE clause in the
 SOQL statement. Additional fields can be filtered on by
 adding field1 = value1 AND field2 = value2 AND...
 
-[[plugins-inputs-salesforce-sfdc_object_name]]
+[id="plugins-{type}s-{plugin}-sfdc_object_name"]
 ===== `sfdc_object_name` 
 
   * This is a required setting.
@@ -191,17 +165,7 @@ adding field1 = value1 AND field2 = value2 AND...
 
 The name of the salesforce object you are creating or updating
 
-[[plugins-inputs-salesforce-tags]]
-===== `tags` 
-
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
-
-Add any number of arbitrary tags to your event.
-
-This can help with processing later.
-
-[[plugins-inputs-salesforce-to_underscores]]
+[id="plugins-{type}s-{plugin}-to_underscores"]
 ===== `to_underscores` 
 
   * Value type is <<boolean,boolean>>
@@ -209,26 +173,7 @@ This can help with processing later.
 
 Setting this to true will convert SFDC's NamedFields__c to named_fields__c
 
-[[plugins-inputs-salesforce-type]]
-===== `type` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a `type` field to all events handled by this input.
-
-Types are used mainly for filter activation.
-
-The type is stored as part of the event itself, so you can
-also use the type to search for it in Kibana.
-
-If you try to set a type on an event that already has one (for
-example when you send an event from a shipper to an indexer) then
-a new input will not override the existing type. A type set at
-the shipper stays with that event for its life even
-when sent to another Logstash server.
-
-[[plugins-inputs-salesforce-use_test_sandbox]]
+[id="plugins-{type}s-{plugin}-use_test_sandbox"]
 ===== `use_test_sandbox` 
 
   * Value type is <<boolean,boolean>>
@@ -237,7 +182,7 @@ when sent to another Logstash server.
 Set this to true to connect to a sandbox sfdc instance
 logging in through test.salesforce.com
 
-[[plugins-inputs-salesforce-username]]
+[id="plugins-{type}s-{plugin}-username"]
 ===== `username` 
 
   * This is a required setting.
@@ -249,3 +194,6 @@ Used for authentication and will be the user all objects
 are created or modified by
 
 
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

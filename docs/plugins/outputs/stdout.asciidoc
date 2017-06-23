@@ -1,7 +1,24 @@
-[[plugins-outputs-stdout]]
-=== stdout
+:plugin: stdout
+:type: output
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}-{plugin}"]
+
+=== Stdout output plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 A simple output which prints to the STDOUT of the shell running
 Logstash. This output can be quite convenient when debugging
@@ -10,7 +27,7 @@ data after it has passed through the inputs and filters.
 
 For example, the following output configuration, in conjunction with the
 Logstash `-e` command-line flag, will allow you to see the results
-of your event pipeline for quick iteration. 
+of your event pipeline for quick iteration.
 [source,ruby]
     output {
       stdout {}
@@ -33,53 +50,15 @@ http://rubygems.org/gems/awesome_print[library]
     }
 
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Stdout Output Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-stdout {
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-outputs-stdout-codec>> |<<codec,codec>>|No|`"line"`
-| <<plugins-outputs-stdout-workers>> |<<number,number>>|No|`1`
+|Setting |Input type|Required
 |=======================================================================
 
-
-
-==== Details
-
-&nbsp;
-
-[[plugins-outputs-stdout-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"line"`
-
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-stdout-workers]]
-===== `workers` 
-
-  * Value type is <<number,number>>
-  * Default value is `1`
-
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
-
-
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

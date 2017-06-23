@@ -1,7 +1,24 @@
-[[plugins-inputs-sqs]]
-=== sqs
+:plugin: sqs
+:type: input
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}-{plugin}"]
+
+=== Sqs input plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 
 Pull events from an Amazon Web Services Simple Queue Service (SQS) queue.
@@ -57,54 +74,34 @@ A sample policy is as follows:
 See http://aws.amazon.com/iam/ for more details on setting up AWS identities.
 
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Sqs Input Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-sqs {
-    queue => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-inputs-sqs-access_key_id>> |<<string,string>>|No|
-| <<plugins-inputs-sqs-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-sqs-aws_credentials_file>> |<<string,string>>|No|
-| <<plugins-inputs-sqs-codec>> |<<codec,codec>>|No|`"json"`
-| <<plugins-inputs-sqs-id_field>> |<<string,string>>|No|
-| <<plugins-inputs-sqs-md5_field>> |<<string,string>>|No|
-| <<plugins-inputs-sqs-polling_frequency>> |<<number,number>>|No|`20`
-| <<plugins-inputs-sqs-proxy_uri>> |<<string,string>>|No|
-| <<plugins-inputs-sqs-queue>> |<<string,string>>|Yes|
-| <<plugins-inputs-sqs-region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "sa-east-1", "us-gov-west-1", "cn-north-1"]`|No|`"us-east-1"`
-| <<plugins-inputs-sqs-secret_access_key>> |<<string,string>>|No|
-| <<plugins-inputs-sqs-sent_timestamp_field>> |<<string,string>>|No|
-| <<plugins-inputs-sqs-session_token>> |<<string,string>>|No|
-| <<plugins-inputs-sqs-tags>> |<<array,array>>|No|
-| <<plugins-inputs-sqs-threads>> |<<number,number>>|No|`1`
-| <<plugins-inputs-sqs-type>> |<<string,string>>|No|
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-access_key_id>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-aws_credentials_file>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-id_field>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-md5_field>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-polling_frequency>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-proxy_uri>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-queue>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-region>> |<<string,string>>, one of `["us-east-1", "us-east-2", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "eu-west-2", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ap-northeast-2", "sa-east-1", "us-gov-west-1", "cn-north-1", "ap-south-1", "ca-central-1"]`|No
+| <<plugins-{type}s-{plugin}-secret_access_key>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-sent_timestamp_field>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-session_token>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-threads>> |<<number,number>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
 
 &nbsp;
 
-[[plugins-inputs-sqs-access_key_id]]
+[id="plugins-{type}s-{plugin}-access_key_id"]
 ===== `access_key_id` 
 
   * Value type is <<string,string>>
@@ -118,15 +115,7 @@ This plugin uses the AWS SDK and supports several ways to get credentials, which
 4. Environment variables `AMAZON_ACCESS_KEY_ID` and `AMAZON_SECRET_ACCESS_KEY`
 5. IAM Instance Profile (available when running inside EC2)
 
-[[plugins-inputs-sqs-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-Add a field to an event
-
-[[plugins-inputs-sqs-aws_credentials_file]]
+[id="plugins-{type}s-{plugin}-aws_credentials_file"]
 ===== `aws_credentials_file` 
 
   * Value type is <<string,string>>
@@ -139,19 +128,12 @@ file should look like this:
 
 [source,ruby]
 ----------------------------------
- :access_key_id: "12345"
- :secret_access_key: "54321"
+    :access_key_id: "12345"
+    :secret_access_key: "54321"
 ----------------------------------
 
-[[plugins-inputs-sqs-codec]]
-===== `codec` 
 
-  * Value type is <<codec,codec>>
-  * Default value is `"json"`
-
-The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-inputs-sqs-id_field]]
+[id="plugins-{type}s-{plugin}-id_field"]
 ===== `id_field` 
 
   * Value type is <<string,string>>
@@ -159,7 +141,7 @@ The codec used for input data. Input codecs are a convenient method for decoding
 
 Name of the event field in which to store the SQS message ID
 
-[[plugins-inputs-sqs-md5_field]]
+[id="plugins-{type}s-{plugin}-md5_field"]
 ===== `md5_field` 
 
   * Value type is <<string,string>>
@@ -167,7 +149,7 @@ Name of the event field in which to store the SQS message ID
 
 Name of the event field in which to store the SQS message MD5 checksum
 
-[[plugins-inputs-sqs-polling_frequency]]
+[id="plugins-{type}s-{plugin}-polling_frequency"]
 ===== `polling_frequency` 
 
   * Value type is <<number,number>>
@@ -175,7 +157,7 @@ Name of the event field in which to store the SQS message MD5 checksum
 
 Polling frequency, default is 20 seconds
 
-[[plugins-inputs-sqs-proxy_uri]]
+[id="plugins-{type}s-{plugin}-proxy_uri"]
 ===== `proxy_uri` 
 
   * Value type is <<string,string>>
@@ -183,7 +165,7 @@ Polling frequency, default is 20 seconds
 
 URI to proxy server if required
 
-[[plugins-inputs-sqs-queue]]
+[id="plugins-{type}s-{plugin}-queue"]
 ===== `queue` 
 
   * This is a required setting.
@@ -192,15 +174,15 @@ URI to proxy server if required
 
 Name of the SQS Queue name to pull messages from. Note that this is just the name of the queue, not the URL or ARN.
 
-[[plugins-inputs-sqs-region]]
+[id="plugins-{type}s-{plugin}-region"]
 ===== `region` 
 
-  * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`
+  * Value can be any of: `us-east-1`, `us-east-2`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `eu-west-2`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `ap-northeast-2`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`, `ap-south-1`, `ca-central-1`
   * Default value is `"us-east-1"`
 
+The AWS Region
 
-
-[[plugins-inputs-sqs-secret_access_key]]
+[id="plugins-{type}s-{plugin}-secret_access_key"]
 ===== `secret_access_key` 
 
   * Value type is <<string,string>>
@@ -208,7 +190,7 @@ Name of the SQS Queue name to pull messages from. Note that this is just the nam
 
 The AWS Secret Access Key
 
-[[plugins-inputs-sqs-sent_timestamp_field]]
+[id="plugins-{type}s-{plugin}-sent_timestamp_field"]
 ===== `sent_timestamp_field` 
 
   * Value type is <<string,string>>
@@ -216,25 +198,15 @@ The AWS Secret Access Key
 
 Name of the event field in which to store the SQS message Sent Timestamp
 
-[[plugins-inputs-sqs-session_token]]
+[id="plugins-{type}s-{plugin}-session_token"]
 ===== `session_token` 
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The AWS Session token for temporary credentials
+The AWS Session token for temporary credential
 
-[[plugins-inputs-sqs-tags]]
-===== `tags` 
-
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
-
-Add any number of arbitrary tags to your event.
-
-This can help with processing later.
-
-[[plugins-inputs-sqs-threads]]
+[id="plugins-{type}s-{plugin}-threads"]
 ===== `threads` 
 
   * Value type is <<number,number>>
@@ -242,23 +214,7 @@ This can help with processing later.
 
 
 
-[[plugins-inputs-sqs-type]]
-===== `type` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a `type` field to all events handled by this input.
-
-Types are used mainly for filter activation.
-
-The type is stored as part of the event itself, so you can
-also use the type to search for it in Kibana.
-
-If you try to set a type on an event that already has one (for
-example when you send an event from a shipper to an indexer) then
-a new input will not override the existing type. A type set at
-the shipper stays with that event for its life even
-when sent to another Logstash server.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

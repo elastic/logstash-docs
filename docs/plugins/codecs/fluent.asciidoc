@@ -1,7 +1,24 @@
-[[plugins-codecs-fluent]]
-=== fluent
+:plugin: fluent
+:type: codec
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}-{plugin}"]
+
+=== Fluent codec plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 This codec handles fluentd's msgpack schema.
 
@@ -25,20 +42,10 @@ Notes:
   subsecond precision on events processed by this codec.
 
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Fluent Codec Configuration Options
 
-==== Synopsis
-
-This plugin has no configuration options.
-
-
-Complete configuration example:
-
-[source,json]
---------------------------
-fluent {
-}
---------------------------
-
-
-
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+|=======================================================================

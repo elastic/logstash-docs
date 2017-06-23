@@ -1,55 +1,55 @@
-[[plugins-outputs-datadog_metrics]]
-=== datadog_metrics
+:plugin: datadog_metrics
+:type: output
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-datadog_metrics`.
+[id="plugins-{type}-{plugin}"]
 
+=== Datadog_metrics output plugin
 
+include::{include_path}/plugin_header.asciidoc[]
 
+==== Description
+
+This output lets you send metrics to
+DataDogHQ based on Logstash events.
+Default `queue_size` and `timeframe` are low in order to provide near realtime alerting.
+If you do not use Datadog for alerting, consider raising these thresholds.
+
+[id="plugins-{type}s-{plugin}-options"]
+==== Datadog_metrics Output Configuration Options
+
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-api_key>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-dd_tags>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-device>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-host>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-metric_name>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-metric_type>> |<<string,string>>, one of `["gauge", "counter", "%{metric_type}"]`|No
+| <<plugins-{type}s-{plugin}-metric_value>> |<<,>>|No
+| <<plugins-{type}s-{plugin}-queue_size>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-timeframe>> |<<number,number>>|No
+|=======================================================================
+
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
 
 &nbsp;
 
-==== Synopsis
-
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-datadog_metrics {
-    api_key => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
-|=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-outputs-datadog_metrics-api_key>> |<<string,string>>|Yes|
-| <<plugins-outputs-datadog_metrics-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-datadog_metrics-dd_tags>> |<<array,array>>|No|
-| <<plugins-outputs-datadog_metrics-device>> |<<string,string>>|No|`"%{metric_device}"`
-| <<plugins-outputs-datadog_metrics-host>> |<<string,string>>|No|`"%{host}"`
-| <<plugins-outputs-datadog_metrics-metric_name>> |<<string,string>>|No|`"%{metric_name}"`
-| <<plugins-outputs-datadog_metrics-metric_type>> |<<string,string>>, one of `["gauge", "counter", "%{metric_type}"]`|No|`"%{metric_type}"`
-| <<plugins-outputs-datadog_metrics-metric_value>> |<<,>>|No|`"%{metric_value}"`
-| <<plugins-outputs-datadog_metrics-queue_size>> |<<number,number>>|No|`10`
-| <<plugins-outputs-datadog_metrics-timeframe>> |<<number,number>>|No|`10`
-| <<plugins-outputs-datadog_metrics-workers>> |<<number,number>>|No|`1`
-|=======================================================================
-
-
-
-==== Details
-
-&nbsp;
-
-[[plugins-outputs-datadog_metrics-api_key]]
+[id="plugins-{type}s-{plugin}-api_key"]
 ===== `api_key` 
 
   * This is a required setting.
@@ -58,15 +58,7 @@ Available configuration options:
 
 Your DatadogHQ API key. https://app.datadoghq.com/account/settings#api
 
-[[plugins-outputs-datadog_metrics-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-datadog_metrics-dd_tags]]
+[id="plugins-{type}s-{plugin}-dd_tags"]
 ===== `dd_tags` 
 
   * Value type is <<array,array>>
@@ -75,7 +67,7 @@ The codec used for output data. Output codecs are a convenient method for encodi
 Set any custom tags for this event,
 default are the Logstash tags if any.
 
-[[plugins-outputs-datadog_metrics-device]]
+[id="plugins-{type}s-{plugin}-device"]
 ===== `device` 
 
   * Value type is <<string,string>>
@@ -83,7 +75,7 @@ default are the Logstash tags if any.
 
 The name of the device that produced the metric.
 
-[[plugins-outputs-datadog_metrics-host]]
+[id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
   * Value type is <<string,string>>
@@ -91,7 +83,7 @@ The name of the device that produced the metric.
 
 The name of the host that produced the metric.
 
-[[plugins-outputs-datadog_metrics-metric_name]]
+[id="plugins-{type}s-{plugin}-metric_name"]
 ===== `metric_name` 
 
   * Value type is <<string,string>>
@@ -99,7 +91,7 @@ The name of the host that produced the metric.
 
 The name of the time series.
 
-[[plugins-outputs-datadog_metrics-metric_type]]
+[id="plugins-{type}s-{plugin}-metric_type"]
 ===== `metric_type` 
 
   * Value can be any of: `gauge`, `counter`, `%{metric_type}`
@@ -107,15 +99,15 @@ The name of the time series.
 
 The type of the metric.
 
-[[plugins-outputs-datadog_metrics-metric_value]]
+[id="plugins-{type}s-{plugin}-metric_value"]
 ===== `metric_value` 
 
-  <li> Value type is <<string,string>>
+  * Value type is <<string,string>>
   * Default value is `"%{metric_value}"`
 
 The value.
 
-[[plugins-outputs-datadog_metrics-queue_size]]
+[id="plugins-{type}s-{plugin}-queue_size"]
 ===== `queue_size` 
 
   * Value type is <<number,number>>
@@ -124,7 +116,7 @@ The value.
 How many events to queue before flushing to Datadog
 prior to schedule set in `@timeframe`
 
-[[plugins-outputs-datadog_metrics-timeframe]]
+[id="plugins-{type}s-{plugin}-timeframe"]
 ===== `timeframe` 
 
   * Value type is <<number,number>>
@@ -132,13 +124,7 @@ prior to schedule set in `@timeframe`
 
 How often (in seconds) to flush queued events to Datadog
 
-[[plugins-outputs-datadog_metrics-workers]]
-===== `workers` 
-
-  * Value type is <<number,number>>
-  * Default value is `1`
-
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

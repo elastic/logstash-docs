@@ -1,67 +1,55 @@
-[[plugins-inputs-irc]]
-=== irc
+:plugin: irc
+:type: input
 
-NOTE: This is a community-maintained plugin!
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="plugins-{type}-{plugin}"]
+
+=== Irc input plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 Read events from an IRC Server.
 
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Irc Input Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-irc {
-    channels => ...
-    host => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-inputs-irc-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-irc-catch_all>> |<<boolean,boolean>>|No|`false`
-| <<plugins-inputs-irc-channels>> |<<array,array>>|Yes|
-| <<plugins-inputs-irc-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-inputs-irc-get_stats>> |<<boolean,boolean>>|No|`false`
-| <<plugins-inputs-irc-host>> |<<string,string>>|Yes|
-| <<plugins-inputs-irc-nick>> |<<string,string>>|No|`"logstash"`
-| <<plugins-inputs-irc-password>> |<<password,password>>|No|
-| <<plugins-inputs-irc-port>> |<<number,number>>|No|`6667`
-| <<plugins-inputs-irc-real>> |<<string,string>>|No|`"logstash"`
-| <<plugins-inputs-irc-secure>> |<<boolean,boolean>>|No|`false`
-| <<plugins-inputs-irc-stats_interval>> |<<number,number>>|No|`5`
-| <<plugins-inputs-irc-tags>> |<<array,array>>|No|
-| <<plugins-inputs-irc-type>> |<<string,string>>|No|
-| <<plugins-inputs-irc-user>> |<<string,string>>|No|`"logstash"`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-catch_all>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-channels>> |<<array,array>>|Yes
+| <<plugins-{type}s-{plugin}-get_stats>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-host>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-nick>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-password>> |<<password,password>>|No
+| <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-real>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-secure>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-stats_interval>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-user>> |<<string,string>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
 
 &nbsp;
 
-[[plugins-inputs-irc-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-Add a field to an event
-
-[[plugins-inputs-irc-catch_all]]
+[id="plugins-{type}s-{plugin}-catch_all"]
 ===== `catch_all` 
 
   * Value type is <<boolean,boolean>>
@@ -69,7 +57,7 @@ Add a field to an event
 
 Catch all IRC channel/user events not just channel messages
 
-[[plugins-inputs-irc-channels]]
+[id="plugins-{type}s-{plugin}-channels"]
 ===== `channels` 
 
   * This is a required setting.
@@ -85,15 +73,7 @@ For passworded channels, add a space and the channel password, such as
 "#logstash password".
 
 
-[[plugins-inputs-irc-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-inputs-irc-get_stats]]
+[id="plugins-{type}s-{plugin}-get_stats"]
 ===== `get_stats` 
 
   * Value type is <<boolean,boolean>>
@@ -101,7 +81,7 @@ The codec used for input data. Input codecs are a convenient method for decoding
 
 Gather and send user counts for channels - this requires catch_all and will force it
 
-[[plugins-inputs-irc-host]]
+[id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
   * This is a required setting.
@@ -110,7 +90,7 @@ Gather and send user counts for channels - this requires catch_all and will forc
 
 Host of the IRC Server to connect to.
 
-[[plugins-inputs-irc-nick]]
+[id="plugins-{type}s-{plugin}-nick"]
 ===== `nick` 
 
   * Value type is <<string,string>>
@@ -118,7 +98,7 @@ Host of the IRC Server to connect to.
 
 IRC Nickname
 
-[[plugins-inputs-irc-password]]
+[id="plugins-{type}s-{plugin}-password"]
 ===== `password` 
 
   * Value type is <<password,password>>
@@ -126,7 +106,7 @@ IRC Nickname
 
 IRC Server password
 
-[[plugins-inputs-irc-port]]
+[id="plugins-{type}s-{plugin}-port"]
 ===== `port` 
 
   * Value type is <<number,number>>
@@ -134,7 +114,7 @@ IRC Server password
 
 Port for the IRC Server
 
-[[plugins-inputs-irc-real]]
+[id="plugins-{type}s-{plugin}-real"]
 ===== `real` 
 
   * Value type is <<string,string>>
@@ -142,7 +122,7 @@ Port for the IRC Server
 
 IRC Real name
 
-[[plugins-inputs-irc-secure]]
+[id="plugins-{type}s-{plugin}-secure"]
 ===== `secure` 
 
   * Value type is <<boolean,boolean>>
@@ -150,7 +130,7 @@ IRC Real name
 
 Set this to true to enable SSL.
 
-[[plugins-inputs-irc-stats_interval]]
+[id="plugins-{type}s-{plugin}-stats_interval"]
 ===== `stats_interval` 
 
   * Value type is <<number,number>>
@@ -158,36 +138,7 @@ Set this to true to enable SSL.
 
 How often in minutes to get the user count stats
 
-[[plugins-inputs-irc-tags]]
-===== `tags` 
-
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
-
-Add any number of arbitrary tags to your event.
-
-This can help with processing later.
-
-[[plugins-inputs-irc-type]]
-===== `type` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a `type` field to all events handled by this input.
-
-Types are used mainly for filter activation.
-
-The type is stored as part of the event itself, so you can
-also use the type to search for it in Kibana.
-
-If you try to set a type on an event that already has one (for
-example when you send an event from a shipper to an indexer) then
-a new input will not override the existing type. A type set at
-the shipper stays with that event for its life even
-when sent to another Logstash server.
-
-[[plugins-inputs-irc-user]]
+[id="plugins-{type}s-{plugin}-user"]
 ===== `user` 
 
   * Value type is <<string,string>>
@@ -196,3 +147,6 @@ when sent to another Logstash server.
 IRC Username
 
 
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

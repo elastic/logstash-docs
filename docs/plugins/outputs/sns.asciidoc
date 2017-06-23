@@ -1,7 +1,24 @@
-[[plugins-outputs-sns]]
-=== sns
+:plugin: sns
+:type: output
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}-{plugin}"]
+
+=== Sns output plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 SNS output.
 
@@ -30,47 +47,30 @@ This plugin now uses the logstash standard <<codec,codec>> option for encoding i
 If you want the same 'plain' format as the v0/1 codec (`format => "plain"`) use `codec => "s3_plain"`.
 
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Sns Output Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-sns {
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-outputs-sns-access_key_id>> |<<string,string>>|No|
-| <<plugins-outputs-sns-arn>> |<<string,string>>|No|
-| <<plugins-outputs-sns-aws_credentials_file>> |<<string,string>>|No|
-| <<plugins-outputs-sns-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-sns-proxy_uri>> |<<string,string>>|No|
-| <<plugins-outputs-sns-publish_boot_message_arn>> |<<string,string>>|No|
-| <<plugins-outputs-sns-region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "sa-east-1", "us-gov-west-1", "cn-north-1"]`|No|`"us-east-1"`
-| <<plugins-outputs-sns-secret_access_key>> |<<string,string>>|No|
-| <<plugins-outputs-sns-session_token>> |<<string,string>>|No|
-| <<plugins-outputs-sns-workers>> |<<number,number>>|No|`1`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-access_key_id>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-arn>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-aws_credentials_file>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-proxy_uri>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-publish_boot_message_arn>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-region>> |<<string,string>>, one of `["us-east-1", "us-east-2", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "eu-west-2", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ap-northeast-2", "sa-east-1", "us-gov-west-1", "cn-north-1", "ap-south-1", "ca-central-1"]`|No
+| <<plugins-{type}s-{plugin}-secret_access_key>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-session_token>> |<<string,string>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
 
 &nbsp;
 
-[[plugins-outputs-sns-access_key_id]]
+[id="plugins-{type}s-{plugin}-access_key_id"]
 ===== `access_key_id` 
 
   * Value type is <<string,string>>
@@ -84,7 +84,7 @@ This plugin uses the AWS SDK and supports several ways to get credentials, which
 4. Environment variables `AMAZON_ACCESS_KEY_ID` and `AMAZON_SECRET_ACCESS_KEY`
 5. IAM Instance Profile (available when running inside EC2)
 
-[[plugins-outputs-sns-arn]]
+[id="plugins-{type}s-{plugin}-arn"]
 ===== `arn` 
 
   * Value type is <<string,string>>
@@ -93,7 +93,7 @@ This plugin uses the AWS SDK and supports several ways to get credentials, which
 Optional ARN to send messages to. If you do not set this you must
 include the `sns` field in your events to set the ARN on a per-message basis!
 
-[[plugins-outputs-sns-aws_credentials_file]]
+[id="plugins-{type}s-{plugin}-aws_credentials_file"]
 ===== `aws_credentials_file` 
 
   * Value type is <<string,string>>
@@ -106,19 +106,12 @@ file should look like this:
 
 [source,ruby]
 ----------------------------------
- :access_key_id: "12345"
- :secret_access_key: "54321"
+    :access_key_id: "12345"
+    :secret_access_key: "54321"
 ----------------------------------
 
-[[plugins-outputs-sns-codec]]
-===== `codec` 
 
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-sns-proxy_uri]]
+[id="plugins-{type}s-{plugin}-proxy_uri"]
 ===== `proxy_uri` 
 
   * Value type is <<string,string>>
@@ -126,7 +119,7 @@ The codec used for output data. Output codecs are a convenient method for encodi
 
 URI to proxy server if required
 
-[[plugins-outputs-sns-publish_boot_message_arn]]
+[id="plugins-{type}s-{plugin}-publish_boot_message_arn"]
 ===== `publish_boot_message_arn` 
 
   * Value type is <<string,string>>
@@ -139,15 +132,15 @@ is registered.
 Example: arn:aws:sns:us-east-1:770975001275:logstash-testing
 
 
-[[plugins-outputs-sns-region]]
+[id="plugins-{type}s-{plugin}-region"]
 ===== `region` 
 
-  * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`
+  * Value can be any of: `us-east-1`, `us-east-2`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `eu-west-2`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `ap-northeast-2`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`, `ap-south-1`, `ca-central-1`
   * Default value is `"us-east-1"`
 
+The AWS Region
 
-
-[[plugins-outputs-sns-secret_access_key]]
+[id="plugins-{type}s-{plugin}-secret_access_key"]
 ===== `secret_access_key` 
 
   * Value type is <<string,string>>
@@ -155,21 +148,15 @@ Example: arn:aws:sns:us-east-1:770975001275:logstash-testing
 
 The AWS Secret Access Key
 
-[[plugins-outputs-sns-session_token]]
+[id="plugins-{type}s-{plugin}-session_token"]
 ===== `session_token` 
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The AWS Session token for temporary credentials
-
-[[plugins-outputs-sns-workers]]
-===== `workers` 
-
-  * Value type is <<number,number>>
-  * Default value is `1`
-
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
+The AWS Session token for temporary credential
 
 
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

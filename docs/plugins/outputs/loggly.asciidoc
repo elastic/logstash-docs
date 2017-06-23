@@ -1,10 +1,26 @@
-[[plugins-outputs-loggly]]
-=== loggly
+:plugin: loggly
+:type: output
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-loggly`.
+[id="plugins-{type}-{plugin}"]
 
+=== Loggly output plugin
 
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Ugly monkey patch to get around http://jira.codehaus.org/browse/JRUBY-5529
 Got a loggly account? Use logstash to ship logs to Loggly!
 
 This is most useful so you can use logstash to parse and structure
@@ -13,56 +29,41 @@ your logs and ship structured, json events to your account at Loggly.
 To use this, you'll need to use a Loggly input with type 'http'
 and 'json logging' enabled.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Loggly Output Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-loggly {
-    key => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-outputs-loggly-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-loggly-host>> |<<string,string>>|No|`"logs-01.loggly.com"`
-| <<plugins-outputs-loggly-key>> |<<string,string>>|Yes|
-| <<plugins-outputs-loggly-proto>> |<<string,string>>|No|`"http"`
-| <<plugins-outputs-loggly-proxy_host>> |<<string,string>>|No|
-| <<plugins-outputs-loggly-proxy_password>> |<<password,password>>|No|`""`
-| <<plugins-outputs-loggly-proxy_port>> |<<number,number>>|No|
-| <<plugins-outputs-loggly-proxy_user>> |<<string,string>>|No|
-| <<plugins-outputs-loggly-tag>> |<<string,string>>|No|`"logstash"`
-| <<plugins-outputs-loggly-workers>> |<<number,number>>|No|`1`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-can_retry>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-host>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-key>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-proto>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-proxy_host>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-proxy_password>> |<<password,password>>|No
+| <<plugins-{type}s-{plugin}-proxy_port>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-proxy_user>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-retry_count>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-tag>> |<<string,string>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
 
 &nbsp;
 
-[[plugins-outputs-loggly-codec]]
-===== `codec` 
+[id="plugins-{type}s-{plugin}-can_retry"]
+===== `can_retry` 
 
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
 
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
+Can Retry.
+Setting this value true helps user to send multiple retry attempts if the first request fails
 
-[[plugins-outputs-loggly-host]]
+[id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
   * Value type is <<string,string>>
@@ -73,7 +74,7 @@ server which is usually "logs-01.loggly.com" (Gen2 account).
 See Loggly HTTP endpoint documentation at
 https://www.loggly.com/docs/http-endpoint/
 
-[[plugins-outputs-loggly-key]]
+[id="plugins-{type}s-{plugin}-key"]
 ===== `key` 
 
   * This is a required setting.
@@ -83,7 +84,7 @@ https://www.loggly.com/docs/http-endpoint/
 The loggly http input key to send to.
 This is usually visible in the Loggly 'Inputs' page as something like this:
 ....
-    https://logs.hoover.loggly.net/inputs/abcdef12-3456-7890-abcd-ef0123456789
+    https://logs-01.loggly.net/inputs/abcdef12-3456-7890-abcd-ef0123456789
                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                                           \---------->   key   <-------------/
 ....
@@ -91,7 +92,7 @@ You can use `%{foo}` field lookups here if you need to pull the api key from
 the event. This is mainly aimed at multitenant hosting providers who want
 to offer shipping a customer's logs to that customer's loggly account.
 
-[[plugins-outputs-loggly-proto]]
+[id="plugins-{type}s-{plugin}-proto"]
 ===== `proto` 
 
   * Value type is <<string,string>>
@@ -99,7 +100,7 @@ to offer shipping a customer's logs to that customer's loggly account.
 
 Should the log action be sent over https instead of plain http
 
-[[plugins-outputs-loggly-proxy_host]]
+[id="plugins-{type}s-{plugin}-proxy_host"]
 ===== `proxy_host` 
 
   * Value type is <<string,string>>
@@ -107,7 +108,7 @@ Should the log action be sent over https instead of plain http
 
 Proxy Host
 
-[[plugins-outputs-loggly-proxy_password]]
+[id="plugins-{type}s-{plugin}-proxy_password"]
 ===== `proxy_password` 
 
   * Value type is <<password,password>>
@@ -115,7 +116,7 @@ Proxy Host
 
 Proxy Password
 
-[[plugins-outputs-loggly-proxy_port]]
+[id="plugins-{type}s-{plugin}-proxy_port"]
 ===== `proxy_port` 
 
   * Value type is <<number,number>>
@@ -123,7 +124,7 @@ Proxy Password
 
 Proxy Port
 
-[[plugins-outputs-loggly-proxy_user]]
+[id="plugins-{type}s-{plugin}-proxy_user"]
 ===== `proxy_user` 
 
   * Value type is <<string,string>>
@@ -131,7 +132,18 @@ Proxy Port
 
 Proxy Username
 
-[[plugins-outputs-loggly-tag]]
+[id="plugins-{type}s-{plugin}-retry_count"]
+===== `retry_count` 
+
+  * Value type is <<number,number>>
+  * Default value is `5`
+
+Retry count. 
+It may be possible that the request may timeout due to slow Internet connection
+if such condition appears, retry_count helps in retrying request for multiple times
+It will try to submit request until retry_count and then halt
+
+[id="plugins-{type}s-{plugin}-tag"]
 ===== `tag` 
 
   * Value type is <<string,string>>
@@ -146,13 +158,7 @@ You can use %{somefield} to allow for custom tag values.
 Helpful for leveraging Loggly source groups.
 https://www.loggly.com/docs/source-groups/
 
-[[plugins-outputs-loggly-workers]]
-===== `workers` 
-
-  * Value type is <<number,number>>
-  * Default value is `1`
-
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

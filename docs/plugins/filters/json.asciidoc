@@ -1,7 +1,24 @@
-[[plugins-filters-json]]
-=== json
+:plugin: json
+:type: filter
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}-{plugin}"]
+
+=== Json filter plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 This is a JSON parsing filter. It takes an existing field which contains JSON and
 expands it into an actual data structure within the Logstash event.
@@ -10,170 +27,43 @@ By default it will place the parsed JSON in the root (top level) of the Logstash
 filter can be configured to place the JSON into any arbitrary event field, using the
 `target` configuration.
 
-&nbsp;
+This plugin has a few fallback scenario when something bad happen during the parsing of the event.
+If the JSON parsing fails on the data, the event will be untouched and it will be tagged with a
+`_jsonparsefailure` then you can use conditionals to clean the data. You can configured this tag with then
+`tag_on_failure` option.
 
-==== Synopsis
+If the parsed data contains a `@timestamp` field, we will try to use it for the event's `@timestamp`, if the
+parsing fails, the field will be renamed to `_@timestamp` and the event will be tagged with a
+`_timestampparsefailure`.
 
-This plugin supports the following configuration options:
+[id="plugins-{type}s-{plugin}-options"]
+==== Json Filter Configuration Options
 
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-Required configuration options:
-
-[source,json]
---------------------------
-json {
-    source => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-filters-json-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-json-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-json-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-json-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-json-remove_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-json-source>> |<<string,string>>|Yes|
-| <<plugins-filters-json-target>> |<<string,string>>|No|
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-skip_on_invalid_json>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-source>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-tag_on_failure>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-target>> |<<string,string>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
 
 &nbsp;
 
-[[plugins-filters-json-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-If this filter is successful, add any arbitrary fields to this event.
-Field names can be dynamic and include parts of the event using the `%{field}`.
-
-Example:
-[source,ruby]
-    filter {
-      json {
-        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
-      }
-    }
-[source,ruby]
-    # You can also add multiple fields at once:
-    filter {
-      json {
-        add_field => {
-          "foo_%{somefield}" => "Hello world, from %{host}"
-          "new_field" => "new_static_value"
-        }
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add field `foo_hello` if it is present, with the
-value above and the `%{host}` piece replaced with that value from the
-event. The second example would also add a hardcoded field.
-
-[[plugins-filters-json-add_tag]]
-===== `add_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, add arbitrary tags to the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      json {
-        add_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also add multiple tags at once:
-    filter {
-      json {
-        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
-
-[[plugins-filters-json-periodic_flush]]
-===== `periodic_flush` 
+[id="plugins-{type}s-{plugin}-skip_on_invalid_json"]
+===== `skip_on_invalid_json` 
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
-Call the filter flush method at regular interval.
-Optional.
+Allow to skip filter on invalid json (allows to handle json and non-json data without warnings)
 
-[[plugins-filters-json-remove_field]]
-===== `remove_field` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary fields from this event.
-Fields names can be dynamic and include parts of the event using the %{field}
-Example:
-[source,ruby]
-    filter {
-      json {
-        remove_field => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple fields at once:
-    filter {
-      json {
-        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the field with name `foo_hello` if it is present. The second
-example would remove an additional, non-dynamic field.
-
-[[plugins-filters-json-remove_tag]]
-===== `remove_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary tags from the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      json {
-        remove_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple tags at once:
-    filter {
-      json {
-        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the tag `foo_hello` if it is present. The second example
-would remove a sad, unwanted tag as well.
-
-[[plugins-filters-json-source]]
+[id="plugins-{type}s-{plugin}-source"]
 ===== `source` 
 
   * This is a required setting.
@@ -194,7 +84,16 @@ For example, if you have JSON data in the `message` field:
 
 The above would parse the json from the `message` field
 
-[[plugins-filters-json-target]]
+[id="plugins-{type}s-{plugin}-tag_on_failure"]
+===== `tag_on_failure` 
+
+  * Value type is <<array,array>>
+  * Default value is `["_jsonparsefailure"]`
+
+Append values to the `tags` field when there has been no
+successful match
+
+[id="plugins-{type}s-{plugin}-target"]
 ===== `target` 
 
   * Value type is <<string,string>>
@@ -217,3 +116,6 @@ data structure in the `target` field.
 NOTE: if the `target` field already exists, it will be overwritten!
 
 
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

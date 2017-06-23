@@ -1,24 +1,31 @@
-[[plugins-codecs-edn_lines]]
-=== edn_lines
+:plugin: edn_lines
+:type: codec
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="plugins-{type}-{plugin}"]
+
+=== Edn_lines codec plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 
 
+[id="plugins-{type}s-{plugin}-options"]
+==== Edn_lines Codec Configuration Options
 
-
-&nbsp;
-
-==== Synopsis
-
-This plugin has no configuration options.
-
-
-Complete configuration example:
-
-[source,json]
---------------------------
-edn_lines {
-}
---------------------------
-
-
-
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+|=======================================================================

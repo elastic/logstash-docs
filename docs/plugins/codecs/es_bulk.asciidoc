@@ -1,7 +1,24 @@
-[[plugins-codecs-es_bulk]]
-=== es_bulk
+:plugin: es_bulk
+:type: codec
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}-{plugin}"]
+
+=== Es_bulk codec plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 This codec will decode the http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk.html[Elasticsearch bulk format]
 into individual events, plus metadata into the `@metadata` field.
@@ -9,20 +26,10 @@ into individual events, plus metadata into the `@metadata` field.
 Encoding is not supported at this time as the Elasticsearch
 output submits Logstash events in bulk format.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Es_bulk Codec Configuration Options
 
-==== Synopsis
-
-This plugin has no configuration options.
-
-
-Complete configuration example:
-
-[source,json]
---------------------------
-es_bulk {
-}
---------------------------
-
-
-
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+|=======================================================================

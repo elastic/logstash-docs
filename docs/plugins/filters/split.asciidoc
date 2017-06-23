@@ -1,7 +1,24 @@
-[[plugins-filters-split]]
-=== split
+:plugin: split
+:type: filter
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}-{plugin}"]
+
+=== Split filter plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 The split filter clones an event by splitting one of its fields and
 placing each value resulting from the split into a clone of the original
@@ -12,181 +29,65 @@ An example use case of this filter is for taking output from the
 the whole output of a command and splitting that output by newline -
 making each line an event.
 
+Split filter can also be used to split array fields in events into individual events.
+A very common pattern in JSON & XML is to make use of lists to group data together.
+
+For example, a json structure like this:
+
+[source,js]
+----------------------------------
+{ field1: ...,
+ results: [
+   { result ... },
+   { result ... },
+   { result ... },
+   ...
+] }
+----------------------------------
+
+The split filter can be used on the above data to create separate events for each value of `results` field
+
+[source,js]
+----------------------------------
+filter {
+ split {
+   field => "results"
+ }
+}
+----------------------------------
+
 The end result of each split is a complete copy of the event
 with only the current split section of the given field changed.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Split Filter Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-split {
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-filters-split-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-split-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-split-field>> |<<string,string>>|No|`"message"`
-| <<plugins-filters-split-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-split-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-split-remove_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-split-target>> |<<string,string>>|No|
-| <<plugins-filters-split-terminator>> |<<string,string>>|No|`"\n"`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-field>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-target>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-terminator>> |<<string,string>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
 
 &nbsp;
 
-[[plugins-filters-split-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-If this filter is successful, add any arbitrary fields to this event.
-Field names can be dynamic and include parts of the event using the `%{field}`.
-
-Example:
-[source,ruby]
-    filter {
-      split {
-        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
-      }
-    }
-[source,ruby]
-    # You can also add multiple fields at once:
-    filter {
-      split {
-        add_field => {
-          "foo_%{somefield}" => "Hello world, from %{host}"
-          "new_field" => "new_static_value"
-        }
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add field `foo_hello` if it is present, with the
-value above and the `%{host}` piece replaced with that value from the
-event. The second example would also add a hardcoded field.
-
-[[plugins-filters-split-add_tag]]
-===== `add_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, add arbitrary tags to the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      split {
-        add_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also add multiple tags at once:
-    filter {
-      split {
-        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
-
-[[plugins-filters-split-field]]
+[id="plugins-{type}s-{plugin}-field"]
 ===== `field` 
 
   * Value type is <<string,string>>
   * Default value is `"message"`
 
-The field whose value is to be split by the terminator.
+The field which value is split by the terminator.  
+Can be a multiline message or the ID of an array.  
+Nested arrays are referenced like: "[object_id][array_id]"
 
-[[plugins-filters-split-periodic_flush]]
-===== `periodic_flush` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Call the filter flush method at regular interval.
-Optional.
-
-[[plugins-filters-split-remove_field]]
-===== `remove_field` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary fields from this event.
-Fields names can be dynamic and include parts of the event using the %{field}
-Example:
-[source,ruby]
-    filter {
-      split {
-        remove_field => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple fields at once:
-    filter {
-      split {
-        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the field with name `foo_hello` if it is present. The second
-example would remove an additional, non-dynamic field.
-
-[[plugins-filters-split-remove_tag]]
-===== `remove_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary tags from the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      split {
-        remove_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple tags at once:
-    filter {
-      split {
-        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the tag `foo_hello` if it is present. The second example
-would remove a sad, unwanted tag as well.
-
-[[plugins-filters-split-target]]
+[id="plugins-{type}s-{plugin}-target"]
 ===== `target` 
 
   * Value type is <<string,string>>
@@ -195,13 +96,16 @@ would remove a sad, unwanted tag as well.
 The field within the new event which the value is split into.
 If not set, the target field defaults to split field name.
 
-[[plugins-filters-split-terminator]]
+[id="plugins-{type}s-{plugin}-terminator"]
 ===== `terminator` 
 
   * Value type is <<string,string>>
   * Default value is `"\n"`
 
 The string to split on. This is usually a line terminator, but can be any
-string.
+string. If you are splitting a JSON array into multiple events, you can ignore this field.
 
 
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
