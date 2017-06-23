@@ -1,16 +1,22 @@
-[[plugins-outputs-elasticsearch]]
-=== elasticsearch
+:plugin: elasticsearch
+:type: output
 
-* Version: 6.2.6
-* Released on: February 7, 2017
-* https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/master/CHANGELOG.md#626[Changelog]
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
 
+=== Elasticsearch output plugin
 
-==== Getting Help
-
-For questions about the plugin, open a topic in the http://discuss.elastic.co[Discuss] forums. For bugs or feature requests, open an issue in https://github.com/elastic/logstash[Github].
-For the list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Elastic Support Matrix].
+include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
@@ -77,103 +83,81 @@ the `LS_JAVA_OPTS` environment variable to `-Dnetworkaddress.cache.ttl=1`.
 Keep in mind that a connection with keepalive enabled will
 not reevaluate its DNS value while the keepalive is in effect.
 
-&nbsp;
+==== HTTP Compression
 
-==== Synopsis
+This plugin supports request and response compression. Response compression is enabled by default and 
+for Elasticsearch versions 5.0 and later, the user doesn't have to set any configs in Elasticsearch for 
+it to send back compressed response. For versions before 5.0, `http.compression` must be set to `true` in 
+Elasticsearch[https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-http.html#modules-http] to take advantage of response compression when using this plugin
 
-This plugin supports the following configuration options:
-
-Required configuration options:
-
-[source,json]
---------------------------
-elasticsearch {
-}
---------------------------
+For requests compression, regardless of the Elasticsearch version, users have to enable `http_compression` 
+setting in their Logstash config file.
 
 
+[id="plugins-{type}s-{plugin}-options"]
+==== Elasticsearch Output Configuration Options
 
-Available configuration options:
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<plugins-outputs-elasticsearch-absolute_healthcheck_path>> |<<boolean,boolean>>|No
-| <<plugins-outputs-elasticsearch-action>> |<<string,string>>|No
-| <<plugins-outputs-elasticsearch-cacert>> |a valid filesystem path|No
-| <<plugins-outputs-elasticsearch-codec>> |<<codec,codec>>|No
-| <<plugins-outputs-elasticsearch-doc_as_upsert>> |<<boolean,boolean>>|No
-| <<plugins-outputs-elasticsearch-document_id>> |<<string,string>>|No
-| <<plugins-outputs-elasticsearch-document_type>> |<<string,string>>|No
-| <<plugins-outputs-elasticsearch-enable_metric>> |<<boolean,boolean>>|No
-| <<plugins-outputs-elasticsearch-failure_type_logging_whitelist>> |<<array,array>>|No
-| <<plugins-outputs-elasticsearch-flush_size>> |<<number,number>>|No
-| <<plugins-outputs-elasticsearch-healthcheck_path>> |<<string,string>>|No
-| <<plugins-outputs-elasticsearch-hosts>> |<<uri,uri>>|No
-| <<plugins-outputs-elasticsearch-id>> |<<string,string>>|No
-| <<plugins-outputs-elasticsearch-idle_flush_time>> |<<number,number>>|No
-| <<plugins-outputs-elasticsearch-index>> |<<string,string>>|No
-| <<plugins-outputs-elasticsearch-keystore>> |a valid filesystem path|No
-| <<plugins-outputs-elasticsearch-keystore_password>> |<<password,password>>|No
-| <<plugins-outputs-elasticsearch-manage_template>> |<<boolean,boolean>>|No
-| <<plugins-outputs-elasticsearch-parameters>> |<<hash,hash>>|No
-| <<plugins-outputs-elasticsearch-parent>> |<<string,string>>|No
-| <<plugins-outputs-elasticsearch-password>> |<<password,password>>|No
-| <<plugins-outputs-elasticsearch-path>> |<<string,string>>|No
-| <<plugins-outputs-elasticsearch-pipeline>> |<<string,string>>|No
-| <<plugins-outputs-elasticsearch-pool_max>> |<<number,number>>|No
-| <<plugins-outputs-elasticsearch-pool_max_per_route>> |<<number,number>>|No
-| <<plugins-outputs-elasticsearch-proxy>> |<<uri,uri>>|No
-| <<plugins-outputs-elasticsearch-resurrect_delay>> |<<number,number>>|No
-| <<plugins-outputs-elasticsearch-retry_initial_interval>> |<<number,number>>|No
-| <<plugins-outputs-elasticsearch-retry_max_interval>> |<<number,number>>|No
-| <<plugins-outputs-elasticsearch-retry_on_conflict>> |<<number,number>>|No
-| <<plugins-outputs-elasticsearch-routing>> |<<string,string>>|No
-| <<plugins-outputs-elasticsearch-script>> |<<string,string>>|No
-| <<plugins-outputs-elasticsearch-script_lang>> |<<string,string>>|No
-| <<plugins-outputs-elasticsearch-script_type>> |<<string,string>>, one of `["inline", "indexed", "file"]`|No
-| <<plugins-outputs-elasticsearch-script_var_name>> |<<string,string>>|No
-| <<plugins-outputs-elasticsearch-scripted_upsert>> |<<boolean,boolean>>|No
-| <<plugins-outputs-elasticsearch-sniffing>> |<<boolean,boolean>>|No
-| <<plugins-outputs-elasticsearch-sniffing_delay>> |<<number,number>>|No
-| <<plugins-outputs-elasticsearch-ssl>> |<<boolean,boolean>>|No
-| <<plugins-outputs-elasticsearch-ssl_certificate_verification>> |<<boolean,boolean>>|No
-| <<plugins-outputs-elasticsearch-template>> |a valid filesystem path|No
-| <<plugins-outputs-elasticsearch-template_name>> |<<string,string>>|No
-| <<plugins-outputs-elasticsearch-template_overwrite>> |<<boolean,boolean>>|No
-| <<plugins-outputs-elasticsearch-timeout>> |<<number,number>>|No
-| <<plugins-outputs-elasticsearch-truststore>> |a valid filesystem path|No
-| <<plugins-outputs-elasticsearch-truststore_password>> |<<password,password>>|No
-| <<plugins-outputs-elasticsearch-upsert>> |<<string,string>>|No
-| <<plugins-outputs-elasticsearch-user>> |<<string,string>>|No
-| <<plugins-outputs-elasticsearch-validate_after_inactivity>> |<<number,number>>|No
-| <<plugins-outputs-elasticsearch-version>> |<<string,string>>|No
-| <<plugins-outputs-elasticsearch-version_type>> |<<string,string>>, one of `["internal", "external", "external_gt", "external_gte", "force"]`|No
-| <<plugins-outputs-elasticsearch-workers>> |<<,>>|No
+| <<plugins-{type}s-{plugin}-action>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-bulk_path>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-cacert>> |a valid filesystem path|No
+| <<plugins-{type}s-{plugin}-doc_as_upsert>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-document_id>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-document_type>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-failure_type_logging_whitelist>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-healthcheck_path>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-hosts>> |<<uri,uri>>|No
+| <<plugins-{type}s-{plugin}-http_compression>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-index>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-keystore>> |a valid filesystem path|No
+| <<plugins-{type}s-{plugin}-keystore_password>> |<<password,password>>|No
+| <<plugins-{type}s-{plugin}-manage_template>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-parameters>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-parent>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-password>> |<<password,password>>|No
+| <<plugins-{type}s-{plugin}-path>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-pipeline>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-pool_max>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-pool_max_per_route>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-proxy>> |<<uri,uri>>|No
+| <<plugins-{type}s-{plugin}-resurrect_delay>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-retry_initial_interval>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-retry_max_interval>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-retry_on_conflict>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-routing>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-script>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-script_lang>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-script_type>> |<<string,string>>, one of `["inline", "indexed", "file"]`|No
+| <<plugins-{type}s-{plugin}-script_var_name>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-scripted_upsert>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-sniffing>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-sniffing_delay>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-sniffing_path>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-ssl>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-ssl_certificate_verification>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-template>> |a valid filesystem path|No
+| <<plugins-{type}s-{plugin}-template_name>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-template_overwrite>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-timeout>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-truststore>> |a valid filesystem path|No
+| <<plugins-{type}s-{plugin}-truststore_password>> |<<password,password>>|No
+| <<plugins-{type}s-{plugin}-upsert>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-user>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-validate_after_inactivity>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-version>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-version_type>> |<<string,string>>, one of `["internal", "external", "external_gt", "external_gte", "force"]`|No
 |=======================================================================
 
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
 
 &nbsp;
 
-[[plugins-outputs-elasticsearch-absolute_healthcheck_path]]
-===== `absolute_healthcheck_path` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-When a `healthcheck_path` config is provided, this additional flag can be used to
-specify whether the healthcheck_path is appended to the existing path (default)
-or is treated as the absolute URL path.
-
-For example, if hosts url is "http://localhost:9200/es" and healthcheck_path is "/health",
-the health check url will be:
-
-* with `absolute_healthcheck_path: true`: "http://localhost:9200/es/health"
-* with `absolute_healthcheck_path: false`: "http://localhost:9200/health"
-
-[[plugins-outputs-elasticsearch-action]]
+[id="plugins-{type}s-{plugin}-action"]
 ===== `action` 
 
   * Value type is <<string,string>>
@@ -194,7 +178,16 @@ The Elasticsearch action to perform. Valid actions are:
 
 For more details on actions, check out the http://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html[Elasticsearch bulk API documentation]
 
-[[plugins-outputs-elasticsearch-cacert]]
+[id="plugins-{type}s-{plugin}-bulk_path"]
+===== `bulk_path` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+HTTP Path to perform the _bulk requests to
+this defaults to a concatenation of the path parameter and "_bulk"
+
+[id="plugins-{type}s-{plugin}-cacert"]
 ===== `cacert` 
 
   * Value type is <<path,path>>
@@ -202,15 +195,7 @@ For more details on actions, check out the http://www.elastic.co/guide/en/elasti
 
 The .cer or .pem file to validate the server's certificate
 
-[[plugins-outputs-elasticsearch-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-elasticsearch-doc_as_upsert]]
+[id="plugins-{type}s-{plugin}-doc_as_upsert"]
 ===== `doc_as_upsert` 
 
   * Value type is <<boolean,boolean>>
@@ -219,7 +204,7 @@ The codec used for output data. Output codecs are a convenient method for encodi
 Enable `doc_as_upsert` for update mode.
 Create a new document with source if `document_id` doesn't exist in Elasticsearch
 
-[[plugins-outputs-elasticsearch-document_id]]
+[id="plugins-{type}s-{plugin}-document_id"]
 ===== `document_id` 
 
   * Value type is <<string,string>>
@@ -228,7 +213,7 @@ Create a new document with source if `document_id` doesn't exist in Elasticsearc
 The document ID for the index. Useful for overwriting existing entries in
 Elasticsearch with the same ID.
 
-[[plugins-outputs-elasticsearch-document_type]]
+[id="plugins-{type}s-{plugin}-document_type"]
 ===== `document_type` 
 
   * Value type is <<string,string>>
@@ -239,17 +224,7 @@ similar events to the same 'type'. String expansion `%{foo}` works here.
 Unless you set 'document_type', the event 'type' will be used if it exists
 otherwise the document type will be assigned the value of 'logs'
 
-[[plugins-outputs-elasticsearch-enable_metric]]
-===== `enable_metric` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Disable or enable metric logging for this specific plugin instance
-by default we record all the metrics we can, but you can disable metrics collection
-for a specific plugin.
-
-[[plugins-outputs-elasticsearch-failure_type_logging_whitelist]]
+[id="plugins-{type}s-{plugin}-failure_type_logging_whitelist"]
 ===== `failure_type_logging_whitelist` 
 
   * Value type is <<array,array>>
@@ -259,31 +234,27 @@ Set the Elasticsearch errors in the whitelist that you don't want to log.
 A useful example is when you want to skip all 409 errors
 which are `document_already_exists_exception`.
 
-[[plugins-outputs-elasticsearch-flush_size]]
-===== `flush_size` 
+[id="plugins-{type}s-{plugin}-flush_size"]
+===== `flush_size`  (DEPRECATED)
 
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
   * Value type is <<number,number>>
   * There is no default value for this setting.
 
-This plugin uses the bulk index API for improved indexing performance.
-This setting defines the maximum sized bulk request Logstash will make.
-You may want to increase this to be in line with your pipeline's batch size.
-If you specify a number larger than the batch size of your pipeline it will have no effect,
-save for the case where a filter increases the size of an inflight batch by outputting
-events.
 
-[[plugins-outputs-elasticsearch-healthcheck_path]]
+
+[id="plugins-{type}s-{plugin}-healthcheck_path"]
 ===== `healthcheck_path` 
 
   * Value type is <<string,string>>
-  * Default value is `"/"`
+  * There is no default value for this setting.
 
-When a backend is marked down a HEAD request will be sent to this path in the
-background to see if it has come back again before it is once again eligible
-to service requests. If you have custom firewall rules you may need to change this
-NOTE: any query parameters present in the URL or query_params config option will be removed
+HTTP Path where a HEAD request is sent when a backend is marked down
+the request is sent in the background to see if it has come back again
+before it is once again eligible to service requests.
+If you have custom firewall rules you may need to change this
 
-[[plugins-outputs-elasticsearch-hosts]]
+[id="plugins-{type}s-{plugin}-hosts"]
 ===== `hosts` 
 
   * Value type is <<uri,uri>>
@@ -301,44 +272,24 @@ to prevent LS from sending bulk requests to the master nodes.  So this parameter
 
 Any special characters present in the URLs here MUST be URL escaped! This means `#` should be put in as `%23` for instance.
 
-[[plugins-outputs-elasticsearch-id]]
-===== `id` 
+[id="plugins-{type}s-{plugin}-http_compression"]
+===== `http_compression` 
 
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
 
-Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
-It is strongly recommended to set this ID in your configuration. This is particularly useful 
-when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
-Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
+Enable gzip compression on requests. Note that response compression is on by default for Elasticsearch v5.0 and beyond
 
-[source,ruby]
----------------------------------------------------------------------------------------------------
-output {
- stdout {
-   id => "my_plugin_id"
- }
-}
----------------------------------------------------------------------------------------------------
+[id="plugins-{type}s-{plugin}-idle_flush_time"]
+===== `idle_flush_time`  (DEPRECATED)
 
-
-[[plugins-outputs-elasticsearch-idle_flush_time]]
-===== `idle_flush_time` 
-
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
   * Value type is <<number,number>>
   * Default value is `1`
 
-The amount of time since last flush before a flush is forced.
 
-This setting helps ensure slow event rates don't get stuck in Logstash.
-For example, if your `flush_size` is 100, and you have received 10 events,
-and it has been more than `idle_flush_time` seconds since the last flush,
-Logstash will flush those 10 events automatically.
 
-This helps keep both fast and slow log streams moving along in
-near-real-time.
-
-[[plugins-outputs-elasticsearch-index]]
+[id="plugins-{type}s-{plugin}-index"]
 ===== `index` 
 
   * Value type is <<string,string>>
@@ -352,7 +303,7 @@ For weekly indexes ISO 8601 format is recommended, eg. logstash-%{+xxxx.ww}.
 LS uses Joda to format the index pattern from event timestamp.
 Joda formats are defined http://www.joda.org/joda-time/apidocs/org/joda/time/format/DateTimeFormat.html[here].
 
-[[plugins-outputs-elasticsearch-keystore]]
+[id="plugins-{type}s-{plugin}-keystore"]
 ===== `keystore` 
 
   * Value type is <<path,path>>
@@ -361,15 +312,15 @@ Joda formats are defined http://www.joda.org/joda-time/apidocs/org/joda/time/for
 The keystore used to present a certificate to the server.
 It can be either .jks or .p12
 
-[[plugins-outputs-elasticsearch-keystore_password]]
+[id="plugins-{type}s-{plugin}-keystore_password"]
 ===== `keystore_password` 
 
   * Value type is <<password,password>>
   * There is no default value for this setting.
 
-Set the truststore password
+Set the keystore password
 
-[[plugins-outputs-elasticsearch-manage_template]]
+[id="plugins-{type}s-{plugin}-manage_template"]
 ===== `manage_template` 
 
   * Value type is <<boolean,boolean>>
@@ -388,7 +339,7 @@ control over template creation, (e.g. creating indices dynamically based on
 field names) you should set `manage_template` to false and use the REST
 API to apply your templates manually.
 
-[[plugins-outputs-elasticsearch-parameters]]
+[id="plugins-{type}s-{plugin}-parameters"]
 ===== `parameters` 
 
   * Value type is <<hash,hash>>
@@ -398,7 +349,7 @@ Pass a set of key value pairs as the URL query string. This query string is adde
 to every host listed in the 'hosts' configuration. If the 'hosts' list contains
 urls that already have query strings, the one specified here will be appended.
 
-[[plugins-outputs-elasticsearch-parent]]
+[id="plugins-{type}s-{plugin}-parent"]
 ===== `parent` 
 
   * Value type is <<string,string>>
@@ -407,7 +358,7 @@ urls that already have query strings, the one specified here will be appended.
 For child documents, ID of the associated parent.
 This can be dynamic using the `%{foo}` syntax.
 
-[[plugins-outputs-elasticsearch-password]]
+[id="plugins-{type}s-{plugin}-password"]
 ===== `password` 
 
   * Value type is <<password,password>>
@@ -415,7 +366,7 @@ This can be dynamic using the `%{foo}` syntax.
 
 Password to authenticate to a secure Elasticsearch cluster
 
-[[plugins-outputs-elasticsearch-path]]
+[id="plugins-{type}s-{plugin}-path"]
 ===== `path` 
 
   * Value type is <<string,string>>
@@ -426,7 +377,7 @@ the root path for the Elasticsearch HTTP API lives.
 Note that if you use paths as components of URLs in the 'hosts' field you may
 not also set this field. That will raise an error at startup
 
-[[plugins-outputs-elasticsearch-pipeline]]
+[id="plugins-{type}s-{plugin}-pipeline"]
 ===== `pipeline` 
 
   * Value type is <<string,string>>
@@ -435,7 +386,7 @@ not also set this field. That will raise an error at startup
 Set which ingest pipeline you wish to execute for an event. You can also use event dependent configuration
 here like `pipeline => "%{INGEST_PIPELINE}"`
 
-[[plugins-outputs-elasticsearch-pool_max]]
+[id="plugins-{type}s-{plugin}-pool_max"]
 ===== `pool_max` 
 
   * Value type is <<number,number>>
@@ -446,7 +397,7 @@ This sets the maximum number of open connections the output will create.
 Setting this too low may mean frequently closing / opening connections
 which is bad.
 
-[[plugins-outputs-elasticsearch-pool_max_per_route]]
+[id="plugins-{type}s-{plugin}-pool_max_per_route"]
 ===== `pool_max_per_route` 
 
   * Value type is <<number,number>>
@@ -457,7 +408,7 @@ This sets the maximum number of open connections per endpoint the output will cr
 Setting this too low may mean frequently closing / opening connections
 which is bad.
 
-[[plugins-outputs-elasticsearch-proxy]]
+[id="plugins-{type}s-{plugin}-proxy"]
 ===== `proxy` 
 
   * Value type is <<uri,uri>>
@@ -467,7 +418,7 @@ Set the address of a forward HTTP proxy.
 This used to accept hashes as arguments but now only accepts
 arguments of the URI type to prevent leaking credentials.
 
-[[plugins-outputs-elasticsearch-resurrect_delay]]
+[id="plugins-{type}s-{plugin}-resurrect_delay"]
 ===== `resurrect_delay` 
 
   * Value type is <<number,number>>
@@ -477,7 +428,7 @@ How frequently, in seconds, to wait between resurrection attempts.
 Resurrection is the process by which backend endpoints marked 'down' are checked
 to see if they have come back to life
 
-[[plugins-outputs-elasticsearch-retry_initial_interval]]
+[id="plugins-{type}s-{plugin}-retry_initial_interval"]
 ===== `retry_initial_interval` 
 
   * Value type is <<number,number>>
@@ -485,7 +436,7 @@ to see if they have come back to life
 
 Set initial interval in seconds between bulk retries. Doubled on each retry up to `retry_max_interval`
 
-[[plugins-outputs-elasticsearch-retry_max_interval]]
+[id="plugins-{type}s-{plugin}-retry_max_interval"]
 ===== `retry_max_interval` 
 
   * Value type is <<number,number>>
@@ -493,7 +444,7 @@ Set initial interval in seconds between bulk retries. Doubled on each retry up t
 
 Set max interval in seconds between bulk retries.
 
-[[plugins-outputs-elasticsearch-retry_on_conflict]]
+[id="plugins-{type}s-{plugin}-retry_on_conflict"]
 ===== `retry_on_conflict` 
 
   * Value type is <<number,number>>
@@ -503,7 +454,7 @@ The number of times Elasticsearch should internally retry an update/upserted doc
 See the https://www.elastic.co/guide/en/elasticsearch/guide/current/partial-updates.html[partial updates]
 for more info
 
-[[plugins-outputs-elasticsearch-routing]]
+[id="plugins-{type}s-{plugin}-routing"]
 ===== `routing` 
 
   * Value type is <<string,string>>
@@ -512,7 +463,7 @@ for more info
 A routing override to be applied to all processed events.
 This can be dynamic using the `%{foo}` syntax.
 
-[[plugins-outputs-elasticsearch-script]]
+[id="plugins-{type}s-{plugin}-script"]
 ===== `script` 
 
   * Value type is <<string,string>>
@@ -520,7 +471,7 @@ This can be dynamic using the `%{foo}` syntax.
 
 Set script name for scripted update mode
 
-[[plugins-outputs-elasticsearch-script_lang]]
+[id="plugins-{type}s-{plugin}-script_lang"]
 ===== `script_lang` 
 
   * Value type is <<string,string>>
@@ -528,7 +479,7 @@ Set script name for scripted update mode
 
 Set the language of the used script. If not set, this defaults to painless in ES 5.0
 
-[[plugins-outputs-elasticsearch-script_type]]
+[id="plugins-{type}s-{plugin}-script_type"]
 ===== `script_type` 
 
   * Value can be any of: `inline`, `indexed`, `file`
@@ -539,7 +490,7 @@ Define the type of script referenced by "script" variable
  indexed : "script" contains the name of script directly indexed in elasticsearch
  file    : "script" contains the name of script stored in elasticseach's config directory
 
-[[plugins-outputs-elasticsearch-script_var_name]]
+[id="plugins-{type}s-{plugin}-script_var_name"]
 ===== `script_var_name` 
 
   * Value type is <<string,string>>
@@ -547,7 +498,7 @@ Define the type of script referenced by "script" variable
 
 Set variable name passed to script (scripted update)
 
-[[plugins-outputs-elasticsearch-scripted_upsert]]
+[id="plugins-{type}s-{plugin}-scripted_upsert"]
 ===== `scripted_upsert` 
 
   * Value type is <<boolean,boolean>>
@@ -555,7 +506,7 @@ Set variable name passed to script (scripted update)
 
 if enabled, script is in charge of creating non-existent document (scripted update)
 
-[[plugins-outputs-elasticsearch-sniffing]]
+[id="plugins-{type}s-{plugin}-sniffing"]
 ===== `sniffing` 
 
   * Value type is <<boolean,boolean>>
@@ -567,7 +518,7 @@ this with master nodes, you probably want to disable HTTP on them by setting
 `http.enabled` to false in their elasticsearch.yml. You can either use the `sniffing` option or
 manually enter multiple Elasticsearch hosts using the `hosts` parameter.
 
-[[plugins-outputs-elasticsearch-sniffing_delay]]
+[id="plugins-{type}s-{plugin}-sniffing_delay"]
 ===== `sniffing_delay` 
 
   * Value type is <<number,number>>
@@ -575,7 +526,18 @@ manually enter multiple Elasticsearch hosts using the `hosts` parameter.
 
 How long to wait, in seconds, between sniffing attempts
 
-[[plugins-outputs-elasticsearch-ssl]]
+[id="plugins-{type}s-{plugin}-sniffing_path"]
+===== `sniffing_path` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+HTTP Path to be used for the sniffing requests
+the default value is computed by concatenating the path value and "_nodes/http"
+if sniffing_path is set it will be used as an absolute path
+do not use full URL here, only paths, e.g. "/sniff/_nodes/http"
+
+[id="plugins-{type}s-{plugin}-ssl"]
 ===== `ssl` 
 
   * Value type is <<boolean,boolean>>
@@ -585,7 +547,7 @@ Enable SSL/TLS secured communication to Elasticsearch cluster. Leaving this unsp
 is specified in the URLs listed in 'hosts'. If no explicit protocol is specified plain HTTP will be used.
 If SSL is explicitly disabled here the plugin will refuse to start if an HTTPS URL is given in 'hosts'
 
-[[plugins-outputs-elasticsearch-ssl_certificate_verification]]
+[id="plugins-{type}s-{plugin}-ssl_certificate_verification"]
 ===== `ssl_certificate_verification` 
 
   * Value type is <<boolean,boolean>>
@@ -595,7 +557,7 @@ Option to validate the server's certificate. Disabling this severely compromises
 For more information on disabling certificate verification please read
 https://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf
 
-[[plugins-outputs-elasticsearch-template]]
+[id="plugins-{type}s-{plugin}-template"]
 ===== `template` 
 
   * Value type is <<path,path>>
@@ -604,7 +566,7 @@ https://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf
 You can set the path to your own template here, if you so desire.
 If not set, the included template will be used.
 
-[[plugins-outputs-elasticsearch-template_name]]
+[id="plugins-{type}s-{plugin}-template_name"]
 ===== `template_name` 
 
   * Value type is <<string,string>>
@@ -618,7 +580,7 @@ change this, you will need to prune the old template manually, e.g.
 
 where `OldTemplateName` is whatever the former setting was.
 
-[[plugins-outputs-elasticsearch-template_overwrite]]
+[id="plugins-{type}s-{plugin}-template_overwrite"]
 ===== `template_overwrite` 
 
   * Value type is <<boolean,boolean>>
@@ -635,7 +597,7 @@ Please note that if you are using your own customized version of the Logstash
 template (logstash), setting this to true will make Logstash to overwrite
 the "logstash" template (i.e. removing all customized settings)
 
-[[plugins-outputs-elasticsearch-timeout]]
+[id="plugins-{type}s-{plugin}-timeout"]
 ===== `timeout` 
 
   * Value type is <<number,number>>
@@ -644,7 +606,7 @@ the "logstash" template (i.e. removing all customized settings)
 Set the timeout, in seconds, for network operations and requests sent Elasticsearch. If
 a timeout occurs, the request will be retried.
 
-[[plugins-outputs-elasticsearch-truststore]]
+[id="plugins-{type}s-{plugin}-truststore"]
 ===== `truststore` 
 
   * Value type is <<path,path>>
@@ -653,7 +615,7 @@ a timeout occurs, the request will be retried.
 The JKS truststore to validate the server's certificate.
 Use either `:truststore` or `:cacert`
 
-[[plugins-outputs-elasticsearch-truststore_password]]
+[id="plugins-{type}s-{plugin}-truststore_password"]
 ===== `truststore_password` 
 
   * Value type is <<password,password>>
@@ -661,7 +623,7 @@ Use either `:truststore` or `:cacert`
 
 Set the truststore password
 
-[[plugins-outputs-elasticsearch-upsert]]
+[id="plugins-{type}s-{plugin}-upsert"]
 ===== `upsert` 
 
   * Value type is <<string,string>>
@@ -670,7 +632,7 @@ Set the truststore password
 Set upsert content for update mode.s
 Create a new document with this parameter as json string if `document_id` doesn't exists
 
-[[plugins-outputs-elasticsearch-user]]
+[id="plugins-{type}s-{plugin}-user"]
 ===== `user` 
 
   * Value type is <<string,string>>
@@ -678,7 +640,7 @@ Create a new document with this parameter as json string if `document_id` doesn'
 
 Username to authenticate to a secure Elasticsearch cluster
 
-[[plugins-outputs-elasticsearch-validate_after_inactivity]]
+[id="plugins-{type}s-{plugin}-validate_after_inactivity"]
 ===== `validate_after_inactivity` 
 
   * Value type is <<number,number>>
@@ -693,7 +655,7 @@ this method disables connection validation. This check helps detect connections 
 have become stale (half-closed) while kept inactive in the pool.'
 See https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/org/apache/http/impl/conn/PoolingHttpClientConnectionManager.html#setValidateAfterInactivity(int)[these docs for more info]
 
-[[plugins-outputs-elasticsearch-version]]
+[id="plugins-{type}s-{plugin}-version"]
 ===== `version` 
 
   * Value type is <<string,string>>
@@ -702,7 +664,7 @@ See https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/org/apache
 The version to use for indexing. Use sprintf syntax like `%{my_version}` to use a field value here.
 See https://www.elastic.co/blog/elasticsearch-versioning-support.
 
-[[plugins-outputs-elasticsearch-version_type]]
+[id="plugins-{type}s-{plugin}-version_type"]
 ===== `version_type` 
 
   * Value can be any of: `internal`, `external`, `external_gt`, `external_gte`, `force`
@@ -712,13 +674,7 @@ The version_type to use for indexing.
 See https://www.elastic.co/blog/elasticsearch-versioning-support.
 See also https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html#_version_types
 
-[[plugins-outputs-elasticsearch-workers]]
-===== `workers` 
-
-  * Value type is <<string,string>>
-  * Default value is `1`
-
-when we no longer support the :legacy type
-This is hacky, but it can only be herne
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

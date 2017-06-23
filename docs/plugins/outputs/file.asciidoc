@@ -1,16 +1,22 @@
-[[plugins-outputs-file]]
-=== file
+:plugin: file
+:type: output
 
-* Version: 4.0.1
-* Released on: September 15, 2016
-* https://github.com/logstash-plugins/logstash-output-file/blob/master/CHANGELOG.md#401[Changelog]
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
 
+=== File output plugin
 
-==== Getting Help
-
-For questions about the plugin, open a topic in the http://discuss.elastic.co[Discuss] forums. For bugs or feature requests, open an issue in https://github.com/elastic/logstash[Github].
-For the list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Elastic Support Matrix].
+include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
@@ -27,55 +33,29 @@ output {
  }
 }
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== File Output Configuration Options
 
-==== Synopsis
-
-This plugin supports the following configuration options:
-
-Required configuration options:
-
-[source,json]
---------------------------
-file {
-    path => ...
-}
---------------------------
-
-
-
-Available configuration options:
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<plugins-outputs-file-codec>> |<<codec,codec>>|No
-| <<plugins-outputs-file-create_if_deleted>> |<<boolean,boolean>>|No
-| <<plugins-outputs-file-dir_mode>> |<<number,number>>|No
-| <<plugins-outputs-file-enable_metric>> |<<boolean,boolean>>|No
-| <<plugins-outputs-file-file_mode>> |<<number,number>>|No
-| <<plugins-outputs-file-filename_failure>> |<<string,string>>|No
-| <<plugins-outputs-file-flush_interval>> |<<number,number>>|No
-| <<plugins-outputs-file-gzip>> |<<boolean,boolean>>|No
-| <<plugins-outputs-file-id>> |<<string,string>>|No
-| <<plugins-outputs-file-path>> |<<string,string>>|Yes
-| <<plugins-outputs-file-workers>> |<<,>>|No
+| <<plugins-{type}s-{plugin}-create_if_deleted>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-dir_mode>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-file_mode>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-filename_failure>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-flush_interval>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-gzip>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-path>> |<<string,string>>|Yes
 |=======================================================================
 
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
 
 &nbsp;
 
-[[plugins-outputs-file-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-file-create_if_deleted]]
+[id="plugins-{type}s-{plugin}-create_if_deleted"]
 ===== `create_if_deleted` 
 
   * Value type is <<boolean,boolean>>
@@ -84,7 +64,7 @@ The codec used for output data. Output codecs are a convenient method for encodi
 If the configured file is deleted, but an event is handled by the plugin, 
 the plugin will recreate the file. Default => true
 
-[[plugins-outputs-file-dir_mode]]
+[id="plugins-{type}s-{plugin}-dir_mode"]
 ===== `dir_mode` 
 
   * Value type is <<number,number>>
@@ -95,17 +75,7 @@ is ignored on linux: https://github.com/jruby/jruby/issues/3426
 Setting it to -1 uses default OS value.
 Example: `"dir_mode" => 0750`
 
-[[plugins-outputs-file-enable_metric]]
-===== `enable_metric` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Disable or enable metric logging for this specific plugin instance
-by default we record all the metrics we can, but you can disable metrics collection
-for a specific plugin.
-
-[[plugins-outputs-file-file_mode]]
+[id="plugins-{type}s-{plugin}-file_mode"]
 ===== `file_mode` 
 
   * Value type is <<number,number>>
@@ -116,7 +86,7 @@ is ignored on linux: https://github.com/jruby/jruby/issues/3426
 Setting it to -1 uses default OS value.
 Example: `"file_mode" => 0640`
 
-[[plugins-outputs-file-filename_failure]]
+[id="plugins-{type}s-{plugin}-filename_failure"]
 ===== `filename_failure` 
 
   * Value type is <<string,string>>
@@ -125,7 +95,7 @@ Example: `"file_mode" => 0640`
 If the generated path is invalid, the events will be saved
 into this file and inside the defined path.
 
-[[plugins-outputs-file-flush_interval]]
+[id="plugins-{type}s-{plugin}-flush_interval"]
 ===== `flush_interval` 
 
   * Value type is <<number,number>>
@@ -134,7 +104,7 @@ into this file and inside the defined path.
 Flush interval (in seconds) for flushing writes to log files.
 0 will flush on every message.
 
-[[plugins-outputs-file-gzip]]
+[id="plugins-{type}s-{plugin}-gzip"]
 ===== `gzip` 
 
   * Value type is <<boolean,boolean>>
@@ -142,28 +112,7 @@ Flush interval (in seconds) for flushing writes to log files.
 
 Gzip the output stream before writing to disk.
 
-[[plugins-outputs-file-id]]
-===== `id` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
-It is strongly recommended to set this ID in your configuration. This is particularly useful 
-when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
-Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
-
-[source,ruby]
----------------------------------------------------------------------------------------------------
-output {
- stdout {
-   id => "my_plugin_id"
- }
-}
----------------------------------------------------------------------------------------------------
-
-
-[[plugins-outputs-file-path]]
+[id="plugins-{type}s-{plugin}-path"]
 ===== `path` 
 
   * This is a required setting.
@@ -181,13 +130,7 @@ E.g.: `path => "./test-%{+YYYY-MM-dd}.txt"` to create
 If you use an absolute path you cannot start with a dynamic string.
 E.g: `/%{myfield}/`, `/test-%{myfield}/` are not valid paths
 
-[[plugins-outputs-file-workers]]
-===== `workers` 
-
-  * Value type is <<string,string>>
-  * Default value is `1`
-
-when we no longer support the :legacy type
-This is hacky, but it can only be herne
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

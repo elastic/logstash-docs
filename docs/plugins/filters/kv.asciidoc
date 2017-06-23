@@ -1,16 +1,22 @@
-[[plugins-filters-kv]]
-=== kv
+:plugin: kv
+:type: filter
 
-* Version: 4.0.0
-* Released on: February 6, 2017
-* https://github.com/logstash-plugins/logstash-filter-kv/blob/master/CHANGELOG.md#400[Changelog]
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
 
+=== Kv filter plugin
 
-==== Getting Help
-
-For questions about the plugin, open a topic in the http://discuss.elastic.co[Discuss] forums. For bugs or feature requests, open an issue in https://github.com/elastic/logstash[Github].
-For the list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Elastic Support Matrix].
+include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
@@ -38,119 +44,39 @@ in case your data is not structured using `=` signs and whitespace.
 For example, this filter can also be used to parse query parameters like
 `foo=bar&baz=fizz` by setting the `field_split` parameter to `&`.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Kv Filter Configuration Options
 
-==== Synopsis
-
-This plugin supports the following configuration options:
-
-Required configuration options:
-
-[source,json]
---------------------------
-kv {
-}
---------------------------
-
-
-
-Available configuration options:
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<plugins-filters-kv-add_field>> |<<hash,hash>>|No
-| <<plugins-filters-kv-add_tag>> |<<array,array>>|No
-| <<plugins-filters-kv-allow_duplicate_values>> |<<boolean,boolean>>|No
-| <<plugins-filters-kv-default_keys>> |<<hash,hash>>|No
-| <<plugins-filters-kv-enable_metric>> |<<boolean,boolean>>|No
-| <<plugins-filters-kv-exclude_keys>> |<<array,array>>|No
-| <<plugins-filters-kv-field_split>> |<<string,string>>|No
-| <<plugins-filters-kv-id>> |<<string,string>>|No
-| <<plugins-filters-kv-include_brackets>> |<<boolean,boolean>>|No
-| <<plugins-filters-kv-include_keys>> |<<array,array>>|No
-| <<plugins-filters-kv-periodic_flush>> |<<boolean,boolean>>|No
-| <<plugins-filters-kv-prefix>> |<<string,string>>|No
-| <<plugins-filters-kv-recursive>> |<<boolean,boolean>>|No
-| <<plugins-filters-kv-remove_char_key>> |<<string,string>>|No
-| <<plugins-filters-kv-remove_char_value>> |<<string,string>>|No
-| <<plugins-filters-kv-remove_field>> |<<array,array>>|No
-| <<plugins-filters-kv-remove_tag>> |<<array,array>>|No
-| <<plugins-filters-kv-source>> |<<string,string>>|No
-| <<plugins-filters-kv-target>> |<<string,string>>|No
-| <<plugins-filters-kv-transform_key>> |<<string,string>>, one of `["lowercase", "uppercase", "capitalize"]`|No
-| <<plugins-filters-kv-transform_value>> |<<string,string>>, one of `["lowercase", "uppercase", "capitalize"]`|No
-| <<plugins-filters-kv-trim_key>> |<<string,string>>|No
-| <<plugins-filters-kv-trim_value>> |<<string,string>>|No
-| <<plugins-filters-kv-value_split>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-allow_duplicate_values>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-default_keys>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-exclude_keys>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-field_split>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-include_brackets>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-include_keys>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-prefix>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-recursive>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-remove_char_key>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-remove_char_value>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-source>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-target>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-transform_key>> |<<string,string>>, one of `["lowercase", "uppercase", "capitalize"]`|No
+| <<plugins-{type}s-{plugin}-transform_value>> |<<string,string>>, one of `["lowercase", "uppercase", "capitalize"]`|No
+| <<plugins-{type}s-{plugin}-trim_key>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-trim_value>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-value_split>> |<<string,string>>|No
 |=======================================================================
 
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
 
 &nbsp;
 
-[[plugins-filters-kv-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-If this filter is successful, add any arbitrary fields to this event.
-Field names can be dynamic and include parts of the event using the `%{field}`.
-
-Example:
-[source,ruby]
-    filter {
-      kv {
-        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
-      }
-    }
-[source,ruby]
-    # You can also add multiple fields at once:
-    filter {
-      kv {
-        add_field => {
-          "foo_%{somefield}" => "Hello world, from %{host}"
-          "new_field" => "new_static_value"
-        }
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add field `foo_hello` if it is present, with the
-value above and the `%{host}` piece replaced with that value from the
-event. The second example would also add a hardcoded field.
-
-[[plugins-filters-kv-add_tag]]
-===== `add_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, add arbitrary tags to the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      kv {
-        add_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also add multiple tags at once:
-    filter {
-      kv {
-        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
-
-[[plugins-filters-kv-allow_duplicate_values]]
+[id="plugins-{type}s-{plugin}-allow_duplicate_values"]
 ===== `allow_duplicate_values` 
 
   * Value type is <<boolean,boolean>>
@@ -169,7 +95,7 @@ you could use this configuration:
       }
     }
 
-[[plugins-filters-kv-default_keys]]
+[id="plugins-{type}s-{plugin}-default_keys"]
 ===== `default_keys` 
 
   * Value type is <<hash,hash>>
@@ -185,17 +111,7 @@ in case these keys do not exist in the source field being parsed.
       }
     }
 
-[[plugins-filters-kv-enable_metric]]
-===== `enable_metric` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Disable or enable metric logging for this specific plugin instance
-by default we record all the metrics we can, but you can disable metrics collection
-for a specific plugin.
-
-[[plugins-filters-kv-exclude_keys]]
+[id="plugins-{type}s-{plugin}-exclude_keys"]
 ===== `exclude_keys` 
 
   * Value type is <<array,array>>
@@ -213,7 +129,7 @@ To exclude `from` and `to`, but retain the `foo` key, you could use this configu
       }
     }
 
-[[plugins-filters-kv-field_split]]
+[id="plugins-{type}s-{plugin}-field_split"]
 ===== `field_split` 
 
   * Value type is <<string,string>>
@@ -244,28 +160,7 @@ fields:
 * `oq: bobo`
 * `ss: 12345`
 
-[[plugins-filters-kv-id]]
-===== `id` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
-It is strongly recommended to set this ID in your configuration. This is particularly useful 
-when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
-Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
-
-[source,ruby]
----------------------------------------------------------------------------------------------------
-output {
- stdout {
-   id => "my_plugin_id"
- }
-}
----------------------------------------------------------------------------------------------------
-
-
-[[plugins-filters-kv-include_brackets]]
+[id="plugins-{type}s-{plugin}-include_brackets"]
 ===== `include_brackets` 
 
   * Value type is <<boolean,boolean>>
@@ -296,7 +191,7 @@ instead of:
 * bracketsthree: <hello
 
 
-[[plugins-filters-kv-include_keys]]
+[id="plugins-{type}s-{plugin}-include_keys"]
 ===== `include_keys` 
 
   * Value type is <<array,array>>
@@ -314,16 +209,7 @@ To include `from` and `to`, but exclude the `foo` key, you could use this config
       }
     }
 
-[[plugins-filters-kv-periodic_flush]]
-===== `periodic_flush` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Call the filter flush method at regular interval.
-Optional.
-
-[[plugins-filters-kv-prefix]]
+[id="plugins-{type}s-{plugin}-prefix"]
 ===== `prefix` 
 
   * Value type is <<string,string>>
@@ -335,7 +221,7 @@ For example, to prepend arg_ to all keys:
 [source,ruby]
     filter { kv { prefix => "arg_" } }
 
-[[plugins-filters-kv-recursive]]
+[id="plugins-{type}s-{plugin}-recursive"]
 ===== `recursive` 
 
   * Value type is <<boolean,boolean>>
@@ -354,7 +240,7 @@ Default is not to recursive values.
     }
 
 
-[[plugins-filters-kv-remove_char_key]]
+[id="plugins-{type}s-{plugin}-remove_char_key"]
 ===== `remove_char_key` 
 
   * Value type is <<string,string>>
@@ -375,7 +261,7 @@ For example, to remove `<` `>` `[` `]` and `,` characters from keys:
       }
     }
 
-[[plugins-filters-kv-remove_char_value]]
+[id="plugins-{type}s-{plugin}-remove_char_value"]
 ===== `remove_char_value` 
 
   * Value type is <<string,string>>
@@ -396,63 +282,7 @@ For example, to remove `<`, `>`, `[`, `]` and `,` characters from values:
       }
     }
 
-[[plugins-filters-kv-remove_field]]
-===== `remove_field` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary fields from this event.
-Fields names can be dynamic and include parts of the event using the %{field}
-Example:
-[source,ruby]
-    filter {
-      kv {
-        remove_field => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple fields at once:
-    filter {
-      kv {
-        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the field with name `foo_hello` if it is present. The second
-example would remove an additional, non-dynamic field.
-
-[[plugins-filters-kv-remove_tag]]
-===== `remove_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary tags from the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      kv {
-        remove_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple tags at once:
-    filter {
-      kv {
-        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the tag `foo_hello` if it is present. The second example
-would remove a sad, unwanted tag as well.
-
-[[plugins-filters-kv-source]]
+[id="plugins-{type}s-{plugin}-source"]
 ===== `source` 
 
   * Value type is <<string,string>>
@@ -464,7 +294,7 @@ For example, to process the `not_the_message` field:
 [source,ruby]
     filter { kv { source => "not_the_message" } }
 
-[[plugins-filters-kv-target]]
+[id="plugins-{type}s-{plugin}-target"]
 ===== `target` 
 
   * Value type is <<string,string>>
@@ -479,7 +309,7 @@ For example, to place all keys into the event field kv:
 [source,ruby]
     filter { kv { target => "kv" } }
 
-[[plugins-filters-kv-transform_key]]
+[id="plugins-{type}s-{plugin}-transform_key"]
 ===== `transform_key` 
 
   * Value can be any of: `lowercase`, `uppercase`, `capitalize`
@@ -495,7 +325,7 @@ For example, to lowercase all keys:
       }
     }
 
-[[plugins-filters-kv-transform_value]]
+[id="plugins-{type}s-{plugin}-transform_value"]
 ===== `transform_value` 
 
   * Value can be any of: `lowercase`, `uppercase`, `capitalize`
@@ -511,7 +341,7 @@ For example, to capitalize all values:
       }
     }
 
-[[plugins-filters-kv-trim_key]]
+[id="plugins-{type}s-{plugin}-trim_key"]
 ===== `trim_key` 
 
   * Value type is <<string,string>>
@@ -533,7 +363,7 @@ For example, to trim `<` `>` `[` `]` and `,` characters from keys:
       }
     }
 
-[[plugins-filters-kv-trim_value]]
+[id="plugins-{type}s-{plugin}-trim_value"]
 ===== `trim_value` 
 
   * Value type is <<string,string>>
@@ -557,7 +387,7 @@ For example, to trim `<`, `>`, `[`, `]` and `,` characters from values:
       }
     }
 
-[[plugins-filters-kv-value_split]]
+[id="plugins-{type}s-{plugin}-value_split"]
 ===== `value_split` 
 
   * Value type is <<string,string>>
@@ -574,3 +404,6 @@ For example, to identify key-values such as
     filter { kv { value_split => ":" } }
 
 
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
