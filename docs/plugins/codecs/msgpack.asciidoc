@@ -12,15 +12,11 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
 
-[id="plugins-{type}-{plugin}"]
+[id="plugins-{type}s-{plugin}"]
 
 === Msgpack codec plugin
 
 include::{include_path}/plugin_header.asciidoc[]
-
-==== Description
-
-
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Msgpack Codec Configuration Options

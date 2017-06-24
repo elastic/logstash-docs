@@ -12,7 +12,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
 
-[id="plugins-{type}-{plugin}"]
+[id="plugins-{type}s-{plugin}"]
 
 === Fluent codec plugin
 
@@ -41,11 +41,3 @@ Notes:
 * the fluent uses a second-precision time for events, so you will never see
   subsecond precision on events processed by this codec.
 
-
-[id="plugins-{type}s-{plugin}-options"]
-==== Fluent Codec Configuration Options
-
-[cols="<,<,<",options="header",]
-|=======================================================================
-|Setting |Input type|Required
-|=======================================================================

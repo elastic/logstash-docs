@@ -12,7 +12,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
 
-[id="plugins-{type}-{plugin}"]
+[id="plugins-{type}s-{plugin}"]
 
 === Es_bulk codec plugin
 
@@ -26,10 +26,3 @@ into individual events, plus metadata into the `@metadata` field.
 Encoding is not supported at this time as the Elasticsearch
 output submits Logstash events in bulk format.
 
-[id="plugins-{type}s-{plugin}-options"]
-==== Es_bulk Codec Configuration Options
-
-[cols="<,<,<",options="header",]
-|=======================================================================
-|Setting |Input type|Required
-|=======================================================================
