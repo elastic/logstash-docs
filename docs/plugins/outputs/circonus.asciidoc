@@ -18,9 +18,6 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 include::{include_path}/plugin_header.asciidoc[]
 
-==== Description
-
-
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Circonus Output Configuration Options
