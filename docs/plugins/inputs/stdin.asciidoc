@@ -28,12 +28,9 @@ want to join lines, you'll want to use the multiline codec.
 [id="plugins-{type}s-{plugin}-options"]
 ==== Stdin Input Configuration Options
 
-This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
+There are no special configuration options for this plugin,
+but it does support the <<plugins-{type}s-{plugin}-common-options>>.
 
-[cols="<,<,<",options="header",]
-|=======================================================================
-|Setting |Input type|Required
-|=======================================================================
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]

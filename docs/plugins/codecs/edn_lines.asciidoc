@@ -18,14 +18,3 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 include::{include_path}/plugin_header.asciidoc[]
 
-==== Description
-
-
-
-[id="plugins-{type}s-{plugin}-options"]
-==== Edn_lines Codec Configuration Options
-
-[cols="<,<,<",options="header",]
-|=======================================================================
-|Setting |Input type|Required
-|=======================================================================

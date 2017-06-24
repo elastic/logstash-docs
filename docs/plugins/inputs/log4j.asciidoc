@@ -18,8 +18,6 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 include::{include_path}/plugin_header.asciidoc[]
 
-==== Description
-
 ==== Deprecation Notice
 
 NOTE: This plugin is deprecated. It is recommended that you use filebeat to collect logs from log4j.
