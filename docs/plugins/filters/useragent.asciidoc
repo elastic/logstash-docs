@@ -4,9 +4,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: %VERSION%
-:release_date: %RELEASE_DATE%
-:changelog_url: %CHANGELOG_URL%
+:version: v3.1.1
+:release_date: 2017-05-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-useragent/blob/v3.1.1/CHANGELOG.md
 :include_path: ../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
