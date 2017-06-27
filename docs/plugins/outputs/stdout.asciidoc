@@ -53,12 +53,8 @@ http://rubygems.org/gems/awesome_print[library]
 [id="plugins-{type}s-{plugin}-options"]
 ==== Stdout Output Configuration Options
 
-This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
-
-[cols="<,<,<",options="header",]
-|=======================================================================
-|Setting |Input type|Required
-|=======================================================================
+There are no special configuration options for this plugin,
+but it does support the <<plugins-{type}s-{plugin}-common-options>>.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
