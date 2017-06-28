@@ -1,66 +1,62 @@
-[[plugins-inputs-s3]]
-=== s3
+:plugin: s3
+:type: input
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.1.5
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-input-s3/blob/v3.1.5/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
+
+=== S3 input plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 Stream events from files from a S3 bucket.
 
 Each line from each file generates an event.
 Files ending in `.gz` are handled as gzip'ed files.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== S3 Input Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-s3 {
-    bucket => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-inputs-s3-access_key_id>> |<<string,string>>|No|
-| <<plugins-inputs-s3-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-s3-aws_credentials_file>> |<<string,string>>|No|
-| <<plugins-inputs-s3-backup_add_prefix>> |<<string,string>>|No|`nil`
-| <<plugins-inputs-s3-backup_to_bucket>> |<<string,string>>|No|`nil`
-| <<plugins-inputs-s3-backup_to_dir>> |<<string,string>>|No|`nil`
-| <<plugins-inputs-s3-bucket>> |<<string,string>>|Yes|
-| <<plugins-inputs-s3-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-inputs-s3-delete>> |<<boolean,boolean>>|No|`false`
-| <<plugins-inputs-s3-exclude_pattern>> |<<string,string>>|No|`nil`
-| <<plugins-inputs-s3-interval>> |<<number,number>>|No|`60`
-| <<plugins-inputs-s3-prefix>> |<<string,string>>|No|`nil`
-| <<plugins-inputs-s3-proxy_uri>> |<<string,string>>|No|
-| <<plugins-inputs-s3-region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "sa-east-1", "us-gov-west-1", "cn-north-1"]`|No|`"us-east-1"`
-| <<plugins-inputs-s3-secret_access_key>> |<<string,string>>|No|
-| <<plugins-inputs-s3-session_token>> |<<string,string>>|No|
-| <<plugins-inputs-s3-sincedb_path>> |<<string,string>>|No|`nil`
-| <<plugins-inputs-s3-tags>> |<<array,array>>|No|
-| <<plugins-inputs-s3-temporary_directory>> |<<string,string>>|No|`"/var/folders/_9/x4bq65rs6vd0rrjthct3zxjw0000gn/T/logstash"`
-| <<plugins-inputs-s3-type>> |<<string,string>>|No|
-| <<plugins-inputs-s3-use_ssl>> |<<boolean,boolean>>|No|`true`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-access_key_id>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-aws_credentials_file>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-backup_add_prefix>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-backup_to_bucket>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-backup_to_dir>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-bucket>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-delete>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-exclude_pattern>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-interval>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-prefix>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-proxy_uri>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-region>> |<<string,string>>, one of `["us-east-1", "us-east-2", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "eu-west-2", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ap-northeast-2", "sa-east-1", "us-gov-west-1", "cn-north-1", "ap-south-1", "ca-central-1"]`|No
+| <<plugins-{type}s-{plugin}-secret_access_key>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-session_token>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-sincedb_path>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-temporary_directory>> |<<string,string>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
 
 &nbsp;
 
-[[plugins-inputs-s3-access_key_id]]
+[id="plugins-{type}s-{plugin}-access_key_id"]
 ===== `access_key_id` 
 
   * Value type is <<string,string>>
@@ -74,15 +70,7 @@ This plugin uses the AWS SDK and supports several ways to get credentials, which
 4. Environment variables `AMAZON_ACCESS_KEY_ID` and `AMAZON_SECRET_ACCESS_KEY`
 5. IAM Instance Profile (available when running inside EC2)
 
-[[plugins-inputs-s3-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-Add a field to an event
-
-[[plugins-inputs-s3-aws_credentials_file]]
+[id="plugins-{type}s-{plugin}-aws_credentials_file"]
 ===== `aws_credentials_file` 
 
   * Value type is <<string,string>>
@@ -95,11 +83,12 @@ file should look like this:
 
 [source,ruby]
 ----------------------------------
- :access_key_id: "12345"
- :secret_access_key: "54321"
+    :access_key_id: "12345"
+    :secret_access_key: "54321"
 ----------------------------------
 
-[[plugins-inputs-s3-backup_add_prefix]]
+
+[id="plugins-{type}s-{plugin}-backup_add_prefix"]
 ===== `backup_add_prefix` 
 
   * Value type is <<string,string>>
@@ -109,7 +98,7 @@ Append a prefix to the key (full path including file name in s3) after processin
 If backing up to another (or the same) bucket, this effectively lets you
 choose a new 'folder' to place the files in
 
-[[plugins-inputs-s3-backup_to_bucket]]
+[id="plugins-{type}s-{plugin}-backup_to_bucket"]
 ===== `backup_to_bucket` 
 
   * Value type is <<string,string>>
@@ -117,7 +106,7 @@ choose a new 'folder' to place the files in
 
 Name of a S3 bucket to backup processed files to.
 
-[[plugins-inputs-s3-backup_to_dir]]
+[id="plugins-{type}s-{plugin}-backup_to_dir"]
 ===== `backup_to_dir` 
 
   * Value type is <<string,string>>
@@ -125,7 +114,7 @@ Name of a S3 bucket to backup processed files to.
 
 Path of a local directory to backup processed files to.
 
-[[plugins-inputs-s3-bucket]]
+[id="plugins-{type}s-{plugin}-bucket"]
 ===== `bucket` 
 
   * This is a required setting.
@@ -134,28 +123,7 @@ Path of a local directory to backup processed files to.
 
 The name of the S3 bucket.
 
-[[plugins-inputs-s3-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-inputs-s3-credentials]]
-===== `credentials`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-DEPRECATED: The credentials of the AWS account used to access the bucket.
-Credentials can be specified:
-- As an ["id","secret"] array
-- As a path to a file containing AWS_ACCESS_KEY_ID=... and AWS_SECRET_ACCESS_KEY=...
-- In the environment, if not set (using variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY)
-
-[[plugins-inputs-s3-delete]]
+[id="plugins-{type}s-{plugin}-delete"]
 ===== `delete` 
 
   * Value type is <<boolean,boolean>>
@@ -163,7 +131,7 @@ Credentials can be specified:
 
 Whether to delete processed files from the original bucket.
 
-[[plugins-inputs-s3-exclude_pattern]]
+[id="plugins-{type}s-{plugin}-exclude_pattern"]
 ===== `exclude_pattern` 
 
   * Value type is <<string,string>>
@@ -171,7 +139,7 @@ Whether to delete processed files from the original bucket.
 
 Ruby style regexp of keys to exclude from the bucket
 
-[[plugins-inputs-s3-interval]]
+[id="plugins-{type}s-{plugin}-interval"]
 ===== `interval` 
 
   * Value type is <<number,number>>
@@ -180,7 +148,7 @@ Ruby style regexp of keys to exclude from the bucket
 Interval to wait between to check the file list again after a run is finished.
 Value is in seconds.
 
-[[plugins-inputs-s3-prefix]]
+[id="plugins-{type}s-{plugin}-prefix"]
 ===== `prefix` 
 
   * Value type is <<string,string>>
@@ -188,32 +156,23 @@ Value is in seconds.
 
 If specified, the prefix of filenames in the bucket must match (not a regexp)
 
-[[plugins-inputs-s3-proxy_uri]]
+[id="plugins-{type}s-{plugin}-proxy_uri"]
 ===== `proxy_uri` 
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-URI to proxy server if required 
+URI to proxy server if required
 
-[[plugins-inputs-s3-region]]
+[id="plugins-{type}s-{plugin}-region"]
 ===== `region` 
 
-  * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`
+  * Value can be any of: `us-east-1`, `us-east-2`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `eu-west-2`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `ap-northeast-2`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`, `ap-south-1`, `ca-central-1`
   * Default value is `"us-east-1"`
 
+The AWS Region
 
-
-[[plugins-inputs-s3-region_endpoint]]
-===== `region_endpoint`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `eu-west-1`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `sa-east-1`, `us-gov-west-1`
-  * There is no default value for this setting.
-
-The AWS region for your bucket.
-
-[[plugins-inputs-s3-secret_access_key]]
+[id="plugins-{type}s-{plugin}-secret_access_key"]
 ===== `secret_access_key` 
 
   * Value type is <<string,string>>
@@ -221,15 +180,15 @@ The AWS region for your bucket.
 
 The AWS Secret Access Key
 
-[[plugins-inputs-s3-session_token]]
+[id="plugins-{type}s-{plugin}-session_token"]
 ===== `session_token` 
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The AWS Session token for temporary credentials
+The AWS Session token for temporary credential
 
-[[plugins-inputs-s3-sincedb_path]]
+[id="plugins-{type}s-{plugin}-sincedb_path"]
 ===== `sincedb_path` 
 
   * Value type is <<string,string>>
@@ -240,50 +199,16 @@ the last handled file was added to S3). The default will write
 sincedb files to some path matching "$HOME/.sincedb*"
 Should be a path with filename not just a directory.
 
-[[plugins-inputs-s3-tags]]
-===== `tags` 
-
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
-
-Add any number of arbitrary tags to your event.
-
-This can help with processing later.
-
-[[plugins-inputs-s3-temporary_directory]]
+[id="plugins-{type}s-{plugin}-temporary_directory"]
 ===== `temporary_directory` 
 
   * Value type is <<string,string>>
-  * Default value is `"/var/folders/_9/x4bq65rs6vd0rrjthct3zxjw0000gn/T/logstash"`
+  * Default value is `"/tmp/logstash"`
 
 Set the directory where logstash will store the tmp files before processing them.
 default to the current OS temporary directory in linux /tmp/logstash
 
-[[plugins-inputs-s3-type]]
-===== `type` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a `type` field to all events handled by this input.
-
-Types are used mainly for filter activation.
-
-The type is stored as part of the event itself, so you can
-also use the type to search for it in Kibana.
-
-If you try to set a type on an event that already has one (for
-example when you send an event from a shipper to an indexer) then
-a new input will not override the existing type. A type set at
-the shipper stays with that event for its life even
-when sent to another Logstash server.
-
-[[plugins-inputs-s3-use_ssl]]
-===== `use_ssl` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
 
 
-
-
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

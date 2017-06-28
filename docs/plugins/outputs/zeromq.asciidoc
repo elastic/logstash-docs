@@ -1,7 +1,7 @@
 [[plugins-outputs-zeromq]]
 === zeromq
 
-NOTE: This is a community-maintained plugin!
+NOTE: This plugin cannot be installed on the current version of Logstash.
 
 Write events to a 0MQ PUB socket.
 

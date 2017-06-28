@@ -1,82 +1,51 @@
-[[plugins-inputs-xmpp]]
-=== xmpp
+:plugin: xmpp
+:type: input
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: 3.1.3
+:release_date: 2017-06-23
+:changelog_url: https://raw.githubusercontent.com/logstash-plugins/logstash-input-xmpp/v3.1.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
 
-load the MUC Client anyway, its mocked in testing
+=== Xmpp input plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
 This input allows you to receive events over XMPP/Jabber.
 
 This plugin can be used for accepting events from humans or applications
 XMPP, or you can use it for PubSub or general message passing for logstash to
 logstash.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Xmpp Input Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-xmpp {
-    password => ...
-    user => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-inputs-xmpp-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-xmpp-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-inputs-xmpp-host>> |<<string,string>>|No|
-| <<plugins-inputs-xmpp-password>> |<<password,password>>|Yes|
-| <<plugins-inputs-xmpp-rooms>> |<<array,array>>|No|
-| <<plugins-inputs-xmpp-tags>> |<<array,array>>|No|
-| <<plugins-inputs-xmpp-type>> |<<string,string>>|No|
-| <<plugins-inputs-xmpp-user>> |<<string,string>>|Yes|
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-host>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-password>> |<<password,password>>|Yes
+| <<plugins-{type}s-{plugin}-rooms>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-user>> |<<string,string>>|Yes
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
 
 &nbsp;
 
-[[plugins-inputs-xmpp-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-Add a field to an event
-
-[[plugins-inputs-xmpp-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-inputs-xmpp-debug]]
-===== `debug`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Set to true to enable greater debugging in XMPP. Useful for debugging
-network/authentication erros.
-
-[[plugins-inputs-xmpp-host]]
+[id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
   * Value type is <<string,string>>
@@ -85,7 +54,7 @@ network/authentication erros.
 The xmpp server to connect to. This is optional. If you omit this setting,
 the host on the user/identity is used. (`foo.com` for `user@foo.com`)
 
-[[plugins-inputs-xmpp-password]]
+[id="plugins-{type}s-{plugin}-password"]
 ===== `password` 
 
   * This is a required setting.
@@ -94,7 +63,7 @@ the host on the user/identity is used. (`foo.com` for `user@foo.com`)
 
 The xmpp password for the user/identity.
 
-[[plugins-inputs-xmpp-rooms]]
+[id="plugins-{type}s-{plugin}-rooms"]
 ===== `rooms` 
 
   * Value type is <<array,array>>
@@ -103,36 +72,7 @@ The xmpp password for the user/identity.
 if muc/multi-user-chat required, give the name of the room that
 you want to join: `room@conference.domain/nick`
 
-[[plugins-inputs-xmpp-tags]]
-===== `tags` 
-
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
-
-Add any number of arbitrary tags to your event.
-
-This can help with processing later.
-
-[[plugins-inputs-xmpp-type]]
-===== `type` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a `type` field to all events handled by this input.
-
-Types are used mainly for filter activation.
-
-The type is stored as part of the event itself, so you can
-also use the type to search for it in Kibana.
-
-If you try to set a type on an event that already has one (for
-example when you send an event from a shipper to an indexer) then
-a new input will not override the existing type. A type set at
-the shipper stays with that event for its life even
-when sent to another Logstash server.
-
-[[plugins-inputs-xmpp-user]]
+[id="plugins-{type}s-{plugin}-user"]
 ===== `user` 
 
   * This is a required setting.
@@ -142,3 +82,6 @@ when sent to another Logstash server.
 The user or resource ID, like `foo@example.com`.
 
 
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

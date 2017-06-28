@@ -1,7 +1,24 @@
-[[plugins-filters-metrics]]
-=== metrics
+:plugin: metrics
+:type: filter
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v4.0.3
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-metrics/blob/v4.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
+
+=== Metrics filter plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 The metrics filter is useful for aggregating metrics.
 
@@ -58,7 +75,7 @@ For a `timer => [ "thing", "%{duration}" ]` you will receive the following field
 The default lengths of the event rate window (1, 5, and 15 minutes)
 can be configured with the `rates` option.
 
-==== Example: computing event rate
+==== Example: Computing event rate
 
 For a simple example, let's track how many events per second are running
 through logstash:
@@ -110,109 +127,29 @@ like so:
       }
     }
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Metrics Filter Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-metrics {
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-filters-metrics-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-metrics-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-metrics-clear_interval>> |<<number,number>>|No|`-1`
-| <<plugins-filters-metrics-flush_interval>> |<<number,number>>|No|`5`
-| <<plugins-filters-metrics-ignore_older_than>> |<<number,number>>|No|`0`
-| <<plugins-filters-metrics-meter>> |<<array,array>>|No|`[]`
-| <<plugins-filters-metrics-percentiles>> |<<array,array>>|No|`[1, 5, 10, 90, 95, 99, 100]`
-| <<plugins-filters-metrics-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-metrics-rates>> |<<array,array>>|No|`[1, 5, 15]`
-| <<plugins-filters-metrics-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-metrics-remove_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-metrics-timer>> |<<hash,hash>>|No|`{}`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-clear_interval>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-flush_interval>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-ignore_older_than>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-meter>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-percentiles>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-rates>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-timer>> |<<hash,hash>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
 
 &nbsp;
 
-[[plugins-filters-metrics-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-If this filter is successful, add any arbitrary fields to this event.
-Field names can be dynamic and include parts of the event using the `%{field}`.
-
-Example:
-[source,ruby]
-    filter {
-      metrics {
-        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
-      }
-    }
-[source,ruby]
-    # You can also add multiple fields at once:
-    filter {
-      metrics {
-        add_field => {
-          "foo_%{somefield}" => "Hello world, from %{host}"
-          "new_field" => "new_static_value"
-        }
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add field `foo_hello` if it is present, with the
-value above and the `%{host}` piece replaced with that value from the
-event. The second example would also add a hardcoded field.
-
-[[plugins-filters-metrics-add_tag]]
-===== `add_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, add arbitrary tags to the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      metrics {
-        add_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also add multiple tags at once:
-    filter {
-      metrics {
-        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
-
-[[plugins-filters-metrics-clear_interval]]
+[id="plugins-{type}s-{plugin}-clear_interval"]
 ===== `clear_interval` 
 
   * Value type is <<number,number>>
@@ -223,7 +160,7 @@ The clear interval, when all counter are reset.
 If set to -1, the default value, the metrics will never be cleared.
 Otherwise, should be a multiple of 5s.
 
-[[plugins-filters-metrics-flush_interval]]
+[id="plugins-{type}s-{plugin}-flush_interval"]
 ===== `flush_interval` 
 
   * Value type is <<number,number>>
@@ -231,7 +168,7 @@ Otherwise, should be a multiple of 5s.
 
 The flush interval, when the metrics event is created. Must be a multiple of 5s.
 
-[[plugins-filters-metrics-ignore_older_than]]
+[id="plugins-{type}s-{plugin}-ignore_older_than"]
 ===== `ignore_older_than` 
 
   * Value type is <<number,number>>
@@ -252,7 +189,7 @@ would do this:
       }
     }
 
-[[plugins-filters-metrics-meter]]
+[id="plugins-{type}s-{plugin}-meter"]
 ===== `meter` 
 
   * Value type is <<array,array>>
@@ -260,7 +197,7 @@ would do this:
 
 syntax: `meter => [ "name of metric", "name of metric" ]`
 
-[[plugins-filters-metrics-percentiles]]
+[id="plugins-{type}s-{plugin}-percentiles"]
 ===== `percentiles` 
 
   * Value type is <<array,array>>
@@ -268,16 +205,7 @@ syntax: `meter => [ "name of metric", "name of metric" ]`
 
 The percentiles that should be measured and emitted for timer values.
 
-[[plugins-filters-metrics-periodic_flush]]
-===== `periodic_flush` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Call the filter flush method at regular interval.
-Optional.
-
-[[plugins-filters-metrics-rates]]
+[id="plugins-{type}s-{plugin}-rates"]
 ===== `rates` 
 
   * Value type is <<array,array>>
@@ -286,63 +214,7 @@ Optional.
 The rates that should be measured, in minutes.
 Possible values are 1, 5, and 15.
 
-[[plugins-filters-metrics-remove_field]]
-===== `remove_field` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary fields from this event.
-Fields names can be dynamic and include parts of the event using the %{field}
-Example:
-[source,ruby]
-    filter {
-      metrics {
-        remove_field => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple fields at once:
-    filter {
-      metrics {
-        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the field with name `foo_hello` if it is present. The second
-example would remove an additional, non-dynamic field.
-
-[[plugins-filters-metrics-remove_tag]]
-===== `remove_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary tags from the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      metrics {
-        remove_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple tags at once:
-    filter {
-      metrics {
-        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the tag `foo_hello` if it is present. The second example
-would remove a sad, unwanted tag as well.
-
-[[plugins-filters-metrics-timer]]
+[id="plugins-{type}s-{plugin}-timer"]
 ===== `timer` 
 
   * Value type is <<hash,hash>>
@@ -351,3 +223,6 @@ would remove a sad, unwanted tag as well.
 syntax: `timer => [ "name of metric", "%{time_value}" ]`
 
 
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

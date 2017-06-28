@@ -2,8 +2,7 @@
 === metaevent
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-metaevent`.
-
+NOTE: This plugin cannot be installed on the current version of Logstash.
 
 
 

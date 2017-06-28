@@ -1,7 +1,24 @@
-[[plugins-filters-useragent]]
-=== useragent
+:plugin: useragent
+:type: filter
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.1.1
+:release_date: 2017-05-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-useragent/blob/v3.1.1/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
+
+=== Useragent
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 Parse user agent strings into structured data based on BrowserScope data
 
@@ -12,108 +29,27 @@ Logstash releases ship with the regexes.yaml database made available from
 ua-parser with an Apache 2.0 license. For more details on ua-parser, see
 <https://github.com/tobie/ua-parser/>.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Useragent Filter Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-useragent {
-    source => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-filters-useragent-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-useragent-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-useragent-lru_cache_size>> |<<number,number>>|No|`1000`
-| <<plugins-filters-useragent-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-useragent-prefix>> |<<string,string>>|No|`""`
-| <<plugins-filters-useragent-regexes>> |<<string,string>>|No|
-| <<plugins-filters-useragent-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-useragent-remove_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-useragent-source>> |<<string,string>>|Yes|
-| <<plugins-filters-useragent-target>> |<<string,string>>|No|
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-lru_cache_size>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-prefix>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-regexes>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-source>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-target>> |<<string,string>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
 
 &nbsp;
 
-[[plugins-filters-useragent-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-If this filter is successful, add any arbitrary fields to this event.
-Field names can be dynamic and include parts of the event using the `%{field}`.
-
-Example:
-[source,ruby]
-    filter {
-      useragent {
-        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
-      }
-    }
-[source,ruby]
-    # You can also add multiple fields at once:
-    filter {
-      useragent {
-        add_field => {
-          "foo_%{somefield}" => "Hello world, from %{host}"
-          "new_field" => "new_static_value"
-        }
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add field `foo_hello` if it is present, with the
-value above and the `%{host}` piece replaced with that value from the
-event. The second example would also add a hardcoded field.
-
-[[plugins-filters-useragent-add_tag]]
-===== `add_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, add arbitrary tags to the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      useragent {
-        add_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also add multiple tags at once:
-    filter {
-      useragent {
-        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
-
-[[plugins-filters-useragent-lru_cache_size]]
+[id="plugins-{type}s-{plugin}-lru_cache_size"]
 ===== `lru_cache_size` 
 
   * Value type is <<number,number>>
@@ -134,16 +70,7 @@ share the same cache. The last declared cache size will 'win'. The reason for th
 to having multiple caches for different instances at different points in the pipeline, that would just increase the
 number of cache misses and waste memory.
 
-[[plugins-filters-useragent-periodic_flush]]
-===== `periodic_flush` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Call the filter flush method at regular interval.
-Optional.
-
-[[plugins-filters-useragent-prefix]]
+[id="plugins-{type}s-{plugin}-prefix"]
 ===== `prefix` 
 
   * Value type is <<string,string>>
@@ -151,7 +78,7 @@ Optional.
 
 A string to prepend to all of the extracted keys
 
-[[plugins-filters-useragent-regexes]]
+[id="plugins-{type}s-{plugin}-regexes"]
 ===== `regexes` 
 
   * Value type is <<string,string>>
@@ -163,65 +90,9 @@ If not specified, this will default to the `regexes.yaml` that ships
 with logstash.
 
 You can find the latest version of this here:
-<https://github.com/tobie/ua-parser/blob/master/regexes.yaml>
+<https://github.com/ua-parser/uap-core/blob/master/regexes.yaml>
 
-[[plugins-filters-useragent-remove_field]]
-===== `remove_field` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary fields from this event.
-Fields names can be dynamic and include parts of the event using the %{field}
-Example:
-[source,ruby]
-    filter {
-      useragent {
-        remove_field => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple fields at once:
-    filter {
-      useragent {
-        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the field with name `foo_hello` if it is present. The second
-example would remove an additional, non-dynamic field.
-
-[[plugins-filters-useragent-remove_tag]]
-===== `remove_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary tags from the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      useragent {
-        remove_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple tags at once:
-    filter {
-      useragent {
-        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the tag `foo_hello` if it is present. The second example
-would remove a sad, unwanted tag as well.
-
-[[plugins-filters-useragent-source]]
+[id="plugins-{type}s-{plugin}-source"]
 ===== `source` 
 
   * This is a required setting.
@@ -231,7 +102,7 @@ would remove a sad, unwanted tag as well.
 The field containing the user agent string. If this field is an
 array, only the first value will be used.
 
-[[plugins-filters-useragent-target]]
+[id="plugins-{type}s-{plugin}-target"]
 ===== `target` 
 
   * Value type is <<string,string>>
@@ -242,3 +113,5 @@ The name of the field to assign user agent data into.
 If not specified user agent data will be stored in the root of the event.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

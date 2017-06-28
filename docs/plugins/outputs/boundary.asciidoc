@@ -1,9 +1,24 @@
-[[plugins-outputs-boundary]]
-=== boundary
+:plugin: boundary
+:type: output
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.2
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-output-boundary/blob/v3.0.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-boundary`.
+[id="plugins-{type}s-{plugin}"]
 
+=== Boundary output plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 This output lets you send annotations to
 Boundary based on Logstash events
@@ -15,49 +30,30 @@ By default the start and stop time will be
 the event timestamp
 
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Boundary Output Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-boundary {
-    api_key => ...
-    org_id => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-outputs-boundary-api_key>> |<<string,string>>|Yes|
-| <<plugins-outputs-boundary-auto>> |<<boolean,boolean>>|No|`false`
-| <<plugins-outputs-boundary-bsubtype>> |<<string,string>>|No|
-| <<plugins-outputs-boundary-btags>> |<<array,array>>|No|
-| <<plugins-outputs-boundary-btype>> |<<string,string>>|No|
-| <<plugins-outputs-boundary-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-boundary-end_time>> |<<string,string>>|No|
-| <<plugins-outputs-boundary-org_id>> |<<string,string>>|Yes|
-| <<plugins-outputs-boundary-start_time>> |<<string,string>>|No|
-| <<plugins-outputs-boundary-workers>> |<<number,number>>|No|`1`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-api_key>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-auto>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-bsubtype>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-btags>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-btype>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-end_time>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-org_id>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-start_time>> |<<string,string>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
 
 &nbsp;
 
-[[plugins-outputs-boundary-api_key]]
+[id="plugins-{type}s-{plugin}-api_key"]
 ===== `api_key` 
 
   * This is a required setting.
@@ -66,7 +62,7 @@ Available configuration options:
 
 Your Boundary API key
 
-[[plugins-outputs-boundary-auto]]
+[id="plugins-{type}s-{plugin}-auto"]
 ===== `auto` 
 
   * Value type is <<boolean,boolean>>
@@ -78,7 +74,7 @@ of the event. Any field explicitly set by config options will
 override these.
 `['type', 'subtype', 'creation_time', 'end_time', 'links', 'tags', 'loc']`
 
-[[plugins-outputs-boundary-bsubtype]]
+[id="plugins-{type}s-{plugin}-bsubtype"]
 ===== `bsubtype` 
 
   * Value type is <<string,string>>
@@ -86,7 +82,7 @@ override these.
 
 Sub-Type
 
-[[plugins-outputs-boundary-btags]]
+[id="plugins-{type}s-{plugin}-btags"]
 ===== `btags` 
 
   * Value type is <<array,array>>
@@ -96,7 +92,7 @@ Tags
 Set any custom tags for this event
 Default are the Logstash tags if any
 
-[[plugins-outputs-boundary-btype]]
+[id="plugins-{type}s-{plugin}-btype"]
 ===== `btype` 
 
   * Value type is <<string,string>>
@@ -104,15 +100,7 @@ Default are the Logstash tags if any
 
 Type
 
-[[plugins-outputs-boundary-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-boundary-end_time]]
+[id="plugins-{type}s-{plugin}-end_time"]
 ===== `end_time` 
 
   * Value type is <<string,string>>
@@ -122,9 +110,9 @@ End time
 Override the stop time
 Note that Boundary requires this to be seconds since epoch
 If overriding, it is your responsibility to type this correctly
-By default this is set to `event["@timestamp"].to_i`
+By default this is set to `event.get("@timestamp").to_i`
 
-[[plugins-outputs-boundary-org_id]]
+[id="plugins-{type}s-{plugin}-org_id"]
 ===== `org_id` 
 
   * This is a required setting.
@@ -133,7 +121,7 @@ By default this is set to `event["@timestamp"].to_i`
 
 Your Boundary Org ID
 
-[[plugins-outputs-boundary-start_time]]
+[id="plugins-{type}s-{plugin}-start_time"]
 ===== `start_time` 
 
   * Value type is <<string,string>>
@@ -143,15 +131,9 @@ Start time
 Override the start time
 Note that Boundary requires this to be seconds since epoch
 If overriding, it is your responsibility to type this correctly
-By default this is set to `event["@timestamp"].to_i`
-
-[[plugins-outputs-boundary-workers]]
-===== `workers` 
-
-  * Value type is <<number,number>>
-  * Default value is `1`
-
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
+By default this is set to `event.get("@timestamp").to_i`
 
 
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

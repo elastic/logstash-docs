@@ -1,63 +1,80 @@
-[[plugins-outputs-email]]
-=== email
+:plugin: email
+:type: output
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v4.0.4
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-output-email/blob/v4.0.4/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
 
-Send email when an output is received. Alternatively, you may include or
-exclude the email output execution using conditionals. 
+=== Email output plugin
 
-&nbsp;
+include::{include_path}/plugin_header.asciidoc[]
 
-==== Synopsis
+==== Description
 
-This plugin supports the following configuration options:
+The output sends email when an output is received. Alternatively, you may include or
+exclude the email output execution using conditionals.
 
-
-Required configuration options:
-
-[source,json]
---------------------------
-email {
-    to => ...
+==== Usage Example
+[source,ruby]
+----------------------------------
+output {
+  if "shouldmail" in [tags] {
+    email {
+      to => 'technical@logstash.net'
+      from => 'monitor@logstash.net'
+      subject => 'Alert - %{title}'
+      body => "Tags: %{tags}\\n\\Content:\\n%{message}"
+      domain => 'mail.logstash.net'
+      port => 25
+    }
+  }
 }
---------------------------
+----------------------------------
 
 
+[id="plugins-{type}s-{plugin}-options"]
+==== Email Output Configuration Options
 
-Available configuration options:
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-outputs-email-address>> |<<string,string>>|No|`"localhost"`
-| <<plugins-outputs-email-attachments>> |<<array,array>>|No|`[]`
-| <<plugins-outputs-email-authentication>> |<<string,string>>|No|
-| <<plugins-outputs-email-body>> |<<string,string>>|No|`""`
-| <<plugins-outputs-email-cc>> |<<string,string>>|No|
-| <<plugins-outputs-email-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-email-contenttype>> |<<string,string>>|No|`"text/html; charset=UTF-8"`
-| <<plugins-outputs-email-debug>> |<<boolean,boolean>>|No|`false`
-| <<plugins-outputs-email-domain>> |<<string,string>>|No|`"localhost"`
-| <<plugins-outputs-email-from>> |<<string,string>>|No|`"logstash.alert@nowhere.com"`
-| <<plugins-outputs-email-htmlbody>> |<<string,string>>|No|`""`
-| <<plugins-outputs-email-password>> |<<string,string>>|No|
-| <<plugins-outputs-email-port>> |<<number,number>>|No|`25`
-| <<plugins-outputs-email-replyto>> |<<string,string>>|No|
-| <<plugins-outputs-email-subject>> |<<string,string>>|No|`""`
-| <<plugins-outputs-email-to>> |<<string,string>>|Yes|
-| <<plugins-outputs-email-use_tls>> |<<boolean,boolean>>|No|`false`
-| <<plugins-outputs-email-username>> |<<string,string>>|No|
-| <<plugins-outputs-email-via>> |<<string,string>>|No|`"smtp"`
-| <<plugins-outputs-email-workers>> |<<number,number>>|No|`1`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-address>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-attachments>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-authentication>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-body>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-cc>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-contenttype>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-debug>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-domain>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-from>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-htmlbody>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-password>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-replyto>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-subject>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-to>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-use_tls>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-username>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-via>> |<<string,string>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
 
 &nbsp;
 
-[[plugins-outputs-email-address]]
+[id="plugins-{type}s-{plugin}-address"]
 ===== `address` 
 
   * Value type is <<string,string>>
@@ -65,7 +82,7 @@ Available configuration options:
 
 The address used to connect to the mail server
 
-[[plugins-outputs-email-attachments]]
+[id="plugins-{type}s-{plugin}-attachments"]
 ===== `attachments` 
 
   * Value type is <<array,array>>
@@ -73,7 +90,7 @@ The address used to connect to the mail server
 
 Attachments - specify the name(s) and location(s) of the files.
 
-[[plugins-outputs-email-authentication]]
+[id="plugins-{type}s-{plugin}-authentication"]
 ===== `authentication` 
 
   * Value type is <<string,string>>
@@ -81,7 +98,7 @@ Attachments - specify the name(s) and location(s) of the files.
 
 Authentication method used when identifying with the server
 
-[[plugins-outputs-email-body]]
+[id="plugins-{type}s-{plugin}-body"]
 ===== `body` 
 
   * Value type is <<string,string>>
@@ -89,7 +106,7 @@ Authentication method used when identifying with the server
 
 Body for the email - plain text only.
 
-[[plugins-outputs-email-cc]]
+[id="plugins-{type}s-{plugin}-cc"]
 ===== `cc` 
 
   * Value type is <<string,string>>
@@ -97,18 +114,10 @@ Body for the email - plain text only.
 
 The fully-qualified email address(es) to include as cc: address(es).
 
-This field also accepts a comma-separated string of addresses, for example: 
+This field also accepts a comma-separated string of addresses, for example:
 `"me@host.com, you@host.com"`
 
-[[plugins-outputs-email-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-email-contenttype]]
+[id="plugins-{type}s-{plugin}-contenttype"]
 ===== `contenttype` 
 
   * Value type is <<string,string>>
@@ -117,7 +126,7 @@ The codec used for output data. Output codecs are a convenient method for encodi
 contenttype : for multipart messages, set the content-type and/or charset of the HTML part.
 NOTE: this may not be functional (KH)
 
-[[plugins-outputs-email-debug]]
+[id="plugins-{type}s-{plugin}-debug"]
 ===== `debug` 
 
   * Value type is <<boolean,boolean>>
@@ -125,7 +134,7 @@ NOTE: this may not be functional (KH)
 
 Run the mail relay in debug mode
 
-[[plugins-outputs-email-domain]]
+[id="plugins-{type}s-{plugin}-domain"]
 ===== `domain` 
 
   * Value type is <<string,string>>
@@ -133,7 +142,7 @@ Run the mail relay in debug mode
 
 Domain used to send the email messages
 
-[[plugins-outputs-email-from]]
+[id="plugins-{type}s-{plugin}-from"]
 ===== `from` 
 
   * Value type is <<string,string>>
@@ -141,7 +150,7 @@ Domain used to send the email messages
 
 The fully-qualified email address for the From: field in the email.
 
-[[plugins-outputs-email-htmlbody]]
+[id="plugins-{type}s-{plugin}-htmlbody"]
 ===== `htmlbody` 
 
   * Value type is <<string,string>>
@@ -149,7 +158,7 @@ The fully-qualified email address for the From: field in the email.
 
 HTML Body for the email, which may contain HTML markup.
 
-[[plugins-outputs-email-password]]
+[id="plugins-{type}s-{plugin}-password"]
 ===== `password` 
 
   * Value type is <<string,string>>
@@ -157,7 +166,7 @@ HTML Body for the email, which may contain HTML markup.
 
 Password to authenticate with the server
 
-[[plugins-outputs-email-port]]
+[id="plugins-{type}s-{plugin}-port"]
 ===== `port` 
 
   * Value type is <<number,number>>
@@ -165,7 +174,7 @@ Password to authenticate with the server
 
 Port used to communicate with the mail server
 
-[[plugins-outputs-email-replyto]]
+[id="plugins-{type}s-{plugin}-replyto"]
 ===== `replyto` 
 
   * Value type is <<string,string>>
@@ -173,7 +182,7 @@ Port used to communicate with the mail server
 
 The fully qualified email address for the Reply-To: field.
 
-[[plugins-outputs-email-subject]]
+[id="plugins-{type}s-{plugin}-subject"]
 ===== `subject` 
 
   * Value type is <<string,string>>
@@ -181,7 +190,7 @@ The fully qualified email address for the Reply-To: field.
 
 Subject: for the email.
 
-[[plugins-outputs-email-to]]
+[id="plugins-{type}s-{plugin}-to"]
 ===== `to` 
 
   * This is a required setting.
@@ -190,12 +199,12 @@ Subject: for the email.
 
 The fully-qualified email address to send the email to.
 
-This field also accepts a comma-separated string of addresses, for example: 
+This field also accepts a comma-separated string of addresses, for example:
 `"me@host.com, you@host.com"`
 
 You can also use dynamic fields from the event with the `%{fieldname}` syntax.
 
-[[plugins-outputs-email-use_tls]]
+[id="plugins-{type}s-{plugin}-use_tls"]
 ===== `use_tls` 
 
   * Value type is <<boolean,boolean>>
@@ -203,7 +212,7 @@ You can also use dynamic fields from the event with the `%{fieldname}` syntax.
 
 Enables TLS when communicating with the server
 
-[[plugins-outputs-email-username]]
+[id="plugins-{type}s-{plugin}-username"]
 ===== `username` 
 
   * Value type is <<string,string>>
@@ -211,7 +220,7 @@ Enables TLS when communicating with the server
 
 Username to authenticate with the server
 
-[[plugins-outputs-email-via]]
+[id="plugins-{type}s-{plugin}-via"]
 ===== `via` 
 
   * Value type is <<string,string>>
@@ -219,13 +228,7 @@ Username to authenticate with the server
 
 How Logstash should send the email, either via SMTP or by invoking sendmail.
 
-[[plugins-outputs-email-workers]]
-===== `workers` 
-
-  * Value type is <<number,number>>
-  * Default value is `1`
-
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

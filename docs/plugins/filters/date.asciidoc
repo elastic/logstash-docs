@@ -1,7 +1,24 @@
-[[plugins-filters-date]]
-=== date
+:plugin: date
+:type: filter
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.1.7
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-date/blob/v3.1.7/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
+
+=== Date filter plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 The date filter is used for parsing dates from fields, and then using that
 date or timestamp as the logstash timestamp for the event.
@@ -21,107 +38,27 @@ first time it sees the event (at input time), if the timestamp is not already
 set in the event. For example, with file input, the timestamp is set to the
 time of each read.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Date Filter Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-date {
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-filters-date-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-date-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-date-locale>> |<<string,string>>|No|
-| <<plugins-filters-date-match>> |<<array,array>>|No|`[]`
-| <<plugins-filters-date-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-date-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-date-remove_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-date-tag_on_failure>> |<<array,array>>|No|`["_dateparsefailure"]`
-| <<plugins-filters-date-target>> |<<string,string>>|No|`"@timestamp"`
-| <<plugins-filters-date-timezone>> |<<string,string>>|No|
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-locale>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-match>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-tag_on_failure>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-target>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-timezone>> |<<string,string>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
 
 &nbsp;
 
-[[plugins-filters-date-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-If this filter is successful, add any arbitrary fields to this event.
-Field names can be dynamic and include parts of the event using the `%{field}`.
-
-Example:
-[source,ruby]
-    filter {
-      date {
-        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
-      }
-    }
-[source,ruby]
-    # You can also add multiple fields at once:
-    filter {
-      date {
-        add_field => {
-          "foo_%{somefield}" => "Hello world, from %{host}"
-          "new_field" => "new_static_value"
-        }
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add field `foo_hello` if it is present, with the
-value above and the `%{host}` piece replaced with that value from the
-event. The second example would also add a hardcoded field.
-
-[[plugins-filters-date-add_tag]]
-===== `add_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, add arbitrary tags to the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      date {
-        add_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also add multiple tags at once:
-    filter {
-      date {
-        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
-
-[[plugins-filters-date-locale]]
+[id="plugins-{type}s-{plugin}-locale"]
 ===== `locale` 
 
   * Value type is <<string,string>>
@@ -136,24 +73,19 @@ weekday names (pattern with `EEE`).
 If not specified, the platform default will be used but for non-english platform default
 an english parser will also be used as a fallback mechanism.
 
-[[plugins-filters-date-match]]
+[id="plugins-{type}s-{plugin}-match"]
 ===== `match` 
 
   * Value type is <<array,array>>
   * Default value is `[]`
-
-The date formats allowed are anything allowed by Joda-Time (java time
-library). You can see the docs for this format here:
-
-http://joda-time.sourceforge.net/apidocs/org/joda/time/format/DateTimeFormat.html[joda.time.format.DateTimeFormat]
 
 An array with field name first, and format patterns following, `[ field,
 formats... ]`
 
 If your time field has multiple possible formats, you can do this:
 [source,ruby]
-    match => [ "logdate", "MMM dd YYY HH:mm:ss",
-              "MMM  d YYY HH:mm:ss", "ISO8601" ]
+    match => [ "logdate", "MMM dd yyyy HH:mm:ss",
+              "MMM  d yyyy HH:mm:ss", "ISO8601" ]
 
 The above will match a syslog (rfc3164) or `iso8601` timestamp.
 
@@ -171,7 +103,7 @@ For example, if you have a field `logdate`, with a value that looks like
 [source,ruby]
     filter {
       date {
-        match => [ "logdate", "MMM dd YYYY HH:mm:ss" ]
+        match => [ "logdate", "MMM dd yyyy HH:mm:ss" ]
       }
     }
 
@@ -244,72 +176,7 @@ For non-formatting syntax, you'll need to put single-quote characters around the
 Other less common date units, such as era (G), century \(C), am/pm (a), and # more, can be learned about on the
 http://www.joda.org/joda-time/key_format.html[joda-time documentation].
 
-[[plugins-filters-date-periodic_flush]]
-===== `periodic_flush` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Call the filter flush method at regular interval.
-Optional.
-
-[[plugins-filters-date-remove_field]]
-===== `remove_field` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary fields from this event.
-Fields names can be dynamic and include parts of the event using the %{field}
-Example:
-[source,ruby]
-    filter {
-      date {
-        remove_field => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple fields at once:
-    filter {
-      date {
-        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the field with name `foo_hello` if it is present. The second
-example would remove an additional, non-dynamic field.
-
-[[plugins-filters-date-remove_tag]]
-===== `remove_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary tags from the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      date {
-        remove_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple tags at once:
-    filter {
-      date {
-        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the tag `foo_hello` if it is present. The second example
-would remove a sad, unwanted tag as well.
-
-[[plugins-filters-date-tag_on_failure]]
+[id="plugins-{type}s-{plugin}-tag_on_failure"]
 ===== `tag_on_failure` 
 
   * Value type is <<array,array>>
@@ -318,7 +185,7 @@ would remove a sad, unwanted tag as well.
 Append values to the `tags` field when there has been no
 successful match
 
-[[plugins-filters-date-target]]
+[id="plugins-{type}s-{plugin}-target"]
 ===== `target` 
 
   * Value type is <<string,string>>
@@ -327,7 +194,7 @@ successful match
 Store the matching timestamp into the given target field.  If not provided,
 default to updating the `@timestamp` field of the event.
 
-[[plugins-filters-date-timezone]]
+[id="plugins-{type}s-{plugin}-timezone"]
 ===== `timezone` 
 
   * Value type is <<string,string>>
@@ -342,3 +209,7 @@ Canonical ID is good as it takes care of daylight saving time for you
 For example, `America/Los_Angeles` or `Europe/Paris` are valid IDs.
 This field can be dynamic and include parts of the event using the `%{field}` syntax
 
+
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

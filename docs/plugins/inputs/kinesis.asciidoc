@@ -1,8 +1,24 @@
-[[plugins-inputs-kinesis]]
-=== kinesis
+:plugin: kinesis
+:type: input
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-input-kinesis`.
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: 2.0.4
+:release_date: 2017-06-27
+:changelog_url: https://raw.githubusercontent.com/logstash-plugins/logstash-input-kinesis/v2.0.4/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
+
+=== Kinesis input plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 Receive events through an AWS Kinesis stream.
 
@@ -18,53 +34,27 @@ option, which defaults to "logstash".
 
 The library can optionally also send worker statistics to CloudWatch.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Kinesis Input Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-Required configuration options:
-
-[source,json]
---------------------------
-kinesis {
-    kinesis_stream_name => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-inputs-kinesis-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-kinesis-application_name>> |<<string,string>>|No|`"logstash"`
-| <<plugins-inputs-kinesis-checkpoint_interval_seconds>> |<<number,number>>|No|`60`
-| <<plugins-inputs-kinesis-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-inputs-kinesis-kinesis_stream_name>> |<<string,string>>|Yes|
-| <<plugins-inputs-kinesis-metrics>> |<<string,string>>, one of `[nil, "cloudwatch"]`|No|`nil`
-| <<plugins-inputs-kinesis-region>> |<<string,string>>|No|`"us-east-1"`
-| <<plugins-inputs-kinesis-tags>> |<<array,array>>|No|
-| <<plugins-inputs-kinesis-type>> |<<string,string>>|No|
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-application_name>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-checkpoint_interval_seconds>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-kinesis_stream_name>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-metrics>> |<<string,string>>, one of `[nil, "cloudwatch"]`|No
+| <<plugins-{type}s-{plugin}-region>> |<<string,string>>|No
 |=======================================================================
 
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
 
 &nbsp;
 
-[[plugins-inputs-kinesis-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-Add a field to an event
-
-[[plugins-inputs-kinesis-application_name]]
+[id="plugins-{type}s-{plugin}-application_name"]
 ===== `application_name` 
 
   * Value type is <<string,string>>
@@ -73,7 +63,7 @@ Add a field to an event
 The application name used for the dynamodb coordination table. Must be
 unique for this kinesis stream.
 
-[[plugins-inputs-kinesis-checkpoint_interval_seconds]]
+[id="plugins-{type}s-{plugin}-checkpoint_interval_seconds"]
 ===== `checkpoint_interval_seconds` 
 
   * Value type is <<number,number>>
@@ -81,15 +71,7 @@ unique for this kinesis stream.
 
 How many seconds between worker checkpoints to dynamodb.
 
-[[plugins-inputs-kinesis-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-inputs-kinesis-kinesis_stream_name]]
+[id="plugins-{type}s-{plugin}-kinesis_stream_name"]
 ===== `kinesis_stream_name` 
 
   * This is a required setting.
@@ -98,7 +80,7 @@ The codec used for input data. Input codecs are a convenient method for decoding
 
 The kinesis stream name.
 
-[[plugins-inputs-kinesis-metrics]]
+[id="plugins-{type}s-{plugin}-metrics"]
 ===== `metrics` 
 
   * Value can be any of: ``, `cloudwatch`
@@ -107,7 +89,7 @@ The kinesis stream name.
 Worker metric tracking. By default this is disabled, set it to "cloudwatch"
 to enable the cloudwatch integration in the Kinesis Client Library.
 
-[[plugins-inputs-kinesis-region]]
+[id="plugins-{type}s-{plugin}-region"]
 ===== `region` 
 
   * Value type is <<string,string>>
@@ -115,33 +97,7 @@ to enable the cloudwatch integration in the Kinesis Client Library.
 
 The AWS region for Kinesis, DynamoDB, and CloudWatch (if enabled)
 
-[[plugins-inputs-kinesis-tags]]
-===== `tags` 
-
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
-
-Add any number of arbitrary tags to your event.
-
-This can help with processing later.
-
-[[plugins-inputs-kinesis-type]]
-===== `type` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a `type` field to all events handled by this input.
-
-Types are used mainly for filter activation.
-
-The type is stored as part of the event itself, so you can
-also use the type to search for it in Kibana.
-
-If you try to set a type on an event that already has one (for
-example when you send an event from a shipper to an indexer) then
-a new input will not override the existing type. A type set at
-the shipper stays with that event for its life even
-when sent to another Logstash server.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

@@ -1,51 +1,85 @@
-[[plugins-codecs-cef]]
-=== cef
+:plugin: cef
+:type: codec
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v4.1.3
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v4.1.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-codec-cef`.
+[id="plugins-{type}s-{plugin}"]
 
-Implementation of a Logstash codec for the ArcSight Common Event Format (CEF).
-Based on Revision 20 of Implementing ArcSight CEF, dated from June 05, 2013.
-https://protect724.hp.com/servlet/JiveServlet/downloadBody/1072-102-6-4697/CommonEventFormat.pdf
+=== Cef codec plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Implementation of a Logstash codec for the ArcSight Common Event Format (CEF)
+Based on Revision 20 of Implementing ArcSight CEF, dated from June 05, 2013
+https://community.saas.hpe.com/dcvta86296/attachments/dcvta86296/connector-documentation/1116/1/CommonEventFormatv23.pdf
+
+If this codec receives a payload from an input that is not a valid CEF message, then it will
+produce an event with the payload as the 'message' field and a '_cefparsefailure' tag.
+
+[id="plugins-{type}s-{plugin}-options"]
+==== Cef Codec Configuration Options
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-delimiter>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-fields>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-name>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-product>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-severity>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-signature>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-vendor>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-version>> |<<string,string>>|No
+|=======================================================================
 
 &nbsp;
 
-==== Synopsis
+[id="plugins-{type}s-{plugin}-delimiter"]
+===== `delimiter` 
 
-This plugin supports the following configuration options:
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
 
+If your input puts a delimiter between each CEF event, you'll want to set
+this to be that delimiter.
 
-Required configuration options:
+For example, with the TCP input, you probably want to put this:
 
-[source,json]
---------------------------
-cef {
-  }
---------------------------
+    input {
+      tcp {
+        codec => cef { delimiter => "\r\n" }
+        # ...
+      }
+    }
 
+This setting allows the following character sequences to have special meaning:
 
+* `\\r` (backslash "r") - means carriage return (ASCII 0x0D)
+* `\\n` (backslash "n") - means newline (ASCII 0x0A)
 
-Available configuration options:
+[id="plugins-{type}s-{plugin}-deprecated_v1_fields"]
+===== `deprecated_v1_fields`  (DEPRECATED)
 
-[cols="<,<,<,<m",options="header",]
-|=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-codecs-cef-fields>> |<<array,array>>|No|`[]`
-| <<plugins-codecs-cef-name>> |<<string,string>>|No|`"Logstash"`
-| <<plugins-codecs-cef-product>> |<<string,string>>|No|`"Logstash"`
-| <<plugins-codecs-cef-severity>> |<<string,string>>|No|`"6"`
-| <<plugins-codecs-cef-signature>> |<<string,string>>|No|`"Logstash"`
-| <<plugins-codecs-cef-vendor>> |<<string,string>>|No|`"Elasticsearch"`
-| <<plugins-codecs-cef-version>> |<<string,string>>|No|`"1.0"`
-|=======================================================================
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is <<boolean,boolean>>
+  * There is no default value for this setting.
 
+Set this flag if you want to have both v1 and v2 fields indexed at the same time. Note that this option will increase
+the index size and data stored in outputs like Elasticsearch
+This option is available to ease transition to new schema
 
-
-==== Details
-
-&nbsp;
-
-[[plugins-codecs-cef-fields]]
+[id="plugins-{type}s-{plugin}-fields"]
 ===== `fields` 
 
   * Value type is <<array,array>>
@@ -53,7 +87,7 @@ Available configuration options:
 
 Fields to be included in CEV extension part as key/value pairs
 
-[[plugins-codecs-cef-name]]
+[id="plugins-{type}s-{plugin}-name"]
 ===== `name` 
 
   * Value type is <<string,string>>
@@ -62,7 +96,7 @@ Fields to be included in CEV extension part as key/value pairs
 Name field in CEF header. The new value can include `%{foo}` strings
 to help you build a new value from other parts of the event.
 
-[[plugins-codecs-cef-product]]
+[id="plugins-{type}s-{plugin}-product"]
 ===== `product` 
 
   * Value type is <<string,string>>
@@ -71,12 +105,12 @@ to help you build a new value from other parts of the event.
 Device product field in CEF header. The new value can include `%{foo}` strings
 to help you build a new value from other parts of the event.
 
-[[plugins-codecs-cef-sev]]
+[id="plugins-{type}s-{plugin}-sev"]
 ===== `sev`  (DEPRECATED)
 
   * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
   * Value type is <<string,string>>
-  * Default value is `"6"`
+  * There is no default value for this setting.
 
 Deprecated severity field for CEF header. The new value can include `%{foo}` strings
 to help you build a new value from other parts of the event.
@@ -87,7 +121,7 @@ Defined as field of type string to allow sprintf. The value will be validated
 to be an integer in the range from 0 to 10 (including).
 All invalid values will be mapped to the default of 6.
 
-[[plugins-codecs-cef-severity]]
+[id="plugins-{type}s-{plugin}-severity"]
 ===== `severity` 
 
   * Value type is <<string,string>>
@@ -100,7 +134,7 @@ Defined as field of type string to allow sprintf. The value will be validated
 to be an integer in the range from 0 to 10 (including).
 All invalid values will be mapped to the default of 6.
 
-[[plugins-codecs-cef-signature]]
+[id="plugins-{type}s-{plugin}-signature"]
 ===== `signature` 
 
   * Value type is <<string,string>>
@@ -109,7 +143,7 @@ All invalid values will be mapped to the default of 6.
 Signature ID field in CEF header. The new value can include `%{foo}` strings
 to help you build a new value from other parts of the event.
 
-[[plugins-codecs-cef-vendor]]
+[id="plugins-{type}s-{plugin}-vendor"]
 ===== `vendor` 
 
   * Value type is <<string,string>>
@@ -118,7 +152,7 @@ to help you build a new value from other parts of the event.
 Device vendor field in CEF header. The new value can include `%{foo}` strings
 to help you build a new value from other parts of the event.
 
-[[plugins-codecs-cef-version]]
+[id="plugins-{type}s-{plugin}-version"]
 ===== `version` 
 
   * Value type is <<string,string>>

@@ -1,6 +1,8 @@
 [[plugins-inputs-gemfire]]
 === gemfire
 
+NOTE: This plugin cannot be installed on the current version of Logstash.
+
 Push events to a GemFire region.
 
 GemFire is an object database.

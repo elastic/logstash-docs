@@ -1,7 +1,24 @@
-[[plugins-inputs-snmptrap]]
-=== snmptrap
+:plugin: snmptrap
+:type: input
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.3
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-input-snmptrap/blob/v3.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
+
+=== Snmptrap input plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 Read snmp trap messages as events
 
@@ -13,61 +30,26 @@ Resulting `@message` looks like :
   @specific_trap=99>
 
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Snmptrap Input Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-snmptrap {
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-inputs-snmptrap-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-snmptrap-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-inputs-snmptrap-community>> |<<array,array>>|No|`"public"`
-| <<plugins-inputs-snmptrap-host>> |<<string,string>>|No|`"0.0.0.0"`
-| <<plugins-inputs-snmptrap-port>> |<<number,number>>|No|`1062`
-| <<plugins-inputs-snmptrap-tags>> |<<array,array>>|No|
-| <<plugins-inputs-snmptrap-type>> |<<string,string>>|No|
-| <<plugins-inputs-snmptrap-yamlmibdir>> |<<string,string>>|No|
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-community>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-host>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-yamlmibdir>> |<<string,string>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
 
 &nbsp;
 
-[[plugins-inputs-snmptrap-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-Add a field to an event
-
-[[plugins-inputs-snmptrap-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-inputs-snmptrap-community]]
+[id="plugins-{type}s-{plugin}-community"]
 ===== `community` 
 
   * Value type is <<array,array>>
@@ -75,7 +57,7 @@ The codec used for input data. Input codecs are a convenient method for decoding
 
 SNMP Community String to listen for.
 
-[[plugins-inputs-snmptrap-host]]
+[id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
   * Value type is <<string,string>>
@@ -83,7 +65,7 @@ SNMP Community String to listen for.
 
 The address to listen on
 
-[[plugins-inputs-snmptrap-port]]
+[id="plugins-{type}s-{plugin}-port"]
 ===== `port` 
 
   * Value type is <<number,number>>
@@ -92,36 +74,7 @@ The address to listen on
 The port to listen on. Remember that ports less than 1024 (privileged
 ports) may require root to use. hence the default of 1062.
 
-[[plugins-inputs-snmptrap-tags]]
-===== `tags` 
-
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
-
-Add any number of arbitrary tags to your event.
-
-This can help with processing later.
-
-[[plugins-inputs-snmptrap-type]]
-===== `type` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a `type` field to all events handled by this input.
-
-Types are used mainly for filter activation.
-
-The type is stored as part of the event itself, so you can
-also use the type to search for it in Kibana.
-
-If you try to set a type on an event that already has one (for
-example when you send an event from a shipper to an indexer) then
-a new input will not override the existing type. A type set at
-the shipper stays with that event for its life even
-when sent to another Logstash server.
-
-[[plugins-inputs-snmptrap-yamlmibdir]]
+[id="plugins-{type}s-{plugin}-yamlmibdir"]
 ===== `yamlmibdir` 
 
   * Value type is <<string,string>>
@@ -130,3 +83,6 @@ when sent to another Logstash server.
 directory of YAML MIB maps  (same format ruby-snmp uses)
 
 
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

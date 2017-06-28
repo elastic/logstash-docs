@@ -1,7 +1,24 @@
-[[plugins-filters-syslog_pri]]
-=== syslog_pri
+:plugin: syslog_pri
+:type: filter
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.3
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-syslog_pri/blob/v3.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
+
+=== Syslog_pri filter plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 Filter plugin for logstash to parse the `PRI` field from the front
 of a Syslog (RFC3164) message.  If no priority is set, it will
@@ -10,106 +27,26 @@ default to 13 (per RFC).
 This filter is based on the original `syslog.rb` code shipped
 with logstash.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Syslog_pri Filter Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-syslog_pri {
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-filters-syslog_pri-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-syslog_pri-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-syslog_pri-facility_labels>> |<<array,array>>|No|`["kernel", "user-level", "mail", "daemon", "security/authorization", "syslogd", "line printer", "network news", "uucp", "clock", "security/authorization", "ftp", "ntp", "log audit", "log alert", "clock", "local0", "local1", "local2", "local3", "local4", "local5", "local6", "local7"]`
-| <<plugins-filters-syslog_pri-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-syslog_pri-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-syslog_pri-remove_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-syslog_pri-severity_labels>> |<<array,array>>|No|`["emergency", "alert", "critical", "error", "warning", "notice", "informational", "debug"]`
-| <<plugins-filters-syslog_pri-syslog_pri_field_name>> |<<string,string>>|No|`"syslog_pri"`
-| <<plugins-filters-syslog_pri-use_labels>> |<<boolean,boolean>>|No|`true`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-facility_labels>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-severity_labels>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-syslog_pri_field_name>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-use_labels>> |<<boolean,boolean>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
 
 &nbsp;
 
-[[plugins-filters-syslog_pri-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-If this filter is successful, add any arbitrary fields to this event.
-Field names can be dynamic and include parts of the event using the `%{field}`.
-
-Example:
-[source,ruby]
-    filter {
-      syslog_pri {
-        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
-      }
-    }
-[source,ruby]
-    # You can also add multiple fields at once:
-    filter {
-      syslog_pri {
-        add_field => {
-          "foo_%{somefield}" => "Hello world, from %{host}"
-          "new_field" => "new_static_value"
-        }
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add field `foo_hello` if it is present, with the
-value above and the `%{host}` piece replaced with that value from the
-event. The second example would also add a hardcoded field.
-
-[[plugins-filters-syslog_pri-add_tag]]
-===== `add_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, add arbitrary tags to the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      syslog_pri {
-        add_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also add multiple tags at once:
-    filter {
-      syslog_pri {
-        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
-
-[[plugins-filters-syslog_pri-facility_labels]]
+[id="plugins-{type}s-{plugin}-facility_labels"]
 ===== `facility_labels` 
 
   * Value type is <<array,array>>
@@ -117,72 +54,7 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
 
 Labels for facility levels. This comes from RFC3164.
 
-[[plugins-filters-syslog_pri-periodic_flush]]
-===== `periodic_flush` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Call the filter flush method at regular interval.
-Optional.
-
-[[plugins-filters-syslog_pri-remove_field]]
-===== `remove_field` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary fields from this event.
-Fields names can be dynamic and include parts of the event using the %{field}
-Example:
-[source,ruby]
-    filter {
-      syslog_pri {
-        remove_field => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple fields at once:
-    filter {
-      syslog_pri {
-        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the field with name `foo_hello` if it is present. The second
-example would remove an additional, non-dynamic field.
-
-[[plugins-filters-syslog_pri-remove_tag]]
-===== `remove_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary tags from the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      syslog_pri {
-        remove_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple tags at once:
-    filter {
-      syslog_pri {
-        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the tag `foo_hello` if it is present. The second example
-would remove a sad, unwanted tag as well.
-
-[[plugins-filters-syslog_pri-severity_labels]]
+[id="plugins-{type}s-{plugin}-severity_labels"]
 ===== `severity_labels` 
 
   * Value type is <<array,array>>
@@ -190,7 +62,7 @@ would remove a sad, unwanted tag as well.
 
 Labels for severity levels. This comes from RFC3164.
 
-[[plugins-filters-syslog_pri-syslog_pri_field_name]]
+[id="plugins-{type}s-{plugin}-syslog_pri_field_name"]
 ===== `syslog_pri_field_name` 
 
   * Value type is <<string,string>>
@@ -198,7 +70,7 @@ Labels for severity levels. This comes from RFC3164.
 
 Name of field which passes in the extracted PRI part of the syslog message
 
-[[plugins-filters-syslog_pri-use_labels]]
+[id="plugins-{type}s-{plugin}-use_labels"]
 ===== `use_labels` 
 
   * Value type is <<boolean,boolean>>
@@ -208,3 +80,6 @@ set the status to experimental/beta/stable
 Add human-readable names after parsing severity and facility from PRI
 
 
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
