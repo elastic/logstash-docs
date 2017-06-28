@@ -1,59 +1,49 @@
-[[plugins-outputs-lumberjack]]
-=== lumberjack
+:plugin: lumberjack
+:type: output
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.1.3
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-output-lumberjack/blob/v3.1.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="plugins-{type}s-{plugin}"]
+
+=== Lumberjack output plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This output sends events using the lumberjack protocol.
 
 
+[id="plugins-{type}s-{plugin}-options"]
+==== Lumberjack Output Configuration Options
 
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-flush_size>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-hosts>> |<<array,array>>|Yes
+| <<plugins-{type}s-{plugin}-idle_flush_time>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-port>> |<<number,number>>|Yes
+| <<plugins-{type}s-{plugin}-ssl_certificate>> |a valid filesystem path|Yes
+|=======================================================================
+
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
 
 &nbsp;
 
-==== Synopsis
-
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-lumberjack {
-    hosts => ...
-    port => ...
-    ssl_certificate => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
-|=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-outputs-lumberjack-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-lumberjack-flush_size>> |<<number,number>>|No|`1024`
-| <<plugins-outputs-lumberjack-hosts>> |<<array,array>>|Yes|
-| <<plugins-outputs-lumberjack-idle_flush_time>> |<<number,number>>|No|`1`
-| <<plugins-outputs-lumberjack-port>> |<<number,number>>|Yes|
-| <<plugins-outputs-lumberjack-ssl_certificate>> |a valid filesystem path|Yes|
-| <<plugins-outputs-lumberjack-workers>> |<<number,number>>|No|`1`
-|=======================================================================
-
-
-
-==== Details
-
-&nbsp;
-
-[[plugins-outputs-lumberjack-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-lumberjack-flush_size]]
+[id="plugins-{type}s-{plugin}-flush_size"]
 ===== `flush_size` 
 
   * Value type is <<number,number>>
@@ -63,7 +53,7 @@ To make efficient calls to the lumberjack output we are buffering events locally
 if the number of events exceed the number the declared `flush_size` we will
 send them to the logstash server.
 
-[[plugins-outputs-lumberjack-hosts]]
+[id="plugins-{type}s-{plugin}-hosts"]
 ===== `hosts` 
 
   * This is a required setting.
@@ -72,7 +62,7 @@ send them to the logstash server.
 
 list of addresses lumberjack can send to
 
-[[plugins-outputs-lumberjack-idle_flush_time]]
+[id="plugins-{type}s-{plugin}-idle_flush_time"]
 ===== `idle_flush_time` 
 
   * Value type is <<number,number>>
@@ -88,7 +78,7 @@ Logstash will flush those 10 events automatically.
 This helps keep both fast and slow log streams moving along in
 near-real-time.
 
-[[plugins-outputs-lumberjack-port]]
+[id="plugins-{type}s-{plugin}-port"]
 ===== `port` 
 
   * This is a required setting.
@@ -97,7 +87,7 @@ near-real-time.
 
 the port to connect to
 
-[[plugins-outputs-lumberjack-ssl_certificate]]
+[id="plugins-{type}s-{plugin}-ssl_certificate"]
 ===== `ssl_certificate` 
 
   * This is a required setting.
@@ -106,22 +96,7 @@ the port to connect to
 
 ssl certificate to use
 
-[[plugins-outputs-lumberjack-window_size]]
-===== `window_size`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<number,number>>
-  * There is no default value for this setting.
-
-window size
-
-[[plugins-outputs-lumberjack-workers]]
-===== `workers` 
-
-  * Value type is <<number,number>>
-  * Default value is `1`
-
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

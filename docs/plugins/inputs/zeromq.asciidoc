@@ -1,7 +1,7 @@
 [[plugins-inputs-zeromq]]
 === zeromq
 
-NOTE: This is a community-maintained plugin!
+NOTE: This plugin cannot be installed on the current version of Logstash.
 
 Read events over a 0MQ SUB socket.
 

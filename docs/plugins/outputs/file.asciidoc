@@ -1,7 +1,24 @@
-[[plugins-outputs-file]]
-=== file
+:plugin: file
+:type: output
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v4.0.2
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-output-file/blob/v4.0.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
+
+=== File output plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 This output writes events to files on disk. You can use fields
 from the event as parts of the filename and/or path.
@@ -16,64 +33,38 @@ output {
  }
 }
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== File Output Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-file {
-    path => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-outputs-file-codec>> |<<codec,codec>>|No|`"json_lines"`
-| <<plugins-outputs-file-create_if_deleted>> |<<boolean,boolean>>|No|`true`
-| <<plugins-outputs-file-dir_mode>> |<<number,number>>|No|`-1`
-| <<plugins-outputs-file-file_mode>> |<<number,number>>|No|`-1`
-| <<plugins-outputs-file-filename_failure>> |<<string,string>>|No|`"_filepath_failures"`
-| <<plugins-outputs-file-flush_interval>> |<<number,number>>|No|`2`
-| <<plugins-outputs-file-gzip>> |<<boolean,boolean>>|No|`false`
-| <<plugins-outputs-file-path>> |<<string,string>>|Yes|
-| <<plugins-outputs-file-workers>> |<<number,number>>|No|`1`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-create_if_deleted>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-dir_mode>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-file_mode>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-filename_failure>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-flush_interval>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-gzip>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-path>> |<<string,string>>|Yes
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
 
 &nbsp;
 
-[[plugins-outputs-file-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"json_lines"`
-
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-file-create_if_deleted]]
+[id="plugins-{type}s-{plugin}-create_if_deleted"]
 ===== `create_if_deleted` 
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-If the a file is deleted, but an event is comming with the need to be stored
-in such a file, the plugin will created a gain this file. Default => true
+If the configured file is deleted, but an event is handled by the plugin, 
+the plugin will recreate the file. Default => true
 
-[[plugins-outputs-file-dir_mode]]
+[id="plugins-{type}s-{plugin}-dir_mode"]
 ===== `dir_mode` 
 
   * Value type is <<number,number>>
@@ -84,7 +75,7 @@ is ignored on linux: https://github.com/jruby/jruby/issues/3426
 Setting it to -1 uses default OS value.
 Example: `"dir_mode" => 0750`
 
-[[plugins-outputs-file-file_mode]]
+[id="plugins-{type}s-{plugin}-file_mode"]
 ===== `file_mode` 
 
   * Value type is <<number,number>>
@@ -95,7 +86,7 @@ is ignored on linux: https://github.com/jruby/jruby/issues/3426
 Setting it to -1 uses default OS value.
 Example: `"file_mode" => 0640`
 
-[[plugins-outputs-file-filename_failure]]
+[id="plugins-{type}s-{plugin}-filename_failure"]
 ===== `filename_failure` 
 
   * Value type is <<string,string>>
@@ -104,7 +95,7 @@ Example: `"file_mode" => 0640`
 If the generated path is invalid, the events will be saved
 into this file and inside the defined path.
 
-[[plugins-outputs-file-flush_interval]]
+[id="plugins-{type}s-{plugin}-flush_interval"]
 ===== `flush_interval` 
 
   * Value type is <<number,number>>
@@ -113,7 +104,7 @@ into this file and inside the defined path.
 Flush interval (in seconds) for flushing writes to log files.
 0 will flush on every message.
 
-[[plugins-outputs-file-gzip]]
+[id="plugins-{type}s-{plugin}-gzip"]
 ===== `gzip` 
 
   * Value type is <<boolean,boolean>>
@@ -121,21 +112,7 @@ Flush interval (in seconds) for flushing writes to log files.
 
 Gzip the output stream before writing to disk.
 
-[[plugins-outputs-file-message_format]]
-===== `message_format`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-The format to use when writing events to the file. This value
-supports any string and can include `%{name}` and other dynamic
-strings.
-
-If this setting is omitted, the full json representation of the
-event will be written as a single line.
-
-[[plugins-outputs-file-path]]
+[id="plugins-{type}s-{plugin}-path"]
 ===== `path` 
 
   * This is a required setting.
@@ -153,13 +130,7 @@ E.g.: `path => "./test-%{+YYYY-MM-dd}.txt"` to create
 If you use an absolute path you cannot start with a dynamic string.
 E.g: `/%{myfield}/`, `/test-%{myfield}/` are not valid paths
 
-[[plugins-outputs-file-workers]]
-===== `workers` 
-
-  * Value type is <<number,number>>
-  * Default value is `1`
-
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

@@ -2,8 +2,7 @@
 === punct
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-punct`.
-
+NOTE: This plugin cannot be installed on the current version of Logstash.
 
 Strip everything but punctuation from a field and store the remainder in the
 a separate field. This is often used for fingerprinting log events.

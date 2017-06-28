@@ -1,7 +1,24 @@
-[[plugins-inputs-generator]]
-=== generator
+:plugin: generator
+:type: input
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.3
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-input-generator/blob/v3.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
+
+=== Generator input plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 Generate random log events.
 
@@ -9,61 +26,26 @@ The general intention of this is to test performance of plugins.
 
 An event is generated first
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Generator Input Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-generator {
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-inputs-generator-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-generator-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-inputs-generator-count>> |<<number,number>>|No|`0`
-| <<plugins-inputs-generator-lines>> |<<array,array>>|No|
-| <<plugins-inputs-generator-message>> |<<string,string>>|No|`"Hello world!"`
-| <<plugins-inputs-generator-tags>> |<<array,array>>|No|
-| <<plugins-inputs-generator-threads>> |<<number,number>>|No|`1`
-| <<plugins-inputs-generator-type>> |<<string,string>>|No|
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-count>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-lines>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-message>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-threads>> |<<number,number>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
 
 &nbsp;
 
-[[plugins-inputs-generator-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-Add a field to an event
-
-[[plugins-inputs-generator-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-inputs-generator-count]]
+[id="plugins-{type}s-{plugin}-count"]
 ===== `count` 
 
   * Value type is <<number,number>>
@@ -73,7 +55,7 @@ Set how many messages should be generated.
 
 The default, `0`, means generate an unlimited number of events.
 
-[[plugins-inputs-generator-lines]]
+[id="plugins-{type}s-{plugin}-lines"]
 ===== `lines` 
 
   * Value type is <<array,array>>
@@ -98,7 +80,7 @@ Example:
 
 The above will emit `line 1` then `line 2` then `line`, then `line 1`, etc...
 
-[[plugins-inputs-generator-message]]
+[id="plugins-{type}s-{plugin}-message"]
 ===== `message` 
 
   * Value type is <<string,string>>
@@ -111,17 +93,7 @@ stdin and use that as the message string for every event.
 
 Otherwise, this value will be used verbatim as the event message.
 
-[[plugins-inputs-generator-tags]]
-===== `tags` 
-
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
-
-Add any number of arbitrary tags to your event.
-
-This can help with processing later.
-
-[[plugins-inputs-generator-threads]]
+[id="plugins-{type}s-{plugin}-threads"]
 ===== `threads` 
 
   * Value type is <<number,number>>
@@ -129,23 +101,7 @@ This can help with processing later.
 
 
 
-[[plugins-inputs-generator-type]]
-===== `type` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a `type` field to all events handled by this input.
-
-Types are used mainly for filter activation.
-
-The type is stored as part of the event itself, so you can
-also use the type to search for it in Kibana.
-
-If you try to set a type on an event that already has one (for
-example when you send an event from a shipper to an indexer) then
-a new input will not override the existing type. A type set at
-the shipper stays with that event for its life even
-when sent to another Logstash server.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

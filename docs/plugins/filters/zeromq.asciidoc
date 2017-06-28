@@ -2,8 +2,7 @@
 === zeromq
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-zeromq`.
-
+NOTE: This plugin cannot be installed on the current version of Logstash.
 
 ZeroMQ filter. This is the best way to send an event externally for filtering
 It works much like an exec filter would by sending the event "offsite"

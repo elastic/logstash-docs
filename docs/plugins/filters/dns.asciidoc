@@ -1,17 +1,33 @@
-[[plugins-filters-dns]]
-=== dns
+:plugin: dns
+:type: filter
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.4
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-dns/blob/v3.0.4/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
+
+=== Dns filter plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 The DNS filter performs a lookup (either an A record/CNAME record lookup
 or a reverse lookup at the PTR record) on records specified under the
-`reverse` and `resolve` arrays.
+`reverse` arrays or respectively under the `resolve` arrays.
 
 The config should look like this:
 [source,ruby]
     filter {
       dns {
-        type => 'type'
         reverse => [ "source_host", "field_with_address" ]
         resolve => [ "field_with_fqdn" ]
         action => "replace"
@@ -24,52 +40,33 @@ have a high latency network. By way of example, if each DNS lookup takes 2
 milliseconds, the maximum throughput you can achieve with a single filter
 worker is 500 events per second (1000 milliseconds / 2 milliseconds).
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Dns Filter Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-dns {
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-filters-dns-action>> |<<string,string>>, one of `["append", "replace"]`|No|`"append"`
-| <<plugins-filters-dns-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-dns-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-dns-failed_cache_size>> |<<number,number>>|No|`0`
-| <<plugins-filters-dns-failed_cache_ttl>> |<<number,number>>|No|`5`
-| <<plugins-filters-dns-hit_cache_size>> |<<number,number>>|No|`0`
-| <<plugins-filters-dns-hit_cache_ttl>> |<<number,number>>|No|`60`
-| <<plugins-filters-dns-max_retries>> |<<number,number>>|No|`2`
-| <<plugins-filters-dns-nameserver>> |<<array,array>>|No|
-| <<plugins-filters-dns-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-dns-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-dns-remove_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-dns-resolve>> |<<array,array>>|No|
-| <<plugins-filters-dns-reverse>> |<<array,array>>|No|
-| <<plugins-filters-dns-timeout>> |<<number,number>>|No|`0.5`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-action>> |<<string,string>>, one of `["append", "replace"]`|No
+| <<plugins-{type}s-{plugin}-failed_cache_size>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-failed_cache_ttl>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-hit_cache_size>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-hit_cache_ttl>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-hostsfile>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-max_retries>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-nameserver>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-resolve>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-reverse>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-timeout>> |<<number,number>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
 
 &nbsp;
 
-[[plugins-filters-dns-action]]
+[id="plugins-{type}s-{plugin}-action"]
 ===== `action` 
 
   * Value can be any of: `append`, `replace`
@@ -78,67 +75,7 @@ Available configuration options:
 Determine what action to do: append or replace the values in the fields
 specified under `reverse` and `resolve`.
 
-[[plugins-filters-dns-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-If this filter is successful, add any arbitrary fields to this event.
-Field names can be dynamic and include parts of the event using the `%{field}`.
-
-Example:
-[source,ruby]
-    filter {
-      dns {
-        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
-      }
-    }
-[source,ruby]
-    # You can also add multiple fields at once:
-    filter {
-      dns {
-        add_field => {
-          "foo_%{somefield}" => "Hello world, from %{host}"
-          "new_field" => "new_static_value"
-        }
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add field `foo_hello` if it is present, with the
-value above and the `%{host}` piece replaced with that value from the
-event. The second example would also add a hardcoded field.
-
-[[plugins-filters-dns-add_tag]]
-===== `add_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, add arbitrary tags to the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      dns {
-        add_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also add multiple tags at once:
-    filter {
-      dns {
-        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
-
-[[plugins-filters-dns-failed_cache_size]]
+[id="plugins-{type}s-{plugin}-failed_cache_size"]
 ===== `failed_cache_size` 
 
   * Value type is <<number,number>>
@@ -146,7 +83,7 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
 
 cache size for failed requests
 
-[[plugins-filters-dns-failed_cache_ttl]]
+[id="plugins-{type}s-{plugin}-failed_cache_ttl"]
 ===== `failed_cache_ttl` 
 
   * Value type is <<number,number>>
@@ -154,7 +91,7 @@ cache size for failed requests
 
 how long to cache failed requests (in seconds)
 
-[[plugins-filters-dns-hit_cache_size]]
+[id="plugins-{type}s-{plugin}-hit_cache_size"]
 ===== `hit_cache_size` 
 
   * Value type is <<number,number>>
@@ -162,7 +99,7 @@ how long to cache failed requests (in seconds)
 
 set the size of cache for successful requests
 
-[[plugins-filters-dns-hit_cache_ttl]]
+[id="plugins-{type}s-{plugin}-hit_cache_ttl"]
 ===== `hit_cache_ttl` 
 
   * Value type is <<number,number>>
@@ -170,7 +107,15 @@ set the size of cache for successful requests
 
 how long to cache successful requests (in seconds)
 
-[[plugins-filters-dns-max_retries]]
+[id="plugins-{type}s-{plugin}-hostsfile"]
+===== `hostsfile` 
+
+  * Value type is <<array,array>>
+  * There is no default value for this setting.
+
+Use custom hosts file(s). For example: `["/var/db/my_custom_hosts"]`
+
+[id="plugins-{type}s-{plugin}-max_retries"]
 ===== `max_retries` 
 
   * Value type is <<number,number>>
@@ -178,7 +123,7 @@ how long to cache successful requests (in seconds)
 
 number of times to retry a failed resolve/reverse
 
-[[plugins-filters-dns-nameserver]]
+[id="plugins-{type}s-{plugin}-nameserver"]
 ===== `nameserver` 
 
   * Value type is <<array,array>>
@@ -186,72 +131,7 @@ number of times to retry a failed resolve/reverse
 
 Use custom nameserver(s). For example: `["8.8.8.8", "8.8.4.4"]`
 
-[[plugins-filters-dns-periodic_flush]]
-===== `periodic_flush` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Call the filter flush method at regular interval.
-Optional.
-
-[[plugins-filters-dns-remove_field]]
-===== `remove_field` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary fields from this event.
-Fields names can be dynamic and include parts of the event using the %{field}
-Example:
-[source,ruby]
-    filter {
-      dns {
-        remove_field => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple fields at once:
-    filter {
-      dns {
-        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the field with name `foo_hello` if it is present. The second
-example would remove an additional, non-dynamic field.
-
-[[plugins-filters-dns-remove_tag]]
-===== `remove_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary tags from the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      dns {
-        remove_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple tags at once:
-    filter {
-      dns {
-        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the tag `foo_hello` if it is present. The second example
-would remove a sad, unwanted tag as well.
-
-[[plugins-filters-dns-resolve]]
+[id="plugins-{type}s-{plugin}-resolve"]
 ===== `resolve` 
 
   * Value type is <<array,array>>
@@ -259,19 +139,15 @@ would remove a sad, unwanted tag as well.
 
 Forward resolve one or more fields.
 
-[[plugins-filters-dns-reverse]]
+[id="plugins-{type}s-{plugin}-reverse"]
 ===== `reverse` 
 
   * Value type is <<array,array>>
   * There is no default value for this setting.
 
-TODO(sissel): The timeout limitation does seem to be fixed in here: http://redmine.ruby-lang.org/issues/5100 # but isn't currently in JRuby.
-TODO(sissel): make `action` required? This was always the intent, but it
-due to a typo it was never enforced. Thus the default behavior in past
-versions was `append` by accident.
 Reverse resolve one or more fields.
 
-[[plugins-filters-dns-timeout]]
+[id="plugins-{type}s-{plugin}-timeout"]
 ===== `timeout` 
 
   * Value type is <<number,number>>
@@ -280,3 +156,6 @@ Reverse resolve one or more fields.
 `resolv` calls will be wrapped in a timeout instance
 
 
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

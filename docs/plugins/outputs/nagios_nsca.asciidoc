@@ -1,7 +1,24 @@
-[[plugins-outputs-nagios_nsca]]
-=== nagios_nsca
+:plugin: nagios_nsca
+:type: output
 
-NOTE: This is a community-maintained plugin!
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.3
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-output-nagios_nsca/blob/v3.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="plugins-{type}s-{plugin}"]
+
+=== Nagios_nsca output plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 The nagios_nsca output is used for sending passive check results to Nagios
 through the NSCA protocol.
@@ -23,56 +40,30 @@ Here is a sample config using the nagios_nsca output:
       }
     }
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Nagios_nsca Output Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-nagios_nsca {
-    nagios_status => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-outputs-nagios_nsca-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-nagios_nsca-host>> |<<string,string>>|No|`"localhost"`
-| <<plugins-outputs-nagios_nsca-message_format>> |<<string,string>>|No|`"%{@timestamp} %{host}: %{message}"`
-| <<plugins-outputs-nagios_nsca-nagios_host>> |<<string,string>>|No|`"%{host}"`
-| <<plugins-outputs-nagios_nsca-nagios_service>> |<<string,string>>|No|`"LOGSTASH"`
-| <<plugins-outputs-nagios_nsca-nagios_status>> |<<string,string>>|Yes|
-| <<plugins-outputs-nagios_nsca-port>> |<<number,number>>|No|`5667`
-| <<plugins-outputs-nagios_nsca-send_nsca_bin>> |<<string,string>>|No|`"/usr/sbin/send_nsca"`
-| <<plugins-outputs-nagios_nsca-send_nsca_config>> |a valid filesystem path|No|
-| <<plugins-outputs-nagios_nsca-workers>> |<<number,number>>|No|`1`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-host>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-message_format>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-nagios_host>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-nagios_service>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-nagios_status>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-send_nsca_bin>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-send_nsca_config>> |a valid filesystem path|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
 
 &nbsp;
 
-[[plugins-outputs-nagios_nsca-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-nagios_nsca-host]]
+[id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
   * Value type is <<string,string>>
@@ -80,7 +71,7 @@ The codec used for output data. Output codecs are a convenient method for encodi
 
 The nagios host or IP to send logs to. It should have a NSCA daemon running.
 
-[[plugins-outputs-nagios_nsca-message_format]]
+[id="plugins-{type}s-{plugin}-message_format"]
 ===== `message_format` 
 
   * Value type is <<string,string>>
@@ -90,7 +81,7 @@ The format to use when writing events to nagios. This value
 supports any string and can include `%{name}` and other dynamic
 strings.
 
-[[plugins-outputs-nagios_nsca-nagios_host]]
+[id="plugins-{type}s-{plugin}-nagios_host"]
 ===== `nagios_host` 
 
   * Value type is <<string,string>>
@@ -100,7 +91,7 @@ The nagios 'host' you want to submit a passive check result to. This
 parameter accepts interpolation, e.g. you can use `@source_host` or other
 logstash internal variables.
 
-[[plugins-outputs-nagios_nsca-nagios_service]]
+[id="plugins-{type}s-{plugin}-nagios_service"]
 ===== `nagios_service` 
 
   * Value type is <<string,string>>
@@ -110,7 +101,7 @@ The nagios 'service' you want to submit a passive check result to. This
 parameter accepts interpolation, e.g. you can use `@source_host` or other
 logstash internal variables.
 
-[[plugins-outputs-nagios_nsca-nagios_status]]
+[id="plugins-{type}s-{plugin}-nagios_status"]
 ===== `nagios_status` 
 
   * This is a required setting.
@@ -119,7 +110,7 @@ logstash internal variables.
 
 The status to send to nagios. Should be 0 = OK, 1 = WARNING, 2 = CRITICAL, 3 = UNKNOWN
 
-[[plugins-outputs-nagios_nsca-port]]
+[id="plugins-{type}s-{plugin}-port"]
 ===== `port` 
 
   * Value type is <<number,number>>
@@ -127,7 +118,7 @@ The status to send to nagios. Should be 0 = OK, 1 = WARNING, 2 = CRITICAL, 3 = U
 
 The port where the NSCA daemon on the nagios host listens.
 
-[[plugins-outputs-nagios_nsca-send_nsca_bin]]
+[id="plugins-{type}s-{plugin}-send_nsca_bin"]
 ===== `send_nsca_bin` 
 
   * Value type is <<string,string>>
@@ -135,7 +126,7 @@ The port where the NSCA daemon on the nagios host listens.
 
 The path to the 'send_nsca' binary on the local host.
 
-[[plugins-outputs-nagios_nsca-send_nsca_config]]
+[id="plugins-{type}s-{plugin}-send_nsca_config"]
 ===== `send_nsca_config` 
 
   * Value type is <<path,path>>
@@ -144,13 +135,7 @@ The path to the 'send_nsca' binary on the local host.
 The path to the send_nsca config file on the local host.
 Leave blank if you don't want to provide a config file.
 
-[[plugins-outputs-nagios_nsca-workers]]
-===== `workers` 
-
-  * Value type is <<number,number>>
-  * Default value is `1`
-
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

@@ -1,24 +1,23 @@
-[[plugins-codecs-edn]]
-=== edn
+:plugin: edn
+:type: codec
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.3
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-edn/blob/v3.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
 
+=== Edn codec plugin
 
+include::{include_path}/plugin_header.asciidoc[]
 
-&nbsp;
+==== Description
 
-==== Synopsis
-
-This plugin has no configuration options.
-
-
-Complete configuration example:
-
-[source,json]
---------------------------
-edn {
-}
---------------------------
-
-
-
+Reads EDN format data.

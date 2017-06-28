@@ -1,64 +1,54 @@
-[[plugins-outputs-ganglia]]
-=== ganglia
+:plugin: ganglia
+:type: output
 
-NOTE: This is a community-maintained plugin!
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.3
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-output-ganglia/blob/v3.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="plugins-{type}s-{plugin}"]
+
+=== Ganglia output plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 This output allows you to pull metrics from your logs and ship them to
 ganglia's gmond. This is heavily based on the graphite output.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Ganglia Output Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-ganglia {
-    metric => ...
-    value => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-outputs-ganglia-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-ganglia-group>> |<<string,string>>|No|`""`
-| <<plugins-outputs-ganglia-host>> |<<string,string>>|No|`"localhost"`
-| <<plugins-outputs-ganglia-lifetime>> |<<number,number>>|No|`300`
-| <<plugins-outputs-ganglia-max_interval>> |<<number,number>>|No|`60`
-| <<plugins-outputs-ganglia-metric>> |<<string,string>>|Yes|
-| <<plugins-outputs-ganglia-metric_type>> |<<string,string>>, one of `["string", "int8", "uint8", "int16", "uint16", "int32", "uint32", "float", "double"]`|No|`"uint8"`
-| <<plugins-outputs-ganglia-port>> |<<number,number>>|No|`8649`
-| <<plugins-outputs-ganglia-slope>> |<<string,string>>, one of `["zero", "positive", "negative", "both", "unspecified"]`|No|`"both"`
-| <<plugins-outputs-ganglia-units>> |<<string,string>>|No|`""`
-| <<plugins-outputs-ganglia-value>> |<<string,string>>|Yes|
-| <<plugins-outputs-ganglia-workers>> |<<number,number>>|No|`1`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-group>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-host>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-lifetime>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-max_interval>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-metric>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-metric_type>> |<<string,string>>, one of `["string", "int8", "uint8", "int16", "uint16", "int32", "uint32", "float", "double"]`|No
+| <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-slope>> |<<string,string>>, one of `["zero", "positive", "negative", "both", "unspecified"]`|No
+| <<plugins-{type}s-{plugin}-units>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-value>> |<<string,string>>|Yes
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
 
 &nbsp;
 
-[[plugins-outputs-ganglia-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-ganglia-group]]
+[id="plugins-{type}s-{plugin}-group"]
 ===== `group` 
 
   * Value type is <<string,string>>
@@ -66,7 +56,7 @@ The codec used for output data. Output codecs are a convenient method for encodi
 
 Metric group
 
-[[plugins-outputs-ganglia-host]]
+[id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
   * Value type is <<string,string>>
@@ -74,7 +64,7 @@ Metric group
 
 The address of the ganglia server.
 
-[[plugins-outputs-ganglia-lifetime]]
+[id="plugins-{type}s-{plugin}-lifetime"]
 ===== `lifetime` 
 
   * Value type is <<number,number>>
@@ -82,7 +72,7 @@ The address of the ganglia server.
 
 Lifetime in seconds of this metric
 
-[[plugins-outputs-ganglia-max_interval]]
+[id="plugins-{type}s-{plugin}-max_interval"]
 ===== `max_interval` 
 
   * Value type is <<number,number>>
@@ -90,7 +80,7 @@ Lifetime in seconds of this metric
 
 Maximum time in seconds between gmetric calls for this metric.
 
-[[plugins-outputs-ganglia-metric]]
+[id="plugins-{type}s-{plugin}-metric"]
 ===== `metric` 
 
   * This is a required setting.
@@ -99,7 +89,7 @@ Maximum time in seconds between gmetric calls for this metric.
 
 The metric to use. This supports dynamic strings like `%{host}`
 
-[[plugins-outputs-ganglia-metric_type]]
+[id="plugins-{type}s-{plugin}-metric_type"]
 ===== `metric_type` 
 
   * Value can be any of: `string`, `int8`, `uint8`, `int16`, `uint16`, `int32`, `uint32`, `float`, `double`
@@ -107,7 +97,7 @@ The metric to use. This supports dynamic strings like `%{host}`
 
 The type of value for this metric.
 
-[[plugins-outputs-ganglia-port]]
+[id="plugins-{type}s-{plugin}-port"]
 ===== `port` 
 
   * Value type is <<number,number>>
@@ -115,7 +105,7 @@ The type of value for this metric.
 
 The port to connect on your ganglia server.
 
-[[plugins-outputs-ganglia-slope]]
+[id="plugins-{type}s-{plugin}-slope"]
 ===== `slope` 
 
   * Value can be any of: `zero`, `positive`, `negative`, `both`, `unspecified`
@@ -123,7 +113,7 @@ The port to connect on your ganglia server.
 
 Metric slope, represents metric behavior
 
-[[plugins-outputs-ganglia-units]]
+[id="plugins-{type}s-{plugin}-units"]
 ===== `units` 
 
   * Value type is <<string,string>>
@@ -132,7 +122,7 @@ Metric slope, represents metric behavior
 Gmetric units for metric, such as "kb/sec" or "ms" or whatever unit
 this metric uses.
 
-[[plugins-outputs-ganglia-value]]
+[id="plugins-{type}s-{plugin}-value"]
 ===== `value` 
 
   * This is a required setting.
@@ -143,13 +133,7 @@ The value to use. This supports dynamic strings like `%{bytes}`
 It will be coerced to a floating point value. Values which cannot be
 coerced will zero (0)
 
-[[plugins-outputs-ganglia-workers]]
-===== `workers` 
-
-  * Value type is <<number,number>>
-  * Default value is `1`
-
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

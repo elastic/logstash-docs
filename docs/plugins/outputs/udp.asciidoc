@@ -1,57 +1,47 @@
-[[plugins-outputs-udp]]
-=== udp
+:plugin: udp
+:type: output
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.3
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-output-udp/blob/v3.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
+
+=== Udp output plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 Send events over UDP
 
 Keep in mind that UDP will lose messages.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Udp Output Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-udp {
-    host => ...
-    port => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-outputs-udp-codec>> |<<codec,codec>>|No|`"json"`
-| <<plugins-outputs-udp-host>> |<<string,string>>|Yes|
-| <<plugins-outputs-udp-port>> |<<number,number>>|Yes|
-| <<plugins-outputs-udp-workers>> |<<number,number>>|No|`1`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-host>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-port>> |<<number,number>>|Yes
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
 
 &nbsp;
 
-[[plugins-outputs-udp-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"json"`
-
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-udp-host]]
+[id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
   * This is a required setting.
@@ -60,7 +50,7 @@ The codec used for output data. Output codecs are a convenient method for encodi
 
 The address to send messages to
 
-[[plugins-outputs-udp-port]]
+[id="plugins-{type}s-{plugin}-port"]
 ===== `port` 
 
   * This is a required setting.
@@ -69,13 +59,7 @@ The address to send messages to
 
 The port to send messages on
 
-[[plugins-outputs-udp-workers]]
-===== `workers` 
-
-  * Value type is <<number,number>>
-  * Default value is `1`
-
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

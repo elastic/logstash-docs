@@ -1,107 +1,104 @@
-[[plugins-outputs-sqs]]
-=== sqs
+:plugin: sqs
+:type: output
 
-NOTE: This is a community-maintained plugin!
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v4.0.2
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-output-sqs/blob/v4.0.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
-Push events to an Amazon Web Services Simple Queue Service (SQS) queue.
+[id="plugins-{type}s-{plugin}"]
 
-SQS is a simple, scalable queue system that is part of the 
-Amazon Web Services suite of tools.
+=== Sqs output plugin
 
-Although SQS is similar to other queuing systems like AMQP, it
-uses a custom API and requires that you have an AWS account.
-See http://aws.amazon.com/sqs/ for more details on how SQS works,
-what the pricing schedule looks like and how to setup a queue.
+include::{include_path}/plugin_header.asciidoc[]
 
-To use this plugin, you *must*:
+==== Description
 
- * Have an AWS account
- * Setup an SQS queue
- * Create an identify that has access to publish messages to the queue.
+Push events to an Amazon Web Services (AWS) Simple Queue Service (SQS) queue.
+
+SQS is a simple, scalable queue system that is part of the Amazon Web
+Services suite of tools. Although SQS is similar to other queuing systems
+such as Advanced Message Queuing Protocol (AMQP), it uses a custom API and
+requires that you have an AWS account. See http://aws.amazon.com/sqs/ for
+more details on how SQS works, what the pricing schedule looks like and how
+to setup a queue.
 
 The "consumer" identity must have the following permissions on the queue:
 
- * sqs:ChangeMessageVisibility
- * sqs:ChangeMessageVisibilityBatch
- * sqs:GetQueueAttributes
- * sqs:GetQueueUrl
- * sqs:ListQueues
- * sqs:SendMessage
- * sqs:SendMessageBatch
+  * `sqs:GetQueueUrl`
+  * `sqs:SendMessage`
+  * `sqs:SendMessageBatch`
 
-Typically, you should setup an IAM policy, create a user and apply the IAM policy to the user.
-A sample policy is as follows:
-[source,ruby]
-     {
-       "Statement": [
-         {
-           "Sid": "Stmt1347986764948",
-           "Action": [
-             "sqs:ChangeMessageVisibility",
-             "sqs:ChangeMessageVisibilityBatch",
-             "sqs:DeleteMessage",
-             "sqs:DeleteMessageBatch",
-             "sqs:GetQueueAttributes",
-             "sqs:GetQueueUrl",
-             "sqs:ListQueues",
-             "sqs:ReceiveMessage"
-           ],
-           "Effect": "Allow",
-           "Resource": [
-             "arn:aws:sqs:us-east-1:200850199751:Logstash"
-           ]
-         }
-       ]
-     }
-
-See http://aws.amazon.com/iam/ for more details on setting up AWS identities.
-
-
-&nbsp;
-
-==== Synopsis
-
-This plugin supports the following configuration options:
-
-
-Required configuration options:
+Typically, you should setup an IAM policy, create a user and apply the IAM
+policy to the user. See http://aws.amazon.com/iam/ for more details on
+setting up AWS identities. A sample policy is as follows:
 
 [source,json]
---------------------------
-sqs {
-    queue => ...
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "sqs:GetQueueUrl",
+        "sqs:SendMessage",
+        "sqs:SendMessageBatch"
+      ],
+      "Resource": "arn:aws:sqs:us-east-1:123456789012:my-sqs-queue"
+    }
+  ]
 }
---------------------------
+
+==== Batch Publishing
+This output publishes messages to SQS in batches in order to optimize event
+throughput and increase performance. This is done using the
+[`SendMessageBatch`](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessageBatch.html)
+API. When publishing messages to SQS in batches, the following service limits
+must be respected (see
+[Limits in Amazon SQS](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/limits-messages.html)):
+
+  * The maximum allowed individual message size is 256KiB.
+  * The maximum total payload size (i.e. the sum of the sizes of all
+    individual messages within a batch) is also 256KiB.
+
+This plugin will dynamically adjust the size of the batch published to SQS in
+order to ensure that the total payload size does not exceed 256KiB.
+
+WARNING: This output cannot currently handle messages larger than 256KiB. Any
+single message exceeding this size will be dropped.
 
 
+[id="plugins-{type}s-{plugin}-options"]
+==== Sqs Output Configuration Options
 
-Available configuration options:
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-outputs-sqs-access_key_id>> |<<string,string>>|No|
-| <<plugins-outputs-sqs-aws_credentials_file>> |<<string,string>>|No|
-| <<plugins-outputs-sqs-batch>> |<<boolean,boolean>>|No|`true`
-| <<plugins-outputs-sqs-batch_events>> |<<number,number>>|No|`10`
-| <<plugins-outputs-sqs-batch_timeout>> |<<number,number>>|No|`5`
-| <<plugins-outputs-sqs-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-sqs-proxy_uri>> |<<string,string>>|No|
-| <<plugins-outputs-sqs-queue>> |<<string,string>>|Yes|
-| <<plugins-outputs-sqs-region>> |<<string,string>>, one of `["us-east-1", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "sa-east-1", "us-gov-west-1", "cn-north-1"]`|No|`"us-east-1"`
-| <<plugins-outputs-sqs-secret_access_key>> |<<string,string>>|No|
-| <<plugins-outputs-sqs-session_token>> |<<string,string>>|No|
-| <<plugins-outputs-sqs-use_ssl>> |<<boolean,boolean>>|No|`true`
-| <<plugins-outputs-sqs-workers>> |<<number,number>>|No|`1`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-access_key_id>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-aws_credentials_file>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-batch_events>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-message_max_size>> |<<bytes,bytes>>|No
+| <<plugins-{type}s-{plugin}-proxy_uri>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-queue>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-region>> |<<string,string>>, one of `["us-east-1", "us-east-2", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "eu-west-2", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ap-northeast-2", "sa-east-1", "us-gov-west-1", "cn-north-1", "ap-south-1", "ca-central-1"]`|No
+| <<plugins-{type}s-{plugin}-secret_access_key>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-session_token>> |<<string,string>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
 
 &nbsp;
 
-[[plugins-outputs-sqs-access_key_id]]
+[id="plugins-{type}s-{plugin}-access_key_id"]
 ===== `access_key_id` 
 
   * Value type is <<string,string>>
@@ -115,7 +112,7 @@ This plugin uses the AWS SDK and supports several ways to get credentials, which
 4. Environment variables `AMAZON_ACCESS_KEY_ID` and `AMAZON_SECRET_ACCESS_KEY`
 5. IAM Instance Profile (available when running inside EC2)
 
-[[plugins-outputs-sqs-aws_credentials_file]]
+[id="plugins-{type}s-{plugin}-aws_credentials_file"]
 ===== `aws_credentials_file` 
 
   * Value type is <<string,string>>
@@ -128,44 +125,52 @@ file should look like this:
 
 [source,ruby]
 ----------------------------------
- :access_key_id: "12345"
- :secret_access_key: "54321"
+    :access_key_id: "12345"
+    :secret_access_key: "54321"
 ----------------------------------
 
-[[plugins-outputs-sqs-batch]]
-===== `batch` 
 
+[id="plugins-{type}s-{plugin}-batch"]
+===== `batch`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-Set to true if you want send messages to SQS in batches with `batch_send`
-from the amazon sdk
+Set to `true` to send messages to SQS in batches (with the
+`SendMessageBatch` API) or `false` to send messages to SQS individually
+(with the `SendMessage` API). The size of the batch is configurable via
+`batch_events`.
 
-[[plugins-outputs-sqs-batch_events]]
+[id="plugins-{type}s-{plugin}-batch_events"]
 ===== `batch_events` 
 
   * Value type is <<number,number>>
   * Default value is `10`
 
-If `batch` is set to true, the number of events we queue up for a `batch_send`.
+The number of events to be sent in each batch. Set this to `1` to disable
+the batch sending of messages.
 
-[[plugins-outputs-sqs-batch_timeout]]
-===== `batch_timeout` 
+[id="plugins-{type}s-{plugin}-batch_timeout"]
+===== `batch_timeout`  (DEPRECATED)
 
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
   * Value type is <<number,number>>
-  * Default value is `5`
+  * There is no default value for this setting.
 
-If `batch` is set to true, the maximum amount of time between `batch_send` commands when there are pending events to flush.
 
-[[plugins-outputs-sqs-codec]]
-===== `codec` 
 
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
+[id="plugins-{type}s-{plugin}-message_max_size"]
+===== `message_max_size` 
 
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
+  * Value type is <<bytes,bytes>>
+  * Default value is `"256KiB"`
 
-[[plugins-outputs-sqs-proxy_uri]]
+The maximum number of bytes for any message sent to SQS. Messages exceeding
+this size will be dropped. See
+http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/limits-messages.html.
+
+[id="plugins-{type}s-{plugin}-proxy_uri"]
 ===== `proxy_uri` 
 
   * Value type is <<string,string>>
@@ -173,24 +178,25 @@ The codec used for output data. Output codecs are a convenient method for encodi
 
 URI to proxy server if required
 
-[[plugins-outputs-sqs-queue]]
+[id="plugins-{type}s-{plugin}-queue"]
 ===== `queue` 
 
   * This is a required setting.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Name of SQS queue to push messages into. Note that this is just the name of the queue, not the URL or ARN.
+The name of the target SQS queue. Note that this is just the name of the
+queue, not the URL or ARN.
 
-[[plugins-outputs-sqs-region]]
+[id="plugins-{type}s-{plugin}-region"]
 ===== `region` 
 
-  * Value can be any of: `us-east-1`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`
+  * Value can be any of: `us-east-1`, `us-east-2`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `eu-west-2`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `ap-northeast-2`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`, `ap-south-1`, `ca-central-1`
   * Default value is `"us-east-1"`
 
+The AWS Region
 
-
-[[plugins-outputs-sqs-secret_access_key]]
+[id="plugins-{type}s-{plugin}-secret_access_key"]
 ===== `secret_access_key` 
 
   * Value type is <<string,string>>
@@ -198,29 +204,15 @@ Name of SQS queue to push messages into. Note that this is just the name of the 
 
 The AWS Secret Access Key
 
-[[plugins-outputs-sqs-session_token]]
+[id="plugins-{type}s-{plugin}-session_token"]
 ===== `session_token` 
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The AWS Session token for temporary credentials
-
-[[plugins-outputs-sqs-use_ssl]]
-===== `use_ssl` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
+The AWS Session token for temporary credential
 
 
 
-[[plugins-outputs-sqs-workers]]
-===== `workers` 
-
-  * Value type is <<number,number>>
-  * Default value is `1`
-
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
-
-
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

@@ -2,8 +2,7 @@
 === websocket
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-input-websocket`.
-
+NOTE: This plugin cannot be installed on the current version of Logstash.
 
 Read events over the websocket protocol.
 
