@@ -20,4 +20,4 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-
+Reads EDN format data.

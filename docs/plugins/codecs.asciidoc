@@ -24,7 +24,7 @@ The following codec plugins are available below. For a list of Elastic supported
 | <<plugins-codecs-json,json>> | Reads JSON formatted content, creating one event per element in a JSON array | https://github.com/logstash-plugins/logstash-codec-json[logstash-codec-json]
 | <<plugins-codecs-json_lines,json_lines>> | Reads newline-delimited JSON | https://github.com/logstash-plugins/logstash-codec-json_lines[logstash-codec-json_lines]
 | <<plugins-codecs-line,line>> | Reads line-oriented text data | https://github.com/logstash-plugins/logstash-codec-line[logstash-codec-line]
-| <<plugins-codecs-msgpack,msgpack>> |  | https://github.com/logstash-plugins/logstash-codec-msgpack[logstash-codec-msgpack]
+| <<plugins-codecs-msgpack,msgpack>> | Reads MessagePack encoded content | https://github.com/logstash-plugins/logstash-codec-msgpack[logstash-codec-msgpack]
 | <<plugins-codecs-multiline,multiline>> | Merges multiline messages into a single event | https://github.com/logstash-plugins/logstash-codec-multiline[logstash-codec-multiline]
 | <<plugins-codecs-netflow,netflow>> | Reads Netflow v5 and Netflow v9 data | https://github.com/logstash-plugins/logstash-codec-netflow[logstash-codec-netflow]
 | <<plugins-codecs-nmap,nmap>> | Reads Nmap data in XML format | https://github.com/logstash-plugins/logstash-codec-nmap[logstash-codec-nmap]
