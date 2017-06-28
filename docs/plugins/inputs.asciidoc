@@ -10,6 +10,7 @@ The following input plugins are available below. For a list of Elastic supported
 | <<plugins-inputs-beats,beats>> | Receives events from the Elastic Beats framework | https://github.com/logstash-plugins/logstash-input-beats[logstash-input-beats]
 | <<plugins-inputs-cloudwatch,cloudwatch>> | Pulls events from the Amazon Web Services CloudWatch API  | https://github.com/logstash-plugins/logstash-input-cloudwatch[logstash-input-cloudwatch]
 | <<plugins-inputs-couchdb_changes,couchdb_changes>> | Streams events from CouchDB's `_changes` URI | https://github.com/logstash-plugins/logstash-input-couchdb_changes[logstash-input-couchdb_changes]
+| <<plugins-inputs-dead_letter_queue,dead_letter_queue>> | read events from Logstash's dead letter queue | https://github.com/logstash-plugins/logstash-input-dead_letter_queue[logstash-input-dead_letter_queue]
 | <<plugins-inputs-drupal_dblog,drupal_dblog>> | Retrieves watchdog log events from Drupal installations with DBLog enabled | https://github.com/logstash-plugins/logstash-input-drupal_dblog[logstash-input-drupal_dblog]
 | <<plugins-inputs-elasticsearch,elasticsearch>> | Reads query results from an Elasticsearch cluster | https://github.com/logstash-plugins/logstash-input-elasticsearch[logstash-input-elasticsearch]
 | <<plugins-inputs-eventlog,eventlog>> | Pulls events from the Windows Event Log | https://github.com/logstash-plugins/logstash-input-eventlog[logstash-input-eventlog]
@@ -29,6 +30,7 @@ The following input plugins are available below. For a list of Elastic supported
 | <<plugins-inputs-imap,imap>> | Reads mail from an IMAP server | https://github.com/logstash-plugins/logstash-input-imap[logstash-input-imap]
 | <<plugins-inputs-irc,irc>> | Reads events from an IRC server | https://github.com/logstash-plugins/logstash-input-irc[logstash-input-irc]
 | <<plugins-inputs-jdbc,jdbc>> | Creates events from JDBC data | https://github.com/logstash-plugins/logstash-input-jdbc[logstash-input-jdbc]
+| <<plugins-inputs-jms,jms>> | Reads events from a Jms Broker | https://github.com/logstash-plugins/logstash-input-jms[logstash-input-jms]
 | <<plugins-inputs-jmx,jmx>> | Retrieves metrics from remote Java applications over JMX | https://github.com/logstash-plugins/logstash-input-jmx[logstash-input-jmx]
 | <<plugins-inputs-kafka,kafka>> | Reads events from a Kafka topic | https://github.com/logstash-plugins/logstash-input-kafka[logstash-input-kafka]
 | <<plugins-inputs-kinesis,kinesis>> | Receives events through an AWS Kinesis stream | https://github.com/logstash-plugins/logstash-input-kinesis[logstash-input-kinesis]
@@ -70,6 +72,9 @@ include::inputs/cloudwatch.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-couchdb_changes/edit/master/docs/index.asciidoc
 include::inputs/couchdb_changes.asciidoc[]
+
+:edit_url: https://github.com/logstash-plugins/logstash-input-dead_letter_queue/edit/master/docs/index.asciidoc
+include::inputs/dead_letter_queue.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-drupal_dblog/edit/master/docs/index.asciidoc
 include::inputs/drupal_dblog.asciidoc[]
@@ -127,6 +132,9 @@ include::inputs/irc.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-jdbc/edit/master/docs/index.asciidoc
 include::inputs/jdbc.asciidoc[]
+
+:edit_url: https://github.com/logstash-plugins/logstash-input-jms/edit/master/docs/index.asciidoc
+include::inputs/jms.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-jmx/edit/master/docs/index.asciidoc
 include::inputs/jmx.asciidoc[]

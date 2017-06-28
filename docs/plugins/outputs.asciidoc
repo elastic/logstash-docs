@@ -28,6 +28,7 @@ The following output plugins are available below. For a list of Elastic supporte
 | <<plugins-outputs-influxdb,influxdb>> | Writes metrics to InfluxDB | https://github.com/logstash-plugins/logstash-output-influxdb[logstash-output-influxdb]
 | <<plugins-outputs-irc,irc>> | Writes events to IRC | https://github.com/logstash-plugins/logstash-output-irc[logstash-output-irc]
 | <<plugins-outputs-jira,jira>> | Writes strutured JSON events to JIRA | https://github.com/logstash-plugins/logstash-output-jira[logstash-output-jira]
+| <<plugins-outputs-jms,jms>> | Writes events to a Jms Broker | https://github.com/logstash-plugins/logstash-output-jms[logstash-output-jms]
 | <<plugins-outputs-juggernaut,juggernaut>> | Pushes messages to the Juggernaut websockets server | https://github.com/logstash-plugins/logstash-output-juggernaut[logstash-output-juggernaut]
 | <<plugins-outputs-kafka,kafka>> | Writes events to a Kafka topic | https://github.com/logstash-plugins/logstash-output-kafka[logstash-output-kafka]
 | <<plugins-outputs-librato,librato>> | Sends metrics, annotations, and alerts to Librato based on Logstash events | https://github.com/logstash-plugins/logstash-output-librato[logstash-output-librato]
@@ -126,6 +127,9 @@ include::outputs/irc.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-jira/edit/master/docs/index.asciidoc
 include::outputs/jira.asciidoc[]
+
+:edit_url: https://github.com/logstash-plugins/logstash-output-jms/edit/master/docs/index.asciidoc
+include::outputs/jms.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-juggernaut/edit/master/docs/index.asciidoc
 include::outputs/juggernaut.asciidoc[]
