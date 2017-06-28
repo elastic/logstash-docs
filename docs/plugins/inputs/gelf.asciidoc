@@ -4,9 +4,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: 3.0.5
-:release_date: 2017-06-27
-:changelog_url: https://raw.githubusercontent.com/logstash-plugins/logstash-input-gelf/v3.0.5/CHANGELOG.md
+:version: 3.0.4
+:release_date: 2017-06-23
+:changelog_url: https://raw.githubusercontent.com/logstash-plugins/logstash-input-gelf/v3.0.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
