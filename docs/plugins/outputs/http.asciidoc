@@ -20,7 +20,15 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
+This output lets you send events to a generic HTTP(S) endpoint.
 
+This output will execute up to 'pool_max' requests in parallel for performance.
+Consider this when tuning this plugin for performance.
+
+Additionally, note that when parallel execution is used strict ordering of events is not
+guaranteed!
+
+Beware, this gem does not yet support codecs. Please use the 'format' option for now.
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Http Output Configuration Options
