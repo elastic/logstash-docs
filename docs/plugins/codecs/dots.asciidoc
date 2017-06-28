@@ -20,12 +20,5 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
+Sends 1 dot per event to stdout for performance tracking.
 
-
-[id="plugins-{type}s-{plugin}-options"]
-==== Dots Codec Configuration Options
-
-[cols="<,<,<",options="header",]
-|=======================================================================
-|Setting |Input type|Required
-|=======================================================================
