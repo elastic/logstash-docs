@@ -88,7 +88,7 @@ here:
   - Creating Service Accounts https://cloud.google.com/iam/docs/creating-managing-service-accounts[overview]
   - Granting Roles https://cloud.google.com/iam/docs/granting-roles-to-service-accounts[overview]
 
-1. If you are running Logstash on a Google Compute Engine instance, you may opt 
+2. If you are running Logstash on a Google Compute Engine instance, you may opt 
 to use Application Default Credentials. In this case, you will not need to 
 specify a JSON private key file in your config.
 
