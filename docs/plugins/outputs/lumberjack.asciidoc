@@ -20,6 +20,7 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
+This output sends events using the lumberjack protocol.
 
 
 [id="plugins-{type}s-{plugin}-options"]
