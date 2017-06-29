@@ -2,7 +2,7 @@
 === zeromq
 
 
-NOTE: This plugin cannot be installed on the current version of Logstash.
+NOTE: This plugin cannot be installed on the current version of Logstash. We are working on resolving this problem.
 
 ZeroMQ filter. This is the best way to send an event externally for filtering
 It works much like an exec filter would by sending the event "offsite"

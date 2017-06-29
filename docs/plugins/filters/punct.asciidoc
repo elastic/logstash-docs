@@ -2,7 +2,7 @@
 === punct
 
 
-NOTE: This plugin cannot be installed on the current version of Logstash.
+NOTE: This plugin cannot be installed on the current version of Logstash. We are working on resolving this problem.
 
 Strip everything but punctuation from a field and store the remainder in the
 a separate field. This is often used for fingerprinting log events.
