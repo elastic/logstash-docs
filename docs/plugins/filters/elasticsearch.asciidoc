@@ -6,7 +6,7 @@ NOTE: This is a community-maintained plugin! It does not ship with Logstash by d
 .Compatibility Note
 [NOTE]
 ================================================================================
-Starting with Elasticsearch 5.3, there's an {ref}modules-http.html[HTTP setting]
+Starting with Elasticsearch 5.3, there's an {ref}/modules-http.html[HTTP setting]
 called `http.content_type.required`. If this option is set to `true`, and you
 are using Logstash 2.4 through 5.2, you need to update the Elasticsearch filter
 plugin to version 3.1.1 or higher.
@@ -14,7 +14,7 @@ plugin to version 3.1.1 or higher.
 ================================================================================
 
 Search Elasticsearch for a previous log event and copy some fields from it
-into the current event.  
+into the current event.
 
 Below is a complete example of how this filter might
 be used.  Whenever Logstash receives an "end" event, it uses this Elasticsearch
@@ -87,7 +87,7 @@ Available configuration options:
 &nbsp;
 
 [[plugins-filters-elasticsearch-add_field]]
-===== `add_field` 
+===== `add_field`
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
@@ -119,7 +119,7 @@ value above and the `%{host}` piece replaced with that value from the
 event. The second example would also add a hardcoded field.
 
 [[plugins-filters-elasticsearch-add_tag]]
-===== `add_tag` 
+===== `add_tag`
 
   * Value type is <<array,array>>
   * Default value is `[]`
@@ -147,7 +147,7 @@ If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
 
 [[plugins-filters-elasticsearch-ca_file]]
-===== `ca_file` 
+===== `ca_file`
 
   * Value type is <<path,path>>
   * There is no default value for this setting.
@@ -155,7 +155,7 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
 SSL Certificate Authority file
 
 [[plugins-filters-elasticsearch-enable_sort]]
-===== `enable_sort` 
+===== `enable_sort`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -163,7 +163,7 @@ SSL Certificate Authority file
 Whether results should be sorted or not
 
 [[plugins-filters-elasticsearch-fields]]
-===== `fields` 
+===== `fields`
 
   * Value type is <<array,array>>
   * Default value is `{}`
@@ -171,7 +171,7 @@ Whether results should be sorted or not
 Array of fields to copy from old event (found via elasticsearch) into new event
 
 [[plugins-filters-elasticsearch-hosts]]
-===== `hosts` 
+===== `hosts`
 
   * Value type is <<array,array>>
   * Default value is `["localhost:9200"]`
@@ -179,7 +179,7 @@ Array of fields to copy from old event (found via elasticsearch) into new event
 List of elasticsearch hosts to use for querying.
 
 [[plugins-filters-elasticsearch-index]]
-===== `index` 
+===== `index`
 
   * Value type is <<string,string>>
   * Default value is `""`
@@ -187,7 +187,7 @@ List of elasticsearch hosts to use for querying.
 Comma-delimited list of index names to search; use `_all` or empty string to perform the operation on all indices
 
 [[plugins-filters-elasticsearch-password]]
-===== `password` 
+===== `password`
 
   * Value type is <<password,password>>
   * There is no default value for this setting.
@@ -195,7 +195,7 @@ Comma-delimited list of index names to search; use `_all` or empty string to per
 Basic Auth - password
 
 [[plugins-filters-elasticsearch-periodic_flush]]
-===== `periodic_flush` 
+===== `periodic_flush`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -204,7 +204,7 @@ Call the filter flush method at regular interval.
 Optional.
 
 [[plugins-filters-elasticsearch-query]]
-===== `query` 
+===== `query`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -213,7 +213,7 @@ Elasticsearch query string. Read the Elasticsearch query string documentation
 for more info at: https://www.elastic.co/guide/en/elasticsearch/reference/master/query-dsl-query-string-query.html#query-string-syntax
 
 [[plugins-filters-elasticsearch-remove_field]]
-===== `remove_field` 
+===== `remove_field`
 
   * Value type is <<array,array>>
   * Default value is `[]`
@@ -240,7 +240,7 @@ would remove the field with name `foo_hello` if it is present. The second
 example would remove an additional, non-dynamic field.
 
 [[plugins-filters-elasticsearch-remove_tag]]
-===== `remove_tag` 
+===== `remove_tag`
 
   * Value type is <<array,array>>
   * Default value is `[]`
@@ -269,7 +269,7 @@ would remove the tag `foo_hello` if it is present. The second example
 would remove a sad, unwanted tag as well.
 
 [[plugins-filters-elasticsearch-result_size]]
-===== `result_size` 
+===== `result_size`
 
   * Value type is <<number,number>>
   * Default value is `1`
@@ -277,7 +277,7 @@ would remove a sad, unwanted tag as well.
 How many results to return
 
 [[plugins-filters-elasticsearch-sort]]
-===== `sort` 
+===== `sort`
 
   * Value type is <<string,string>>
   * Default value is `"@timestamp:desc"`
@@ -285,7 +285,7 @@ How many results to return
 Comma-delimited list of `<field>:<direction>` pairs that define the sort order
 
 [[plugins-filters-elasticsearch-ssl]]
-===== `ssl` 
+===== `ssl`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -293,7 +293,7 @@ Comma-delimited list of `<field>:<direction>` pairs that define the sort order
 SSL
 
 [[plugins-filters-elasticsearch-tag_on_failure]]
-===== `tag_on_failure` 
+===== `tag_on_failure`
 
   * Value type is <<array,array>>
   * Default value is `["_elasticsearch_lookup_failure"]`
@@ -301,11 +301,9 @@ SSL
 Tags the event on failure to look up geo information. This can be used in later analysis.
 
 [[plugins-filters-elasticsearch-user]]
-===== `user` 
+===== `user`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
 Basic Auth - username
-
-

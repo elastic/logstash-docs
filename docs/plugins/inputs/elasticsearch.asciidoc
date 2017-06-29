@@ -17,7 +17,7 @@ For the list of Elastic supported plugins, please consult the https://www.elasti
 .Compatibility Note
 [NOTE]
 ================================================================================
-Starting with Elasticsearch 5.3, there's an {ref}modules-http.html[HTTP setting]
+Starting with Elasticsearch 5.3, there's an {ref}/modules-http.html[HTTP setting]
 called `http.content_type.required`. If this option is set to `true`, and you
 are using Logstash 2.4 through 5.2, you need to update the Elasticsearch input
 plugin to version 4.0.2 or higher.
@@ -97,7 +97,7 @@ Available configuration options:
 &nbsp;
 
 [[plugins-inputs-elasticsearch-add_field]]
-===== `add_field` 
+===== `add_field`
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
@@ -105,15 +105,15 @@ Available configuration options:
 Add a field to an event
 
 [[plugins-inputs-elasticsearch-ca_file]]
-===== `ca_file` 
+===== `ca_file`
 
   * Value type is <<path,path>>
   * There is no default value for this setting.
 
-SSL Certificate Authority file in PEM encoded format, must also include any chain certificates as necessary 
+SSL Certificate Authority file in PEM encoded format, must also include any chain certificates as necessary
 
 [[plugins-inputs-elasticsearch-codec]]
-===== `codec` 
+===== `codec`
 
   * Value type is <<codec,codec>>
   * Default value is `"plain"`
@@ -121,7 +121,7 @@ SSL Certificate Authority file in PEM encoded format, must also include any chai
 The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
 
 [[plugins-inputs-elasticsearch-docinfo]]
-===== `docinfo` 
+===== `docinfo`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -157,7 +157,7 @@ Example
 
 
 [[plugins-inputs-elasticsearch-docinfo_fields]]
-===== `docinfo_fields` 
+===== `docinfo_fields`
 
   * Value type is <<array,array>>
   * Default value is `["_index", "_type", "_id"]`
@@ -167,7 +167,7 @@ To learn more about Elasticsearch metadata fields read
 http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_document_metadata.html
 
 [[plugins-inputs-elasticsearch-docinfo_target]]
-===== `docinfo_target` 
+===== `docinfo_target`
 
   * Value type is <<string,string>>
   * Default value is `"@metadata"`
@@ -175,7 +175,7 @@ http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_document_meta
 Where to move the Elasticsearch document information by default we use the @metadata field.
 
 [[plugins-inputs-elasticsearch-enable_metric]]
-===== `enable_metric` 
+===== `enable_metric`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -185,7 +185,7 @@ by default we record all the metrics we can, but you can disable metrics collect
 for a specific plugin.
 
 [[plugins-inputs-elasticsearch-hosts]]
-===== `hosts` 
+===== `hosts`
 
   * Value type is <<array,array>>
   * There is no default value for this setting.
@@ -195,14 +195,14 @@ each host can be either IP, HOST, IP:port or HOST:port
 port defaults to 9200
 
 [[plugins-inputs-elasticsearch-id]]
-===== `id` 
+===== `id`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
-It is strongly recommended to set this ID in your configuration. This is particularly useful 
-when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
+Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one.
+It is strongly recommended to set this ID in your configuration. This is particularly useful
+when you have two or more plugins of the same type, for example, if you have 2 grok filters.
 Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
 
 [source,ruby]
@@ -216,7 +216,7 @@ output {
 
 
 [[plugins-inputs-elasticsearch-index]]
-===== `index` 
+===== `index`
 
   * Value type is <<string,string>>
   * Default value is `"logstash-*"`
@@ -224,7 +224,7 @@ output {
 The index or alias to search.
 
 [[plugins-inputs-elasticsearch-password]]
-===== `password` 
+===== `password`
 
   * Value type is <<password,password>>
   * There is no default value for this setting.
@@ -232,7 +232,7 @@ The index or alias to search.
 Basic Auth - password
 
 [[plugins-inputs-elasticsearch-query]]
-===== `query` 
+===== `query`
 
   * Value type is <<string,string>>
   * Default value is `"{ \"sort\": [ \"_doc\" ] }"`
@@ -242,7 +242,7 @@ for more info
 https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
 
 [[plugins-inputs-elasticsearch-scroll]]
-===== `scroll` 
+===== `scroll`
 
   * Value type is <<string,string>>
   * Default value is `"1m"`
@@ -252,7 +252,7 @@ request and initiates the scrolling process. The timeout applies per
 round trip (i.e. between the previous scroll request, to the next).
 
 [[plugins-inputs-elasticsearch-size]]
-===== `size` 
+===== `size`
 
   * Value type is <<number,number>>
   * Default value is `1000`
@@ -260,7 +260,7 @@ round trip (i.e. between the previous scroll request, to the next).
 This allows you to set the maximum number of hits returned per scroll.
 
 [[plugins-inputs-elasticsearch-ssl]]
-===== `ssl` 
+===== `ssl`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -268,7 +268,7 @@ This allows you to set the maximum number of hits returned per scroll.
 SSL
 
 [[plugins-inputs-elasticsearch-tags]]
-===== `tags` 
+===== `tags`
 
   * Value type is <<array,array>>
   * There is no default value for this setting.
@@ -278,7 +278,7 @@ Add any number of arbitrary tags to your event.
 This can help with processing later.
 
 [[plugins-inputs-elasticsearch-type]]
-===== `type` 
+===== `type`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -298,11 +298,9 @@ the shipper stays with that event for its life even
 when sent to another Logstash server.
 
 [[plugins-inputs-elasticsearch-user]]
-===== `user` 
+===== `user`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
 Basic Auth - username
-
-
