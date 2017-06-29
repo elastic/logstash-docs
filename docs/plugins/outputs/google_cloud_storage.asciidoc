@@ -1,8 +1,8 @@
 [[plugins-outputs-google_cloud_storage]]
-=== google_cloud_storage
+=== Google_cloud_storage output plugin
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-google_cloud_storage`.
+NOTE: This plugin cannot be installed on the current version of Logstash. We are working on resolving this problem.
 
 
 Author: Rodrigo De Castro <rdc@google.com>
