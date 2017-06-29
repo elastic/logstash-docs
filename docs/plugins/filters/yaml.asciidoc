@@ -1,7 +1,7 @@
 [[plugins-filters-yaml]]
 === yaml
 
-NOTE: This plugin cannot be installed on the current version of Logstash.
+NOTE: This plugin cannot be installed on the current version of Logstash. We are working on resolving this problem.
 
 This is a YAML parsing filter. It takes an existing field which contains YAML and
 expands it into an actual data structure within the Logstash event.
