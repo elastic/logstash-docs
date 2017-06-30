@@ -23,7 +23,7 @@ include::{include_path}/plugin_header.asciidoc[]
 .Compatibility Note
 [NOTE]
 ================================================================================
-Starting with Elasticsearch 5.3, there's an {ref}modules-http.html[HTTP setting]
+Starting with Elasticsearch 5.3, there's an {ref}/modules-http.html[HTTP setting]
 called `http.content_type.required`. If this option is set to `true`, and you
 are using Logstash 2.4 through 5.2, you need to update the Elasticsearch input
 plugin to version 4.0.2 or higher.
@@ -83,15 +83,15 @@ input plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-ca_file"]
-===== `ca_file` 
+===== `ca_file`
 
   * Value type is <<path,path>>
   * There is no default value for this setting.
 
-SSL Certificate Authority file in PEM encoded format, must also include any chain certificates as necessary 
+SSL Certificate Authority file in PEM encoded format, must also include any chain certificates as necessary
 
 [id="plugins-{type}s-{plugin}-docinfo"]
-===== `docinfo` 
+===== `docinfo`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -127,7 +127,7 @@ Example
 
 
 [id="plugins-{type}s-{plugin}-docinfo_fields"]
-===== `docinfo_fields` 
+===== `docinfo_fields`
 
   * Value type is <<array,array>>
   * Default value is `["_index", "_type", "_id"]`
@@ -137,7 +137,7 @@ To learn more about Elasticsearch metadata fields read
 http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_document_metadata.html
 
 [id="plugins-{type}s-{plugin}-docinfo_target"]
-===== `docinfo_target` 
+===== `docinfo_target`
 
   * Value type is <<string,string>>
   * Default value is `"@metadata"`
@@ -145,7 +145,7 @@ http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_document_meta
 Where to move the Elasticsearch document information by default we use the @metadata field.
 
 [id="plugins-{type}s-{plugin}-hosts"]
-===== `hosts` 
+===== `hosts`
 
   * Value type is <<array,array>>
   * There is no default value for this setting.
@@ -155,7 +155,7 @@ each host can be either IP, HOST, IP:port or HOST:port
 port defaults to 9200
 
 [id="plugins-{type}s-{plugin}-index"]
-===== `index` 
+===== `index`
 
   * Value type is <<string,string>>
   * Default value is `"logstash-*"`
@@ -163,7 +163,7 @@ port defaults to 9200
 The index or alias to search.
 
 [id="plugins-{type}s-{plugin}-password"]
-===== `password` 
+===== `password`
 
   * Value type is <<password,password>>
   * There is no default value for this setting.
@@ -171,7 +171,7 @@ The index or alias to search.
 Basic Auth - password
 
 [id="plugins-{type}s-{plugin}-query"]
-===== `query` 
+===== `query`
 
   * Value type is <<string,string>>
   * Default value is `"{ \"sort\": [ \"_doc\" ] }"`
@@ -181,7 +181,7 @@ for more info
 https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
 
 [id="plugins-{type}s-{plugin}-scroll"]
-===== `scroll` 
+===== `scroll`
 
   * Value type is <<string,string>>
   * Default value is `"1m"`
@@ -191,7 +191,7 @@ request and initiates the scrolling process. The timeout applies per
 round trip (i.e. between the previous scroll request, to the next).
 
 [id="plugins-{type}s-{plugin}-size"]
-===== `size` 
+===== `size`
 
   * Value type is <<number,number>>
   * Default value is `1000`
@@ -199,7 +199,7 @@ round trip (i.e. between the previous scroll request, to the next).
 This allows you to set the maximum number of hits returned per scroll.
 
 [id="plugins-{type}s-{plugin}-ssl"]
-===== `ssl` 
+===== `ssl`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -207,7 +207,7 @@ This allows you to set the maximum number of hits returned per scroll.
 SSL
 
 [id="plugins-{type}s-{plugin}-user"]
-===== `user` 
+===== `user`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
