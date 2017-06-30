@@ -1,8 +1,8 @@
 [[plugins-codecs-cloudtrail]]
-=== cloudtrail
+=== Cloudtrail codec plugin
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-codec-cloudtrail`.
+NOTE: This plugin cannot be installed on the current version of Logstash. We are working on resolving this problem.
 
 
 

@@ -1,8 +1,8 @@
 [[plugins-inputs-drupal_dblog]]
-=== drupal_dblog
+=== Drupal_dblog input plugin
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-input-drupal_dblog`.
+NOTE: This plugin cannot be installed on the current version of Logstash. We are working on resolving this problem.
 
 
 Retrieve watchdog log events from a Drupal installation with DBLog enabled.

@@ -1,71 +1,60 @@
-[[plugins-inputs-imap]]
-=== imap
+:plugin: imap
+:type: input
 
-NOTE: This is a community-maintained plugin!
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.3
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-input-imap/blob/v3.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="plugins-{type}s-{plugin}"]
+
+=== Imap input plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 Read mails from IMAP server
 
 Periodically scan an IMAP folder (`INBOX` by default) and move any read messages
 to the trash.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Imap Input Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-imap {
-    host => ...
-    password => ...
-    user => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-inputs-imap-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-imap-check_interval>> |<<number,number>>|No|`300`
-| <<plugins-inputs-imap-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-inputs-imap-content_type>> |<<string,string>>|No|`"text/plain"`
-| <<plugins-inputs-imap-delete>> |<<boolean,boolean>>|No|`false`
-| <<plugins-inputs-imap-fetch_count>> |<<number,number>>|No|`50`
-| <<plugins-inputs-imap-folder>> |<<string,string>>|No|`"INBOX"`
-| <<plugins-inputs-imap-host>> |<<string,string>>|Yes|
-| <<plugins-inputs-imap-lowercase_headers>> |<<boolean,boolean>>|No|`true`
-| <<plugins-inputs-imap-password>> |<<password,password>>|Yes|
-| <<plugins-inputs-imap-port>> |<<number,number>>|No|
-| <<plugins-inputs-imap-secure>> |<<boolean,boolean>>|No|`true`
-| <<plugins-inputs-imap-tags>> |<<array,array>>|No|
-| <<plugins-inputs-imap-type>> |<<string,string>>|No|
-| <<plugins-inputs-imap-user>> |<<string,string>>|Yes|
-| <<plugins-inputs-imap-verify_cert>> |<<boolean,boolean>>|No|`true`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-check_interval>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-content_type>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-delete>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-expunge>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-fetch_count>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-folder>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-host>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-lowercase_headers>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-password>> |<<password,password>>|Yes
+| <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-secure>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-strip_attachments>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-user>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-verify_cert>> |<<boolean,boolean>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
 
 &nbsp;
 
-[[plugins-inputs-imap-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-Add a field to an event
-
-[[plugins-inputs-imap-check_interval]]
+[id="plugins-{type}s-{plugin}-check_interval"]
 ===== `check_interval` 
 
   * Value type is <<number,number>>
@@ -73,15 +62,7 @@ Add a field to an event
 
 
 
-[[plugins-inputs-imap-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-inputs-imap-content_type]]
+[id="plugins-{type}s-{plugin}-content_type"]
 ===== `content_type` 
 
   * Value type is <<string,string>>
@@ -90,7 +71,7 @@ The codec used for input data. Input codecs are a convenient method for decoding
 For multipart messages, use the first part that has this
 content-type as the event message.
 
-[[plugins-inputs-imap-delete]]
+[id="plugins-{type}s-{plugin}-delete"]
 ===== `delete` 
 
   * Value type is <<boolean,boolean>>
@@ -98,7 +79,15 @@ content-type as the event message.
 
 
 
-[[plugins-inputs-imap-fetch_count]]
+[id="plugins-{type}s-{plugin}-expunge"]
+===== `expunge` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+
+
+[id="plugins-{type}s-{plugin}-fetch_count"]
 ===== `fetch_count` 
 
   * Value type is <<number,number>>
@@ -106,7 +95,7 @@ content-type as the event message.
 
 
 
-[[plugins-inputs-imap-folder]]
+[id="plugins-{type}s-{plugin}-folder"]
 ===== `folder` 
 
   * Value type is <<string,string>>
@@ -114,7 +103,7 @@ content-type as the event message.
 
 
 
-[[plugins-inputs-imap-host]]
+[id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
   * This is a required setting.
@@ -123,7 +112,7 @@ content-type as the event message.
 
 
 
-[[plugins-inputs-imap-lowercase_headers]]
+[id="plugins-{type}s-{plugin}-lowercase_headers"]
 ===== `lowercase_headers` 
 
   * Value type is <<boolean,boolean>>
@@ -131,7 +120,7 @@ content-type as the event message.
 
 
 
-[[plugins-inputs-imap-password]]
+[id="plugins-{type}s-{plugin}-password"]
 ===== `password` 
 
   * This is a required setting.
@@ -140,7 +129,7 @@ content-type as the event message.
 
 
 
-[[plugins-inputs-imap-port]]
+[id="plugins-{type}s-{plugin}-port"]
 ===== `port` 
 
   * Value type is <<number,number>>
@@ -148,7 +137,7 @@ content-type as the event message.
 
 
 
-[[plugins-inputs-imap-secure]]
+[id="plugins-{type}s-{plugin}-secure"]
 ===== `secure` 
 
   * Value type is <<boolean,boolean>>
@@ -156,36 +145,15 @@ content-type as the event message.
 
 
 
-[[plugins-inputs-imap-tags]]
-===== `tags` 
+[id="plugins-{type}s-{plugin}-strip_attachments"]
+===== `strip_attachments` 
 
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
 
-Add any number of arbitrary tags to your event.
 
-This can help with processing later.
 
-[[plugins-inputs-imap-type]]
-===== `type` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a `type` field to all events handled by this input.
-
-Types are used mainly for filter activation.
-
-The type is stored as part of the event itself, so you can
-also use the type to search for it in Kibana.
-
-If you try to set a type on an event that already has one (for
-example when you send an event from a shipper to an indexer) then
-a new input will not override the existing type. A type set at
-the shipper stays with that event for its life even
-when sent to another Logstash server.
-
-[[plugins-inputs-imap-user]]
+[id="plugins-{type}s-{plugin}-user"]
 ===== `user` 
 
   * This is a required setting.
@@ -194,7 +162,7 @@ when sent to another Logstash server.
 
 
 
-[[plugins-inputs-imap-verify_cert]]
+[id="plugins-{type}s-{plugin}-verify_cert"]
 ===== `verify_cert` 
 
   * Value type is <<boolean,boolean>>
@@ -203,3 +171,6 @@ when sent to another Logstash server.
 
 
 
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

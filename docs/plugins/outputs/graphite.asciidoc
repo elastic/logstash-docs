@@ -1,7 +1,24 @@
-[[plugins-outputs-graphite]]
-=== graphite
+:plugin: graphite
+:type: output
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.1.2
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-output-graphite/blob/v3.1.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
+
+=== Graphite output plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 This output allows you to pull metrics from your logs and ship them to
 Graphite. Graphite is an open source tool for storing and graphing metrics.
@@ -10,67 +27,33 @@ An example use case: Some applications emit aggregated stats in the logs
 every 10 seconds. Using the grok filter and this output, it is possible to
 capture the metric values from the logs and emit them to Graphite.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Graphite Output Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-graphite {
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-outputs-graphite-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-graphite-exclude_metrics>> |<<array,array>>|No|`["%{[^}]+}"]`
-| <<plugins-outputs-graphite-fields_are_metrics>> |<<boolean,boolean>>|No|`false`
-| <<plugins-outputs-graphite-host>> |<<string,string>>|No|`"localhost"`
-| <<plugins-outputs-graphite-include_metrics>> |<<array,array>>|No|`[".*"]`
-| <<plugins-outputs-graphite-metrics>> |<<hash,hash>>|No|`{}`
-| <<plugins-outputs-graphite-metrics_format>> |<<string,string>>|No|`"*"`
-| <<plugins-outputs-graphite-nested_object_separator>> |<<string,string>>|No|`"."`
-| <<plugins-outputs-graphite-port>> |<<number,number>>|No|`2003`
-| <<plugins-outputs-graphite-reconnect_interval>> |<<number,number>>|No|`2`
-| <<plugins-outputs-graphite-resend_on_failure>> |<<boolean,boolean>>|No|`false`
-| <<plugins-outputs-graphite-timestamp_field>> |<<string,string>>|No|`"@timestamp"`
-| <<plugins-outputs-graphite-workers>> |<<number,number>>|No|`1`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-exclude_metrics>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-fields_are_metrics>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-host>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-include_metrics>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-metrics>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-metrics_format>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-nested_object_separator>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-reconnect_interval>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-resend_on_failure>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-timestamp_field>> |<<string,string>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
 
 &nbsp;
 
-[[plugins-outputs-graphite-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-graphite-debug]]
-===== `debug`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Enable debug output.
-
-[[plugins-outputs-graphite-exclude_metrics]]
+[id="plugins-{type}s-{plugin}-exclude_metrics"]
 ===== `exclude_metrics` 
 
   * Value type is <<array,array>>
@@ -78,7 +61,7 @@ Enable debug output.
 
 Exclude regex matched metric names, by default exclude unresolved %{field} strings.
 
-[[plugins-outputs-graphite-fields_are_metrics]]
+[id="plugins-{type}s-{plugin}-fields_are_metrics"]
 ===== `fields_are_metrics` 
 
   * Value type is <<boolean,boolean>>
@@ -88,7 +71,7 @@ An array indicating that these event fields should be treated as metrics
 and will be sent verbatim to Graphite. You may use either `fields_are_metrics`
 or `metrics`, but not both.
 
-[[plugins-outputs-graphite-host]]
+[id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
   * Value type is <<string,string>>
@@ -96,7 +79,7 @@ or `metrics`, but not both.
 
 The hostname or IP address of the Graphite server.
 
-[[plugins-outputs-graphite-include_metrics]]
+[id="plugins-{type}s-{plugin}-include_metrics"]
 ===== `include_metrics` 
 
   * Value type is <<array,array>>
@@ -104,7 +87,7 @@ The hostname or IP address of the Graphite server.
 
 Include only regex matched metric names.
 
-[[plugins-outputs-graphite-metrics]]
+[id="plugins-{type}s-{plugin}-metrics"]
 ===== `metrics` 
 
   * Value type is <<hash,hash>>
@@ -120,7 +103,7 @@ The value will be coerced to a floating point value. Values which cannot be
 coerced will be set to zero (0). You may use either `metrics` or `fields_are_metrics`,
 but not both.
 
-[[plugins-outputs-graphite-metrics_format]]
+[id="plugins-{type}s-{plugin}-metrics_format"]
 ===== `metrics_format` 
 
   * Value type is <<string,string>>
@@ -133,7 +116,7 @@ replaced with the name of the actual metric.
 
 NOTE: If no metrics_format is defined, the name of the metric will be used as fallback.
 
-[[plugins-outputs-graphite-nested_object_separator]]
+[id="plugins-{type}s-{plugin}-nested_object_separator"]
 ===== `nested_object_separator` 
 
   * Value type is <<string,string>>
@@ -150,7 +133,7 @@ If you've specified a 'metrics_format' it will respect that,
 but you still may want control over the separator within these nested key names.
 This config setting changes the separator from the '.' default.
 
-[[plugins-outputs-graphite-port]]
+[id="plugins-{type}s-{plugin}-port"]
 ===== `port` 
 
   * Value type is <<number,number>>
@@ -158,7 +141,7 @@ This config setting changes the separator from the '.' default.
 
 The port to connect to on the Graphite server.
 
-[[plugins-outputs-graphite-reconnect_interval]]
+[id="plugins-{type}s-{plugin}-reconnect_interval"]
 ===== `reconnect_interval` 
 
   * Value type is <<number,number>>
@@ -166,7 +149,7 @@ The port to connect to on the Graphite server.
 
 Interval between reconnect attempts to Carbon.
 
-[[plugins-outputs-graphite-resend_on_failure]]
+[id="plugins-{type}s-{plugin}-resend_on_failure"]
 ===== `resend_on_failure` 
 
   * Value type is <<boolean,boolean>>
@@ -174,7 +157,7 @@ Interval between reconnect attempts to Carbon.
 
 Should metrics be resent on failure?
 
-[[plugins-outputs-graphite-timestamp_field]]
+[id="plugins-{type}s-{plugin}-timestamp_field"]
 ===== `timestamp_field` 
 
   * Value type is <<string,string>>
@@ -184,13 +167,7 @@ Use this field for the timestamp instead of '@timestamp' which is the
 default. Useful when backfilling or just getting more accurate data into
 graphite since you probably have a cache layer infront of Logstash.
 
-[[plugins-outputs-graphite-workers]]
-===== `workers` 
-
-  * Value type is <<number,number>>
-  * Default value is `1`
-
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

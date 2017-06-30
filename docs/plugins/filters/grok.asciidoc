@@ -1,7 +1,24 @@
-[[plugins-filters-grok]]
-=== grok
+:plugin: grok
+:type: filter
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.4.2
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-grok/blob/v3.4.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
+
+=== Grok filter plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 Parse arbitrary text and structure it.
 
@@ -135,112 +152,38 @@ The above will match and result in the following fields:
 The `timestamp`, `logsource`, `program`, and `pid` fields come from the
 `SYSLOGBASE` pattern which itself is defined by other patterns.
 
-&nbsp;
-
-==== Synopsis
-
-This plugin supports the following configuration options:
+Another option is to define patterns _inline_ in the filter using `pattern_definitions`.
+This is mostly for convenience and allows user to define a pattern which can be used just in that 
+filter. This newly defined patterns in `pattern_definitions` will not be available outside of that particular `grok` filter.
 
 
-Required configuration options:
+[id="plugins-{type}s-{plugin}-options"]
+==== Grok Filter Configuration Options
 
-[source,json]
---------------------------
-grok {
-}
---------------------------
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-filters-grok-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-grok-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-grok-break_on_match>> |<<boolean,boolean>>|No|`true`
-| <<plugins-filters-grok-keep_empty_captures>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-grok-match>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-grok-named_captures_only>> |<<boolean,boolean>>|No|`true`
-| <<plugins-filters-grok-overwrite>> |<<array,array>>|No|`[]`
-| <<plugins-filters-grok-patterns_dir>> |<<array,array>>|No|`[]`
-| <<plugins-filters-grok-patterns_files_glob>> |<<string,string>>|No|`"*"`
-| <<plugins-filters-grok-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-grok-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-grok-remove_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-grok-tag_on_failure>> |<<array,array>>|No|`["_grokparsefailure"]`
-| <<plugins-filters-grok-tag_on_timeout>> |<<string,string>>|No|`"_groktimeout"`
-| <<plugins-filters-grok-timeout_millis>> |<<number,number>>|No|`2000`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-break_on_match>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-keep_empty_captures>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-match>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-named_captures_only>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-overwrite>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-pattern_definitions>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-patterns_dir>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-patterns_files_glob>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-tag_on_failure>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-tag_on_timeout>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-timeout_millis>> |<<number,number>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
 
 &nbsp;
 
-[[plugins-filters-grok-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-If this filter is successful, add any arbitrary fields to this event.
-Field names can be dynamic and include parts of the event using the `%{field}`.
-
-Example:
-[source,ruby]
-    filter {
-      grok {
-        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
-      }
-    }
-[source,ruby]
-    # You can also add multiple fields at once:
-    filter {
-      grok {
-        add_field => {
-          "foo_%{somefield}" => "Hello world, from %{host}"
-          "new_field" => "new_static_value"
-        }
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add field `foo_hello` if it is present, with the
-value above and the `%{host}` piece replaced with that value from the
-event. The second example would also add a hardcoded field.
-
-[[plugins-filters-grok-add_tag]]
-===== `add_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, add arbitrary tags to the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      grok {
-        add_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also add multiple tags at once:
-    filter {
-      grok {
-        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
-
-[[plugins-filters-grok-break_on_match]]
+[id="plugins-{type}s-{plugin}-break_on_match"]
 ===== `break_on_match` 
 
   * Value type is <<boolean,boolean>>
@@ -250,7 +193,7 @@ Break on first match. The first successful match by grok will result in the
 filter being finished. If you want grok to try all patterns (maybe you are
 parsing different things), then set this to false.
 
-[[plugins-filters-grok-keep_empty_captures]]
+[id="plugins-{type}s-{plugin}-keep_empty_captures"]
 ===== `keep_empty_captures` 
 
   * Value type is <<boolean,boolean>>
@@ -258,7 +201,7 @@ parsing different things), then set this to false.
 
 If `true`, keep empty captures as event fields.
 
-[[plugins-filters-grok-match]]
+[id="plugins-{type}s-{plugin}-match"]
 ===== `match` 
 
   * Value type is <<hash,hash>>
@@ -279,7 +222,7 @@ If you need to match multiple patterns against a single field, the value can be 
     }
 
 
-[[plugins-filters-grok-named_captures_only]]
+[id="plugins-{type}s-{plugin}-named_captures_only"]
 ===== `named_captures_only` 
 
   * Value type is <<boolean,boolean>>
@@ -287,7 +230,7 @@ If you need to match multiple patterns against a single field, the value can be 
 
 If `true`, only store named captures from grok.
 
-[[plugins-filters-grok-overwrite]]
+[id="plugins-{type}s-{plugin}-overwrite"]
 ===== `overwrite` 
 
   * Value type is <<array,array>>
@@ -310,7 +253,18 @@ overwrite the `message` field with part of the match like so:
 In this case, a line like `May 29 16:37:11 sadness logger: hello world`
 will be parsed and `hello world` will overwrite the original message.
 
-[[plugins-filters-grok-patterns_dir]]
+[id="plugins-{type}s-{plugin}-pattern_definitions"]
+===== `pattern_definitions` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+A hash of pattern-name and pattern tuples defining custom patterns to be used by 
+the current filter. Patterns matching existing names will override the pre-existing 
+definition. Think of this as inline patterns available just for this definition of 
+grok
+
+[id="plugins-{type}s-{plugin}-patterns_dir"]
 ===== `patterns_dir` 
 
   * Value type is <<array,array>>
@@ -321,7 +275,7 @@ Logstash ships by default with a bunch of patterns, so you don't
 necessarily need to define this yourself unless you are adding additional
 patterns. You can point to multiple pattern directories using this setting.
 Note that Grok will read all files in the directory matching the patterns_files_glob
-and assume it's a pattern file (including any tilde backup files)
+and assume it's a pattern file (including any tilde backup files). 
 [source,ruby]
     patterns_dir => ["/opt/logstash/patterns", "/opt/logstash/extra_patterns"]
 
@@ -333,7 +287,9 @@ For example:
 [source,ruby]
     NUMBER \d+
 
-[[plugins-filters-grok-patterns_files_glob]]
+The patterns are loaded when the pipeline is created.
+
+[id="plugins-{type}s-{plugin}-patterns_files_glob"]
 ===== `patterns_files_glob` 
 
   * Value type is <<string,string>>
@@ -342,72 +298,7 @@ For example:
 Glob pattern, used to select the pattern files in the directories
 specified by patterns_dir
 
-[[plugins-filters-grok-periodic_flush]]
-===== `periodic_flush` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Call the filter flush method at regular interval.
-Optional.
-
-[[plugins-filters-grok-remove_field]]
-===== `remove_field` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary fields from this event.
-Fields names can be dynamic and include parts of the event using the %{field}
-Example:
-[source,ruby]
-    filter {
-      grok {
-        remove_field => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple fields at once:
-    filter {
-      grok {
-        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the field with name `foo_hello` if it is present. The second
-example would remove an additional, non-dynamic field.
-
-[[plugins-filters-grok-remove_tag]]
-===== `remove_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary tags from the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      grok {
-        remove_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple tags at once:
-    filter {
-      grok {
-        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the tag `foo_hello` if it is present. The second example
-would remove a sad, unwanted tag as well.
-
-[[plugins-filters-grok-tag_on_failure]]
+[id="plugins-{type}s-{plugin}-tag_on_failure"]
 ===== `tag_on_failure` 
 
   * Value type is <<array,array>>
@@ -416,7 +307,7 @@ would remove a sad, unwanted tag as well.
 Append values to the `tags` field when there has been no
 successful match
 
-[[plugins-filters-grok-tag_on_timeout]]
+[id="plugins-{type}s-{plugin}-tag_on_timeout"]
 ===== `tag_on_timeout` 
 
   * Value type is <<string,string>>
@@ -424,15 +315,19 @@ successful match
 
 Tag to apply if a grok regexp times out.
 
-[[plugins-filters-grok-timeout_millis]]
+[id="plugins-{type}s-{plugin}-timeout_millis"]
 ===== `timeout_millis` 
 
   * Value type is <<number,number>>
-  * Default value is `2000`
+  * Default value is `30000`
 
 Attempt to terminate regexps after this amount of time.
 This applies per pattern if multiple patterns are applied
 This will never timeout early, but may take a little longer to timeout.
 Actual timeout is approximate based on a 250ms quantization.
+Set to 0 to disable timeouts
 
 
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

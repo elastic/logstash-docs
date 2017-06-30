@@ -1,42 +1,39 @@
-[[plugins-codecs-msgpack]]
-=== msgpack
+:plugin: msgpack
+:type: codec
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.3
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-msgpack/blob/v3.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
 
+=== Msgpack codec plugin
 
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This codec reads MessagePack encoded content.
+
+[id="plugins-{type}s-{plugin}-options"]
+==== Msgpack Codec Configuration Options
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-format>> |<<string,string>>|No
+|=======================================================================
 
 &nbsp;
 
-==== Synopsis
-
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-msgpack {
-  }
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
-|=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-codecs-msgpack-format>> |<<string,string>>|No|`nil`
-|=======================================================================
-
-
-
-==== Details
-
-&nbsp;
-
-[[plugins-codecs-msgpack-format]]
+[id="plugins-{type}s-{plugin}-format"]
 ===== `format` 
 
   * Value type is <<string,string>>

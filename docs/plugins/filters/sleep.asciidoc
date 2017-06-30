@@ -1,112 +1,49 @@
-[[plugins-filters-sleep]]
-=== sleep
+:plugin: sleep
+:type: filter
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.4
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-sleep/blob/v3.0.4/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
+
+=== Sleep filter plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 Sleep a given amount of time. This will cause logstash
 to stall for the given amount of time. This is useful
 for rate limiting, etc.
 
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Sleep Filter Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-sleep {
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-filters-sleep-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-sleep-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-sleep-every>> |<<string,string>>|No|`1`
-| <<plugins-filters-sleep-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-sleep-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-sleep-remove_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-sleep-replay>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-sleep-time>> |<<string,string>>|No|
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-every>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-replay>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-time>> |<<string,string>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
 
 &nbsp;
 
-[[plugins-filters-sleep-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-If this filter is successful, add any arbitrary fields to this event.
-Field names can be dynamic and include parts of the event using the `%{field}`.
-
-Example:
-[source,ruby]
-    filter {
-      sleep {
-        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
-      }
-    }
-[source,ruby]
-    # You can also add multiple fields at once:
-    filter {
-      sleep {
-        add_field => {
-          "foo_%{somefield}" => "Hello world, from %{host}"
-          "new_field" => "new_static_value"
-        }
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add field `foo_hello` if it is present, with the
-value above and the `%{host}` piece replaced with that value from the
-event. The second example would also add a hardcoded field.
-
-[[plugins-filters-sleep-add_tag]]
-===== `add_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, add arbitrary tags to the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      sleep {
-        add_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also add multiple tags at once:
-    filter {
-      sleep {
-        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
-
-[[plugins-filters-sleep-every]]
+[id="plugins-{type}s-{plugin}-every"]
 ===== `every` 
 
   * Value type is <<string,string>>
@@ -123,72 +60,7 @@ Example:
       }
     }
 
-[[plugins-filters-sleep-periodic_flush]]
-===== `periodic_flush` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Call the filter flush method at regular interval.
-Optional.
-
-[[plugins-filters-sleep-remove_field]]
-===== `remove_field` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary fields from this event.
-Fields names can be dynamic and include parts of the event using the %{field}
-Example:
-[source,ruby]
-    filter {
-      sleep {
-        remove_field => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple fields at once:
-    filter {
-      sleep {
-        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the field with name `foo_hello` if it is present. The second
-example would remove an additional, non-dynamic field.
-
-[[plugins-filters-sleep-remove_tag]]
-===== `remove_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary tags from the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      sleep {
-        remove_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple tags at once:
-    filter {
-      sleep {
-        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the tag `foo_hello` if it is present. The second example
-would remove a sad, unwanted tag as well.
-
-[[plugins-filters-sleep-replay]]
+[id="plugins-{type}s-{plugin}-replay"]
 ===== `replay` 
 
   * Value type is <<boolean,boolean>>
@@ -219,7 +91,7 @@ For example:
 The above will sleep in such a way that it will perform
 replay 2-times faster than the original time speed.
 
-[[plugins-filters-sleep-time]]
+[id="plugins-{type}s-{plugin}-time"]
 ===== `time` 
 
   * Value type is <<string,string>>
@@ -242,3 +114,6 @@ Example:
     }
 
 
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
