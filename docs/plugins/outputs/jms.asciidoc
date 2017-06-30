@@ -1,0 +1,175 @@
+:plugin: jms
+:type: output
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.1
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-output-jms/blob/v3.0.1/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="plugins-{type}s-{plugin}"]
+
+=== Jms output plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Write events to a Jms Broker. Supports both Jms Queues and Topics.
+
+For more information about Jms, see <http://docs.oracle.com/javaee/6/tutorial/doc/bncdq.html>
+For more information about the Ruby Gem used, see <http://github.com/reidmorrison/jruby-jms>
+Here is a config example :
+ jms {
+    include_header => false
+    include_properties => false
+    include_body => true
+    use_jms_timestamp => false
+    queue_name => "myqueue"
+    yaml_file => "~/jms.yml"
+    yaml_section => "mybroker"
+  }
+
+
+
+[id="plugins-{type}s-{plugin}-options"]
+==== Jms Output Configuration Options
+
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-broker_url>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-delivery_mode>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-destination>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-factory>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-jndi_context>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-jndi_name>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-password>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-pub_sub>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-require_jars>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-username>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-yaml_file>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-yaml_section>> |<<string,string>>|No
+|=======================================================================
+
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="plugins-{type}s-{plugin}-broker_url"]
+===== `broker_url` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Url to use when connecting to the JMS provider
+
+[id="plugins-{type}s-{plugin}-delivery_mode"]
+===== `delivery_mode` 
+
+  * Value type is <<string,string>>
+  * Default value is `nil`
+
+Name of delivery mode to use
+Options are "persistent" and "non_persistent" if not defined nothing will be passed.
+
+[id="plugins-{type}s-{plugin}-destination"]
+===== `destination` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Name of the destination queue or topic to use.
+Mandatory
+
+[id="plugins-{type}s-{plugin}-factory"]
+===== `factory` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Name of JMS Provider Factory class
+
+[id="plugins-{type}s-{plugin}-jndi_context"]
+===== `jndi_context` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+Mandatory if jndi lookup is being used,
+contains details on how to connect to JNDI server
+
+[id="plugins-{type}s-{plugin}-jndi_name"]
+===== `jndi_name` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Name of JNDI entry at which the Factory can be found
+
+[id="plugins-{type}s-{plugin}-password"]
+===== `password` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Password to use when connecting to the JMS provider
+
+[id="plugins-{type}s-{plugin}-pub_sub"]
+===== `pub_sub` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+If pub-sub (topic) style should be used or not.
+Mandatory
+
+[id="plugins-{type}s-{plugin}-require_jars"]
+===== `require_jars` 
+
+  * Value type is <<array,array>>
+  * There is no default value for this setting.
+
+If you do not use an yaml configuration use either the factory or jndi_name.
+An optional array of Jar file names to load for the specified
+JMS provider. By using this option it is not necessary
+to put all the JMS Provider specific jar files into the
+java CLASSPATH prior to starting Logstash.
+
+[id="plugins-{type}s-{plugin}-username"]
+===== `username` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Username to connect to JMS provider with
+
+[id="plugins-{type}s-{plugin}-yaml_file"]
+===== `yaml_file` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Yaml config file
+
+[id="plugins-{type}s-{plugin}-yaml_section"]
+===== `yaml_section` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Yaml config file section name
+For some known examples, see: [Example jms.yml](https://github.com/reidmorrison/jruby-jms/blob/master/examples/jms.yml)
+
+
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

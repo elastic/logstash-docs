@@ -1,9 +1,24 @@
-[[plugins-outputs-redmine]]
-=== redmine
+:plugin: redmine
+:type: output
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.1
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-output-redmine/blob/v3.0.1/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-redmine`.
+[id="plugins-{type}s-{plugin}"]
 
+=== Redmine output plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 The redmine output is used to create a ticket via the API redmine.
 
@@ -24,58 +39,35 @@ It send a POST request in a JSON format and use TOKEN authentication
    }
  }
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Redmine Output Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-redmine {
-    priority_id => ...
-    project_id => ...
-    status_id => ...
-    token => ...
-    tracker_id => ...
-    url => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-outputs-redmine-assigned_to_id>> |<<number,number>>|No|`nil`
-| <<plugins-outputs-redmine-categorie_id>> |<<number,number>>|No|`nil`
-| <<plugins-outputs-redmine-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-redmine-description>> |<<string,string>>|No|`"%{message}"`
-| <<plugins-outputs-redmine-fixed_version_id>> |<<number,number>>|No|`nil`
-| <<plugins-outputs-redmine-parent_issue_id>> |<<number,number>>|No|`nil`
-| <<plugins-outputs-redmine-priority_id>> |<<number,number>>|Yes|
-| <<plugins-outputs-redmine-project_id>> |<<number,number>>|Yes|
-| <<plugins-outputs-redmine-ssl>> |<<boolean,boolean>>|No|`false`
-| <<plugins-outputs-redmine-status_id>> |<<number,number>>|Yes|
-| <<plugins-outputs-redmine-subject>> |<<string,string>>|No|`"%{host}"`
-| <<plugins-outputs-redmine-token>> |<<string,string>>|Yes|
-| <<plugins-outputs-redmine-tracker_id>> |<<number,number>>|Yes|
-| <<plugins-outputs-redmine-url>> |<<string,string>>|Yes|
-| <<plugins-outputs-redmine-workers>> |<<number,number>>|No|`1`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-assigned_to_id>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-categorie_id>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-description>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-fixed_version_id>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-parent_issue_id>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-priority_id>> |<<number,number>>|Yes
+| <<plugins-{type}s-{plugin}-project_id>> |<<number,number>>|Yes
+| <<plugins-{type}s-{plugin}-ssl>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-status_id>> |<<number,number>>|Yes
+| <<plugins-{type}s-{plugin}-subject>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-token>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-tracker_id>> |<<number,number>>|Yes
+| <<plugins-{type}s-{plugin}-url>> |<<string,string>>|Yes
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
 
 &nbsp;
 
-[[plugins-outputs-redmine-assigned_to_id]]
+[id="plugins-{type}s-{plugin}-assigned_to_id"]
 ===== `assigned_to_id` 
 
   * Value type is <<number,number>>
@@ -84,7 +76,7 @@ Available configuration options:
 redmine issue assigned_to
 not required for post_issue
 
-[[plugins-outputs-redmine-categorie_id]]
+[id="plugins-{type}s-{plugin}-categorie_id"]
 ===== `categorie_id` 
 
   * Value type is <<number,number>>
@@ -92,15 +84,7 @@ not required for post_issue
 
 not required for post_issue
 
-[[plugins-outputs-redmine-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-redmine-description]]
+[id="plugins-{type}s-{plugin}-description"]
 ===== `description` 
 
   * Value type is <<string,string>>
@@ -109,7 +93,7 @@ The codec used for output data. Output codecs are a convenient method for encodi
 redmine issue description
 required
 
-[[plugins-outputs-redmine-fixed_version_id]]
+[id="plugins-{type}s-{plugin}-fixed_version_id"]
 ===== `fixed_version_id` 
 
   * Value type is <<number,number>>
@@ -117,7 +101,7 @@ required
 
 redmine issue fixed_version_id
 
-[[plugins-outputs-redmine-parent_issue_id]]
+[id="plugins-{type}s-{plugin}-parent_issue_id"]
 ===== `parent_issue_id` 
 
   * Value type is <<number,number>>
@@ -126,7 +110,7 @@ redmine issue fixed_version_id
 redmine issue parent_issue_id
 not required for post_issue
 
-[[plugins-outputs-redmine-priority_id]]
+[id="plugins-{type}s-{plugin}-priority_id"]
 ===== `priority_id` 
 
   * This is a required setting.
@@ -136,7 +120,7 @@ not required for post_issue
 redmine issue priority_id
 required
 
-[[plugins-outputs-redmine-project_id]]
+[id="plugins-{type}s-{plugin}-project_id"]
 ===== `project_id` 
 
   * This is a required setting.
@@ -146,7 +130,7 @@ required
 redmine issue projet_id
 required
 
-[[plugins-outputs-redmine-ssl]]
+[id="plugins-{type}s-{plugin}-ssl"]
 ===== `ssl` 
 
   * Value type is <<boolean,boolean>>
@@ -154,7 +138,7 @@ required
 
 
 
-[[plugins-outputs-redmine-status_id]]
+[id="plugins-{type}s-{plugin}-status_id"]
 ===== `status_id` 
 
   * This is a required setting.
@@ -164,7 +148,7 @@ required
 redmine issue status_id
 required
 
-[[plugins-outputs-redmine-subject]]
+[id="plugins-{type}s-{plugin}-subject"]
 ===== `subject` 
 
   * Value type is <<string,string>>
@@ -173,7 +157,7 @@ required
 redmine issue subject
 required
 
-[[plugins-outputs-redmine-token]]
+[id="plugins-{type}s-{plugin}-token"]
 ===== `token` 
 
   * This is a required setting.
@@ -182,7 +166,7 @@ required
 
 redmine token user used for authentication
 
-[[plugins-outputs-redmine-tracker_id]]
+[id="plugins-{type}s-{plugin}-tracker_id"]
 ===== `tracker_id` 
 
   * This is a required setting.
@@ -192,7 +176,7 @@ redmine token user used for authentication
 redmine issue tracker_id
 required
 
-[[plugins-outputs-redmine-url]]
+[id="plugins-{type}s-{plugin}-url"]
 ===== `url` 
 
   * This is a required setting.
@@ -202,13 +186,7 @@ required
 host of redmine app
 value format : 'http://urlofredmine.tld' - Not add '/issues' at end
 
-[[plugins-outputs-redmine-workers]]
-===== `workers` 
-
-  * Value type is <<number,number>>
-  * Default value is `1`
-
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

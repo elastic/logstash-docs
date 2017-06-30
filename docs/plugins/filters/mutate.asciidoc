@@ -1,118 +1,56 @@
-[[plugins-filters-mutate]]
-=== mutate
+:plugin: mutate
+:type: filter
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.1.5
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.1.5/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
+
+=== Mutate filter plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 The mutate filter allows you to perform general mutations on fields. You
 can rename, remove, replace, and modify fields in your events.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Mutate Filter Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-mutate {
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-filters-mutate-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-mutate-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-mutate-convert>> |<<hash,hash>>|No|
-| <<plugins-filters-mutate-gsub>> |<<array,array>>|No|
-| <<plugins-filters-mutate-join>> |<<hash,hash>>|No|
-| <<plugins-filters-mutate-lowercase>> |<<array,array>>|No|
-| <<plugins-filters-mutate-merge>> |<<hash,hash>>|No|
-| <<plugins-filters-mutate-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-mutate-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-mutate-remove_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-mutate-rename>> |<<hash,hash>>|No|
-| <<plugins-filters-mutate-replace>> |<<hash,hash>>|No|
-| <<plugins-filters-mutate-split>> |<<hash,hash>>|No|
-| <<plugins-filters-mutate-strip>> |<<array,array>>|No|
-| <<plugins-filters-mutate-update>> |<<hash,hash>>|No|
-| <<plugins-filters-mutate-uppercase>> |<<array,array>>|No|
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-convert>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-copy>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-gsub>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-join>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-lowercase>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-merge>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-rename>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-replace>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-split>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-strip>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-update>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-uppercase>> |<<array,array>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
 
 &nbsp;
 
-[[plugins-filters-mutate-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-If this filter is successful, add any arbitrary fields to this event.
-Field names can be dynamic and include parts of the event using the `%{field}`.
-
-Example:
-[source,ruby]
-    filter {
-      mutate {
-        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
-      }
-    }
-[source,ruby]
-    # You can also add multiple fields at once:
-    filter {
-      mutate {
-        add_field => {
-          "foo_%{somefield}" => "Hello world, from %{host}"
-          "new_field" => "new_static_value"
-        }
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add field `foo_hello` if it is present, with the
-value above and the `%{host}` piece replaced with that value from the
-event. The second example would also add a hardcoded field.
-
-[[plugins-filters-mutate-add_tag]]
-===== `add_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, add arbitrary tags to the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      mutate {
-        add_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also add multiple tags at once:
-    filter {
-      mutate {
-        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
-
-[[plugins-filters-mutate-convert]]
+[id="plugins-{type}s-{plugin}-convert"]
 ===== `convert` 
 
   * Value type is <<hash,hash>>
@@ -140,7 +78,23 @@ Example:
       }
     }
 
-[[plugins-filters-mutate-gsub]]
+[id="plugins-{type}s-{plugin}-copy"]
+===== `copy` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+Copy an existing field to another field. Existing target field will be overriden.
+
+Example:
+[source,ruby]
+    filter {
+      mutate {
+         copy => { "source_field" => "dest_field" }
+      }
+    }
+
+[id="plugins-{type}s-{plugin}-gsub"]
 ===== `gsub` 
 
   * Value type is <<array,array>>
@@ -169,7 +123,7 @@ Example:
     }
 
 
-[[plugins-filters-mutate-join]]
+[id="plugins-{type}s-{plugin}-join"]
 ===== `join` 
 
   * Value type is <<hash,hash>>
@@ -185,7 +139,7 @@ Example:
      }
    }
 
-[[plugins-filters-mutate-lowercase]]
+[id="plugins-{type}s-{plugin}-lowercase"]
 ===== `lowercase` 
 
   * Value type is <<array,array>>
@@ -201,7 +155,7 @@ Example:
       }
     }
 
-[[plugins-filters-mutate-merge]]
+[id="plugins-{type}s-{plugin}-merge"]
 ===== `merge` 
 
   * Value type is <<hash,hash>>
@@ -222,92 +176,7 @@ Example:
       }
     }
 
-[[plugins-filters-mutate-periodic_flush]]
-===== `periodic_flush` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Call the filter flush method at regular interval.
-Optional.
-
-[[plugins-filters-mutate-remove]]
-===== `remove`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
-
-Remove one or more fields.
-
-Example:
-[source,ruby]
-    filter {
-      mutate {
-        remove => [ "client" ]  # Removes the 'client' field
-      }
-    }
-
-This option is deprecated, instead use `remove_field` option available in all
-filters.
-
-[[plugins-filters-mutate-remove_field]]
-===== `remove_field` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary fields from this event.
-Fields names can be dynamic and include parts of the event using the %{field}
-Example:
-[source,ruby]
-    filter {
-      mutate {
-        remove_field => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple fields at once:
-    filter {
-      mutate {
-        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the field with name `foo_hello` if it is present. The second
-example would remove an additional, non-dynamic field.
-
-[[plugins-filters-mutate-remove_tag]]
-===== `remove_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary tags from the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      mutate {
-        remove_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple tags at once:
-    filter {
-      mutate {
-        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the tag `foo_hello` if it is present. The second example
-would remove a sad, unwanted tag as well.
-
-[[plugins-filters-mutate-rename]]
+[id="plugins-{type}s-{plugin}-rename"]
 ===== `rename` 
 
   * Value type is <<hash,hash>>
@@ -324,7 +193,7 @@ Example:
       }
     }
 
-[[plugins-filters-mutate-replace]]
+[id="plugins-{type}s-{plugin}-replace"]
 ===== `replace` 
 
   * Value type is <<hash,hash>>
@@ -341,7 +210,7 @@ Example:
       }
     }
 
-[[plugins-filters-mutate-split]]
+[id="plugins-{type}s-{plugin}-split"]
 ===== `split` 
 
   * Value type is <<hash,hash>>
@@ -358,7 +227,7 @@ Example:
       }
     }
 
-[[plugins-filters-mutate-strip]]
+[id="plugins-{type}s-{plugin}-strip"]
 ===== `strip` 
 
   * Value type is <<array,array>>
@@ -374,7 +243,7 @@ Example:
       }
     }
 
-[[plugins-filters-mutate-update]]
+[id="plugins-{type}s-{plugin}-update"]
 ===== `update` 
 
   * Value type is <<hash,hash>>
@@ -391,7 +260,7 @@ Example:
       }
     }
 
-[[plugins-filters-mutate-uppercase]]
+[id="plugins-{type}s-{plugin}-uppercase"]
 ===== `uppercase` 
 
   * Value type is <<array,array>>
@@ -408,3 +277,6 @@ Example:
     }
 
 
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

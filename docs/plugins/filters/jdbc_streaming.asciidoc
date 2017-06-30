@@ -1,27 +1,30 @@
-[[plugins-filters-jdbc_streaming]]
-=== jdbc_streaming
+:plugin: jdbc_streaming
+:type: filter
 
-* Version: 1.0.0
-* Released on: March 27, 2017
-* https://github.com/logstash-plugins/logstash-filter-jdbc_streaming/blob/master/CHANGELOG.md#100[Changelog]
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v1.0.1
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-jdbc_streaming/blob/v1.0.1/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
 
-==== Installation
+=== Jdbc_streaming filter plugin
 
-For plugins not bundled by default, it is easy to install by running `bin/logstash-plugin install logstash-filter-jdbc_streaming`. See <<working-with-plugins>> for more details.
-
-
-==== Getting Help
-
-For questions about the plugin, open a topic in the http://discuss.elastic.co[Discuss] forums. For bugs or feature requests, open an issue in https://github.com/elastic/logstash[Github].
-For the list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Elastic Support Matrix].
+include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-Enrich Logstash events with your database data. This filter executes a SQL query and stores the result set in the field
-specified as `target`. It will cache the results locally in an LRU cache with a configurable expiry time.
+This filter executes a SQL query and store the result set in the field
+specified as `target`.
+It will cache the results locally in an LRU cache with expiry
 
-For example you can load a row based on an id from an event
+For example you can load a row based on an id from in the event
 
 [source,ruby]
 filter {
@@ -38,122 +41,38 @@ filter {
 }
 
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Jdbc_streaming Filter Configuration Options
 
-==== Synopsis
-
-This plugin supports the following configuration options:
-
-Required configuration options:
-
-[source,json]
---------------------------
-jdbc_streaming {
-    jdbc_connection_string => ...
-    jdbc_driver_class => ...
-    statement => ...
-    target => ...
-}
---------------------------
-
-
-
-Available configuration options:
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<plugins-filters-jdbc_streaming-add_field>> |<<hash,hash>>|No
-| <<plugins-filters-jdbc_streaming-add_tag>> |<<array,array>>|No
-| <<plugins-filters-jdbc_streaming-cache_expiration>> |<<number,number>>|No
-| <<plugins-filters-jdbc_streaming-cache_size>> |<<number,number>>|No
-| <<plugins-filters-jdbc_streaming-default_hash>> |<<hash,hash>>|No
-| <<plugins-filters-jdbc_streaming-enable_metric>> |<<boolean,boolean>>|No
-| <<plugins-filters-jdbc_streaming-id>> |<<string,string>>|No
-| <<plugins-filters-jdbc_streaming-jdbc_connection_string>> |<<string,string>>|Yes
-| <<plugins-filters-jdbc_streaming-jdbc_driver_class>> |<<string,string>>|Yes
-| <<plugins-filters-jdbc_streaming-jdbc_driver_library>> |a valid filesystem path|No
-| <<plugins-filters-jdbc_streaming-jdbc_password>> |<<password,password>>|No
-| <<plugins-filters-jdbc_streaming-jdbc_user>> |<<string,string>>|No
-| <<plugins-filters-jdbc_streaming-jdbc_validate_connection>> |<<boolean,boolean>>|No
-| <<plugins-filters-jdbc_streaming-jdbc_validation_timeout>> |<<number,number>>|No
-| <<plugins-filters-jdbc_streaming-parameters>> |<<hash,hash>>|No
-| <<plugins-filters-jdbc_streaming-periodic_flush>> |<<boolean,boolean>>|No
-| <<plugins-filters-jdbc_streaming-remove_field>> |<<array,array>>|No
-| <<plugins-filters-jdbc_streaming-remove_tag>> |<<array,array>>|No
-| <<plugins-filters-jdbc_streaming-statement>> |<<string,string>>|Yes
-| <<plugins-filters-jdbc_streaming-tag_on_default_use>> |<<array,array>>|No
-| <<plugins-filters-jdbc_streaming-tag_on_failure>> |<<array,array>>|No
-| <<plugins-filters-jdbc_streaming-target>> |<<string,string>>|Yes
-| <<plugins-filters-jdbc_streaming-use_cache>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-cache_expiration>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-cache_size>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-default_hash>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-jdbc_connection_string>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-jdbc_driver_class>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-jdbc_driver_library>> |a valid filesystem path|No
+| <<plugins-{type}s-{plugin}-jdbc_password>> |<<password,password>>|No
+| <<plugins-{type}s-{plugin}-jdbc_user>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-jdbc_validate_connection>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-jdbc_validation_timeout>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-parameters>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-statement>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-tag_on_default_use>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-tag_on_failure>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-target>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-use_cache>> |<<boolean,boolean>>|No
 |=======================================================================
 
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
 
 &nbsp;
 
-[[plugins-filters-jdbc_streaming-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-If this filter is successful, add any arbitrary fields to this event.
-Field names can be dynamic and include parts of the event using the `%{field}`.
-
-Example:
-[source,ruby]
-    filter {
-      jdbc_streaming {
-        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
-      }
-    }
-[source,ruby]
-    # You can also add multiple fields at once:
-    filter {
-      jdbc_streaming {
-        add_field => {
-          "foo_%{somefield}" => "Hello world, from %{host}"
-          "new_field" => "new_static_value"
-        }
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add field `foo_hello` if it is present, with the
-value above and the `%{host}` piece replaced with that value from the
-event. The second example would also add a hardcoded field.
-
-[[plugins-filters-jdbc_streaming-add_tag]]
-===== `add_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, add arbitrary tags to the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      jdbc_streaming {
-        add_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also add multiple tags at once:
-    filter {
-      jdbc_streaming {
-        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
-
-[[plugins-filters-jdbc_streaming-cache_expiration]]
+[id="plugins-{type}s-{plugin}-cache_expiration"]
 ===== `cache_expiration` 
 
   * Value type is <<number,number>>
@@ -167,7 +86,7 @@ the cache entry expires, then the jdbc lookup will be tried again for the same p
 Conversely, while the cache contains valid results any external problem that would cause
 jdbc errors, will not be noticed for the cache_expiration period.
 
-[[plugins-filters-jdbc_streaming-cache_size]]
+[id="plugins-{type}s-{plugin}-cache_size"]
 ===== `cache_size` 
 
   * Value type is <<number,number>>
@@ -176,7 +95,7 @@ jdbc errors, will not be noticed for the cache_expiration period.
 The maximum number of cache entries are stored, defaults to 500 entries
 The least recently used entry will be evicted
 
-[[plugins-filters-jdbc_streaming-default_hash]]
+[id="plugins-{type}s-{plugin}-default_hash"]
 ===== `default_hash` 
 
   * Value type is <<hash,hash>>
@@ -185,38 +104,7 @@ The least recently used entry will be evicted
 Define a default object to use when lookup fails to return a matching row.
 ensure that the key names of this object match the columns from the statement
 
-[[plugins-filters-jdbc_streaming-enable_metric]]
-===== `enable_metric` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Disable or enable metric logging for this specific plugin instance
-by default we record all the metrics we can, but you can disable metrics collection
-for a specific plugin.
-
-[[plugins-filters-jdbc_streaming-id]]
-===== `id` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
-It is strongly recommended to set this ID in your configuration. This is particularly useful 
-when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
-Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
-
-[source,ruby]
----------------------------------------------------------------------------------------------------
-output {
- stdout {
-   id => "my_plugin_id"
- }
-}
----------------------------------------------------------------------------------------------------
-
-
-[[plugins-filters-jdbc_streaming-jdbc_connection_string]]
+[id="plugins-{type}s-{plugin}-jdbc_connection_string"]
 ===== `jdbc_connection_string` 
 
   * This is a required setting.
@@ -225,7 +113,7 @@ output {
 
 JDBC connection string
 
-[[plugins-filters-jdbc_streaming-jdbc_driver_class]]
+[id="plugins-{type}s-{plugin}-jdbc_driver_class"]
 ===== `jdbc_driver_class` 
 
   * This is a required setting.
@@ -234,7 +122,7 @@ JDBC connection string
 
 JDBC driver class to load, for example "oracle.jdbc.OracleDriver" or "org.apache.derby.jdbc.ClientDriver"
 
-[[plugins-filters-jdbc_streaming-jdbc_driver_library]]
+[id="plugins-{type}s-{plugin}-jdbc_driver_library"]
 ===== `jdbc_driver_library` 
 
   * Value type is <<path,path>>
@@ -246,7 +134,7 @@ This method is called when someone includes this module
 Add these methods to the 'base' given.
 JDBC driver library path to third party driver library.
 
-[[plugins-filters-jdbc_streaming-jdbc_password]]
+[id="plugins-{type}s-{plugin}-jdbc_password"]
 ===== `jdbc_password` 
 
   * Value type is <<password,password>>
@@ -254,7 +142,7 @@ JDBC driver library path to third party driver library.
 
 JDBC password
 
-[[plugins-filters-jdbc_streaming-jdbc_user]]
+[id="plugins-{type}s-{plugin}-jdbc_user"]
 ===== `jdbc_user` 
 
   * Value type is <<string,string>>
@@ -262,7 +150,7 @@ JDBC password
 
 JDBC user
 
-[[plugins-filters-jdbc_streaming-jdbc_validate_connection]]
+[id="plugins-{type}s-{plugin}-jdbc_validate_connection"]
 ===== `jdbc_validate_connection` 
 
   * Value type is <<boolean,boolean>>
@@ -271,7 +159,7 @@ JDBC user
 Connection pool configuration.
 Validate connection before use.
 
-[[plugins-filters-jdbc_streaming-jdbc_validation_timeout]]
+[id="plugins-{type}s-{plugin}-jdbc_validation_timeout"]
 ===== `jdbc_validation_timeout` 
 
   * Value type is <<number,number>>
@@ -280,7 +168,7 @@ Validate connection before use.
 Connection pool configuration.
 How often to validate a connection (in seconds)
 
-[[plugins-filters-jdbc_streaming-parameters]]
+[id="plugins-{type}s-{plugin}-parameters"]
 ===== `parameters` 
 
   * Value type is <<hash,hash>>
@@ -288,72 +176,7 @@ How often to validate a connection (in seconds)
 
 Hash of query parameter, for example `{ "id" => "id_field" }`
 
-[[plugins-filters-jdbc_streaming-periodic_flush]]
-===== `periodic_flush` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Call the filter flush method at regular interval.
-Optional.
-
-[[plugins-filters-jdbc_streaming-remove_field]]
-===== `remove_field` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary fields from this event.
-Fields names can be dynamic and include parts of the event using the %{field}
-Example:
-[source,ruby]
-    filter {
-      jdbc_streaming {
-        remove_field => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple fields at once:
-    filter {
-      jdbc_streaming {
-        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the field with name `foo_hello` if it is present. The second
-example would remove an additional, non-dynamic field.
-
-[[plugins-filters-jdbc_streaming-remove_tag]]
-===== `remove_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary tags from the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      jdbc_streaming {
-        remove_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple tags at once:
-    filter {
-      jdbc_streaming {
-        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the tag `foo_hello` if it is present. The second example
-would remove a sad, unwanted tag as well.
-
-[[plugins-filters-jdbc_streaming-statement]]
+[id="plugins-{type}s-{plugin}-statement"]
 ===== `statement` 
 
   * This is a required setting.
@@ -363,7 +186,7 @@ would remove a sad, unwanted tag as well.
 Statement to execute.
 To use parameters, use named parameter syntax, for example "SELECT * FROM MYTABLE WHERE ID = :id"
 
-[[plugins-filters-jdbc_streaming-tag_on_default_use]]
+[id="plugins-{type}s-{plugin}-tag_on_default_use"]
 ===== `tag_on_default_use` 
 
   * Value type is <<array,array>>
@@ -371,7 +194,7 @@ To use parameters, use named parameter syntax, for example "SELECT * FROM MYTABL
 
 Append values to the `tags` field if no record was found and default values were used
 
-[[plugins-filters-jdbc_streaming-tag_on_failure]]
+[id="plugins-{type}s-{plugin}-tag_on_failure"]
 ===== `tag_on_failure` 
 
   * Value type is <<array,array>>
@@ -379,7 +202,7 @@ Append values to the `tags` field if no record was found and default values were
 
 Append values to the `tags` field if sql error occured
 
-[[plugins-filters-jdbc_streaming-target]]
+[id="plugins-{type}s-{plugin}-target"]
 ===== `target` 
 
   * This is a required setting.
@@ -389,7 +212,7 @@ Append values to the `tags` field if sql error occured
 Define the target field to store the extracted result(s)
 Field is overwritten if exists
 
-[[plugins-filters-jdbc_streaming-use_cache]]
+[id="plugins-{type}s-{plugin}-use_cache"]
 ===== `use_cache` 
 
   * Value type is <<boolean,boolean>>
@@ -398,3 +221,6 @@ Field is overwritten if exists
 Enable or disable caching, boolean true or false, defaults to true
 
 
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

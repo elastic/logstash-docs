@@ -1,58 +1,56 @@
-[[plugins-outputs-irc]]
-=== irc
+:plugin: irc
+:type: output
 
-NOTE: This is a community-maintained plugin!
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.3
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-output-irc/blob/v3.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="plugins-{type}s-{plugin}"]
+
+=== Irc output plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 Write events to IRC
 
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Irc Output Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-irc {
-    channels => ...
-    host => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-outputs-irc-channels>> |<<array,array>>|Yes|
-| <<plugins-outputs-irc-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-irc-format>> |<<string,string>>|No|`"%{message}"`
-| <<plugins-outputs-irc-host>> |<<string,string>>|Yes|
-| <<plugins-outputs-irc-messages_per_second>> |<<number,number>>|No|`0.5`
-| <<plugins-outputs-irc-nick>> |<<string,string>>|No|`"logstash"`
-| <<plugins-outputs-irc-password>> |<<password,password>>|No|
-| <<plugins-outputs-irc-port>> |<<number,number>>|No|`6667`
-| <<plugins-outputs-irc-post_string>> |<<string,string>>|No|
-| <<plugins-outputs-irc-pre_string>> |<<string,string>>|No|
-| <<plugins-outputs-irc-real>> |<<string,string>>|No|`"logstash"`
-| <<plugins-outputs-irc-secure>> |<<boolean,boolean>>|No|`false`
-| <<plugins-outputs-irc-user>> |<<string,string>>|No|`"logstash"`
-| <<plugins-outputs-irc-workers>> |<<number,number>>|No|`1`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-channels>> |<<array,array>>|Yes
+| <<plugins-{type}s-{plugin}-format>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-host>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-messages_per_second>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-nick>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-password>> |<<password,password>>|No
+| <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-post_string>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-pre_string>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-real>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-secure>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-user>> |<<string,string>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
 
 &nbsp;
 
-[[plugins-outputs-irc-channels]]
+[id="plugins-{type}s-{plugin}-channels"]
 ===== `channels` 
 
   * This is a required setting.
@@ -64,15 +62,7 @@ Channels to broadcast to.
 These should be full channel names including the '#' symbol, such as
 "#logstash".
 
-[[plugins-outputs-irc-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-irc-format]]
+[id="plugins-{type}s-{plugin}-format"]
 ===== `format` 
 
   * Value type is <<string,string>>
@@ -80,7 +70,7 @@ The codec used for output data. Output codecs are a convenient method for encodi
 
 Message format to send, event tokens are usable here
 
-[[plugins-outputs-irc-host]]
+[id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
   * This is a required setting.
@@ -89,7 +79,7 @@ Message format to send, event tokens are usable here
 
 Address of the host to connect to
 
-[[plugins-outputs-irc-messages_per_second]]
+[id="plugins-{type}s-{plugin}-messages_per_second"]
 ===== `messages_per_second` 
 
   * Value type is <<number,number>>
@@ -97,7 +87,7 @@ Address of the host to connect to
 
 Limit the rate of messages sent to IRC in messages per second.
 
-[[plugins-outputs-irc-nick]]
+[id="plugins-{type}s-{plugin}-nick"]
 ===== `nick` 
 
   * Value type is <<string,string>>
@@ -105,7 +95,7 @@ Limit the rate of messages sent to IRC in messages per second.
 
 IRC Nickname
 
-[[plugins-outputs-irc-password]]
+[id="plugins-{type}s-{plugin}-password"]
 ===== `password` 
 
   * Value type is <<password,password>>
@@ -113,7 +103,7 @@ IRC Nickname
 
 IRC server password
 
-[[plugins-outputs-irc-port]]
+[id="plugins-{type}s-{plugin}-port"]
 ===== `port` 
 
   * Value type is <<number,number>>
@@ -121,7 +111,7 @@ IRC server password
 
 Port on host to connect to.
 
-[[plugins-outputs-irc-post_string]]
+[id="plugins-{type}s-{plugin}-post_string"]
 ===== `post_string` 
 
   * Value type is <<string,string>>
@@ -129,7 +119,7 @@ Port on host to connect to.
 
 Static string after event
 
-[[plugins-outputs-irc-pre_string]]
+[id="plugins-{type}s-{plugin}-pre_string"]
 ===== `pre_string` 
 
   * Value type is <<string,string>>
@@ -137,7 +127,7 @@ Static string after event
 
 Static string before event
 
-[[plugins-outputs-irc-real]]
+[id="plugins-{type}s-{plugin}-real"]
 ===== `real` 
 
   * Value type is <<string,string>>
@@ -145,7 +135,7 @@ Static string before event
 
 IRC Real name
 
-[[plugins-outputs-irc-secure]]
+[id="plugins-{type}s-{plugin}-secure"]
 ===== `secure` 
 
   * Value type is <<boolean,boolean>>
@@ -153,7 +143,7 @@ IRC Real name
 
 Set this to true to enable SSL.
 
-[[plugins-outputs-irc-user]]
+[id="plugins-{type}s-{plugin}-user"]
 ===== `user` 
 
   * Value type is <<string,string>>
@@ -161,13 +151,7 @@ Set this to true to enable SSL.
 
 IRC Username
 
-[[plugins-outputs-irc-workers]]
-===== `workers` 
-
-  * Value type is <<number,number>>
-  * Default value is `1`
-
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

@@ -1,5 +1,24 @@
-[[plugins-filters-throttle]]
-=== throttle
+:plugin: throttle
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v4.0.2
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-throttle/blob/v4.0.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="plugins-{type}s-{plugin}"]
+
+=== Throttle filter plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 The throttle filter is for throttling the number of events.  The filter is
 configured with a lower bound, the "before_count", and upper bound, the "after_count",
@@ -13,100 +32,100 @@ The plugin is thread-safe and properly tracks past events.
 For example, if you wanted to throttle events so you only receive an event after 2
 occurrences and you get no more than 3 in 10 minutes, you would use the configuration:
 [source,ruby]
-   period => 600
-   max_age => 1200
-   before_count => 3
-   after_count => 5
+    period => 600
+    max_age => 1200
+    before_count => 3
+    after_count => 5
 
 Which would result in:
 ==========================
-   event 1 - throttled (successful filter, period start)
-   event 2 - throttled (successful filter)
-   event 3 - not throttled
-   event 4 - not throttled
-   event 5 - not throttled
-   event 6 - throttled (successful filter)
-   event 7 - throttled (successful filter)
-   event x - throttled (successful filter)
-   period end
-   event 1 - throttled (successful filter, period start)
-   event 2 - throttled (successful filter)
-   event 3 - not throttled
-   event 4 - not throttled
-   event 5 - not throttled
-   event 6 - throttled (successful filter)
-   ...
+    event 1 - throttled (successful filter, period start)
+    event 2 - throttled (successful filter)
+    event 3 - not throttled
+    event 4 - not throttled
+    event 5 - not throttled
+    event 6 - throttled (successful filter)
+    event 7 - throttled (successful filter)
+    event x - throttled (successful filter)
+    period end
+    event 1 - throttled (successful filter, period start)
+    event 2 - throttled (successful filter)
+    event 3 - not throttled
+    event 4 - not throttled
+    event 5 - not throttled
+    event 6 - throttled (successful filter)
+    ...
 ==========================
 Another example is if you wanted to throttle events so you only
 receive 1 event per hour, you would use the configuration:
 [source,ruby]
-   period => 3600
-   max_age => 7200
-   before_count => -1
-   after_count => 1
+    period => 3600
+    max_age => 7200
+    before_count => -1
+    after_count => 1
 
 Which would result in:
 ==========================
-   event 1 - not throttled (period start)
-   event 2 - throttled (successful filter)
-   event 3 - throttled (successful filter)
-   event 4 - throttled (successful filter)
-   event x - throttled (successful filter)
-   period end
-   event 1 - not throttled (period start)
-   event 2 - throttled (successful filter)
-   event 3 - throttled (successful filter)
-   event 4 - throttled (successful filter)
-   ...
+    event 1 - not throttled (period start)
+    event 2 - throttled (successful filter)
+    event 3 - throttled (successful filter)
+    event 4 - throttled (successful filter)
+    event x - throttled (successful filter)
+    period end
+    event 1 - not throttled (period start)
+    event 2 - throttled (successful filter)
+    event 3 - throttled (successful filter)
+    event 4 - throttled (successful filter)
+    ...
 ==========================
 A common use case would be to use the throttle filter to throttle events before 3 and
 after 5 while using multiple fields for the key and then use the drop filter to remove
 throttled events. This configuration might appear as:
 [source,ruby]
-   filter {
-     throttle {
-       before_count => 3
-       after_count => 5
-       period => 3600
-       max_age => 7200
-       key => "%{host}%{message}"
-       add_tag => "throttled"
-     }
-     if "throttled" in [tags] {
-       drop { }
-     }
-   }
+    filter {
+      throttle {
+        before_count => 3
+        after_count => 5
+        period => 3600
+        max_age => 7200
+        key => "%{host}%{message}"
+        add_tag => "throttled"
+      }
+      if "throttled" in [tags] {
+        drop { }
+      }
+    }
 
 Another case would be to store all events, but only email non-throttled events
 so the op's inbox isn't flooded with emails in the event of a system error.
 This configuration might appear as:
 [source,ruby]
-   filter {
-     throttle {
-       before_count => 3
-       after_count => 5
-       period => 3600
-       max_age => 7200
-       key => "%{message}"
-       add_tag => "throttled"
-     }
-   }
-   output {
-     if "throttled" not in [tags] {
-       email {
-         from => "logstash@mycompany.com"
-         subject => "Production System Alert"
-         to => "ops@mycompany.com"
-         via => "sendmail"
-         body => "Alert on %{host} from path %{path}:\n\n%{message}"
-         options => { "location" => "/usr/sbin/sendmail" }
-       }
-     }
-     elasticsearch_http {
-       host => "localhost"
-       port => "19200"
-     }
-   }
+    filter {
+      throttle {
+        before_count => 3
+        after_count => 5
+        period => 3600
+        max_age => 7200
+        key => "%{message}"
+        add_tag => "throttled"
+      }
+    }
+    output {
+      if "throttled" not in [tags] {
+        email {
+          from => "logstash@mycompany.com"
+          subject => "Production System Alert"
+          to => "ops@mycompany.com"
+          via => "sendmail"
+          body => "Alert on %{host} from path %{path}:\n\n%{message}"
+          options => { "location" => "/usr/sbin/sendmail" }
+        }
+      }
+      elasticsearch_http {
+        host => "localhost"
+        port => "19200"
+      }
+    }
 
 When an event is received, the event key is stored in a key_cache.  The key references
 a timeslot_cache.  The event is allocated to a timeslot (created dynamically) based on
@@ -117,128 +136,53 @@ The timeslot counter is incremented once again.
 The timeslot expires if the maximum age has been exceeded.  The age is calculated
 based on the latest event timestamp and the max_age configuration option.
 
-       ---[::.. DESIGN ..::]---
+        ---[::.. DESIGN ..::]---
 
 +- [key_cache] -+  +-- [timeslot_cache] --+
 |               |  | @created: 1439839636 |
-                  | @latest:  1439839836 |
-  [a.b.c]  =>     +----------------------+
-                  | [1439839636] => 1    |
-                  | [1439839736] => 3    |
-                  | [1439839836] => 2    |
-                  +----------------------+
+                   | @latest:  1439839836 |
+   [a.b.c]  =>     +----------------------+
+                   | [1439839636] => 1    |
+                   | [1439839736] => 3    |
+                   | [1439839836] => 2    |
+                   +----------------------+
 
-                  +-- [timeslot_cache] --+
-                  | @created: eeeeeeeeee |
-                  | @latest:  llllllllll |
-  [x.y.z]  =>     +----------------------+
-                  | [0000000060] => x    |
-                  | [0000000120] => y    |
+                   +-- [timeslot_cache] --+
+                   | @created: eeeeeeeeee |
+                   | @latest:  llllllllll |
+   [x.y.z]  =>     +----------------------+
+                   | [0000000060] => x    |
+                   | [0000000120] => y    |
 |               |  | [..........] => N    |
 +---------------+  +----------------------+
 
+Frank de Jong (@frapex)
+Mike Pilone (@mikepilone)
 
-==== Synopsis
+only update if greater than current
 
-This plugin supports the following configuration options:
+[id="plugins-{type}s-{plugin}-options"]
+==== Throttle Filter Configuration Options
 
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-Required configuration options:
-
-[source,json]
---------------------------
-throttle {
-    key => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-filters-throttle-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-throttle-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-throttle-after_count>> |<<number,number>>|No|`-1`
-| <<plugins-filters-throttle-before_count>> |<<number,number>>|No|`-1`
-| <<plugins-filters-throttle-key>> |<<string,string>>|Yes|
-| <<plugins-filters-throttle-max_age>> |<<number,number>>|No|`3600`
-| <<plugins-filters-throttle-max_counters>> |<<number,number>>|No|`100000`
-| <<plugins-filters-throttle-period>> |<<string,string>>|No|`"60"`
-| <<plugins-filters-throttle-periodic_flush>> |<<boolean,boolean>>|No|`true`
-| <<plugins-filters-throttle-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-throttle-remove_tag>> |<<array,array>>|No|`[]`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-after_count>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-before_count>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-key>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-max_age>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-max_counters>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-period>> |<<string,string>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
 
 &nbsp;
 
-[[plugins-filters-throttle-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-If this filter is successful, add any arbitrary fields to this event.
-Field names can be dynamic and include parts of the event using the `%{field}`.
-
-Example:
-[source,ruby]
-    filter {
-      throttle {
-        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
-      }
-    }
-[source,ruby]
-     You can also add multiple fields at once:
-    filter {
-      throttle {
-        add_field => {
-          "foo_%{somefield}" => "Hello world, from %{host}"
-          "new_field" => "new_static_value"
-        }
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add field `foo_hello` if it is present, with the
-value above and the `%{host}` piece replaced with that value from the
-event. The second example would also add a hardcoded field.
-
-[[plugins-filters-throttle-add_tag]]
-===== `add_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, add arbitrary tags to the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      throttle {
-        add_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-     You can also add multiple tags at once:
-    filter {
-      throttle {
-        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
-
-[[plugins-filters-throttle-after_count]]
+[id="plugins-{type}s-{plugin}-after_count"]
 ===== `after_count` 
 
   * Value type is <<number,number>>
@@ -247,7 +191,7 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
 Events greater than this count will be throttled.  Setting this value to -1, the
 default, will cause no events to be throttled based on the upper bound.
 
-[[plugins-filters-throttle-before_count]]
+[id="plugins-{type}s-{plugin}-before_count"]
 ===== `before_count` 
 
   * Value type is <<number,number>>
@@ -256,7 +200,7 @@ default, will cause no events to be throttled based on the upper bound.
 Events less than this count will be throttled.  Setting this value to -1, the
 default, will cause no events to be throttled based on the lower bound.
 
-[[plugins-filters-throttle-key]]
+[id="plugins-{type}s-{plugin}-key"]
 ===== `key` 
 
   * This is a required setting.
@@ -266,7 +210,7 @@ default, will cause no events to be throttled based on the lower bound.
 The key used to identify events.  Events with the same key are grouped together.
 Field substitutions are allowed, so you can combine multiple fields.
 
-[[plugins-filters-throttle-max_age]]
+[id="plugins-{type}s-{plugin}-max_age"]
 ===== `max_age` 
 
   * Value type is <<number,number>>
@@ -278,7 +222,7 @@ to at least twice the period.  Or set this value to period + maximum time offset
 between unordered events with the same key.  Values below the specified period give
 unexpected results if unordered events are processed simultaneously.
 
-[[plugins-filters-throttle-max_counters]]
+[id="plugins-{type}s-{plugin}-max_counters"]
 ===== `max_counters` 
 
   * Value type is <<number,number>>
@@ -291,7 +235,7 @@ control mechanism and can cause early counter expiration if the value is reached
 It is recommended to leave the default value and ensure that your key is selected
 such that it limits the number of counters required (i.e. don't use UUID as the key).
 
-[[plugins-filters-throttle-period]]
+[id="plugins-{type}s-{plugin}-period"]
 ===== `period` 
 
   * Value type is <<string,string>>
@@ -302,72 +246,7 @@ is created.  This period is tracked per unique key and per timeslot.
 Field substitutions are allowed in this value.  This allows you to specify that
 certain kinds of events throttle for a specific period of time.
 
-[[plugins-filters-throttle-periodic_flush]]
-===== `periodic_flush` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-The name to use in configuration files.
-The memory control mechanism automatically ajusts the maximum age
-of a timeslot based on the maximum number of counters.
-Call the filter flush method at regular interval.  It is used by the memory
-control mechanism.  Set to false if you like your VM to go (B)OOM.
-
-[[plugins-filters-throttle-remove_field]]
-===== `remove_field` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary fields from this event.
-Fields names can be dynamic and include parts of the event using the %{field}
-Example:
-[source,ruby]
-    filter {
-      throttle {
-        remove_field => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-     You can also remove multiple fields at once:
-    filter {
-      throttle {
-        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the field with name `foo_hello` if it is present. The second
-example would remove an additional, non-dynamic field.
-
-[[plugins-filters-throttle-remove_tag]]
-===== `remove_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary tags from the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      throttle {
-        remove_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-     You can also remove multiple tags at once:
-    filter {
-      throttle {
-        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the tag `foo_hello` if it is present. The second example
-would remove a sad, unwanted tag as well.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

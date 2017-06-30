@@ -1,7 +1,24 @@
-[[plugins-inputs-exec]]
-=== exec
+:plugin: exec
+:type: input
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.1.3
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-input-exec/blob/v3.1.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
+
+=== Exec input plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 Periodically run a shell command and capture the whole output as an event.
 
@@ -11,61 +28,24 @@ Notes:
 * The `message` field of this event will be the entire stdout of the command.
 
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Exec Input Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-exec {
-    command => ...
-    interval => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-inputs-exec-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-exec-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-inputs-exec-command>> |<<string,string>>|Yes|
-| <<plugins-inputs-exec-interval>> |<<number,number>>|Yes|
-| <<plugins-inputs-exec-tags>> |<<array,array>>|No|
-| <<plugins-inputs-exec-type>> |<<string,string>>|No|
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-command>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-interval>> |<<number,number>>|Yes
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
 
 &nbsp;
 
-[[plugins-inputs-exec-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-Add a field to an event
-
-[[plugins-inputs-exec-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-inputs-exec-command]]
+[id="plugins-{type}s-{plugin}-command"]
 ===== `command` 
 
   * This is a required setting.
@@ -74,16 +54,7 @@ The codec used for input data. Input codecs are a convenient method for decoding
 
 Command to run. For example, `uptime`
 
-[[plugins-inputs-exec-debug]]
-===== `debug`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Set this to true to enable debugging on an input.
-
-[[plugins-inputs-exec-interval]]
+[id="plugins-{type}s-{plugin}-interval"]
 ===== `interval` 
 
   * This is a required setting.
@@ -92,33 +63,7 @@ Set this to true to enable debugging on an input.
 
 Interval to run the command. Value is in seconds.
 
-[[plugins-inputs-exec-tags]]
-===== `tags` 
-
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
-
-Add any number of arbitrary tags to your event.
-
-This can help with processing later.
-
-[[plugins-inputs-exec-type]]
-===== `type` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a `type` field to all events handled by this input.
-
-Types are used mainly for filter activation.
-
-The type is stored as part of the event itself, so you can
-also use the type to search for it in Kibana.
-
-If you try to set a type on an event that already has one (for
-example when you send an event from a shipper to an indexer) then
-a new input will not override the existing type. A type set at
-the shipper stays with that event for its life even
-when sent to another Logstash server.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
