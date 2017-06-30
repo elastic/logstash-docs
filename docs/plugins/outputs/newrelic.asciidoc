@@ -1,7 +1,7 @@
 [[plugins-outputs-newrelic]]
-=== newrelic
+=== Newrelic output plugin
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-newrelic`.
+NOTE: This plugin cannot be installed on the current version of Logstash. We are working on resolving this problem.
 
 
 This output sends logstash events to New Relic Insights as custom events.

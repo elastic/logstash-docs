@@ -1,5 +1,5 @@
 [[plugins-outputs-rackspace]]
-=== rackspace
+=== Rackspace output plugin
 
 
 NOTE: This plugin cannot be installed on the current version of Logstash. We are working on resolving this problem.

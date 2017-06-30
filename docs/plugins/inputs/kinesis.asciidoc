@@ -4,7 +4,7 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: 2.0.4
+:version: v2.0.4
 :release_date: 2017-06-27
 :changelog_url: https://github.com/logstash-plugins/logstash-input-kinesis/blob/v2.0.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include

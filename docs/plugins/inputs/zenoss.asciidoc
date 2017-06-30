@@ -1,5 +1,5 @@
 [[plugins-inputs-zenoss]]
-=== zenoss
+=== Zenoss input plugin
 
 
 NOTE: This plugin cannot be installed on the current version of Logstash. We are working on resolving this problem.

@@ -32,7 +32,6 @@ The following codec plugins are available below. For a list of Elastic supported
 | <<plugins-codecs-plain,plain>> | Reads plaintext with no delimiting between events | https://github.com/logstash-plugins/logstash-codec-plain[logstash-codec-plain]
 | <<plugins-codecs-protobuf,protobuf>> | Reads protobuf messages and converts to Logstash Events | https://github.com/logstash-plugins/logstash-codec-protobuf[logstash-codec-protobuf]
 | <<plugins-codecs-rubydebug,rubydebug>> | Applies the Ruby Awesome Print library to Logstash events | https://github.com/logstash-plugins/logstash-codec-rubydebug[logstash-codec-rubydebug]
-| <<plugins-codecs-s3_plain,s3_plain>> | Provides backwards compatibility with earlier versions of S3 Output  | https://github.com/logstash-plugins/logstash-codec-s3_plain[logstash-codec-s3_plain]
 |=======================================================================
 
 :edit_url: https://github.com/logstash-plugins/logstash-codec-avro/edit/master/docs/index.asciidoc
@@ -106,9 +105,6 @@ include::codecs/protobuf.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-codec-rubydebug/edit/master/docs/index.asciidoc
 include::codecs/rubydebug.asciidoc[]
-
-:edit_url: https://github.com/logstash-plugins/logstash-codec-s3_plain/edit/master/docs/index.asciidoc
-include::codecs/s3_plain.asciidoc[]
 
 
 :edit_url: 
