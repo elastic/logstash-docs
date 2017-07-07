@@ -16,6 +16,14 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 === Dissect filter plugin
 
+[IMPORTANT]
+===============================
+The Logstash 5.5.0 release will not work with the dissect filter out-of-the-box. To use this plugin, please update the dissect filter to v1.0.11 or higher by running:
+
+`bin/logstash-plugin update logstash-filter-dissect`
+
+===============================
+
 include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
