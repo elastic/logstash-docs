@@ -19,17 +19,6 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 include::{include_path}/plugin_header.asciidoc[]
 
 
-<<plugins-{type}s-{plugin}-description>> +
-<<plugins-{type}s-{plugin}-example1>> +
-<<plugins-{type}s-{plugin}-example2>> +
-<<plugins-{type}s-{plugin}-example3>> +
-<<plugins-{type}s-{plugin}-example4>> +
-<<plugins-{type}s-{plugin}-example5>> +
-<<plugins-{type}s-{plugin}-howitworks>> +
-<<plugins-{type}s-{plugin}-usecases>> +
-<<plugins-{type}s-{plugin}-options>> +
-
-
 [id="plugins-{type}s-{plugin}-description"]
 ==== Description
 
