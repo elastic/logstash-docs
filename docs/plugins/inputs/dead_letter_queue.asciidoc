@@ -16,6 +16,14 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 === Dead_letter_queue input plugin
 
+[IMPORTANT]
+===============================
+The Logstash 5.5.0 release will not work with the dead_letter_queue input out-of-the-box. To use the dead_letter_queue input, please update the plugin to v1.0.5 or higher by running:
+
+`bin/logstash-plugin update logstash-input-dead_letter_queue`
+
+===============================
+
 include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
