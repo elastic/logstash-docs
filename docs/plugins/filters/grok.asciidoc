@@ -4,9 +4,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.4.2
-:release_date: 2017-06-23
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-grok/blob/v3.4.2/CHANGELOG.md
+:version: v3.4.3
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-grok/blob/v3.4.3/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -22,8 +22,7 @@ include::{include_path}/plugin_header.asciidoc[]
 
 Parse arbitrary text and structure it.
 
-Grok is currently the best way in logstash to parse crappy unstructured log
-data into something structured and queryable.
+Grok is a great way to parse unstructured log data into something structured and queryable.
 
 This tool is perfect for syslog logs, apache and other webserver logs, mysql
 logs, and in general, any log format that is generally written for humans

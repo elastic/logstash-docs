@@ -4,9 +4,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.1
-:release_date: 2017-06-23
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-cidr/blob/v3.0.1/CHANGELOG.md
+:version: v3.1.1
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-cidr/blob/v3.1.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -35,6 +35,9 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-address>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-network>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-network_path>> |a valid filesystem path|No
+| <<plugins-{type}s-{plugin}-refresh_interval>>| <<number,number>>|No
+| <<plugins-{type}s-{plugin}-separator>> |<<string,string>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -43,7 +46,7 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-address"]
-===== `address` 
+===== `address`
 
   * Value type is <<array,array>>
   * Default value is `[]`
@@ -59,7 +62,7 @@ The IP address(es) to check with. Example:
     }
 
 [id="plugins-{type}s-{plugin}-network"]
-===== `network` 
+===== `network`
 
   * Value type is <<array,array>>
   * Default value is `[]`
@@ -75,6 +78,37 @@ The IP network(s) to check against. Example:
     }
 
 
+[id="plugins-{type}s-{plugin}-network_path"]
+===== `network_path`
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+The full path of the external file containing the networks the filter should check with.
+Networks are separated by a separator character defined in `separator`.
+[source,ruby]
+    192.168.1.0/24
+    192.167.0.0/16	
+NOTE: It is an error to specify both `network` and `network_path`.
+
+[id="plugins-{type}s-{plugin}-refresh_interval"]
+===== `refresh_interval`
+
+  * Value type is <<number,number>>
+  * Default value is `600`
+
+When using an external file, this setting will indicate how frequently
+(in seconds) Logstash will check the file for updates.
+
+
+[id="plugins-{type}s-{plugin}-separator"]
+===== `separator`
+
+  * Value type is <<string,string>>
+  * Default value is `\n`
+
+Separator character used for parsing networks from the external file
+specified by `network_path`. Defaults to newline `\n` character.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]

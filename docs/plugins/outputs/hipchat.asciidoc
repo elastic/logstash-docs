@@ -1,5 +1,6 @@
 :plugin: hipchat
 :type: output
+:default_plugin: 0
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
@@ -12,7 +13,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
 
-[id="plugins-{type}s-{plugin}"]
+[id="plugins-{type}-{plugin}"]
 
 === Hipchat output plugin
 

@@ -1,12 +1,13 @@
 :plugin: aggregate
 :type: filter
+:default_plugin: 0
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v2.6.1
-:release_date: 2017-06-23
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-aggregate/blob/v2.6.1/CHANGELOG.md
+:version: v2.6.3
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-aggregate/blob/v2.6.3/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -308,7 +309,7 @@ filter {
 [id="plugins-{type}s-{plugin}-howitworks"]
 ==== How it works
 * the filter needs a "task_id" to correlate events (log lines) of a same task
-* at the task beggining, filter creates a map, attached to task_id
+* at the task beginning, filter creates a map, attached to task_id
 * for each event, you can execute code using 'event' and 'map' (for instance, copy an event field to map)
 * in the final event, you can execute a last code (for instance, add map data to final event)
 * after the final event, the map attached to task is deleted (thanks to `end_of_task => true`)

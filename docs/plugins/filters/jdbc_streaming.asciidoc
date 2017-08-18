@@ -1,12 +1,13 @@
 :plugin: jdbc_streaming
 :type: filter
+:default_plugin: 0
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.0.1
-:release_date: 2017-06-23
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-jdbc_streaming/blob/v1.0.1/CHANGELOG.md
+:version: v1.0.2
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-jdbc_streaming/blob/v1.0.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!

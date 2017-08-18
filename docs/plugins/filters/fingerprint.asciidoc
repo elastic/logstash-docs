@@ -4,9 +4,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.4
-:release_date: 2017-06-23
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-fingerprint/blob/v3.0.4/CHANGELOG.md
+:version: v3.1.1
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-fingerprint/blob/v3.1.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -45,6 +45,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-base64encode>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-concatenate_sources>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-concatenate_all_fields>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-key>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-method>> |<<string,string>>, one of `["SHA1", "SHA256", "SHA384", "SHA512", "MD5", "MURMUR3", "IPV4_NETWORK", "UUID", "PUNCTUATION"]`|Yes
 | <<plugins-{type}s-{plugin}-source>> |<<array,array>>|No
@@ -77,6 +78,19 @@ plugin concatenates the names and values of all fields given in the
 doing the fingerprint computation. If `false` and multiple source
 fields are given, the target field will be an array with fingerprints
 of the source fields given.
+
+[id="plugins-{type}s-{plugin}-concatenate_all_fields"]
+===== `concatenate_sources` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+When set to `true` and `method` isn't `UUID` or `PUNCTUATION`, the
+plugin concatenates the names and values of all fields of the event 
+into one string (like the old checksum filter) before doing the 
+fingerprint computation. If `false` and at least one source field is 
+given, the target field will be an array with fingerprints of the 
+source fields given.
 
 [id="plugins-{type}s-{plugin}-key"]
 ===== `key` 

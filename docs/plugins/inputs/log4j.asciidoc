@@ -4,9 +4,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.6
-:release_date: 2017-06-23
-:changelog_url: https://github.com/logstash-plugins/logstash-input-log4j/blob/v3.0.6/CHANGELOG.md
+:version: v3.1.1
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-input-log4j/blob/v3.1.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -84,7 +84,7 @@ beats input for protection and safety of your log data..
 For more details on configuring the beats input, see
 https://www.elastic.co/guide/en/logstash/current/plugins-inputs-beats.html[the logstash beats input documentation].
 
-'''
+==== Description
 
 Read events over a TCP socket from a Log4j SocketAppender. This plugin works only with log4j version 1.x.
 

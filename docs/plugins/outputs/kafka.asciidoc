@@ -4,10 +4,10 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.1.7
-:release_date: 2017-06-23
-:changelog_url: https://github.com/logstash-plugins/logstash-output-kafka/blob/v5.1.7/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:version: v5.1.9
+:release_date: 2017-08-18
+:changelog_url: https://github.com/logstash-plugins/logstash-output-kafka/blob/v5.1.9/CHANGELOG.md
+:include_path: ../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
