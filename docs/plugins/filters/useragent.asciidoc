@@ -4,9 +4,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.1
-:release_date: 2017-05-15
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-useragent/blob/v3.1.1/CHANGELOG.md
+:version: v3.2.1
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-useragent/blob/v3.2.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -111,6 +111,7 @@ array, only the first value will be used.
 The name of the field to assign user agent data into.
 
 If not specified user agent data will be stored in the root of the event.
+
 
 
 [id="plugins-{type}s-{plugin}-common-options"]

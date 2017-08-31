@@ -1,12 +1,13 @@
 :plugin: google_pubsub
 :type: input
+:default_plugin: 0
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.0.1
-:release_date: 2017-06-23
-:changelog_url: https://github.com/logstash-plugins/logstash-input-google_pubsub/blob/v1.0.1/CHANGELOG.md
+:version: v1.0.3
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-input-google_pubsub/blob/v1.0.3/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -48,7 +49,7 @@ feature of Stackdriver Logging.
 
 ==== Prerequisites
 
-You must first create a Google Cloud Platform project and enable the the 
+You must first create a Google Cloud Platform project and enable the 
 Google Pub/Sub API. If you intend to use the plugin ingest Stackdriver Logging 
 messages, you must also enable the Stackdriver Logging API and configure log 
 exporting to Pub/Sub. There is plentiful information on 
