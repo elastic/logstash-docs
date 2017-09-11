@@ -4,9 +4,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.4.1
-:release_date: 2017-06-23
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-netflow/blob/v3.4.1/CHANGELOG.md
+:version: v3.5.2
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-netflow/blob/v3.5.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -24,59 +24,68 @@ The "netflow" codec is used for decoding Netflow v5/v9/v10 (IPFIX) flows.
 
 ==== Supported Netflow/IPFIX exporters
 
+This codec supports:
+
+* Netflow v5
+* Netflow v9
+* IPFIX
+
 The following Netflow/IPFIX exporters are known to work with the most recent version of the netflow codec:
 
 [cols="6,^2,^2,^2,12",options="header"]
 |===========================================================================================
-|Netflow exporter      | v5 | v9 | IPFIX | Remarks
-|Softflowd             |  y | y  |   y   | IPFIX supported in https://github.com/djmdjm/softflowd
-|nProbe                |  y | y  |   y   |  
-|ipt_NETFLOW           |  y | y  |   y   |
-|Cisco ASA             |    | y  |       |  
-|Cisco IOS 12.x        |    | y  |       |  
-|fprobe                |  y |    |       |
-|Juniper MX80          |  y |    |       | SW > 12.3R8
-|OpenBSD pflow         |  y | n  |   y   | http://man.openbsd.org/OpenBSD-current/man4/pflow.4
-|Mikrotik 6.35.4       |  y |    |   n   | http://wiki.mikrotik.com/wiki/Manual:IP/Traffic_Flow
-|Ubiquiti Edgerouter X |    | y  |       | With MPLS labels
-|Citrix Netscaler      |    |    |   y   | Still some unknown fields, labeled netscalerUnknown<id>
+|Netflow exporter         | v5 | v9 | IPFIX | Remarks
+|Barracuda Firewall       |    |    |   y   |
+|Cisco ASA                |    | y  |       |  
+|Cisco ASR                |    | y  |       |  
+|Cisco IOS 12.x           |    | y  |       |  
+|Cisco WLC                |    | y  |       |
+|Citrix Netscaler         |    |    |   y   | Still some unknown fields, labeled netscalerUnknown<id>
+|fprobe                   |  y |    |       |
+|Fortigate FortiOS        |    | y  |       |
+|ipt_NETFLOW              |  y | y  |   y   |
+|Juniper MX80             |  y |    |       | SW > 12.3R8
+|Mikrotik                 |  y |    |   y   | http://wiki.mikrotik.com/wiki/Manual:IP/Traffic_Flow
+|nProbe                   |  y | y  |   y   |  
+|OpenBSD pflow            |  y | n  |   y   | http://man.openbsd.org/OpenBSD-current/man4/pflow.4
+|Softflowd                |  y | y  |   y   | IPFIX supported in https://github.com/djmdjm/softflowd
+|Streamcore Streamgroomer |    | y  |       |
+|Ubiquiti Edgerouter X    |    | y  |       | With MPLS labels
+|VMware VDS               |    |    |   y   | Still some unknown fields
 |===========================================================================================
 
 ==== Usage
 
-Example Logstash configuration:
+Example Logstash configuration that will listen on 2055/udp for Netflow v5,v9 and IPFIX:
 
 [source, ruby]
 --------------------------
 input {
   udp {
-    host => localhost
-    port => 2055
-    codec => netflow {
-      versions => [5, 9]
-    }
-    type => netflow
-  }
-  udp {
-    host => localhost
-    port => 4739
-    codec => netflow {
-      versions => [10]
-      target => ipfix
-   }
-   type => ipfix
-  }
-  tcp {
-    host => localhost
-    port => 4739
-    codec => netflow {
-      versions => [10]
-      target => ipfix
-    }
-    type => ipfix
+    port  => 2055
+    codec => netflow
   }
 }
 --------------------------
+
+For high-performance production environments the configuration below will decode up to 6000 flows/sec on an 8 CPU instance. If your total flowrate exceeds 6000 flows/sec, you should use multiple Logstash instances.
+
+
+[source, ruby]
+--------------------------
+input {
+  udp {
+    port                 => 2055
+    receive_buffer_bytes => 16777216
+    codec                => netflow
+    workers              => 6
+  }
+--------------------------
+
+Make sure to increase the Linux kernel receive buffer limit:
+
+ # sysctl -w net.core.rmem_max=$((1024*1024*16))
+
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Netflow Codec Configuration Options
@@ -101,10 +110,15 @@ input {
   * Value type is <<path,path>>
   * There is no default value for this setting.
 
-Where to save the template cache
-This helps speed up processing when restarting logstash
-(So you don't have to await the arrival of templates)
-cache will save as path/netflow_templates.cache and/or path/ipfix_templates.cache
+Enables the template cache and saves it in the specified directory. This
+minimizes data loss after Logstash restarts because the codec doesn't have to
+wait for the arrival of templates, but instead reload already received
+templates received during previous runs.
+
+Template caches are saved as:
+
+* <<path,path>>/netflow_templates.cache for Netflow v9 templates.
+* <<path,path>>/ipfix_templates.cache for IPFIX templates.
 
 [id="plugins-{type}s-{plugin}-cache_ttl"]
 ===== `cache_ttl` 
@@ -112,7 +126,7 @@ cache will save as path/netflow_templates.cache and/or path/ipfix_templates.cach
   * Value type is <<number,number>>
   * Default value is `4000`
 
-Netflow v9/v10 template cache TTL (minutes)
+Netflow v9/v10 template cache TTL (seconds)
 
 [id="plugins-{type}s-{plugin}-include_flowset_id"]
 ===== `include_flowset_id` 

@@ -4,9 +4,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.3.1
-:release_date: 2017-06-23
-:changelog_url: https://github.com/logstash-plugins/logstash-output-http/blob/v4.3.1/CHANGELOG.md
+:version: v4.3.4
+:release_date: 2017-08-18
+:changelog_url: https://github.com/logstash-plugins/logstash-output-http/blob/v4.3.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -359,16 +359,6 @@ Specify the truststore type here. One of `JKS` or `PKCS12`. Default is `JKS`
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-This output lets you send events to a
-generic HTTP(S) endpoint
-
-This output will execute up to 'pool_max' requests in parallel for performance.
-Consider this when tuning this plugin for performance.
-
-Additionally, note that when parallel execution is used strict ordering of events is not
-guaranteed!
-
-Beware, this gem does not yet support codecs. Please use the 'format' option for now.
 URL to use
 
 [id="plugins-{type}s-{plugin}-validate_after_inactivity"]
@@ -378,7 +368,7 @@ URL to use
   * Default value is `200`
 
 How long to wait before checking if the connection is stale before executing a request on a connection using keepalive.
-# You may want to set this lower, possibly to 0 if you get connection errors regularly
+You may want to set this lower, possibly to 0 if you get connection errors regularly
 Quoting the Apache commons docs (this client is based Apache Commmons):
 'Defines period of inactivity in milliseconds after which persistent connections must be re-validated prior to being leased to the consumer. Non-positive value passed to this method disables connection validation. This check helps detect connections that have become stale (half-closed) while kept inactive in the pool.'
 See https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/org/apache/http/impl/conn/PoolingHttpClientConnectionManager.html#setValidateAfterInactivity(int)[these docs for more info]

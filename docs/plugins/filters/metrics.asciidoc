@@ -4,9 +4,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.3
-:release_date: 2017-06-23
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-metrics/blob/v4.0.3/CHANGELOG.md
+:version: v4.0.4
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-metrics/blob/v4.0.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -60,12 +60,12 @@ For a `meter => "something"` you will receive the following fields:
 
 ==== `timer` values
 
-For a `timer => [ "thing", "%{duration}" ]` you will receive the following fields:
+For a `timer => { "thing" => "%{duration}" }` you will receive the following fields:
 
 * "[thing][count]" - the total count of events
-* "[thing][rate_1m]" - the per-second event rate in a 1-minute sliding window
-* "[thing][rate_5m]" - the per-second event rate in a 5-minute sliding window
-* "[thing][rate_15m]" - the per-second event rate in a 15-minute sliding window
+* "[thing][rate_1m]" - the per-second average value in a 1-minute sliding window
+* "[thing][rate_5m]" - the per-second average value in a 5-minute sliding window
+* "[thing][rate_15m]" - the per-second average value in a 15-minute sliding window
 * "[thing][min]" - the minimum value seen for this metric
 * "[thing][max]" - the maximum value seen for this metric
 * "[thing][stddev]" - the standard deviation for this metric
