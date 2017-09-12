@@ -1,16 +1,22 @@
-[[plugins-inputs-stdin]]
-=== stdin
+:plugin: stdin
+:type: input
 
-* Version: 3.2.2
-* Released on: January 17, 2017
-* https://github.com/logstash-plugins/logstash-input-stdin/blob/master/CHANGELOG.md#322[Changelog]
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.2.4
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-input-stdin/blob/v3.2.4/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
 
+=== Stdin input plugin
 
-==== Getting Help
-
-For questions about the plugin, open a topic in the http://discuss.elastic.co[Discuss] forums. For bugs or feature requests, open an issue in https://github.com/elastic/logstash[Github].
-For the list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Elastic Support Matrix].
+include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
@@ -19,115 +25,11 @@ Read events from standard input.
 By default, each event is assumed to be one line. If you
 want to join lines, you'll want to use the multiline codec.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Stdin Input Configuration Options
 
-==== Synopsis
+There are no special configuration options for this plugin,
+but it does support the <<plugins-{type}s-{plugin}-common-options>>.
 
-This plugin supports the following configuration options:
-
-Required configuration options:
-
-[source,json]
---------------------------
-stdin {
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<",options="header",]
-|=======================================================================
-|Setting |Input type|Required
-| <<plugins-inputs-stdin-add_field>> |<<hash,hash>>|No
-| <<plugins-inputs-stdin-codec>> |<<codec,codec>>|No
-| <<plugins-inputs-stdin-enable_metric>> |<<boolean,boolean>>|No
-| <<plugins-inputs-stdin-id>> |<<string,string>>|No
-| <<plugins-inputs-stdin-tags>> |<<array,array>>|No
-| <<plugins-inputs-stdin-type>> |<<string,string>>|No
-|=======================================================================
-
-
-==== Details
-
-&nbsp;
-
-[[plugins-inputs-stdin-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-Add a field to an event
-
-[[plugins-inputs-stdin-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-inputs-stdin-enable_metric]]
-===== `enable_metric` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Disable or enable metric logging for this specific plugin instance
-by default we record all the metrics we can, but you can disable metrics collection
-for a specific plugin.
-
-[[plugins-inputs-stdin-id]]
-===== `id` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
-It is strongly recommended to set this ID in your configuration. This is particularly useful 
-when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
-Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
-
-[source,ruby]
----------------------------------------------------------------------------------------------------
-output {
- stdout {
-   id => "my_plugin_id"
- }
-}
----------------------------------------------------------------------------------------------------
-
-
-[[plugins-inputs-stdin-tags]]
-===== `tags` 
-
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
-
-Add any number of arbitrary tags to your event.
-
-This can help with processing later.
-
-[[plugins-inputs-stdin-type]]
-===== `type` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-This is the base class for Logstash inputs.
-Add a `type` field to all events handled by this input.
-
-Types are used mainly for filter activation.
-
-The type is stored as part of the event itself, so you can
-also use the type to search for it in Kibana.
-
-If you try to set a type on an event that already has one (for
-example when you send an event from a shipper to an indexer) then
-a new input will not override the existing type. A type set at
-the shipper stays with that event for its life even
-when sent to another Logstash server.
-
-
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

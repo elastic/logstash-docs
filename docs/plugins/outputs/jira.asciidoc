@@ -1,8 +1,8 @@
 [[plugins-outputs-jira]]
-=== jira
+=== Jira output plugin
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-jira`.
+NOTE: This plugin cannot be installed on the current version of Logstash. We are working on resolving this problem.
 
 
 Origin https://groups.google.com/forum/#!msg/logstash-users/exgrB4iQ-mw/R34apku5nXsJ

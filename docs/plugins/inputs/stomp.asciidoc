@@ -1,80 +1,52 @@
-[[plugins-inputs-stomp]]
-=== stomp
+:plugin: stomp
+:type: input
+:default_plugin: 0
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.5
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-input-stomp/blob/v3.0.5/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-input-stomp`.
+[id="plugins-{type}s-{plugin}"]
 
+=== Stomp input plugin
 
+include::{include_path}/plugin_header.asciidoc[]
 
+==== Description
+
+Creates events received with the STOMP protocol.
+
+[id="plugins-{type}s-{plugin}-options"]
+==== Stomp Input Configuration Options
+
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-destination>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-host>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-password>> |<<password,password>>|No
+| <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-reconnect>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-reconnect_interval>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-user>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-vhost>> |<<string,string>>|No
+|=======================================================================
+
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
 
 &nbsp;
 
-==== Synopsis
-
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-stomp {
-    destination => ...
-    host => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
-|=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-inputs-stomp-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-stomp-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-inputs-stomp-debug>> |<<boolean,boolean>>|No|`false`
-| <<plugins-inputs-stomp-destination>> |<<string,string>>|Yes|
-| <<plugins-inputs-stomp-host>> |<<string,string>>|Yes|`"localhost"`
-| <<plugins-inputs-stomp-password>> |<<password,password>>|No|`""`
-| <<plugins-inputs-stomp-port>> |<<number,number>>|No|`61613`
-| <<plugins-inputs-stomp-tags>> |<<array,array>>|No|
-| <<plugins-inputs-stomp-type>> |<<string,string>>|No|
-| <<plugins-inputs-stomp-user>> |<<string,string>>|No|`""`
-| <<plugins-inputs-stomp-vhost>> |<<string,string>>|No|`nil`
-|=======================================================================
-
-
-
-==== Details
-
-&nbsp;
-
-[[plugins-inputs-stomp-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-Add a field to an event
-
-[[plugins-inputs-stomp-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-inputs-stomp-debug]]
-===== `debug` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Enable debugging output?
-
-[[plugins-inputs-stomp-destination]]
+[id="plugins-{type}s-{plugin}-destination"]
 ===== `destination` 
 
   * This is a required setting.
@@ -85,7 +57,7 @@ The destination to read events from.
 
 Example: `/topic/logstash`
 
-[[plugins-inputs-stomp-host]]
+[id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
   * This is a required setting.
@@ -94,7 +66,7 @@ Example: `/topic/logstash`
 
 The address of the STOMP server.
 
-[[plugins-inputs-stomp-password]]
+[id="plugins-{type}s-{plugin}-password"]
 ===== `password` 
 
   * Value type is <<password,password>>
@@ -102,7 +74,7 @@ The address of the STOMP server.
 
 The password to authenticate with.
 
-[[plugins-inputs-stomp-port]]
+[id="plugins-{type}s-{plugin}-port"]
 ===== `port` 
 
   * Value type is <<number,number>>
@@ -110,36 +82,23 @@ The password to authenticate with.
 
 The port to connet to on your STOMP server.
 
-[[plugins-inputs-stomp-tags]]
-===== `tags` 
+[id="plugins-{type}s-{plugin}-reconnect"]
+===== `reconnect` 
 
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
 
-Add any number of arbitrary tags to your event.
+Auto reconnect
 
-This can help with processing later.
+[id="plugins-{type}s-{plugin}-reconnect_interval"]
+===== `reconnect_interval` 
 
-[[plugins-inputs-stomp-type]]
-===== `type` 
+  * Value type is <<number,number>>
+  * Default value is `30`
 
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
 
-Add a `type` field to all events handled by this input.
 
-Types are used mainly for filter activation.
-
-The type is stored as part of the event itself, so you can
-also use the type to search for it in Kibana.
-
-If you try to set a type on an event that already has one (for
-example when you send an event from a shipper to an indexer) then
-a new input will not override the existing type. A type set at
-the shipper stays with that event for its life even
-when sent to another Logstash server.
-
-[[plugins-inputs-stomp-user]]
+[id="plugins-{type}s-{plugin}-user"]
 ===== `user` 
 
   * Value type is <<string,string>>
@@ -147,7 +106,7 @@ when sent to another Logstash server.
 
 The username to authenticate with.
 
-[[plugins-inputs-stomp-vhost]]
+[id="plugins-{type}s-{plugin}-vhost"]
 ===== `vhost` 
 
   * Value type is <<string,string>>
@@ -156,3 +115,6 @@ The username to authenticate with.
 The vhost to use
 
 
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

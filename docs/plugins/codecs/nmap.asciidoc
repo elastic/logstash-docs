@@ -1,11 +1,30 @@
-[[plugins-codecs-nmap]]
-=== nmap
+:plugin: nmap
+:type: codec
+:default_plugin: 0
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v0.0.20
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-nmap/blob/v0.0.20/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
-This codec is used to parse https://nmap.org/[nmap] output data which is serialized in XML format. Nmap ("Network Mapper") is a free and open source utility for network discovery and security auditing. 
+[id="plugins-{type}s-{plugin}"]
+
+=== Nmap codec plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This codec is used to parse https://nmap.org/[namp] output data which is serialized in XML format. Nmap ("Network Mapper") is a free and open source utility for network discovery and security auditing. 
 For more information on nmap, see https://nmap.org/.
- 
-Note: This codec can only be used for decoding data.
+
+This codec can only be used for decoding data.
 
 Event types are listed below
 
@@ -14,41 +33,21 @@ Event types are listed below
 `nmap_port`: One event is created per host/port. This duplicates data already in `nmap_host`: This was put in for the case where you want to model ports as separate documents in Elasticsearch (which Kibana prefers).
 `nmap_traceroute_link`: One of these is output per traceroute 'connection', with a `from` and a `to` object describing each hop. Note that traceroute hop data is not always correct due to the fact that each tracing ICMP packet may take a different route. Also very useful for Kibana visualizations.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Nmap Codec Configuration Options
 
-==== Synopsis
-
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-nmap {
-  }
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-codecs-nmap-emit_hosts>> |<<boolean,boolean>>|No|`true`
-| <<plugins-codecs-nmap-emit_ports>> |<<boolean,boolean>>|No|`true`
-| <<plugins-codecs-nmap-emit_scan_metadata>> |<<boolean,boolean>>|No|`true`
-| <<plugins-codecs-nmap-emit_traceroute_links>> |<<boolean,boolean>>|No|`true`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-emit_hosts>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-emit_ports>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-emit_scan_metadata>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-emit_traceroute_links>> |<<boolean,boolean>>|No
 |=======================================================================
-
-
-
-==== Details
 
 &nbsp;
 
-[[plugins-codecs-nmap-emit_hosts]]
+[id="plugins-{type}s-{plugin}-emit_hosts"]
 ===== `emit_hosts` 
 
   * Value type is <<boolean,boolean>>
@@ -56,7 +55,7 @@ Available configuration options:
 
 Emit all host data as a nested document (including ports + traceroutes) with the type 'nmap_fullscan'
 
-[[plugins-codecs-nmap-emit_ports]]
+[id="plugins-{type}s-{plugin}-emit_ports"]
 ===== `emit_ports` 
 
   * Value type is <<boolean,boolean>>
@@ -64,7 +63,7 @@ Emit all host data as a nested document (including ports + traceroutes) with the
 
 Emit each port as a separate document with type 'nmap_port'
 
-[[plugins-codecs-nmap-emit_scan_metadata]]
+[id="plugins-{type}s-{plugin}-emit_scan_metadata"]
 ===== `emit_scan_metadata` 
 
   * Value type is <<boolean,boolean>>
@@ -72,7 +71,7 @@ Emit each port as a separate document with type 'nmap_port'
 
 Emit scan metadata
 
-[[plugins-codecs-nmap-emit_traceroute_links]]
+[id="plugins-{type}s-{plugin}-emit_traceroute_links"]
 ===== `emit_traceroute_links` 
 
   * Value type is <<boolean,boolean>>
