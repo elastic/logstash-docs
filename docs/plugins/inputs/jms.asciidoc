@@ -1,0 +1,260 @@
+:plugin: jms
+:type: input
+:default_plugin: 0
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.3
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-input-jms/blob/v3.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="plugins-{type}s-{plugin}"]
+
+=== Jms input plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Read events from a Jms Broker. Supports both Jms Queues and Topics.
+
+For more information about Jms, see <http://docs.oracle.com/javaee/6/tutorial/doc/bncdq.html>
+For more information about the Ruby Gem used, see <http://github.com/reidmorrison/jruby-jms>
+Here is a config example to pull from a queue:
+ jms {
+    include_header => false
+    include_properties => false
+    include_body => true
+    use_jms_timestamp => false
+    interval => 10
+    destination => "myqueue"
+    pub-sub => false
+    yaml_file => "~/jms.yml"
+    yaml_section => "mybroker"
+  }
+
+
+
+[id="plugins-{type}s-{plugin}-options"]
+==== Jms Input Configuration Options
+
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-broker_url>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-destination>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-factory>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-include_body>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-include_header>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-include_properties>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-interval>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-jndi_context>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-jndi_name>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-password>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-pub_sub>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-require_jars>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-runner>> |<<string,string>>, one of `["consumer", "async", "thread"]`|No
+| <<plugins-{type}s-{plugin}-selector>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-threads>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-timeout>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-use_jms_timestamp>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-username>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-yaml_file>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-yaml_section>> |<<string,string>>|No
+|=======================================================================
+
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="plugins-{type}s-{plugin}-broker_url"]
+===== `broker_url` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Url to use when connecting to the JMS provider
+
+[id="plugins-{type}s-{plugin}-destination"]
+===== `destination` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Name of the destination queue or topic to use.
+
+[id="plugins-{type}s-{plugin}-factory"]
+===== `factory` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Name of JMS Provider Factory class
+
+[id="plugins-{type}s-{plugin}-include_body"]
+===== `include_body` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Include JMS Message Body in the event
+Supports TextMessage, MapMessage and ByteMessage
+If the JMS Message is a TextMessage or ByteMessage, then the value will be in the "message" field of the event
+If the JMS Message is a MapMessage, then all the key/value pairs will be added in the Hashmap of the event
+StreamMessage and ObjectMessage are not supported
+
+[id="plugins-{type}s-{plugin}-include_header"]
+===== `include_header` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+A JMS message has three parts :
+ Message Headers (required)
+ Message Properties (optional)
+ Message Bodies (optional)
+You can tell the input plugin which parts should be included in the event produced by Logstash
+
+Include JMS Message Header Field values in the event
+
+[id="plugins-{type}s-{plugin}-include_properties"]
+===== `include_properties` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Include JMS Message Properties Field values in the event
+
+[id="plugins-{type}s-{plugin}-interval"]
+===== `interval` 
+
+  * Value type is <<number,number>>
+  * Default value is `10`
+
+Polling interval in seconds.
+This is the time sleeping between asks to a consumed Queue.
+This parameter has non influence in the case of a subcribed Topic.
+
+[id="plugins-{type}s-{plugin}-jndi_context"]
+===== `jndi_context` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+Mandatory if jndi lookup is being used,
+contains details on how to connect to JNDI server
+
+[id="plugins-{type}s-{plugin}-jndi_name"]
+===== `jndi_name` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Name of JNDI entry at which the Factory can be found
+
+[id="plugins-{type}s-{plugin}-password"]
+===== `password` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Password to use when connecting to the JMS provider
+
+[id="plugins-{type}s-{plugin}-pub_sub"]
+===== `pub_sub` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+If pub-sub (topic) style should be used.
+
+[id="plugins-{type}s-{plugin}-require_jars"]
+===== `require_jars` 
+
+  * Value type is <<array,array>>
+  * There is no default value for this setting.
+
+If you do not use an yaml configuration use either the factory or jndi_name.
+An optional array of Jar file names to load for the specified
+JMS provider. By using this option it is not necessary
+to put all the JMS Provider specific jar files into the
+java CLASSPATH prior to starting Logstash.
+
+[id="plugins-{type}s-{plugin}-runner"]
+===== `runner` 
+
+  * Value can be any of: `consumer`, `async`, `thread`
+  * Default value is `"consumer"`
+
+Choose an implementation of the run block. Value can be either consumer, async or thread
+
+[id="plugins-{type}s-{plugin}-selector"]
+===== `selector` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Set the selector to use to get messages off the queue or topic
+
+[id="plugins-{type}s-{plugin}-threads"]
+===== `threads` 
+
+  * Value type is <<number,number>>
+  * Default value is `1`
+
+
+
+[id="plugins-{type}s-{plugin}-timeout"]
+===== `timeout` 
+
+  * Value type is <<number,number>>
+  * Default value is `60`
+
+Initial connection timeout in seconds.
+
+[id="plugins-{type}s-{plugin}-use_jms_timestamp"]
+===== `use_jms_timestamp` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Convert the JMSTimestamp header field to the @timestamp value of the event
+
+[id="plugins-{type}s-{plugin}-username"]
+===== `username` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Username to connect to JMS provider with
+
+[id="plugins-{type}s-{plugin}-yaml_file"]
+===== `yaml_file` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Yaml config file
+
+[id="plugins-{type}s-{plugin}-yaml_section"]
+===== `yaml_section` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Yaml config file section name
+For some known examples, see: [Example jms.yml](https://github.com/reidmorrison/jruby-jms/blob/master/examples/jms.yml)
+
+
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
