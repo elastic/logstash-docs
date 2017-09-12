@@ -1,9 +1,25 @@
-[[plugins-outputs-solr_http]]
-=== solr_http
+:plugin: solr_http
+:type: output
+:default_plugin: 0
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.3
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-output-solr_http/blob/v3.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-solr_http`.
+[id="plugins-{type}s-{plugin}"]
 
+=== Solr_http output plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 This output lets you index&store your logs in Solr. If you want to get
 started quickly you should use version 4.4 or above in schemaless mode,
@@ -18,51 +34,26 @@ you can use the example included in the Solr archive:
 
 You can learn more at https://lucene.apache.org/solr/[the Solr home page]
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Solr_http Output Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-solr_http {
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-outputs-solr_http-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-solr_http-document_id>> |<<string,string>>|No|`nil`
-| <<plugins-outputs-solr_http-flush_size>> |<<number,number>>|No|`100`
-| <<plugins-outputs-solr_http-idle_flush_time>> |<<number,number>>|No|`1`
-| <<plugins-outputs-solr_http-solr_url>> |<<string,string>>|No|`"http://localhost:8983/solr"`
-| <<plugins-outputs-solr_http-workers>> |<<number,number>>|No|`1`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-document_id>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-flush_size>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-idle_flush_time>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-solr_url>> |<<string,string>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
 
 &nbsp;
 
-[[plugins-outputs-solr_http-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-solr_http-document_id]]
+[id="plugins-{type}s-{plugin}-document_id"]
 ===== `document_id` 
 
   * Value type is <<string,string>>
@@ -71,7 +62,7 @@ The codec used for output data. Output codecs are a convenient method for encodi
 Solr document ID for events. You'd typically have a variable here, like
 '%{foo}' so you can assign your own IDs
 
-[[plugins-outputs-solr_http-flush_size]]
+[id="plugins-{type}s-{plugin}-flush_size"]
 ===== `flush_size` 
 
   * Value type is <<number,number>>
@@ -79,7 +70,7 @@ Solr document ID for events. You'd typically have a variable here, like
 
 Number of events to queue up before writing to Solr
 
-[[plugins-outputs-solr_http-idle_flush_time]]
+[id="plugins-{type}s-{plugin}-idle_flush_time"]
 ===== `idle_flush_time` 
 
   * Value type is <<number,number>>
@@ -88,7 +79,7 @@ Number of events to queue up before writing to Solr
 Amount of time since the last flush before a flush is done even if
 the number of buffered events is smaller than flush_size
 
-[[plugins-outputs-solr_http-solr_url]]
+[id="plugins-{type}s-{plugin}-solr_url"]
 ===== `solr_url` 
 
   * Value type is <<string,string>>
@@ -96,13 +87,7 @@ the number of buffered events is smaller than flush_size
 
 URL used to connect to Solr
 
-[[plugins-outputs-solr_http-workers]]
-===== `workers` 
-
-  * Value type is <<number,number>>
-  * Default value is `1`
-
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

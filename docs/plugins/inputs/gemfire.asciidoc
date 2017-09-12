@@ -1,5 +1,7 @@
 [[plugins-inputs-gemfire]]
-=== gemfire
+=== Gemfire input plugin
+
+NOTE: This plugin cannot be installed on the current version of Logstash. We are working on resolving this problem.
 
 Push events to a GemFire region.
 

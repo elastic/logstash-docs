@@ -1,9 +1,25 @@
-[[plugins-inputs-relp]]
-=== relp
+:plugin: relp
+:type: input
+:default_plugin: 0
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.2
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-input-relp/blob/v3.0.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-input-relp`.
+[id="plugins-{type}s-{plugin}"]
 
+=== Relp input plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 Read RELP events over a TCP socket.
 
@@ -16,66 +32,30 @@ against message loss.
 Message acks only function as far as messages being put into the queue for
 filters; anything lost after that point will not be retransmitted
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Relp Input Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-relp {
-    port => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-inputs-relp-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-relp-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-inputs-relp-host>> |<<string,string>>|No|`"0.0.0.0"`
-| <<plugins-inputs-relp-port>> |<<number,number>>|Yes|
-| <<plugins-inputs-relp-ssl_cacert>> |a valid filesystem path|No|
-| <<plugins-inputs-relp-ssl_cert>> |a valid filesystem path|No|
-| <<plugins-inputs-relp-ssl_enable>> |<<boolean,boolean>>|No|`false`
-| <<plugins-inputs-relp-ssl_key>> |a valid filesystem path|No|
-| <<plugins-inputs-relp-ssl_key_passphrase>> |<<password,password>>|No|`nil`
-| <<plugins-inputs-relp-ssl_verify>> |<<boolean,boolean>>|No|`true`
-| <<plugins-inputs-relp-tags>> |<<array,array>>|No|
-| <<plugins-inputs-relp-type>> |<<string,string>>|No|
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-host>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-port>> |<<number,number>>|Yes
+| <<plugins-{type}s-{plugin}-ssl_cacert>> |a valid filesystem path|No
+| <<plugins-{type}s-{plugin}-ssl_cert>> |a valid filesystem path|No
+| <<plugins-{type}s-{plugin}-ssl_enable>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-ssl_key>> |a valid filesystem path|No
+| <<plugins-{type}s-{plugin}-ssl_key_passphrase>> |<<password,password>>|No
+| <<plugins-{type}s-{plugin}-ssl_verify>> |<<boolean,boolean>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
 
 &nbsp;
 
-[[plugins-inputs-relp-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-Add a field to an event
-
-[[plugins-inputs-relp-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-inputs-relp-host]]
+[id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
   * Value type is <<string,string>>
@@ -83,7 +63,7 @@ The codec used for input data. Input codecs are a convenient method for decoding
 
 The address to listen on.
 
-[[plugins-inputs-relp-port]]
+[id="plugins-{type}s-{plugin}-port"]
 ===== `port` 
 
   * This is a required setting.
@@ -92,7 +72,7 @@ The address to listen on.
 
 The port to listen on.
 
-[[plugins-inputs-relp-ssl_cacert]]
+[id="plugins-{type}s-{plugin}-ssl_cacert"]
 ===== `ssl_cacert` 
 
   * Value type is <<path,path>>
@@ -100,7 +80,7 @@ The port to listen on.
 
 The SSL CA certificate, chainfile or CA path. The system CA path is automatically included.
 
-[[plugins-inputs-relp-ssl_cert]]
+[id="plugins-{type}s-{plugin}-ssl_cert"]
 ===== `ssl_cert` 
 
   * Value type is <<path,path>>
@@ -108,7 +88,7 @@ The SSL CA certificate, chainfile or CA path. The system CA path is automaticall
 
 SSL certificate path
 
-[[plugins-inputs-relp-ssl_enable]]
+[id="plugins-{type}s-{plugin}-ssl_enable"]
 ===== `ssl_enable` 
 
   * Value type is <<boolean,boolean>>
@@ -116,7 +96,7 @@ SSL certificate path
 
 Enable SSL (must be set for other `ssl_` options to take effect).
 
-[[plugins-inputs-relp-ssl_key]]
+[id="plugins-{type}s-{plugin}-ssl_key"]
 ===== `ssl_key` 
 
   * Value type is <<path,path>>
@@ -124,7 +104,7 @@ Enable SSL (must be set for other `ssl_` options to take effect).
 
 SSL key path
 
-[[plugins-inputs-relp-ssl_key_passphrase]]
+[id="plugins-{type}s-{plugin}-ssl_key_passphrase"]
 ===== `ssl_key_passphrase` 
 
   * Value type is <<password,password>>
@@ -132,7 +112,7 @@ SSL key path
 
 SSL key passphrase
 
-[[plugins-inputs-relp-ssl_verify]]
+[id="plugins-{type}s-{plugin}-ssl_verify"]
 ===== `ssl_verify` 
 
   * Value type is <<boolean,boolean>>
@@ -141,33 +121,7 @@ SSL key passphrase
 Verify the identity of the other end of the SSL connection against the CA.
 For input, sets the field `sslsubject` to that of the client certificate.
 
-[[plugins-inputs-relp-tags]]
-===== `tags` 
-
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
-
-Add any number of arbitrary tags to your event.
-
-This can help with processing later.
-
-[[plugins-inputs-relp-type]]
-===== `type` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a `type` field to all events handled by this input.
-
-Types are used mainly for filter activation.
-
-The type is stored as part of the event itself, so you can
-also use the type to search for it in Kibana.
-
-If you try to set a type on an event that already has one (for
-example when you send an event from a shipper to an indexer) then
-a new input will not override the existing type. A type set at
-the shipper stays with that event for its life even
-when sent to another Logstash server.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

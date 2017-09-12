@@ -1,114 +1,52 @@
-[[plugins-filters-cidr]]
-=== cidr
+:plugin: cidr
+:type: filter
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.1.1
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-cidr/blob/v3.1.1/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-cidr`.
+[id="plugins-{type}s-{plugin}"]
 
+=== Cidr filter plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 The CIDR filter is for checking IP addresses in events against a list of
 network blocks that might contain it. Multiple addresses can be checked
 against multiple networks, any match succeeds. Upon success additional tags
 and/or fields can be added to the event.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Cidr Filter Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-cidr {
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-filters-cidr-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-cidr-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-cidr-address>> |<<array,array>>|No|`[]`
-| <<plugins-filters-cidr-network>> |<<array,array>>|No|`[]`
-| <<plugins-filters-cidr-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-cidr-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-cidr-remove_tag>> |<<array,array>>|No|`[]`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-address>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-network>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-network_path>> |a valid filesystem path|No
+| <<plugins-{type}s-{plugin}-refresh_interval>>| <<number,number>>|No
+| <<plugins-{type}s-{plugin}-separator>> |<<string,string>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
 
 &nbsp;
 
-[[plugins-filters-cidr-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-If this filter is successful, add any arbitrary fields to this event.
-Field names can be dynamic and include parts of the event using the `%{field}`.
-
-Example:
-[source,ruby]
-    filter {
-      cidr {
-        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
-      }
-    }
-[source,ruby]
-    # You can also add multiple fields at once:
-    filter {
-      cidr {
-        add_field => {
-          "foo_%{somefield}" => "Hello world, from %{host}"
-          "new_field" => "new_static_value"
-        }
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add field `foo_hello` if it is present, with the
-value above and the `%{host}` piece replaced with that value from the
-event. The second example would also add a hardcoded field.
-
-[[plugins-filters-cidr-add_tag]]
-===== `add_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, add arbitrary tags to the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      cidr {
-        add_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also add multiple tags at once:
-    filter {
-      cidr {
-        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
-
-[[plugins-filters-cidr-address]]
-===== `address` 
+[id="plugins-{type}s-{plugin}-address"]
+===== `address`
 
   * Value type is <<array,array>>
   * Default value is `[]`
@@ -123,8 +61,8 @@ The IP address(es) to check with. Example:
       }
     }
 
-[[plugins-filters-cidr-network]]
-===== `network` 
+[id="plugins-{type}s-{plugin}-network"]
+===== `network`
 
   * Value type is <<array,array>>
   * Default value is `[]`
@@ -139,69 +77,38 @@ The IP network(s) to check against. Example:
       }
     }
 
-[[plugins-filters-cidr-periodic_flush]]
-===== `periodic_flush` 
 
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
+[id="plugins-{type}s-{plugin}-network_path"]
+===== `network_path`
 
-Call the filter flush method at regular interval.
-Optional.
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
 
-[[plugins-filters-cidr-remove_field]]
-===== `remove_field` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary fields from this event.
-Fields names can be dynamic and include parts of the event using the %{field}
-Example:
+The full path of the external file containing the networks the filter should check with.
+Networks are separated by a separator character defined in `separator`.
 [source,ruby]
-    filter {
-      cidr {
-        remove_field => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple fields at once:
-    filter {
-      cidr {
-        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
-      }
-    }
+    192.168.1.0/24
+    192.167.0.0/16	
+NOTE: It is an error to specify both `network` and `network_path`.
 
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the field with name `foo_hello` if it is present. The second
-example would remove an additional, non-dynamic field.
+[id="plugins-{type}s-{plugin}-refresh_interval"]
+===== `refresh_interval`
 
-[[plugins-filters-cidr-remove_tag]]
-===== `remove_tag` 
+  * Value type is <<number,number>>
+  * Default value is `600`
 
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary tags from the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      cidr {
-        remove_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple tags at once:
-    filter {
-      cidr {
-        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the tag `foo_hello` if it is present. The second example
-would remove a sad, unwanted tag as well.
+When using an external file, this setting will indicate how frequently
+(in seconds) Logstash will check the file for updates.
 
 
+[id="plugins-{type}s-{plugin}-separator"]
+===== `separator`
+
+  * Value type is <<string,string>>
+  * Default value is `\n`
+
+Separator character used for parsing networks from the external file
+specified by `network_path`. Defaults to newline `\n` character.
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

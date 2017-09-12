@@ -1,9 +1,25 @@
-[[plugins-inputs-rss]]
-=== rss
+:plugin: rss
+:type: input
+:default_plugin: 0
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.3
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-input-rss/blob/v3.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-input-rss`.
+[id="plugins-{type}s-{plugin}"]
 
+=== Rss input plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 Run command line tools and capture the whole output as an event.
 
@@ -14,61 +30,24 @@ Notes:
   as one event.
 
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Rss Input Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-rss {
-    interval => ...
-    url => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-inputs-rss-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-inputs-rss-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-inputs-rss-interval>> |<<number,number>>|Yes|
-| <<plugins-inputs-rss-tags>> |<<array,array>>|No|
-| <<plugins-inputs-rss-type>> |<<string,string>>|No|
-| <<plugins-inputs-rss-url>> |<<string,string>>|Yes|
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-interval>> |<<number,number>>|Yes
+| <<plugins-{type}s-{plugin}-url>> |<<string,string>>|Yes
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
 
 &nbsp;
 
-[[plugins-inputs-rss-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-Add a field to an event
-
-[[plugins-inputs-rss-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-inputs-rss-interval]]
+[id="plugins-{type}s-{plugin}-interval"]
 ===== `interval` 
 
   * This is a required setting.
@@ -77,36 +56,7 @@ The codec used for input data. Input codecs are a convenient method for decoding
 
 Interval to run the command. Value is in seconds.
 
-[[plugins-inputs-rss-tags]]
-===== `tags` 
-
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
-
-Add any number of arbitrary tags to your event.
-
-This can help with processing later.
-
-[[plugins-inputs-rss-type]]
-===== `type` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a `type` field to all events handled by this input.
-
-Types are used mainly for filter activation.
-
-The type is stored as part of the event itself, so you can
-also use the type to search for it in Kibana.
-
-If you try to set a type on an event that already has one (for
-example when you send an event from a shipper to an indexer) then
-a new input will not override the existing type. A type set at
-the shipper stays with that event for its life even
-when sent to another Logstash server.
-
-[[plugins-inputs-rss-url]]
+[id="plugins-{type}s-{plugin}-url"]
 ===== `url` 
 
   * This is a required setting.
@@ -116,3 +66,6 @@ when sent to another Logstash server.
 RSS/Atom feed URL
 
 
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
