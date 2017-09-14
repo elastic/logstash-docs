@@ -24,7 +24,6 @@ The following input plugins are available below. For a list of Elastic supported
 | <<plugins-inputs-google_pubsub,google_pubsub>> | Consume events from a Google Cloud PubSub service | https://github.com/logstash-plugins/logstash-input-google_pubsub[logstash-input-google_pubsub]
 | <<plugins-inputs-graphite,graphite>> | Reads metrics from the `graphite` tool | https://github.com/logstash-plugins/logstash-input-graphite[logstash-input-graphite]
 | <<plugins-inputs-heartbeat,heartbeat>> | Generates heartbeat events for testing | https://github.com/logstash-plugins/logstash-input-heartbeat[logstash-input-heartbeat]
-| <<plugins-inputs-heroku,heroku>> | Streams events from the logs of a Heroku app | https://github.com/logstash-plugins/logstash-input-heroku[logstash-input-heroku]
 | <<plugins-inputs-http,http>> | Receives events over HTTP or HTTPS | https://github.com/logstash-plugins/logstash-input-http[logstash-input-http]
 | <<plugins-inputs-http_poller,http_poller>> | Decodes the output of an HTTP API into events | https://github.com/logstash-plugins/logstash-input-http_poller[logstash-input-http_poller]
 | <<plugins-inputs-imap,imap>> | Reads mail from an IMAP server | https://github.com/logstash-plugins/logstash-input-imap[logstash-input-imap]
@@ -114,9 +113,6 @@ include::inputs/graphite.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-heartbeat/edit/master/docs/index.asciidoc
 include::inputs/heartbeat.asciidoc[]
-
-:edit_url: https://github.com/logstash-plugins/logstash-input-heroku/edit/master/docs/index.asciidoc
-include::inputs/heroku.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-http/edit/master/docs/index.asciidoc
 include::inputs/http.asciidoc[]
