@@ -1,15 +1,24 @@
-[[plugins-filters-dissect]]
-=== dissect
+:plugin: dissect
+:type: filter
 
-* Version: 1.0.8
-* Released on: 2016-10-22
-* https://github.com/logstash-plugins/logstash-filter-dissect/blob/master/CHANGELOG.md#108[Changelog]
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v1.0.12
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-dissect/blob/v1.0.12/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
 
-NOTE: This plugin does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-dissect`.
+=== Dissect filter plugin
 
+include::{include_path}/plugin_header.asciidoc[]
 
-==== *Dissect or how to de-structure text*
+==== Description
 
 The Dissect filter is a kind of split operation. Unlike a regular split operation where one delimiter is applied to the whole string, this operation applies a set of delimiters # to a string value. +
 Dissect does not use regular expressions and is very fast. +
@@ -83,7 +92,7 @@ e.g. for a text of `1 2 3 go`, this `%{a} %{b} %{+a}` will build two key/values 
 The found value is added to the Event using the found value of another field as the key. +
 The key is prefixed with a `&`. +
 `%{&some_field}` - an indirect field where the key is indirectly sourced from the value of `some_field`. +
-e.g. for a text of `error: some_error, some_description`, this `error: %{?err}, %{&err}` will build a key/value of `some_error => description`.
+e.g. for a text of `error: some_error, some_description`, this `error: %{?err}, %{&err}` will build a key/value of `some_error => some_description`.
 
 [NOTE]
 for append and indirect field the key can refer to a field that already exists in the event before dissection.
@@ -128,105 +137,25 @@ filter {
 }
 ....
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Dissect Filter Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-Required configuration options:
-
-[source,json]
---------------------------
-dissect {
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-filters-dissect-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-dissect-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-dissect-convert_datatype>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-dissect-enable_metric>> |<<boolean,boolean>>|No|`true`
-| <<plugins-filters-dissect-id>> |<<string,string>>|No|
-| <<plugins-filters-dissect-mapping>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-dissect-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-dissect-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-dissect-remove_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-dissect-tag_on_failure>> |<<array,array>>|No|`["_dissectfailure"]`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-convert_datatype>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-mapping>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-tag_on_failure>> |<<array,array>>|No
 |=======================================================================
 
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
 
 &nbsp;
 
-[[plugins-filters-dissect-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-If this filter is successful, add any arbitrary fields to this event.
-Field names can be dynamic and include parts of the event using the `%{field}`.
-
-Example:
-[source,ruby]
-    filter {
-      dissect {
-        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
-      }
-    }
-[source,ruby]
-    # You can also add multiple fields at once:
-    filter {
-      dissect {
-        add_field => {
-          "foo_%{somefield}" => "Hello world, from %{host}"
-          "new_field" => "new_static_value"
-        }
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add field `foo_hello` if it is present, with the
-value above and the `%{host}` piece replaced with that value from the
-event. The second example would also add a hardcoded field.
-
-[[plugins-filters-dissect-add_tag]]
-===== `add_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, add arbitrary tags to the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      dissect {
-        add_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also add multiple tags at once:
-    filter {
-      dissect {
-        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
-
-[[plugins-filters-dissect-convert_datatype]]
+[id="plugins-{type}s-{plugin}-convert_datatype"]
 ===== `convert_datatype` 
 
   * Value type is <<hash,hash>>
@@ -247,36 +176,7 @@ filter {
   }
 }
 
-[[plugins-filters-dissect-enable_metric]]
-===== `enable_metric` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Disable or enable metric logging for this specific plugin instance
-by default we record all the metrics we can, but you can disable metrics collection
-for a specific plugin.
-
-[[plugins-filters-dissect-id]]
-===== `id` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a unique `ID` to the plugin instance, this `ID` is used for tracking
-information for a specific configuration of the plugin.
-
-```
-output {
- stdout {
-   id => "ABC"
- }
-}
-```
-
-If you don't explicitely set this variable Logstash will generate a unique name.
-
-[[plugins-filters-dissect-mapping]]
+[id="plugins-{type}s-{plugin}-mapping"]
 ===== `mapping` 
 
   * Value type is <<hash,hash>>
@@ -299,72 +199,7 @@ filter {
 This is useful if you want to keep the field `description` but also
 dissect it some more.
 
-[[plugins-filters-dissect-periodic_flush]]
-===== `periodic_flush` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Call the filter flush method at regular interval.
-Optional.
-
-[[plugins-filters-dissect-remove_field]]
-===== `remove_field` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary fields from this event.
-Fields names can be dynamic and include parts of the event using the %{field}
-Example:
-[source,ruby]
-    filter {
-      dissect {
-        remove_field => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple fields at once:
-    filter {
-      dissect {
-        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the field with name `foo_hello` if it is present. The second
-example would remove an additional, non-dynamic field.
-
-[[plugins-filters-dissect-remove_tag]]
-===== `remove_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary tags from the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      dissect {
-        remove_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple tags at once:
-    filter {
-      dissect {
-        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the tag `foo_hello` if it is present. The second example
-would remove a sad, unwanted tag as well.
-
-[[plugins-filters-dissect-tag_on_failure]]
+[id="plugins-{type}s-{plugin}-tag_on_failure"]
 ===== `tag_on_failure` 
 
   * Value type is <<array,array>>
@@ -372,3 +207,7 @@ would remove a sad, unwanted tag as well.
 
 Append values to the `tags` field when dissection fails
 
+
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

@@ -1,12 +1,13 @@
-:plugin: msgpack
+:plugin: pretty
 :type: codec
+:default_plugin: 0
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.5
+:version: v1.0.1
 :release_date: 2017-08-15
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-msgpack/blob/v3.0.5/CHANGELOG.md
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-pretty/blob/v1.0.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -14,31 +15,33 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 [id="plugins-{type}s-{plugin}"]
 
-=== Msgpack codec plugin
+=== Pretty codec plugin
 
 include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-This codec reads and produces MessagePack encoded content.
+The Pretty codec will pretty print your event data using
+the Ruby Awesome Print library.
+
 
 [id="plugins-{type}s-{plugin}-options"]
-==== Msgpack Codec Configuration Options
+==== Pretty Codec Configuration Options
 
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<plugins-{type}s-{plugin}-format>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-metadata>> |<<boolean,boolean>>|No
 |=======================================================================
 
 &nbsp;
 
-[id="plugins-{type}s-{plugin}-format"]
-===== `format` 
+[id="plugins-{type}s-{plugin}-metadata"]
+===== `metadata` 
 
-  * Value type is <<string,string>>
-  * Default value is `nil`
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
 
-
+Should the event's metadata be included in the output?
 
 

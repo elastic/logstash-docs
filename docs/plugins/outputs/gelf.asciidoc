@@ -1,58 +1,58 @@
-[[plugins-outputs-gelf]]
-=== gelf
+:plugin: gelf
+:type: output
+:default_plugin: 0
 
-NOTE: This is a community-maintained plugin!
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.1.4
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-output-gelf/blob/v3.1.4/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="plugins-{type}s-{plugin}"]
+
+=== Gelf output plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 This output generates messages in GELF format. This is most useful if you
 want to use Logstash to output events to Graylog2.
 
 More information at http://graylog2.org/gelf#specs[The Graylog2 GELF specs page]
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Gelf Output Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-gelf {
-    host => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-outputs-gelf-chunksize>> |<<number,number>>|No|`1420`
-| <<plugins-outputs-gelf-codec>> |<<codec,codec>>|No|`"plain"`
-| <<plugins-outputs-gelf-custom_fields>> |<<hash,hash>>|No|`{}`
-| <<plugins-outputs-gelf-full_message>> |<<string,string>>|No|`"%{message}"`
-| <<plugins-outputs-gelf-host>> |<<string,string>>|Yes|
-| <<plugins-outputs-gelf-ignore_metadata>> |<<array,array>>|No|`["@timestamp", "@version", "severity", "host", "source_host", "source_path", "short_message"]`
-| <<plugins-outputs-gelf-level>> |<<array,array>>|No|`["%{severity}", "INFO"]`
-| <<plugins-outputs-gelf-port>> |<<number,number>>|No|`12201`
-| <<plugins-outputs-gelf-sender>> |<<string,string>>|No|`"%{host}"`
-| <<plugins-outputs-gelf-ship_metadata>> |<<boolean,boolean>>|No|`true`
-| <<plugins-outputs-gelf-ship_tags>> |<<boolean,boolean>>|No|`true`
-| <<plugins-outputs-gelf-short_message>> |<<string,string>>|No|`"short_message"`
-| <<plugins-outputs-gelf-workers>> |<<number,number>>|No|`1`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-chunksize>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-custom_fields>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-full_message>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-host>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-ignore_metadata>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-level>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-sender>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-ship_metadata>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-ship_tags>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-short_message>> |<<string,string>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
 
 &nbsp;
 
-[[plugins-outputs-gelf-chunksize]]
+[id="plugins-{type}s-{plugin}-chunksize"]
 ===== `chunksize` 
 
   * Value type is <<number,number>>
@@ -60,15 +60,7 @@ Available configuration options:
 
 The GELF chunksize. You usually don't need to change this.
 
-[[plugins-outputs-gelf-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-gelf-custom_fields]]
+[id="plugins-{type}s-{plugin}-custom_fields"]
 ===== `custom_fields` 
 
   * Value type is <<hash,hash>>
@@ -79,29 +71,7 @@ fields. This exposes that. Exclude the `_` portion of the field name
 e.g. `custom_fields => ['foo_field', 'some_value']`
 sets `_foo_field` = `some_value`.
 
-[[plugins-outputs-gelf-facility]]
-===== `facility`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-The GELF facility. Dynamic values like `%{foo}` are permitted here; this
-is useful if you need to use a value from the event as the facility name.
-Should now be sent as an underscored "additional field" (e.g. `\_facility`)
-
-[[plugins-outputs-gelf-file]]
-===== `file`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-The GELF file; this is usually the source code file in your program where
-the log event originated. Dynamic values like `%{foo}` are permitted here.
-Should now be sent as an underscored "additional field" (e.g. `\_file`).
-
-[[plugins-outputs-gelf-full_message]]
+[id="plugins-{type}s-{plugin}-full_message"]
 ===== `full_message` 
 
   * Value type is <<string,string>>
@@ -109,7 +79,7 @@ Should now be sent as an underscored "additional field" (e.g. `\_file`).
 
 The GELF full message. Dynamic values like `%{foo}` are permitted here.
 
-[[plugins-outputs-gelf-host]]
+[id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
   * This is a required setting.
@@ -118,7 +88,7 @@ The GELF full message. Dynamic values like `%{foo}` are permitted here.
 
 Graylog2 server IP address or hostname.
 
-[[plugins-outputs-gelf-ignore_metadata]]
+[id="plugins-{type}s-{plugin}-ignore_metadata"]
 ===== `ignore_metadata` 
 
   * Value type is <<array,array>>
@@ -127,7 +97,7 @@ Graylog2 server IP address or hostname.
 Ignore these fields when `ship_metadata` is set. Typically this lists the
 fields used in dynamic values for GELF fields.
 
-[[plugins-outputs-gelf-level]]
+[id="plugins-{type}s-{plugin}-level"]
 ===== `level` 
 
   * Value type is <<array,array>>
@@ -145,19 +115,7 @@ The following additional severity\_labels from Logstash's  syslog\_pri filter
 are accepted: "emergency", "alert", "critical",  "warning", "notice", and
 "informational".
 
-[[plugins-outputs-gelf-line]]
-===== `line`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-The GELF line number; this is usually the line number in your program where
-the log event originated. Dynamic values like `%{foo}` are permitted here, but the
-value should be a number.
-Should now be sent as an underscored "additional field" (e.g. `\_line`).
-
-[[plugins-outputs-gelf-port]]
+[id="plugins-{type}s-{plugin}-port"]
 ===== `port` 
 
   * Value type is <<number,number>>
@@ -165,7 +123,7 @@ Should now be sent as an underscored "additional field" (e.g. `\_line`).
 
 Graylog2 server port number.
 
-[[plugins-outputs-gelf-sender]]
+[id="plugins-{type}s-{plugin}-sender"]
 ===== `sender` 
 
   * Value type is <<string,string>>
@@ -176,7 +134,7 @@ want to use something other than the event's source host as the
 "sender" of an event. A common case for this is using the application name
 instead of the hostname.
 
-[[plugins-outputs-gelf-ship_metadata]]
+[id="plugins-{type}s-{plugin}-ship_metadata"]
 ===== `ship_metadata` 
 
   * Value type is <<boolean,boolean>>
@@ -186,7 +144,7 @@ Should Logstash ship metadata within event object? This will cause Logstash
 to ship any fields in the event (such as those created by grok) in the GELF
 messages. These will be sent as underscored "additional fields".
 
-[[plugins-outputs-gelf-ship_tags]]
+[id="plugins-{type}s-{plugin}-ship_tags"]
 ===== `ship_tags` 
 
   * Value type is <<boolean,boolean>>
@@ -195,7 +153,7 @@ messages. These will be sent as underscored "additional fields".
 Ship tags within events. This will cause Logstash to ship the tags of an
 event as the field `\_tags`.
 
-[[plugins-outputs-gelf-short_message]]
+[id="plugins-{type}s-{plugin}-short_message"]
 ===== `short_message` 
 
   * Value type is <<string,string>>
@@ -204,13 +162,7 @@ event as the field `\_tags`.
 The GELF short message field name. If the field does not exist or is empty,
 the event message is taken instead.
 
-[[plugins-outputs-gelf-workers]]
-===== `workers` 
-
-  * Value type is <<number,number>>
-  * Default value is `1`
-
-The number of workers to use for this output.
-Note that this setting may not be useful for all outputs.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

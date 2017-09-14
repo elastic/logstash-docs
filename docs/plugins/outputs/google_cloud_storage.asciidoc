@@ -1,11 +1,10 @@
 [[plugins-outputs-google_cloud_storage]]
-=== google_cloud_storage
+=== Google_cloud_storage output plugin
 
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-output-google_cloud_storage`.
+NOTE: This plugin cannot be installed on the current version of Logstash. We are working on resolving this problem.
 
-[source,txt]
------
+
 Author: Rodrigo De Castro <rdc@google.com>
 Date: 2013-09-20
 
@@ -22,8 +21,6 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
------
-
 Summary: plugin to upload log events to Google Cloud Storage (GCS), rolling
 files based on the date pattern provided as a configuration setting. Events
 are written to files locally and, once file is closed, this plugin uploads
@@ -44,8 +41,6 @@ uploading the log files and in terms of storage costs as well.
 USAGE:
 This is an example of logstash config:
 
-[source,json]
---------------------------
 output {
    google_cloud_storage {
      bucket => "my_bucket"                                     (required)
@@ -62,16 +57,14 @@ output {
      uploader_interval_secs => 60                              (optional)
    }
 }
---------------------------
 
 Improvements TODO list:
-
-* Support logstash event variables to determine filename.
-* Turn Google API code into a Plugin Mixin (like AwsConfig).
-* There's no recover method, so if logstash/plugin crashes, files may not
+- Support logstash event variables to determine filename.
+- Turn Google API code into a Plugin Mixin (like AwsConfig).
+- There's no recover method, so if logstash/plugin crashes, files may not
 be uploaded to GCS.
-* Allow user to configure file name.
-* Allow parallel uploads for heavier loads (+ connection configuration if
+- Allow user to configure file name.
+- Allow parallel uploads for heavier loads (+ connection configuration if
 exposed by Ruby API client)
 
 &nbsp;
