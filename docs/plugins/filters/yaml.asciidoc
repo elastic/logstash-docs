@@ -1,8 +1,7 @@
 [[plugins-filters-yaml]]
-=== yaml
+=== Yaml filter plugin
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-yaml`.
-
+NOTE: This plugin cannot be installed on the current version of Logstash. We are working on resolving this problem.
 
 This is a YAML parsing filter. It takes an existing field which contains YAML and
 expands it into an actual data structure within the Logstash event.

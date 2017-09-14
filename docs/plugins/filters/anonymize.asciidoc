@@ -1,112 +1,49 @@
-[[plugins-filters-anonymize]]
-=== anonymize
+:plugin: anonymize
+:type: filter
+:default_plugin: 0
 
-NOTE: We recommend that you use the <<plugins-filters-fingerprint,fingerprint filter plugin>> instead of anonymize.
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.5
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-anonymize/blob/v3.0.5/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="plugins-{type}s-{plugin}"]
+
+=== Anonymize filter plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+deprecated[3.0.3,We recommend that you use the <<plugins-filters-fingerprint,fingerprint filter plugin>> instead.]
 
 Anonymize fields by replacing values with a consistent hash.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Anonymize Filter Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-anonymize {
-    algorithm => ...
-    fields => ...
-    key => ...
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-filters-anonymize-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-anonymize-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-anonymize-algorithm>> |<<string,string>>, one of `["SHA1", "SHA256", "SHA384", "SHA512", "MD5", "MURMUR3", "IPV4_NETWORK"]`|Yes|`"SHA1"`
-| <<plugins-filters-anonymize-fields>> |<<array,array>>|Yes|
-| <<plugins-filters-anonymize-key>> |<<string,string>>|Yes|
-| <<plugins-filters-anonymize-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-anonymize-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-anonymize-remove_tag>> |<<array,array>>|No|`[]`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-algorithm>> |<<string,string>>, one of `["SHA1", "SHA256", "SHA384", "SHA512", "MD5", "MURMUR3", "IPV4_NETWORK"]`|Yes
+| <<plugins-{type}s-{plugin}-fields>> |<<array,array>>|Yes
+| <<plugins-{type}s-{plugin}-key>> |<<string,string>>|Yes
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
 
 &nbsp;
 
-[[plugins-filters-anonymize-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-If this filter is successful, add any arbitrary fields to this event.
-Field names can be dynamic and include parts of the event using the `%{field}`.
-
-Example:
-[source,ruby]
-    filter {
-      anonymize {
-        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
-      }
-    }
-[source,ruby]
-    # You can also add multiple fields at once:
-    filter {
-      anonymize {
-        add_field => {
-          "foo_%{somefield}" => "Hello world, from %{host}"
-          "new_field" => "new_static_value"
-        }
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add field `foo_hello` if it is present, with the
-value above and the `%{host}` piece replaced with that value from the
-event. The second example would also add a hardcoded field.
-
-[[plugins-filters-anonymize-add_tag]]
-===== `add_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, add arbitrary tags to the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      anonymize {
-        add_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also add multiple tags at once:
-    filter {
-      anonymize {
-        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
-
-[[plugins-filters-anonymize-algorithm]]
+[id="plugins-{type}s-{plugin}-algorithm"]
 ===== `algorithm` 
 
   * This is a required setting.
@@ -115,7 +52,7 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
 
 digest/hash type
 
-[[plugins-filters-anonymize-fields]]
+[id="plugins-{type}s-{plugin}-fields"]
 ===== `fields` 
 
   * This is a required setting.
@@ -124,7 +61,7 @@ digest/hash type
 
 The fields to be anonymized
 
-[[plugins-filters-anonymize-key]]
+[id="plugins-{type}s-{plugin}-key"]
 ===== `key` 
 
   * This is a required setting.
@@ -135,69 +72,7 @@ Hashing key
 When using MURMUR3 the key is ignored but must still be set.
 When using IPV4_NETWORK key is the subnet prefix lentgh
 
-[[plugins-filters-anonymize-periodic_flush]]
-===== `periodic_flush` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Call the filter flush method at regular interval.
-Optional.
-
-[[plugins-filters-anonymize-remove_field]]
-===== `remove_field` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary fields from this event.
-Fields names can be dynamic and include parts of the event using the %{field}
-Example:
-[source,ruby]
-    filter {
-      anonymize {
-        remove_field => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple fields at once:
-    filter {
-      anonymize {
-        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the field with name `foo_hello` if it is present. The second
-example would remove an additional, non-dynamic field.
-
-[[plugins-filters-anonymize-remove_tag]]
-===== `remove_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary tags from the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      anonymize {
-        remove_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple tags at once:
-    filter {
-      anonymize {
-        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the tag `foo_hello` if it is present. The second example
-would remove a sad, unwanted tag as well.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

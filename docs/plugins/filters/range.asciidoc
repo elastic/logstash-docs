@@ -1,9 +1,25 @@
-[[plugins-filters-range]]
-=== range
+:plugin: range
+:type: filter
+:default_plugin: 0
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.2
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-range/blob/v3.0.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-range`.
+[id="plugins-{type}s-{plugin}"]
 
+=== Range filter plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 This filter is used to check that certain fields are within expected size/length ranges.
 Supported types are numbers and strings.
@@ -16,104 +32,24 @@ Supported actions are drop event, add tag, or add field with specified value.
 Example use cases are for histogram-like tagging of events
 or for finding anomaly values in fields or too big events that should be dropped.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Range Filter Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-range {
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-filters-range-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-range-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-range-negate>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-range-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-range-ranges>> |<<array,array>>|No|`[]`
-| <<plugins-filters-range-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-range-remove_tag>> |<<array,array>>|No|`[]`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-negate>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-ranges>> |<<array,array>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
 
 &nbsp;
 
-[[plugins-filters-range-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-If this filter is successful, add any arbitrary fields to this event.
-Field names can be dynamic and include parts of the event using the `%{field}`.
-
-Example:
-[source,ruby]
-    filter {
-      range {
-        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
-      }
-    }
-[source,ruby]
-    # You can also add multiple fields at once:
-    filter {
-      range {
-        add_field => {
-          "foo_%{somefield}" => "Hello world, from %{host}"
-          "new_field" => "new_static_value"
-        }
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add field `foo_hello` if it is present, with the
-value above and the `%{host}` piece replaced with that value from the
-event. The second example would also add a hardcoded field.
-
-[[plugins-filters-range-add_tag]]
-===== `add_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, add arbitrary tags to the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      range {
-        add_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also add multiple tags at once:
-    filter {
-      range {
-        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
-
-[[plugins-filters-range-negate]]
+[id="plugins-{type}s-{plugin}-negate"]
 ===== `negate` 
 
   * Value type is <<boolean,boolean>>
@@ -121,16 +57,7 @@ would add a tag `foo_hello` (and the second example would of course add a `tagge
 
 Negate the range match logic, events should be outsize of the specified range to match.
 
-[[plugins-filters-range-periodic_flush]]
-===== `periodic_flush` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Call the filter flush method at regular interval.
-Optional.
-
-[[plugins-filters-range-ranges]]
+[id="plugins-{type}s-{plugin}-ranges"]
 ===== `ranges` 
 
   * Value type is <<array,array>>
@@ -144,11 +71,11 @@ Example:
         ranges => [ "message", 0, 10, "tag:short",
                     "message", 11, 100, "tag:medium",
                     "message", 101, 1000, "tag:long",
-                    "message", 1001, 100000, "drop",
+                    "message", 1001, 1e1000, "drop",
                     "duration", 0, 100, "field:latency:fast",
                     "duration", 101, 200, "field:latency:normal",
                     "duration", 201, 1000, "field:latency:slow",
-                    "duration", 1001, 100000, "field:latency:outlier",
+                    "duration", 1001, 1e1000, "field:latency:outlier",
                     "requests", 0, 10, "tag:too_few_%{host}_requests" ]
       }
     }
@@ -157,60 +84,7 @@ Supported actions are drop tag or field with specified value.
 Added tag names and field names and field values can have `%{dynamic}` values.
 
 
-[[plugins-filters-range-remove_field]]
-===== `remove_field` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary fields from this event.
-Fields names can be dynamic and include parts of the event using the %{field}
-Example:
-[source,ruby]
-    filter {
-      range {
-        remove_field => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple fields at once:
-    filter {
-      range {
-        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the field with name `foo_hello` if it is present. The second
-example would remove an additional, non-dynamic field.
-
-[[plugins-filters-range-remove_tag]]
-===== `remove_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary tags from the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      range {
-        remove_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple tags at once:
-    filter {
-      range {
-        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the tag `foo_hello` if it is present. The second example
-would remove a sad, unwanted tag as well.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
