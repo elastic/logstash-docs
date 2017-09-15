@@ -4,9 +4,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.11
-:release_date: 2017-08-21
-:changelog_url: https://github.com/logstash-plugins/logstash-output-rabbitmq/blob/v4.0.11/CHANGELOG.md
+:version: v5.0.1
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-output-rabbitmq/blob/v5.0.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -96,15 +96,6 @@ Time in seconds to wait before retrying a connection
   * There is no default value for this setting.
 
 The default connection timeout in milliseconds. If not specified the timeout is infinite.
-
-[id="plugins-{type}s-{plugin}-debug"]
-===== `debug`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Enable or disable logging
 
 [id="plugins-{type}s-{plugin}-durable"]
 ===== `durable` 
@@ -249,24 +240,6 @@ Path to an SSL certificate in PKCS12 (.p12) format used for verifying the remote
   * Default value is `"TLSv1.2"`
 
 Version of the SSL protocol to use.
-
-[id="plugins-{type}s-{plugin}-tls_certificate_password"]
-===== `tls_certificate_password`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-TLS certificate password
-
-[id="plugins-{type}s-{plugin}-tls_certificate_path"]
-===== `tls_certificate_path`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<path,path>>
-  * There is no default value for this setting.
-
-TLS certifcate path
 
 [id="plugins-{type}s-{plugin}-user"]
 ===== `user` 

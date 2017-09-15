@@ -4,9 +4,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.5
-:release_date: 2017-08-18
-:changelog_url: https://github.com/logstash-plugins/logstash-output-redis/blob/v3.0.5/CHANGELOG.md
+:version: v4.0.1
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-output-redis/blob/v4.0.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -119,8 +119,8 @@ Only supported for `list` Redis `data_type`.
   * Value can be any of: `list`, `channel`
   * There is no default value for this setting.
 
-Either list or channel.  If `redis_type` is list, then we will set
-RPUSH to key. If `redis_type` is channel, then we will PUBLISH to `key`.
+Either list or channel.  If `data_type` is list, then we will set
+RPUSH to key. If `data_type` is channel, then we will PUBLISH to `key`.
 
 [id="plugins-{type}s-{plugin}-db"]
 ===== `db` 
@@ -156,15 +156,6 @@ For example:
 The name of a Redis list or channel. Dynamic names are
 valid here, for example `logstash-%{type}`.
 
-[id="plugins-{type}s-{plugin}-name"]
-===== `name`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `"default"`
-
-Name is used for logging in case there are multiple instances.
-
 [id="plugins-{type}s-{plugin}-password"]
 ===== `password` 
 
@@ -180,16 +171,6 @@ Password to authenticate with.  There is no authentication by default.
   * Default value is `6379`
 
 The default port to connect on. Can be overridden on any hostname.
-
-[id="plugins-{type}s-{plugin}-queue"]
-===== `queue`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-The name of the Redis queue (we'll use RPUSH on this). Dynamic names are
-valid here, for example `logstash-%{type}`
 
 [id="plugins-{type}s-{plugin}-reconnect_interval"]
 ===== `reconnect_interval` 
