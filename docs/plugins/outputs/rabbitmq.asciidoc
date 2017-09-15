@@ -46,7 +46,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-heartbeat>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-host>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-key>> |<<string,string>>|No
-| <<plugins-{type}s-{plugin}-message_properties>> |<<Hash,Hash>>|No
+| <<plugins-{type}s-{plugin}-message_properties>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-passive>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-password>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-persistent>> |<<boolean,boolean>>|No
