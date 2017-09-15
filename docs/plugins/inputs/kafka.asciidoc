@@ -4,9 +4,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.1.11
-:release_date: 2017-08-21
-:changelog_url: https://github.com/logstash-plugins/logstash-input-kafka/blob/v5.1.11/CHANGELOG.md
+:version: v8.0.2
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-input-kafka/blob/v8.0.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -20,8 +20,8 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-This input will read events from a Kafka topic. It uses the 0.10 version of the
-consumer API provided by Kafka to read messages from the broker.
+This input will read events from a Kafka topic. It uses the 0.10 version of
+the consumer API provided by Kafka to read messages from the broker.
 
 Here's a compatibility matrix that shows the Kafka client versions that are compatible with each combination
 of Logstash and the Kafka input plugin: 
@@ -33,6 +33,8 @@ of Logstash and the Kafka input plugin:
 |0.9       |2.0.0 - 2.3.x   | 3.x.x |Works with the old Ruby Event API (`event['product']['price'] = 10`)  
 |0.9       |2.4.x - 5.x.x   | 4.x.x |Works with the new getter/setter APIs (`event.set('[product][price]', 10)`)
 |0.10.0.x  |2.4.x - 5.x.x   | 5.x.x |Not compatible with the <= 0.9 broker
+|0.10.1.x  |2.4.x - 5.x.x   | 6.x.x |
+|0.11.0.0  |2.4.x - 5.x.x   | 6.x.x |Not compatible with the <= 0.9 broker
 |==========================================================
 
 NOTE: We recommended that you use matching Kafka client and broker versions. During upgrades, you should
@@ -62,6 +64,19 @@ For more information see http://kafka.apache.org/documentation.html#theconsumer
 
 Kafka consumer configuration: http://kafka.apache.org/documentation.html#consumerconfigs
 
+==== Metadata fields
+
+The following metadata from Kafka broker are added under the `[@metadata]` field:
+
+* `[@metadata][kafka][topic]`: Original Kafka topic from where the message was consumed.
+* `[@metadata][kafka][consumer_group]`: Consumer group
+* `[@metadata][kafka][partition]`: Partition info for this message.
+* `[@metadata][kafka][offset]`: Original record offset for this message.
+* `[@metadata][kafka][key]`: Record key, if any.
+* `[@metadata][kafka][timestamp]`: Timestamp when this message was received by the Kafka broker.
+
+Please note that `@metadata` fields are not part of any of your events at output time. If you need these information to be 
+inserted into your original event, you'll have to use the `mutate` filter to manually copy the required fields into your `event`.
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Kafka Input Configuration Options
@@ -81,6 +96,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-decorate_events>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-enable_auto_commit>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-exclude_internal_topics>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-fetch_max_bytes>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-fetch_max_wait_ms>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-fetch_min_bytes>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-group_id>> |<<string,string>>|No
@@ -89,6 +105,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-kerberos_config>> |a valid filesystem path|No
 | <<plugins-{type}s-{plugin}-key_deserializer_class>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-max_partition_fetch_bytes>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-max_poll_interval_ms>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-max_poll_records>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-metadata_max_age_ms>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-partition_assignment_strategy>> |<<string,string>>|No
@@ -146,7 +163,7 @@ What to do when there is no initial offset in Kafka or if an offset is out of ra
   * Value type is <<string,string>>
   * Default value is `"localhost:9092"`
 
-A list of URLs to use for establishing the initial connection to the cluster.
+A list of URLs of Kafka instances to use for establishing the initial connection to the cluster.
 This list should be in the form of `host1:port1,host2:port2` These urls are just used
 for the initial connection to discover the full cluster membership (which may change dynamically)
 so this list need not contain the full set of servers (you may want more than one, though, in
@@ -221,6 +238,16 @@ which the consumption will begin.
 
 Whether records from internal topics (such as offsets) should be exposed to the consumer.
 If set to true the only way to receive records from an internal topic is subscribing to it.
+
+[id="plugins-{type}s-{plugin}-fetch_max_bytes"]
+===== `fetch_max_bytes` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The maximum amount of data the server should return for a fetch request. This is not an 
+absolute maximum, if the first message in the first non-empty partition of the fetch is larger 
+than this value, the message will still be returned to ensure that the consumer can make progress.
 
 [id="plugins-{type}s-{plugin}-fetch_max_wait_ms"]
 ===== `fetch_max_wait_ms` 
@@ -314,6 +341,18 @@ request will be <code>#partitions * max.partition.fetch.bytes</code>. This size 
 as large as the maximum message size the server allows or else it is possible for the producer to
 send messages larger than the consumer can fetch. If that happens, the consumer can get stuck trying
 to fetch a large message on a certain partition.
+
+[id="plugins-{type}s-{plugin}-max_poll_interval_ms"]
+===== `max_poll_interval_ms` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The maximum delay between invocations of poll() when using consumer group management. This places 
+an upper bound on the amount of time that the consumer can be idle before fetching more records. 
+If poll() is not called before expiration of this timeout, then the consumer is considered failed and 
+the group will rebalance in order to reassign the partitions to another member.
+The value of the configuration `request_timeout_ms` must always be larger than max_poll_interval_ms
 
 [id="plugins-{type}s-{plugin}-max_poll_records"]
 ===== `max_poll_records` 
@@ -431,15 +470,6 @@ The size of the TCP send buffer (SO_SNDBUF) to use when sending data
 The timeout after which, if the `poll_timeout_ms` is not invoked, the consumer is marked dead
 and a rebalance operation is triggered for the group identified by `group_id`
 
-[id="plugins-{type}s-{plugin}-ssl"]
-===== `ssl`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Enable SSL/TLS secured communication to Kafka broker.
-
 [id="plugins-{type}s-{plugin}-ssl_key_password"]
 ===== `ssl_key_password` 
 
@@ -520,6 +550,8 @@ The topics configuration will be ignored when using this configuration.
   * Default value is `"org.apache.kafka.common.serialization.StringDeserializer"`
 
 Java Class used to deserialize the record's value
+
+
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
