@@ -1,16 +1,22 @@
-[[plugins-inputs-rabbitmq]]
-=== rabbitmq
+:plugin: rabbitmq
+:type: input
 
-* Version: 5.2.2
-* Released on: January 17, 2017
-* https://github.com/logstash-plugins/logstash-input-rabbitmq/blob/master/CHANGELOG.md#522[Changelog]
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v6.0.1
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-input-rabbitmq/blob/v6.0.1/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
 
+=== Rabbitmq input plugin
 
-==== Getting Help
-
-For questions about the plugin, open a topic in the http://discuss.elastic.co[Discuss] forums. For bugs or feature requests, open an issue in https://github.com/elastic/logstash[Github].
-For the list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Elastic Support Matrix].
+include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
@@ -66,70 +72,49 @@ field:
 Additionally, any message headers will be saved in the
 `[@metadata][rabbitmq_headers]` field.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Rabbitmq Input Configuration Options
 
-==== Synopsis
-
-This plugin supports the following configuration options:
-
-Required configuration options:
-
-[source,json]
---------------------------
-rabbitmq {
-    host => ...
-    subscription_retry_interval_seconds => ...
-}
---------------------------
-
-
-
-Available configuration options:
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<plugins-inputs-rabbitmq-ack>> |<<boolean,boolean>>|No
-| <<plugins-inputs-rabbitmq-add_field>> |<<hash,hash>>|No
-| <<plugins-inputs-rabbitmq-arguments>> |<<array,array>>|No
-| <<plugins-inputs-rabbitmq-auto_delete>> |<<boolean,boolean>>|No
-| <<plugins-inputs-rabbitmq-automatic_recovery>> |<<boolean,boolean>>|No
-| <<plugins-inputs-rabbitmq-codec>> |<<codec,codec>>|No
-| <<plugins-inputs-rabbitmq-connect_retry_interval>> |<<number,number>>|No
-| <<plugins-inputs-rabbitmq-connection_timeout>> |<<number,number>>|No
-| <<plugins-inputs-rabbitmq-durable>> |<<boolean,boolean>>|No
-| <<plugins-inputs-rabbitmq-enable_metric>> |<<boolean,boolean>>|No
-| <<plugins-inputs-rabbitmq-exchange>> |<<string,string>>|No
-| <<plugins-inputs-rabbitmq-exchange_type>> |<<string,string>>|No
-| <<plugins-inputs-rabbitmq-exclusive>> |<<boolean,boolean>>|No
-| <<plugins-inputs-rabbitmq-heartbeat>> |<<number,number>>|No
-| <<plugins-inputs-rabbitmq-host>> |<<string,string>>|Yes
-| <<plugins-inputs-rabbitmq-id>> |<<string,string>>|No
-| <<plugins-inputs-rabbitmq-key>> |<<string,string>>|No
-| <<plugins-inputs-rabbitmq-metadata_enabled>> |<<boolean,boolean>>|No
-| <<plugins-inputs-rabbitmq-passive>> |<<boolean,boolean>>|No
-| <<plugins-inputs-rabbitmq-password>> |<<password,password>>|No
-| <<plugins-inputs-rabbitmq-port>> |<<number,number>>|No
-| <<plugins-inputs-rabbitmq-prefetch_count>> |<<number,number>>|No
-| <<plugins-inputs-rabbitmq-queue>> |<<string,string>>|No
-| <<plugins-inputs-rabbitmq-ssl>> |<<boolean,boolean>>|No
-| <<plugins-inputs-rabbitmq-ssl_certificate_password>> |<<string,string>>|No
-| <<plugins-inputs-rabbitmq-ssl_certificate_path>> |a valid filesystem path|No
-| <<plugins-inputs-rabbitmq-ssl_version>> |<<string,string>>|No
-| <<plugins-inputs-rabbitmq-subscription_retry_interval_seconds>> |<<number,number>>|Yes
-| <<plugins-inputs-rabbitmq-tags>> |<<array,array>>|No
-| <<plugins-inputs-rabbitmq-threads>> |<<number,number>>|No
-| <<plugins-inputs-rabbitmq-type>> |<<string,string>>|No
-| <<plugins-inputs-rabbitmq-user>> |<<string,string>>|No
-| <<plugins-inputs-rabbitmq-vhost>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-ack>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-arguments>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-auto_delete>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-automatic_recovery>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-connect_retry_interval>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-connection_timeout>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-durable>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-exchange>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-exchange_type>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-exclusive>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-heartbeat>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-host>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-key>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-metadata_enabled>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-passive>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-password>> |<<password,password>>|No
+| <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-prefetch_count>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-queue>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-ssl>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-ssl_certificate_password>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-ssl_certificate_path>> |a valid filesystem path|No
+| <<plugins-{type}s-{plugin}-ssl_version>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-subscription_retry_interval_seconds>> |<<number,number>>|Yes
+| <<plugins-{type}s-{plugin}-threads>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-user>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-vhost>> |<<string,string>>|No
 |=======================================================================
 
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
 
 &nbsp;
 
-[[plugins-inputs-rabbitmq-ack]]
+[id="plugins-{type}s-{plugin}-ack"]
 ===== `ack` 
 
   * Value type is <<boolean,boolean>>
@@ -144,15 +129,7 @@ throughput.
 This will only send an ack back every `prefetch_count` messages.
 Working in batches provides a performance boost here.
 
-[[plugins-inputs-rabbitmq-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-Add a field to an event
-
-[[plugins-inputs-rabbitmq-arguments]]
+[id="plugins-{type}s-{plugin}-arguments"]
 ===== `arguments` 
 
   * Value type is <<array,array>>
@@ -161,7 +138,7 @@ Add a field to an event
 Extra queue arguments as an array.
 To make a RabbitMQ queue mirrored, use: `{"x-ha-policy" => "all"}`
 
-[[plugins-inputs-rabbitmq-auto_delete]]
+[id="plugins-{type}s-{plugin}-auto_delete"]
 ===== `auto_delete` 
 
   * Value type is <<boolean,boolean>>
@@ -172,7 +149,7 @@ disconnects? Set this option to `false` if you want the queue to remain
 on the broker, queueing up messages until a consumer comes along to
 consume them.
 
-[[plugins-inputs-rabbitmq-automatic_recovery]]
+[id="plugins-{type}s-{plugin}-automatic_recovery"]
 ===== `automatic_recovery` 
 
   * Value type is <<boolean,boolean>>
@@ -180,15 +157,7 @@ consume them.
 
 Set this to automatically recover from a broken connection. You almost certainly don't want to override this!!!
 
-[[plugins-inputs-rabbitmq-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for input data. Input codecs are a convenient method for decoding your data before it enters the input, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-inputs-rabbitmq-connect_retry_interval]]
+[id="plugins-{type}s-{plugin}-connect_retry_interval"]
 ===== `connect_retry_interval` 
 
   * Value type is <<number,number>>
@@ -196,7 +165,7 @@ The codec used for input data. Input codecs are a convenient method for decoding
 
 Time in seconds to wait before retrying a connection
 
-[[plugins-inputs-rabbitmq-connection_timeout]]
+[id="plugins-{type}s-{plugin}-connection_timeout"]
 ===== `connection_timeout` 
 
   * Value type is <<number,number>>
@@ -204,16 +173,7 @@ Time in seconds to wait before retrying a connection
 
 The default connection timeout in milliseconds. If not specified the timeout is infinite.
 
-[[plugins-inputs-rabbitmq-debug]]
-===== `debug`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-
-
-[[plugins-inputs-rabbitmq-durable]]
+[id="plugins-{type}s-{plugin}-durable"]
 ===== `durable` 
 
   * Value type is <<boolean,boolean>>
@@ -221,17 +181,7 @@ The default connection timeout in milliseconds. If not specified the timeout is 
 
 Is this queue durable? (aka; Should it survive a broker restart?)
 
-[[plugins-inputs-rabbitmq-enable_metric]]
-===== `enable_metric` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Disable or enable metric logging for this specific plugin instance
-by default we record all the metrics we can, but you can disable metrics collection
-for a specific plugin.
-
-[[plugins-inputs-rabbitmq-exchange]]
+[id="plugins-{type}s-{plugin}-exchange"]
 ===== `exchange` 
 
   * Value type is <<string,string>>
@@ -240,7 +190,7 @@ for a specific plugin.
 The name of the exchange to bind the queue to. Specify `exchange_type`
 as well to declare the exchange if it does not exist
 
-[[plugins-inputs-rabbitmq-exchange_type]]
+[id="plugins-{type}s-{plugin}-exchange_type"]
 ===== `exchange_type` 
 
   * Value type is <<string,string>>
@@ -249,7 +199,7 @@ as well to declare the exchange if it does not exist
 The type of the exchange to bind to. Specifying this will cause this plugin
 to declare the exchange if it does not exist.
 
-[[plugins-inputs-rabbitmq-exclusive]]
+[id="plugins-{type}s-{plugin}-exclusive"]
 ===== `exclusive` 
 
   * Value type is <<boolean,boolean>>
@@ -259,7 +209,7 @@ Is the queue exclusive? Exclusive queues can only be used by the connection
 that declared them and will be deleted when it is closed (e.g. due to a Logstash
 restart).
 
-[[plugins-inputs-rabbitmq-heartbeat]]
+[id="plugins-{type}s-{plugin}-heartbeat"]
 ===== `heartbeat` 
 
   * Value type is <<number,number>>
@@ -267,7 +217,7 @@ restart).
 
 Heartbeat delay in seconds. If unspecified no heartbeats will be sent
 
-[[plugins-inputs-rabbitmq-host]]
+[id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
   * This is a required setting.
@@ -286,28 +236,7 @@ if multiple hosts are provided on the initial connection and any subsequent
 recovery attempts of the hosts is chosen at random and connected to.
 Note that only one host connection is active at a time.
 
-[[plugins-inputs-rabbitmq-id]]
-===== `id` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
-It is strongly recommended to set this ID in your configuration. This is particularly useful 
-when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
-Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
-
-[source,ruby]
----------------------------------------------------------------------------------------------------
-output {
- stdout {
-   id => "my_plugin_id"
- }
-}
----------------------------------------------------------------------------------------------------
-
-
-[[plugins-inputs-rabbitmq-key]]
+[id="plugins-{type}s-{plugin}-key"]
 ===== `key` 
 
   * Value type is <<string,string>>
@@ -319,7 +248,7 @@ This is only relevant for direct or topic exchanges.
 * Routing keys are ignored on fanout exchanges.
 * Wildcards are not valid on direct exchanges.
 
-[[plugins-inputs-rabbitmq-metadata_enabled]]
+[id="plugins-{type}s-{plugin}-metadata_enabled"]
 ===== `metadata_enabled` 
 
   * Value type is <<boolean,boolean>>
@@ -327,7 +256,7 @@ This is only relevant for direct or topic exchanges.
 
 Enable the storage of message headers and properties in `@metadata`. This may impact performance
 
-[[plugins-inputs-rabbitmq-passive]]
+[id="plugins-{type}s-{plugin}-passive"]
 ===== `passive` 
 
   * Value type is <<boolean,boolean>>
@@ -339,7 +268,7 @@ if necessary leave this option as false. If actively declaring
 a queue that already exists, the queue options for this plugin
 (durable etc) must match those of the existing queue.
 
-[[plugins-inputs-rabbitmq-password]]
+[id="plugins-{type}s-{plugin}-password"]
 ===== `password` 
 
   * Value type is <<password,password>>
@@ -347,7 +276,7 @@ a queue that already exists, the queue options for this plugin
 
 RabbitMQ password
 
-[[plugins-inputs-rabbitmq-port]]
+[id="plugins-{type}s-{plugin}-port"]
 ===== `port` 
 
   * Value type is <<number,number>>
@@ -355,7 +284,7 @@ RabbitMQ password
 
 RabbitMQ port to connect on
 
-[[plugins-inputs-rabbitmq-prefetch_count]]
+[id="plugins-{type}s-{plugin}-prefetch_count"]
 ===== `prefetch_count` 
 
   * Value type is <<number,number>>
@@ -365,7 +294,7 @@ Prefetch count. If acknowledgements are enabled with the `ack`
 option, specifies the number of outstanding unacknowledged
 messages allowed.
 
-[[plugins-inputs-rabbitmq-queue]]
+[id="plugins-{type}s-{plugin}-queue"]
 ===== `queue` 
 
   * Value type is <<string,string>>
@@ -390,7 +319,7 @@ The name of the queue Logstash will consume events from. If
 left empty, a transient queue with an randomly chosen name
 will be created.
 
-[[plugins-inputs-rabbitmq-ssl]]
+[id="plugins-{type}s-{plugin}-ssl"]
 ===== `ssl` 
 
   * Value type is <<boolean,boolean>>
@@ -401,7 +330,7 @@ Note that by default remote certificate verification is off.
 Specify ssl_certificate_path and ssl_certificate_password if you need
 certificate verification
 
-[[plugins-inputs-rabbitmq-ssl_certificate_password]]
+[id="plugins-{type}s-{plugin}-ssl_certificate_password"]
 ===== `ssl_certificate_password` 
 
   * Value type is <<string,string>>
@@ -409,7 +338,7 @@ certificate verification
 
 Password for the encrypted PKCS12 (.p12) certificate file specified in ssl_certificate_path
 
-[[plugins-inputs-rabbitmq-ssl_certificate_path]]
+[id="plugins-{type}s-{plugin}-ssl_certificate_path"]
 ===== `ssl_certificate_path` 
 
   * Value type is <<path,path>>
@@ -417,7 +346,7 @@ Password for the encrypted PKCS12 (.p12) certificate file specified in ssl_certi
 
 Path to an SSL certificate in PKCS12 (.p12) format used for verifying the remote host
 
-[[plugins-inputs-rabbitmq-ssl_version]]
+[id="plugins-{type}s-{plugin}-ssl_version"]
 ===== `ssl_version` 
 
   * Value type is <<string,string>>
@@ -425,7 +354,7 @@ Path to an SSL certificate in PKCS12 (.p12) format used for verifying the remote
 
 Version of the SSL protocol to use.
 
-[[plugins-inputs-rabbitmq-subscription_retry_interval_seconds]]
+[id="plugins-{type}s-{plugin}-subscription_retry_interval_seconds"]
 ===== `subscription_retry_interval_seconds` 
 
   * This is a required setting.
@@ -435,63 +364,13 @@ Version of the SSL protocol to use.
 Amount of time in seconds to wait after a failed subscription request
 before retrying. Subscribes can fail if the server goes away and then comes back.
 
-[[plugins-inputs-rabbitmq-tags]]
-===== `tags` 
-
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
-
-Add any number of arbitrary tags to your event.
-
-This can help with processing later.
-
-[[plugins-inputs-rabbitmq-threads]]
+[id="plugins-{type}s-{plugin}-threads"]
 ===== `threads` 
 
   * Value type is <<number,number>>
   * Default value is `1`
 
-
-
-[[plugins-inputs-rabbitmq-tls_certificate_password]]
-===== `tls_certificate_password`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-TLS certificate password
-
-[[plugins-inputs-rabbitmq-tls_certificate_path]]
-===== `tls_certificate_path`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<path,path>>
-  * There is no default value for this setting.
-
-TLS certifcate path
-
-[[plugins-inputs-rabbitmq-type]]
-===== `type` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-This is the base class for Logstash inputs.
-Add a `type` field to all events handled by this input.
-
-Types are used mainly for filter activation.
-
-The type is stored as part of the event itself, so you can
-also use the type to search for it in Kibana.
-
-If you try to set a type on an event that already has one (for
-example when you send an event from a shipper to an indexer) then
-a new input will not override the existing type. A type set at
-the shipper stays with that event for its life even
-when sent to another Logstash server.
-
-[[plugins-inputs-rabbitmq-user]]
+[id="plugins-{type}s-{plugin}-user"]
 ===== `user` 
 
   * Value type is <<string,string>>
@@ -499,7 +378,7 @@ when sent to another Logstash server.
 
 RabbitMQ username
 
-[[plugins-inputs-rabbitmq-vhost]]
+[id="plugins-{type}s-{plugin}-vhost"]
 ===== `vhost` 
 
   * Value type is <<string,string>>
@@ -511,3 +390,6 @@ vhost ("/"), names of vhosts should not begin with a forward
 slash.
 
 
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
