@@ -4,9 +4,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.2.3
-:release_date: 2017-08-18
-:changelog_url: https://github.com/logstash-plugins/logstash-input-tcp/blob/v4.2.3/CHANGELOG.md
+:version: v5.0.1
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-input-tcp/blob/v5.0.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -94,15 +94,6 @@ input plugins.
 
 &nbsp;
 
-[id="plugins-{type}s-{plugin}-data_timeout"]
-===== `data_timeout`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<number,number>>
-  * Default value is `-1`
-
-
-
 [id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
@@ -139,15 +130,6 @@ When mode is `client`, the port to connect to.
 
 Proxy protocol support, only v1 is supported at this time
 http://www.haproxy.org/download/1.5/doc/proxy-protocol.txt
-
-[id="plugins-{type}s-{plugin}-ssl_cacert"]
-===== `ssl_cacert`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<path,path>>
-  * There is no default value for this setting.
-
-The SSL CA certificate, chainfile or CA path. The system CA path is automatically included.
 
 [id="plugins-{type}s-{plugin}-ssl_cert"]
 ===== `ssl_cert` 

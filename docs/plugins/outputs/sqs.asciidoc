@@ -4,9 +4,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.3
-:release_date: 2017-08-18
-:changelog_url: https://github.com/logstash-plugins/logstash-output-sqs/blob/v4.0.3/CHANGELOG.md
+:version: v5.0.1
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-output-sqs/blob/v5.0.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -130,18 +130,6 @@ file should look like this:
 ----------------------------------
 
 
-[id="plugins-{type}s-{plugin}-batch"]
-===== `batch`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Set to `true` to send messages to SQS in batches (with the
-`SendMessageBatch` API) or `false` to send messages to SQS individually
-(with the `SendMessage` API). The size of the batch is configurable via
-`batch_events`.
-
 [id="plugins-{type}s-{plugin}-batch_events"]
 ===== `batch_events` 
 
@@ -150,15 +138,6 @@ Set to `true` to send messages to SQS in batches (with the
 
 The number of events to be sent in each batch. Set this to `1` to disable
 the batch sending of messages.
-
-[id="plugins-{type}s-{plugin}-batch_timeout"]
-===== `batch_timeout`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<number,number>>
-  * There is no default value for this setting.
-
-
 
 [id="plugins-{type}s-{plugin}-message_max_size"]
 ===== `message_max_size` 

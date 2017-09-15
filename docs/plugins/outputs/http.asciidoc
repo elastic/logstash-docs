@@ -4,9 +4,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.3.4
-:release_date: 2017-08-18
-:changelog_url: https://github.com/logstash-plugins/logstash-output-http/blob/v4.3.4/CHANGELOG.md
+:version: v5.1.0
+:release_date: 2017-08-23
+:changelog_url: https://github.com/logstash-plugins/logstash-output-http/blob/v5.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -48,6 +48,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-follow_redirects>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-format>> |<<string,string>>, one of `["json", "form", "message"]`|No
 | <<plugins-{type}s-{plugin}-headers>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-http_compression>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-http_method>> |<<string,string>>, one of `["put", "post", "patch", "delete", "get", "head"]`|Yes
 | <<plugins-{type}s-{plugin}-ignorable_codes>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-keepalive>> |<<boolean,boolean>>|No
@@ -64,7 +65,6 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-retry_non_idempotent>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-retryable_codes>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-socket_timeout>> |<<number,number>>|No
-| <<plugins-{type}s-{plugin}-ssl_certificate_validation>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-truststore>> |a valid filesystem path|No
 | <<plugins-{type}s-{plugin}-truststore_password>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-truststore_type>> |<<string,string>>|No
@@ -172,6 +172,15 @@ Otherwise, the event is sent as json.
 
 Custom headers to use
 format is `headers => ["X-My-Header", "%{host}"]`
+
+[id="plugins-{type}s-{plugin}-http_compression"]
+===== `http_compression`
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Enable request compression support. With this enabled the plugin will compress
+http requests using gzip.
 
 [id="plugins-{type}s-{plugin}-http_method"]
 ===== `http_method` 
@@ -317,15 +326,6 @@ If encountered as response codes this plugin will retry these requests
   * Default value is `10`
 
 Timeout (in seconds) to wait for data on the socket. Default is `10s`
-
-[id="plugins-{type}s-{plugin}-ssl_certificate_validation"]
-===== `ssl_certificate_validation` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Set this to false to disable SSL/TLS certificate validation
-Note: setting this to false is generally considered insecure!
 
 [id="plugins-{type}s-{plugin}-truststore"]
 ===== `truststore` 

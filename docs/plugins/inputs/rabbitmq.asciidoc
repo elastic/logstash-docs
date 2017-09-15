@@ -4,9 +4,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.2.5
-:release_date: 2017-08-18
-:changelog_url: https://github.com/logstash-plugins/logstash-input-rabbitmq/blob/v5.2.5/CHANGELOG.md
+:version: v6.0.1
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-input-rabbitmq/blob/v6.0.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -369,26 +369,6 @@ before retrying. Subscribes can fail if the server goes away and then comes back
 
   * Value type is <<number,number>>
   * Default value is `1`
-
-
-
-[id="plugins-{type}s-{plugin}-tls_certificate_password"]
-===== `tls_certificate_password`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-TLS certificate password
-
-[id="plugins-{type}s-{plugin}-tls_certificate_path"]
-===== `tls_certificate_path`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<path,path>>
-  * There is no default value for this setting.
-
-TLS certifcate path
 
 [id="plugins-{type}s-{plugin}-user"]
 ===== `user` 
