@@ -4,9 +4,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.1.4
-:release_date: 2017-08-18
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v4.1.4/CHANGELOG.md
+:version: v5.0.1
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v5.0.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -69,15 +69,11 @@ This setting allows the following character sequences to have special meaning:
 * `\\n` (backslash "n") - means newline (ASCII 0x0A)
 
 [id="plugins-{type}s-{plugin}-deprecated_v1_fields"]
-===== `deprecated_v1_fields`  (DEPRECATED)
+===== `deprecated_v1_fields`  (OBSOLETE)
 
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * OBSOLETE WARNING: This configuration item is obsolete and will prevent the pipeline from starting if used
   * Value type is <<boolean,boolean>>
   * There is no default value for this setting.
-
-Set this flag if you want to have both v1 and v2 fields indexed at the same time. Note that this option will increase
-the index size and data stored in outputs like Elasticsearch
-This option is available to ease transition to new schema
 
 [id="plugins-{type}s-{plugin}-fields"]
 ===== `fields` 
@@ -106,20 +102,13 @@ Device product field in CEF header. The new value can include `%{foo}` strings
 to help you build a new value from other parts of the event.
 
 [id="plugins-{type}s-{plugin}-sev"]
-===== `sev`  (DEPRECATED)
+===== `sev`  (OBSOLETE)
 
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * OBSOLETE WARNING: This configuration item is obsolete and will prevent the pipeline from starting.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Deprecated severity field for CEF header. The new value can include `%{foo}` strings
-to help you build a new value from other parts of the event.
-
-This field is used only if :severity is unchanged set to the default value.
-
-Defined as field of type string to allow sprintf. The value will be validated
-to be an integer in the range from 0 to 10 (including).
-All invalid values will be mapped to the default of 6.
+Obsolete severity field for CEF header use :severity instead.
 
 [id="plugins-{type}s-{plugin}-severity"]
 ===== `severity` 
@@ -160,5 +149,6 @@ to help you build a new value from other parts of the event.
 
 Device version field in CEF header. The new value can include `%{foo}` strings
 to help you build a new value from other parts of the event.
+
 
 

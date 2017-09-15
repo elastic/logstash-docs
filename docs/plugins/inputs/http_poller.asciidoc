@@ -4,9 +4,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.3.2
-:release_date: 2017-08-18
-:changelog_url: https://github.com/logstash-plugins/logstash-input-http_poller/blob/v3.3.2/CHANGELOG.md
+:version: v4.0.1
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-input-http_poller/blob/v4.0.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -81,7 +81,7 @@ The above snippet will create two files `downloaded_cert.pem` and `downloaded_tr
    }
    truststore => "/path/to/downloaded_truststore.jks"
    truststore_password => "mypassword"
-   interval => 30
+   schedule => { cron => "* * * * * UTC"}
  }
 ----------------------------------
 
@@ -205,18 +205,6 @@ across requests as a normal web browser would. Enabled by default
 
 Should redirects be followed? Defaults to `true`
 
-[id="plugins-{type}s-{plugin}-interval"]
-===== `interval`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<number,number>>
-  * There is no default value for this setting.
-
-How often (in seconds) the urls will be called
-DEPRECATED. Use 'schedule' option instead.
-If both interval and schedule options are specified, interval
-option takes higher precedence
-
 [id="plugins-{type}s-{plugin}-keepalive"]
 ===== `keepalive` 
 
@@ -330,15 +318,6 @@ See: rufus/scheduler for details about different schedule options and value stri
   * Default value is `10`
 
 Timeout (in seconds) to wait for data on the socket. Default is `10s`
-
-[id="plugins-{type}s-{plugin}-ssl_certificate_validation"]
-===== `ssl_certificate_validation` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Set this to false to disable SSL/TLS certificate validation
-Note: setting this to false is generally considered insecure!
 
 [id="plugins-{type}s-{plugin}-target"]
 ===== `target` 
