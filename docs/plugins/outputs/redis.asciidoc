@@ -1,16 +1,22 @@
-[[plugins-outputs-redis]]
-=== redis
+:plugin: redis
+:type: output
 
-* Version: 3.0.3
-* Released on: October 13, 2016
-* https://github.com/logstash-plugins/logstash-output-redis/blob/master/CHANGELOG.md#303[Changelog]
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v4.0.1
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-output-redis/blob/v4.0.1/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
+[id="plugins-{type}s-{plugin}"]
 
+=== Redis output plugin
 
-==== Getting Help
-
-For questions about the plugin, open a topic in the http://discuss.elastic.co[Discuss] forums. For bugs or feature requests, open an issue in https://github.com/elastic/logstash[Github].
-For the list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Elastic Support Matrix].
+include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
@@ -24,53 +30,36 @@ recent stable versions.  Versions 2.6.0+ are recommended.
 For more information, see http://redis.io/[the Redis homepage]
 
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Redis Output Configuration Options
 
-==== Synopsis
-
-This plugin supports the following configuration options:
-
-Required configuration options:
-
-[source,json]
---------------------------
-redis {
-}
---------------------------
-
-
-
-Available configuration options:
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<plugins-outputs-redis-batch>> |<<boolean,boolean>>|No
-| <<plugins-outputs-redis-batch_events>> |<<number,number>>|No
-| <<plugins-outputs-redis-batch_timeout>> |<<number,number>>|No
-| <<plugins-outputs-redis-codec>> |<<codec,codec>>|No
-| <<plugins-outputs-redis-congestion_interval>> |<<number,number>>|No
-| <<plugins-outputs-redis-congestion_threshold>> |<<number,number>>|No
-| <<plugins-outputs-redis-data_type>> |<<string,string>>, one of `["list", "channel"]`|No
-| <<plugins-outputs-redis-db>> |<<number,number>>|No
-| <<plugins-outputs-redis-enable_metric>> |<<boolean,boolean>>|No
-| <<plugins-outputs-redis-host>> |<<array,array>>|No
-| <<plugins-outputs-redis-id>> |<<string,string>>|No
-| <<plugins-outputs-redis-key>> |<<string,string>>|No
-| <<plugins-outputs-redis-password>> |<<password,password>>|No
-| <<plugins-outputs-redis-port>> |<<number,number>>|No
-| <<plugins-outputs-redis-reconnect_interval>> |<<number,number>>|No
-| <<plugins-outputs-redis-shuffle_hosts>> |<<boolean,boolean>>|No
-| <<plugins-outputs-redis-timeout>> |<<number,number>>|No
-| <<plugins-outputs-redis-workers>> |<<,>>|No
+| <<plugins-{type}s-{plugin}-batch>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-batch_events>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-batch_timeout>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-congestion_interval>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-congestion_threshold>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-data_type>> |<<string,string>>, one of `["list", "channel"]`|No
+| <<plugins-{type}s-{plugin}-db>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-host>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-key>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-password>> |<<password,password>>|No
+| <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-reconnect_interval>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-shuffle_hosts>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-timeout>> |<<number,number>>|No
 |=======================================================================
 
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
 
 &nbsp;
 
-[[plugins-outputs-redis-batch]]
+[id="plugins-{type}s-{plugin}-batch"]
 ===== `batch` 
 
   * Value type is <<boolean,boolean>>
@@ -84,7 +73,7 @@ If true, we send an RPUSH every "batch_events" events or
 "batch_timeout" seconds (whichever comes first).
 Only supported for `data_type` is "list".
 
-[[plugins-outputs-redis-batch_events]]
+[id="plugins-{type}s-{plugin}-batch_events"]
 ===== `batch_events` 
 
   * Value type is <<number,number>>
@@ -92,7 +81,7 @@ Only supported for `data_type` is "list".
 
 If batch is set to true, the number of events we queue up for an RPUSH.
 
-[[plugins-outputs-redis-batch_timeout]]
+[id="plugins-{type}s-{plugin}-batch_timeout"]
 ===== `batch_timeout` 
 
   * Value type is <<number,number>>
@@ -101,15 +90,7 @@ If batch is set to true, the number of events we queue up for an RPUSH.
 If batch is set to true, the maximum amount of time between RPUSH commands
 when there are pending events to flush.
 
-[[plugins-outputs-redis-codec]]
-===== `codec` 
-
-  * Value type is <<codec,codec>>
-  * Default value is `"plain"`
-
-The codec used for output data. Output codecs are a convenient method for encoding your data before it leaves the output, without needing a separate filter in your Logstash pipeline.
-
-[[plugins-outputs-redis-congestion_interval]]
+[id="plugins-{type}s-{plugin}-congestion_interval"]
 ===== `congestion_interval` 
 
   * Value type is <<number,number>>
@@ -118,7 +99,7 @@ The codec used for output data. Output codecs are a convenient method for encodi
 How often to check for congestion. Default is one second.
 Zero means to check on every event.
 
-[[plugins-outputs-redis-congestion_threshold]]
+[id="plugins-{type}s-{plugin}-congestion_threshold"]
 ===== `congestion_threshold` 
 
   * Value type is <<number,number>>
@@ -132,16 +113,16 @@ until Redis CPU consumption reaches the max allowed RAM size.
 A default value of 0 means that this limit is disabled.
 Only supported for `list` Redis `data_type`.
 
-[[plugins-outputs-redis-data_type]]
+[id="plugins-{type}s-{plugin}-data_type"]
 ===== `data_type` 
 
   * Value can be any of: `list`, `channel`
   * There is no default value for this setting.
 
-Either list or channel.  If `redis_type` is list, then we will set
-RPUSH to key. If `redis_type` is channel, then we will PUBLISH to `key`.
+Either list or channel.  If `data_type` is list, then we will set
+RPUSH to key. If `data_type` is channel, then we will PUBLISH to `key`.
 
-[[plugins-outputs-redis-db]]
+[id="plugins-{type}s-{plugin}-db"]
 ===== `db` 
 
   * Value type is <<number,number>>
@@ -149,17 +130,7 @@ RPUSH to key. If `redis_type` is channel, then we will PUBLISH to `key`.
 
 The Redis database number.
 
-[[plugins-outputs-redis-enable_metric]]
-===== `enable_metric` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-Disable or enable metric logging for this specific plugin instance
-by default we record all the metrics we can, but you can disable metrics collection
-for a specific plugin.
-
-[[plugins-outputs-redis-host]]
+[id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
   * Value type is <<array,array>>
@@ -176,28 +147,7 @@ For example:
     ["127.0.0.1", "127.0.0.2"]
     ["127.0.0.1:6380", "127.0.0.1"]
 
-[[plugins-outputs-redis-id]]
-===== `id` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
-It is strongly recommended to set this ID in your configuration. This is particularly useful 
-when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
-Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
-
-[source,ruby]
----------------------------------------------------------------------------------------------------
-output {
- stdout {
-   id => "my_plugin_id"
- }
-}
----------------------------------------------------------------------------------------------------
-
-
-[[plugins-outputs-redis-key]]
+[id="plugins-{type}s-{plugin}-key"]
 ===== `key` 
 
   * Value type is <<string,string>>
@@ -206,16 +156,7 @@ output {
 The name of a Redis list or channel. Dynamic names are
 valid here, for example `logstash-%{type}`.
 
-[[plugins-outputs-redis-name]]
-===== `name`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * Default value is `"default"`
-
-Name is used for logging in case there are multiple instances.
-
-[[plugins-outputs-redis-password]]
+[id="plugins-{type}s-{plugin}-password"]
 ===== `password` 
 
   * Value type is <<password,password>>
@@ -223,7 +164,7 @@ Name is used for logging in case there are multiple instances.
 
 Password to authenticate with.  There is no authentication by default.
 
-[[plugins-outputs-redis-port]]
+[id="plugins-{type}s-{plugin}-port"]
 ===== `port` 
 
   * Value type is <<number,number>>
@@ -231,17 +172,7 @@ Password to authenticate with.  There is no authentication by default.
 
 The default port to connect on. Can be overridden on any hostname.
 
-[[plugins-outputs-redis-queue]]
-===== `queue`  (DEPRECATED)
-
-  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-The name of the Redis queue (we'll use RPUSH on this). Dynamic names are
-valid here, for example `logstash-%{type}`
-
-[[plugins-outputs-redis-reconnect_interval]]
+[id="plugins-{type}s-{plugin}-reconnect_interval"]
 ===== `reconnect_interval` 
 
   * Value type is <<number,number>>
@@ -249,7 +180,7 @@ valid here, for example `logstash-%{type}`
 
 Interval for reconnecting to failed Redis connections
 
-[[plugins-outputs-redis-shuffle_hosts]]
+[id="plugins-{type}s-{plugin}-shuffle_hosts"]
 ===== `shuffle_hosts` 
 
   * Value type is <<boolean,boolean>>
@@ -257,7 +188,7 @@ Interval for reconnecting to failed Redis connections
 
 Shuffle the host list during Logstash startup.
 
-[[plugins-outputs-redis-timeout]]
+[id="plugins-{type}s-{plugin}-timeout"]
 ===== `timeout` 
 
   * Value type is <<number,number>>
@@ -265,13 +196,7 @@ Shuffle the host list during Logstash startup.
 
 Redis initial connection timeout in seconds.
 
-[[plugins-outputs-redis-workers]]
-===== `workers` 
-
-  * Value type is <<string,string>>
-  * Default value is `1`
-
-when we no longer support the :legacy type
-This is hacky, but it can only be herne
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

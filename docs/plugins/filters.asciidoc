@@ -8,7 +8,6 @@ The following filter plugins are available below. For a list of Elastic supporte
 
 |=======================================================================
 | Plugin | Description | Github repository
-| <<plugins-filters-age,age>> | Calculates the age of an event. | https://github.com/logstash-plugins/logstash-filter-age[logstash-filter-age]
 | <<plugins-filters-aggregate,aggregate>> | Aggregates information from several events originating with a single task | https://github.com/logstash-plugins/logstash-filter-aggregate[logstash-filter-aggregate]
 | <<plugins-filters-alter,alter>> | Performs general alterations to fields that the `mutate` filter does not handle | https://github.com/logstash-plugins/logstash-filter-alter[logstash-filter-alter]
 | <<plugins-filters-anonymize,anonymize>> | Replaces field values with a consistent hash | https://github.com/logstash-plugins/logstash-filter-anonymize[logstash-filter-anonymize]
@@ -24,7 +23,6 @@ The following filter plugins are available below. For a list of Elastic supporte
 | <<plugins-filters-drop,drop>> | Drops all events | https://github.com/logstash-plugins/logstash-filter-drop[logstash-filter-drop]
 | <<plugins-filters-elapsed,elapsed>> | Calculates the elapsed time between a pair of events | https://github.com/logstash-plugins/logstash-filter-elapsed[logstash-filter-elapsed]
 | <<plugins-filters-elasticsearch,elasticsearch>> | Copies fields from previous log events in Elasticsearch to current events  | https://github.com/logstash-plugins/logstash-filter-elasticsearch[logstash-filter-elasticsearch]
-| <<plugins-filters-emoji,emoji>> | Maps syslog severity to emojis  | https://github.com/logstash-plugins/logstash-filter-emoji[logstash-filter-emoji]
 | <<plugins-filters-environment,environment>> | Stores environment variables as metadata sub-fields | https://github.com/logstash-plugins/logstash-filter-environment[logstash-filter-environment]
 | <<plugins-filters-extractnumbers,extractnumbers>> | Extracts numbers from a string | https://github.com/logstash-plugins/logstash-filter-extractnumbers[logstash-filter-extractnumbers]
 | <<plugins-filters-fingerprint,fingerprint>> | Fingerprints fields by replacing values with a consistent hash | https://github.com/logstash-plugins/logstash-filter-fingerprint[logstash-filter-fingerprint]
@@ -50,6 +48,7 @@ The following filter plugins are available below. For a list of Elastic supporte
 | <<plugins-filters-throttle,throttle>> | Throttles the number of events | https://github.com/logstash-plugins/logstash-filter-throttle[logstash-filter-throttle]
 | <<plugins-filters-tld,tld>> | Replaces the contents of the default message field with whatever you specify in the configuration | https://github.com/logstash-plugins/logstash-filter-tld[logstash-filter-tld]
 | <<plugins-filters-translate,translate>> | Replaces field contents based on a hash or YAML file | https://github.com/logstash-plugins/logstash-filter-translate[logstash-filter-translate]
+| <<plugins-filters-truncate,truncate>> | Truncates fields longer than a given length | https://github.com/logstash-plugins/logstash-filter-truncate[logstash-filter-truncate]
 | <<plugins-filters-urldecode,urldecode>> | Decodes URL-encoded fields | https://github.com/logstash-plugins/logstash-filter-urldecode[logstash-filter-urldecode]
 | <<plugins-filters-useragent,useragent>> | Parses user agent strings into fields  | https://github.com/logstash-plugins/logstash-filter-useragent[logstash-filter-useragent]
 | <<plugins-filters-uuid,uuid>> | Adds a UUID to events | https://github.com/logstash-plugins/logstash-filter-uuid[logstash-filter-uuid]
@@ -58,101 +57,146 @@ The following filter plugins are available below. For a list of Elastic supporte
 | <<plugins-filters-zeromq,zeromq>> | Sends an event to ZeroMQ | https://github.com/logstash-plugins/logstash-filter-zeromq[logstash-filter-zeromq]
 |=======================================================================
 
-:edit_url: https://github.com/logstash-plugins/logstash-filter-age/edit/master/docs/index.asciidoc
-include::filters/age.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-aggregate/edit/master/docs/index.asciidoc
 include::filters/aggregate.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-alter/edit/master/docs/index.asciidoc
 include::filters/alter.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-anonymize/edit/master/docs/index.asciidoc
 include::filters/anonymize.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-cidr/edit/master/docs/index.asciidoc
 include::filters/cidr.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-cipher/edit/master/docs/index.asciidoc
 include::filters/cipher.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-clone/edit/master/docs/index.asciidoc
 include::filters/clone.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-collate/edit/master/docs/index.asciidoc
 include::filters/collate.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-csv/edit/master/docs/index.asciidoc
 include::filters/csv.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-date/edit/master/docs/index.asciidoc
 include::filters/date.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-de_dot/edit/master/docs/index.asciidoc
 include::filters/de_dot.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-dns/edit/master/docs/index.asciidoc
 include::filters/dissect.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-dissect/edit/master/docs/index.asciidoc
 include::filters/dns.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-drop/edit/master/docs/index.asciidoc
 include::filters/drop.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-elapsed/edit/master/docs/index.asciidoc
 include::filters/elapsed.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/edit/master/docs/index.asciidoc
 include::filters/elasticsearch.asciidoc[]
-:edit_url: https://github.com/logstash-plugins/logstash-filter-emoji/edit/master/docs/index.asciidoc
-include::filters/emoji.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-environment/edit/master/docs/index.asciidoc
 include::filters/environment.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-extractnumbers/edit/master/docs/index.asciidoc
 include::filters/extractnumbers.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-fingerprint/edit/master/docs/index.asciidoc
 include::filters/fingerprint.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-geoip/edit/master/docs/index.asciidoc
 include::filters/geoip.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-grok/edit/master/docs/index.asciidoc
 include::filters/grok.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-i18n/edit/master/docs/index.asciidoc
 include::filters/i18n.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-jdbc_streaming/edit/master/docs/index.asciidoc
 include::filters/jdbc_streaming.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-json/edit/master/docs/index.asciidoc
 include::filters/json.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-json_encode/edit/master/docs/index.asciidoc
 include::filters/json_encode.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-kv/edit/master/docs/index.asciidoc
 include::filters/kv.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-metaevent/edit/master/docs/index.asciidoc
 include::filters/metaevent.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-metricize/edit/master/docs/index.asciidoc
 include::filters/metricize.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-metrics/edit/master/docs/index.asciidoc
 include::filters/metrics.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-mutate/edit/master/docs/index.asciidoc
 include::filters/mutate.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-oui/edit/master/docs/index.asciidoc
 include::filters/oui.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-prune/edit/master/docs/index.asciidoc
 include::filters/prune.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-punct/edit/master/docs/index.asciidoc
 include::filters/punct.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-range/edit/master/docs/index.asciidoc
 include::filters/range.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-ruby/edit/master/docs/index.asciidoc
 include::filters/ruby.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-sleep/edit/master/docs/index.asciidoc
 include::filters/sleep.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-split/edit/master/docs/index.asciidoc
 include::filters/split.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-syslog_pri/edit/master/docs/index.asciidoc
 include::filters/syslog_pri.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-throttle/edit/master/docs/index.asciidoc
 include::filters/throttle.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-tld/edit/master/docs/index.asciidoc
 include::filters/tld.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-translate/edit/master/docs/index.asciidoc
 include::filters/translate.asciidoc[]
+
+:edit_url: https://github.com/logstash-plugins/logstash-filter-truncate/edit/master/docs/index.asciidoc
+include::filters/truncate.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-urldecode/edit/master/docs/index.asciidoc
 include::filters/urldecode.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-useragent/edit/master/docs/index.asciidoc
 include::filters/useragent.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-uuid/edit/master/docs/index.asciidoc
 include::filters/uuid.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-xml/edit/master/docs/index.asciidoc
 include::filters/xml.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-yaml/edit/master/docs/index.asciidoc
 include::filters/yaml.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-zeromq/edit/master/docs/index.asciidoc
 include::filters/zeromq.asciidoc[]
+
 
 :edit_url: 

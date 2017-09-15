@@ -1,9 +1,25 @@
-[[plugins-filters-environment]]
-=== environment
+:plugin: environment
+:type: filter
+:default_plugin: 0
 
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.2
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-environment/blob/v3.0.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
 
-NOTE: This is a community-maintained plugin! It does not ship with Logstash by default, but it is easy to install by running `bin/logstash-plugin install logstash-filter-environment`.
+[id="plugins-{type}s-{plugin}"]
 
+=== Environment filter plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
 
 This filter stores environment variables as subfields in the `@metadata` field.
 You can then use these values in other parts of the pipeline.
@@ -11,7 +27,7 @@ You can then use these values in other parts of the pipeline.
 Adding environment variables is as easy as:
    filter {
      environment {
-       add_metadata_from_env { "field_name" => "ENV_VAR_NAME" }
+       add_metadata_from_env => { "field_name" => "ENV_VAR_NAME" }
      }
    }
 
@@ -27,75 +43,23 @@ fields at the root level of the event.  Current versions make use of the
 `@metadata` field, as outlined.  You have to change `add_field_from_env` in
 the older versions to `add_metadata_from_env` in the newer version.
 
-&nbsp;
+[id="plugins-{type}s-{plugin}-options"]
+==== Environment Filter Configuration Options
 
-==== Synopsis
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-This plugin supports the following configuration options:
-
-
-Required configuration options:
-
-[source,json]
---------------------------
-environment {
-}
---------------------------
-
-
-
-Available configuration options:
-
-[cols="<,<,<,<m",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
-|Setting |Input type|Required|Default value
-| <<plugins-filters-environment-add_field>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-environment-add_metadata_from_env>> |<<hash,hash>>|No|`{}`
-| <<plugins-filters-environment-add_tag>> |<<array,array>>|No|`[]`
-| <<plugins-filters-environment-periodic_flush>> |<<boolean,boolean>>|No|`false`
-| <<plugins-filters-environment-remove_field>> |<<array,array>>|No|`[]`
-| <<plugins-filters-environment-remove_tag>> |<<array,array>>|No|`[]`
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-add_metadata_from_env>> |<<hash,hash>>|No
 |=======================================================================
 
-
-
-==== Details
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
 
 &nbsp;
 
-[[plugins-filters-environment-add_field]]
-===== `add_field` 
-
-  * Value type is <<hash,hash>>
-  * Default value is `{}`
-
-If this filter is successful, add any arbitrary fields to this event.
-Field names can be dynamic and include parts of the event using the `%{field}`.
-
-Example:
-[source,ruby]
-    filter {
-      environment {
-        add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
-      }
-    }
-[source,ruby]
-    # You can also add multiple fields at once:
-    filter {
-      environment {
-        add_field => {
-          "foo_%{somefield}" => "Hello world, from %{host}"
-          "new_field" => "new_static_value"
-        }
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add field `foo_hello` if it is present, with the
-value above and the `%{host}` piece replaced with that value from the
-event. The second example would also add a hardcoded field.
-
-[[plugins-filters-environment-add_metadata_from_env]]
+[id="plugins-{type}s-{plugin}-add_metadata_from_env"]
 ===== `add_metadata_from_env` 
 
   * Value type is <<hash,hash>>
@@ -104,107 +68,17 @@ event. The second example would also add a hardcoded field.
 Specify a hash of field names and the environment variable name with the
 value you want imported into Logstash. For example:
 
-   add_metadata_from_env { "field_name" => "ENV_VAR_NAME" }
+   add_metadata_from_env => { "field_name" => "ENV_VAR_NAME" }
 
 or
 
-   add_metadata_from_env {
+   add_metadata_from_env => {
      "field1" => "ENV1"
      "field2" => "ENV2"
      # "field_n" => "ENV_n"
    }
 
-[[plugins-filters-environment-add_tag]]
-===== `add_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, add arbitrary tags to the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      environment {
-        add_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also add multiple tags at once:
-    filter {
-      environment {
-        add_tag => [ "foo_%{somefield}", "taggedy_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
-
-[[plugins-filters-environment-periodic_flush]]
-===== `periodic_flush` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Call the filter flush method at regular interval.
-Optional.
-
-[[plugins-filters-environment-remove_field]]
-===== `remove_field` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary fields from this event.
-Fields names can be dynamic and include parts of the event using the %{field}
-Example:
-[source,ruby]
-    filter {
-      environment {
-        remove_field => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple fields at once:
-    filter {
-      environment {
-        remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the field with name `foo_hello` if it is present. The second
-example would remove an additional, non-dynamic field.
-
-[[plugins-filters-environment-remove_tag]]
-===== `remove_tag` 
-
-  * Value type is <<array,array>>
-  * Default value is `[]`
-
-If this filter is successful, remove arbitrary tags from the event.
-Tags can be dynamic and include parts of the event using the `%{field}`
-syntax.
-
-Example:
-[source,ruby]
-    filter {
-      environment {
-        remove_tag => [ "foo_%{somefield}" ]
-      }
-    }
-[source,ruby]
-    # You can also remove multiple tags at once:
-    filter {
-      environment {
-        remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
-      }
-    }
-
-If the event has field `"somefield" == "hello"` this filter, on success,
-would remove the tag `foo_hello` if it is present. The second example
-would remove a sad, unwanted tag as well.
 
 
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
