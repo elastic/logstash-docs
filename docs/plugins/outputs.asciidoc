@@ -55,6 +55,7 @@ The following output plugins are available below. For a list of Elastic supporte
 | <<plugins-outputs-stomp,stomp>> | Writes events using the STOMP protocol | https://github.com/logstash-plugins/logstash-output-stomp[logstash-output-stomp]
 | <<plugins-outputs-syslog,syslog>> | Sends events to a `syslog` server | https://github.com/logstash-plugins/logstash-output-syslog[logstash-output-syslog]
 | <<plugins-outputs-tcp,tcp>> | Writes events over a TCP socket | https://github.com/logstash-plugins/logstash-output-tcp[logstash-output-tcp]
+| <<plugins-outputs-timber,timber>> | Sends events to the Timber.io logging service | https://github.com/logstash-plugins/logstash-output-timber[logstash-output-timber]
 | <<plugins-outputs-udp,udp>> | Sends events over UDP | https://github.com/logstash-plugins/logstash-output-udp[logstash-output-udp]
 | <<plugins-outputs-webhdfs,webhdfs>> | Sends Logstash events to HDFS using the `webhdfs` REST API | https://github.com/logstash-plugins/logstash-output-webhdfs[logstash-output-webhdfs]
 | <<plugins-outputs-websocket,websocket>> | Publishes messages to a websocket | https://github.com/logstash-plugins/logstash-output-websocket[logstash-output-websocket]
