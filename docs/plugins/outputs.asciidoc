@@ -208,6 +208,9 @@ include::outputs/syslog.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-output-tcp/edit/master/docs/index.asciidoc
 include::outputs/tcp.asciidoc[]
 
+:edit_url: https://github.com/logstash-plugins/logstash-output-timber/edit/master/docs/index.asciidoc
+include::outputs/timber.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-output-udp/edit/master/docs/index.asciidoc
 include::outputs/udp.asciidoc[]
 
