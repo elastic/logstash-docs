@@ -11,14 +11,11 @@ The following input plugins are available below. For a list of Elastic supported
 | <<plugins-inputs-cloudwatch,cloudwatch>> | Pulls events from the Amazon Web Services CloudWatch API  | https://github.com/logstash-plugins/logstash-input-cloudwatch[logstash-input-cloudwatch]
 | <<plugins-inputs-couchdb_changes,couchdb_changes>> | Streams events from CouchDB's `_changes` URI | https://github.com/logstash-plugins/logstash-input-couchdb_changes[logstash-input-couchdb_changes]
 | <<plugins-inputs-dead_letter_queue,dead_letter_queue>> | read events from Logstash's dead letter queue | https://github.com/logstash-plugins/logstash-input-dead_letter_queue[logstash-input-dead_letter_queue]
-| <<plugins-inputs-drupal_dblog,drupal_dblog>> | Retrieves watchdog log events from Drupal installations with DBLog enabled | https://github.com/logstash-plugins/logstash-input-drupal_dblog[logstash-input-drupal_dblog]
 | <<plugins-inputs-elasticsearch,elasticsearch>> | Reads query results from an Elasticsearch cluster | https://github.com/logstash-plugins/logstash-input-elasticsearch[logstash-input-elasticsearch]
-| <<plugins-inputs-eventlog,eventlog>> | Pulls events from the Windows Event Log | https://github.com/logstash-plugins/logstash-input-eventlog[logstash-input-eventlog]
 | <<plugins-inputs-exec,exec>> | Captures the output of a shell command as an event | https://github.com/logstash-plugins/logstash-input-exec[logstash-input-exec]
 | <<plugins-inputs-file,file>> | Streams events from files | https://github.com/logstash-plugins/logstash-input-file[logstash-input-file]
 | <<plugins-inputs-ganglia,ganglia>> | Reads Ganglia packets over UDP | https://github.com/logstash-plugins/logstash-input-ganglia[logstash-input-ganglia]
 | <<plugins-inputs-gelf,gelf>> | Reads GELF-format messages from Graylog2 as events | https://github.com/logstash-plugins/logstash-input-gelf[logstash-input-gelf]
-| <<plugins-inputs-gemfire,gemfire>> | Pushes events to a GemFire region | https://github.com/logstash-plugins/logstash-input-gemfire[logstash-input-gemfire]
 | <<plugins-inputs-generator,generator>> | Generates random log events for test purposes | https://github.com/logstash-plugins/logstash-input-generator[logstash-input-generator]
 | <<plugins-inputs-github,github>> | Reads events from a GitHub webhook | https://github.com/logstash-plugins/logstash-input-github[logstash-input-github]
 | <<plugins-inputs-google_pubsub,google_pubsub>> | Consume events from a Google Cloud PubSub service | https://github.com/logstash-plugins/logstash-input-google_pubsub[logstash-input-google_pubsub]
@@ -39,7 +36,6 @@ The following input plugins are available below. For a list of Elastic supported
 | <<plugins-inputs-pipe,pipe>> | Streams events from a long-running command pipe | https://github.com/logstash-plugins/logstash-input-pipe[logstash-input-pipe]
 | <<plugins-inputs-puppet_facter,puppet_facter>> | Receives facts from a Puppet server | https://github.com/logstash-plugins/logstash-input-puppet_facter[logstash-input-puppet_facter]
 | <<plugins-inputs-rabbitmq,rabbitmq>> | Pulls events from a RabbitMQ exchange | https://github.com/logstash-plugins/logstash-input-rabbitmq[logstash-input-rabbitmq]
-| <<plugins-inputs-rackspace,rackspace>> | Receives events from a Rackspace Cloud Queue service | https://github.com/logstash-plugins/logstash-input-rackspace[logstash-input-rackspace]
 | <<plugins-inputs-redis,redis>> | Reads events from a Redis instance | https://github.com/logstash-plugins/logstash-input-redis[logstash-input-redis]
 | <<plugins-inputs-relp,relp>> | Receives RELP events over a TCP socket | https://github.com/logstash-plugins/logstash-input-relp[logstash-input-relp]
 | <<plugins-inputs-rss,rss>> | Captures the output of command line tools as an event | https://github.com/logstash-plugins/logstash-input-rss[logstash-input-rss]
@@ -59,8 +55,6 @@ The following input plugins are available below. For a list of Elastic supported
 | <<plugins-inputs-websocket,websocket>> | Reads events from a websocket | https://github.com/logstash-plugins/logstash-input-websocket[logstash-input-websocket]
 | <<plugins-inputs-wmi,wmi>> | Creates events based on the results of a WMI query | https://github.com/logstash-plugins/logstash-input-wmi[logstash-input-wmi]
 | <<plugins-inputs-xmpp,xmpp>> | Receives events over the XMPP/Jabber protocol | https://github.com/logstash-plugins/logstash-input-xmpp[logstash-input-xmpp]
-| <<plugins-inputs-zenoss,zenoss>> | Reads Zenoss events from the fanout exchange | https://github.com/logstash-plugins/logstash-input-zenoss[logstash-input-zenoss]
-| <<plugins-inputs-zeromq,zeromq>> | Reads events from a ZeroMQ SUB socket | https://github.com/logstash-plugins/logstash-input-zeromq[logstash-input-zeromq]
 |=======================================================================
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-beats/edit/master/docs/index.asciidoc
@@ -75,14 +69,8 @@ include::inputs/couchdb_changes.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-input-dead_letter_queue/edit/master/docs/index.asciidoc
 include::inputs/dead_letter_queue.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-drupal_dblog/edit/master/docs/index.asciidoc
-include::inputs/drupal_dblog.asciidoc[]
-
 :edit_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/edit/master/docs/index.asciidoc
 include::inputs/elasticsearch.asciidoc[]
-
-:edit_url: https://github.com/logstash-plugins/logstash-input-eventlog/edit/master/docs/index.asciidoc
-include::inputs/eventlog.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-exec/edit/master/docs/index.asciidoc
 include::inputs/exec.asciidoc[]
@@ -95,9 +83,6 @@ include::inputs/ganglia.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-gelf/edit/master/docs/index.asciidoc
 include::inputs/gelf.asciidoc[]
-
-:edit_url: https://github.com/logstash-plugins/logstash-input-gemfire/edit/master/docs/index.asciidoc
-include::inputs/gemfire.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-generator/edit/master/docs/index.asciidoc
 include::inputs/generator.asciidoc[]
@@ -159,9 +144,6 @@ include::inputs/puppet_facter.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-input-rabbitmq/edit/master/docs/index.asciidoc
 include::inputs/rabbitmq.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-rackspace/edit/master/docs/index.asciidoc
-include::inputs/rackspace.asciidoc[]
-
 :edit_url: https://github.com/logstash-plugins/logstash-input-redis/edit/master/docs/index.asciidoc
 include::inputs/redis.asciidoc[]
 
@@ -218,12 +200,6 @@ include::inputs/wmi.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-xmpp/edit/master/docs/index.asciidoc
 include::inputs/xmpp.asciidoc[]
-
-:edit_url: https://github.com/logstash-plugins/logstash-input-zenoss/edit/master/docs/index.asciidoc
-include::inputs/zenoss.asciidoc[]
-
-:edit_url: https://github.com/logstash-plugins/logstash-input-zeromq/edit/master/docs/index.asciidoc
-include::inputs/zeromq.asciidoc[]
 
 
 :edit_url: 

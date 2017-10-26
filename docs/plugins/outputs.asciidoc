@@ -20,13 +20,11 @@ The following output plugins are available below. For a list of Elastic supporte
 | <<plugins-outputs-ganglia,ganglia>> | Writes metrics to Ganglia's `gmond` | https://github.com/logstash-plugins/logstash-output-ganglia[logstash-output-ganglia]
 | <<plugins-outputs-gelf,gelf>> | Generates GELF formatted output for Graylog2 | https://github.com/logstash-plugins/logstash-output-gelf[logstash-output-gelf]
 | <<plugins-outputs-google_bigquery,google_bigquery>> | Writes events to Google BigQuery | https://github.com/logstash-plugins/logstash-output-google_bigquery[logstash-output-google_bigquery]
-| <<plugins-outputs-google_cloud_storage,google_cloud_storage>> | Writes events to Google Cloud Storage | https://github.com/logstash-plugins/logstash-output-google_cloud_storage[logstash-output-google_cloud_storage]
 | <<plugins-outputs-graphite,graphite>> | Writes metrics to Graphite | https://github.com/logstash-plugins/logstash-output-graphite[logstash-output-graphite]
 | <<plugins-outputs-graphtastic,graphtastic>> | Sends metric data on Windows | https://github.com/logstash-plugins/logstash-output-graphtastic[logstash-output-graphtastic]
 | <<plugins-outputs-http,http>> | Sends events to a generic HTTP or HTTPS endpoint | https://github.com/logstash-plugins/logstash-output-http[logstash-output-http]
 | <<plugins-outputs-influxdb,influxdb>> | Writes metrics to InfluxDB | https://github.com/logstash-plugins/logstash-output-influxdb[logstash-output-influxdb]
 | <<plugins-outputs-irc,irc>> | Writes events to IRC | https://github.com/logstash-plugins/logstash-output-irc[logstash-output-irc]
-| <<plugins-outputs-jira,jira>> | Writes strutured JSON events to JIRA | https://github.com/logstash-plugins/logstash-output-jira[logstash-output-jira]
 | <<plugins-outputs-juggernaut,juggernaut>> | Pushes messages to the Juggernaut websockets server | https://github.com/logstash-plugins/logstash-output-juggernaut[logstash-output-juggernaut]
 | <<plugins-outputs-kafka,kafka>> | Writes events to a Kafka topic | https://github.com/logstash-plugins/logstash-output-kafka[logstash-output-kafka]
 | <<plugins-outputs-librato,librato>> | Sends metrics, annotations, and alerts to Librato based on Logstash events | https://github.com/logstash-plugins/logstash-output-librato[logstash-output-librato]
@@ -36,12 +34,10 @@ The following output plugins are available below. For a list of Elastic supporte
 | <<plugins-outputs-mongodb,mongodb>> | Writes events to MongoDB | https://github.com/logstash-plugins/logstash-output-mongodb[logstash-output-mongodb]
 | <<plugins-outputs-nagios,nagios>> | Sends passive check results to Nagios | https://github.com/logstash-plugins/logstash-output-nagios[logstash-output-nagios]
 | <<plugins-outputs-nagios_nsca,nagios_nsca>> | Sends passive check results to Nagios using the NSCA protocol | https://github.com/logstash-plugins/logstash-output-nagios_nsca[logstash-output-nagios_nsca]
-| <<plugins-outputs-newrelic,newrelic>> | Sends logstash events to New Relic Insights as custom events | https://github.com/logstash-plugins/logstash-output-newrelic[logstash-output-newrelic]
 | <<plugins-outputs-opentsdb,opentsdb>> | Writes metrics to OpenTSDB | https://github.com/logstash-plugins/logstash-output-opentsdb[logstash-output-opentsdb]
 | <<plugins-outputs-pagerduty,pagerduty>> | Sends notifications based on preconfigured services and escalation policies | https://github.com/logstash-plugins/logstash-output-pagerduty[logstash-output-pagerduty]
 | <<plugins-outputs-pipe,pipe>> | Pipes events to another program's standard input | https://github.com/logstash-plugins/logstash-output-pipe[logstash-output-pipe]
 | <<plugins-outputs-rabbitmq,rabbitmq>> | Pushes events to a RabbitMQ exchange | https://github.com/logstash-plugins/logstash-output-rabbitmq[logstash-output-rabbitmq]
-| <<plugins-outputs-rackspace,rackspace>> | Sends events to a Rackspace Cloud Queue service | https://github.com/logstash-plugins/logstash-output-rackspace[logstash-output-rackspace]
 | <<plugins-outputs-redis,redis>> | Sends events to a Redis queue using the `RPUSH` command | https://github.com/logstash-plugins/logstash-output-redis[logstash-output-redis]
 | <<plugins-outputs-redmine,redmine>> | Creates tickets using the Redmine API | https://github.com/logstash-plugins/logstash-output-redmine[logstash-output-redmine]
 | <<plugins-outputs-riak,riak>> | Writes events to the Riak distributed key/value store | https://github.com/logstash-plugins/logstash-output-riak[logstash-output-riak]
@@ -61,7 +57,6 @@ The following output plugins are available below. For a list of Elastic supporte
 | <<plugins-outputs-websocket,websocket>> | Publishes messages to a websocket | https://github.com/logstash-plugins/logstash-output-websocket[logstash-output-websocket]
 | <<plugins-outputs-xmpp,xmpp>> | Posts events over XMPP | https://github.com/logstash-plugins/logstash-output-xmpp[logstash-output-xmpp]
 | <<plugins-outputs-zabbix,zabbix>> | Sends events to a Zabbix server | https://github.com/logstash-plugins/logstash-output-zabbix[logstash-output-zabbix]
-| <<plugins-outputs-zeromq,zeromq>> | Writes events to a ZeroMQ PUB socket | https://github.com/logstash-plugins/logstash-output-zeromq[logstash-output-zeromq]
 |=======================================================================
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-boundary/edit/master/docs/index.asciidoc
@@ -103,9 +98,6 @@ include::outputs/gelf.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-output-google_bigquery/edit/master/docs/index.asciidoc
 include::outputs/google_bigquery.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-output-google_cloud_storage/edit/master/docs/index.asciidoc
-include::outputs/google_cloud_storage.asciidoc[]
-
 :edit_url: https://github.com/logstash-plugins/logstash-output-graphite/edit/master/docs/index.asciidoc
 include::outputs/graphite.asciidoc[]
 
@@ -120,9 +112,6 @@ include::outputs/influxdb.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-irc/edit/master/docs/index.asciidoc
 include::outputs/irc.asciidoc[]
-
-:edit_url: https://github.com/logstash-plugins/logstash-output-jira/edit/master/docs/index.asciidoc
-include::outputs/jira.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-juggernaut/edit/master/docs/index.asciidoc
 include::outputs/juggernaut.asciidoc[]
@@ -151,9 +140,6 @@ include::outputs/nagios.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-output-nagios_nsca/edit/master/docs/index.asciidoc
 include::outputs/nagios_nsca.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-output-newrelic/edit/master/docs/index.asciidoc
-include::outputs/newrelic.asciidoc[]
-
 :edit_url: https://github.com/logstash-plugins/logstash-output-opentsdb/edit/master/docs/index.asciidoc
 include::outputs/opentsdb.asciidoc[]
 
@@ -165,9 +151,6 @@ include::outputs/pipe.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-rabbitmq/edit/master/docs/index.asciidoc
 include::outputs/rabbitmq.asciidoc[]
-
-:edit_url: https://github.com/logstash-plugins/logstash-output-rackspace/edit/master/docs/index.asciidoc
-include::outputs/rackspace.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-redis/edit/master/docs/index.asciidoc
 include::outputs/redis.asciidoc[]
@@ -225,9 +208,6 @@ include::outputs/xmpp.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-zabbix/edit/master/docs/index.asciidoc
 include::outputs/zabbix.asciidoc[]
-
-:edit_url: https://github.com/logstash-plugins/logstash-output-zeromq/edit/master/docs/index.asciidoc
-include::outputs/zeromq.asciidoc[]
 
 
 :edit_url: 
