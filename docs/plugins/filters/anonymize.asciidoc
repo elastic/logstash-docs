@@ -1,6 +1,5 @@
 :plugin: anonymize
 :type: filter
-:default_plugin: 0
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
