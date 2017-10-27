@@ -1,5 +1,6 @@
 :plugin: xmpp
 :type: output
+:default_plugin: 0
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!

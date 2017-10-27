@@ -151,4 +151,3 @@ Device version field in CEF header. The new value can include `%{foo}` strings
 to help you build a new value from other parts of the event.
 
 
-

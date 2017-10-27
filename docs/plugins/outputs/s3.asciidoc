@@ -4,9 +4,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.10
-:release_date: 2017-08-16
-:changelog_url: https://github.com/logstash-plugins/logstash-output-s3/blob/v4.0.10/CHANGELOG.md
+:version: v4.0.11
+:release_date: 2017-09-18
+:changelog_url: https://github.com/logstash-plugins/logstash-output-s3/blob/v4.0.11/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
