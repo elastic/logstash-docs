@@ -78,10 +78,10 @@ include::filters/date.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-de_dot/edit/master/docs/index.asciidoc
 include::filters/de_dot.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-filter-dns/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-filter-dissect/edit/master/docs/index.asciidoc
 include::filters/dissect.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-filter-dissect/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-filter-dns/edit/master/docs/index.asciidoc
 include::filters/dns.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-filter-drop/edit/master/docs/index.asciidoc
