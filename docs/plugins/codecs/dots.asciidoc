@@ -1,5 +1,6 @@
 :plugin: dots
 :type: codec
+:default_plugin: 1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!

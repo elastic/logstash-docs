@@ -1,5 +1,6 @@
 :plugin: split
 :type: filter
+:default_plugin: 1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
