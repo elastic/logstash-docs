@@ -10,7 +10,6 @@ The following filter plugins are available below. For a list of Elastic supporte
 | Plugin | Description | Github repository
 | <<plugins-filters-aggregate,aggregate>> | Aggregates information from several events originating with a single task | https://github.com/logstash-plugins/logstash-filter-aggregate[logstash-filter-aggregate]
 | <<plugins-filters-alter,alter>> | Performs general alterations to fields that the `mutate` filter does not handle | https://github.com/logstash-plugins/logstash-filter-alter[logstash-filter-alter]
-| <<plugins-filters-anonymize,anonymize>> | Replaces field values with a consistent hash | https://github.com/logstash-plugins/logstash-filter-anonymize[logstash-filter-anonymize]
 | <<plugins-filters-cidr,cidr>> | Checks IP addresses against a list of network blocks | https://github.com/logstash-plugins/logstash-filter-cidr[logstash-filter-cidr]
 | <<plugins-filters-cipher,cipher>> | Applies or removes a cipher to an event | https://github.com/logstash-plugins/logstash-filter-cipher[logstash-filter-cipher]
 | <<plugins-filters-clone,clone>> | Duplicates events | https://github.com/logstash-plugins/logstash-filter-clone[logstash-filter-clone]
@@ -62,9 +61,6 @@ include::filters/aggregate.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-filter-alter/edit/master/docs/index.asciidoc
 include::filters/alter.asciidoc[]
-
-:edit_url: https://github.com/logstash-plugins/logstash-filter-anonymize/edit/master/docs/index.asciidoc
-include::filters/anonymize.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-filter-cidr/edit/master/docs/index.asciidoc
 include::filters/cidr.asciidoc[]
