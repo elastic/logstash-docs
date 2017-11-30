@@ -1,0 +1,7 @@
+:type: filter
+:type_uc: Filter
+
+include::include/plugin-intro.asciidoc[]
+
+include::filters/multiline-index.asciidoc[]
+
