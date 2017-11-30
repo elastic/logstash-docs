@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.1.0
-:release_date: 2017-08-23
-:changelog_url: https://github.com/logstash-plugins/logstash-output-http/blob/v5.1.0/CHANGELOG.md
+:version: v5.1.1
+:release_date: 2017-11-07
+:changelog_url: https://github.com/logstash-plugins/logstash-output-http/blob/v5.1.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!

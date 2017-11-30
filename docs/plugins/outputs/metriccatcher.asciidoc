@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.2
-:release_date: 2017-08-16
-:changelog_url: https://github.com/logstash-plugins/logstash-output-metriccatcher/blob/v3.0.2/CHANGELOG.md
+:version: v3.0.3
+:release_date: 2017-11-07
+:changelog_url: https://github.com/logstash-plugins/logstash-output-metriccatcher/blob/v3.0.3/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
