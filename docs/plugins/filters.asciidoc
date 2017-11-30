@@ -56,6 +56,9 @@ include::filters/aggregate.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-alter/edit/master/docs/index.asciidoc
 include::filters/alter.asciidoc[]
 
+:edit_url: https://github.com/logstash-plugins/logstash-filter-anonymize/edit/master/docs/index.asciidoc
+include::filters/anonymize.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-cidr/edit/master/docs/index.asciidoc
 include::filters/cidr.asciidoc[]
 
