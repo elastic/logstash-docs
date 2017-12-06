@@ -87,7 +87,7 @@ def filter(event)
 end
 ----
 
-====== Testing the ruby script
+===== Testing the ruby script
 
 To validate the behaviour of the `filter` method you implemented,
 the Ruby filter plugin provides an inline test framework where you
@@ -125,7 +125,7 @@ end
 
 We can now test that the ruby script we're using is implemented correctly:
 
-[source]
+[source,shell]
 ----
 % bin/logstash -e "filter { ruby { path => '/etc/logstash/drop_percentage.rb' script_params => { 'drop_percentage' => 0.5 } } }" -t
 [2017-10-13T13:44:29,723][INFO ][logstash.filters.ruby.script] Test run complete {:script_path=>"/etc/logstash/drop_percentage.rb", :results=>{:passed=>1, :failed=>0, :errored=>0}}
@@ -158,7 +158,7 @@ filter plugins.
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
-	* This setting cannot be used together with `path`.
+  * This setting cannot be used together with `path`.
 
 The code to execute for every event.
 You will have an `event` variable available that is the event itself. See the <<event-api,Event API>> for more information.
@@ -176,7 +176,7 @@ Any code to execute at logstash startup-time
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
-	* This setting cannot be used together with `code`.
+  * This setting cannot be used together with `code`.
 
 The path of the ruby script file that implements the `filter` method.
 
@@ -188,6 +188,15 @@ The path of the ruby script file that implements the `filter` method.
 
 A key/value hash with parameters that are passed to the register method
 of your ruby script file defined in `path`.
+
+[id="plugins-{type}s-{plugin}-tag_on_exception"]
+===== `tag_on_exception`
+
+  * Value type is <<string,string>>
+  * Default value is `_rubyexception`
+
+Tag to add to events in case the ruby code (either inline or file based)
+causes an exception.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
