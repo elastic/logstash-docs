@@ -1,0 +1,6 @@
+:type: output
+:type_uc: Output
+
+include::include/plugin-intro.asciidoc[]
+
+include::outputs/elasticsearch-index.asciidoc[]

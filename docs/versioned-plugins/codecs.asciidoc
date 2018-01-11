@@ -1,0 +1,6 @@
+:type: codec
+:type_uc: Codec
+
+include::include/plugin-intro.asciidoc[]
+
+include::codecs/rubydebug-index.asciidoc[]

@@ -1,0 +1,14 @@
+:plugin: multiline
+:type: filter
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date 
+| <<v3.0.4-plugins-filters-multiline,v3.0.4>> | Aug 15, 2017 (latest)
+| <<v3.0.3-plugins-filters-multiline,v3.0.3>> | Aug 15, 2017
+|=======================================================================
+
+
+include::multiline-v3.0.4.asciidoc[]
+include::multiline-v3.0.3.asciidoc[]

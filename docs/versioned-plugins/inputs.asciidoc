@@ -1,0 +1,8 @@
+:type: input
+:type_uc: Input
+
+include::include/plugin-intro.asciidoc[]
+
+include::inputs/beats-index.asciidoc[]
+
+include::inputs/dead_letter_queue-index.asciidoc[]
