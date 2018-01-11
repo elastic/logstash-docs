@@ -1,0 +1,14 @@
+:plugin: salesforce
+:type: input
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v3.0.3-plugins-inputs-salesforce,v3.0.3>> | 2017-08-16
+| <<v3.0.2-plugins-inputs-salesforce,v3.0.2>> | 2017-06-23
+|=======================================================================
+
+include::salesforce-v3.0.3.asciidoc[]
+include::salesforce-v3.0.2.asciidoc[]
+

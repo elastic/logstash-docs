@@ -1,0 +1,139 @@
+:plugin: ganglia
+:type: output
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.4
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-output-ganglia/blob/v3.0.4/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Ganglia output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This output allows you to pull metrics from your logs and ship them to
+ganglia's gmond. This is heavily based on the graphite output.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Ganglia Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-group>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-host>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-lifetime>> |<<number,number>>|No
+| <<{version}-plugins-{type}s-{plugin}-max_interval>> |<<number,number>>|No
+| <<{version}-plugins-{type}s-{plugin}-metric>> |<<string,string>>|Yes
+| <<{version}-plugins-{type}s-{plugin}-metric_type>> |<<string,string>>, one of `["string", "int8", "uint8", "int16", "uint16", "int32", "uint32", "float", "double"]`|No
+| <<{version}-plugins-{type}s-{plugin}-port>> |<<number,number>>|No
+| <<{version}-plugins-{type}s-{plugin}-slope>> |<<string,string>>, one of `["zero", "positive", "negative", "both", "unspecified"]`|No
+| <<{version}-plugins-{type}s-{plugin}-units>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-value>> |<<string,string>>|Yes
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-group"]
+===== `group` 
+
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+Metric group
+
+[id="{version}-plugins-{type}s-{plugin}-host"]
+===== `host` 
+
+  * Value type is <<string,string>>
+  * Default value is `"localhost"`
+
+The address of the ganglia server.
+
+[id="{version}-plugins-{type}s-{plugin}-lifetime"]
+===== `lifetime` 
+
+  * Value type is <<number,number>>
+  * Default value is `300`
+
+Lifetime in seconds of this metric
+
+[id="{version}-plugins-{type}s-{plugin}-max_interval"]
+===== `max_interval` 
+
+  * Value type is <<number,number>>
+  * Default value is `60`
+
+Maximum time in seconds between gmetric calls for this metric.
+
+[id="{version}-plugins-{type}s-{plugin}-metric"]
+===== `metric` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The metric to use. This supports dynamic strings like `%{host}`
+
+[id="{version}-plugins-{type}s-{plugin}-metric_type"]
+===== `metric_type` 
+
+  * Value can be any of: `string`, `int8`, `uint8`, `int16`, `uint16`, `int32`, `uint32`, `float`, `double`
+  * Default value is `"uint8"`
+
+The type of value for this metric.
+
+[id="{version}-plugins-{type}s-{plugin}-port"]
+===== `port` 
+
+  * Value type is <<number,number>>
+  * Default value is `8649`
+
+The port to connect on your ganglia server.
+
+[id="{version}-plugins-{type}s-{plugin}-slope"]
+===== `slope` 
+
+  * Value can be any of: `zero`, `positive`, `negative`, `both`, `unspecified`
+  * Default value is `"both"`
+
+Metric slope, represents metric behavior
+
+[id="{version}-plugins-{type}s-{plugin}-units"]
+===== `units` 
+
+  * Value type is <<string,string>>
+  * Default value is `""`
+
+Gmetric units for metric, such as "kb/sec" or "ms" or whatever unit
+this metric uses.
+
+[id="{version}-plugins-{type}s-{plugin}-value"]
+===== `value` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The value to use. This supports dynamic strings like `%{bytes}`
+It will be coerced to a floating point value. Values which cannot be
+coerced will zero (0)
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

@@ -1,0 +1,115 @@
+:plugin: juggernaut
+:type: output
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.5
+:release_date: 2017-11-07
+:changelog_url: https://github.com/logstash-plugins/logstash-output-juggernaut/blob/v3.0.5/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Juggernaut output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Push messages to the juggernaut websockets server:
+
+* https://github.com/maccman/juggernaut
+
+Wraps Websockets and supports other methods (including xhr longpolling) This
+is basically, just an extension of the redis output (Juggernaut pulls
+messages from redis).  But it pushes messages to a particular channel and
+formats the messages in the way juggernaut expects.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Juggernaut Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-channels>> |<<array,array>>|Yes
+| <<{version}-plugins-{type}s-{plugin}-db>> |<<number,number>>|No
+| <<{version}-plugins-{type}s-{plugin}-host>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-message_format>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-password>> |<<password,password>>|No
+| <<{version}-plugins-{type}s-{plugin}-port>> |<<number,number>>|No
+| <<{version}-plugins-{type}s-{plugin}-timeout>> |<<number,number>>|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-channels"]
+===== `channels` 
+
+  * This is a required setting.
+  * Value type is <<array,array>>
+  * There is no default value for this setting.
+
+List of channels to which to publish. Dynamic names are
+valid here, for example `logstash-%{type}`.
+
+[id="{version}-plugins-{type}s-{plugin}-db"]
+===== `db` 
+
+  * Value type is <<number,number>>
+  * Default value is `0`
+
+The redis database number.
+
+[id="{version}-plugins-{type}s-{plugin}-host"]
+===== `host` 
+
+  * Value type is <<string,string>>
+  * Default value is `"127.0.0.1"`
+
+The hostname of the redis server to which juggernaut is listening.
+
+[id="{version}-plugins-{type}s-{plugin}-message_format"]
+===== `message_format` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+How should the message be formatted before pushing to the websocket.
+
+[id="{version}-plugins-{type}s-{plugin}-password"]
+===== `password` 
+
+  * Value type is <<password,password>>
+  * There is no default value for this setting.
+
+Password to authenticate with.  There is no authentication by default.
+
+[id="{version}-plugins-{type}s-{plugin}-port"]
+===== `port` 
+
+  * Value type is <<number,number>>
+  * Default value is `6379`
+
+The port to connect on.
+
+[id="{version}-plugins-{type}s-{plugin}-timeout"]
+===== `timeout` 
+
+  * Value type is <<number,number>>
+  * Default value is `5`
+
+Redis initial connection timeout in seconds.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

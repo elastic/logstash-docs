@@ -1,0 +1,91 @@
+:plugin: rackspace
+:type: output
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v2.0.5
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-output-rackspace/blob/v2.0.5/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="plugins-{type}-{plugin}"]
+
+=== Rackspace output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Rackspace Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-api_key>> |<<string,string>>|Yes
+| <<{version}-plugins-{type}s-{plugin}-queue>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-region>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-ttl>> |<<number,number>>|No
+| <<{version}-plugins-{type}s-{plugin}-username>> |<<string,string>>|Yes
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-api_key"]
+===== `api_key` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Rackspace Cloud API Key
+
+[id="{version}-plugins-{type}s-{plugin}-queue"]
+===== `queue` 
+
+  * Value type is <<string,string>>
+  * Default value is `"logstash"`
+
+Rackspace Queue Name
+
+[id="{version}-plugins-{type}s-{plugin}-region"]
+===== `region` 
+
+  * Value type is <<string,string>>
+  * Default value is `"dfw"`
+
+Rackspace region
+ord, dfw, lon, syd, etc
+
+[id="{version}-plugins-{type}s-{plugin}-ttl"]
+===== `ttl` 
+
+  * Value type is <<number,number>>
+  * Default value is `360`
+
+time for item to live in queue
+
+[id="{version}-plugins-{type}s-{plugin}-username"]
+===== `username` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Rackspace Cloud Username
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

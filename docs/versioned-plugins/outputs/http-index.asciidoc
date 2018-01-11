@@ -1,0 +1,30 @@
+:plugin: http
+:type: output
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v5.1.2-plugins-outputs-http,v5.1.2>> | 2018-01-09
+| <<v5.1.1-plugins-outputs-http,v5.1.1>> | 2017-11-07
+| <<v5.1.0-plugins-outputs-http,v5.1.0>> | 2017-08-23
+| <<v5.0.1-plugins-outputs-http,v5.0.1>> | 2017-08-16
+| <<v5.0.0-plugins-outputs-http,v5.0.0>> | 2017-08-02
+| <<v4.4.0-plugins-outputs-http,v4.4.0>> | 2017-08-23
+| <<v4.3.4-plugins-outputs-http,v4.3.4>> | 2017-08-18
+| <<v4.3.2-plugins-outputs-http,v4.3.2>> | 2017-07-06
+| <<v4.3.1-plugins-outputs-http,v4.3.1>> | 2017-06-23
+| <<v4.3.0-plugins-outputs-http,v4.3.0>> | 2017-05-08
+|=======================================================================
+
+include::http-v5.1.2.asciidoc[]
+include::http-v5.1.1.asciidoc[]
+include::http-v5.1.0.asciidoc[]
+include::http-v5.0.1.asciidoc[]
+include::http-v5.0.0.asciidoc[]
+include::http-v4.4.0.asciidoc[]
+include::http-v4.3.4.asciidoc[]
+include::http-v4.3.2.asciidoc[]
+include::http-v4.3.1.asciidoc[]
+include::http-v4.3.0.asciidoc[]
+

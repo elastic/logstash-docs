@@ -1,0 +1,160 @@
+:plugin: zabbix
+:type: output
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.2
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-output-zabbix/blob/v3.0.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="plugins-{type}-{plugin}"]
+
+=== Zabbix output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+The Zabbix output is used to send item data (key/value pairs) to a Zabbix
+server.  The event `@timestamp` will automatically be associated with the
+Zabbix item data.
+
+The Zabbix Sender protocol is described at
+https://www.zabbix.org/wiki/Docs/protocols/zabbix_sender/2.0
+Zabbix uses a kind of nested key/value store.
+
+[source,txt]
+    host
+      ├── item1
+      │     └── value1
+      ├── item2
+      │     └── value2
+      ├── ...
+      │     └── ...
+      ├── item_n
+      │     └── value_n
+
+Each "host" is an identifier, and each item is associated with that host.
+Items are typed on the Zabbix side.  You can send numbers as strings and
+Zabbix will Do The Right Thing.
+
+In the Zabbix UI, ensure that your hostname matches the value referenced by
+`zabbix_host`. Create the item with the key as it appears in the field
+referenced by `zabbix_key`.  In the item configuration window, ensure that the
+type dropdown is set to Zabbix Trapper. Also be sure to set the type of
+information that Zabbix should expect for this item.
+
+This plugin does not currently send in batches.  While it is possible to do
+so, this is not supported.  Be careful not to flood your Zabbix server with
+too many events per second.
+
+NOTE: This plugin will log a warning if a necessary field is missing. It will
+not attempt to resend if Zabbix is down, but will log an error message.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Zabbix Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-multi_value>> |<<array,array>>|No
+| <<{version}-plugins-{type}s-{plugin}-timeout>> |<<number,number>>|No
+| <<{version}-plugins-{type}s-{plugin}-zabbix_host>> |<<string,string>>|Yes
+| <<{version}-plugins-{type}s-{plugin}-zabbix_key>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-zabbix_server_host>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-zabbix_server_port>> |<<number,number>>|No
+| <<{version}-plugins-{type}s-{plugin}-zabbix_value>> |<<string,string>>|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-multi_value"]
+===== `multi_value` 
+
+  * Value type is <<array,array>>
+  * There is no default value for this setting.
+
+Use the `multi_value` directive to send multiple key/value pairs.
+This can be thought of as an array, like:
+
+`[ zabbix_key1, zabbix_value1, zabbix_key2, zabbix_value2, ... zabbix_keyN, zabbix_valueN ]`
+
+...where `zabbix_key1` is an instance of `zabbix_key`, and `zabbix_value1`
+is an instance of `zabbix_value`.  If the field referenced by any
+`zabbix_key` or `zabbix_value` does not exist, that entry will be ignored.
+
+This directive cannot be used in conjunction with the single-value directives
+`zabbix_key` and `zabbix_value`.
+
+[id="{version}-plugins-{type}s-{plugin}-timeout"]
+===== `timeout` 
+
+  * Value type is <<number,number>>
+  * Default value is `1`
+
+The number of seconds to wait before giving up on a connection to the Zabbix
+server. This number should be very small, otherwise delays in delivery of
+other outputs could result.
+
+[id="{version}-plugins-{type}s-{plugin}-zabbix_host"]
+===== `zabbix_host` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The field name which holds the Zabbix host name. This can be a sub-field of
+the @metadata field.
+
+[id="{version}-plugins-{type}s-{plugin}-zabbix_key"]
+===== `zabbix_key` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+A single field name which holds the value you intend to use as the Zabbix
+item key. This can be a sub-field of the @metadata field.
+This directive will be ignored if using `multi_value`
+
+IMPORTANT: `zabbix_key` is required if not using `multi_value`.
+
+
+[id="{version}-plugins-{type}s-{plugin}-zabbix_server_host"]
+===== `zabbix_server_host` 
+
+  * Value type is <<string,string>>
+  * Default value is `"localhost"`
+
+The IP or resolvable hostname where the Zabbix server is running
+
+[id="{version}-plugins-{type}s-{plugin}-zabbix_server_port"]
+===== `zabbix_server_port` 
+
+  * Value type is <<number,number>>
+  * Default value is `10051`
+
+The port on which the Zabbix server is running
+
+[id="{version}-plugins-{type}s-{plugin}-zabbix_value"]
+===== `zabbix_value` 
+
+  * Value type is <<string,string>>
+  * Default value is `"message"`
+
+The field name which holds the value you want to send.
+This directive will be ignored if using `multi_value`
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

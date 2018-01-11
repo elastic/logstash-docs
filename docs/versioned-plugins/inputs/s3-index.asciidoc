@@ -1,0 +1,22 @@
+:plugin: s3
+:type: input
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v3.2.0-plugins-inputs-s3,v3.2.0>> | 2018-01-09
+| <<v3.1.9-plugins-inputs-s3,v3.1.9>> | 2017-12-19
+| <<v3.1.8-plugins-inputs-s3,v3.1.8>> | 2017-11-07
+| <<v3.1.7-plugins-inputs-s3,v3.1.7>> | 2017-10-03
+| <<v3.1.6-plugins-inputs-s3,v3.1.6>> | 2017-08-16
+| <<v3.1.5-plugins-inputs-s3,v3.1.5>> | 2017-06-23
+|=======================================================================
+
+include::s3-v3.2.0.asciidoc[]
+include::s3-v3.1.9.asciidoc[]
+include::s3-v3.1.8.asciidoc[]
+include::s3-v3.1.7.asciidoc[]
+include::s3-v3.1.6.asciidoc[]
+include::s3-v3.1.5.asciidoc[]
+

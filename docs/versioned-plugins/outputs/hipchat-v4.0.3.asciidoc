@@ -1,0 +1,122 @@
+:plugin: hipchat
+:type: output
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v4.0.3
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-output-hipchat/blob/v4.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="plugins-{type}-{plugin}"]
+
+=== Hipchat output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This output allows you to write events to https://www.hipchat.com/[HipChat].
+
+Make sure your API token have the appropriate permissions and support
+sending  messages.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Hipchat Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-color>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-format>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-from>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-host>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-message_format>> |<<string,string>>, one of `["html", "text"]`|No
+| <<{version}-plugins-{type}s-{plugin}-room_id>> |<<string,string>>|Yes
+| <<{version}-plugins-{type}s-{plugin}-token>> |<<string,string>>|Yes
+| <<{version}-plugins-{type}s-{plugin}-trigger_notify>> |<<boolean,boolean>>|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-color"]
+===== `color` 
+
+  * Value type is <<string,string>>
+  * Default value is `"yellow"`
+
+Background color for message.
+HipChat currently supports one of "yellow", "red", "green", "purple",
+"gray", or "random". (default: yellow), support fieldref
+
+[id="{version}-plugins-{type}s-{plugin}-format"]
+===== `format` 
+
+  * Value type is <<string,string>>
+  * Default value is `"%{message}"`
+
+Message format to send, event tokens are usable here.
+
+[id="{version}-plugins-{type}s-{plugin}-from"]
+===== `from` 
+
+  * Value type is <<string,string>>
+  * Default value is `"logstash"`
+
+The name the message will appear be sent from, you can use fieldref
+
+[id="{version}-plugins-{type}s-{plugin}-host"]
+===== `host` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+HipChat host to use
+
+[id="{version}-plugins-{type}s-{plugin}-message_format"]
+===== `message_format` 
+
+  * Value can be any of: `html`, `text`
+  * Default value is `"html"`
+
+Specify `Message Format`
+
+[id="{version}-plugins-{type}s-{plugin}-room_id"]
+===== `room_id` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The ID or name of the room, support fieldref
+
+[id="{version}-plugins-{type}s-{plugin}-token"]
+===== `token` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The HipChat authentication token.
+
+[id="{version}-plugins-{type}s-{plugin}-trigger_notify"]
+===== `trigger_notify` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Whether or not this message should trigger a notification for people in the room.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

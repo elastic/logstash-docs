@@ -1,0 +1,130 @@
+:plugin: datadog_metrics
+:type: output
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.1
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-output-datadog_metrics/blob/v3.0.1/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="plugins-{type}-{plugin}"]
+
+=== Datadog_metrics output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This output lets you send metrics to
+DataDogHQ based on Logstash events.
+Default `queue_size` and `timeframe` are low in order to provide near realtime alerting.
+If you do not use Datadog for alerting, consider raising these thresholds.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Datadog_metrics Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-api_key>> |<<string,string>>|Yes
+| <<{version}-plugins-{type}s-{plugin}-dd_tags>> |<<array,array>>|No
+| <<{version}-plugins-{type}s-{plugin}-device>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-host>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-metric_name>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-metric_type>> |<<string,string>>, one of `["gauge", "counter", "%{metric_type}"]`|No
+| <<{version}-plugins-{type}s-{plugin}-metric_value>> |<<,>>|No
+| <<{version}-plugins-{type}s-{plugin}-queue_size>> |<<number,number>>|No
+| <<{version}-plugins-{type}s-{plugin}-timeframe>> |<<number,number>>|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-api_key"]
+===== `api_key` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Your DatadogHQ API key. https://app.datadoghq.com/account/settings#api
+
+[id="{version}-plugins-{type}s-{plugin}-dd_tags"]
+===== `dd_tags` 
+
+  * Value type is <<array,array>>
+  * There is no default value for this setting.
+
+Set any custom tags for this event,
+default are the Logstash tags if any.
+
+[id="{version}-plugins-{type}s-{plugin}-device"]
+===== `device` 
+
+  * Value type is <<string,string>>
+  * Default value is `"%{metric_device}"`
+
+The name of the device that produced the metric.
+
+[id="{version}-plugins-{type}s-{plugin}-host"]
+===== `host` 
+
+  * Value type is <<string,string>>
+  * Default value is `"%{host}"`
+
+The name of the host that produced the metric.
+
+[id="{version}-plugins-{type}s-{plugin}-metric_name"]
+===== `metric_name` 
+
+  * Value type is <<string,string>>
+  * Default value is `"%{metric_name}"`
+
+The name of the time series.
+
+[id="{version}-plugins-{type}s-{plugin}-metric_type"]
+===== `metric_type` 
+
+  * Value can be any of: `gauge`, `counter`, `%{metric_type}`
+  * Default value is `"%{metric_type}"`
+
+The type of the metric.
+
+[id="{version}-plugins-{type}s-{plugin}-metric_value"]
+===== `metric_value` 
+
+  * Value type is <<string,string>>
+  * Default value is `"%{metric_value}"`
+
+The value.
+
+[id="{version}-plugins-{type}s-{plugin}-queue_size"]
+===== `queue_size` 
+
+  * Value type is <<number,number>>
+  * Default value is `10`
+
+How many events to queue before flushing to Datadog
+prior to schedule set in `@timeframe`
+
+[id="{version}-plugins-{type}s-{plugin}-timeframe"]
+===== `timeframe` 
+
+  * Value type is <<number,number>>
+  * Default value is `10`
+
+How often (in seconds) to flush queued events to Datadog
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

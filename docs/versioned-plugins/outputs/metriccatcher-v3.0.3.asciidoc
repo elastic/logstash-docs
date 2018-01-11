@@ -1,0 +1,164 @@
+:plugin: metriccatcher
+:type: output
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.3
+:release_date: 2017-11-07
+:changelog_url: https://github.com/logstash-plugins/logstash-output-metriccatcher/blob/v3.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Metriccatcher output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This output ships metrics to MetricCatcher, allowing you to
+utilize Coda Hale's Metrics.
+
+More info on MetricCatcher: https://github.com/clearspring/MetricCatcher
+
+At Clearspring, we use it to count the response codes from Apache logs:
+[source,ruby]
+    metriccatcher {
+        host => "localhost"
+        port => "1420"
+        type => "apache-access"
+        fields => [ "response" ]
+        meter => {
+            "%{host}.apache.response.%{response}" => "1"
+            }
+    }
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Metriccatcher Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-biased>> |<<hash,hash>>|No
+| <<{version}-plugins-{type}s-{plugin}-counter>> |<<hash,hash>>|No
+| <<{version}-plugins-{type}s-{plugin}-gauge>> |<<hash,hash>>|No
+| <<{version}-plugins-{type}s-{plugin}-host>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-meter>> |<<hash,hash>>|No
+| <<{version}-plugins-{type}s-{plugin}-port>> |<<number,number>>|No
+| <<{version}-plugins-{type}s-{plugin}-timer>> |<<hash,hash>>|No
+| <<{version}-plugins-{type}s-{plugin}-uniform>> |<<hash,hash>>|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-biased"]
+===== `biased` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+The metrics to send. This supports dynamic strings like `%{host}`
+for metric names and also for values. This is a hash field with key
+of the metric name, value of the metric value.
+
+The value will be coerced to a floating point value. Values which cannot be
+coerced will zero (0)
+
+[id="{version}-plugins-{type}s-{plugin}-counter"]
+===== `counter` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+The metrics to send. This supports dynamic strings like `%{host}`
+for metric names and also for values. This is a hash field with key
+of the metric name, value of the metric value. Example:
+[source,ruby]
+  counter => { "%{host}.apache.hits.%{response} => "1" }
+
+The value will be coerced to a floating point value. Values which cannot be
+coerced will zero (0)
+
+[id="{version}-plugins-{type}s-{plugin}-gauge"]
+===== `gauge` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+The metrics to send. This supports dynamic strings like `%{host}`
+for metric names and also for values. This is a hash field with key
+of the metric name, value of the metric value.
+
+The value will be coerced to a floating point value. Values which cannot be
+coerced will zero (0)
+
+[id="{version}-plugins-{type}s-{plugin}-host"]
+===== `host` 
+
+  * Value type is <<string,string>>
+  * Default value is `"localhost"`
+
+The address of the MetricCatcher
+
+[id="{version}-plugins-{type}s-{plugin}-meter"]
+===== `meter` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+The metrics to send. This supports dynamic strings like `%{host}`
+for metric names and also for values. This is a hash field with key
+of the metric name, value of the metric value.
+
+The value will be coerced to a floating point value. Values which cannot be
+coerced will zero (0)
+
+[id="{version}-plugins-{type}s-{plugin}-port"]
+===== `port` 
+
+  * Value type is <<number,number>>
+  * Default value is `1420`
+
+The port to connect on your MetricCatcher
+
+[id="{version}-plugins-{type}s-{plugin}-timer"]
+===== `timer` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+The metrics to send. This supports dynamic strings like %{host}
+for metric names and also for values. This is a hash field with key
+of the metric name, value of the metric value. Example:
+[source,ruby]
+  timer => { "%{host}.apache.response_time => "%{response_time}" }
+
+The value will be coerced to a floating point value. Values which cannot be
+coerced will zero (0)
+
+[id="{version}-plugins-{type}s-{plugin}-uniform"]
+===== `uniform` 
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+The metrics to send. This supports dynamic strings like `%{host}`
+for metric names and also for values. This is a hash field with key
+of the metric name, value of the metric value.
+
+The value will be coerced to a floating point value. Values which cannot be
+coerced will zero (0)
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

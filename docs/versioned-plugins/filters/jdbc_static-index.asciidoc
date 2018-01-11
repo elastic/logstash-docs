@@ -1,0 +1,10 @@
+:plugin: jdbc_static
+:type: filter
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+|=======================================================================
+
+

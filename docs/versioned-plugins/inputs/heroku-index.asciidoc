@@ -1,0 +1,14 @@
+:plugin: heroku
+:type: input
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v3.0.2-plugins-inputs-heroku,v3.0.2>> | 2017-08-15
+| <<v3.0.1-plugins-inputs-heroku,v3.0.1>> | 2017-06-23
+|=======================================================================
+
+include::heroku-v3.0.2.asciidoc[]
+include::heroku-v3.0.1.asciidoc[]
+

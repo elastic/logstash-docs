@@ -1,0 +1,14 @@
+:plugin: age
+:type: filter
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v1.0.2-plugins-filters-age,v1.0.2>> | 2017-08-15
+| <<v1.0.1-plugins-filters-age,v1.0.1>> | 2017-06-23
+|=======================================================================
+
+include::age-v1.0.2.asciidoc[]
+include::age-v1.0.1.asciidoc[]
+

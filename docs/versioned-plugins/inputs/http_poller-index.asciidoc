@@ -1,0 +1,30 @@
+:plugin: http_poller
+:type: input
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v4.0.4-plugins-inputs-http_poller,v4.0.4>> | 2017-11-07
+| <<v4.0.3-plugins-inputs-http_poller,v4.0.3>> | 2017-09-20
+| <<v4.0.2-plugins-inputs-http_poller,v4.0.2>> | 2017-09-07
+| <<v4.0.1-plugins-inputs-http_poller,v4.0.1>> | 2017-08-15
+| <<v4.0.0-plugins-inputs-http_poller,v4.0.0>> | 2017-08-02
+| <<v3.3.4-plugins-inputs-http_poller,v3.3.4>> | 2017-09-21
+| <<v3.3.3-plugins-inputs-http_poller,v3.3.3>> | 2017-09-07
+| <<v3.3.2-plugins-inputs-http_poller,v3.3.2>> | 2017-08-18
+| <<v3.3.1-plugins-inputs-http_poller,v3.3.1>> | 2017-06-23
+| <<v3.3.0-plugins-inputs-http_poller,v3.3.0>> | 2017-05-08
+|=======================================================================
+
+include::http_poller-v4.0.4.asciidoc[]
+include::http_poller-v4.0.3.asciidoc[]
+include::http_poller-v4.0.2.asciidoc[]
+include::http_poller-v4.0.1.asciidoc[]
+include::http_poller-v4.0.0.asciidoc[]
+include::http_poller-v3.3.4.asciidoc[]
+include::http_poller-v3.3.3.asciidoc[]
+include::http_poller-v3.3.2.asciidoc[]
+include::http_poller-v3.3.1.asciidoc[]
+include::http_poller-v3.3.0.asciidoc[]
+

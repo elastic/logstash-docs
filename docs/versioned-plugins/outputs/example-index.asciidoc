@@ -1,0 +1,10 @@
+:plugin: example
+:type: output
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+|=======================================================================
+
+

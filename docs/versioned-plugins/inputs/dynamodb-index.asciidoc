@@ -1,0 +1,10 @@
+:plugin: dynamodb
+:type: input
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+|=======================================================================
+
+

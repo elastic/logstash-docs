@@ -1,0 +1,14 @@
+:plugin: rackspace
+:type: output
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v2.0.7-plugins-outputs-rackspace,v2.0.7>> | 2017-08-16
+| <<v2.0.5-plugins-outputs-rackspace,v2.0.5>> | 2017-06-23
+|=======================================================================
+
+include::rackspace-v2.0.7.asciidoc[]
+include::rackspace-v2.0.5.asciidoc[]
+

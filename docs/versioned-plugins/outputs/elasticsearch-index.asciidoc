@@ -1,0 +1,44 @@
+:plugin: elasticsearch
+:type: output
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v9.0.2-plugins-outputs-elasticsearch,v9.0.2>> | 2017-11-30
+| <<v9.0.0-plugins-outputs-elasticsearch,v9.0.0>> | 2017-09-29
+| <<v8.2.2-plugins-outputs-elasticsearch,v8.2.2>> | 2017-09-21
+| <<v8.2.0-plugins-outputs-elasticsearch,v8.2.0>> | 2017-09-21
+| <<v8.1.1-plugins-outputs-elasticsearch,v8.1.1>> | 2017-08-21
+| <<v8.0.1-plugins-outputs-elasticsearch,v8.0.1>> | 2017-08-16
+| <<v8.0.0-plugins-outputs-elasticsearch,v8.0.0>> | 2017-08-01
+| <<v7.4.2-plugins-outputs-elasticsearch,v7.4.2>> | 2017-09-22
+| <<v7.4.1-plugins-outputs-elasticsearch,v7.4.1>> | 2017-09-21
+| <<v7.4.0-plugins-outputs-elasticsearch,v7.4.0>> | 2017-08-21
+| <<v7.3.8-plugins-outputs-elasticsearch,v7.3.8>> | 2017-07-20
+| <<v7.3.7-plugins-outputs-elasticsearch,v7.3.7>> | 2017-07-18
+| <<v7.3.6-plugins-outputs-elasticsearch,v7.3.6>> | 2017-06-23
+| <<v7.3.5-plugins-outputs-elasticsearch,v7.3.5>> | 2017-06-09
+| <<v7.3.4-plugins-outputs-elasticsearch,v7.3.4>> | 2017-06-06
+| <<v7.3.3-plugins-outputs-elasticsearch,v7.3.3>> | 2017-06-05
+| <<v7.3.2-plugins-outputs-elasticsearch,v7.3.2>> | 2017-05-26
+|=======================================================================
+
+include::elasticsearch-v9.0.2.asciidoc[]
+include::elasticsearch-v9.0.0.asciidoc[]
+include::elasticsearch-v8.2.2.asciidoc[]
+include::elasticsearch-v8.2.0.asciidoc[]
+include::elasticsearch-v8.1.1.asciidoc[]
+include::elasticsearch-v8.0.1.asciidoc[]
+include::elasticsearch-v8.0.0.asciidoc[]
+include::elasticsearch-v7.4.2.asciidoc[]
+include::elasticsearch-v7.4.1.asciidoc[]
+include::elasticsearch-v7.4.0.asciidoc[]
+include::elasticsearch-v7.3.8.asciidoc[]
+include::elasticsearch-v7.3.7.asciidoc[]
+include::elasticsearch-v7.3.6.asciidoc[]
+include::elasticsearch-v7.3.5.asciidoc[]
+include::elasticsearch-v7.3.4.asciidoc[]
+include::elasticsearch-v7.3.3.asciidoc[]
+include::elasticsearch-v7.3.2.asciidoc[]
+
