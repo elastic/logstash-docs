@@ -11,10 +11,10 @@ include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
 [[logstash-plugin-reference]]
 = Versioned Plugin Reference
 
-include::inputs.asciidoc[]
+include::inputs-index.asciidoc[]
 
-include::outputs.asciidoc[]
+include::outputs-index.asciidoc[]
 
-include::filters.asciidoc[]
+include::filters-index.asciidoc[]
 
-include::codecs.asciidoc[]
+include::codecs-index.asciidoc[]

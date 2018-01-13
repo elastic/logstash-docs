@@ -140,11 +140,11 @@ This plugin supports the following configuration options plus the <<{version}-pl
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<{version}-plugins-{type}s-{plugin}-code>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-init>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-path>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-script_params>> |<<hash,hash>>,{}|No
-| <<{version}-plugins-{type}s-{plugin}-tag_on_exception>> |<<string,string>>,_rubyexception|No
+| <<{version}-plugins-{type}s-{plugin}-code>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-init>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-path>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-script_params>> |{logstash-ref}/configuration-file-structure.html#hash[hash],{}|No
+| <<{version}-plugins-{type}s-{plugin}-tag_on_exception>> |{logstash-ref}/configuration-file-structure.html#string[string],_rubyexception|No
 |=======================================================================
 
 Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -155,17 +155,17 @@ filter plugins.
 [id="{version}-plugins-{type}s-{plugin}-code"]
 ===== `code`
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * There is no default value for this setting.
   * This setting cannot be used together with `path`.
 
 The code to execute for every event.
-You will have an `event` variable available that is the event itself. See the <<event-api,Event API>> for more information.
+You will have an `event` variable available that is the event itself. See the {logstash-ref}/event-api.html[Event API] for more information.
 
 [id="{version}-plugins-{type}s-{plugin}-init"]
 ===== `init`
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * There is no default value for this setting.
 
 Any code to execute at logstash startup-time
@@ -173,7 +173,7 @@ Any code to execute at logstash startup-time
 [id="{version}-plugins-{type}s-{plugin}-path"]
 ===== `path`
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * There is no default value for this setting.
   * This setting cannot be used together with `code`.
 
@@ -182,7 +182,7 @@ The path of the ruby script file that implements the `filter` method.
 [id="{version}-plugins-{type}s-{plugin}-script_params"]
 ===== `script_params`
 
-  * Value type is <<hash,hash>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
   * Default value is `{}`
 
 A key/value hash with parameters that are passed to the register method
@@ -191,7 +191,7 @@ of your ruby script file defined in `path`.
 [id="{version}-plugins-{type}s-{plugin}-tag_on_exception"]
 ===== `tag_on_exception`
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `_rubyexception`
 
 Tag to add to events in case the ruby code (either inline or file based)

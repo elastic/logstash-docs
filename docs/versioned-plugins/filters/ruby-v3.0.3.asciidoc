@@ -12,7 +12,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
 
-[id="plugins-{type}-{plugin}"]
+[id="{version}-plugins-{type}s-{plugin}"]
 
 === Ruby filter plugin {version}
 
@@ -49,8 +49,8 @@ This plugin supports the following configuration options plus the <<{version}-pl
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<{version}-plugins-{type}s-{plugin}-code>> |<<string,string>>|Yes
-| <<{version}-plugins-{type}s-{plugin}-init>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-code>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-init>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
 |=======================================================================
 
 Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -62,16 +62,16 @@ filter plugins.
 ===== `code` 
 
   * This is a required setting.
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * There is no default value for this setting.
 
 The code to execute for every event.
-You will have an `event` variable available that is the event itself. See the <<event-api,Event API>> for more information.
+You will have an `event` variable available that is the event itself. See the {logstash-ref}/event-api.html[Event API] for more information.
 
 [id="{version}-plugins-{type}s-{plugin}-init"]
 ===== `init` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * There is no default value for this setting.
 
 Any code to execute at logstash startup-time

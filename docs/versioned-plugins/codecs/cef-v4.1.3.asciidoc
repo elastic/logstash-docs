@@ -12,7 +12,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
 
-[id="plugins-{type}-{plugin}"]
+[id="{version}-plugins-{type}s-{plugin}"]
 
 === Cef codec plugin {version}
 
@@ -33,14 +33,14 @@ produce an event with the payload as the 'message' field and a '_cefparsefailure
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<{version}-plugins-{type}s-{plugin}-delimiter>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-fields>> |<<array,array>>|No
-| <<{version}-plugins-{type}s-{plugin}-name>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-product>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-severity>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-signature>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-vendor>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-version>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-delimiter>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-fields>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-name>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-product>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-severity>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-signature>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-vendor>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-version>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
 |=======================================================================
 
 &nbsp;
@@ -48,7 +48,7 @@ produce an event with the payload as the 'message' field and a '_cefparsefailure
 [id="{version}-plugins-{type}s-{plugin}-delimiter"]
 ===== `delimiter` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * There is no default value for this setting.
 
 If your input puts a delimiter between each CEF event, you'll want to set
@@ -72,7 +72,7 @@ This setting allows the following character sequences to have special meaning:
 ===== `deprecated_v1_fields`  (DEPRECATED)
 
   * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<boolean,boolean>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
   * There is no default value for this setting.
 
 Set this flag if you want to have both v1 and v2 fields indexed at the same time. Note that this option will increase
@@ -82,7 +82,7 @@ This option is available to ease transition to new schema
 [id="{version}-plugins-{type}s-{plugin}-fields"]
 ===== `fields` 
 
-  * Value type is <<array,array>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
   * Default value is `[]`
 
 Fields to be included in CEV extension part as key/value pairs
@@ -90,7 +90,7 @@ Fields to be included in CEV extension part as key/value pairs
 [id="{version}-plugins-{type}s-{plugin}-name"]
 ===== `name` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `"Logstash"`
 
 Name field in CEF header. The new value can include `%{foo}` strings
@@ -99,7 +99,7 @@ to help you build a new value from other parts of the event.
 [id="{version}-plugins-{type}s-{plugin}-product"]
 ===== `product` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `"Logstash"`
 
 Device product field in CEF header. The new value can include `%{foo}` strings
@@ -109,7 +109,7 @@ to help you build a new value from other parts of the event.
 ===== `sev`  (DEPRECATED)
 
   * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * There is no default value for this setting.
 
 Deprecated severity field for CEF header. The new value can include `%{foo}` strings
@@ -124,7 +124,7 @@ All invalid values will be mapped to the default of 6.
 [id="{version}-plugins-{type}s-{plugin}-severity"]
 ===== `severity` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `"6"`
 
 Severity field in CEF header. The new value can include `%{foo}` strings
@@ -137,7 +137,7 @@ All invalid values will be mapped to the default of 6.
 [id="{version}-plugins-{type}s-{plugin}-signature"]
 ===== `signature` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `"Logstash"`
 
 Signature ID field in CEF header. The new value can include `%{foo}` strings
@@ -146,7 +146,7 @@ to help you build a new value from other parts of the event.
 [id="{version}-plugins-{type}s-{plugin}-vendor"]
 ===== `vendor` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `"Elasticsearch"`
 
 Device vendor field in CEF header. The new value can include `%{foo}` strings
@@ -155,7 +155,7 @@ to help you build a new value from other parts of the event.
 [id="{version}-plugins-{type}s-{plugin}-version"]
 ===== `version` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `"1.0"`
 
 Device version field in CEF header. The new value can include `%{foo}` strings

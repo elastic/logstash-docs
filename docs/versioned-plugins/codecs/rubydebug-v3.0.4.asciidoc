@@ -30,7 +30,7 @@ the Ruby Awesome Print library.
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<{version}-plugins-{type}s-{plugin}-metadata>> |<<boolean,boolean>>|No
+| <<{version}-plugins-{type}s-{plugin}-metadata>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
 |=======================================================================
 
 &nbsp;
@@ -38,7 +38,7 @@ the Ruby Awesome Print library.
 [id="{version}-plugins-{type}s-{plugin}-metadata"]
 ===== `metadata` 
 
-  * Value type is <<boolean,boolean>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
   * Default value is `false`
 
 Should the event's metadata be included?

@@ -7,12 +7,12 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v4.0.3
 :release_date: 2017-06-22
 :changelog_url: https://github.com/logstash-plugins/logstash-input-beats/blob/v4.0.3/CHANGELOG.md
-:include_path: ../../../logstash/docs/include
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
 
-[id="plugins-{type}-{plugin}"]
+[id="{version}-plugins-{type}s-{plugin}"]
 
 === Beats input plugin {version}
 
@@ -46,41 +46,41 @@ output {
 
 NOTE: The Beats shipper automatically sets the `type` field on the event.
 You cannot override this setting in the Logstash config. If you specify
-a setting for the <<plugins-inputs-beats-type,`type`>> config option in
+a setting for the <<{version}-plugins-inputs-beats-type,`type`>> config option in
 Logstash, it is ignored.
 
 IMPORTANT: If you are shipping events that span multiple lines, you need to
 use the https://www.elastic.co/guide/en/beats/filebeat/current/multiline-examples.html[configuration options available in Filebeat] to handle multiline events
 before sending the event data to Logstash. You cannot use the
-<<plugins-codecs-multiline>> codec to handle multiline events. Doing so will
+{logstash-ref}/plugins-codecs-multiline.html[Multiline codec plugin] codec to handle multiline events. Doing so will
 result in the failure to start Logstash.
 
 
 [id="{version}-plugins-{type}s-{plugin}-options"]
 ==== Beats Input Configuration Options
 
-This plugin supports the following configuration options plus the <<plugins-{type}s-common-options>> described later.
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<{version}-plugins-{type}s-{plugin}-cipher_suites>> |<<array,array>>|No
-| <<{version}-plugins-{type}s-{plugin}-client_inactivity_timeout>> |<<number,number>>|No
-| <<{version}-plugins-{type}s-{plugin}-host>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-include_codec_tag>> |<<boolean,boolean>>|No
-| <<{version}-plugins-{type}s-{plugin}-port>> |<<number,number>>|Yes
-| <<{version}-plugins-{type}s-{plugin}-ssl>> |<<boolean,boolean>>|No
+| <<{version}-plugins-{type}s-{plugin}-cipher_suites>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-client_inactivity_timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-host>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-include_codec_tag>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-port>> |{logstash-ref}/configuration-file-structure.html#number[number]|Yes
+| <<{version}-plugins-{type}s-{plugin}-ssl>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
 | <<{version}-plugins-{type}s-{plugin}-ssl_certificate>> |a valid filesystem path|No
-| <<{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities>> |<<array,array>>|No
-| <<{version}-plugins-{type}s-{plugin}-ssl_handshake_timeout>> |<<number,number>>|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_handshake_timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
 | <<{version}-plugins-{type}s-{plugin}-ssl_key>> |a valid filesystem path|No
-| <<{version}-plugins-{type}s-{plugin}-ssl_key_passphrase>> |<<password,password>>|No
-| <<{version}-plugins-{type}s-{plugin}-ssl_verify_mode>> |<<string,string>>, one of `["none", "peer", "force_peer"]`|No
-| <<{version}-plugins-{type}s-{plugin}-tls_max_version>> |<<number,number>>|No
-| <<{version}-plugins-{type}s-{plugin}-tls_min_version>> |<<number,number>>|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_key_passphrase>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_verify_mode>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["none", "peer", "force_peer"]`|No
+| <<{version}-plugins-{type}s-{plugin}-tls_max_version>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-tls_min_version>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
 |=======================================================================
 
-Also see <<plugins-{type}s-common-options>> for a list of options supported by all
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
 input plugins.
 
 &nbsp;
@@ -88,7 +88,7 @@ input plugins.
 [id="{version}-plugins-{type}s-{plugin}-cipher_suites"]
 ===== `cipher_suites` 
 
-  * Value type is <<array,array>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
   * Default value is `java.lang.String[TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256]@459cfcca`
 
 The list of ciphers suite to use, listed by priorities.
@@ -96,7 +96,7 @@ The list of ciphers suite to use, listed by priorities.
 [id="{version}-plugins-{type}s-{plugin}-client_inactivity_timeout"]
 ===== `client_inactivity_timeout` 
 
-  * Value type is <<number,number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * Default value is `60`
 
 Close Idle clients after X seconds of inactivity.
@@ -105,7 +105,7 @@ Close Idle clients after X seconds of inactivity.
 ===== `congestion_threshold`  (DEPRECATED)
 
   * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<number,number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * Default value is `5`
 
 The number of seconds before we raise a timeout. 
@@ -114,7 +114,7 @@ This option is useful to control how much time to wait if something is blocking 
 [id="{version}-plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `"0.0.0.0"`
 
 The IP address to listen on.
@@ -122,7 +122,7 @@ The IP address to listen on.
 [id="{version}-plugins-{type}s-{plugin}-include_codec_tag"]
 ===== `include_codec_tag` 
 
-  * Value type is <<boolean,boolean>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
   * Default value is `true`
 
 
@@ -131,7 +131,7 @@ The IP address to listen on.
 ===== `port` 
 
   * This is a required setting.
-  * Value type is <<number,number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * There is no default value for this setting.
 
 The port to listen on.
@@ -139,7 +139,7 @@ The port to listen on.
 [id="{version}-plugins-{type}s-{plugin}-ssl"]
 ===== `ssl` 
 
-  * Value type is <<boolean,boolean>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
   * Default value is `false`
 
 Events are by default sent in plain text. You can
@@ -149,7 +149,7 @@ the `ssl_certificate` and `ssl_key` options.
 [id="{version}-plugins-{type}s-{plugin}-ssl_certificate"]
 ===== `ssl_certificate` 
 
-  * Value type is <<path,path>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
   * There is no default value for this setting.
 
 SSL certificate to use.
@@ -157,7 +157,7 @@ SSL certificate to use.
 [id="{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities"]
 ===== `ssl_certificate_authorities` 
 
-  * Value type is <<array,array>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
   * Default value is `[]`
 
 Validate client certificates against these authorities. 
@@ -169,7 +169,7 @@ to `peer` or `force_peer` to enable the verification.
 [id="{version}-plugins-{type}s-{plugin}-ssl_handshake_timeout"]
 ===== `ssl_handshake_timeout` 
 
-  * Value type is <<number,number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * Default value is `10000`
 
 Time in milliseconds for an incomplete ssl handshake to timeout
@@ -177,7 +177,7 @@ Time in milliseconds for an incomplete ssl handshake to timeout
 [id="{version}-plugins-{type}s-{plugin}-ssl_key"]
 ===== `ssl_key` 
 
-  * Value type is <<path,path>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
   * There is no default value for this setting.
 
 SSL key to use.
@@ -187,7 +187,7 @@ for more information.
 [id="{version}-plugins-{type}s-{plugin}-ssl_key_passphrase"]
 ===== `ssl_key_passphrase` 
 
-  * Value type is <<password,password>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
   * There is no default value for this setting.
 
 SSL key passphrase to use.
@@ -212,7 +212,7 @@ This option needs to be used with `ssl_certificate_authorities` and a defined li
 ===== `target_field_for_codec`  (DEPRECATED)
 
   * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `"message"`
 
 This is the default field to which the specified codec will be applied.
@@ -220,7 +220,7 @@ This is the default field to which the specified codec will be applied.
 [id="{version}-plugins-{type}s-{plugin}-tls_max_version"]
 ===== `tls_max_version` 
 
-  * Value type is <<number,number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * Default value is `1.2`
 
 The maximum TLS version allowed for the encrypted connections. The value must be the one of the following:
@@ -229,12 +229,12 @@ The maximum TLS version allowed for the encrypted connections. The value must be
 [id="{version}-plugins-{type}s-{plugin}-tls_min_version"]
 ===== `tls_min_version` 
 
-  * Value type is <<number,number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * Default value is `1`
 
 The minimum TLS version allowed for the encrypted connections. The value must be one of the following:
 1.0 for TLS 1.0, 1.1 for TLS 1.1, 1.2 for TLS 1.2
 
 
-
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]

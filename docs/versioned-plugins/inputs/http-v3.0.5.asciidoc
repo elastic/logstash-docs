@@ -12,7 +12,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
 
-[id="plugins-{type}-{plugin}"]
+[id="{version}-plugins-{type}s-{plugin}"]
 
 === Http input plugin {version}
 
@@ -49,17 +49,17 @@ This plugin supports the following configuration options plus the <<{version}-pl
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<{version}-plugins-{type}s-{plugin}-additional_codecs>> |<<hash,hash>>|No
-| <<{version}-plugins-{type}s-{plugin}-host>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-additional_codecs>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-host>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
 | <<{version}-plugins-{type}s-{plugin}-keystore>> |a valid filesystem path|No
-| <<{version}-plugins-{type}s-{plugin}-keystore_password>> |<<password,password>>|No
-| <<{version}-plugins-{type}s-{plugin}-password>> |<<password,password>>|No
-| <<{version}-plugins-{type}s-{plugin}-port>> |<<number,number>>|No
-| <<{version}-plugins-{type}s-{plugin}-response_headers>> |<<hash,hash>>|No
-| <<{version}-plugins-{type}s-{plugin}-ssl>> |<<boolean,boolean>>|No
-| <<{version}-plugins-{type}s-{plugin}-threads>> |<<number,number>>|No
-| <<{version}-plugins-{type}s-{plugin}-user>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-verify_mode>> |<<string,string>>, one of `["none", "peer", "force_peer"]`|No
+| <<{version}-plugins-{type}s-{plugin}-keystore_password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-port>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-response_headers>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-threads>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-user>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-verify_mode>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["none", "peer", "force_peer"]`|No
 |=======================================================================
 
 Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -70,7 +70,7 @@ input plugins.
 [id="{version}-plugins-{type}s-{plugin}-additional_codecs"]
 ===== `additional_codecs` 
 
-  * Value type is <<hash,hash>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
   * Default value is `{"application/json"=>"json"}`
 
 Apply specific codecs for specific content types.
@@ -80,7 +80,7 @@ and no codec for the request's content-type is found
 [id="{version}-plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `"0.0.0.0"`
 
 Codec used to decode the incoming data.
@@ -91,7 +91,7 @@ The host or ip to bind
 [id="{version}-plugins-{type}s-{plugin}-keystore"]
 ===== `keystore` 
 
-  * Value type is <<path,path>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
   * There is no default value for this setting.
 
 The JKS keystore to validate the client's certificates
@@ -99,7 +99,7 @@ The JKS keystore to validate the client's certificates
 [id="{version}-plugins-{type}s-{plugin}-keystore_password"]
 ===== `keystore_password` 
 
-  * Value type is <<password,password>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
   * There is no default value for this setting.
 
 Set the truststore password
@@ -107,7 +107,7 @@ Set the truststore password
 [id="{version}-plugins-{type}s-{plugin}-password"]
 ===== `password` 
 
-  * Value type is <<password,password>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
   * There is no default value for this setting.
 
 Password for basic authorization
@@ -115,7 +115,7 @@ Password for basic authorization
 [id="{version}-plugins-{type}s-{plugin}-port"]
 ===== `port` 
 
-  * Value type is <<number,number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * Default value is `8080`
 
 The TCP port to bind to
@@ -123,7 +123,7 @@ The TCP port to bind to
 [id="{version}-plugins-{type}s-{plugin}-response_headers"]
 ===== `response_headers` 
 
-  * Value type is <<hash,hash>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
   * Default value is `{"Content-Type"=>"text/plain"}`
 
 specify a custom set of response headers
@@ -131,7 +131,7 @@ specify a custom set of response headers
 [id="{version}-plugins-{type}s-{plugin}-ssl"]
 ===== `ssl` 
 
-  * Value type is <<boolean,boolean>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
   * Default value is `false`
 
 SSL Configurations
@@ -141,7 +141,7 @@ Enable SSL
 [id="{version}-plugins-{type}s-{plugin}-threads"]
 ===== `threads` 
 
-  * Value type is <<number,number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * Default value is `4`
 
 Maximum number of threads to use
@@ -149,7 +149,7 @@ Maximum number of threads to use
 [id="{version}-plugins-{type}s-{plugin}-user"]
 ===== `user` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * There is no default value for this setting.
 
 Username for basic authorization

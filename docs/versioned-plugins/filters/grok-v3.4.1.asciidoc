@@ -7,12 +7,12 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.4.1
 :release_date: 2017-05-10
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-grok/blob/v3.4.1/CHANGELOG.md
-:include_path: ../../../logstash/docs/include
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
 
-[id="plugins-{type}-{plugin}"]
+[id="{version}-plugins-{type}s-{plugin}"]
 
 === Grok
 
@@ -160,25 +160,25 @@ filter. This newly defined patterns in `pattern_definitions` will not be availab
 [id="{version}-plugins-{type}s-{plugin}-options"]
 ==== Grok Filter Configuration Options
 
-This plugin supports the following configuration options plus the <<plugins-{type}s-common-options>> described later.
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<{version}-plugins-{type}s-{plugin}-break_on_match>> |<<boolean,boolean>>|No
-| <<{version}-plugins-{type}s-{plugin}-keep_empty_captures>> |<<boolean,boolean>>|No
-| <<{version}-plugins-{type}s-{plugin}-match>> |<<hash,hash>>|No
-| <<{version}-plugins-{type}s-{plugin}-named_captures_only>> |<<boolean,boolean>>|No
-| <<{version}-plugins-{type}s-{plugin}-overwrite>> |<<array,array>>|No
-| <<{version}-plugins-{type}s-{plugin}-pattern_definitions>> |<<hash,hash>>|No
-| <<{version}-plugins-{type}s-{plugin}-patterns_dir>> |<<array,array>>|No
-| <<{version}-plugins-{type}s-{plugin}-patterns_files_glob>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-tag_on_failure>> |<<array,array>>|No
-| <<{version}-plugins-{type}s-{plugin}-tag_on_timeout>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-timeout_millis>> |<<number,number>>|No
+| <<{version}-plugins-{type}s-{plugin}-break_on_match>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-keep_empty_captures>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-match>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-named_captures_only>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-overwrite>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-pattern_definitions>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-patterns_dir>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-patterns_files_glob>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-tag_on_failure>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-tag_on_timeout>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-timeout_millis>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
 |=======================================================================
 
-Also see <<plugins-{type}s-common-options>> for a list of options supported by all
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
 filter plugins.
 
 &nbsp;
@@ -186,7 +186,7 @@ filter plugins.
 [id="{version}-plugins-{type}s-{plugin}-break_on_match"]
 ===== `break_on_match` 
 
-  * Value type is <<boolean,boolean>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
   * Default value is `true`
 
 Break on first match. The first successful match by grok will result in the
@@ -196,7 +196,7 @@ parsing different things), then set this to false.
 [id="{version}-plugins-{type}s-{plugin}-keep_empty_captures"]
 ===== `keep_empty_captures` 
 
-  * Value type is <<boolean,boolean>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
   * Default value is `false`
 
 If `true`, keep empty captures as event fields.
@@ -204,7 +204,7 @@ If `true`, keep empty captures as event fields.
 [id="{version}-plugins-{type}s-{plugin}-match"]
 ===== `match` 
 
-  * Value type is <<hash,hash>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
   * Default value is `{}`
 
 A hash of matches of field => value
@@ -225,7 +225,7 @@ If you need to match multiple patterns against a single field, the value can be 
 [id="{version}-plugins-{type}s-{plugin}-named_captures_only"]
 ===== `named_captures_only` 
 
-  * Value type is <<boolean,boolean>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
   * Default value is `true`
 
 If `true`, only store named captures from grok.
@@ -233,7 +233,7 @@ If `true`, only store named captures from grok.
 [id="{version}-plugins-{type}s-{plugin}-overwrite"]
 ===== `overwrite` 
 
-  * Value type is <<array,array>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
   * Default value is `[]`
 
 The fields to overwrite.
@@ -256,7 +256,7 @@ will be parsed and `hello world` will overwrite the original message.
 [id="{version}-plugins-{type}s-{plugin}-pattern_definitions"]
 ===== `pattern_definitions` 
 
-  * Value type is <<hash,hash>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
   * Default value is `{}`
 
 A hash of pattern-name and pattern tuples defining custom patterns to be used by 
@@ -267,7 +267,7 @@ grok
 [id="{version}-plugins-{type}s-{plugin}-patterns_dir"]
 ===== `patterns_dir` 
 
-  * Value type is <<array,array>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
   * Default value is `[]`
 
 
@@ -292,7 +292,7 @@ The patterns are loaded when the pipeline is created.
 [id="{version}-plugins-{type}s-{plugin}-patterns_files_glob"]
 ===== `patterns_files_glob` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `"*"`
 
 Glob pattern, used to select the pattern files in the directories
@@ -301,7 +301,7 @@ specified by patterns_dir
 [id="{version}-plugins-{type}s-{plugin}-tag_on_failure"]
 ===== `tag_on_failure` 
 
-  * Value type is <<array,array>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
   * Default value is `["_grokparsefailure"]`
 
 Append values to the `tags` field when there has been no
@@ -310,7 +310,7 @@ successful match
 [id="{version}-plugins-{type}s-{plugin}-tag_on_timeout"]
 ===== `tag_on_timeout` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `"_groktimeout"`
 
 Tag to apply if a grok regexp times out.
@@ -318,7 +318,7 @@ Tag to apply if a grok regexp times out.
 [id="{version}-plugins-{type}s-{plugin}-timeout_millis"]
 ===== `timeout_millis` 
 
-  * Value type is <<number,number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * Default value is `30000`
 
 Attempt to terminate regexps after this amount of time.
@@ -328,5 +328,5 @@ Actual timeout is approximate based on a 250ms quantization.
 Set to 0 to disable timeouts
 
 
-
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]

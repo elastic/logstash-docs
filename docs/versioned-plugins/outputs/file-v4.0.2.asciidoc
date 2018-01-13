@@ -12,7 +12,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
 
-[id="plugins-{type}-{plugin}"]
+[id="{version}-plugins-{type}s-{plugin}"]
 
 === File output plugin {version}
 
@@ -41,13 +41,13 @@ This plugin supports the following configuration options plus the <<{version}-pl
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<{version}-plugins-{type}s-{plugin}-create_if_deleted>> |<<boolean,boolean>>|No
-| <<{version}-plugins-{type}s-{plugin}-dir_mode>> |<<number,number>>|No
-| <<{version}-plugins-{type}s-{plugin}-file_mode>> |<<number,number>>|No
-| <<{version}-plugins-{type}s-{plugin}-filename_failure>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-flush_interval>> |<<number,number>>|No
-| <<{version}-plugins-{type}s-{plugin}-gzip>> |<<boolean,boolean>>|No
-| <<{version}-plugins-{type}s-{plugin}-path>> |<<string,string>>|Yes
+| <<{version}-plugins-{type}s-{plugin}-create_if_deleted>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-dir_mode>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-file_mode>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-filename_failure>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-flush_interval>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-gzip>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-path>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
 |=======================================================================
 
 Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -58,7 +58,7 @@ output plugins.
 [id="{version}-plugins-{type}s-{plugin}-create_if_deleted"]
 ===== `create_if_deleted` 
 
-  * Value type is <<boolean,boolean>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
   * Default value is `true`
 
 If the configured file is deleted, but an event is handled by the plugin, 
@@ -67,7 +67,7 @@ the plugin will recreate the file. Default => true
 [id="{version}-plugins-{type}s-{plugin}-dir_mode"]
 ===== `dir_mode` 
 
-  * Value type is <<number,number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * Default value is `-1`
 
 Dir access mode to use. Note that due to the bug in jruby system umask
@@ -78,7 +78,7 @@ Example: `"dir_mode" => 0750`
 [id="{version}-plugins-{type}s-{plugin}-file_mode"]
 ===== `file_mode` 
 
-  * Value type is <<number,number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * Default value is `-1`
 
 File access mode to use. Note that due to the bug in jruby system umask
@@ -89,7 +89,7 @@ Example: `"file_mode" => 0640`
 [id="{version}-plugins-{type}s-{plugin}-filename_failure"]
 ===== `filename_failure` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `"_filepath_failures"`
 
 If the generated path is invalid, the events will be saved
@@ -98,7 +98,7 @@ into this file and inside the defined path.
 [id="{version}-plugins-{type}s-{plugin}-flush_interval"]
 ===== `flush_interval` 
 
-  * Value type is <<number,number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * Default value is `2`
 
 Flush interval (in seconds) for flushing writes to log files.
@@ -107,7 +107,7 @@ Flush interval (in seconds) for flushing writes to log files.
 [id="{version}-plugins-{type}s-{plugin}-gzip"]
 ===== `gzip` 
 
-  * Value type is <<boolean,boolean>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
   * Default value is `false`
 
 Gzip the output stream before writing to disk.
@@ -116,7 +116,7 @@ Gzip the output stream before writing to disk.
 ===== `path` 
 
   * This is a required setting.
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * There is no default value for this setting.
 
 The path to the file to write. Event fields can be used here,

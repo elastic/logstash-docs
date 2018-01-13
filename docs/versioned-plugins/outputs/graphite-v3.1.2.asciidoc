@@ -12,7 +12,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
 
-[id="plugins-{type}-{plugin}"]
+[id="{version}-plugins-{type}s-{plugin}"]
 
 === Graphite output plugin {version}
 
@@ -35,17 +35,17 @@ This plugin supports the following configuration options plus the <<{version}-pl
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<{version}-plugins-{type}s-{plugin}-exclude_metrics>> |<<array,array>>|No
-| <<{version}-plugins-{type}s-{plugin}-fields_are_metrics>> |<<boolean,boolean>>|No
-| <<{version}-plugins-{type}s-{plugin}-host>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-include_metrics>> |<<array,array>>|No
-| <<{version}-plugins-{type}s-{plugin}-metrics>> |<<hash,hash>>|No
-| <<{version}-plugins-{type}s-{plugin}-metrics_format>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-nested_object_separator>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-port>> |<<number,number>>|No
-| <<{version}-plugins-{type}s-{plugin}-reconnect_interval>> |<<number,number>>|No
-| <<{version}-plugins-{type}s-{plugin}-resend_on_failure>> |<<boolean,boolean>>|No
-| <<{version}-plugins-{type}s-{plugin}-timestamp_field>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-exclude_metrics>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-fields_are_metrics>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-host>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-include_metrics>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-metrics>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-metrics_format>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-nested_object_separator>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-port>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-reconnect_interval>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-resend_on_failure>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-timestamp_field>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
 |=======================================================================
 
 Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -56,7 +56,7 @@ output plugins.
 [id="{version}-plugins-{type}s-{plugin}-exclude_metrics"]
 ===== `exclude_metrics` 
 
-  * Value type is <<array,array>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
   * Default value is `["%{[^}]+}"]`
 
 Exclude regex matched metric names, by default exclude unresolved %{field} strings.
@@ -64,7 +64,7 @@ Exclude regex matched metric names, by default exclude unresolved %{field} strin
 [id="{version}-plugins-{type}s-{plugin}-fields_are_metrics"]
 ===== `fields_are_metrics` 
 
-  * Value type is <<boolean,boolean>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
   * Default value is `false`
 
 An array indicating that these event fields should be treated as metrics
@@ -74,7 +74,7 @@ or `metrics`, but not both.
 [id="{version}-plugins-{type}s-{plugin}-host"]
 ===== `host` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `"localhost"`
 
 The hostname or IP address of the Graphite server.
@@ -82,7 +82,7 @@ The hostname or IP address of the Graphite server.
 [id="{version}-plugins-{type}s-{plugin}-include_metrics"]
 ===== `include_metrics` 
 
-  * Value type is <<array,array>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
   * Default value is `[".*"]`
 
 Include only regex matched metric names.
@@ -90,7 +90,7 @@ Include only regex matched metric names.
 [id="{version}-plugins-{type}s-{plugin}-metrics"]
 ===== `metrics` 
 
-  * Value type is <<hash,hash>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
   * Default value is `{}`
 
 The metric(s) to use. This supports dynamic strings like %{host}
@@ -106,7 +106,7 @@ but not both.
 [id="{version}-plugins-{type}s-{plugin}-metrics_format"]
 ===== `metrics_format` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `"*"`
 
 Defines the format of the metric string. The placeholder '*' will be
@@ -119,7 +119,7 @@ NOTE: If no metrics_format is defined, the name of the metric will be used as fa
 [id="{version}-plugins-{type}s-{plugin}-nested_object_separator"]
 ===== `nested_object_separator` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `"."`
 
 When hashes are passed in as values they are broken out into a dotted notation
@@ -136,7 +136,7 @@ This config setting changes the separator from the '.' default.
 [id="{version}-plugins-{type}s-{plugin}-port"]
 ===== `port` 
 
-  * Value type is <<number,number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * Default value is `2003`
 
 The port to connect to on the Graphite server.
@@ -144,7 +144,7 @@ The port to connect to on the Graphite server.
 [id="{version}-plugins-{type}s-{plugin}-reconnect_interval"]
 ===== `reconnect_interval` 
 
-  * Value type is <<number,number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * Default value is `2`
 
 Interval between reconnect attempts to Carbon.
@@ -152,7 +152,7 @@ Interval between reconnect attempts to Carbon.
 [id="{version}-plugins-{type}s-{plugin}-resend_on_failure"]
 ===== `resend_on_failure` 
 
-  * Value type is <<boolean,boolean>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
   * Default value is `false`
 
 Should metrics be resent on failure?
@@ -160,7 +160,7 @@ Should metrics be resent on failure?
 [id="{version}-plugins-{type}s-{plugin}-timestamp_field"]
 ===== `timestamp_field` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `"@timestamp"`
 
 Use this field for the timestamp instead of '@timestamp' which is the

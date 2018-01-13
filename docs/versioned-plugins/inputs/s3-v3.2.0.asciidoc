@@ -33,22 +33,22 @@ This plugin supports the following configuration options plus the <<{version}-pl
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<{version}-plugins-{type}s-{plugin}-access_key_id>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-aws_credentials_file>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-backup_add_prefix>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-backup_to_bucket>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-backup_to_dir>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-bucket>> |<<string,string>>|Yes
-| <<{version}-plugins-{type}s-{plugin}-delete>> |<<boolean,boolean>>|No
-| <<{version}-plugins-{type}s-{plugin}-exclude_pattern>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-interval>> |<<number,number>>|No
-| <<{version}-plugins-{type}s-{plugin}-prefix>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-proxy_uri>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-region>> |<<string,string>>, one of `["us-east-1", "us-east-2", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "eu-west-2", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ap-northeast-2", "sa-east-1", "us-gov-west-1", "cn-north-1", "ap-south-1", "ca-central-1"]`|No
-| <<{version}-plugins-{type}s-{plugin}-secret_access_key>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-session_token>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-sincedb_path>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-temporary_directory>> |<<string,string>>|No
+| <<{version}-plugins-{type}s-{plugin}-access_key_id>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-aws_credentials_file>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-backup_add_prefix>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-backup_to_bucket>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-backup_to_dir>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-bucket>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-delete>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-exclude_pattern>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-interval>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-prefix>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-proxy_uri>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-region>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["us-east-1", "us-east-2", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "eu-west-2", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ap-northeast-2", "sa-east-1", "us-gov-west-1", "cn-north-1", "ap-south-1", "ca-central-1"]`|No
+| <<{version}-plugins-{type}s-{plugin}-secret_access_key>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-session_token>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-sincedb_path>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-temporary_directory>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
 |=======================================================================
 
 Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -59,7 +59,7 @@ input plugins.
 [id="{version}-plugins-{type}s-{plugin}-access_key_id"]
 ===== `access_key_id` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * There is no default value for this setting.
 
 This plugin uses the AWS SDK and supports several ways to get credentials, which will be tried in this order:
@@ -73,7 +73,7 @@ This plugin uses the AWS SDK and supports several ways to get credentials, which
 [id="{version}-plugins-{type}s-{plugin}-aws_credentials_file"]
 ===== `aws_credentials_file` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * There is no default value for this setting.
 
 Path to YAML file containing a hash of AWS credentials.
@@ -91,7 +91,7 @@ file should look like this:
 [id="{version}-plugins-{type}s-{plugin}-backup_add_prefix"]
 ===== `backup_add_prefix` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `nil`
 
 Append a prefix to the key (full path including file name in s3) after processing.
@@ -101,7 +101,7 @@ choose a new 'folder' to place the files in
 [id="{version}-plugins-{type}s-{plugin}-backup_to_bucket"]
 ===== `backup_to_bucket` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `nil`
 
 Name of a S3 bucket to backup processed files to.
@@ -109,7 +109,7 @@ Name of a S3 bucket to backup processed files to.
 [id="{version}-plugins-{type}s-{plugin}-backup_to_dir"]
 ===== `backup_to_dir` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `nil`
 
 Path of a local directory to backup processed files to.
@@ -118,7 +118,7 @@ Path of a local directory to backup processed files to.
 ===== `bucket` 
 
   * This is a required setting.
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * There is no default value for this setting.
 
 The name of the S3 bucket.
@@ -126,7 +126,7 @@ The name of the S3 bucket.
 [id="{version}-plugins-{type}s-{plugin}-delete"]
 ===== `delete` 
 
-  * Value type is <<boolean,boolean>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
   * Default value is `false`
 
 Whether to delete processed files from the original bucket.
@@ -134,7 +134,7 @@ Whether to delete processed files from the original bucket.
 [id="{version}-plugins-{type}s-{plugin}-exclude_pattern"]
 ===== `exclude_pattern` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `nil`
 
 Ruby style regexp of keys to exclude from the bucket
@@ -142,7 +142,7 @@ Ruby style regexp of keys to exclude from the bucket
 [id="{version}-plugins-{type}s-{plugin}-interval"]
 ===== `interval` 
 
-  * Value type is <<number,number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * Default value is `60`
 
 Interval to wait between to check the file list again after a run is finished.
@@ -151,7 +151,7 @@ Value is in seconds.
 [id="{version}-plugins-{type}s-{plugin}-prefix"]
 ===== `prefix` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `nil`
 
 If specified, the prefix of filenames in the bucket must match (not a regexp)
@@ -159,7 +159,7 @@ If specified, the prefix of filenames in the bucket must match (not a regexp)
 [id="{version}-plugins-{type}s-{plugin}-proxy_uri"]
 ===== `proxy_uri` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * There is no default value for this setting.
 
 URI to proxy server if required
@@ -175,7 +175,7 @@ The AWS Region
 [id="{version}-plugins-{type}s-{plugin}-secret_access_key"]
 ===== `secret_access_key` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * There is no default value for this setting.
 
 The AWS Secret Access Key
@@ -183,7 +183,7 @@ The AWS Secret Access Key
 [id="{version}-plugins-{type}s-{plugin}-session_token"]
 ===== `session_token` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * There is no default value for this setting.
 
 The AWS Session token for temporary credential
@@ -191,7 +191,7 @@ The AWS Session token for temporary credential
 [id="{version}-plugins-{type}s-{plugin}-sincedb_path"]
 ===== `sincedb_path` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `nil`
 
 Where to write the since database (keeps track of the date
@@ -203,7 +203,7 @@ If specified, this setting must be a filename path and not just a directory.
 [id="{version}-plugins-{type}s-{plugin}-temporary_directory"]
 ===== `temporary_directory` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `"/tmp/logstash"`
 
 Set the directory where logstash will store the tmp files before processing them.
