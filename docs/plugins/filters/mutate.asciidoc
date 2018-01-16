@@ -1,12 +1,13 @@
 :plugin: mutate
 :type: filter
+:default_plugin: 1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.6
-:release_date: 2017-08-15
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.1.6/CHANGELOG.md
+:version: v3.2.0
+:release_date: 2017-11-28
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -58,7 +59,7 @@ filter plugins.
 
 Convert a field's value to a different type, like turning a string to an
 integer. If the field value is an array, all members will be converted.
-If the field is a hash, no action will be taken.
+If the field is a hash no action will be taken.
 
 If the conversion type is `boolean`, the acceptable values are:
 
@@ -67,6 +68,10 @@ If the conversion type is `boolean`, the acceptable values are:
 
 If a value other than these is provided, it will pass straight through
 and log a warning message.
+
+If the conversion type is `integer` and the value is a boolean, it will be converted as:
+* **True:**  `1`
+* **False:** `0`
 
 Valid conversion targets are: integer, float, string, and boolean.
 

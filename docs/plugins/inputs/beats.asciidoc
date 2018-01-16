@@ -1,12 +1,13 @@
 :plugin: beats
 :type: input
+:default_plugin: 1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.24
-:release_date: 2017-08-18
-:changelog_url: https://github.com/logstash-plugins/logstash-input-beats/blob/v3.1.24/CHANGELOG.md
+:version: v3.1.26
+:release_date: 2018-01-05
+:changelog_url: https://github.com/logstash-plugins/logstash-input-beats/blob/v3.1.26/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
