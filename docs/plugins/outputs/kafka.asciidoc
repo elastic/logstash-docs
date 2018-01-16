@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.1.11
-:release_date: 2017-10-09
-:changelog_url: https://github.com/logstash-plugins/logstash-output-kafka/blob/v5.1.11/CHANGELOG.md
+:version: v5.1.10
+:release_date: 2017-08-21
+:changelog_url: https://github.com/logstash-plugins/logstash-output-kafka/blob/v5.1.10/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -21,24 +21,11 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-Write events to a Kafka topic. This uses the Kafka Producer API to write messages to a topic on
-the broker.
+Write events to a Kafka topic.
 
-Here's a compatibility matrix that shows the Kafka client versions that are compatible with each combination
-of Logstash and the Kafka output plugin: 
+This plugin uses Kafka Client 0.10.0.1. For broker compatibility, see the official https://cwiki.apache.org/confluence/display/KAFKA/Compatibility+Matrix[Kafka compatibility reference].
 
-[options="header"]
-|==========================================================
-|Kafka Client Version |Logstash Version |Plugin Version |Why?
-|0.8       |2.0.0 - 2.x.x   |<3.0.0 |Legacy, 0.8 is still popular 
-|0.9       |2.0.0 - 2.3.x   | 3.x.x |Works with the old Ruby Event API (`event['product']['price'] = 10`)
-|0.9       |2.4.x - 5.x.x   | 4.x.x |Works with the new getter/setter APIs (`event.set('[product][price]', 10)`)
-|0.10.0.x  |2.4.x - 5.x.x   | 5.x.x |Not compatible with the <= 0.9 broker
-|==========================================================
-
-NOTE: We recommended that you use matching Kafka client and broker versions. During upgrades, you should
-upgrade brokers before clients because brokers target backwards compatibility. For example, the 0.9 broker
-is compatible with both the 0.8 consumer and 0.9 consumer APIs, but not the other way around.
+If you're using a plugin version that was released after {version}, see the https://www.elastic.co/guide/en/logstash/master/plugins-inputs-kafka.html[latest plugin documentation] for updated information about Kafka compatibility. If you require features not yet available in this plugin (including client version upgrades), please file an issue with details about what you need.
 
 This output supports connecting to Kafka over:
 
@@ -47,19 +34,20 @@ This output supports connecting to Kafka over:
 
 By default security is disabled but can be turned on as needed.
 
-The only required configuration is the topic_id. 
-
-The default codec is plain. Logstash will encode your events with not only the message field but also with a timestamp and hostname.
-
-If you want the full content of your events to be sent as json, you should set the codec in the output configuration like this:
+The only required configuration is the topic_id. The default codec is plain,
+so events will be persisted on the broker in json format. If you select a codec of plain,
+Logstash will encode your messages with not only the message but also with a timestamp and
+hostname. If you do not want anything but your message passing through, you should make the output
+configuration something like:
 [source,ruby]
     output {
       kafka {
-        codec => json
+        codec => plain {
+           format => "%{message}"
+        }
         topic_id => "mytopic"
       }
     }
-    
 For more information see http://kafka.apache.org/documentation.html#theproducer
 
 Kafka producer configuration: http://kafka.apache.org/documentation.html#newproducerconfigs
@@ -301,17 +289,10 @@ retries are exhausted.
 ===== `retries` 
 
   * Value type is <<number,number>>
-  * There is no default value for this setting.
+  * Default value is `0`
 
-The default retry behavior is to retry until successful. To prevent data loss,
-the use of this setting is discouraged.
-
-If you choose to set `retries`, a value greater than zero will cause the
-client to only retry a fixed number of times. This will result in data loss
-if a transport fault exists for longer than your retry count (network outage,
-Kafka down, etc).
-
-A value less than zero is a configuration error.
+Setting a value greater than zero will cause the client to
+resend any record whose send fails with a potentially transient error.
 
 [id="plugins-{type}s-{plugin}-retry_backoff_ms"]
 ===== `retry_backoff_ms` 
