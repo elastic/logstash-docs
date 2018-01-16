@@ -1,12 +1,13 @@
 :plugin: cloudwatch
 :type: output
+:default_plugin: 1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.6
-:release_date: 2017-08-16
-:changelog_url: https://github.com/logstash-plugins/logstash-output-cloudwatch/blob/v3.0.6/CHANGELOG.md
+:version: v3.0.7
+:release_date: 2017-11-07
+:changelog_url: https://github.com/logstash-plugins/logstash-output-cloudwatch/blob/v3.0.7/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
