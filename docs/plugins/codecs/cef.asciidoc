@@ -1,12 +1,13 @@
 :plugin: cef
 :type: codec
+:default_plugin: 1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.0.1
-:release_date: 2017-08-15
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v5.0.1/CHANGELOG.md
+:version: v5.0.2
+:release_date: 2017-11-07
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v5.0.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -149,6 +150,5 @@ to help you build a new value from other parts of the event.
 
 Device version field in CEF header. The new value can include `%{foo}` strings
 to help you build a new value from other parts of the event.
-
 
 

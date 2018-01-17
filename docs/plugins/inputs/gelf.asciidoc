@@ -1,12 +1,13 @@
 :plugin: gelf
 :type: input
+:default_plugin: 1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.6
-:release_date: 2017-08-15
-:changelog_url: https://github.com/logstash-plugins/logstash-input-gelf/blob/v3.0.6/CHANGELOG.md
+:version: v3.1.0
+:release_date: 2018-01-15
+:changelog_url: https://github.com/logstash-plugins/logstash-input-gelf/blob/v3.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -44,7 +45,11 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |=======================================================================
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-host>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-use_udp>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-use_tcp>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-port_tcp>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-port_udp>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-remap>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-strip_leading_underscore>> |<<boolean,boolean>>|No
 |=======================================================================
@@ -62,6 +67,22 @@ input plugins.
 
 The IP address or hostname to listen on.
 
+[id="plugins-{type}s-{plugin}-use_udp"]
+===== `use_udp`
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Whether to listen for gelf messages sent over udp
+
+[id="plugins-{type}s-{plugin}-use_tcp"]
+===== `use_tcp`
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Whether to listen for gelf messages sent over tcp
+
 [id="plugins-{type}s-{plugin}-port"]
 ===== `port` 
 
@@ -70,6 +91,22 @@ The IP address or hostname to listen on.
 
 The port to listen on. Remember that ports less than 1024 (privileged
 ports) may require root to use.
+port_tcp and port_udp can be used to set a specific port for each protocol.
+[id="plugins-{type}s-{plugin}-port_tcp"]
+===== `port_tcp`
+
+  * Value type is <<number,number>>
+  * There is no default value for this setting.
+
+Tcp port to listen on. Use port instead of this setting unless you need a different port for udp than tcp
+
+[id="plugins-{type}s-{plugin}-port_udp"]
+===== `port_udp`
+
+  * Value type is <<number,number>>
+  * There is no default value for this setting.
+
+Udp port to listen on. Use port instead of this setting unless you need a different port for udp than tcp
 
 [id="plugins-{type}s-{plugin}-remap"]
 ===== `remap` 

@@ -1,12 +1,13 @@
 :plugin: multiline
 :type: codec
+:default_plugin: 1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.7
-:release_date: 2017-08-15
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-multiline/blob/v3.0.7/CHANGELOG.md
+:version: v3.0.9
+:release_date: 2018-01-17
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-multiline/blob/v3.0.9/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!

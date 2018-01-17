@@ -1,12 +1,13 @@
 :plugin: csv
 :type: filter
+:default_plugin: 1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.5
-:release_date: 2017-08-15
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-csv/blob/v3.0.5/CHANGELOG.md
+:version: v3.0.8
+:release_date: 2018-01-12
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-csv/blob/v3.0.8/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -39,6 +40,8 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-quote_char>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-separator>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-skip_empty_columns>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-skip_empty_rows>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-skip_header>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-source>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-target>> |<<string,string>>|No
 |=======================================================================
@@ -128,6 +131,31 @@ Optional.
 
 Define whether empty columns should be skipped.
 Defaults to false. If set to true, columns containing no value will not get set.
+
+[id="plugins-{type}s-{plugin}-skip_empty_rows"]
+===== `skip_empty_rows` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Define whether empty rows could potentially be skipped.
+Defaults to false. If set to true, rows containing no value will be tagged with "_csvskippedemptyfield".
+This tag can referenced by users if they wish to cancel events using an 'if' conditional statement.
+
+[id="plugins-{type}s-{plugin}-skip_header"]
+===== `skip_header`
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Define whether the header should be skipped.
+Defaults to false. If set to true, the header will be skipped.
+Assumes that header is not repeated within further rows as such rows will also be skipped.
+If skip_header is set without autodetect_column_names being set then columns should be set which
+will result in the skipping of any row that exactly matches the specified column values.
+If skip_header and autodetect_column_names are specified then columns should not be specified, in this case
+autodetect_column_names will fill the columns setting in the background, from the first event seen, and any
+subsequent values that match what was autodetected will be skipped.
 
 [id="plugins-{type}s-{plugin}-source"]
 ===== `source` 

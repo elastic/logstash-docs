@@ -1,12 +1,13 @@
 :plugin: s3
 :type: output
+:default_plugin: 1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.10
-:release_date: 2017-08-16
-:changelog_url: https://github.com/logstash-plugins/logstash-output-s3/blob/v4.0.10/CHANGELOG.md
+:version: v4.0.13
+:release_date: 2017-11-13
+:changelog_url: https://github.com/logstash-plugins/logstash-output-s3/blob/v4.0.13/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!

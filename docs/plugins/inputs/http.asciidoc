@@ -1,12 +1,13 @@
 :plugin: http
 :type: input
+:default_plugin: 1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.6
-:release_date: 2017-08-15
-:changelog_url: https://github.com/logstash-plugins/logstash-input-http/blob/v3.0.6/CHANGELOG.md
+:version: v3.0.8
+:release_date: 2017-12-09
+:changelog_url: https://github.com/logstash-plugins/logstash-input-http/blob/v3.0.8/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -30,6 +31,19 @@ data formats, `plain` codec is used.
 This input can also be used to receive webhook requests to integrate with other services
 and applications. By taking advantage of the vast plugin ecosystem available in Logstash
 you can trigger actionable events right from your application.
+
+==== Blocking Behavior
+
+The HTTP protocol doesn't deal well with long running requests. This plugin will either return 
+a 429 (busy) error when Logstash is backlogged, or it will time out the request. 
+
+If a 429 error is encountered clients should sleep, backing off exponentially with some random 
+jitter, then retry their request.
+
+This plugin will block if the Logstash queue is blocked and there are available HTTP input threads.
+This will cause most HTTP clients to time out. Sent events will still be processed in this case. This
+behavior is not optimal and will be changed in a future release. In the future, this plugin will always 
+return a 429 if the queue is busy, and will not time out in the event of a busy queue. 
 
 ==== Security
 This plugin supports standard HTTP basic authentication headers to identify the requester.
@@ -83,9 +97,6 @@ and no codec for the request's content-type is found
   * Value type is <<string,string>>
   * Default value is `"0.0.0.0"`
 
-Codec used to decode the incoming data.
-This codec will be used as a fall-back if the content-type
-is not found in the "additional_codecs" hash
 The host or ip to bind
 
 [id="plugins-{type}s-{plugin}-keystore"]
