@@ -1,13 +1,13 @@
 :plugin: email
 :type: output
-:default_plugin: 0
+:default_plugin: 1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.6
-:release_date: 2017-08-16
-:changelog_url: https://github.com/logstash-plugins/logstash-output-email/blob/v4.0.6/CHANGELOG.md
+:version: v4.1.0
+:release_date: 2018-01-15
+:changelog_url: https://github.com/logstash-plugins/logstash-output-email/blob/v4.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -34,6 +34,7 @@ output {
       from => 'monitor@example.com'
       subject => 'Alert - %{title}'
       body => "Tags: %{tags}\\n\\Content:\\n%{message}"
+      template_file => "/tmp/email_template.mustache"
       domain => 'mail.example.com'
       port => 25
     }
@@ -54,6 +55,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-authentication>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-body>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-cc>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-bcc>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-contenttype>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-debug>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-domain>> |<<string,string>>|No
@@ -67,6 +69,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-use_tls>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-username>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-via>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-template_file>> |<<path,path>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -116,6 +119,16 @@ The fully-qualified email address(es) to include as cc: address(es).
 
 This field also accepts a comma-separated string of addresses, for example:
 `"me@example.com, you@example.com"`
+
+[id="plugins-{type}s-{plugin}-bcc"]
+===== `bcc` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The fully-qualified email address(es) to include as bcc: address(es).
+
+This field accepts several addresses like cc.
 
 [id="plugins-{type}s-{plugin}-contenttype"]
 ===== `contenttype` 
@@ -230,6 +243,14 @@ Username to authenticate with the server
 
 How Logstash should send the email, either via SMTP or by invoking sendmail.
 
+[id="plugins-{type}s-{plugin}-template_file"]
+===== `template_file` 
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+Path of a [Mustache templating](https://mustache.github.io/) file used for email templating. See example in test fixture.
+Can be used with `body` to send multi-part emails. Takes precedence over `htmlBody`.
 
 
 [id="plugins-{type}s-{plugin}-common-options"]

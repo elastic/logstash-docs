@@ -1,12 +1,13 @@
 :plugin: elasticsearch
 :type: input
+:default_plugin: 1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.5
-:release_date: 2017-08-15
-:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.0.5/CHANGELOG.md
+:version: v4.2.0
+:release_date: 2018-01-15
+:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -32,6 +33,9 @@ plugin to version 4.0.2 or higher.
 
 Read from an Elasticsearch cluster, based on search query results.
 This is useful for replaying test logs, reindexing, etc.
+You can periodically schedule ingestion using a cron syntax 
+(see `schedule` setting) or run the query one time to load
+data into Logstash.
 
 Example:
 [source,ruby]
@@ -55,6 +59,25 @@ This would create an Elasticsearch query with the following format:
     }'
 
 
+==== Scheduling
+
+Input from this plugin can be scheduled to run periodically according to a specific
+schedule. This scheduling syntax is powered by https://github.com/jmettraux/rufus-scheduler[rufus-scheduler].
+The syntax is cron-like with some extensions specific to Rufus (e.g. timezone support ).
+
+Examples:
+
+|==========================================================
+| `* 5 * 1-3 *`               | will execute every minute of 5am every day of January through March.
+| `0 * * * *`                 | will execute on the 0th minute of every hour every day.
+| `0 6 * * * America/Chicago` | will execute at 6:00am (UTC/GMT -5) every day.
+|==========================================================
+
+
+Further documentation describing this syntax can be found
+https://github.com/jmettraux/rufus-scheduler#parsing-cronlines-and-time-strings[here].
+
+
 [id="plugins-{type}s-{plugin}-options"]
 ==== Elasticsearch Input Configuration Options
 
@@ -71,6 +94,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-index>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-password>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-query>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-schedule>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-scroll>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-size>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-ssl>> |<<boolean,boolean>>|No
@@ -127,6 +151,11 @@ Example
     }
 
 
+NOTE: Starting with Logstash 6.0, the `document_type` option is
+deprecated due to the
+https://www.elastic.co/guide/en/elasticsearch/reference/6.0/removal-of-types.html[removal of types in Logstash 6.0].
+It will be removed in the next major version of Logstash.
+
 [id="plugins-{type}s-{plugin}-docinfo_fields"]
 ===== `docinfo_fields` 
 
@@ -136,7 +165,7 @@ Example
 If document metadata storage is requested by enabling the `docinfo`
 option, this option lists the metadata fields to save in the current
 event. See
-[Document Metadata](http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_document_metadata.html)
+http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_document_metadata.html[Document Metadata]
 in the Elasticsearch documentation for more information.
 
 [id="plugins-{type}s-{plugin}-docinfo_target"]
@@ -184,8 +213,20 @@ string authentication will be disabled.
   * Default value is `'{ "sort": [ "_doc" ] }'`
 
 The query to be executed. Read the
-[Elasticsearch query DSL documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html)
+https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html[Elasticsearch query DSL documentation]
 for more information.
+
+[id="plugins-{type}s-{plugin}-schedule"]
+===== `schedule` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Schedule of when to periodically run statement, in Cron format
+for example: "* * * * *" (execute query every minute, on the minute)
+
+There is no schedule by default. If no schedule is given, then the statement is run
+exactly once.
 
 [id="plugins-{type}s-{plugin}-scroll"]
 ===== `scroll` 

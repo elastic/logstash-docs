@@ -1,12 +1,13 @@
 :plugin: udp
 :type: input
+:default_plugin: 1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.2
-:release_date: 2017-08-16
-:changelog_url: https://github.com/logstash-plugins/logstash-input-udp/blob/v3.1.2/CHANGELOG.md
+:version: v3.2.1
+:release_date: 2017-12-19
+:changelog_url: https://github.com/logstash-plugins/logstash-input-udp/blob/v3.2.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
