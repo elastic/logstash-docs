@@ -1,0 +1,119 @@
+:plugin: sleep
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.5
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-sleep/blob/v3.0.5/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Sleep filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Sleep a given amount of time. This will cause logstash
+to stall for the given amount of time. This is useful
+for rate limiting, etc.
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Sleep Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-every>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-replay>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-time>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-every"]
+===== `every` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `1`
+
+Sleep on every N'th. This option is ignored in replay mode.
+
+Example:
+[source,ruby]
+    filter {
+      sleep {
+        time => "1"   # Sleep 1 second
+        every => 10   # on every 10th event
+      }
+    }
+
+[id="{version}-plugins-{type}s-{plugin}-replay"]
+===== `replay` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Enable replay mode.
+
+Replay mode tries to sleep based on timestamps in each event.
+
+The amount of time to sleep is computed by subtracting the
+previous event's timestamp from the current event's timestamp.
+This helps you replay events in the same timeline as original.
+
+If you specify a `time` setting as well, this filter will
+use the `time` value as a speed modifier. For example,
+a `time` value of 2 will replay at double speed, while a
+value of 0.25 will replay at 1/4th speed.
+
+For example:
+[source,ruby]
+    filter {
+      sleep {
+        time => 2
+        replay => true
+      }
+    }
+
+The above will sleep in such a way that it will perform
+replay 2-times faster than the original time speed.
+
+[id="{version}-plugins-{type}s-{plugin}-time"]
+===== `time` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The length of time to sleep, in seconds, for every event.
+
+This can be a number (eg, 0.5), or a string (eg, `%{foo}`)
+The second form (string with a field value) is useful if
+you have an attribute of your event that you want to use
+to indicate the amount of time to sleep.
+
+Example:
+[source,ruby]
+    filter {
+      sleep {
+        # Sleep 1 second for every event.
+        time => "1"
+      }
+    }
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

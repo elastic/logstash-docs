@@ -1,0 +1,10 @@
+:type: filter
+:type_uc: Filter
+
+include::include/plugin-intro.asciidoc[]
+
+include::filters/grok-index.asciidoc[]
+include::filters/mutate-index.asciidoc[]
+include::filters/ruby-index.asciidoc[]
+include::filters/sleep-index.asciidoc[]
+
