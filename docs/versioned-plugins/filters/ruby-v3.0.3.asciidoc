@@ -1,0 +1,82 @@
+:plugin: ruby
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.3
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-ruby/blob/v3.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Ruby filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Execute ruby code.
+
+For example, to cancel 90% of events, you can do this:
+[source,ruby]
+    filter {
+      ruby {
+        # Cancel 90% of events
+        code => "event.cancel if rand <= 0.90"
+      }
+    }
+
+If you need to create additional events, it cannot be done as in other filters where you would use `yield`,
+you must use a specific syntax `new_event_block.call(event)` like in this example duplicating the input event
+[source,ruby]
+filter {
+  ruby {
+    code => "new_event_block.call(event.clone)"
+  }
+}
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Ruby Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-code>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-init>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-code"]
+===== `code` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The code to execute for every event.
+You will have an `event` variable available that is the event itself. See the {logstash-ref}/event-api.html[Event API] for more information.
+
+[id="{version}-plugins-{type}s-{plugin}-init"]
+===== `init` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Any code to execute at logstash startup-time
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

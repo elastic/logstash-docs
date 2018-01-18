@@ -1,0 +1,235 @@
+:plugin: email
+:type: output
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v4.0.4
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-output-email/blob/v4.0.4/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Email output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Sends email when an output is received. Alternatively, you may include or
+exclude the email output execution using conditionals.
+
+==== Usage Example
+[source,ruby]
+----------------------------------
+output {
+  if "shouldmail" in [tags] {
+    email {
+      to => 'technical@logstash.net'
+      from => 'monitor@logstash.net'
+      subject => 'Alert - %{title}'
+      body => "Tags: %{tags}\\n\\Content:\\n%{message}"
+      domain => 'mail.logstash.net'
+      port => 25
+    }
+  }
+}
+----------------------------------
+Send email when an output is received. Alternatively, you may include or
+exclude the email output execution using conditionals.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Email Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-address>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-attachments>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-authentication>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-body>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-cc>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-contenttype>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-debug>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-domain>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-from>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-htmlbody>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-password>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-port>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-replyto>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-subject>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-to>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-use_tls>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-username>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-via>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-address"]
+===== `address` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"localhost"`
+
+The address used to connect to the mail server
+
+[id="{version}-plugins-{type}s-{plugin}-attachments"]
+===== `attachments` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `[]`
+
+Attachments - specify the name(s) and location(s) of the files.
+
+[id="{version}-plugins-{type}s-{plugin}-authentication"]
+===== `authentication` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Authentication method used when identifying with the server
+
+[id="{version}-plugins-{type}s-{plugin}-body"]
+===== `body` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `""`
+
+Body for the email - plain text only.
+
+[id="{version}-plugins-{type}s-{plugin}-cc"]
+===== `cc` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The fully-qualified email address(es) to include as cc: address(es).
+
+This field also accepts a comma-separated string of addresses, for example:
+`"me@host.com, you@host.com"`
+
+[id="{version}-plugins-{type}s-{plugin}-contenttype"]
+===== `contenttype` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"text/html; charset=UTF-8"`
+
+contenttype : for multipart messages, set the content-type and/or charset of the HTML part.
+NOTE: this may not be functional (KH)
+
+[id="{version}-plugins-{type}s-{plugin}-debug"]
+===== `debug` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Run the mail relay in debug mode
+
+[id="{version}-plugins-{type}s-{plugin}-domain"]
+===== `domain` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"localhost"`
+
+Domain used to send the email messages
+
+[id="{version}-plugins-{type}s-{plugin}-from"]
+===== `from` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"logstash.alert@nowhere.com"`
+
+The fully-qualified email address for the From: field in the email.
+
+[id="{version}-plugins-{type}s-{plugin}-htmlbody"]
+===== `htmlbody` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `""`
+
+HTML Body for the email, which may contain HTML markup.
+
+[id="{version}-plugins-{type}s-{plugin}-password"]
+===== `password` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Password to authenticate with the server
+
+[id="{version}-plugins-{type}s-{plugin}-port"]
+===== `port` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `25`
+
+Port used to communicate with the mail server
+
+[id="{version}-plugins-{type}s-{plugin}-replyto"]
+===== `replyto` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The fully qualified email address for the Reply-To: field.
+
+[id="{version}-plugins-{type}s-{plugin}-subject"]
+===== `subject` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `""`
+
+Subject: for the email.
+
+[id="{version}-plugins-{type}s-{plugin}-to"]
+===== `to` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The fully-qualified email address to send the email to.
+
+This field also accepts a comma-separated string of addresses, for example:
+`"me@host.com, you@host.com"`
+
+You can also use dynamic fields from the event with the `%{fieldname}` syntax.
+
+[id="{version}-plugins-{type}s-{plugin}-use_tls"]
+===== `use_tls` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Enables TLS when communicating with the server
+
+[id="{version}-plugins-{type}s-{plugin}-username"]
+===== `username` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Username to authenticate with the server
+
+[id="{version}-plugins-{type}s-{plugin}-via"]
+===== `via` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"smtp"`
+
+How Logstash should send the email, either via SMTP or by invoking sendmail.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
