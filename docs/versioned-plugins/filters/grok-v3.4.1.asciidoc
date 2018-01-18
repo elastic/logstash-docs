@@ -160,7 +160,7 @@ filter. This newly defined patterns in `pattern_definitions` will not be availab
 [id="{version}-plugins-{type}s-{plugin}-options"]
 ==== Grok Filter Configuration Options
 
-This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+This plugin supports the following configuration options plus the <<plugins-{type}s-common-options>> described later.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
@@ -178,7 +178,7 @@ This plugin supports the following configuration options plus the <<{version}-pl
 | <<{version}-plugins-{type}s-{plugin}-timeout_millis>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
 |=======================================================================
 
-Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+Also see <<plugins-{type}s-common-options>> for a list of options supported by all
 filter plugins.
 
 &nbsp;
@@ -328,5 +328,5 @@ Actual timeout is approximate based on a 250ms quantization.
 Set to 0 to disable timeouts
 
 
-[id="{version}-plugins-{type}s-{plugin}-common-options"]
+
 include::{include_path}/{type}.asciidoc[]

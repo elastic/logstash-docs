@@ -20,8 +20,6 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-Sends email when an output is received. Alternatively, you may include or
-exclude the email output execution using conditionals.
 
 ==== Usage Example
 [source,ruby]

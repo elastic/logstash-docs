@@ -46,13 +46,13 @@ output {
 
 NOTE: The Beats shipper automatically sets the `type` field on the event.
 You cannot override this setting in the Logstash config. If you specify
-a setting for the <<{version}-plugins-inputs-beats-type,`type`>> config option in
+a setting for the <<{version}-plugins-{type}s-{plugin}-type,`type`>> config option in
 Logstash, it is ignored.
 
 IMPORTANT: If you are shipping events that span multiple lines, you need to
 use the https://www.elastic.co/guide/en/beats/filebeat/current/multiline-examples.html[configuration options available in Filebeat] to handle multiline events
 before sending the event data to Logstash. You cannot use the
-{logstash-ref}/plugins-codecs-multiline.html[Multiline codec plugin] codec to handle multiline events. Doing so will
+<<plugins-codecs-multiline>> codec to handle multiline events. Doing so will
 result in the failure to start Logstash.
 
 

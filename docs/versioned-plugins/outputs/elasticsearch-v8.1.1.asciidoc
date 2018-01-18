@@ -111,7 +111,7 @@ This plugin supports the following configuration options plus the <<{version}-pl
 | <<{version}-plugins-{type}s-{plugin}-document_type>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
 | <<{version}-plugins-{type}s-{plugin}-failure_type_logging_whitelist>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
 | <<{version}-plugins-{type}s-{plugin}-healthcheck_path>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
-| <<{version}-plugins-{type}s-{plugin}-hosts>> |{logstash-ref}/configuration-file-structure.html#uri[uri]|No
+| <<{version}-plugins-{type}s-{plugin}-hosts>> |<<uri,uri>>|No
 | <<{version}-plugins-{type}s-{plugin}-http_compression>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
 | <<{version}-plugins-{type}s-{plugin}-index>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
 | <<{version}-plugins-{type}s-{plugin}-keystore>> |a valid filesystem path|No
@@ -124,7 +124,7 @@ This plugin supports the following configuration options plus the <<{version}-pl
 | <<{version}-plugins-{type}s-{plugin}-pipeline>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
 | <<{version}-plugins-{type}s-{plugin}-pool_max>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
 | <<{version}-plugins-{type}s-{plugin}-pool_max_per_route>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
-| <<{version}-plugins-{type}s-{plugin}-proxy>> |{logstash-ref}/configuration-file-structure.html#uri[uri]|No
+| <<{version}-plugins-{type}s-{plugin}-proxy>> |<<uri,uri>>|No
 | <<{version}-plugins-{type}s-{plugin}-resurrect_delay>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
 | <<{version}-plugins-{type}s-{plugin}-retry_initial_interval>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
 | <<{version}-plugins-{type}s-{plugin}-retry_max_interval>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
@@ -249,7 +249,7 @@ If you have custom firewall rules you may need to change this
 [id="{version}-plugins-{type}s-{plugin}-hosts"]
 ===== `hosts` 
 
-  * Value type is {logstash-ref}/configuration-file-structure.html#uri[uri]
+  * Value type is <<uri,uri>>
   * Default value is `[//127.0.0.1]`
 
 Sets the host(s) of the remote instance. If given an array it will load balance requests across the hosts specified in the `hosts` parameter.
@@ -394,7 +394,7 @@ which is bad.
 [id="{version}-plugins-{type}s-{plugin}-proxy"]
 ===== `proxy` 
 
-  * Value type is {logstash-ref}/configuration-file-structure.html#uri[uri]
+  * Value type is <<uri,uri>>
   * There is no default value for this setting.
 
 Set the address of a forward HTTP proxy.

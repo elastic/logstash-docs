@@ -188,14 +188,5 @@ The path of the ruby script file that implements the `filter` method.
 A key/value hash with parameters that are passed to the register method
 of your ruby script file defined in `path`.
 
-[id="{version}-plugins-{type}s-{plugin}-tag_on_exception"]
-===== `tag_on_exception`
-
-  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
-  * Default value is `_rubyexception`
-
-Tag to add to events in case the ruby code (either inline or file based)
-causes an exception.
-
 [id="{version}-plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]

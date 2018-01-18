@@ -67,13 +67,13 @@ HTTP requests to the bulk API are expected to return a 200 response code. All ot
 
 The following document errors are handled as follows:
 
-* 400 and 404 errors are sent to the dead letter queue (DLQ), if enabled. If a DLQ is not enabled, a log message will be emitted, and the event will be dropped. See <<{version}-dlq-policy>> for more info.
+* 400 and 404 errors are sent to the dead letter queue (DLQ), if enabled. If a DLQ is not enabled, a log message will be emitted, and the event will be dropped. See <<dlq-policy>> for more info.
 * 409 errors (conflict) are logged as a warning and dropped. 
 
 Note that 409 exceptions are no longer retried. Please set a higher `retry_on_conflict` value if you experience 409 exceptions.
 It is more performant for Elasticsearch to retry these exceptions than this plugin.
 
-[id="{version}-dlq-policy"]
+[[dlq-policy]]
 ==== DLQ Policy
 
 Mapping (404) errors from Elasticsearch can lead to data loss. Unfortunately
@@ -83,7 +83,7 @@ original events causing the mapping errors are stored in a file that can be
 processed at a later time. Often times, the offending field can be removed and
 re-indexed to Elasticsearch. If the DLQ is not enabled, and a mapping error
 happens, the problem is logged as a warning, and the event is dropped. See
-{logstash-ref}/dead-letter-queues.html[dead-letter-queues] for more information about processing events in the DLQ.
+<<dead-letter-queues>> for more information about processing events in the DLQ.
 
 ==== Batch Sizes
 
@@ -128,7 +128,7 @@ This plugin supports the following configuration options plus the <<{version}-pl
 | <<{version}-plugins-{type}s-{plugin}-document_type>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
 | <<{version}-plugins-{type}s-{plugin}-failure_type_logging_whitelist>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
 | <<{version}-plugins-{type}s-{plugin}-healthcheck_path>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
-| <<{version}-plugins-{type}s-{plugin}-hosts>> |{logstash-ref}/configuration-file-structure.html#uri[uri]|No
+| <<{version}-plugins-{type}s-{plugin}-hosts>> |<<uri,uri>>|No
 | <<{version}-plugins-{type}s-{plugin}-http_compression>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
 | <<{version}-plugins-{type}s-{plugin}-index>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
 | <<{version}-plugins-{type}s-{plugin}-keystore>> |a valid filesystem path|No
@@ -141,7 +141,7 @@ This plugin supports the following configuration options plus the <<{version}-pl
 | <<{version}-plugins-{type}s-{plugin}-pipeline>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
 | <<{version}-plugins-{type}s-{plugin}-pool_max>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
 | <<{version}-plugins-{type}s-{plugin}-pool_max_per_route>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
-| <<{version}-plugins-{type}s-{plugin}-proxy>> |{logstash-ref}/configuration-file-structure.html#uri[uri]|No
+| <<{version}-plugins-{type}s-{plugin}-proxy>> |<<uri,uri>>|No
 | <<{version}-plugins-{type}s-{plugin}-resurrect_delay>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
 | <<{version}-plugins-{type}s-{plugin}-retry_initial_interval>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
 | <<{version}-plugins-{type}s-{plugin}-retry_max_interval>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
@@ -275,7 +275,7 @@ If you have custom firewall rules you may need to change this
 [id="{version}-plugins-{type}s-{plugin}-hosts"]
 ===== `hosts` 
 
-  * Value type is {logstash-ref}/configuration-file-structure.html#uri[uri]
+  * Value type is <<uri,uri>>
   * Default value is `[//127.0.0.1]`
 
 Sets the host(s) of the remote instance. If given an array it will load balance requests across the hosts specified in the `hosts` parameter.
@@ -429,7 +429,7 @@ which is bad.
 [id="{version}-plugins-{type}s-{plugin}-proxy"]
 ===== `proxy` 
 
-  * Value type is {logstash-ref}/configuration-file-structure.html#uri[uri]
+  * Value type is <<uri,uri>>
   * There is no default value for this setting.
 
 Set the address of a forward HTTP proxy.
