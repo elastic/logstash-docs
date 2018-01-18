@@ -3,7 +3,21 @@
 
 include::include/plugin-intro.asciidoc[]
 
+include::codecs/avro-index.asciidoc[]
 include::codecs/cef-index.asciidoc[]
+include::codecs/cloudfront-index.asciidoc[]
+include::codecs/cloudtrail-index.asciidoc[]
+include::codecs/collectd-index.asciidoc[]
+include::codecs/compress_spooler-index.asciidoc[]
+include::codecs/csv-index.asciidoc[]
+include::codecs/dots-index.asciidoc[]
+include::codecs/edn-index.asciidoc[]
+include::codecs/edn_lines-index.asciidoc[]
+include::codecs/es_bulk-index.asciidoc[]
+include::codecs/example-index.asciidoc[]
+include::codecs/fluent-index.asciidoc[]
+include::codecs/graphite-index.asciidoc[]
+include::codecs/gzip_lines-index.asciidoc[]
 include::codecs/json-index.asciidoc[]
 include::codecs/rubydebug-index.asciidoc[]
 
