@@ -1,0 +1,103 @@
+:plugin: yaml
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v0.1.1
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-yaml/blob/v0.1.1/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Yaml filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This is a YAML parsing filter. It takes an existing field which contains YAML and
+expands it into an actual data structure within the Logstash event.
+
+By default it will place the parsed YAML in the root (top level) of the Logstash event, but this
+filter can be configured to place the YAML into any arbitrary event field, using the
+`target` configuration.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Yaml Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-source>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-target>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-exclude_tags"]
+===== `exclude_tags`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `[]`
+
+Only handle events without any of these tags.
+Optional.
+
+[id="{version}-plugins-{type}s-{plugin}-source"]
+===== `source` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The configuration for the YAML filter:
+[source,ruby]
+    source => source_field
+
+For example, if you have YAML data in the @message field:
+[source,ruby]
+    filter {
+      yaml {
+        source => "message"
+      }
+    }
+
+The above would parse the yaml from the @message field
+
+[id="{version}-plugins-{type}s-{plugin}-target"]
+===== `target` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Define the target field for placing the parsed data. If this setting is
+omitted, the YAML data will be stored at the root (top level) of the event.
+
+For example, if you want the data to be put in the `doc` field:
+[source,ruby]
+    filter {
+      yaml {
+        target => "doc"
+      }
+    }
+
+YAML in the value of the `source` field will be expanded into a
+data structure in the `target` field.
+
+NOTE: if the `target` field already exists, it will be overwritten!
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

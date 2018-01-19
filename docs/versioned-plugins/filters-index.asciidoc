@@ -7,7 +7,41 @@ include::filters/grok-index.asciidoc[]
 
 include::filters/mutate-index.asciidoc[]
 
+include::filters/oui-index.asciidoc[]
+
+include::filters/prune-index.asciidoc[]
+
+include::filters/punct-index.asciidoc[]
+
+include::filters/range-index.asciidoc[]
+
 include::filters/ruby-index.asciidoc[]
 
 include::filters/sleep-index.asciidoc[]
+
+include::filters/split-index.asciidoc[]
+
+include::filters/syslog_pri-index.asciidoc[]
+
+include::filters/throttle-index.asciidoc[]
+
+include::filters/tld-index.asciidoc[]
+
+include::filters/translate-index.asciidoc[]
+
+include::filters/truncate-index.asciidoc[]
+
+include::filters/unique-index.asciidoc[]
+
+include::filters/urldecode-index.asciidoc[]
+
+include::filters/useragent-index.asciidoc[]
+
+include::filters/uuid-index.asciidoc[]
+
+include::filters/xml-index.asciidoc[]
+
+include::filters/yaml-index.asciidoc[]
+
+include::filters/zeromq-index.asciidoc[]
 
