@@ -1,0 +1,243 @@
+:plugin: cipher
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v2.0.7
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-cipher/blob/v2.0.7/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Cipher filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This filter parses a source and apply a cipher or decipher before
+storing it in the target.
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Cipher Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-algorithm>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-base64>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-cipher_padding>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-iv_random_length>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-key>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-key_pad>> |<<,>>|No
+| <<{version}-plugins-{type}s-{plugin}-key_size>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-max_cipher_reuse>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-mode>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-source>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-target>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-algorithm"]
+===== `algorithm` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The cipher algorithm
+
+A list of supported algorithms can be obtained by
+[source,ruby]
+    puts OpenSSL::Cipher.ciphers
+
+[id="{version}-plugins-{type}s-{plugin}-base64"]
+===== `base64` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Do we have to perform a `base64` decode or encode?
+
+If we are decrypting, `base64` decode will be done before.
+If we are encrypting, `base64` will be done after.
+
+
+[id="{version}-plugins-{type}s-{plugin}-cipher_padding"]
+===== `cipher_padding` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Cipher padding to use. Enables or disables padding.
+
+By default encryption operations are padded using standard block padding
+and the padding is checked and removed when decrypting. If the pad
+parameter is zero then no padding is performed, the total amount of data
+encrypted or decrypted must then be a multiple of the block size or an
+error will occur.
+
+See EVP_CIPHER_CTX_set_padding for further information.
+
+We are using Openssl jRuby which uses default padding to PKCS5Padding
+If you want to change it, set this parameter. If you want to disable
+it, Set this parameter to 0
+[source,ruby]
+    filter { cipher { cipher_padding => 0 }}
+
+[id="{version}-plugins-{type}s-{plugin}-iv"]
+===== `iv`  (DEPRECATED)
+
+  * DEPRECATED WARNING: This configuration item is deprecated and may not be available in future versions.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The initialization vector to use (statically hard-coded). For
+a random IV see the iv_random_length property
+
+NOTE: If iv_random_length is set, it takes precedence over any value set for "iv"
+
+The cipher modes CBC, CFB, OFB and CTR all need an "initialization
+vector", or short, IV. ECB mode is the only mode that does not require
+an IV, but there is almost no legitimate use case for this mode
+because of the fact that it does not sufficiently hide plaintext patterns.
+
+For AES algorithms set this to a 16 byte string.
+[source,ruby]
+    filter { cipher { iv => "1234567890123456" }}
+
+Deprecated: Please use `iv_random_length` instead
+
+[id="{version}-plugins-{type}s-{plugin}-iv_random_length"]
+===== `iv_random_length` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * There is no default value for this setting.
+
+Force an random IV to be used per encryption invocation and specify
+the length of the random IV that will be generated via:
+
+      OpenSSL::Random.random_bytes(int_length)
+
+If iv_random_length is set, it takes precedence over any value set for "iv"
+
+Enabling this will force the plugin to generate a unique
+random IV for each encryption call. This random IV will be prepended to the
+encrypted result bytes and then base64 encoded. On decryption "iv_random_length" must
+also be set to utilize this feature. Random IV's are better than statically
+hardcoded IVs
+
+For AES algorithms you can set this to a 16
+[source,ruby]
+    filter { cipher { iv_random_length => 16 }}
+
+[id="{version}-plugins-{type}s-{plugin}-key"]
+===== `key` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The key to use
+
+NOTE: If you encounter an error message at runtime containing the following:
+
+"java.security.InvalidKeyException: Illegal key size: possibly you need to install 
+Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files for your JRE"
+
+Please read the following: https://github.com/jruby/jruby/wiki/UnlimitedStrengthCrypto
+
+
+[id="{version}-plugins-{type}s-{plugin}-key_pad"]
+===== `key_pad` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"\u0000"`
+
+The character used to pad the key
+
+[id="{version}-plugins-{type}s-{plugin}-key_size"]
+===== `key_size` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `16`
+
+The key size to pad
+
+It depends of the cipher algorithm. If your key doesn't need
+padding, don't set this parameter
+
+Example, for AES-128, we must have 16 char long key. AES-256 = 32 chars 
+[source,ruby]
+    filter { cipher { key_size => 16 }
+
+
+[id="{version}-plugins-{type}s-{plugin}-max_cipher_reuse"]
+===== `max_cipher_reuse` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `1`
+
+If this is set the internal Cipher instance will be
+re-used up to @max_cipher_reuse times before being
+reset() and re-created from scratch. This is an option
+for efficiency where lots of data is being encrypted
+and decrypted using this filter. This lets the filter
+avoid creating new Cipher instances over and over
+for each encrypt/decrypt operation.
+
+This is optional, the default is no re-use of the Cipher
+instance and max_cipher_reuse = 1 by default
+[source,ruby]
+    filter { cipher { max_cipher_reuse => 1000 }}
+
+[id="{version}-plugins-{type}s-{plugin}-mode"]
+===== `mode` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Encrypting or decrypting some data
+
+Valid values are encrypt or decrypt
+
+[id="{version}-plugins-{type}s-{plugin}-source"]
+===== `source` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"message"`
+
+The field to perform filter
+
+Example, to use the @message field (default) :
+[source,ruby]
+    filter { cipher { source => "message" } }
+
+[id="{version}-plugins-{type}s-{plugin}-target"]
+===== `target` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"message"`
+
+The name of the container to put the result
+
+Example, to place the result into crypt :
+[source,ruby]
+    filter { cipher { target => "crypt" } }
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

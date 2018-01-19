@@ -25,8 +25,6 @@ include::codecs/edn_lines-index.asciidoc[]
 
 include::codecs/es_bulk-index.asciidoc[]
 
-//include::codecs/example-index.asciidoc[]
-
 include::codecs/fluent-index.asciidoc[]
 
 include::codecs/graphite-index.asciidoc[]
@@ -35,5 +33,31 @@ include::codecs/gzip_lines-index.asciidoc[]
 
 include::codecs/json-index.asciidoc[]
 
+include::codecs/json_lines-index.asciidoc[]
+
+include::codecs/json_pretty-index.asciidoc[]
+
+include::codecs/line-index.asciidoc[]
+
+include::codecs/msgpack-index.asciidoc[]
+
+include::codecs/multiline-index.asciidoc[]
+
+include::codecs/netflow-index.asciidoc[]
+
+include::codecs/nmap-index.asciidoc[]
+
+include::codecs/oldlogstashjson-index.asciidoc[]
+
+include::codecs/plain-index.asciidoc[]
+
+include::codecs/pretty-index.asciidoc[]
+
+include::codecs/protobuf-index.asciidoc[]
+
 include::codecs/rubydebug-index.asciidoc[]
+
+include::codecs/s3plain-index.asciidoc[]
+
+include::codecs/sflow-index.asciidoc[]
 

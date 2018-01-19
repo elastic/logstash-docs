@@ -1,0 +1,16 @@
+:plugin: json_lines
+:type: codec
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v3.0.5-plugins-codecs-json_lines,v3.0.5>> | 2017-11-07
+| <<v3.0.4-plugins-codecs-json_lines,v3.0.4>> | 2017-08-15
+| <<v3.0.3-plugins-codecs-json_lines,v3.0.3>> | 2017-06-23
+|=======================================================================
+
+include::json_lines-v3.0.5.asciidoc[]
+include::json_lines-v3.0.4.asciidoc[]
+include::json_lines-v3.0.3.asciidoc[]
+

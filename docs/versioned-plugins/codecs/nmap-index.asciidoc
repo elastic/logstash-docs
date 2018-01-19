@@ -1,0 +1,16 @@
+:plugin: nmap
+:type: codec
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v0.0.21-plugins-codecs-nmap,v0.0.21>> | 2017-11-07
+| <<v0.0.20-plugins-codecs-nmap,v0.0.20>> | 2017-08-15
+| <<v0.0.19-plugins-codecs-nmap,v0.0.19>> | 2017-06-23
+|=======================================================================
+
+include::nmap-v0.0.21.asciidoc[]
+include::nmap-v0.0.20.asciidoc[]
+include::nmap-v0.0.19.asciidoc[]
+
