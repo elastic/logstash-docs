@@ -20,12 +20,5 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
+Reads and produces newline-delimited EDN format data.
 
-
-[id="{version}-plugins-{type}s-{plugin}-options"]
-==== Edn_lines Codec Configuration Options
-
-[cols="<,<,<",options="header",]
-|=======================================================================
-|Setting |Input type|Required
-|=======================================================================

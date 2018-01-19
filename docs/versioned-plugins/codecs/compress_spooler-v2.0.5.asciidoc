@@ -20,7 +20,7 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-
+The compress_spooler codec.
 
 [id="{version}-plugins-{type}s-{plugin}-options"]
 ==== Compress_spooler Codec Configuration Options

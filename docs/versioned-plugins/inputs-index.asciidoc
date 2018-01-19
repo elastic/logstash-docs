@@ -4,7 +4,10 @@
 include::include/plugin-intro.asciidoc[]
 
 include::inputs/beats-index.asciidoc[]
+
 include::inputs/http-index.asciidoc[]
+
 include::inputs/s3-index.asciidoc[]
+
 include::inputs/tcp-index.asciidoc[]
 

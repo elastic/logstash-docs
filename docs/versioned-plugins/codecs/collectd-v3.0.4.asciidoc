@@ -55,8 +55,6 @@ Be sure to replace `10.0.0.1` with the IP of your Logstash instance.
 [id="{version}-plugins-{type}s-{plugin}-options"]
 ==== Collectd Codec Configuration Options
 
-This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
-
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
@@ -69,8 +67,6 @@ This plugin supports the following configuration options plus the <<{version}-pl
 | <<{version}-plugins-{type}s-{plugin}-typesdb>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
 |=======================================================================
 
-Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
-codec plugins.
 
 &nbsp;
 
@@ -143,5 +139,3 @@ The last matching pattern wins if you have identical pattern names in multiple f
 If no types.db is provided the included `types.db` will be used (currently 5.4.0).
 
 
-[id="{version}-plugins-{type}s-{plugin}-common-options"]
-include::{include_path}/{type}.asciidoc[]

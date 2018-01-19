@@ -62,8 +62,6 @@ output {
 [id="{version}-plugins-{type}s-{plugin}-options"]
 ==== Avro Codec Configuration Options
 
-This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
-
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
@@ -71,8 +69,6 @@ This plugin supports the following configuration options plus the <<{version}-pl
 | <<{version}-plugins-{type}s-{plugin}-tag_on_failure>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
 |=======================================================================
 
-Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
-codec plugins.
 
 &nbsp;
 
@@ -98,6 +94,3 @@ example:
 
 tag events with `_avroparsefailure` when decode fails
 
-
-[id="{version}-plugins-{type}s-{plugin}-common-options"]
-include::{include_path}/{type}.asciidoc[]

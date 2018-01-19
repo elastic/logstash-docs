@@ -20,14 +20,4 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-
-
-[id="{version}-plugins-{type}s-{plugin}-options"]
-==== Edn Codec Configuration Options
-
-This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
-
-[cols="<,<,<",options="header",]
-|=======================================================================
-|Setting |Input type|Required
-|=======================================================================
+Reads and produces EDN format data.

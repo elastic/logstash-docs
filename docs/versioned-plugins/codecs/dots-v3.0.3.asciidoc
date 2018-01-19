@@ -20,12 +20,5 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
+This codec generates a dot(`.`) to represent each Event it processes. This is typically used with `stdout` output to provide feedback on the terminal. It is also used to measure Logstash's throughtput with the `pv` command.
 
-
-[id="{version}-plugins-{type}s-{plugin}-options"]
-==== Dots Codec Configuration Options
-
-[cols="<,<,<",options="header",]
-|=======================================================================
-|Setting |Input type|Required
-|=======================================================================
