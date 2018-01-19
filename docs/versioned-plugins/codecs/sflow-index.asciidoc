@@ -1,0 +1,10 @@
+:plugin: sflow
+:type: codec
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+|=======================================================================
+
+

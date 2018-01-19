@@ -1,0 +1,61 @@
+:plugin: extractnumbers
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.2
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-extractnumbers/blob/v3.0.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Extractnumbers filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This filter automatically extracts all numbers found inside a string
+
+This is useful when you have lines that don't match a grok pattern
+or use json but you still need to extract numbers.
+
+Each numbers is returned in a `@fields.intX` or `@fields.floatX` field
+where X indicates the position in the string.
+
+The fields produced by this filter are extra useful used in combination
+with kibana number plotting features.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Extractnumbers Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-source>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-source"]
+===== `source` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"message"`
+
+The source field for the data. By default is message.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

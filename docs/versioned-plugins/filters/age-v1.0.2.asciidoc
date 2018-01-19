@@ -1,0 +1,66 @@
+:plugin: age
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v1.0.2
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-age/blob/v1.0.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Age filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+A simple filter for calculating the age of an event.
+
+This filter calculates the age of an event by subtracting the event timestamp
+from the current timestamp. This allows you to drop Logstash events that are
+older than some threshold.
+
+[source,ruby]
+filter {
+  age {}
+
+  if [@metadata][age] > 86400 {
+    drop {}
+  }
+}
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Age Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-target>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-target"]
+===== `target` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"[@metadata][age]"`
+
+Define the target field for the event age, in seconds.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

@@ -1,0 +1,34 @@
+:plugin: netflow
+:type: codec
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v3.9.1-plugins-codecs-netflow,v3.9.1>> | 2017-12-30
+| <<v3.9.0-plugins-codecs-netflow,v3.9.0>> | 2017-12-03
+| <<v3.8.3-plugins-codecs-netflow,v3.8.3>> | 2017-11-23
+| <<v3.8.1-plugins-codecs-netflow,v3.8.1>> | 2017-11-19
+| <<v3.8.0-plugins-codecs-netflow,v3.8.0>> | 2017-11-11
+| <<v3.7.1-plugins-codecs-netflow,v3.7.1>> | 2017-11-07
+| <<v3.7.0-plugins-codecs-netflow,v3.7.0>> | 2017-09-29
+| <<v3.6.0-plugins-codecs-netflow,v3.6.0>> | 2017-09-28
+| <<v3.5.2-plugins-codecs-netflow,v3.5.2>> | 2017-08-15
+| <<v3.5.1-plugins-codecs-netflow,v3.5.1>> | 2017-07-18
+| <<v3.5.0-plugins-codecs-netflow,v3.5.0>> | 2017-06-23
+| <<v3.4.1-plugins-codecs-netflow,v3.4.1>> | 2017-06-23
+|=======================================================================
+
+include::netflow-v3.9.1.asciidoc[]
+include::netflow-v3.9.0.asciidoc[]
+include::netflow-v3.8.3.asciidoc[]
+include::netflow-v3.8.1.asciidoc[]
+include::netflow-v3.8.0.asciidoc[]
+include::netflow-v3.7.1.asciidoc[]
+include::netflow-v3.7.0.asciidoc[]
+include::netflow-v3.6.0.asciidoc[]
+include::netflow-v3.5.2.asciidoc[]
+include::netflow-v3.5.1.asciidoc[]
+include::netflow-v3.5.0.asciidoc[]
+include::netflow-v3.4.1.asciidoc[]
+

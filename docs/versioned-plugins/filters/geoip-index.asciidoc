@@ -1,0 +1,28 @@
+:plugin: geoip
+:type: filter
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v5.0.3-plugins-filters-geoip,v5.0.3>> | 2017-12-21
+| <<v5.0.2-plugins-filters-geoip,v5.0.2>> | 2017-11-13
+| <<v5.0.1-plugins-filters-geoip,v5.0.1>> | 2017-08-16
+| <<v5.0.0-plugins-filters-geoip,v5.0.0>> | 2017-08-01
+| <<v4.3.1-plugins-filters-geoip,v4.3.1>> | 2017-08-18
+| <<v4.3.0-plugins-filters-geoip,v4.3.0>> | 2017-07-17
+| <<v4.2.1-plugins-filters-geoip,v4.2.1>> | 2017-06-23
+| <<v4.2.0-plugins-filters-geoip,v4.2.0>> | 2017-06-22
+| <<v4.1.1-plugins-filters-geoip,v4.1.1>> | 2017-05-15
+|=======================================================================
+
+include::geoip-v5.0.3.asciidoc[]
+include::geoip-v5.0.2.asciidoc[]
+include::geoip-v5.0.1.asciidoc[]
+include::geoip-v5.0.0.asciidoc[]
+include::geoip-v4.3.1.asciidoc[]
+include::geoip-v4.3.0.asciidoc[]
+include::geoip-v4.2.1.asciidoc[]
+include::geoip-v4.2.0.asciidoc[]
+include::geoip-v4.1.1.asciidoc[]
+

@@ -1,0 +1,69 @@
+:plugin: checksum
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.3
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-checksum/blob/v3.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Checksum filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This filter let's you create a checksum based on various parts
+of the logstash event.
+This can be useful for deduplication of messages or simply to provide
+a custom unique identifier.
+
+This is VERY experimental and is largely a proof-of-concept
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Checksum Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-algorithm>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["md5", "sha", "sha1", "sha256", "sha384"]`|No
+| <<{version}-plugins-{type}s-{plugin}-keys>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-algorithm"]
+===== `algorithm` 
+
+  * Value can be any of: `md5`, `sha`, `sha1`, `sha256`, `sha384`
+  * Default value is `"sha256"`
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-keys"]
+===== `keys` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `["message", "@timestamp", "type"]`
+
+A list of keys to use in creating the string to checksum
+Keys will be sorted before building the string
+keys and values will then be concatenated with pipe delimeters
+and checksummed
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

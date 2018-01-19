@@ -1,0 +1,176 @@
+:plugin: emoji
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v1.0.1
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-emoji/blob/v1.0.1/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Emoji filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This plugin maps the severity names or numeric codes as defined in
+https://tools.ietf.org/html/rfc3164#section-4.1.1[RFC 3164] and
+https://tools.ietf.org/html/rfc5424#section-6.2.1[RFC 5424] to the emoji
+as defined in the configuration.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Emoji Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-fallback>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-field>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-override>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-sev_alert>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-sev_critical>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-sev_debug>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-sev_emergency>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-sev_error>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-sev_info>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-sev_notice>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-sev_warning>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-target>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-fallback"]
+===== `fallback` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+In case no match is found in the event, this will add a default emoji, which
+will always populate `target`, if the match failed.
+
+For example, if we have configured `fallback => "`❓`"`, using this
+dictionary:
+[source,ruby]
+    foo: 👤
+
+Then, if logstash received an event with the field `foo` set to 👤, the
+target field would be set to 👤. However, if logstash received an event with
+`foo` set to `nope`, then the target field would still be populated, but
+with the value of ❓.
+This configuration can be dynamic and include parts of the event using the
+`%{field}` syntax.
+
+[id="{version}-plugins-{type}s-{plugin}-field"]
+===== `field` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The name of the logstash event field containing the value to be compared for
+a match by the emoji filter (e.g. `severity`).
+
+If this field is an array, only the first value will be used.
+
+[id="{version}-plugins-{type}s-{plugin}-override"]
+===== `override` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+If the target field already exists, this configuration item specifies
+whether the filter should skip being rewritten as an emoji (default) or
+overwrite the target field value with the emoji value.
+
+[id="{version}-plugins-{type}s-{plugin}-sev_alert"]
+===== `sev_alert` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"🚨"`
+
+`sev_alert` selects the emoji/unicode character for Alert severity
+
+[id="{version}-plugins-{type}s-{plugin}-sev_critical"]
+===== `sev_critical` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"🔥"`
+
+`sev_critical` selects the emoji/unicode character for Critical severity
+
+[id="{version}-plugins-{type}s-{plugin}-sev_debug"]
+===== `sev_debug` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"🐛"`
+
+`sev_debug` selects the emoji/unicode character for Debug severity
+
+[id="{version}-plugins-{type}s-{plugin}-sev_emergency"]
+===== `sev_emergency` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"💥"`
+
+`sev_emergency` selects the emoji/unicode character for Emergency severity
+
+[id="{version}-plugins-{type}s-{plugin}-sev_error"]
+===== `sev_error` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"❌"`
+
+`sev_error` selects the emoji/unicode character for Error severity
+
+[id="{version}-plugins-{type}s-{plugin}-sev_info"]
+===== `sev_info` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"ℹ️"`
+
+`sev_info` selects the emoji/unicode character for Informational severity
+
+[id="{version}-plugins-{type}s-{plugin}-sev_notice"]
+===== `sev_notice` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"👀"`
+
+`sev_notice` selects the emoji/unicode character for Notice severity
+
+[id="{version}-plugins-{type}s-{plugin}-sev_warning"]
+===== `sev_warning` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"⚠️"`
+
+`sev_warning` selects the emoji/unicode character for Warning severity
+
+[id="{version}-plugins-{type}s-{plugin}-target"]
+===== `target` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"emoji"`
+
+The target field you wish to populate with the emoji. The default
+is a field named `emoji`. Set this to the same value as the source (`field`)
+if you want to do a substitution, in this case filter will allways succeed.
+This will overwrite the old value of the source field!
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

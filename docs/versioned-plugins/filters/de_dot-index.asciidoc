@@ -1,0 +1,16 @@
+:plugin: de_dot
+:type: filter
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v1.0.3-plugins-filters-de_dot,v1.0.3>> | 2017-11-07
+| <<v1.0.2-plugins-filters-de_dot,v1.0.2>> | 2017-08-15
+| <<v1.0.1-plugins-filters-de_dot,v1.0.1>> | 2017-06-23
+|=======================================================================
+
+include::de_dot-v1.0.3.asciidoc[]
+include::de_dot-v1.0.2.asciidoc[]
+include::de_dot-v1.0.1.asciidoc[]
+
