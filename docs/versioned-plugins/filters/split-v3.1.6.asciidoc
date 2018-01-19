@@ -25,7 +25,7 @@ placing each value resulting from the split into a clone of the original
 event. The field being split can either be a string or an array.
 
 An example use case of this filter is for taking output from the
-<<plugins-inputs-exec,exec input plugin>> which emits one event for
+{logstash-ref}/plugins-inputs-exec.html[exec input plugin] which emits one event for
 the whole output of a command and splitting that output by newline -
 making each line an event.
 
