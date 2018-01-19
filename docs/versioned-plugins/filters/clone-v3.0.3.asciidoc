@@ -1,0 +1,57 @@
+:plugin: clone
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.3
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-clone/blob/v3.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Clone filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+The clone filter is for duplicating events.
+A clone will be created for each type in the clone list.
+The original event is left unchanged.
+Created events are inserted into the pipeline 
+as normal events and will be processed by the remaining pipeline configuration 
+starting from the filter that generated them (i.e. this plugin).
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Clone Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-clones>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-clones"]
+===== `clones` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `[]`
+
+A new clone will be created with the given type for each type in this list.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

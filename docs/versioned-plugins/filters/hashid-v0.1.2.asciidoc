@@ -1,0 +1,110 @@
+:plugin: hashid
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v0.1.2
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-hashid/blob/v0.1.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Hashid filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This filter allow you to generate predictable, string encoded hashed keys 
+based om event contents and timestamp. This can be used to avoid getting 
+duplicate records indexed into Elasticsearch.
+
+Hashed keys to be generated based on full or partial hashes and
+has the ability to prefix these keys based on the event timestamp in order
+to make then largely ordered by timestamp, which tend to lead to increased
+indexing performance for event based use cases where data is being indexed
+in near real time.
+
+When used with the timestamp prefix enabled, it should ideally be run after 
+the date filter has run and populated the @timestamp field.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Hashid Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-add_timestamp_prefix>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-hash_bytes_used>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-key>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-method>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["SHA1", "SHA256", "SHA384", "SHA512", "MD5"]`|No
+| <<{version}-plugins-{type}s-{plugin}-source>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-target>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-add_timestamp_prefix"]
+===== `add_timestamp_prefix` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Use the timestamp to generate an ID prefix
+
+[id="{version}-plugins-{type}s-{plugin}-hash_bytes_used"]
+===== `hash_bytes_used` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * There is no default value for this setting.
+
+If full hash generated is not to be used, this parameter specifies how many bytes that should be used
+If not specified, the full hash will be used
+
+[id="{version}-plugins-{type}s-{plugin}-key"]
+===== `key` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"hashid"`
+
+Encryption key to be used when generating cryptographic hashes
+
+[id="{version}-plugins-{type}s-{plugin}-method"]
+===== `method` 
+
+  * Value can be any of: `SHA1`, `SHA256`, `SHA384`, `SHA512`, `MD5`
+  * Default value is `"MD5"`
+
+Hash function to use
+
+[id="{version}-plugins-{type}s-{plugin}-source"]
+===== `source` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `["message"]`
+
+Source field(s) to base the hash calculation on
+
+[id="{version}-plugins-{type}s-{plugin}-target"]
+===== `target` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"hashid"`
+
+Target field.
+Will overwrite current value of a field if it exists.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

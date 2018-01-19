@@ -1,0 +1,14 @@
+:plugin: checksum
+:type: filter
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v3.0.4-plugins-filters-checksum,v3.0.4>> | 2017-08-15
+| <<v3.0.3-plugins-filters-checksum,v3.0.3>> | 2017-06-23
+|=======================================================================
+
+include::checksum-v3.0.4.asciidoc[]
+include::checksum-v3.0.3.asciidoc[]
+

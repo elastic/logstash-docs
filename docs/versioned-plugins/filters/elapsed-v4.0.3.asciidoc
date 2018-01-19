@@ -1,0 +1,168 @@
+:plugin: elapsed
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v4.0.3
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-elapsed/blob/v4.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Elapsed filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+The elapsed filter tracks a pair of start/end events and uses their
+timestamps to calculate the elapsed time between them.
+
+The filter has been developed to track the execution time of processes and
+other long tasks.
+
+The configuration looks like this:
+[source,ruby]
+    filter {
+      elapsed {
+        start_tag => "start event tag"
+        end_tag => "end event tag"
+        unique_id_field => "id field name"
+        timeout => seconds
+        new_event_on_match => true/false
+      }
+    }
+
+The events managed by this filter must have some particular properties.
+The event describing the start of the task (the "start event") must contain
+a tag equal to `start_tag`. On the other side, the event describing the end
+of the task (the "end event") must contain a tag equal to `end_tag`. Both
+these two kinds of event need to own an ID field which identify uniquely that
+particular task. The name of this field is stored in `unique_id_field`.
+
+You can use a Grok filter to prepare the events for the elapsed filter.
+An example of configuration can be:
+[source,ruby]
+    filter {
+      grok {
+        match => { "message" => "%{TIMESTAMP_ISO8601} START id: (?<task_id>.*)" }
+        add_tag => [ "taskStarted" ]
+      }
+
+      grok {
+        match => { "message" => "%{TIMESTAMP_ISO8601} END id: (?<task_id>.*)" }
+        add_tag => [ "taskTerminated" ]
+      }
+
+      elapsed {
+        start_tag => "taskStarted"
+        end_tag => "taskTerminated"
+        unique_id_field => "task_id"
+      }
+    }
+
+The elapsed filter collects all the "start events". If two, or more, "start
+events" have the same ID, only the first one is recorded, the others are
+discarded.
+
+When an "end event" matching a previously collected "start event" is
+received, there is a match. The configuration property `new_event_on_match`
+tells where to insert the elapsed information: they can be added to the
+"end event" or a new "match event" can be created. Both events store the
+following information:
+
+* the tags `elapsed` and `elapsed_match`
+* the field `elapsed_time` with the difference, in seconds, between
+  the two events timestamps
+* an ID filed with the task ID
+* the field `elapsed_timestamp_start` with the timestamp of the start event
+
+If the "end event" does not arrive before "timeout" seconds, the
+"start event" is discarded and an "expired event" is generated. This event
+contains:
+
+* the tags `elapsed` and `elapsed_expired_error`
+* a field called `elapsed_time` with the age, in seconds, of the
+  "start event"
+* an ID filed with the task ID
+* the field `elapsed_timestamp_start` with the timestamp of the "start event"
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Elapsed Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-end_tag>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-new_event_on_match>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-start_tag>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-unique_id_field>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-end_tag"]
+===== `end_tag` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The name of the tag identifying the "end event"
+
+[id="{version}-plugins-{type}s-{plugin}-new_event_on_match"]
+===== `new_event_on_match` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+This property manage what to do when an "end event" matches a "start event".
+If it's set to `false` (default value), the elapsed information are added
+to the "end event"; if it's set to `true` a new "match event" is created.
+
+[id="{version}-plugins-{type}s-{plugin}-start_tag"]
+===== `start_tag` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The name of the tag identifying the "start event"
+
+[id="{version}-plugins-{type}s-{plugin}-timeout"]
+===== `timeout` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `1800`
+
+The amount of seconds after an "end event" can be considered lost.
+The corresponding "start event" is discarded and an "expired event"
+is generated. The default value is 30 minutes (1800 seconds).
+
+[id="{version}-plugins-{type}s-{plugin}-unique_id_field"]
+===== `unique_id_field` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The name of the field containing the task ID.
+This value must uniquely identify the task in the system, otherwise
+it's impossible to match the couple of events.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

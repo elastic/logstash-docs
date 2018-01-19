@@ -1,0 +1,10 @@
+:plugin: kubernetes_metadata
+:type: filter
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+|=======================================================================
+
+
