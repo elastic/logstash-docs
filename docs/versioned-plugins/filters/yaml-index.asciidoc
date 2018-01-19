@@ -1,0 +1,12 @@
+:plugin: yaml
+:type: filter
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v0.1.1-plugins-filters-yaml,v0.1.1>> | 2017-06-23
+|=======================================================================
+
+include::yaml-v0.1.1.asciidoc[]
+

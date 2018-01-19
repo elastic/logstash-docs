@@ -1,0 +1,148 @@
+:plugin: zeromq
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.2
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-zeromq/blob/v3.0.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Zeromq filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+ZeroMQ filter. This is the best way to send an event externally for filtering
+It works much like an exec filter would by sending the event "offsite"
+for processing and waiting for a response
+
+The protocol here is:
+  * REQ sent with JSON-serialized logstash event
+  * REP read expected to be the full JSON 'filtered' event
+  * - if reply read is an empty string, it will cancel the event.
+
+Note that this is a limited subset of the zeromq functionality in
+inputs and outputs. The only topology that makes sense here is:
+REQ/REP. bunde
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Zeromq Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-add_tag_on_timeout>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-address>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-field>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-mode>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["server", "client"]`|No
+| <<{version}-plugins-{type}s-{plugin}-retries>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-sentinel>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-sockopt>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-add_tag_on_timeout"]
+===== `add_tag_on_timeout` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"zeromqtimeout"`
+
+tag to add if zeromq timeout expires before getting back an answer.
+If set to "" then no tag will be added.
+
+[id="{version}-plugins-{type}s-{plugin}-address"]
+===== `address` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"tcp://127.0.0.1:2121"`
+
+0mq socket address to connect or bind
+Please note that inproc:// will not work with logstash
+as we use a context per thread
+By default, filters connect
+
+[id="{version}-plugins-{type}s-{plugin}-field"]
+===== `field` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The field to send off-site for processing
+If this is unset, the whole event will be sent
+
+[id="{version}-plugins-{type}s-{plugin}-mode"]
+===== `mode` 
+
+  * Value can be any of: `server`, `client`
+  * Default value is `"client"`
+
+0mq mode
+server mode binds/listens
+client mode connects
+
+[id="{version}-plugins-{type}s-{plugin}-retries"]
+===== `retries` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `3`
+
+number of retries, used for both sending and receiving messages.
+for sending, retries should return instantly.
+for receiving, the total blocking time is up to retries X timeout,
+which by default is 3 X 500 = 1500ms
+
+[id="{version}-plugins-{type}s-{plugin}-sentinel"]
+===== `sentinel` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `""`
+
+A sentinel value to signal the filter to cancel the event
+If the peer returns the sentinel value, the event will be cancelled
+
+[id="{version}-plugins-{type}s-{plugin}-sockopt"]
+===== `sockopt` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * There is no default value for this setting.
+
+0mq socket options
+This exposes zmq_setsockopt
+for advanced tuning
+see http://api.zeromq.org/2-1:zmq-setsockopt for details
+
+This is where you would set values like:
+ZMQ::HWM - high water mark
+ZMQ::IDENTITY - named queues
+ZMQ::SWAP_SIZE - space for disk overflow
+ZMQ::SUBSCRIBE - topic filters for pubsub
+
+example: sockopt => ["ZMQ::HWM", 50, "ZMQ::IDENTITY", "my_named_queue"]
+
+[id="{version}-plugins-{type}s-{plugin}-timeout"]
+===== `timeout` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `500`
+
+timeout in milliseconds on which to wait for a reply.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
