@@ -28,7 +28,7 @@ This is useful if you need to generate a string that's unique for every
 event, even if the same input is processed multiple times. If you want
 to generate strings that are identical each time a event with a given
 content is processed (i.e. a hash) you should use the
-<<plugins-filters-fingerprint,fingerprint filter>> instead.
+{logstash-ref}/plugins-filters-fingerprint.html[fingerprint filter] instead.
 
 The generated UUIDs follow the version 4 definition in
 https://tools.ietf.org/html/rfc4122[RFC 4122]) and will be

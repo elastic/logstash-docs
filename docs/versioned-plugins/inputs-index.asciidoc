@@ -7,8 +7,6 @@ include::inputs/beats-index.asciidoc[]
 
 include::inputs/cloudwatch-index.asciidoc[]
 
-include::inputs/cloudwatch-index.asciidoc[]
-
 include::inputs/cloudwatch_logs-index.asciidoc[]
 
 include::inputs/couchdb_changes-index.asciidoc[]
