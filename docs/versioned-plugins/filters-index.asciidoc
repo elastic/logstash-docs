@@ -11,7 +11,7 @@ include::filters/alter-index.asciidoc[]
 
 include::filters/anonymize-index.asciidoc[]
 
-include::filters/bytesize-index.asciidoc[]
+//include::filters/bytesize-index.asciidoc[]
 
 include::filters/checksum-index.asciidoc[]
 
@@ -31,7 +31,7 @@ include::filters/date-index.asciidoc[]
 
 include::filters/de_dot-index.asciidoc[]
 
-include::filters/debug-index.asciidoc[]
+//include::filters/debug-index.asciidoc[]
 
 include::filters/dissect-index.asciidoc[]
 
@@ -52,8 +52,6 @@ include::filters/extractnumbers-index.asciidoc[]
 include::filters/fingerprint-index.asciidoc[]
 
 include::filters/geoip-index.asciidoc[]
-
-include::filters/grok-index.asciidoc[]
 
 include::filters/grok-index.asciidoc[]
 
