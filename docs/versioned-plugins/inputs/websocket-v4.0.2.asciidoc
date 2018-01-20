@@ -1,0 +1,64 @@
+:plugin: websocket
+:type: input
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v4.0.2
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-input-websocket/blob/v4.0.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Websocket input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Read events over the websocket protocol.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Websocket Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-mode>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["client"]`|No
+| <<{version}-plugins-{type}s-{plugin}-url>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-mode"]
+===== `mode` 
+
+  * Value can be any of: `client`
+  * Default value is `"client"`
+
+Select the plugin's mode of operation. Right now only client mode
+is supported, i.e. this plugin connects to a websocket server and
+receives events from the server as websocket messages.
+
+[id="{version}-plugins-{type}s-{plugin}-url"]
+===== `url` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The URL to connect to.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

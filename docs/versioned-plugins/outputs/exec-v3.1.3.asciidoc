@@ -1,0 +1,86 @@
+:plugin: exec
+:type: output
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.1.3
+:release_date: 2017-11-07
+:changelog_url: https://github.com/logstash-plugins/logstash-output-exec/blob/v3.1.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Exec output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+The exec output will run a command for each event received. Ruby's
+`system()` function will be used, i.e. the command string will
+be passed to a shell. You can use `%{name}` and other dynamic strings
+in the command to pass select fields from the event to the child
+process. Example:
+[source,ruby]
+    output {
+      if [type] == "abuse" {
+        exec {
+          command => "iptables -A INPUT -s %{clientip} -j DROP"
+        }
+      }
+    }
+
+WARNING: If you want it non-blocking you should use `&` or `dtach`
+or other such techniques. There is no timeout for the commands being
+run so misbehaving commands could otherwise stall the Logstash
+pipeline indefinitely.
+
+WARNING: Exercise great caution with `%{name}` field placeholders.
+The contents of the field will be included verbatim without any
+sanitization, i.e. any shell metacharacters from the field values
+will be passed straight to the shell.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Exec Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-command>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-quiet>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-command"]
+===== `command` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Command line to execute via subprocess. Use `dtach` or `screen` to
+make it non blocking. This value can include `%{name}` and other
+dynamic strings.
+
+[id="{version}-plugins-{type}s-{plugin}-quiet"]
+===== `quiet` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+display the result of the command to the terminal
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

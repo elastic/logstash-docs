@@ -1,0 +1,12 @@
+:plugin: jms
+:type: output
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v3.0.1-plugins-outputs-jms,v3.0.1>> | 2017-06-23
+|=======================================================================
+
+include::jms-v3.0.1.asciidoc[]
+
