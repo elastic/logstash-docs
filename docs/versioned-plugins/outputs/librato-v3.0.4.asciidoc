@@ -1,0 +1,162 @@
+:plugin: librato
+:type: output
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.4
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-output-librato/blob/v3.0.4/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Librato output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This output lets you send metrics, annotations, and alerts to
+Librato based on Logstash events
+
+This is VERY experimental and inefficient right now.
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Librato Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-account_id>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-annotation>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-api_token>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-batch_size>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-counter>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-gauge>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-account_id"]
+===== `account_id` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Your Librato account
+usually an email address
+
+[id="{version}-plugins-{type}s-{plugin}-annotation"]
+===== `annotation` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * Default value is `{}`
+
+Annotations
+Registers an annotation with Librato
+The only required field is `title` and `name`.
+`start_time` and `end_time` will be set to `event.get("@timestamp").to_i`
+You can add any other optional annotation values as well.
+All values will be passed through `event.sprintf`
+
+Example:
+[source,ruby]
+  {
+      "title" => "Logstash event on %{host}"
+      "name" => "logstash_stream"
+  }
+or
+[source,ruby]
+   {
+      "title" => "Logstash event"
+      "description" => "%{message}"
+      "name" => "logstash_stream"
+   }
+
+[id="{version}-plugins-{type}s-{plugin}-api_token"]
+===== `api_token` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Your Librato API Token
+
+[id="{version}-plugins-{type}s-{plugin}-batch_size"]
+===== `batch_size` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"10"`
+
+Batch size
+Number of events to batch up before sending to Librato.
+
+
+[id="{version}-plugins-{type}s-{plugin}-counter"]
+===== `counter` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * Default value is `{}`
+
+Counters
+Send data to Librato as a counter
+
+Example:
+[source,ruby]
+    {
+        "value" => "1"
+        "source" => "%{host}"
+        "name" => "messages_received"
+    }
+    
+Additionally, you can override the `measure_time` for the event. Must be a unix timestamp:
+[source,ruby]
+    {
+        "value" => "1"
+        "source" => "%{host}"
+        "name" => "messages_received"
+        "measure_time" => "%{my_unixtime_field}"
+    }
+Default is to use the event's timestamp
+
+[id="{version}-plugins-{type}s-{plugin}-gauge"]
+===== `gauge` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * Default value is `{}`
+
+Gauges
+Send data to Librato as a gauge
+
+Example:
+[source,ruby]
+    {
+        "value" => "%{bytes_received}"
+        "source" => "%{host}"
+        "name" => "apache_bytes"
+    }
+Additionally, you can override the `measure_time` for the event. Must be a unix timestamp:
+[source,ruby]
+    {
+        "value" => "%{bytes_received}"
+        "source" => "%{host}"
+        "name" => "apache_bytes"
+        "measure_time" => "%{my_unixtime_field}
+    }
+Default is to use the event's timestamp
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
