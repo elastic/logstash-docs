@@ -1,0 +1,12 @@
+:plugin: journald
+:type: input
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v2.0.1-plugins-inputs-journald,v2.0.1>> | 2017-06-23
+|=======================================================================
+
+include::journald-v2.0.1.asciidoc[]
+

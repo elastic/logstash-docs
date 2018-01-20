@@ -1,0 +1,26 @@
+:plugin: jdbc
+:type: input
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v4.3.3-plugins-inputs-jdbc,v4.3.3>> | 2017-12-14
+| <<v4.3.2-plugins-inputs-jdbc,v4.3.2>> | 2017-12-07
+| <<v4.3.1-plugins-inputs-jdbc,v4.3.1>> | 2017-11-07
+| <<v4.3.0-plugins-inputs-jdbc,v4.3.0>> | 2017-10-27
+| <<v4.2.4-plugins-inputs-jdbc,v4.2.4>> | 2017-08-21
+| <<v4.2.3-plugins-inputs-jdbc,v4.2.3>> | 2017-08-15
+| <<v4.2.2-plugins-inputs-jdbc,v4.2.2>> | 2017-07-25
+| <<v4.2.1-plugins-inputs-jdbc,v4.2.1>> | 2017-06-23
+|=======================================================================
+
+include::jdbc-v4.3.3.asciidoc[]
+include::jdbc-v4.3.2.asciidoc[]
+include::jdbc-v4.3.1.asciidoc[]
+include::jdbc-v4.3.0.asciidoc[]
+include::jdbc-v4.2.4.asciidoc[]
+include::jdbc-v4.2.3.asciidoc[]
+include::jdbc-v4.2.2.asciidoc[]
+include::jdbc-v4.2.1.asciidoc[]
+

@@ -1,0 +1,93 @@
+:plugin: neo4j
+:type: input
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v2.0.5
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-input-neo4j/blob/v2.0.5/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Neo4j input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This plugin gets data from a Neo4j database in predefined intervals. To fetch
+this data uses a given Cypher query.
+
+### Usage:
+[source, ruby]
+input {
+  neo4j {
+    query => "MATCH (p:`Person`)-->(m:`Movie`) WHERE m.released = 2005 RETURN *"
+    path  => "/foo/bar.db"
+  }
+}
+
+In embedded_db mode this plugin require a neo4j db 2.0.1 or superior. If
+using the remote version there is no major restriction.
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Neo4j Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-path>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-query>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-schedule>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-path"]
+===== `path` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The path within your file system where the neo4j database is located
+
+[id="{version}-plugins-{type}s-{plugin}-query"]
+===== `query` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+If undefined, Logstash will complain, even if codec is unused.
+Cypher query used to retrieve data from the neo4j database, this statement
+should looks like something like this:
+
+MATCH (p:`Person`)-->(m:`Movie`) WHERE m.released = 2005 RETURN *
+
+
+[id="{version}-plugins-{type}s-{plugin}-schedule"]
+===== `schedule` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Schedule of when to periodically run statement, in Cron format
+for example: "* * * * *" (execute query every minute, on the minute).
+If this variable is not specified then this input will run only once
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

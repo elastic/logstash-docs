@@ -1,0 +1,171 @@
+:plugin: log4j
+:type: input
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.6
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-input-log4j/blob/v3.0.6/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Log4j input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+==== Deprecation Notice
+
+NOTE: This plugin is deprecated. It is recommended that you use filebeat to collect logs from log4j.
+
+The following section is a guide for how to migrate from SocketAppender to use filebeat.
+
+To migrate away from log4j SocketAppender to using filebeat, you will need to make 3 changes:
+
+1) Configure your log4j.properties (in your app) to write to a local file.
+2) Install and configure filebeat to collect those logs and ship them to Logstash
+3) Configure Logstash to use the beats input.
+
+.Configuring log4j for writing to local files
+
+In your log4j.properties file, remove SocketAppender and replace it with RollingFileAppender. 
+
+For example, you can use the following log4j.properties configuration to write daily log files.
+
+    # Your app's log4j.properties (log4j 1.2 only)
+    log4j.rootLogger=daily
+    log4j.appender.daily=org.apache.log4j.rolling.RollingFileAppender
+    log4j.appender.daily.RollingPolicy=org.apache.log4j.rolling.TimeBasedRollingPolicy
+    log4j.appender.daily.RollingPolicy.FileNamePattern=/var/log/your-app/app.%d.log
+    log4j.appender.daily.layout = org.apache.log4j.PatternLayout
+    log4j.appender.daily.layout.ConversionPattern=%d{YYYY-MM-dd HH:mm:ss,SSSZ} %p %c{1}:%L - %m%n
+
+Configuring log4j.properties in more detail is outside the scope of this migration guide.
+
+.Configuring filebeat
+
+Next,
+https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html[install
+filebeat]. Based on the above log4j.properties, we can use this filebeat
+configuration:
+
+    # filebeat.yml
+    filebeat:
+      prospectors:
+        -
+          paths:
+            - /var/log/your-app/app.*.log
+          input_type: log
+    output:
+      logstash:
+        hosts: ["your-logstash-host:5000"]
+
+For more details on configuring filebeat, see 
+https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-configuration.html[the filebeat configuration guide].
+
+.Configuring Logstash to receive from filebeat
+
+Finally, configure Logstash with a beats input:
+
+    # logstash configuration
+    input {
+      beats {
+        port => 5000
+      }
+    }
+
+It is strongly recommended that you also enable TLS in filebeat and logstash
+beats input for protection and safety of your log data..
+
+For more details on configuring the beats input, see
+https://www.elastic.co/guide/en/logstash/current/plugins-inputs-beats.html[the logstash beats input documentation].
+
+'''
+
+Read events over a TCP socket from a Log4j SocketAppender. This plugin works only with log4j version 1.x.
+
+Can either accept connections from clients or connect to a server,
+depending on `mode`. Depending on which `mode` is configured,
+you need a matching SocketAppender or a SocketHubAppender
+on the remote side.
+
+One event is created per received log4j LoggingEvent with the following schema:
+
+* `timestamp` => the number of milliseconds elapsed from 1/1/1970 until logging event was created.
+* `path` => the name of the logger
+* `priority` => the level of this event
+* `logger_name` => the name of the logger
+* `thread` => the thread name making the logging request
+* `class` => the fully qualified class name of the caller making the logging request.
+* `file` => the source file name and line number of the caller making the logging request in a colon-separated format "fileName:lineNumber".
+* `method` => the method name of the caller making the logging request.
+* `NDC` => the NDC string
+* `stack_trace` => the multi-line stack-trace
+
+Also if the original log4j LoggingEvent contains MDC hash entries, they will be merged in the event as fields.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Log4j Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-host>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-mode>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["server", "client"]`|No
+| <<{version}-plugins-{type}s-{plugin}-port>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-proxy_protocol>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-host"]
+===== `host` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"0.0.0.0"`
+
+When mode is `server`, the address to listen on.
+When mode is `client`, the address to connect to.
+
+[id="{version}-plugins-{type}s-{plugin}-mode"]
+===== `mode` 
+
+  * Value can be any of: `server`, `client`
+  * Default value is `"server"`
+
+Mode to operate in. `server` listens for client connections,
+`client` connects to a server.
+
+[id="{version}-plugins-{type}s-{plugin}-port"]
+===== `port` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `4560`
+
+When mode is `server`, the port to listen on.
+When mode is `client`, the port to connect to.
+
+[id="{version}-plugins-{type}s-{plugin}-proxy_protocol"]
+===== `proxy_protocol` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Proxy protocol support, only v1 is supported at this time
+http://www.haproxy.org/download/1.5/doc/proxy-protocol.txt
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
