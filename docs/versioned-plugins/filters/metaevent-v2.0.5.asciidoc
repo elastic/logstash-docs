@@ -20,7 +20,7 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-
+Periodically group all events under a certain list of tags into a single event.
 
 [id="{version}-plugins-{type}s-{plugin}-options"]
 ==== Metaevent Filter Configuration Options

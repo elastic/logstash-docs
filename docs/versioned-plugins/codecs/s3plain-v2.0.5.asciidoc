@@ -1,4 +1,4 @@
-:plugin: s3_plain
+:plugin: s3plain
 :type: codec
 
 ///////////////////////////////////////////
@@ -14,19 +14,11 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 [id="{version}-plugins-{type}s-{plugin}"]
 
-=== S3_plain
+=== S3plain
 
 include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-The "s3_plain" codec is used for backward compatibility with previous version of the S3 Output
+The "s3plain" codec is used for backward compatibility with previous version of the S3 Output
 
-
-[id="{version}-plugins-{type}s-{plugin}-options"]
-==== S3_plain Codec Configuration Options
-
-[cols="<,<,<",options="header",]
-|=======================================================================
-|Setting |Input type|Required
-|=======================================================================

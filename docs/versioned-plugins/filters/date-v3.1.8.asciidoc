@@ -109,7 +109,7 @@ For example, if you have a field `logdate`, with a value that looks like
 
 If your field is nested in your structure, you can use the nested
 syntax `[foo][bar]` to match its value. For more information, please refer to
-<<logstash-config-field-references>>
+{logstash-ref}/event-dependent-configuration.html#logstash-config-field-references[Field References]
 
 *More details on the syntax*
 
