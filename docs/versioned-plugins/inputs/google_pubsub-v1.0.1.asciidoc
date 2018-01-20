@@ -1,0 +1,213 @@
+:plugin: google_pubsub
+:type: input
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v1.0.1
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-input-google_pubsub/blob/v1.0.1/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Google_pubsub input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Author: Eric Johnson <erjohnso@google.com>
+Date: 2016-06-01
+
+Copyright 2016 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+Google deps
+This is a https://github.com/elastic/logstash[Logstash] input plugin for 
+https://cloud.google.com/pubsub/[Google Pub/Sub]. The plugin can subscribe 
+to a topic and ingest messages.
+
+The main motivation behind the development of this plugin was to ingest 
+https://cloud.google.com/logging/[Stackdriver Logging] messages via the 
+https://cloud.google.com/logging/docs/export/using_exported_logs[Exported Logs] 
+feature of Stackdriver Logging.
+
+==== Prerequisites
+
+You must first create a Google Cloud Platform project and enable the the 
+Google Pub/Sub API. If you intend to use the plugin ingest Stackdriver Logging 
+messages, you must also enable the Stackdriver Logging API and configure log 
+exporting to Pub/Sub. There is plentiful information on 
+https://cloud.google.com/ to get started: 
+
+- Google Cloud Platform Projects and https://cloud.google.com/docs/overview/[Overview]
+- Google Cloud Pub/Sub https://cloud.google.com/pubsub/[documentation]
+- Stackdriver Logging https://cloud.google.com/logging/[documentation]
+
+==== Cloud Pub/Sub
+
+Currently, this module requires you to create a `topic` manually and specify 
+it in the logstash config file. You must also specify a `subscription`, but 
+the plugin will attempt to create the pull-based `subscription` on its own. 
+
+All messages received from Pub/Sub will be converted to a logstash `event` 
+and added to the processing pipeline queue. All Pub/Sub messages will be 
+`acknowledged` and removed from the Pub/Sub `topic` (please see more about 
+https://cloud.google.com/pubsub/overview#concepts)[Pub/Sub concepts]. 
+
+It is generally assumed that incoming messages will be in JSON and added to 
+the logstash `event` as-is. However, if a plain text message is received, the 
+plugin will return the raw text in as `raw_message` in the logstash `event`. 
+
+==== Authentication
+
+You have two options for authentication depending on where you run Logstash. 
+
+1. If you are running Logstash outside of Google Cloud Platform, then you will 
+need to create a Google Cloud Platform Service Account and specify the full 
+path to the JSON private key file in your config. You must assign sufficient 
+roles to the Service Account to create a subscription and to pull messages 
+from the subscription. Learn more about GCP Service Accounts and IAM roles 
+here:
+
+  - Google Cloud Platform IAM https://cloud.google.com/iam/[overview]
+  - Creating Service Accounts https://cloud.google.com/iam/docs/creating-managing-service-accounts[overview]
+  - Granting Roles https://cloud.google.com/iam/docs/granting-roles-to-service-accounts[overview]
+
+1. If you are running Logstash on a Google Compute Engine instance, you may opt 
+to use Application Default Credentials. In this case, you will not need to 
+specify a JSON private key file in your config.
+
+==== Stackdriver Logging (optional)
+
+If you intend to use the logstash plugin for Stackdriver Logging message 
+ingestion, you must first manually set up the Export option to Cloud Pub/Sub and 
+the manually create the `topic`. Please see the more detailed instructions at, 
+https://cloud.google.com/logging/docs/export/using_exported_logs [Exported Logs] 
+and ensure that the https://cloud.google.com/logging/docs/export/configure_export#manual-access-pubsub[necessary permissions] 
+have also been manually configured.
+
+Logging messages from Stackdriver Logging exported to Pub/Sub are received as 
+JSON and converted to a logstash `event` as-is in 
+https://cloud.google.com/logging/docs/export/using_exported_logs#log_entries_in_google_pubsub_topics[this format].
+
+==== Sample Configuration
+
+Below is a copy of the included `example.conf-tmpl` file that shows a basic 
+configuration for this plugin.
+
+[source,ruby]
+----------------------------------
+input {
+    google_pubsub {
+        # Your GCP project id (name)
+        project_id => "my-project-1234"
+
+        # The topic name below is currently hard-coded in the plugin. You
+        # must first create this topic by hand and ensure you are exporting
+        # logging to this pubsub topic.
+        topic => "logstash-input-dev"
+
+        # The subscription name is customizeable. The plugin will attempt to
+        # create the subscription (but use the hard-coded topic name above).
+        subscription => "logstash-sub"
+
+        # If you are running logstash within GCE, it will use
+        # Application Default Credentials and use GCE's metadata
+        # service to fetch tokens.  However, if you are running logstash
+        # outside of GCE, you will need to specify the service account's
+        # JSON key file below.
+        #json_key_file => "/home/erjohnso/pkey.json"
+    }
+}
+output { stdout { codec => rubydebug } }
+----------------------------------
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Google_pubsub Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-json_key_file>> |a valid filesystem path|No
+| <<{version}-plugins-{type}s-{plugin}-max_messages>> |{logstash-ref}/configuration-file-structure.html#number[number]|Yes
+| <<{version}-plugins-{type}s-{plugin}-project_id>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-subscription>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-topic>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-json_key_file"]
+===== `json_key_file` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+If logstash is running within Google Compute Engine, the plugin will use
+GCE's Application Default Credentials. Outside of GCE, you will need to
+specify a Service Account JSON key file.
+
+[id="{version}-plugins-{type}s-{plugin}-max_messages"]
+===== `max_messages` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `5`
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-project_id"]
+===== `project_id` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Google Cloud Project ID (name, not number)
+
+[id="{version}-plugins-{type}s-{plugin}-subscription"]
+===== `subscription` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-topic"]
+===== `topic` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Google Cloud Pub/Sub Topic and Subscription.
+Note that the topic must be created manually with Cloud Logging
+pre-configured export to PubSub configured to use the defined topic.
+The subscription will be created automatically by the plugin.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

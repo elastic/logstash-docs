@@ -1,0 +1,144 @@
+:plugin: syslog
+:type: input
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.2.3
+:release_date: 2017-11-07
+:changelog_url: https://github.com/logstash-plugins/logstash-input-syslog/blob/v3.2.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Syslog input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Read syslog messages as events over the network.
+
+This input is a good choice if you already use syslog today.
+It is also a good choice if you want to receive logs from
+appliances and network devices where you cannot run your own
+log collector.
+
+Of course, 'syslog' is a very muddy term. This input only supports `RFC3164`
+syslog with some small modifications. The date format is allowed to be
+`RFC3164` style or `ISO8601`. Otherwise the rest of `RFC3164` must be obeyed.
+If you do not use `RFC3164`, do not use this input.
+
+For more information see the http://www.ietf.org/rfc/rfc3164.txt[RFC3164 page].
+
+Note: This input will start listeners on both TCP and UDP.
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Syslog Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-facility_labels>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-host>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-locale>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-port>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-proxy_protocol>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-severity_labels>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-timezone>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-use_labels>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-facility_labels"]
+===== `facility_labels` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `["kernel", "user-level", "mail", "system", "security/authorization", "syslogd", "line printer", "network news", "UUCP", "clock", "security/authorization", "FTP", "NTP", "log audit", "log alert", "clock", "local0", "local1", "local2", "local3", "local4", "local5", "local6", "local7"]`
+
+Labels for facility levels. These are defined in RFC3164.
+
+[id="{version}-plugins-{type}s-{plugin}-host"]
+===== `host` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"0.0.0.0"`
+
+The address to listen on.
+
+[id="{version}-plugins-{type}s-{plugin}-locale"]
+===== `locale` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Specify a locale to be used for date parsing using either IETF-BCP47 or POSIX language tag.
+Simple examples are `en`,`en-US` for BCP47 or `en_US` for POSIX.
+If not specified, the platform default will be used.
+
+The locale is mostly necessary to be set for parsing month names (pattern with MMM) and
+weekday names (pattern with EEE).
+
+
+[id="{version}-plugins-{type}s-{plugin}-port"]
+===== `port` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `514`
+
+The port to listen on. Remember that ports less than 1024 (privileged
+ports) may require root to use.
+
+[id="{version}-plugins-{type}s-{plugin}-proxy_protocol"]
+===== `proxy_protocol` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Proxy protocol support, only v1 is supported at this time
+http://www.haproxy.org/download/1.5/doc/proxy-protocol.txt
+
+[id="{version}-plugins-{type}s-{plugin}-severity_labels"]
+===== `severity_labels` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `["Emergency", "Alert", "Critical", "Error", "Warning", "Notice", "Informational", "Debug"]`
+
+Labels for severity levels. These are defined in RFC3164.
+
+[id="{version}-plugins-{type}s-{plugin}-timezone"]
+===== `timezone` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Specify a time zone canonical ID to be used for date parsing.
+The valid IDs are listed on the [Joda.org available time zones page](http://joda-time.sourceforge.net/timezones.html).
+This is useful in case the time zone cannot be extracted from the value,
+and is not the platform default.
+If this is not specified the platform default will be used.
+Canonical ID is good as it takes care of daylight saving time for you
+For example, `America/Los_Angeles` or `Europe/France` are valid IDs.
+
+[id="{version}-plugins-{type}s-{plugin}-use_labels"]
+===== `use_labels` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Use label parsing for severity and facility levels.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

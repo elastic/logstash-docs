@@ -1,0 +1,139 @@
+:plugin: redis
+:type: input
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.1.4
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-input-redis/blob/v3.1.4/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Redis input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This input will read events from a Redis instance; it supports both Redis channels and lists.
+The list command (BLPOP) used by Logstash is supported in Redis v1.3.1+, and
+the channel commands used by Logstash are found in Redis v1.3.8+.
+While you may be able to make these Redis versions work, the best performance
+and stability will be found in more recent stable versions.  Versions 2.6.0+
+are recommended.
+
+For more information about Redis, see <http://redis.io/>
+
+`batch_count` note: If you use the `batch_count` setting, you *must* use a Redis version 2.6.0 or
+newer. Anything older does not support the operations used by batching.
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Redis Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-batch_count>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-data_type>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["list", "channel", "pattern_channel"]`|Yes
+| <<{version}-plugins-{type}s-{plugin}-db>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-host>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-key>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-port>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-threads>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-batch_count"]
+===== `batch_count` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `125`
+
+The number of events to return from Redis using EVAL.
+
+[id="{version}-plugins-{type}s-{plugin}-data_type"]
+===== `data_type` 
+
+  * This is a required setting.
+  * Value can be any of: `list`, `channel`, `pattern_channel`
+  * There is no default value for this setting.
+
+Specify either list or channel.  If `redis\_type` is `list`, then we will BLPOP the
+key.  If `redis\_type` is `channel`, then we will SUBSCRIBE to the key.
+If `redis\_type` is `pattern_channel`, then we will PSUBSCRIBE to the key.
+
+[id="{version}-plugins-{type}s-{plugin}-db"]
+===== `db` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `0`
+
+The Redis database number.
+
+[id="{version}-plugins-{type}s-{plugin}-host"]
+===== `host` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"127.0.0.1"`
+
+The hostname of your Redis server.
+
+[id="{version}-plugins-{type}s-{plugin}-key"]
+===== `key` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The name of a Redis list or channel.
+
+[id="{version}-plugins-{type}s-{plugin}-password"]
+===== `password` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Password to authenticate with. There is no authentication by default.
+
+[id="{version}-plugins-{type}s-{plugin}-port"]
+===== `port` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `6379`
+
+The port to connect on.
+
+[id="{version}-plugins-{type}s-{plugin}-threads"]
+===== `threads` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `1`
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-timeout"]
+===== `timeout` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `5`
+
+Initial connection timeout in seconds.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

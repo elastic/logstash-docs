@@ -1,0 +1,102 @@
+:plugin: rackspace
+:type: input
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.1
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-input-rackspace/blob/v3.0.1/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Rackspace input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Rackspace Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-api_key>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-claim>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-queue>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-region>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-ttl>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-username>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-api_key"]
+===== `api_key` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Rackspace Cloud API Key
+
+[id="{version}-plugins-{type}s-{plugin}-claim"]
+===== `claim` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `1`
+
+number of messages to claim
+Min: 1, Max: 10
+
+[id="{version}-plugins-{type}s-{plugin}-queue"]
+===== `queue` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"logstash"`
+
+Rackspace Queue Name
+
+[id="{version}-plugins-{type}s-{plugin}-region"]
+===== `region` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"dfw"`
+
+Rackspace region
+`ord, dfw, lon, syd,` etc
+
+[id="{version}-plugins-{type}s-{plugin}-ttl"]
+===== `ttl` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `60`
+
+length of time to hold claim
+Min: 60
+
+[id="{version}-plugins-{type}s-{plugin}-username"]
+===== `username` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Rackspace Cloud Username
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

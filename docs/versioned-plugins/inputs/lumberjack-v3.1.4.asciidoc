@@ -1,0 +1,112 @@
+:plugin: lumberjack
+:type: input
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.1.4
+:release_date: 2017-11-07
+:changelog_url: https://github.com/logstash-plugins/logstash-input-lumberjack/blob/v3.1.4/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Lumberjack input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Receive events using the Lumberjack protocol.
+
+This input can be used to reliably and securely transport
+events between Logstash instances. To do so, use the
+{logstash-ref}/plugins-outputs-lumberjack.html[lumberjack output plugin]
+in the sending Logstash instance(s).
+
+It can also be used to receive events from the deprecated
+https://github.com/elastic/logstash-forwarder[logstash-forwarder]
+tool that has been replaced by
+https://github.com/elastic/beats/tree/master/filebeat[Filebeat].
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Lumberjack Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-congestion_threshold>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-host>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-port>> |{logstash-ref}/configuration-file-structure.html#number[number]|Yes
+| <<{version}-plugins-{type}s-{plugin}-ssl_certificate>> |a valid filesystem path|Yes
+| <<{version}-plugins-{type}s-{plugin}-ssl_key>> |a valid filesystem path|Yes
+| <<{version}-plugins-{type}s-{plugin}-ssl_key_passphrase>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-congestion_threshold"]
+===== `congestion_threshold` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `5`
+
+The number of seconds before we raise a timeout,
+this option is useful to control how much time to wait if something is blocking the pipeline.
+
+[id="{version}-plugins-{type}s-{plugin}-host"]
+===== `host` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"0.0.0.0"`
+
+The IP address to listen on.
+
+[id="{version}-plugins-{type}s-{plugin}-port"]
+===== `port` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * There is no default value for this setting.
+
+The port to listen on.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_certificate"]
+===== `ssl_certificate` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+SSL certificate to use.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_key"]
+===== `ssl_key` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+SSL key to use.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_key_passphrase"]
+===== `ssl_key_passphrase` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+SSL key passphrase to use.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

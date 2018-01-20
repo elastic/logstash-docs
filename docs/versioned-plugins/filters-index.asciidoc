@@ -11,8 +11,6 @@ include::filters/alter-index.asciidoc[]
 
 include::filters/anonymize-index.asciidoc[]
 
-//include::filters/bytesize-index.asciidoc[]
-
 include::filters/checksum-index.asciidoc[]
 
 include::filters/cidr-index.asciidoc[]
@@ -30,8 +28,6 @@ include::filters/csv-index.asciidoc[]
 include::filters/date-index.asciidoc[]
 
 include::filters/de_dot-index.asciidoc[]
-
-//include::filters/debug-index.asciidoc[]
 
 include::filters/dissect-index.asciidoc[]
 

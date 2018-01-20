@@ -1,0 +1,20 @@
+:plugin: rabbitmq
+:type: input
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v6.0.2-plugins-inputs-rabbitmq,v6.0.2>> | 2017-11-07
+| <<v6.0.1-plugins-inputs-rabbitmq,v6.0.1>> | 2017-08-16
+| <<v6.0.0-plugins-inputs-rabbitmq,v6.0.0>> | 2017-08-02
+| <<v5.2.5-plugins-inputs-rabbitmq,v5.2.5>> | 2017-08-18
+| <<v5.2.4-plugins-inputs-rabbitmq,v5.2.4>> | 2017-06-23
+|=======================================================================
+
+include::rabbitmq-v6.0.2.asciidoc[]
+include::rabbitmq-v6.0.1.asciidoc[]
+include::rabbitmq-v6.0.0.asciidoc[]
+include::rabbitmq-v5.2.5.asciidoc[]
+include::rabbitmq-v5.2.4.asciidoc[]
+

@@ -1,0 +1,132 @@
+:plugin: gemfire
+:type: input
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v2.0.5
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-input-gemfire/blob/v2.0.5/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Gemfire input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Push events to a GemFire region.
+
+GemFire is an object database.
+
+To use this plugin you need to add gemfire.jar to your CLASSPATH.
+Using format=json requires jackson.jar too; use of continuous
+queries requires antlr.jar.
+
+Note: this plugin has only been tested with GemFire 7.0.
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Gemfire Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-cache_name>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-cache_xml_file>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-interest_regexp>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-query>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-region_name>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-serialization>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-threads>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-cache_name"]
+===== `cache_name` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"logstash"`
+
+Your client cache name
+
+[id="{version}-plugins-{type}s-{plugin}-cache_xml_file"]
+===== `cache_xml_file` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `nil`
+
+The path to a GemFire client cache XML file.
+
+Example:
+
+     <client-cache>
+       <pool name="client-pool" subscription-enabled="true" subscription-redundancy="1">
+           <locator host="localhost" port="31331"/>
+       </pool>
+       <region name="Logstash">
+           <region-attributes refid="CACHING_PROXY" pool-name="client-pool" >
+           </region-attributes>
+       </region>
+     </client-cache>
+
+
+[id="{version}-plugins-{type}s-{plugin}-interest_regexp"]
+===== `interest_regexp` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `".*"`
+
+A regexp to use when registering interest for cache events.
+Ignored if a :query is specified.
+
+[id="{version}-plugins-{type}s-{plugin}-query"]
+===== `query` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `nil`
+
+A query to run as a GemFire "continuous query"; if specified it takes
+precedence over :interest_regexp which will be ignore.
+
+Important: use of continuous queries requires subscriptions to be enabled on the client pool.
+
+[id="{version}-plugins-{type}s-{plugin}-region_name"]
+===== `region_name` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"Logstash"`
+
+The region name
+
+[id="{version}-plugins-{type}s-{plugin}-serialization"]
+===== `serialization` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `nil`
+
+How the message is serialized in the cache. Can be one of "json" or "plain"; default is plain
+
+[id="{version}-plugins-{type}s-{plugin}-threads"]
+===== `threads` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `1`
+
+
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
