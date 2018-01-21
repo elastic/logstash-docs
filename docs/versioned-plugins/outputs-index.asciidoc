@@ -3,11 +3,69 @@
 
 include::include/plugin-intro.asciidoc[]
 
+include::outputs/boundary-index.asciidoc[]
+
+include::outputs/circonus-index.asciidoc[]
+
+include::outputs/cloudwatch-index.asciidoc[]
+
+include::outputs/csv-index.asciidoc[]
+
+include::outputs/datadog-index.asciidoc[]
+
+include::outputs/datadog_metrics-index.asciidoc[]
+
 include::outputs/elasticsearch-index.asciidoc[]
+
+include::outputs/elasticsearch_java-index.asciidoc[]
 
 include::outputs/email-index.asciidoc[]
 
+include::outputs/exec-index.asciidoc[]
+
 include::outputs/file-index.asciidoc[]
 
+include::outputs/ganglia-index.asciidoc[]
+
+include::outputs/gelf-index.asciidoc[]
+
+include::outputs/gemfire-index.asciidoc[]
+
+include::outputs/google_bigquery-index.asciidoc[]
+
+include::outputs/google_cloud_storage-index.asciidoc[]
+
 include::outputs/graphite-index.asciidoc[]
+
+include::outputs/graphtastic-index.asciidoc[]
+
+include::outputs/hipchat-index.asciidoc[]
+
+include::outputs/http-index.asciidoc[]
+
+include::outputs/icinga-index.asciidoc[]
+
+include::outputs/influxdb-index.asciidoc[]
+
+include::outputs/irc-index.asciidoc[]
+
+include::outputs/jira-index.asciidoc[]
+
+include::outputs/jms-index.asciidoc[]
+
+include::outputs/juggernaut-index.asciidoc[]
+
+include::outputs/kafka-index.asciidoc[]
+
+include::outputs/librato-index.asciidoc[]
+
+include::outputs/logentries-index.asciidoc[]
+
+include::outputs/loggly-index.asciidoc[]
+
+include::outputs/lumberjack-index.asciidoc[]
+
+include::outputs/metriccatcher-index.asciidoc[]
+
+include::outputs/monasca_log_api-index.asciidoc[]
 
