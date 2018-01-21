@@ -1,0 +1,152 @@
+:plugin: irc
+:type: input
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.5
+:release_date: 2017-11-14
+:changelog_url: https://github.com/logstash-plugins/logstash-input-irc/blob/v3.0.5/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Irc input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Read events from an IRC Server.
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Irc Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-catch_all>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-channels>> |{logstash-ref}/configuration-file-structure.html#array[array]|Yes
+| <<{version}-plugins-{type}s-{plugin}-get_stats>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-host>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-nick>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-port>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-real>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-secure>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-stats_interval>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-user>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-catch_all"]
+===== `catch_all` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Catch all IRC channel/user events not just channel messages
+
+[id="{version}-plugins-{type}s-{plugin}-channels"]
+===== `channels` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * There is no default value for this setting.
+
+Channels to join and read messages from.
+
+These should be full channel names including the '#' symbol, such as
+"#logstash".
+
+For passworded channels, add a space and the channel password, such as
+"#logstash password".
+
+
+[id="{version}-plugins-{type}s-{plugin}-get_stats"]
+===== `get_stats` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Gather and send user counts for channels - this requires catch_all and will force it
+
+[id="{version}-plugins-{type}s-{plugin}-host"]
+===== `host` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Host of the IRC Server to connect to.
+
+[id="{version}-plugins-{type}s-{plugin}-nick"]
+===== `nick` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"logstash"`
+
+IRC Nickname
+
+[id="{version}-plugins-{type}s-{plugin}-password"]
+===== `password` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+IRC Server password
+
+[id="{version}-plugins-{type}s-{plugin}-port"]
+===== `port` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `6667`
+
+Port for the IRC Server
+
+[id="{version}-plugins-{type}s-{plugin}-real"]
+===== `real` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"logstash"`
+
+IRC Real name
+
+[id="{version}-plugins-{type}s-{plugin}-secure"]
+===== `secure` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Set this to true to enable SSL.
+
+[id="{version}-plugins-{type}s-{plugin}-stats_interval"]
+===== `stats_interval` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `5`
+
+How often in minutes to get the user count stats
+
+[id="{version}-plugins-{type}s-{plugin}-user"]
+===== `user` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"logstash"`
+
+IRC Username
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

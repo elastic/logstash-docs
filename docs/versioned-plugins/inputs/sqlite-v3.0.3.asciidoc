@@ -1,0 +1,124 @@
+:plugin: sqlite
+:type: input
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.3
+:release_date: 2017-11-07
+:changelog_url: https://github.com/logstash-plugins/logstash-input-sqlite/blob/v3.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Sqlite input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Read rows from an sqlite database.
+
+This is most useful in cases where you are logging directly to a table.
+Any tables being watched must have an `id` column that is monotonically
+increasing.
+
+All tables are read by default except:
+
+* ones matching `sqlite_%` - these are internal/adminstrative tables for sqlite
+* `since_table` - this is used by this plugin to track state.
+
+Example
+[source,sql]
+    % sqlite /tmp/example.db
+    sqlite> CREATE TABLE weblogs (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ip STRING,
+        request STRING,
+        response INTEGER);
+    sqlite> INSERT INTO weblogs (ip, request, response) 
+        VALUES ("1.2.3.4", "/index.html", 200);
+
+Then with this logstash config:
+[source,ruby]
+    input {
+      sqlite {
+        path => "/tmp/example.db"
+        type => weblogs
+      }
+    }
+    output {
+      stdout {
+        debug => true
+      }
+    }
+
+Sample output:
+[source,ruby]
+    {
+      "@source"      => "sqlite://sadness/tmp/x.db",
+      "@tags"        => [],
+      "@fields"      => {
+        "ip"       => "1.2.3.4",
+        "request"  => "/index.html",
+        "response" => 200
+      },
+      "@timestamp"   => "2013-05-29T06:16:30.850Z",
+      "@source_host" => "sadness",
+      "@source_path" => "/tmp/x.db",
+      "@message"     => "",
+      "@type"        => "foo"
+    }
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Sqlite Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-batch>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-exclude_tables>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-path>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-batch"]
+===== `batch` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `5`
+
+How many rows to fetch at a time from each `SELECT` call.
+
+[id="{version}-plugins-{type}s-{plugin}-exclude_tables"]
+===== `exclude_tables` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `[]`
+
+Any tables to exclude by name.
+By default all tables are followed.
+
+[id="{version}-plugins-{type}s-{plugin}-path"]
+===== `path` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The path to the sqlite database file.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

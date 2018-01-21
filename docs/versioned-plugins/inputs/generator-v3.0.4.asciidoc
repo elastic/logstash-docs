@@ -1,0 +1,107 @@
+:plugin: generator
+:type: input
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.4
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-input-generator/blob/v3.0.4/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Generator input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Generate random log events.
+
+The general intention of this is to test performance of plugins.
+
+An event is generated first
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Generator Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-count>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-lines>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-message>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-threads>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-count"]
+===== `count` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `0`
+
+Set how many messages should be generated.
+
+The default, `0`, means generate an unlimited number of events.
+
+[id="{version}-plugins-{type}s-{plugin}-lines"]
+===== `lines` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * There is no default value for this setting.
+
+The lines to emit, in order. This option cannot be used with the 'message'
+setting.
+
+Example:
+[source,ruby]
+    input {
+      generator {
+        lines => [
+          "line 1",
+          "line 2",
+          "line 3"
+        ]
+        # Emit all lines 3 times.
+        count => 3
+      }
+    }
+
+The above will emit `line 1` then `line 2` then `line`, then `line 1`, etc...
+
+[id="{version}-plugins-{type}s-{plugin}-message"]
+===== `message` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"Hello world!"`
+
+The message string to use in the event.
+
+If you set this to `stdin` then this plugin will read a single line from
+stdin and use that as the message string for every event.
+
+Otherwise, this value will be used verbatim as the event message.
+
+[id="{version}-plugins-{type}s-{plugin}-threads"]
+===== `threads` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `1`
+
+
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

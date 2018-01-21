@@ -35,8 +35,6 @@ include::codecs/json-index.asciidoc[]
 
 include::codecs/json_lines-index.asciidoc[]
 
-//include::codecs/json_pretty-index.asciidoc[]
-
 include::codecs/line-index.asciidoc[]
 
 include::codecs/msgpack-index.asciidoc[]

@@ -1,0 +1,157 @@
+:plugin: jmx
+:type: input
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.3
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-input-jmx/blob/v3.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Jmx input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This input plugin permits to retrieve metrics from remote Java applications using JMX.
+Every `polling_frequency`, it scans a folder containing json configuration 
+files describing JVMs to monitor with metrics to retrieve.
+Then a pool of threads will retrieve metrics and create events.
+
+## The configuration:
+
+In Logstash configuration, you must set the polling frequency,
+the number of thread used to poll metrics and a directory absolute path containing
+json files with the configuration per jvm of metrics to retrieve.
+Logstash input configuration example:
+[source,ruby]
+    jmx {
+      //Required
+      path => "/apps/logstash_conf/jmxconf"
+      //Optional, default 60s
+      polling_frequency => 15
+      type => "jmx"
+      //Optional, default 4
+      nb_thread => 4
+    }
+
+Json JMX configuration example:
+[source,js]
+    {
+      //Required, JMX listening host/ip
+      "host" : "192.168.1.2",
+      //Required, JMX listening port
+      "port" : 1335,
+      //Optional, the username to connect to JMX
+      "username" : "user",
+      //Optional, the password to connect to JMX
+      "password": "pass",
+      //Optional, use this alias as a prefix in the metric name. If not set use <host>_<port>
+      "alias" : "test.homeserver.elasticsearch",
+      //Required, list of JMX metrics to retrieve
+      "queries" : [
+      {
+        //Required, the object name of Mbean to request
+        "object_name" : "java.lang:type=Memory",
+        //Optional, use this alias in the metrics value instead of the object_name
+        "object_alias" : "Memory"
+      }, {
+        "object_name" : "java.lang:type=Runtime",
+        //Optional, set of attributes to retrieve. If not set retrieve
+        //all metrics available on the configured object_name.
+        "attributes" : [ "Uptime", "StartTime" ],
+        "object_alias" : "Runtime"
+      }, {
+        //object_name can be configured with * to retrieve all matching Mbeans
+        "object_name" : "java.lang:type=GarbageCollector,name=*",
+        "attributes" : [ "CollectionCount", "CollectionTime" ],
+        //object_alias can be based on specific value from the object_name thanks to ${<varname>}.
+        //In this case ${type} will be replaced by GarbageCollector...
+        "object_alias" : "${type}.${name}"
+      }, {
+        "object_name" : "java.nio:type=BufferPool,name=*",
+        "object_alias" : "${type}.${name}"
+      } ]
+    }
+
+Here are examples of generated events. When returned metrics value type is 
+number/boolean it is stored in `metric_value_number` event field
+otherwise it is stored in `metric_value_string` event field.
+[source,ruby]
+    {
+      "@version" => "1",
+      "@timestamp" => "2014-02-18T20:57:27.688Z",
+      "host" => "192.168.1.2",
+      "path" => "/apps/logstash_conf/jmxconf",
+      "type" => "jmx",
+      "metric_path" => "test.homeserver.elasticsearch.GarbageCollector.ParNew.CollectionCount",
+      "metric_value_number" => 2212
+    }
+
+[source,ruby]
+    {
+      "@version" => "1",
+      "@timestamp" => "2014-02-18T20:58:06.376Z",
+      "host" => "localhost",
+      "path" => "/apps/logstash_conf/jmxconf",
+      "type" => "jmx",
+      "metric_path" => "test.homeserver.elasticsearch.BufferPool.mapped.ObjectName",
+      "metric_value_string" => "java.nio:type=BufferPool,name=mapped"
+    }
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Jmx Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-nb_thread>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-path>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-polling_frequency>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-nb_thread"]
+===== `nb_thread` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `4`
+
+Indicate number of thread launched to retrieve metrics
+
+[id="{version}-plugins-{type}s-{plugin}-path"]
+===== `path` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Path where json conf files are stored
+
+[id="{version}-plugins-{type}s-{plugin}-polling_frequency"]
+===== `polling_frequency` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `60`
+
+Indicate interval between two jmx metrics retrieval
+(in s)
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

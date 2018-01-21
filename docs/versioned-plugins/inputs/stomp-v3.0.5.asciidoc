@@ -1,0 +1,119 @@
+:plugin: stomp
+:type: input
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.5
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-input-stomp/blob/v3.0.5/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Stomp input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Creates events received with the STOMP protocol.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Stomp Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-destination>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-host>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-port>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-reconnect>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-reconnect_interval>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-user>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-vhost>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-destination"]
+===== `destination` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The destination to read events from.
+
+Example: `/topic/logstash`
+
+[id="{version}-plugins-{type}s-{plugin}-host"]
+===== `host` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"localhost"`
+
+The address of the STOMP server.
+
+[id="{version}-plugins-{type}s-{plugin}-password"]
+===== `password` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * Default value is `""`
+
+The password to authenticate with.
+
+[id="{version}-plugins-{type}s-{plugin}-port"]
+===== `port` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `61613`
+
+The port to connet to on your STOMP server.
+
+[id="{version}-plugins-{type}s-{plugin}-reconnect"]
+===== `reconnect` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Auto reconnect
+
+[id="{version}-plugins-{type}s-{plugin}-reconnect_interval"]
+===== `reconnect_interval` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `30`
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-user"]
+===== `user` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `""`
+
+The username to authenticate with.
+
+[id="{version}-plugins-{type}s-{plugin}-vhost"]
+===== `vhost` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `nil`
+
+The vhost to use
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

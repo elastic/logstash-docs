@@ -1,0 +1,39 @@
+:plugin: stdin
+:type: input
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.2.3
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-input-stdin/blob/v3.2.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Stdin input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Read events from standard input.
+
+By default, each event is assumed to be one line. If you
+want to join lines, you'll want to use the multiline codec.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Stdin Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+|=======================================================================
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
