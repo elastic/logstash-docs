@@ -1,0 +1,106 @@
+:plugin: protobuf
+:type: codec
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v1.0.2
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-protobuf/blob/v1.0.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Protobuf codec plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This codec converts protobuf encoded messages into logstash events and vice versa. 
+
+Requires the protobuf definitions as ruby files. You can create those using the [ruby-protoc compiler](https://github.com/codekitchen/ruby-protocol-buffers).
+
+The following shows a usage example for decoding events from a kafka stream:
+[source,ruby]
+kafka 
+{
+ zk_connect => "127.0.0.1"
+ topic_id => "your_topic_goes_here"
+ codec => protobuf 
+ {
+   class_name => "Animal::Unicorn"
+   include_path => ['/path/to/protobuf/definitions/UnicornProtobuf.pb.rb']
+ }
+}
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Protobuf Codec Configuration Options
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-class_name>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-include_path>> |{logstash-ref}/configuration-file-structure.html#array[array]|Yes
+|=======================================================================
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-class_name"]
+===== `class_name` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Name of the class to decode.
+If your protobuf definition contains modules, prepend them to the class name with double colons like so:
+[source,ruby]
+class_name => "Foods::Dairy::Cheese"
+
+This corresponds to a protobuf definition starting as follows:
+[source,ruby]
+module Foods
+   module Dairy
+       class Cheese
+           # here are your field definitions.
+
+If your class references other definitions: you only have to add the main class here.
+
+[id="{version}-plugins-{type}s-{plugin}-include_path"]
+===== `include_path` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * There is no default value for this setting.
+
+List of absolute pathes to files with protobuf definitions. 
+When using more than one file, make sure to arrange the files in reverse order of dependency so that each class is loaded before it is 
+refered to by another.
+
+Example: a class _Cheese_ referencing another protobuf class _Milk_
+[source,ruby]
+module Foods
+  module Dairy
+        class Cheese
+           set_fully_qualified_name "Foods.Dairy.Cheese"
+           optional ::Foods::Cheese::Milk, :milk, 1
+           optional :int64, :unique_id, 2
+           # here be more field definitions
+
+would be configured as
+[source,ruby]
+include_path => ['/path/to/protobuf/definitions/Milk.pb.rb','/path/to/protobuf/definitions/Cheese.pb.rb']
+
+When using the codec in an output plugin: 
+* make sure to include all the desired fields in the protobuf definition, including timestamp. 
+  Remove fields that are not part of the protobuf definition from the event by using the mutate filter.
+* the @ symbol is currently not supported in field names when loading the protobuf definitions for encoding. Make sure to call the timestamp field "timestamp" 
+  instead of "@timestamp" in the protobuf file. Logstash event fields will be stripped of the leading @ before conversion.
+ 
+
+

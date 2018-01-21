@@ -1,0 +1,83 @@
+:plugin: environment
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.3
+:release_date: 2017-11-07
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-environment/blob/v3.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Environment filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This filter stores environment variables as subfields in the `@metadata` field.
+You can then use these values in other parts of the pipeline.
+
+Adding environment variables is as easy as:
+   filter {
+     environment {
+       add_metadata_from_env => { "field_name" => "ENV_VAR_NAME" }
+     }
+   }
+
+Accessing stored environment variables is now done through the `@metadata` field:
+
+   ["@metadata"]["field_name"]
+
+This would reference field `field_name`, which in the above example references
+the `ENV_VAR_NAME` environment variable.
+
+IMPORTANT: Previous versions of this plugin put the environment variables as
+fields at the root level of the event.  Current versions make use of the
+`@metadata` field, as outlined.  You have to change `add_field_from_env` in
+the older versions to `add_metadata_from_env` in the newer version.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Environment Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-add_metadata_from_env>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-add_metadata_from_env"]
+===== `add_metadata_from_env` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * Default value is `{}`
+
+Specify a hash of field names and the environment variable name with the
+value you want imported into Logstash. For example:
+
+   add_metadata_from_env => { "field_name" => "ENV_VAR_NAME" }
+
+or
+
+   add_metadata_from_env => {
+     "field1" => "ENV1"
+     "field2" => "ENV2"
+     # "field_n" => "ENV_n"
+   }
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

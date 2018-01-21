@@ -1,0 +1,194 @@
+:plugin: multiline
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.3
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-multiline/blob/v3.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Multiline filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+
+This filter will collapse multiline messages from a single source into one Logstash event.
+
+The original goal of this filter was to allow joining of multi-line messages
+from files into a single event. For example - joining java exception and
+stacktrace messages into a single event.
+
+NOTE: This filter will not work with multiple worker threads `-w 2` on the logstash command line.
+
+The config looks like this:
+[source,ruby]
+    filter {
+      multiline {
+        pattern => "pattern, a regexp"
+        negate => boolean
+        what => "previous" or "next"
+      }
+    }
+
+The `pattern` should be a regexp ({logstash-ref}/plugins-filters-grok.html[grok] patterns are
+supported) which matches what you believe to be an indicator that the field
+is part of an event consisting of multiple lines of log data.
+
+The `what` must be `previous` or `next` and indicates the relation
+to the multi-line event.
+
+The `negate` can be `true` or `false` (defaults to `false`). If `true`, a
+message not matching the pattern will constitute a match of the multiline
+filter and the `what` will be applied. (vice-versa is also true)
+
+For example, Java stack traces are multiline and usually have the message
+starting at the far-left, with each subsequent line indented. Do this:
+[source,ruby]
+    filter {
+      multiline {
+        pattern => "^\s"
+        what => "previous"
+      }
+    }
+
+This says that any line starting with whitespace belongs to the previous line.
+
+Another example is C line continuations (backslash). Here's how to do that:
+[source,ruby]
+    filter {
+      multiline {
+        pattern => "\\$"
+        what => "next"
+      }
+    }
+
+This says that any line ending with a backslash should be combined with the
+following line.
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Multiline Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-allow_duplicates>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-max_age>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-negate>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-pattern>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-patterns_dir>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-source>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-stream_identity>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-what>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["previous", "next"]`|Yes
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-allow_duplicates"]
+===== `allow_duplicates` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Allow duplcate values on the source field.
+
+[id="{version}-plugins-{type}s-{plugin}-max_age"]
+===== `max_age` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `5`
+
+The maximum age an event can be (in seconds) before it is automatically
+flushed.
+
+[id="{version}-plugins-{type}s-{plugin}-negate"]
+===== `negate` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Negate the regexp pattern ('if not matched')
+
+[id="{version}-plugins-{type}s-{plugin}-pattern"]
+===== `pattern` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The expression to match. The same matching engine as the
+{logstash-ref}/plugins-filters-grok.html[grok filter] is used, so the expression can contain
+a plain regular expression or one that also contains grok patterns.
+
+[id="{version}-plugins-{type}s-{plugin}-patterns_dir"]
+===== `patterns_dir` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `[]`
+
+Logstash ships by default with a bunch of patterns, so you don't
+necessarily need to define this yourself unless you are adding additional
+patterns.
+
+Pattern files are plain text with format:
+[source,ruby]
+    NAME PATTERN
+
+For example:
+[source,ruby]
+    NUMBER \d+
+
+[id="{version}-plugins-{type}s-{plugin}-source"]
+===== `source` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"message"`
+
+The field name to execute the pattern match on.
+
+[id="{version}-plugins-{type}s-{plugin}-stream_identity"]
+===== `stream_identity` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"%{host}.%{path}.%{type}"`
+
+The stream identity is how the multiline filter determines which stream an
+event belongs to. This is generally used for differentiating, say, events
+coming from multiple files in the same file input, or multiple connections
+coming from a tcp input.
+
+The default value here is usually what you want, but there are some cases
+where you want to change it. One such example is if you are using a tcp
+input with only one client connecting at any time. If that client
+reconnects (due to error or client restart), then logstash will identify
+the new connection as a new stream and break any multiline goodness that
+may have occurred between the old and new connection. To solve this use
+case, you can use `%{@source_host}.%{@type}` instead.
+
+[id="{version}-plugins-{type}s-{plugin}-what"]
+===== `what` 
+
+  * This is a required setting.
+  * Value can be any of: `previous`, `next`
+  * There is no default value for this setting.
+
+If the pattern matched, does event belong to the next or previous event?
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

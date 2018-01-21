@@ -1,0 +1,14 @@
+:plugin: metaevent
+:type: filter
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v2.0.7-plugins-filters-metaevent,v2.0.7>> | 2017-08-15
+| <<v2.0.5-plugins-filters-metaevent,v2.0.5>> | 2017-06-23
+|=======================================================================
+
+include::metaevent-v2.0.7.asciidoc[]
+include::metaevent-v2.0.5.asciidoc[]
+

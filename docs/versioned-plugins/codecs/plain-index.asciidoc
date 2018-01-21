@@ -1,0 +1,18 @@
+:plugin: plain
+:type: codec
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v3.0.6-plugins-codecs-plain,v3.0.6>> | 2017-12-19
+| <<v3.0.5-plugins-codecs-plain,v3.0.5>> | 2017-11-07
+| <<v3.0.4-plugins-codecs-plain,v3.0.4>> | 2017-08-15
+| <<v3.0.3-plugins-codecs-plain,v3.0.3>> | 2017-06-23
+|=======================================================================
+
+include::plain-v3.0.6.asciidoc[]
+include::plain-v3.0.5.asciidoc[]
+include::plain-v3.0.4.asciidoc[]
+include::plain-v3.0.3.asciidoc[]
+

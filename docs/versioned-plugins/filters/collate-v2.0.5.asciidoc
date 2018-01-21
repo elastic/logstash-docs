@@ -1,0 +1,84 @@
+:plugin: collate
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v2.0.5
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-collate/blob/v2.0.5/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Collate filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Collate events by time or count.
+
+The original goal of this filter was to merge the logs from different sources
+by the time of log, for example, in real-time log collection, logs can be
+collated by amount of 3000 logs or can be collated in 30 seconds.
+
+The config looks like this:
+[source,ruby]
+    filter {
+      collate {
+        count => 3000
+        interval => "30s"
+        order => "ascending"
+      }
+    }
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Collate Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-count>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-interval>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-order>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["ascending", "descending"]`|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-count"]
+===== `count` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `1000`
+
+How many logs should be collated.
+
+[id="{version}-plugins-{type}s-{plugin}-interval"]
+===== `interval` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"1m"`
+
+The `interval` is the time window which how long the logs should be collated. (default `1m`)
+
+[id="{version}-plugins-{type}s-{plugin}-order"]
+===== `order` 
+
+  * Value can be any of: `ascending`, `descending`
+  * Default value is `"ascending"`
+
+The `order` collated events should appear in.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

@@ -1,0 +1,14 @@
+:plugin: file
+:type: input
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v4.0.3-plugins-inputs-file,v4.0.3>> | 2017-08-15
+| <<v4.0.2-plugins-inputs-file,v4.0.2>> | 2017-06-23
+|=======================================================================
+
+include::file-v4.0.3.asciidoc[]
+include::file-v4.0.2.asciidoc[]
+

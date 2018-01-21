@@ -1,0 +1,121 @@
+:plugin: json
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.4
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-json/blob/v3.0.4/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Json filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This is a JSON parsing filter. It takes an existing field which contains JSON and
+expands it into an actual data structure within the Logstash event.
+
+By default it will place the parsed JSON in the root (top level) of the Logstash event, but this
+filter can be configured to place the JSON into any arbitrary event field, using the
+`target` configuration.
+
+This plugin has a few fallback scenario when something bad happen during the parsing of the event.
+If the JSON parsing fails on the data, the event will be untouched and it will be tagged with a
+`_jsonparsefailure` then you can use conditionals to clean the data. You can configured this tag with then
+`tag_on_failure` option.
+
+If the parsed data contains a `@timestamp` field, we will try to use it for the event's `@timestamp`, if the
+parsing fails, the field will be renamed to `_@timestamp` and the event will be tagged with a
+`_timestampparsefailure`.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Json Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-skip_on_invalid_json>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-source>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-tag_on_failure>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-target>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-skip_on_invalid_json"]
+===== `skip_on_invalid_json` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Allow to skip filter on invalid json (allows to handle json and non-json data without warnings)
+
+[id="{version}-plugins-{type}s-{plugin}-source"]
+===== `source` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The configuration for the JSON filter:
+[source,ruby]
+    source => source_field
+
+For example, if you have JSON data in the `message` field:
+[source,ruby]
+    filter {
+      json {
+        source => "message"
+      }
+    }
+
+The above would parse the json from the `message` field
+
+[id="{version}-plugins-{type}s-{plugin}-tag_on_failure"]
+===== `tag_on_failure` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `["_jsonparsefailure"]`
+
+Append values to the `tags` field when there has been no
+successful match
+
+[id="{version}-plugins-{type}s-{plugin}-target"]
+===== `target` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Define the target field for placing the parsed data. If this setting is
+omitted, the JSON data will be stored at the root (top level) of the event.
+
+For example, if you want the data to be put in the `doc` field:
+[source,ruby]
+    filter {
+      json {
+        target => "doc"
+      }
+    }
+
+JSON in the value of the `source` field will be expanded into a
+data structure in the `target` field.
+
+NOTE: if the `target` field already exists, it will be overwritten!
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

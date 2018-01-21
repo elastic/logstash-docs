@@ -1,0 +1,13 @@
+:type: output
+:type_uc: Output
+
+include::include/plugin-intro.asciidoc[]
+
+include::outputs/elasticsearch-index.asciidoc[]
+
+include::outputs/email-index.asciidoc[]
+
+include::outputs/file-index.asciidoc[]
+
+include::outputs/graphite-index.asciidoc[]
+

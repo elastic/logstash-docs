@@ -1,0 +1,20 @@
+:plugin: multiline
+:type: codec
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v3.0.9-plugins-codecs-multiline,v3.0.9>> | 2018-01-17
+| <<v3.0.8-plugins-codecs-multiline,v3.0.8>> | 2017-11-07
+| <<v3.0.7-plugins-codecs-multiline,v3.0.7>> | 2017-08-15
+| <<v3.0.6-plugins-codecs-multiline,v3.0.6>> | 2017-08-07
+| <<v3.0.5-plugins-codecs-multiline,v3.0.5>> | 2017-06-23
+|=======================================================================
+
+include::multiline-v3.0.9.asciidoc[]
+include::multiline-v3.0.8.asciidoc[]
+include::multiline-v3.0.7.asciidoc[]
+include::multiline-v3.0.6.asciidoc[]
+include::multiline-v3.0.5.asciidoc[]
+

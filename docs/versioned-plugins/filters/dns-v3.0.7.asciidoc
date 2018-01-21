@@ -1,0 +1,161 @@
+:plugin: dns
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.7
+:release_date: 2017-11-07
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-dns/blob/v3.0.7/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Dns filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+The DNS filter performs a lookup (either an A record/CNAME record lookup
+or a reverse lookup at the PTR record) on records specified under the
+`reverse` arrays or respectively under the `resolve` arrays.
+
+The config should look like this:
+[source,ruby]
+    filter {
+      dns {
+        reverse => [ "source_host", "field_with_address" ]
+        resolve => [ "field_with_fqdn" ]
+        action => "replace"
+      }
+    }
+
+This filter, like all filters, only processes 1 event at a time, so the use
+of this plugin can significantly slow down your pipeline's throughput if you
+have a high latency network. By way of example, if each DNS lookup takes 2
+milliseconds, the maximum throughput you can achieve with a single filter
+worker is 500 events per second (1000 milliseconds / 2 milliseconds).
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Dns Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-action>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["append", "replace"]`|No
+| <<{version}-plugins-{type}s-{plugin}-failed_cache_size>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-failed_cache_ttl>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-hit_cache_size>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-hit_cache_ttl>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-hostsfile>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-max_retries>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-nameserver>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-resolve>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-reverse>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-action"]
+===== `action` 
+
+  * Value can be any of: `append`, `replace`
+  * Default value is `"append"`
+
+Determine what action to do: append or replace the values in the fields
+specified under `reverse` and `resolve`.
+
+[id="{version}-plugins-{type}s-{plugin}-failed_cache_size"]
+===== `failed_cache_size` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `0`
+
+cache size for failed requests
+
+[id="{version}-plugins-{type}s-{plugin}-failed_cache_ttl"]
+===== `failed_cache_ttl` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `5`
+
+how long to cache failed requests (in seconds)
+
+[id="{version}-plugins-{type}s-{plugin}-hit_cache_size"]
+===== `hit_cache_size` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `0`
+
+set the size of cache for successful requests
+
+[id="{version}-plugins-{type}s-{plugin}-hit_cache_ttl"]
+===== `hit_cache_ttl` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `60`
+
+how long to cache successful requests (in seconds)
+
+[id="{version}-plugins-{type}s-{plugin}-hostsfile"]
+===== `hostsfile` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * There is no default value for this setting.
+
+Use custom hosts file(s). For example: `["/var/db/my_custom_hosts"]`
+
+[id="{version}-plugins-{type}s-{plugin}-max_retries"]
+===== `max_retries` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `2`
+
+number of times to retry a failed resolve/reverse
+
+[id="{version}-plugins-{type}s-{plugin}-nameserver"]
+===== `nameserver` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * There is no default value for this setting.
+
+Use custom nameserver(s). For example: `["8.8.8.8", "8.8.4.4"]`
+
+[id="{version}-plugins-{type}s-{plugin}-resolve"]
+===== `resolve` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * There is no default value for this setting.
+
+Forward resolve one or more fields.
+
+[id="{version}-plugins-{type}s-{plugin}-reverse"]
+===== `reverse` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * There is no default value for this setting.
+
+Reverse resolve one or more fields.
+
+[id="{version}-plugins-{type}s-{plugin}-timeout"]
+===== `timeout` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `0.5`
+
+`resolv` calls will be wrapped in a timeout instance
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

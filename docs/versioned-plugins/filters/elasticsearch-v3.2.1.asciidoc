@@ -1,0 +1,238 @@
+:plugin: elasticsearch
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.2.1
+:release_date: 2017-11-07
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.2.1/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Elasticsearch filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+.Compatibility Note
+[NOTE]
+================================================================================
+Starting with Elasticsearch 5.3, there's an {ref}/modules-http.html[HTTP setting]
+called `http.content_type.required`. If this option is set to `true`, and you
+are using Logstash 2.4 through 5.2, you need to update the Elasticsearch filter
+plugin to version 3.1.1 or higher.
+
+================================================================================
+
+Search Elasticsearch for a previous log event and copy some fields from it
+into the current event.  Below are two complete examples of how this filter might
+be used.
+
+The first example uses the legacy 'query' parameter where the user is limited to an Elasticsearch query_string.
+Whenever logstash receives an "end" event, it uses this elasticsearch
+filter to find the matching "start" event based on some operation identifier.
+Then it copies the `@timestamp` field from the "start" event into a new field on
+the "end" event.  Finally, using a combination of the "date" filter and the
+"ruby" filter, we calculate the time duration in hours between the two events.
+[source,ruby]
+--------------------------------------------------
+      if [type] == "end" {
+         elasticsearch {
+            hosts => ["es-server"]
+            query => "type:start AND operation:%{[opid]}"
+            fields => { "@timestamp" => "started" }
+         }
+
+         date {
+            match => ["[started]", "ISO8601"]
+            target => "[started]"
+         }
+
+         ruby {
+            code => "event['duration_hrs'] = (event['@timestamp'] - event['started']) / 3600 rescue nil"
+         }
+      }
+
+ The example below reproduces the above example but utilises the query_template.  This query_template represents a full
+ Elasticsearch query DSL and supports the standard Logstash field substitution syntax.  The example below issues
+ the same query as the first example but uses the template shown.
+
+  if [type] == "end" {
+         elasticsearch {
+            hosts => ["es-server"]
+            query_template => "template.json"
+         }
+
+         date {
+            match => ["[started]", "ISO8601"]
+            target => "[started]"
+         }
+
+         ruby {
+            code => "event['duration_hrs'] = (event['@timestamp'] - event['started']) / 3600 rescue nil"
+         }
+  }
+
+
+
+  template.json:
+
+ {
+    "query": {
+      "query_string": {
+       "query": "type:start AND operation:%{[opid]}"
+      }
+    },
+   "_source": ["@timestamp", "started"]
+ }
+
+As illustrated above, through the use of 'opid', fields from the Logstash events can be referenced within the template.
+The template will be populated per event prior to being used to query Elasticsearch.
+
+--------------------------------------------------
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Elasticsearch Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-ca_file>> |a valid filesystem path|No
+| <<{version}-plugins-{type}s-{plugin}-enable_sort>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-fields>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-hosts>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-index>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-query>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-query_template>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-result_size>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-sort>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-tag_on_failure>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-user>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-ca_file"]
+===== `ca_file` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+SSL Certificate Authority file
+
+[id="{version}-plugins-{type}s-{plugin}-enable_sort"]
+===== `enable_sort` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Whether results should be sorted or not
+
+[id="{version}-plugins-{type}s-{plugin}-fields"]
+===== `fields` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `{}`
+
+Array of fields to copy from old event (found via elasticsearch) into new event
+
+[id="{version}-plugins-{type}s-{plugin}-hosts"]
+===== `hosts` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `["localhost:9200"]`
+
+List of elasticsearch hosts to use for querying.
+
+[id="{version}-plugins-{type}s-{plugin}-index"]
+===== `index` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `""`
+
+Comma-delimited list of index names to search; use `_all` or empty string to perform the operation on all indices.
+Field substitution (e.g. `index-name-%{date_field}`) is available
+
+[id="{version}-plugins-{type}s-{plugin}-password"]
+===== `password` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Basic Auth - password
+
+[id="{version}-plugins-{type}s-{plugin}-query"]
+===== `query` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Elasticsearch query string. Read the Elasticsearch query string documentation.
+for more info at: https://www.elastic.co/guide/en/elasticsearch/reference/master/query-dsl-query-string-query.html#query-string-syntax
+
+[id="{version}-plugins-{type}s-{plugin}-query_template"]
+===== `query_template` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+File path to elasticsearch query in DSL format. Read the Elasticsearch query documentation
+for more info at: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
+
+[id="{version}-plugins-{type}s-{plugin}-result_size"]
+===== `result_size` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `1`
+
+How many results to return
+
+[id="{version}-plugins-{type}s-{plugin}-sort"]
+===== `sort` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"@timestamp:desc"`
+
+Comma-delimited list of `<field>:<direction>` pairs that define the sort order
+
+[id="{version}-plugins-{type}s-{plugin}-ssl"]
+===== `ssl` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+SSL
+
+[id="{version}-plugins-{type}s-{plugin}-tag_on_failure"]
+===== `tag_on_failure` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `["_elasticsearch_lookup_failure"]`
+
+Tags the event on failure to look up previous log event information. This can be used in later analysis.
+
+[id="{version}-plugins-{type}s-{plugin}-user"]
+===== `user` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Basic Auth - username
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

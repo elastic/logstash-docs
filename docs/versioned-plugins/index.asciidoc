@@ -1,0 +1,20 @@
+:versioned_docs: true
+
+// Set include path for static files that live in the logstash repo
+:include_path: ../include
+
+include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
+
+// Override logstash-ref setting imported from shared/attributes.asciidoc
+:logstash-ref: http://www.elastic.co/guide/en/logstash/current
+
+[[logstash-plugin-reference]]
+= Versioned Plugin Reference
+
+include::inputs-index.asciidoc[]
+
+include::outputs-index.asciidoc[]
+
+include::filters-index.asciidoc[]
+
+include::codecs-index.asciidoc[]

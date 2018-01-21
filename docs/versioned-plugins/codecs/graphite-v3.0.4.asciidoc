@@ -1,0 +1,93 @@
+:plugin: graphite
+:type: codec
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.4
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-graphite/blob/v3.0.4/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Graphite codec plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This codec will encode and decode Graphite formated lines.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Graphite Codec Configuration Options
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-exclude_metrics>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-fields_are_metrics>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-include_metrics>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-metrics>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-metrics_format>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-exclude_metrics"]
+===== `exclude_metrics` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `["%{[^}]+}"]`
+
+Exclude regex matched metric names, by default exclude unresolved %{field} strings
+
+[id="{version}-plugins-{type}s-{plugin}-fields_are_metrics"]
+===== `fields_are_metrics` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Indicate that the event @fields should be treated as metrics and will be sent as is to graphite
+
+[id="{version}-plugins-{type}s-{plugin}-include_metrics"]
+===== `include_metrics` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `[".*"]`
+
+Include only regex matched metric names
+
+[id="{version}-plugins-{type}s-{plugin}-metrics"]
+===== `metrics` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * Default value is `{}`
+
+The metric(s) to use. This supports dynamic strings like `%{host}`
+for metric names and also for values. This is a hash field with key
+of the metric name, value of the metric value. Example:
+[source,ruby]
+    [ "%{host}/uptime", "%{uptime_1m}" ]
+
+The value will be coerced to a floating point value. Values which cannot be
+coerced will zero (0)
+
+[id="{version}-plugins-{type}s-{plugin}-metrics_format"]
+===== `metrics_format` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"*"`
+
+Defines format of the metric string. The placeholder `*` will be
+replaced with the name of the actual metric. This supports dynamic
+strings like `%{host}`.
+[source,ruby]
+    metrics_format => "%{host}.foo.bar.*.sum"
+
+NOTE: If no metrics_format is defined the name of the metric will be used as fallback.
+
+
