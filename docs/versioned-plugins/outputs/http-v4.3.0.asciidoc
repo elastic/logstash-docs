@@ -14,12 +14,9 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 [id="{version}-plugins-{type}s-{plugin}"]
 
-=== Http
+=== Http output plugin {version}
 
 include::{include_path}/plugin_header.asciidoc[]
-
-==== Description
-
 
 
 [id="{version}-plugins-{type}s-{plugin}-options"]

@@ -20,6 +20,10 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
+This output sends events to DataDogHQ based on Logstash events.
+
+Note that since Logstash maintains no state
+these will be one-shot events
 
 
 [id="{version}-plugins-{type}s-{plugin}-options"]

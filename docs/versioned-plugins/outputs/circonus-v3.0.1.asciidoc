@@ -20,6 +20,7 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
+This output sends annotations to Circonus based on Logstash events.
 
 
 [id="{version}-plugins-{type}s-{plugin}-options"]
