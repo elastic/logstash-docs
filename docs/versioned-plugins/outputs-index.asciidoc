@@ -43,7 +43,7 @@ include::outputs/hipchat-index.asciidoc[]
 
 include::outputs/http-index.asciidoc[]
 
-include::outputs/icinga-index.asciidoc[]
+//include::outputs/icinga-index.asciidoc[]
 
 include::outputs/influxdb-index.asciidoc[]
 
@@ -59,7 +59,7 @@ include::outputs/kafka-index.asciidoc[]
 
 include::outputs/librato-index.asciidoc[]
 
-include::outputs/logentries-index.asciidoc[]
+//include::outputs/logentries-index.asciidoc[]
 
 include::outputs/loggly-index.asciidoc[]
 

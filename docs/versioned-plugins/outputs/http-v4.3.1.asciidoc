@@ -18,9 +18,6 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 include::{include_path}/plugin_header.asciidoc[]
 
-==== Description
-
-
 
 [id="{version}-plugins-{type}s-{plugin}-options"]
 ==== Http Output Configuration Options

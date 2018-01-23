@@ -20,7 +20,10 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
+This output lets you send metrics, annotations, and alerts to
+Librato based on Logstash events
 
+This is VERY experimental and inefficient right now.
 
 [id="{version}-plugins-{type}s-{plugin}-options"]
 ==== Librato Output Configuration Options
