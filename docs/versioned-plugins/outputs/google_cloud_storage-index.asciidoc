@@ -1,0 +1,14 @@
+:plugin: google_cloud_storage
+:type: output
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v3.0.4-plugins-outputs-google_cloud_storage,v3.0.4>> | 2017-08-16
+| <<v3.0.3-plugins-outputs-google_cloud_storage,v3.0.3>> | 2017-06-23
+|=======================================================================
+
+include::google_cloud_storage-v3.0.4.asciidoc[]
+include::google_cloud_storage-v3.0.3.asciidoc[]
+

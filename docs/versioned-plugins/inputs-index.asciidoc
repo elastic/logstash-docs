@@ -29,3 +29,17 @@ include::inputs/s3-index.asciidoc[]
 
 include::inputs/tcp-index.asciidoc[]
 
+include::inputs/unix-index.asciidoc[]
+
+include::inputs/varnishlog-index.asciidoc[]
+
+include::inputs/websocket-index.asciidoc[]
+
+include::inputs/wmi-index.asciidoc[]
+
+include::inputs/xmpp-index.asciidoc[]
+
+include::inputs/zenoss-index.asciidoc[]
+
+include::inputs/zeromq-index.asciidoc[]
+

@@ -1,0 +1,94 @@
+:plugin: circonus
+:type: output
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.1
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-output-circonus/blob/v3.0.1/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Circonus output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This output sends annotations to Circonus based on Logstash events.
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Circonus Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-annotation>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|Yes
+| <<{version}-plugins-{type}s-{plugin}-api_token>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-app_name>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-annotation"]
+===== `annotation` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * Default value is `{}`
+
+Annotations
+Registers an annotation with Circonus
+The only required field is `title` and `description`.
+`start` and `stop` will be set to the event timestamp.
+You can add any other optional annotation values as well.
+All values will be passed through `event.sprintf`
+
+Example:
+[source,ruby]
+  ["title":"Logstash event", "description":"Logstash event for %{host}"]
+or
+[source,ruby]
+  ["title":"Logstash event", "description":"Logstash event for %{host}", "parent_id", "1"]
+
+[id="{version}-plugins-{type}s-{plugin}-api_token"]
+===== `api_token` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+This output lets you send annotations to
+Circonus based on Logstash events
+
+Your Circonus API Token
+
+[id="{version}-plugins-{type}s-{plugin}-app_name"]
+===== `app_name` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Your Circonus App name
+This will be passed through `event.sprintf`
+so variables are allowed here:
+
+Example:
+ `app_name => "%{myappname}"`
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
