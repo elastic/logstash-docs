@@ -1,0 +1,103 @@
+:plugin: unix
+:type: input
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.5
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-input-unix/blob/v3.0.5/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Unix input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Read events over a UNIX socket.
+
+Like `stdin` and `file` inputs, each event is assumed to be one line of text.
+
+Can either accept connections from clients or connect to a server,
+depending on `mode`.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Unix Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-data_timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-force_unlink>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-mode>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["server", "client"]`|No
+| <<{version}-plugins-{type}s-{plugin}-path>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-socket_not_present_retry_interval_seconds>> |{logstash-ref}/configuration-file-structure.html#number[number]|Yes
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-data_timeout"]
+===== `data_timeout` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `-1`
+
+The 'read' timeout in seconds. If a particular connection is idle for
+more than this timeout period, we will assume it is dead and close it.
+
+If you never want to timeout, use -1.
+
+[id="{version}-plugins-{type}s-{plugin}-force_unlink"]
+===== `force_unlink` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Remove socket file in case of EADDRINUSE failure
+
+[id="{version}-plugins-{type}s-{plugin}-mode"]
+===== `mode` 
+
+  * Value can be any of: `server`, `client`
+  * Default value is `"server"`
+
+Mode to operate in. `server` listens for client connections,
+`client` connects to a server.
+
+[id="{version}-plugins-{type}s-{plugin}-path"]
+===== `path` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+When mode is `server`, the path to listen on.
+When mode is `client`, the path to connect to.
+
+[id="{version}-plugins-{type}s-{plugin}-socket_not_present_retry_interval_seconds"]
+===== `socket_not_present_retry_interval_seconds` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `5`
+
+Amount of time in seconds to wait if the socket file is not present, before retrying.
+Only positive values are allowed.
+
+This setting is only used if `mode` is `client`.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

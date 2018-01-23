@@ -1,0 +1,105 @@
+:plugin: gelf
+:type: input
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.5
+:release_date: 2017-06-27
+:changelog_url: https://github.com/logstash-plugins/logstash-input-gelf/blob/v3.0.5/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Gelf input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This input will read GELF messages as events over the network,
+making it a good choice if you already use Graylog2 today.
+
+The main use case for this input is to leverage existing GELF
+logging libraries such as the GELF log4j appender. A library used
+by this plugin has a bug which prevents it parsing uncompressed data.
+If you use the log4j appender you need to configure it like this to force
+gzip even for small messages:
+
+  <Socket name="logstash" protocol="udp" host="logstash.example.com" port="5001">
+     <GelfLayout compressionType="GZIP" compressionThreshold="1" />
+  </Socket>
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Gelf Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-host>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-port>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-remap>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-strip_leading_underscore>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-host"]
+===== `host` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"0.0.0.0"`
+
+The IP address or hostname to listen on.
+
+[id="{version}-plugins-{type}s-{plugin}-port"]
+===== `port` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `12201`
+
+The port to listen on. Remember that ports less than 1024 (privileged
+ports) may require root to use.
+
+[id="{version}-plugins-{type}s-{plugin}-remap"]
+===== `remap` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Whether or not to remap the GELF message fields to Logstash event fields or
+leave them intact.
+
+Remapping converts the following GELF fields to Logstash equivalents:
+
+* `full\_message` becomes `event.get("message")`.
+* if there is no `full\_message`, `short\_message` becomes `event.get("message")`.
+
+[id="{version}-plugins-{type}s-{plugin}-strip_leading_underscore"]
+===== `strip_leading_underscore` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Whether or not to remove the leading `\_` in GELF fields or leave them
+in place. (Logstash < 1.2 did not remove them by default.). Note that
+GELF version 1.1 format now requires all non-standard fields to be added
+as an "additional" field, beginning with an underscore.
+
+e.g. `\_foo` becomes `foo`
+
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

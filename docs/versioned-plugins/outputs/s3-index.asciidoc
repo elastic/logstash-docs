@@ -1,0 +1,14 @@
+:plugin: s3
+:type: output
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v4.0.9-plugins-outputs-s3,v4.0.9>> | 2017-07-19
+| <<v4.0.8-plugins-outputs-s3,v4.0.8>> | 2017-06-23
+|=======================================================================
+
+include::s3-v4.0.9.asciidoc[]
+include::s3-v4.0.8.asciidoc[]
+

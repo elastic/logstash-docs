@@ -1,0 +1,199 @@
+:plugin: salesforce
+:type: input
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.2
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-input-salesforce/blob/v3.0.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Salesforce input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This Logstash input plugin allows you to query Salesforce using SOQL and puts the results
+into Logstash, one row per event. You can configure it to pull entire sObjects or only
+specific fields.
+
+NOTE: This input plugin will stop after all the results of the query are processed and will
+need to be re-run to fetch new results. It does not utilize the streaming API.
+
+In order to use this plugin, you will need to create a new SFDC Application using
+oauth. More details can be found here:
+https://help.salesforce.com/apex/HTViewHelpDoc?id=connected_app_create.htm
+
+You will also need a username, password, and security token for your salesforce instance.
+More details for generating a token can be found here:
+https://help.salesforce.com/apex/HTViewHelpDoc?id=user_security_token.htm
+
+In addition to specifying an sObject, you can also supply a list of API fields
+that will be used in the SOQL query.
+
+==== Example
+This example prints all the Salesforce Opportunities to standard out
+
+[source,ruby]
+----------------------------------
+input {
+  salesforce {
+    client_id => 'OAUTH CLIENT ID FROM YOUR SFDC APP'
+    client_secret => 'OAUTH CLIENT SECRET FROM YOUR SFDC APP'
+    username => 'email@example.com'
+    password => 'super-secret'
+    security_token => 'SECURITY TOKEN FOR THIS USER'
+    sfdc_object_name => 'Opportunity'
+  }
+}
+
+output {
+  stdout {
+    codec => rubydebug
+  }
+}
+----------------------------------
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Salesforce Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-api_version>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-client_id>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-client_secret>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-password>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-security_token>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-sfdc_fields>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-sfdc_filters>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-sfdc_object_name>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-to_underscores>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-use_test_sandbox>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-username>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-api_version"]
+===== `api_version` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+By default, this uses the default Restforce API version.
+To override this, set this to something like "32.0" for example
+
+[id="{version}-plugins-{type}s-{plugin}-client_id"]
+===== `client_id` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Consumer Key for authentication. You must set up a new SFDC
+connected app with oath to use this output. More information
+can be found here:
+https://help.salesforce.com/apex/HTViewHelpDoc?id=connected_app_create.htm
+
+[id="{version}-plugins-{type}s-{plugin}-client_secret"]
+===== `client_secret` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Consumer Secret from your oauth enabled connected app
+
+[id="{version}-plugins-{type}s-{plugin}-password"]
+===== `password` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The password used to login to sfdc
+
+[id="{version}-plugins-{type}s-{plugin}-security_token"]
+===== `security_token` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The security token for this account. For more information about
+generting a security token, see:
+https://help.salesforce.com/apex/HTViewHelpDoc?id=user_security_token.htm
+
+[id="{version}-plugins-{type}s-{plugin}-sfdc_fields"]
+===== `sfdc_fields` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `[]`
+
+These are the field names to return in the Salesforce query
+If this is empty, all fields are returned.
+
+[id="{version}-plugins-{type}s-{plugin}-sfdc_filters"]
+===== `sfdc_filters` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `""`
+
+These options will be added to the WHERE clause in the
+SOQL statement. Additional fields can be filtered on by
+adding field1 = value1 AND field2 = value2 AND...
+
+[id="{version}-plugins-{type}s-{plugin}-sfdc_object_name"]
+===== `sfdc_object_name` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The name of the salesforce object you are creating or updating
+
+[id="{version}-plugins-{type}s-{plugin}-to_underscores"]
+===== `to_underscores` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Setting this to true will convert SFDC's NamedFields__c to named_fields__c
+
+[id="{version}-plugins-{type}s-{plugin}-use_test_sandbox"]
+===== `use_test_sandbox` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Set this to true to connect to a sandbox sfdc instance
+logging in through test.salesforce.com
+
+[id="{version}-plugins-{type}s-{plugin}-username"]
+===== `username` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+A valid salesforce user name, usually your email address.
+Used for authentication and will be the user all objects
+are created or modified by
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

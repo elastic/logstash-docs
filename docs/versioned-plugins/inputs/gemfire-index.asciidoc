@@ -1,0 +1,14 @@
+:plugin: gemfire
+:type: input
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v2.0.6-plugins-inputs-gemfire,v2.0.6>> | 2017-08-15
+| <<v2.0.5-plugins-inputs-gemfire,v2.0.5>> | 2017-06-23
+|=======================================================================
+
+include::gemfire-v2.0.6.asciidoc[]
+include::gemfire-v2.0.5.asciidoc[]
+

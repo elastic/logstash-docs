@@ -1,0 +1,14 @@
+:plugin: protobuf
+:type: codec
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v1.0.3-plugins-codecs-protobuf,v1.0.3>> | 2017-08-15
+| <<v1.0.2-plugins-codecs-protobuf,v1.0.2>> | 2017-06-23
+|=======================================================================
+
+include::protobuf-v1.0.3.asciidoc[]
+include::protobuf-v1.0.2.asciidoc[]
+

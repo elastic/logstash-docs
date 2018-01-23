@@ -1,0 +1,92 @@
+:plugin: solr_http
+:type: output
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.2
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-output-solr_http/blob/v3.0.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Solr_http output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This output lets you index&store your logs in Solr. If you want to get
+started quickly you should use version 4.4 or above in schemaless mode,
+which will try and guess your fields automatically. To turn that on,
+you can use the example included in the Solr archive:
+[source,shell]
+    tar zxf solr-4.4.0.tgz
+    cd example
+    mv solr solr_ #back up the existing sample conf
+    cp -r example-schemaless/solr/ .  #put the schemaless conf in place
+    java -jar start.jar   #start Solr
+
+You can learn more at https://lucene.apache.org/solr/[the Solr home page]
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Solr_http Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-document_id>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-flush_size>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-idle_flush_time>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-solr_url>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-document_id"]
+===== `document_id` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `nil`
+
+Solr document ID for events. You'd typically have a variable here, like
+'%{foo}' so you can assign your own IDs
+
+[id="{version}-plugins-{type}s-{plugin}-flush_size"]
+===== `flush_size` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `100`
+
+Number of events to queue up before writing to Solr
+
+[id="{version}-plugins-{type}s-{plugin}-idle_flush_time"]
+===== `idle_flush_time` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `1`
+
+Amount of time since the last flush before a flush is done even if
+the number of buffered events is smaller than flush_size
+
+[id="{version}-plugins-{type}s-{plugin}-solr_url"]
+===== `solr_url` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"http://localhost:8983/solr"`
+
+URL used to connect to Solr
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

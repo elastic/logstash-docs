@@ -1,0 +1,18 @@
+:plugin: avro
+:type: codec
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v3.2.3-plugins-codecs-avro,v3.2.3>> | 2017-11-07
+| <<v3.2.2-plugins-codecs-avro,v3.2.2>> | 2017-08-15
+| <<v3.2.1-plugins-codecs-avro,v3.2.1>> | 2017-06-23
+| <<v3.2.0-plugins-codecs-avro,v3.2.0>> | 2017-05-19
+|=======================================================================
+
+include::avro-v3.2.3.asciidoc[]
+include::avro-v3.2.2.asciidoc[]
+include::avro-v3.2.1.asciidoc[]
+include::avro-v3.2.0.asciidoc[]
+

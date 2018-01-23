@@ -1,0 +1,26 @@
+:plugin: oldlogstashjson
+:type: codec
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v2.0.5
+:release_date: 2017-06-23
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-oldlogstashjson/blob/v2.0.5/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Oldlogstashjson codec plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+deprecated[5.0]
+
+Reads Logstash JSON in the schema used by Logstash versions earlier than 1.2.0
+

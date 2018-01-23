@@ -1,0 +1,25 @@
+:plugin: s3plain
+:type: codec
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v2.0.6
+:release_date: 2017-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-s3plain/blob/v2.0.6/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== s3plain
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+The "s3_plain" codec is used for backward compatibility with previous version of the S3 Output
+
+

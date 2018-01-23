@@ -1,0 +1,126 @@
+:plugin: relp
+:type: input
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.2
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-input-relp/blob/v3.0.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Relp input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Read RELP events over a TCP socket.
+
+For more information about RELP, see
+<http://www.rsyslog.com/doc/imrelp.html>
+
+This protocol implements application-level acknowledgements to help protect
+against message loss.
+
+Message acks only function as far as messages being put into the queue for
+filters; anything lost after that point will not be retransmitted
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Relp Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-host>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-port>> |{logstash-ref}/configuration-file-structure.html#number[number]|Yes
+| <<{version}-plugins-{type}s-{plugin}-ssl_cacert>> |a valid filesystem path|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_cert>> |a valid filesystem path|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_enable>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_key>> |a valid filesystem path|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_key_passphrase>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_verify>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-host"]
+===== `host` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"0.0.0.0"`
+
+The address to listen on.
+
+[id="{version}-plugins-{type}s-{plugin}-port"]
+===== `port` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * There is no default value for this setting.
+
+The port to listen on.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_cacert"]
+===== `ssl_cacert` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+The SSL CA certificate, chainfile or CA path. The system CA path is automatically included.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_cert"]
+===== `ssl_cert` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+SSL certificate path
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_enable"]
+===== `ssl_enable` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Enable SSL (must be set for other `ssl_` options to take effect).
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_key"]
+===== `ssl_key` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+SSL key path
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_key_passphrase"]
+===== `ssl_key_passphrase` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * Default value is `nil`
+
+SSL key passphrase
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_verify"]
+===== `ssl_verify` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Verify the identity of the other end of the SSL connection against the CA.
+For input, sets the field `sslsubject` to that of the client certificate.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
