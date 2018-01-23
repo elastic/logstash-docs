@@ -26,12 +26,9 @@ performance.
 [id="{version}-plugins-{type}s-{plugin}-options"]
 ==== Null Output Configuration Options
 
-This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+There are no special configuration options for this plugin,
+but it does support the <<{version}-plugins-{type}s-{plugin}-common-options>>.
 
-[cols="<,<,<",options="header",]
-|=======================================================================
-|Setting |Input type|Required
-|=======================================================================
 
 [id="{version}-plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]

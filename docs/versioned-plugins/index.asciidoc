@@ -1,3 +1,6 @@
+// Don't change any of these asciidoc settings unless you know how they work.
+// The versioned plugin reference has special requirements that differ from
+// other books in our library.
 :versioned_docs: true
 
 // Set include path for static files that live in the logstash repo
@@ -9,7 +12,7 @@ include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
 :logstash-ref: http://www.elastic.co/guide/en/logstash/current
 
 [[logstash-plugin-reference]]
-= Versioned Plugin Reference
+= Logstash Versioned Plugin Reference
 
 include::inputs-index.asciidoc[]
 

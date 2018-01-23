@@ -20,7 +20,7 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-
+The slack output.
 
 [id="{version}-plugins-{type}s-{plugin}-options"]
 ==== Slack Output Configuration Options

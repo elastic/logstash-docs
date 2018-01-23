@@ -20,7 +20,7 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-
+This output writes events using the STOMP protocol.
 
 [id="{version}-plugins-{type}s-{plugin}-options"]
 ==== Stomp Output Configuration Options
