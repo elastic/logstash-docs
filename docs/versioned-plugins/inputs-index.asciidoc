@@ -25,7 +25,7 @@ include::inputs/exec-index.asciidoc[]
 
 include::inputs/file-index.asciidoc[]
 
-include::inputs/fluentd-index.asciidoc[]
+//include::inputs/fluentd-index.asciidoc[]
 
 include::inputs/ganglia-index.asciidoc[]
 
@@ -67,17 +67,17 @@ include::inputs/kinesis-index.asciidoc[]
 
 include::inputs/log4j-index.asciidoc[]
 
-include::inputs/log4j2-index.asciidoc[]
+//include::inputs/log4j2-index.asciidoc[]
 
 include::inputs/lumberjack-index.asciidoc[]
 
 include::inputs/meetup-index.asciidoc[]
 
-include::inputs/mongodb-index.asciidoc[]
+//include::inputs/mongodb-index.asciidoc[]
 
 include::inputs/neo4j-index.asciidoc[]
 
-include::inputs/perfmon-index.asciidoc[]
+//include::inputs/perfmon-index.asciidoc[]
 
 include::inputs/pipe-index.asciidoc[]
 
@@ -95,7 +95,7 @@ include::inputs/rss-index.asciidoc[]
 
 include::inputs/s3-index.asciidoc[]
 
-include::inputs/s3sqs-index.asciidoc[]
+//include::inputs/s3sqs-index.asciidoc[]
 
 include::inputs/salesforce-index.asciidoc[]
 

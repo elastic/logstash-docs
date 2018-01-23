@@ -20,7 +20,7 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-
+The rackspace input.
 
 [id="{version}-plugins-{type}s-{plugin}-options"]
 ==== Rackspace Input Configuration Options
