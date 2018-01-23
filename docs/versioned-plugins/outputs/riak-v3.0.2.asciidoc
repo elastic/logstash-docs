@@ -1,0 +1,177 @@
+:plugin: riak
+:type: output
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.2
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-output-riak/blob/v3.0.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Riak output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Riak is a distributed k/v store from Basho.
+It's based on the Dynamo model.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Riak Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-bucket>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-bucket_props>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-enable_search>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-enable_ssl>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-indices>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-key_name>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-nodes>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-proto>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["http", "pb"]`|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_opts>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-bucket"]
+===== `bucket` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `["logstash-%{+YYYY.MM.dd}"]`
+
+The bucket name to write events to
+Expansion is supported here as values are 
+passed through event.sprintf
+Multiple buckets can be specified here
+but any bucket-specific settings defined
+apply to ALL the buckets.
+
+[id="{version}-plugins-{type}s-{plugin}-bucket_props"]
+===== `bucket_props` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * There is no default value for this setting.
+
+Bucket properties (NYI)
+Logstash hash of properties for the bucket
+i.e.
+[source,ruby]
+    bucket_props => {
+        "r" => "one"
+        "w" => "one"
+        "dw", "one
+     }
+or
+[source,ruby]
+    bucket_props => { "n_val" => "3" }
+Properties will be passed as-is
+
+[id="{version}-plugins-{type}s-{plugin}-enable_search"]
+===== `enable_search` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Search
+Enable search on the bucket defined above
+
+[id="{version}-plugins-{type}s-{plugin}-enable_ssl"]
+===== `enable_ssl` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+SSL
+Enable SSL
+
+[id="{version}-plugins-{type}s-{plugin}-indices"]
+===== `indices` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * There is no default value for this setting.
+
+Indices
+Array of fields to add 2i on
+e.g.
+[source,ruby]
+    `indices => ["source_host", "type"]
+Off by default as not everyone runs eleveldb
+
+[id="{version}-plugins-{type}s-{plugin}-key_name"]
+===== `key_name` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The event key name
+variables are valid here.
+
+Choose this carefully. Best to let riak decide.
+
+[id="{version}-plugins-{type}s-{plugin}-nodes"]
+===== `nodes` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * Default value is `{"localhost"=>"8098"}`
+
+The nodes of your Riak cluster
+This can be a single host or
+a Logstash hash of node/port pairs
+e.g
+[source,ruby]
+    {
+        "node1" => "8098"
+        "node2" => "8098"
+    }
+
+[id="{version}-plugins-{type}s-{plugin}-proto"]
+===== `proto` 
+
+  * Value can be any of: `http`, `pb`
+  * Default value is `"http"`
+
+The protocol to use
+HTTP or ProtoBuf
+Applies to ALL backends listed above
+No mix and match
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_opts"]
+===== `ssl_opts` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * There is no default value for this setting.
+
+SSL Options
+Options for SSL connections
+Only applied if SSL is enabled
+Logstash hash that maps to the riak-client options
+here: https://github.com/basho/riak-ruby-client/wiki/Connecting-to-Riak
+You'll likely want something like this:
+
+[source, ruby]
+    ssl_opts => {
+       "pem" => "/etc/riak.pem"
+       "ca_path" => "/usr/share/certificates"
+    }
+
+Per the riak client docs, the above sample options
+will turn on SSL `VERIFY_PEER`
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

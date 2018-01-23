@@ -1,0 +1,12 @@
+:plugin: timber
+:type: output
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v1.0.3-plugins-outputs-timber,v1.0.3>> | 2017-09-02
+|=======================================================================
+
+include::timber-v1.0.3.asciidoc[]
+

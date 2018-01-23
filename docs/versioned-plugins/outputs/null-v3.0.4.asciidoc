@@ -1,0 +1,37 @@
+:plugin: null
+:type: output
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.4
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-output-null/blob/v3.0.4/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Null output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+A null output. This is useful for testing logstash inputs and filters for
+performance.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Null Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+|=======================================================================
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

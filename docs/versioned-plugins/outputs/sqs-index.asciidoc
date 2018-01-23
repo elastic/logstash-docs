@@ -1,0 +1,20 @@
+:plugin: sqs
+:type: output
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v5.0.2-plugins-outputs-sqs,v5.0.2>> | 2017-11-13
+| <<v5.0.1-plugins-outputs-sqs,v5.0.1>> | 2017-08-16
+| <<v5.0.0-plugins-outputs-sqs,v5.0.0>> | 2017-08-01
+| <<v4.0.3-plugins-outputs-sqs,v4.0.3>> | 2017-08-18
+| <<v4.0.2-plugins-outputs-sqs,v4.0.2>> | 2017-06-23
+|=======================================================================
+
+include::sqs-v5.0.2.asciidoc[]
+include::sqs-v5.0.1.asciidoc[]
+include::sqs-v5.0.0.asciidoc[]
+include::sqs-v4.0.3.asciidoc[]
+include::sqs-v4.0.2.asciidoc[]
+
