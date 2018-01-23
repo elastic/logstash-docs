@@ -115,7 +115,6 @@ This plugin supports the following configuration options plus the <<{version}-pl
 | <<{version}-plugins-{type}s-{plugin}-retry_non_idempotent>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
 | <<{version}-plugins-{type}s-{plugin}-schedule>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
 | <<{version}-plugins-{type}s-{plugin}-socket_timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
-| <<{version}-plugins-{type}s-{plugin}-ssl_certificate_validation>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
 | <<{version}-plugins-{type}s-{plugin}-target>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
 | <<{version}-plugins-{type}s-{plugin}-truststore>> |a valid filesystem path|No
 | <<{version}-plugins-{type}s-{plugin}-truststore_password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
