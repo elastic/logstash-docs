@@ -1,0 +1,126 @@
+:plugin: zeromq
+:type: output
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.1.2
+:release_date: 2017-11-13
+:changelog_url: https://github.com/logstash-plugins/logstash-output-zeromq/blob/v3.1.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Zeromq output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Write events to a 0MQ PUB socket.
+
+You need to have the 0mq 2.1.x library installed to be able to use
+this output plugin.
+
+The default settings will create a publisher connecting to a subscriber
+bound to tcp://127.0.0.1:2120
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Zeromq Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-address>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-mode>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["server", "client"]`|No
+| <<{version}-plugins-{type}s-{plugin}-sockopt>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-topic>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-topology>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["pushpull", "pubsub", "pair"]`|Yes
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-address"]
+===== `address` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `["tcp://127.0.0.1:2120"]`
+
+This will be a performance bottleneck. Someone needs to upgrade this to
+concurrency :shared and make sure there is no breakage
+0mq socket address to connect or bind.
+Please note that `inproc://` will not work with logstashi.
+For each we use a context per thread.
+By default, inputs bind/listen and outputs connect.
+
+[id="{version}-plugins-{type}s-{plugin}-mode"]
+===== `mode` 
+
+  * Value can be any of: `server`, `client`
+  * Default value is `"client"`
+
+Server mode binds/listens. Client mode connects.
+
+[id="{version}-plugins-{type}s-{plugin}-sockopt"]
+===== `sockopt` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * There is no default value for this setting.
+
+This exposes zmq_setsockopt for advanced tuning.
+See http://api.zeromq.org/2-1:zmq-setsockopt for details.
+
+This is where you would set values like:
+
+* ZMQ::HWM - high water mark
+* ZMQ::IDENTITY - named queues
+* ZMQ::SWAP_SIZE - space for disk overflow
+
+Example:
+[source,ruby]
+    sockopt => {
+       "ZMQ::HWM" => 50
+       "ZMQ::IDENTITY"  => "my_named_queue"
+    }
+
+[id="{version}-plugins-{type}s-{plugin}-topic"]
+===== `topic` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `""`
+
+This is used for the 'pubsub' topology only.
+On inputs, this allows you to filter messages by topic.
+On outputs, this allows you to tag a message for routing.
+NOTE: ZeroMQ does subscriber-side filtering
+NOTE: Topic is evaluated with `event.sprintf` so macros are valid here.
+
+[id="{version}-plugins-{type}s-{plugin}-topology"]
+===== `topology` 
+
+  * This is a required setting.
+  * Value can be any of: `pushpull`, `pubsub`, `pair`
+  * There is no default value for this setting.
+
+The default logstash topologies work as follows:
+
+* pushpull - inputs are pull, outputs are push
+* pubsub - inputs are subscribers, outputs are publishers
+* pair - inputs are clients, outputs are servers
+
+If the predefined topology flows don't work for you,
+you can change the 'mode' setting
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

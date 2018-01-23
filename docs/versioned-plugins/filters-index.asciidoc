@@ -19,8 +19,6 @@ include::filters/cipher-index.asciidoc[]
 
 include::filters/clone-index.asciidoc[]
 
-include::filters/cloudfoundry-index.asciidoc[]
-
 include::filters/collate-index.asciidoc[]
 
 include::filters/csv-index.asciidoc[]
@@ -55,23 +53,13 @@ include::filters/hashid-index.asciidoc[]
 
 include::filters/i18n-index.asciidoc[]
 
-include::filters/jdbc_static-index.asciidoc[]
-
 include::filters/jdbc_streaming-index.asciidoc[]
 
 include::filters/json-index.asciidoc[]
 
 include::filters/json_encode-index.asciidoc[]
 
-include::filters/kubernetes_metadata-index.asciidoc[]
-
 include::filters/kv-index.asciidoc[]
-
-include::filters/language-index.asciidoc[]
-
-include::filters/lookup-index.asciidoc[]
-
-include::filters/math-index.asciidoc[]
 
 include::filters/metaevent-index.asciidoc[]
 
