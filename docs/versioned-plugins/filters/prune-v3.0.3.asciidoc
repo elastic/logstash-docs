@@ -24,8 +24,8 @@ The prune filter is for removing fields from events based on
 whitelists or blacklist of field names or their values (names and
 values can also be regular expressions).
 
-This can e.g. be useful if you have a {logstash-ref}/plugins-filters-json.html[json]
-or {logstash-ref}/plugins-filters-kv.html[kv] filter that creates a number of fields
+This can e.g. be useful if you have a <<plugins-filters-json,json>>
+or <<plugins-filters-kv,kv>> filter that creates a number of fields
 with names that you don't necessarily know the names of beforehand,
 and you only want to keep a subset of them.
 

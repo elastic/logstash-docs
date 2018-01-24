@@ -24,7 +24,7 @@ Receive events using the Lumberjack protocol.
 
 This input can be used to reliably and securely transport
 events between Logstash instances. To do so, use the
-{logstash-ref}/plugins-outputs-lumberjack.html[lumberjack output plugin]
+<<plugins-outputs-lumberjack,lumberjack output plugin>>
 in the sending Logstash instance(s).
 
 It can also be used to receive events from the deprecated

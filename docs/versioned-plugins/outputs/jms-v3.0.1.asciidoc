@@ -12,7 +12,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
 
-[id="{version}-plugins-{type}s-{plugin}"]
+[id="{version}-plugins-{type}-{plugin}"]
 
 === Jms output plugin {version}
 

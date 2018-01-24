@@ -33,7 +33,7 @@ you must set the key, otherwise the plugin will raise an exception
 NOTE: When the `target` option is set to `UUID` the result won't be
 a consistent hash but a random
 https://en.wikipedia.org/wiki/Universally_unique_identifier[UUID].
-To generate UUIDs, prefer the {logstash-ref}/plugins-filters-uuid.html[uuid filter].
+To generate UUIDs, prefer the <<plugins-filters-uuid,uuid filter>>.
 
 [id="{version}-plugins-{type}s-{plugin}-options"]
 ==== Fingerprint Filter Configuration Options

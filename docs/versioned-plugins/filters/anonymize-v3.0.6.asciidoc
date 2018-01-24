@@ -20,7 +20,7 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-deprecated[3.0.3,We recommend that you use the {logstash-ref}/plugins-filters-fingerprint.html[fingerprint filter plugin] instead.]
+deprecated[3.0.3,We recommend that you use the <<plugins-filters-fingerprint,fingerprint filter plugin>> instead.]
 
 Anonymize fields by replacing values with a consistent hash.
 
