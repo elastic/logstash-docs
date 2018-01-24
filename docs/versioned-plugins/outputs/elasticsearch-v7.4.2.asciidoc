@@ -7,7 +7,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v7.4.2
 :release_date: 2017-09-22
 :changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v7.4.2/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include/6.x
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

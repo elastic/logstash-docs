@@ -4,7 +4,7 @@
 :versioned_docs: true
 
 // Set include path for static files that live in the logstash repo
-:include_path: ../include
+:include_path: ../include/6.x
 
 include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
 

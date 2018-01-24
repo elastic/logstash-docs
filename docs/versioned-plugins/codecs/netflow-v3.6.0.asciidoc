@@ -7,7 +7,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.6.0
 :release_date: 2017-09-28
 :changelog_url: https://github.com/logstash-plugins/logstash-codec-netflow/blob/v3.6.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include/6.x
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

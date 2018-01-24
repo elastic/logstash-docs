@@ -7,7 +7,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.1.7
 :release_date: 2017-10-03
 :changelog_url: https://github.com/logstash-plugins/logstash-input-s3/blob/v3.1.7/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include/6.x
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

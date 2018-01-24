@@ -7,7 +7,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.8
 :release_date: 2018-01-12
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-csv/blob/v3.0.8/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include/6.x
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
