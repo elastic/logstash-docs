@@ -20,7 +20,7 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-The csv codec.
+
 
 [id="{version}-plugins-{type}s-{plugin}-options"]
 ==== Csv Codec Configuration Options
