@@ -27,7 +27,7 @@ The following filter plugins are available below. For a list of Elastic supporte
 | <<plugins-filters-geoip,geoip>> | Adds geographical information about an IP address | https://github.com/logstash-plugins/logstash-filter-geoip[logstash-filter-geoip]
 | <<plugins-filters-grok,grok>> | Parses unstructured event data into fields | https://github.com/logstash-plugins/logstash-filter-grok[logstash-filter-grok]
 | <<plugins-filters-i18n,i18n>> | Removes special characters from a field | https://github.com/logstash-plugins/logstash-filter-i18n[logstash-filter-i18n]
-| <<plugins-filters-jdbc_static>> | Enriches events with pre-loaded data from a fast in-memory SQL database  | https://github.com/logstash-plugins/logstash-filter-jdbc_static[logstash-filter-jdbc_static]
+| <<plugins-filters-jdbc_static>> | Enriches events with data pre-loaded from a remote database  | https://github.com/logstash-plugins/logstash-filter-jdbc_static[logstash-filter-jdbc_static]
 | <<plugins-filters-jdbc_streaming,jdbc_streaming>> | Enrich events with your database data | https://github.com/logstash-plugins/logstash-filter-jdbc_streaming[logstash-filter-jdbc_streaming]
 | <<plugins-filters-json,json>> | Parses JSON events | https://github.com/logstash-plugins/logstash-filter-json[logstash-filter-json]
 | <<plugins-filters-json_encode,json_encode>> | Serializes a field to JSON | https://github.com/logstash-plugins/logstash-filter-json_encode[logstash-filter-json_encode]
