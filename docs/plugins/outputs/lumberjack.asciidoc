@@ -1,6 +1,6 @@
 :plugin: lumberjack
 :type: output
-:default_plugin: 0
+:default_plugin: 1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!

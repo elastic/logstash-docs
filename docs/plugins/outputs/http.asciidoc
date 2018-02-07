@@ -1,12 +1,13 @@
 :plugin: http
 :type: output
+:default_plugin: 1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.1.0
-:release_date: 2017-08-23
-:changelog_url: https://github.com/logstash-plugins/logstash-output-http/blob/v5.1.0/CHANGELOG.md
+:version: v5.2.0
+:release_date: 2018-01-15
+:changelog_url: https://github.com/logstash-plugins/logstash-output-http/blob/v5.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -46,7 +47,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-content_type>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-cookies>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-follow_redirects>> |<<boolean,boolean>>|No
-| <<plugins-{type}s-{plugin}-format>> |<<string,string>>, one of `["json", "form", "message"]`|No
+| <<plugins-{type}s-{plugin}-format>> |<<string,string>>, one of `["json", "json_batch", "form", "message"]`|No
 | <<plugins-{type}s-{plugin}-headers>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-http_compression>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-http_method>> |<<string,string>>, one of `["put", "post", "patch", "delete", "get", "head"]`|Yes
@@ -130,6 +131,7 @@ Content type
 If not specified, this defaults to the following:
 
 * if format is "json", "application/json"
+* if format is "json_batch", "application/json". Each Logstash batch of events will be concatenated into a single array and sent in one request.
 * if format is "form", "application/x-www-form-urlencoded"
 
 [id="plugins-{type}s-{plugin}-cookies"]
@@ -152,10 +154,14 @@ Should redirects be followed? Defaults to `true`
 [id="plugins-{type}s-{plugin}-format"]
 ===== `format` 
 
-  * Value can be any of: `json`, `form`, `message`
+  * Value can be any of: `json`, `json_batch`, `form`, `message`
   * Default value is `"json"`
 
 Set the format of the http body.
+
+If json_batch, each batch of events received by this output will be placed
+into a single JSON array and sent in one request. This is particularly useful
+for high throughput scenarios such as sending data between Logstash instaces.
 
 If form, then the body will be the mapping (or whole event) converted
 into a query parameter string, e.g. `foo=bar&baz=fizz...`

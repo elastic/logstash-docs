@@ -1,12 +1,13 @@
 :plugin: dead_letter_queue
 :type: input
+:default_plugin: 1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.1.0
-:release_date: 2017-08-25
-:changelog_url: https://github.com/logstash-plugins/logstash-input-dead_letter_queue/blob/v1.1.0/CHANGELOG.md
+:version: v1.1.2
+:release_date: 2017-11-07
+:changelog_url: https://github.com/logstash-plugins/logstash-input-dead_letter_queue/blob/v1.1.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -32,6 +33,9 @@ input {
 }
 -----------------------------------------
 
+
++For more information about processing events in the dead letter queue, see
++{logstash-ref}/dead-letter-queues.html[Dead Letter Queues].
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Dead_letter_queue Input Configuration Options

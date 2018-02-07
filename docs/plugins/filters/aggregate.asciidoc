@@ -1,13 +1,13 @@
 :plugin: aggregate
 :type: filter
-:default_plugin: 0
+:default_plugin: 1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v2.6.3
-:release_date: 2017-08-15
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-aggregate/blob/v2.6.3/CHANGELOG.md
+:version: v2.7.2
+:release_date: 2017-11-16
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-aggregate/blob/v2.7.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -196,9 +196,11 @@ filter {
 [id="plugins-{type}s-{plugin}-example4"]
 ==== Example #4 : no end event and tasks come one after the other
 
-Fourth use case : like example #3, you have no specific end event, but also, tasks come one after the other. +
-That is to say : tasks are not interlaced. All task1 events come, then all task2 events come, ... +
-In that case, you don't want to wait task timeout to flush aggregation map. +
+Fourth use case : like example #3, you have no specific end event, but also, tasks come one after the other.
+
+That is to say : tasks are not interlaced. All task1 events come, then all task2 events come, ...
+
+In that case, you don't want to wait task timeout to flush aggregation map.
 
 * A typical case is aggregating results from jdbc input plugin.
 * Given that you have this SQL query : `SELECT country_name, town_name FROM town`
@@ -246,20 +248,31 @@ In that case, you don't want to wait task timeout to flush aggregation map. +
 [id="plugins-{type}s-{plugin}-example5"]
 ==== Example #5 : no end event and push events as soon as possible
 
-Fifth use case: like example #3, there is no end event. +
-Events keep comming for an indefinite time and you want to push the aggregation map as soon as possible after the last user interaction without waiting for the `timeout`. +
-This allows to have the aggregated events pushed closer to real time. +
+Fifth use case: like example #3, there is no end event.
 
-A typical case is aggregating or tracking user behaviour. +
-We can track a user by its ID through the events, however once the user stops interacting, the events stop coming in. +
-There is no specific event indicating the end of the user's interaction. +
-The user ineraction will be considered as ended when no events for the specified user (task_id) arrive after the specified inactivity_timeout`. +
-If the user continues interacting for longer than `timeout` seconds (since first event), the aggregation map will still be deleted and pushed as a new event when timeout occurs. +
+Events keep comming for an indefinite time and you want to push the aggregation map as soon as possible after the last user interaction without waiting for the `timeout`.
+
+This allows to have the aggregated events pushed closer to real time.
+
+
+A typical case is aggregating or tracking user behaviour.
+
+We can track a user by its ID through the events, however once the user stops interacting, the events stop coming in.
+
+There is no specific event indicating the end of the user's interaction.
+
+The user ineraction will be considered as ended when no events for the specified user (task_id) arrive after the specified inactivity_timeout`.
+
+If the user continues interacting for longer than `timeout` seconds (since first event), the aggregation map will still be deleted and pushed as a new event when timeout occurs.
+
 The difference with example #3 is that the events will be pushed as soon as the user stops interacting for `inactivity_timeout` seconds instead of waiting for the end of `timeout` seconds since first event.
 
-In this case, we can enable the option 'push_map_as_event_on_timeout' to enable pushing the aggregation map as a new event when inactivity timeout occurs. +
-In addition, we can enable 'timeout_code' to execute code on the populated timeout event. +
-We can also add 'timeout_task_id_field' so we can correlate the task_id, which in this case would be the user's ID. +
+In this case, we can enable the option 'push_map_as_event_on_timeout' to enable pushing the aggregation map as a new event when inactivity timeout occurs.
+
+In addition, we can enable 'timeout_code' to execute code on the populated timeout event.
+
+We can also add 'timeout_task_id_field' so we can correlate the task_id, which in this case would be the user's ID.
+
 
 * Given these logs:
 
@@ -316,7 +329,7 @@ filter {
 * an aggregate map is tied to one task_id value which is tied to one task_id pattern. So if you have 2 filters with different task_id patterns, even if you have same task_id value, they won't share the same aggregate map.
 * in one filter configuration, it is recommanded to define a timeout option to protect the feature against unterminated tasks. It tells the filter to delete expired maps
 * if no timeout is defined, by default, all maps older than 1800 seconds are automatically deleted
-* all timeout options have to be defined in only one aggregate filter per task_id pattern. Timeout options are : timeout, inactivity_timeout, timeout_code, push_map_as_event_on_timeout, push_previous_map_as_event, timeout_task_id_field, timeout_tags
+* all timeout options have to be defined in only one aggregate filter per task_id pattern (per pipeline). Timeout options are : timeout, inactivity_timeout, timeout_code, push_map_as_event_on_timeout, push_previous_map_as_event, timeout_task_id_field, timeout_tags
 * if `code` execution raises an exception, the error is logged and event is tagged '_aggregateexception'
 
 
@@ -367,7 +380,7 @@ The path to file where aggregate maps are stored when Logstash stops
 and are loaded from when Logstash starts.
 
 If not defined, aggregate maps will not be stored at Logstash stop and will be lost.
-Must be defined in only one aggregate filter (as aggregate maps are global).
+Must be defined in only one aggregate filter per pipeline (as aggregate maps are shared at pipeline level).
 
 Example:
 [source,ruby]
