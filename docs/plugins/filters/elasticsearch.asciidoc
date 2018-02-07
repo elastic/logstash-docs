@@ -1,13 +1,13 @@
 :plugin: elasticsearch
 :type: filter
-:default_plugin: 0
+:default_plugin: 1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.6
-:release_date: 2017-08-15
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.1.6/CHANGELOG.md
+:version: v3.3.0
+:release_date: 2018-01-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.3.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -56,7 +56,7 @@ the "end" event.  Finally, using a combination of the "date" filter and the
          }
 
          ruby {
-            code => "event['duration_hrs'] = (event['@timestamp'] - event['started']) / 3600 rescue nil"
+            code => "event.set('duration_hrs', (event.get('@timestamp') - event.get('started')) / 3600)"
          }
       }
 
@@ -68,6 +68,7 @@ the "end" event.  Finally, using a combination of the "date" filter and the
          elasticsearch {
             hosts => ["es-server"]
             query_template => "template.json"
+            fields => { "@timestamp" => "started" }
          }
 
          date {
@@ -76,7 +77,7 @@ the "end" event.  Finally, using a combination of the "date" filter and the
          }
 
          ruby {
-            code => "event['duration_hrs'] = (event['@timestamp'] - event['started']) / 3600 rescue nil"
+            code => "event.set('duration_hrs', (event.get('@timestamp') - event.get('started')) / 3600)"
          }
   }
 
@@ -90,7 +91,7 @@ the "end" event.  Finally, using a combination of the "date" filter and the
        "query": "type:start AND operation:%{[opid]}"
       }
     },
-   "_source": ["@timestamp", "started"]
+   "_source": ["@timestamp"]
  }
 
 As illustrated above, through the use of 'opid', fields from the Logstash events can be referenced within the template.
@@ -106,7 +107,9 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-aggregation_fields>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-ca_file>> |a valid filesystem path|No
+| <<plugins-{type}s-{plugin}-docinfo_fields>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-enable_sort>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-fields>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-hosts>> |<<array,array>>|No
@@ -126,6 +129,24 @@ filter plugins.
 
 &nbsp;
 
+[id="plugins-{type}s-{plugin}-aggregation_fields"]
+===== `aggregation_fields` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+Hash of aggregation names to copy from elasticsearch response into Logstash event fields
+
+Example:
+[source,ruby]
+    filter {
+      elasticsearch {
+        aggregation_fields => {
+          "my_agg_name" => "my_ls_field"
+        }
+      }
+    }
+
 [id="plugins-{type}s-{plugin}-ca_file"]
 ===== `ca_file` 
 
@@ -133,6 +154,25 @@ filter plugins.
   * There is no default value for this setting.
 
 SSL Certificate Authority file
+
+[id="plugins-{type}s-{plugin}-docinfo_fields"]
+===== `docinfo_fields` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+Hash of docinfo fields to copy from old event (found via elasticsearch) into new event
+
+Example:
+[source,ruby]
+    filter {
+      elasticsearch {
+        docinfo_fields => {
+          "_id" => "document_id"
+          "_index" => "document_index"
+        }
+      }
+    }
 
 [id="plugins-{type}s-{plugin}-enable_sort"]
 ===== `enable_sort` 
@@ -164,7 +204,8 @@ List of elasticsearch hosts to use for querying.
   * Value type is <<string,string>>
   * Default value is `""`
 
-Comma-delimited list of index names to search; use `_all` or empty string to perform the operation on all indices
+Comma-delimited list of index names to search; use `_all` or empty string to perform the operation on all indices.
+Field substitution (e.g. `index-name-%{date_field}`) is available
 
 [id="plugins-{type}s-{plugin}-password"]
 ===== `password` 
@@ -222,7 +263,7 @@ SSL
   * Value type is <<array,array>>
   * Default value is `["_elasticsearch_lookup_failure"]`
 
-Tags the event on failure to look up geo information. This can be used in later analysis.
+Tags the event on failure to look up previous log event information. This can be used in later analysis.
 
 [id="plugins-{type}s-{plugin}-user"]
 ===== `user` 

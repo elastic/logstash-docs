@@ -13,7 +13,6 @@ The following filter plugins are available below. For a list of Elastic supporte
 | <<plugins-filters-cidr,cidr>> | Checks IP addresses against a list of network blocks | https://github.com/logstash-plugins/logstash-filter-cidr[logstash-filter-cidr]
 | <<plugins-filters-cipher,cipher>> | Applies or removes a cipher to an event | https://github.com/logstash-plugins/logstash-filter-cipher[logstash-filter-cipher]
 | <<plugins-filters-clone,clone>> | Duplicates events | https://github.com/logstash-plugins/logstash-filter-clone[logstash-filter-clone]
-| <<plugins-filters-collate,collate>> | Collates events by time or count | https://github.com/logstash-plugins/logstash-filter-collate[logstash-filter-collate]
 | <<plugins-filters-csv,csv>> | Parses comma-separated value data into individual fields | https://github.com/logstash-plugins/logstash-filter-csv[logstash-filter-csv]
 | <<plugins-filters-date,date>> | Parses dates from fields to use as the Logstash timestamp for an event | https://github.com/logstash-plugins/logstash-filter-date[logstash-filter-date]
 | <<plugins-filters-de_dot,de_dot>> | Computationally expensive filter that removes dots from a field name | https://github.com/logstash-plugins/logstash-filter-de_dot[logstash-filter-de_dot]
@@ -28,17 +27,15 @@ The following filter plugins are available below. For a list of Elastic supporte
 | <<plugins-filters-geoip,geoip>> | Adds geographical information about an IP address | https://github.com/logstash-plugins/logstash-filter-geoip[logstash-filter-geoip]
 | <<plugins-filters-grok,grok>> | Parses unstructured event data into fields | https://github.com/logstash-plugins/logstash-filter-grok[logstash-filter-grok]
 | <<plugins-filters-i18n,i18n>> | Removes special characters from a field | https://github.com/logstash-plugins/logstash-filter-i18n[logstash-filter-i18n]
+| <<plugins-filters-jdbc_static>> | Enriches events with data pre-loaded from a remote database  | https://github.com/logstash-plugins/logstash-filter-jdbc_static[logstash-filter-jdbc_static]
 | <<plugins-filters-jdbc_streaming,jdbc_streaming>> | Enrich events with your database data | https://github.com/logstash-plugins/logstash-filter-jdbc_streaming[logstash-filter-jdbc_streaming]
 | <<plugins-filters-json,json>> | Parses JSON events | https://github.com/logstash-plugins/logstash-filter-json[logstash-filter-json]
 | <<plugins-filters-json_encode,json_encode>> | Serializes a field to JSON | https://github.com/logstash-plugins/logstash-filter-json_encode[logstash-filter-json_encode]
 | <<plugins-filters-kv,kv>> | Parses key-value pairs | https://github.com/logstash-plugins/logstash-filter-kv[logstash-filter-kv]
-| <<plugins-filters-metaevent,metaevent>> | Adds arbitrary fields to an event | https://github.com/logstash-plugins/logstash-filter-metaevent[logstash-filter-metaevent]
 | <<plugins-filters-metricize,metricize>> | Takes complex events containing a number of metrics and splits these up into multiple events, each holding a single metric | https://github.com/logstash-plugins/logstash-filter-metricize[logstash-filter-metricize]
 | <<plugins-filters-metrics,metrics>> | Aggregates metrics | https://github.com/logstash-plugins/logstash-filter-metrics[logstash-filter-metrics]
 | <<plugins-filters-mutate,mutate>> | Performs mutations on fields | https://github.com/logstash-plugins/logstash-filter-mutate[logstash-filter-mutate]
-| <<plugins-filters-oui,oui>> | Parse OUI data from MAC addresses | https://github.com/logstash-plugins/logstash-filter-oui[logstash-filter-oui]
 | <<plugins-filters-prune,prune>> | Prunes event data based on a list of fields to blacklist or whitelist | https://github.com/logstash-plugins/logstash-filter-prune[logstash-filter-prune]
-| <<plugins-filters-punct,punct>> | Strips all non-punctuation content from a field | https://github.com/logstash-plugins/logstash-filter-punct[logstash-filter-punct]
 | <<plugins-filters-range,range>> | Checks that specified fields stay within given size or length limits | https://github.com/logstash-plugins/logstash-filter-range[logstash-filter-range]
 | <<plugins-filters-ruby,ruby>> | Executes arbitrary Ruby code | https://github.com/logstash-plugins/logstash-filter-ruby[logstash-filter-ruby]
 | <<plugins-filters-sleep,sleep>> | Sleeps for a specified time span | https://github.com/logstash-plugins/logstash-filter-sleep[logstash-filter-sleep]
@@ -52,8 +49,6 @@ The following filter plugins are available below. For a list of Elastic supporte
 | <<plugins-filters-useragent,useragent>> | Parses user agent strings into fields  | https://github.com/logstash-plugins/logstash-filter-useragent[logstash-filter-useragent]
 | <<plugins-filters-uuid,uuid>> | Adds a UUID to events | https://github.com/logstash-plugins/logstash-filter-uuid[logstash-filter-uuid]
 | <<plugins-filters-xml,xml>> | Parses XML into fields | https://github.com/logstash-plugins/logstash-filter-xml[logstash-filter-xml]
-| <<plugins-filters-yaml,yaml>> | Takes an existing field that contains YAML and expands it into an actual data structure within the Logstash event | https://github.com/logstash-plugins/logstash-filter-yaml[logstash-filter-yaml]
-| <<plugins-filters-zeromq,zeromq>> | Sends an event to ZeroMQ | https://github.com/logstash-plugins/logstash-filter-zeromq[logstash-filter-zeromq]
 |=======================================================================
 
 :edit_url: https://github.com/logstash-plugins/logstash-filter-aggregate/edit/master/docs/index.asciidoc
@@ -70,9 +65,6 @@ include::filters/cipher.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-filter-clone/edit/master/docs/index.asciidoc
 include::filters/clone.asciidoc[]
-
-:edit_url: https://github.com/logstash-plugins/logstash-filter-collate/edit/master/docs/index.asciidoc
-include::filters/collate.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-filter-csv/edit/master/docs/index.asciidoc
 include::filters/csv.asciidoc[]
@@ -116,6 +108,9 @@ include::filters/grok.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-i18n/edit/master/docs/index.asciidoc
 include::filters/i18n.asciidoc[]
 
+:edit_url: https://github.com/logstash-plugins/logstash-filter-jdbc_static/edit/master/docs/index.asciidoc
+include::filters/jdbc_static.asciidoc[]
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-jdbc_streaming/edit/master/docs/index.asciidoc
 include::filters/jdbc_streaming.asciidoc[]
 
@@ -128,9 +123,6 @@ include::filters/json_encode.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-kv/edit/master/docs/index.asciidoc
 include::filters/kv.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-filter-metaevent/edit/master/docs/index.asciidoc
-include::filters/metaevent.asciidoc[]
-
 :edit_url: https://github.com/logstash-plugins/logstash-filter-metricize/edit/master/docs/index.asciidoc
 include::filters/metricize.asciidoc[]
 
@@ -140,14 +132,8 @@ include::filters/metrics.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-mutate/edit/master/docs/index.asciidoc
 include::filters/mutate.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-filter-oui/edit/master/docs/index.asciidoc
-include::filters/oui.asciidoc[]
-
 :edit_url: https://github.com/logstash-plugins/logstash-filter-prune/edit/master/docs/index.asciidoc
 include::filters/prune.asciidoc[]
-
-:edit_url: https://github.com/logstash-plugins/logstash-filter-punct/edit/master/docs/index.asciidoc
-include::filters/punct.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-filter-range/edit/master/docs/index.asciidoc
 include::filters/range.asciidoc[]
@@ -187,12 +173,6 @@ include::filters/uuid.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-filter-xml/edit/master/docs/index.asciidoc
 include::filters/xml.asciidoc[]
-
-:edit_url: https://github.com/logstash-plugins/logstash-filter-yaml/edit/master/docs/index.asciidoc
-include::filters/yaml.asciidoc[]
-
-:edit_url: https://github.com/logstash-plugins/logstash-filter-zeromq/edit/master/docs/index.asciidoc
-include::filters/zeromq.asciidoc[]
 
 
 :edit_url: 

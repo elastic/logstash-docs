@@ -1,12 +1,13 @@
 :plugin: websocket
 :type: output
+:default_plugin: 0
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: 3.0.2
-:release_date: 2017-06-27
-:changelog_url: https://github.com/logstash-plugins/logstash-output-websocket/blob/v3.0.2/CHANGELOG.md
+:version: v3.0.4
+:release_date: 2017-11-13
+:changelog_url: https://github.com/logstash-plugins/logstash-output-websocket/blob/v3.0.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
