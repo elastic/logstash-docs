@@ -14,6 +14,8 @@ include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
 [[logstash-plugin-reference]]
 = Logstash Versioned Plugin Reference
 
+:edit_url!:
+
 include::inputs-index.asciidoc[]
 
 include::outputs-index.asciidoc[]
