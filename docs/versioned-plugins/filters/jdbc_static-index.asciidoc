@@ -10,4 +10,3 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 include::jdbc_static-v1.0.0.asciidoc[]
 
-
