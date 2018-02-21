@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.10.0
-:release_date: 2017-12-30
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-netflow/blob/v3.10.0/CHANGELOG.md
+:version: v3.11.0
+:release_date: 2018-01-31
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-netflow/blob/v3.11.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -46,6 +46,7 @@ The following Netflow/IPFIX exporters are known to work with the most recent ver
 |Citrix Netscaler         |    |    |   y   | Still some unknown fields, labeled netscalerUnknown<id>
 |fprobe                   |  y |    |       |
 |Fortigate FortiOS        |    | y  |       |
+|Huawei Netstream         |    | y  |       |
 |ipt_NETFLOW              |  y | y  |   y   |
 |Juniper MX80             |  y |    |       | SW > 12.3R8
 |Mikrotik                 |  y |    |   y   | http://wiki.mikrotik.com/wiki/Manual:IP/Traffic_Flow
@@ -75,7 +76,9 @@ input {
 }
 --------------------------
 
-For high-performance production environments the configuration below will decode up to 15000 flows/sec on a dedicated 16 CPU instance. If your total flowrate exceeds 15000 flows/sec, you should use multiple Logstash instances.
+For high-performance production environments the configuration below will decode up to 15000 flows/sec from a Cisco ASR 9000 router on a dedicated 16 CPU instance. If your total flowrate exceeds 15000 flows/sec, you should use multiple Logstash instances.
+
+Note that for richer flows from a Cisco ASA firewall this number will be at least 3x lower.
 
 [source, ruby]
 --------------------------
