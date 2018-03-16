@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.1.0
-:release_date: 2018-02-13
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-kv/blob/v4.1.0/CHANGELOG.md
+:version: v4.0.3
+:release_date: 2017-11-07
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-kv/blob/v4.0.3/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -136,7 +136,7 @@ To exclude `from` and `to`, but retain the `foo` key, you could use this configu
   * Value type is <<string,string>>
   * Default value is `" "`
 
-A string of characters to use as single-character field delimiters for parsing out key-value pairs.
+A string of characters to use as delimiters for parsing out key-value pairs.
 
 These characters form a regex character class and thus you must escape special regex
 characters like `[` or `]` using `\`.
@@ -160,29 +160,6 @@ fields:
 * `e: foo@bar.com`
 * `oq: bobo`
 * `ss: 12345`
-
-[id="plugins-{type}s-{plugin}-field_split_pattern"]
-===== `field_split_pattern`
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-A regex expression to use as field delimiter for parsing out key-value pairs.
-Useful to define multi-character field delimiters.
-Setting the `field_split_pattern` options will take precedence over the `field_split` option.
-
-Note that you should avoid using captured groups in your regex and you should be
-cautious with lookaheads or lookbehinds and positional anchors.
-
-For example, to split fields on a repetition of one or more colons
-`k1=v1:k2=v2::k3=v3:::k4=v4`:
-[source,ruby]
-    filter { kv { field_split_pattern => ":+" } }
-
-To split fields on a regex character that need escaping like the plus sign
-`k1=v1++k2=v2++k3=v3++k4=v4`:
-[source,ruby]
-    filter { kv { field_split_pattern => "\\+\\+" } }
 
 [id="plugins-{type}s-{plugin}-include_brackets"]
 ===== `include_brackets` 
@@ -417,7 +394,7 @@ For example, to trim `<`, `>`, `[`, `]` and `,` characters from values:
   * Value type is <<string,string>>
   * Default value is `"="`
 
-A non-empty string of characters to use as single-character value delimiters for parsing out key-value pairs.
+A non-empty string of characters to use as delimiters for identifying key-value relations.
 
 These characters form a regex character class and thus you must escape special regex
 characters like `[` or `]` using `\`.
@@ -427,21 +404,6 @@ For example, to identify key-values such as
 [source,ruby]
     filter { kv { value_split => ":" } }
 
-
-[id="plugins-{type}s-{plugin}-value_split_pattern"]
-===== `value_split_pattern`
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-A regex expression to use as value delimiter for parsing out key-value pairs.
-Useful to define multi-character value delimiters.
-Setting the `value_split_pattern` options will take precedence over the `value_split option`.
-
-Note that you should avoid using captured groups in your regex and you should be
-cautious with lookaheads or lookbehinds and positional anchors.
-
-See `field_split_pattern` for examples.
 
 
 [id="plugins-{type}s-{plugin}-common-options"]
