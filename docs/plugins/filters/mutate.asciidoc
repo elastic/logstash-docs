@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.3.1
-:release_date: 2018-02-02
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.3.1/CHANGELOG.md
+:version: v3.2.0
+:release_date: 2017-11-28
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -38,14 +38,12 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-join>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-lowercase>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-merge>> |<<hash,hash>>|No
-| <<plugins-{type}s-{plugin}-coerce>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-rename>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-replace>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-split>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-strip>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-update>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-uppercase>> |<<array,array>>|No
-| <<plugins-{type}s-{plugin}-capitalize>> |<<array,array>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -54,7 +52,7 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-convert"]
-===== `convert`
+===== `convert` 
 
   * Value type is <<hash,hash>>
   * There is no default value for this setting.
@@ -75,13 +73,7 @@ If the conversion type is `integer` and the value is a boolean, it will be conve
 * **True:**  `1`
 * **False:** `0`
 
-If you have numeric strings that have decimal commas (Europe and ex-colonies)
-e.g. "1.234,56" or "2.340", by using conversion targets of integer_eu or float_eu
-the convert function will treat "." as a group separator and "," as a decimal separator.
-
-Conversion targets of integer or float will now correctly handle "," as a group separator.
-
-Valid conversion targets are: integer, float, integer_eu, float_eu, string, and boolean.
+Valid conversion targets are: integer, float, string, and boolean.
 
 Example:
 [source,ruby]
@@ -92,7 +84,7 @@ Example:
     }
 
 [id="plugins-{type}s-{plugin}-copy"]
-===== `copy`
+===== `copy` 
 
   * Value type is <<hash,hash>>
   * There is no default value for this setting.
@@ -108,7 +100,7 @@ Example:
     }
 
 [id="plugins-{type}s-{plugin}-gsub"]
-===== `gsub`
+===== `gsub` 
 
   * Value type is <<array,array>>
   * There is no default value for this setting.
@@ -138,7 +130,7 @@ Example:
 
 
 [id="plugins-{type}s-{plugin}-join"]
-===== `join`
+===== `join` 
 
   * Value type is <<hash,hash>>
   * There is no default value for this setting.
@@ -154,7 +146,7 @@ Example:
    }
 
 [id="plugins-{type}s-{plugin}-lowercase"]
-===== `lowercase`
+===== `lowercase` 
 
   * Value type is <<array,array>>
   * There is no default value for this setting.
@@ -170,7 +162,7 @@ Example:
     }
 
 [id="plugins-{type}s-{plugin}-merge"]
-===== `merge`
+===== `merge` 
 
   * Value type is <<hash,hash>>
   * There is no default value for this setting.
@@ -190,25 +182,8 @@ Example:
       }
     }
 
-[id="plugins-{type}s-{plugin}-coerce"]
-===== `coerce`
-
-  * Value type is <<hash,hash>>
-  * There is no default value for this setting.
-
-Set the default value of a field that exists but is null
-
-Example:
-[source,ruby]
-    filter {
-      mutate {
-        # Sets the default value of the 'field1' field to 'default_value'
-        coerce => { "field1" => "default_value" }
-      }
-    }
-
 [id="plugins-{type}s-{plugin}-rename"]
-===== `rename`
+===== `rename` 
 
   * Value type is <<hash,hash>>
   * There is no default value for this setting.
@@ -225,7 +200,7 @@ Example:
     }
 
 [id="plugins-{type}s-{plugin}-replace"]
-===== `replace`
+===== `replace` 
 
   * Value type is <<hash,hash>>
   * There is no default value for this setting.
@@ -242,7 +217,7 @@ Example:
     }
 
 [id="plugins-{type}s-{plugin}-split"]
-===== `split`
+===== `split` 
 
   * Value type is <<hash,hash>>
   * There is no default value for this setting.
@@ -259,7 +234,7 @@ Example:
     }
 
 [id="plugins-{type}s-{plugin}-strip"]
-===== `strip`
+===== `strip` 
 
   * Value type is <<array,array>>
   * There is no default value for this setting.
@@ -275,7 +250,7 @@ Example:
     }
 
 [id="plugins-{type}s-{plugin}-update"]
-===== `update`
+===== `update` 
 
   * Value type is <<hash,hash>>
   * There is no default value for this setting.
@@ -292,7 +267,7 @@ Example:
     }
 
 [id="plugins-{type}s-{plugin}-uppercase"]
-===== `uppercase`
+===== `uppercase` 
 
   * Value type is <<array,array>>
   * There is no default value for this setting.
@@ -307,21 +282,7 @@ Example:
       }
     }
 
-[id="plugins-{type}s-{plugin}-capitalize"]
-===== `capitalize`
 
-  * Value type is <<array,array>>
-  * There is no default value for this setting.
-
-Convert a string to its capitalized equivalent.
-
-Example:
-[source,ruby]
-    filter {
-      mutate {
-        capitalize => [ "fieldname" ]
-      }
-    }
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
