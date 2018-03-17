@@ -8,11 +8,15 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v1.1.4-plugins-filters-dissect,v1.1.4>> | 2018-02-15
 | <<v1.1.2-plugins-filters-dissect,v1.1.2>> | 2017-11-07
 | <<v1.1.1-plugins-filters-dissect,v1.1.1>> | 2017-11-02
+| <<v1.0.12-plugins-filters-dissect,v1.0.12>> | 2017-08-15
+| <<v1.0.11-plugins-filters-dissect,v1.0.11>> | 2017-07-07
 | <<v1.0.9-plugins-filters-dissect,v1.0.9>> | 2017-06-23
 |=======================================================================
 
 include::dissect-v1.1.4.asciidoc[]
 include::dissect-v1.1.2.asciidoc[]
 include::dissect-v1.1.1.asciidoc[]
+include::dissect-v1.0.12.asciidoc[]
+include::dissect-v1.0.11.asciidoc[]
 include::dissect-v1.0.9.asciidoc[]
 
