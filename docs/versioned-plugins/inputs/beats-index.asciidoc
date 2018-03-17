@@ -5,6 +5,8 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v5.0.11-plugins-inputs-beats,v5.0.11>> | 2018-03-13
+| <<v5.0.10-plugins-inputs-beats,v5.0.10>> | 2018-02-21
 | <<v5.0.9-plugins-inputs-beats,v5.0.9>> | 2018-02-14
 | <<v5.0.8-plugins-inputs-beats,v5.0.8>> | 2018-02-12
 | <<v5.0.6-plugins-inputs-beats,v5.0.6>> | 2018-01-05
@@ -12,7 +14,6 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v5.0.4-plugins-inputs-beats,v5.0.4>> | 2017-12-12
 | <<v5.0.3-plugins-inputs-beats,v5.0.3>> | 2017-11-07
 | <<v5.0.2-plugins-inputs-beats,v5.0.2>> | 2017-10-06
-| <<v5.0.10-plugins-inputs-beats,v5.0.10>> | 2018-02-21
 | <<v5.0.1-plugins-inputs-beats,v5.0.1>> | 2017-08-15
 | <<v5.0.0-plugins-inputs-beats,v5.0.0>> | 2017-07-28
 | <<v4.0.5-plugins-inputs-beats,v4.0.5>> | 2017-07-12
@@ -20,8 +21,24 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v4.0.3-plugins-inputs-beats,v4.0.3>> | 2017-06-22
 | <<v4.0.2-plugins-inputs-beats,v4.0.2>> | 2017-06-07
 | <<v4.0.1-plugins-inputs-beats,v4.0.1>> | 2017-06-03
+| <<v3.1.30-plugins-inputs-beats,v3.1.30>> | 2018-03-13
+| <<v3.1.29-plugins-inputs-beats,v3.1.29>> | 2018-02-21
+| <<v3.1.28-plugins-inputs-beats,v3.1.28>> | 2018-02-21
+| <<v3.1.27-plugins-inputs-beats,v3.1.27>> | 2018-02-12
+| <<v3.1.26-plugins-inputs-beats,v3.1.26>> | 2018-01-05
+| <<v3.1.25-plugins-inputs-beats,v3.1.25>> | 2017-12-15
+| <<v3.1.24-plugins-inputs-beats,v3.1.24>> | 2017-08-18
+| <<v3.1.23-plugins-inputs-beats,v3.1.23>> | 2017-07-12
+| <<v3.1.22-plugins-inputs-beats,v3.1.22>> | 2017-07-12
+| <<v3.1.21-plugins-inputs-beats,v3.1.21>> | 2017-06-23
+| <<v3.1.20-plugins-inputs-beats,v3.1.20>> | 2017-06-23
+| <<v3.1.19-plugins-inputs-beats,v3.1.19>> | 2017-06-22
+| <<v3.1.18-plugins-inputs-beats,v3.1.18>> | 2017-06-07
+| <<v3.1.17-plugins-inputs-beats,v3.1.17>> | 2017-06-05
 |=======================================================================
 
+include::beats-v5.0.11.asciidoc[]
+include::beats-v5.0.10.asciidoc[]
 include::beats-v5.0.9.asciidoc[]
 include::beats-v5.0.8.asciidoc[]
 include::beats-v5.0.6.asciidoc[]
@@ -29,7 +46,6 @@ include::beats-v5.0.5.asciidoc[]
 include::beats-v5.0.4.asciidoc[]
 include::beats-v5.0.3.asciidoc[]
 include::beats-v5.0.2.asciidoc[]
-include::beats-v5.0.10.asciidoc[]
 include::beats-v5.0.1.asciidoc[]
 include::beats-v5.0.0.asciidoc[]
 include::beats-v4.0.5.asciidoc[]
@@ -37,4 +53,18 @@ include::beats-v4.0.4.asciidoc[]
 include::beats-v4.0.3.asciidoc[]
 include::beats-v4.0.2.asciidoc[]
 include::beats-v4.0.1.asciidoc[]
+include::beats-v3.1.30.asciidoc[]
+include::beats-v3.1.29.asciidoc[]
+include::beats-v3.1.28.asciidoc[]
+include::beats-v3.1.27.asciidoc[]
+include::beats-v3.1.26.asciidoc[]
+include::beats-v3.1.25.asciidoc[]
+include::beats-v3.1.24.asciidoc[]
+include::beats-v3.1.23.asciidoc[]
+include::beats-v3.1.22.asciidoc[]
+include::beats-v3.1.21.asciidoc[]
+include::beats-v3.1.20.asciidoc[]
+include::beats-v3.1.19.asciidoc[]
+include::beats-v3.1.18.asciidoc[]
+include::beats-v3.1.17.asciidoc[]
 
