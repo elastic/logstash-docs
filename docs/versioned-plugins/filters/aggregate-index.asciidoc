@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v2.8.0-plugins-filters-aggregate,v2.8.0>> | 2018-03-18
 | <<v2.7.2-plugins-filters-aggregate,v2.7.2>> | 2017-11-16
 | <<v2.7.1-plugins-filters-aggregate,v2.7.1>> | 2017-11-07
 | <<v2.7.0-plugins-filters-aggregate,v2.7.0>> | 2017-11-03
@@ -14,6 +15,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v2.6.0-plugins-filters-aggregate,v2.6.0>> | 2017-06-11
 |=======================================================================
 
+include::aggregate-v2.8.0.asciidoc[]
 include::aggregate-v2.7.2.asciidoc[]
 include::aggregate-v2.7.1.asciidoc[]
 include::aggregate-v2.7.0.asciidoc[]
