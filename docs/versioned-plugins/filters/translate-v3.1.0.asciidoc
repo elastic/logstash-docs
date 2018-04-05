@@ -1,0 +1,224 @@
+:plugin: translate
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.1.0
+:release_date: 2018-04-04
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-translate/blob/v3.1.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Translate filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+A general search and replace tool that uses a configured hash
+and/or a file to determine replacement values. Currently supported are 
+YAML, JSON, and CSV files.
+
+The dictionary entries can be specified in one of two ways: First,
+the `dictionary` configuration item may contain a hash representing
+the mapping. Second, an external file (readable by logstash) may be specified
+in the `dictionary_path` configuration item. These two methods may not be used
+in conjunction; it will produce an error.
+
+Operationally, if the event field specified in the `field` configuration
+matches the EXACT contents of a dictionary entry key (or matches a regex if
+`regex` configuration item has been enabled), the field's value will be substituted
+with the matched key's value from the dictionary.
+
+By default, the translate filter will replace the contents of the 
+maching event field (in-place). However, by using the `destination`
+configuration item, you may also specify a target event field to
+populate with the new translated value.
+
+Alternatively, for simple string search and replacements for just a few values
+you might consider using the gsub function of the mutate filter.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Translate Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-destination>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-dictionary>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-dictionary_path>> |a valid filesystem path|No
+| <<{version}-plugins-{type}s-{plugin}-exact>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-fallback>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-field>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-override>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-refresh_interval>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-regex>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-refresh_behaviour>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-destination"]
+===== `destination` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"translation"`
+
+The destination field you wish to populate with the translated code. The default
+is a field named `translation`. Set this to the same value as source if you want
+to do a substitution, in this case filter will allways succeed. This will clobber
+the old value of the source field! 
+
+[id="{version}-plugins-{type}s-{plugin}-dictionary"]
+===== `dictionary` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * Default value is `{}`
+
+The dictionary to use for translation, when specified in the logstash filter
+configuration item (i.e. do not use the `@dictionary_path` file).
+
+Example:
+[source,ruby]
+    filter {
+      translate {
+        dictionary => { 
+          "100"         => "Continue",
+          "101"         => "Switching Protocols",
+          "merci"       => "thank you",
+          "old version" => "new version"
+        }
+      }
+    }
+
+NOTE: It is an error to specify both `dictionary` and `dictionary_path`.
+
+[id="{version}-plugins-{type}s-{plugin}-dictionary_path"]
+===== `dictionary_path` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+The full path of the external dictionary file. The format of the table
+should be a standard YAML, JSON, or CSV. Make sure you specify any integer-based keys
+in quotes. For example, the YAML file should look something like this:
+[source,ruby]
+    "100": Continue
+    "101": Switching Protocols
+    merci: gracias
+    old version: new version
+
+NOTE: it is an error to specify both `dictionary` and `dictionary_path`.
+
+The currently supported formats are YAML, JSON, and CSV. Format selection is
+based on the file extension: `json` for JSON, `yaml` or `yml` for YAML, and
+`csv` for CSV. The JSON format only supports simple key/value, unnested
+objects. The CSV format expects exactly two columns, with the first serving
+as the original text, and the second column as the replacement.
+
+[id="{version}-plugins-{type}s-{plugin}-exact"]
+===== `exact` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+When `exact => true`, the translate filter will populate the destination field
+with the exact contents of the dictionary value. When `exact => false`, the
+filter will populate the destination field with the result of any existing
+destination field's data, with the translated value substituted in-place.
+
+For example, consider this simple translation.yml, configured to check the `data` field:
+[source,ruby]
+    foo: bar
+
+If logstash receives an event with the `data` field set to `foo`, and `exact => true`,
+the destination field will be populated with the string `bar`.
+If `exact => false`, and logstash receives the same event, the destination field
+will be also set to `bar`. However, if logstash receives an event with the `data` field
+set to `foofing`, the destination field will be set to `barfing`.
+
+Set both `exact => true` AND `regex => `true` if you would like to match using dictionary
+keys as regular expressions. A large dictionary could be expensive to match in this case. 
+
+[id="{version}-plugins-{type}s-{plugin}-fallback"]
+===== `fallback` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+In case no translation occurs in the event (no matches), this will add a default
+translation string, which will always populate `field`, if the match failed.
+
+For example, if we have configured `fallback => "no match"`, using this dictionary:
+[source,ruby]
+    foo: bar
+
+Then, if logstash received an event with the field `foo` set to `bar`, the destination
+field would be set to `bar`. However, if logstash received an event with `foo` set to `nope`,
+then the destination field would still be populated, but with the value of `no match`.
+This configuration can be dynamic and include parts of the event using the `%{field}` syntax.
+
+[id="{version}-plugins-{type}s-{plugin}-field"]
+===== `field` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The name of the logstash event field containing the value to be compared for a
+match by the translate filter (e.g. `message`, `host`, `response_code`). 
+
+If this field is an array, only the first value will be used.
+
+[id="{version}-plugins-{type}s-{plugin}-override"]
+===== `override` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+If the destination (or target) field already exists, this configuration item specifies
+whether the filter should skip translation (default) or overwrite the target field
+value with the new translation value.
+
+[id="{version}-plugins-{type}s-{plugin}-refresh_interval"]
+===== `refresh_interval` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `300`
+
+When using a dictionary file, this setting will indicate how frequently
+(in seconds) logstash will check the dictionary file for updates.
+
+[id="{version}-plugins-{type}s-{plugin}-regex"]
+===== `regex` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+If you'd like to treat dictionary keys as regular expressions, set `exact => true`.
+Note: this is activated only when `exact => true`.
+
+[id="{version}-plugins-{type}s-{plugin}-refresh_behaviour"]
+===== `refresh_behaviour`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `merge`
+
+When using a dictionary file, this setting indicates how the update will be executed.
+Setting this to `merge` leads to entries removed from the dictionary file being kept;
+`replace` deletes old entries on update.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

@@ -5,6 +5,8 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v3.11.4-plugins-codecs-netflow,v3.11.4>> | 2018-03-26
+| <<v3.11.3-plugins-codecs-netflow,v3.11.3>> | 2018-03-25
 | <<v3.11.2-plugins-codecs-netflow,v3.11.2>> | 2018-02-01
 | <<v3.11.1-plugins-codecs-netflow,v3.11.1>> | 2018-02-01
 | <<v3.11.0-plugins-codecs-netflow,v3.11.0>> | 2018-01-31
@@ -23,6 +25,8 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.4.1-plugins-codecs-netflow,v3.4.1>> | 2017-06-23
 |=======================================================================
 
+include::netflow-v3.11.4.asciidoc[]
+include::netflow-v3.11.3.asciidoc[]
 include::netflow-v3.11.2.asciidoc[]
 include::netflow-v3.11.1.asciidoc[]
 include::netflow-v3.11.0.asciidoc[]
