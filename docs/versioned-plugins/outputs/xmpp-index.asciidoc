@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v3.0.8-plugins-outputs-xmpp,v3.0.8>> | 2018-04-06
 | <<v3.0.7-plugins-outputs-xmpp,v3.0.7>> | 2017-11-13
 | <<v3.0.6-plugins-outputs-xmpp,v3.0.6>> | 2017-08-16
 | <<v3.0.5-plugins-outputs-xmpp,v3.0.5>> | 2017-06-27
@@ -12,6 +13,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.0.3-plugins-outputs-xmpp,v3.0.3>> | 2017-05-03
 |=======================================================================
 
+include::xmpp-v3.0.8.asciidoc[]
 include::xmpp-v3.0.7.asciidoc[]
 include::xmpp-v3.0.6.asciidoc[]
 include::xmpp-v3.0.5.asciidoc[]
