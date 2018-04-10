@@ -5,10 +5,12 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v2.0.7-plugins-inputs-zenoss,v2.0.7>> | 2018-04-06
 | <<v2.0.6-plugins-inputs-zenoss,v2.0.6>> | 2017-08-16
 | <<v2.0.5-plugins-inputs-zenoss,v2.0.5>> | 2017-06-23
 |=======================================================================
 
+include::zenoss-v2.0.7.asciidoc[]
 include::zenoss-v2.0.6.asciidoc[]
 include::zenoss-v2.0.5.asciidoc[]
 
