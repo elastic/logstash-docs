@@ -17,6 +17,8 @@ include::inputs/elasticsearch-index.asciidoc[]
 
 include::inputs/eventlog-index.asciidoc[]
 
+include::inputs/example-index.asciidoc[]
+
 include::inputs/exec-index.asciidoc[]
 
 include::inputs/file-index.asciidoc[]

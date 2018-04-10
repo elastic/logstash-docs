@@ -1,0 +1,12 @@
+:plugin: example
+:type: input
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v2.0.7-plugins-inputs-example,v2.0.7>> | 2018-04-06
+|=======================================================================
+
+include::example-v2.0.7.asciidoc[]
+

@@ -1,0 +1,12 @@
+:plugin: example
+:type: output
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v2.0.3-plugins-outputs-example,v2.0.3>> | 2018-04-06
+|=======================================================================
+
+include::example-v2.0.3.asciidoc[]
+
