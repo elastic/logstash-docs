@@ -1,0 +1,151 @@
+:plugin: graphtastic
+:type: output
+:default_codec: plain
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.4
+:release_date: 2018-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-output-graphtastic/blob/v3.0.4/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Graphtastic output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+A plugin for a newly developed Java/Spring Metrics application
+I didn't really want to code this project but I couldn't find
+a respectable alternative that would also run on any Windows
+machine - which is the problem and why I am not going with Graphite
+and statsd.  This application provides multiple integration options
+so as to make its use under your network requirements possible.
+This includes a REST option that is always enabled for your use
+in case you want to write a small script to send the occasional
+metric data.
+
+Find GraphTastic here : https://github.com/NickPadilla/GraphTastic
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Graphtastic Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-batch_number>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-context>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-error_file>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-host>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-integration>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["udp", "tcp", "rmi", "rest"]`|No
+| <<{version}-plugins-{type}s-{plugin}-metrics>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-port>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-retries>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-batch_number"]
+===== `batch_number` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `60`
+
+the number of metrics to send to GraphTastic at one time. 60 seems to be the perfect
+amount for UDP, with default packet size.
+
+[id="{version}-plugins-{type}s-{plugin}-context"]
+===== `context` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"graphtastic"`
+
+if using rest as your end point you need to also provide the application url
+it defaults to localhost/graphtastic.  You can customize the application url
+by changing the name of the .war file.  There are other ways to change the
+application context, but they vary depending on the Application Server in use.
+Please consult your application server documentation for more on application
+contexts.
+
+[id="{version}-plugins-{type}s-{plugin}-error_file"]
+===== `error_file` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `""`
+
+setting allows you to specify where we save errored transactions
+this makes the most sense at this point - will need to decide
+on how we reintegrate these error metrics
+NOT IMPLEMENTED!
+
+[id="{version}-plugins-{type}s-{plugin}-host"]
+===== `host` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"127.0.0.1"`
+
+host for the graphtastic server - defaults to 127.0.0.1
+
+[id="{version}-plugins-{type}s-{plugin}-integration"]
+===== `integration` 
+
+  * Value can be any of: `udp`, `tcp`, `rmi`, `rest`
+  * Default value is `"udp"`
+
+options are udp(fastest - default) - rmi(faster) - rest(fast) - tcp(don't use TCP yet - some problems - errors out on linux)
+
+[id="{version}-plugins-{type}s-{plugin}-metrics"]
+===== `metrics` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * Default value is `{}`
+
+metrics hash - you will provide a name for your metric and the metric
+data as key value pairs.  so for example:
+
+[source,ruby]
+metrics => { "Response" => "%{response}" }
+
+example for the logstash config
+
+[source,ruby]
+metrics => [ "Response", "%{response}" ]
+
+NOTE: you can also use the dynamic fields for the key value as well as the actual value
+
+[id="{version}-plugins-{type}s-{plugin}-port"]
+===== `port` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * There is no default value for this setting.
+
+port for the graphtastic instance - defaults to 1199 for RMI, 1299 for TCP, 1399 for UDP, and 8080 for REST
+
+[id="{version}-plugins-{type}s-{plugin}-retries"]
+===== `retries` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `1`
+
+number of attempted retry after send error - currently only way to integrate
+errored transactions - should try and save to a file or later consumption
+either by graphtastic utility or by this program after connectivity is
+ensured to be established.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:

@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v1.1.4-plugins-inputs-dead_letter_queue,v1.1.4>> | 2018-04-06
 | <<v1.1.2-plugins-inputs-dead_letter_queue,v1.1.2>> | 2017-11-07
 | <<v1.1.1-plugins-inputs-dead_letter_queue,v1.1.1>> | 2017-09-20
 | <<v1.1.0-plugins-inputs-dead_letter_queue,v1.1.0>> | 2017-08-25
@@ -14,6 +15,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v1.0.3-plugins-inputs-dead_letter_queue,v1.0.3>> | 2017-06-06
 |=======================================================================
 
+include::dead_letter_queue-v1.1.4.asciidoc[]
 include::dead_letter_queue-v1.1.2.asciidoc[]
 include::dead_letter_queue-v1.1.1.asciidoc[]
 include::dead_letter_queue-v1.1.0.asciidoc[]
