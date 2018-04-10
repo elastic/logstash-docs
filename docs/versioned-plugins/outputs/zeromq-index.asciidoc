@@ -5,10 +5,12 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v3.1.3-plugins-outputs-zeromq,v3.1.3>> | 2018-04-06
 | <<v3.1.2-plugins-outputs-zeromq,v3.1.2>> | 2017-11-13
 | <<v3.1.1-plugins-outputs-zeromq,v3.1.1>> | 2017-06-23
 |=======================================================================
 
+include::zeromq-v3.1.3.asciidoc[]
 include::zeromq-v3.1.2.asciidoc[]
 include::zeromq-v3.1.1.asciidoc[]
 

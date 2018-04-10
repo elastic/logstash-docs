@@ -21,6 +21,8 @@ include::outputs/elasticsearch_java-index.asciidoc[]
 
 include::outputs/email-index.asciidoc[]
 
+include::outputs/example-index.asciidoc[]
+
 include::outputs/exec-index.asciidoc[]
 
 include::outputs/file-index.asciidoc[]
