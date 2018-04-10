@@ -1,0 +1,126 @@
+:plugin: stomp
+:type: output
+:default_codec: plain
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.0.9
+:release_date: 2018-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-output-stomp/blob/v3.0.9/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Stomp output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This output writes events using the STOMP protocol.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Stomp Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-debug>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-destination>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-headers>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-host>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-port>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-user>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-vhost>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-debug"]
+===== `debug` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Enable debugging output?
+
+[id="{version}-plugins-{type}s-{plugin}-destination"]
+===== `destination` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The destination to read events from. Supports string expansion, meaning
+`%{foo}` values will expand to the field value.
+
+Example: "/topic/logstash"
+
+[id="{version}-plugins-{type}s-{plugin}-headers"]
+===== `headers` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * There is no default value for this setting.
+
+Custom headers to send with each message. Supports string expansion, meaning
+%{foo} values will expand to the field value.
+
+Example: headers => ["amq-msg-type", "text", "host", "%{host}"]
+
+[id="{version}-plugins-{type}s-{plugin}-host"]
+===== `host` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The address of the STOMP server.
+
+[id="{version}-plugins-{type}s-{plugin}-password"]
+===== `password` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * Default value is `""`
+
+The password to authenticate with.
+
+[id="{version}-plugins-{type}s-{plugin}-port"]
+===== `port` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `61613`
+
+The port to connect to on your STOMP server.
+
+[id="{version}-plugins-{type}s-{plugin}-user"]
+===== `user` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `""`
+
+The username to authenticate with.
+
+[id="{version}-plugins-{type}s-{plugin}-vhost"]
+===== `vhost` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `nil`
+
+The vhost to use
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
