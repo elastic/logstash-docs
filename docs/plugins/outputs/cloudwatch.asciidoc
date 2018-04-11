@@ -1,13 +1,14 @@
 :plugin: cloudwatch
 :type: output
 :default_plugin: 1
+:default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.7
-:release_date: 2017-11-07
-:changelog_url: https://github.com/logstash-plugins/logstash-output-cloudwatch/blob/v3.0.7/CHANGELOG.md
+:version: v3.0.8
+:release_date: 2018-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-output-cloudwatch/blob/v3.0.8/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -316,3 +317,5 @@ If you set this option you should probably set the `unit` option along with it
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
