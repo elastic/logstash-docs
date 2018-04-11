@@ -1,13 +1,14 @@
 :plugin: beats
 :type: input
 :default_plugin: 1
+:default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.0.10
-:release_date: 2018-02-21
-:changelog_url: https://github.com/logstash-plugins/logstash-input-beats/blob/v5.0.10/CHANGELOG.md
+:version: v5.0.13
+:release_date: 2018-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-input-beats/blob/v5.0.13/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -222,3 +223,5 @@ The minimum TLS version allowed for the encrypted connections. The value must be
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:

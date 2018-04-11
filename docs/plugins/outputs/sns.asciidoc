@@ -1,13 +1,14 @@
 :plugin: sns
 :type: output
 :default_plugin: 1
+:default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.6
-:release_date: 2017-11-13
-:changelog_url: https://github.com/logstash-plugins/logstash-output-sns/blob/v4.0.6/CHANGELOG.md
+:version: v4.0.7
+:release_date: 2018-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-output-sns/blob/v4.0.7/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -44,7 +45,7 @@ This plugin looks for the following fields on events it receives:
 ==== Upgrading to 2.0.0
 
 This plugin used to have a `format` option for controlling the encoding of messages prior to being sent to SNS.
-This plugin now uses the logstash standard <<codec,codec>> option for encoding instead.
+This plugin now uses the logstash standard {logstash-ref}/configuration-file-structure.html#codec[codec] option for encoding instead.
 If you want the same 'plain' format as the v0/1 codec (`format => "plain"`) use `codec => "s3_plain"`.
 
 
@@ -161,3 +162,5 @@ The AWS Session token for temporary credential
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
