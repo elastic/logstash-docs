@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.4
-:release_date: 2017-11-07
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-translate/blob/v3.0.4/CHANGELOG.md
+:version: v3.1.0
+:release_date: 2018-04-04
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-translate/blob/v3.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -61,6 +61,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-override>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-refresh_interval>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-regex>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-refresh_behaviour>> |<<string,string>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -92,10 +93,12 @@ Example:
 [source,ruby]
     filter {
       translate {
-        dictionary => [ "100", "Continue",
-                        "101", "Switching Protocols",
-                        "merci", "thank you",
-                        "old version", "new version" ]
+        dictionary => { 
+          "100"         => "Continue",
+          "101"         => "Switching Protocols",
+          "merci"       => "thank you",
+          "old version" => "new version"
+        }
       }
     }
 
@@ -205,6 +208,16 @@ When using a dictionary file, this setting will indicate how frequently
 
 If you'd like to treat dictionary keys as regular expressions, set `exact => true`.
 Note: this is activated only when `exact => true`.
+
+[id="plugins-{type}s-{plugin}-refresh_behaviour"]
+===== `refresh_behaviour`
+
+  * Value type is <<string,string>>
+  * Default value is `merge`
+
+When using a dictionary file, this setting indicates how the update will be executed.
+Setting this to `merge` leads to entries removed from the dictionary file being kept;
+`replace` deletes old entries on update.
 
 
 

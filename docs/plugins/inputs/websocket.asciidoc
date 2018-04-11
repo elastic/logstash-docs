@@ -1,13 +1,14 @@
 :plugin: websocket
 :type: input
 :default_plugin: 0
+:default_codec: json
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.3
-:release_date: 2017-11-07
-:changelog_url: https://github.com/logstash-plugins/logstash-input-websocket/blob/v4.0.3/CHANGELOG.md
+:version: v4.0.4
+:release_date: 2018-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-input-websocket/blob/v4.0.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -63,3 +64,5 @@ The URL to connect to.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:

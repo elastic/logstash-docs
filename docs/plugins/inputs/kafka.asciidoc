@@ -1,13 +1,14 @@
 :plugin: kafka
 :type: input
 :default_plugin: 1
+:default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v8.0.4
-:release_date: 2018-01-05
-:changelog_url: https://github.com/logstash-plugins/logstash-input-kafka/blob/v8.0.4/CHANGELOG.md
+:version: v8.0.6
+:release_date: 2018-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-input-kafka/blob/v8.0.6/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -25,7 +26,8 @@ This input will read events from a Kafka topic.
 
 This plugin uses Kafka Client 1.0.0. For broker compatibility, see the official https://cwiki.apache.org/confluence/display/KAFKA/Compatibility+Matrix[Kafka compatibility reference].
 
-If you're using a plugin version that was released after {version}, see the https://www.elastic.co/guide/en/logstash/master/plugins-inputs-kafka.html[latest plugin documentation] for updated information about Kafka compatibility.
+If you're using a plugin version that was released after {version}, see the https://www.elastic.co/guide/en/logstash/master/plugins-inputs-kafka.html[latest plugin documentation] for updated information about Kafka compatibility. If you require features not yet available in this plugin (including client version upgrades), please file an issue with details about what you need..
+
 
 This input supports connecting to Kafka over:
 
@@ -541,3 +543,5 @@ Java Class used to deserialize the record's value
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:

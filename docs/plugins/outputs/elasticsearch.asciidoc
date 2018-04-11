@@ -1,13 +1,14 @@
 :plugin: elasticsearch
 :type: output
 :default_plugin: 1
+:default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v9.0.3
-:release_date: 2018-02-08
-:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v9.0.3/CHANGELOG.md
+:version: v9.1.1
+:release_date: 2018-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v9.1.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -106,8 +107,8 @@ not reevaluate its DNS value while the keepalive is in effect.
 
 This plugin supports request and response compression. Response compression is enabled by default and 
 for Elasticsearch versions 5.0 and later, the user doesn't have to set any configs in Elasticsearch for 
-it to send back compressed response. For versions before 5.0, `http.compression` must be set to `true` in 
-Elasticsearch[https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-http.html#modules-http] to take advantage of response compression when using this plugin
+it to send back compressed response. For versions before 5.0, `http.compression` must be set to `true` https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-http.html#modules-http[in 
+Elasticsearch] to take advantage of response compression when using this plugin
 
 For requests compression, regardless of the Elasticsearch version, users have to enable `http_compression` 
 setting in their Logstash config file.
@@ -239,7 +240,7 @@ Elasticsearch with the same ID.
   * There is no default value for this setting.
   * This option is deprecated
 
-Note: This option is deprecated due to the https://www.elastic.co/guide/en/elasticsearch/reference/6.0/removal-of-types.html[removal of types in Logstash 6.0].
+Note: This option is deprecated due to the https://www.elastic.co/guide/en/elasticsearch/reference/6.0/removal-of-types.html[removal of types in Elasticsearch 6.0].
 It will be removed in the next major version of Logstash.
 This sets the document type to write events to. Generally you should try to write only
 similar events to the same 'type'. String expansion `%{foo}` works here.
@@ -477,6 +478,14 @@ This can be dynamic using the `%{foo}` syntax.
 
 Set script name for scripted update mode
 
+Example:
+[source,ruby]
+    output {
+      elasticsearch {
+        script => "ctx._source.message = params.event.get('message')"
+      }
+    }
+
 [id="plugins-{type}s-{plugin}-script_lang"]
 ===== `script_lang` 
 
@@ -495,7 +504,7 @@ When using indexed (stored) scripts on Elasticsearch 6 and higher, you must set 
 Define the type of script referenced by "script" variable
  inline : "script" contains inline script
  indexed : "script" contains the name of script directly indexed in elasticsearch
- file    : "script" contains the name of script stored in elasticseach's config directory
+ file    : "script" contains the name of script stored in elasticsearch's config directory
 
 [id="plugins-{type}s-{plugin}-script_var_name"]
 ===== `script_var_name` 
@@ -683,3 +692,5 @@ See also https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-in
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
