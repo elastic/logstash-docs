@@ -1,13 +1,14 @@
 :plugin: udp
 :type: input
 :default_plugin: 1
+:default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.2.1
-:release_date: 2017-12-19
-:changelog_url: https://github.com/logstash-plugins/logstash-input-udp/blob/v3.2.1/CHANGELOG.md
+:version: v3.3.1
+:release_date: 2018-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-input-udp/blob/v3.3.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -105,3 +106,5 @@ Number of threads processing packets
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
