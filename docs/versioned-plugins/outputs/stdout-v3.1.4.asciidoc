@@ -1,0 +1,64 @@
+:plugin: stdout
+:type: output
+:default_codec: rubydebug
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.1.4
+:release_date: 2018-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-output-stdout/blob/v3.1.4/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Stdout output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+A simple output which prints to the STDOUT of the shell running
+Logstash. This output can be quite convenient when debugging
+plugin configurations, by allowing instant access to the event
+data after it has passed through the inputs and filters.
+
+For example, the following output configuration, in conjunction with the
+Logstash `-e` command-line flag, will allow you to see the results
+of your event pipeline for quick iteration.
+[source,ruby]
+    output {
+      stdout {}
+    }
+
+Useful codecs include:
+
+`rubydebug`: outputs event data using the ruby "awesome_print"
+http://rubygems.org/gems/awesome_print[library]
+This is the default codec for stdout.
+
+[source,ruby]
+    output {
+      stdout { }
+    }
+
+`json`: outputs event data in structured JSON format
+[source,ruby]
+    output {
+      stdout { codec => json }
+    }
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Stdout Output Configuration Options
+
+There are no special configuration options for this plugin,
+but it does support the <<{version}-plugins-{type}s-{plugin}-common-options>>.
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
