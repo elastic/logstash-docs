@@ -1,13 +1,14 @@
 :plugin: jmx
 :type: input
 :default_plugin: 0
+:default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.4
-:release_date: 2017-11-14
-:changelog_url: https://github.com/logstash-plugins/logstash-input-jmx/blob/v3.0.4/CHANGELOG.md
+:version: v3.0.6
+:release_date: 2018-04-13
+:changelog_url: https://github.com/logstash-plugins/logstash-input-jmx/blob/v3.0.6/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -26,7 +27,7 @@ Every `polling_frequency`, it scans a folder containing json configuration
 files describing JVMs to monitor with metrics to retrieve.
 Then a pool of threads will retrieve metrics and create events.
 
-## The configuration:
+==== The configuration
 
 In Logstash configuration, you must set the polling frequency,
 the number of thread used to poll metrics and a directory absolute path containing
@@ -156,3 +157,5 @@ Indicate interval between two jmx metrics retrieval
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:

@@ -1,13 +1,14 @@
 :plugin: file
 :type: input
 :default_plugin: 1
+:default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.3
-:release_date: 2017-08-15
-:changelog_url: https://github.com/logstash-plugins/logstash-input-file/blob/v4.0.3/CHANGELOG.md
+:version: v4.0.5
+:release_date: 2018-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-input-file/blob/v4.0.5/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -202,7 +203,8 @@ of `/var/log` will be done for all `*.log` files.
 Paths must be absolute and cannot be relative.
 
 You may also configure multiple paths. See an example
-on the <<array,Logstash configuration page>>.
+on the {logstash-ref}/configuration-file-structure.html#array[Logstash configuration page].
+
 
 [id="plugins-{type}s-{plugin}-sincedb_path"]
 ===== `sincedb_path` 
@@ -255,3 +257,5 @@ but increase the time to detect new log lines.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
