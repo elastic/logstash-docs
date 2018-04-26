@@ -1,0 +1,14 @@
+:plugin: bytes
+:type: filter
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v1.0.1-plugins-filters-bytes,v1.0.1>> | 2018-04-24
+| <<v1.0.0-plugins-filters-bytes,v1.0.0>> | 2018-04-23
+|=======================================================================
+
+include::bytes-v1.0.1.asciidoc[]
+include::bytes-v1.0.0.asciidoc[]
+

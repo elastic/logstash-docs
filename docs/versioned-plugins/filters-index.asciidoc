@@ -11,6 +11,8 @@ include::filters/alter-index.asciidoc[]
 
 include::filters/anonymize-index.asciidoc[]
 
+include::filters/bytes-index.asciidoc[]
+
 include::filters/checksum-index.asciidoc[]
 
 include::filters/cidr-index.asciidoc[]

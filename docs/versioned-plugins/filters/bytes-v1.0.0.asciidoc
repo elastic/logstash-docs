@@ -1,0 +1,118 @@
+:plugin: bytes
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v1.0.0
+:release_date: 2018-04-23
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-bytes/blob/v1.0.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Bytes filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Parse string representations of computer storage sizes, such as "123 MB" or "5.6gb", into
+their numeric value in bytes.
+
+This plugin understands: 
+
+- bytes ("B")
+- kilobytes ("KB" or "kB")
+- megabytes ("MB", "mb", or "mB")
+- gigabytes ("GB", "gb", or "gB")
+- terabytes ("TB", "tb", or "tB")
+- petabytes ("PB", "pb", or "pB")
+
+[id="{version}-plugins-{type}s-{plugin}-examples"]
+==== Examples
+
+
+[cols="<,<",options="header",]
+|=======================================================================
+|Input string |Conversion method | Numeric value in bytes
+|40|`binary` or `metric`|40
+|40B|`binary` or `metric`|40
+|40 B|`binary` or `metric`|40
+|40KB|`binary`|40960
+|40kB|`binary`|40960
+|40KB|`metric`|40000
+|40.5KB|`binary`|41472
+|40kb|`binary`|5120
+|40Kb|`binary`|5120
+|10 MB|`binary`|10485760
+|10 mB|`binary`|10485760
+|10 mb|`binary`|10485760
+|10 Mb|`binary`|1310720
+|=======================================================================
+
+[source,ruby]
+    filter {
+      bytes {
+        source => "my_bytes_string_field"
+        target => "my_bytes_numeric_field"
+      }
+    }
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Bytes Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-source>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-target>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-conversion_method>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-decimal_separator>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-source"]
+===== `source` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `message`
+
+Name of the source field that contains the storage size
+
+[id="{version}-plugins-{type}s-{plugin}-target"]
+===== `target` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+
+Name of the target field that will contain the storage size in bytes
+
+[id="{version}-plugins-{type}s-{plugin}-conversion_method"]
+===== `conversion_method` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Value can be any of: `binary`, `metric`
+  * Default value is `binary`
+
+Which conversion method to use when converting to bytes. `binary` uses `1K = 1024B`. `metric` uses `1K = 1000B`.
+
+[id="{version}-plugins-{type}s-{plugin}-decimal_separator"]
+===== `source` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `.`
+
+Separator, if any, used as the decimal. This value is only used if the plugin cannot guess the decimal
+separator by looking at the string in the `source` field.
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
