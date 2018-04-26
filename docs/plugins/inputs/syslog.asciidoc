@@ -1,13 +1,14 @@
 :plugin: syslog
 :type: input
 :default_plugin: 1
+:default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.2.4
-:release_date: 2017-12-06
-:changelog_url: https://github.com/logstash-plugins/logstash-input-syslog/blob/v3.2.4/CHANGELOG.md
+:version: v3.4.1
+:release_date: 2018-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-input-syslog/blob/v3.4.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -28,10 +29,11 @@ It is also a good choice if you want to receive logs from
 appliances and network devices where you cannot run your own
 log collector.
 
-Of course, 'syslog' is a very muddy term. This input only supports `RFC3164`
-syslog with some small modifications. The date format is allowed to be
-`RFC3164` style or `ISO8601`. Otherwise the rest of `RFC3164` must be obeyed.
-If you do not use `RFC3164`, do not use this input.
+Of course, 'syslog' is a very muddy term. By default, this input only
+supports `RFC3164` syslog with some small modifications. However, some
+non-standard syslog formats can be read and parsed if a functional
+`grok_pattern` is provided. The date format is still only allowed to be
+`RFC3164` style or `ISO8601`.
 
 For more information see the http://www.ietf.org/rfc/rfc3164.txt[RFC3164 page].
 
@@ -47,11 +49,13 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |=======================================================================
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-facility_labels>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-grok_pattern>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-host>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-locale>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-proxy_protocol>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-severity_labels>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-syslog_field>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-timezone>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-use_labels>> |<<boolean,boolean>>|No
 |=======================================================================
@@ -62,15 +66,33 @@ input plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-facility_labels"]
-===== `facility_labels` 
+===== `facility_labels`
 
   * Value type is <<array,array>>
   * Default value is `["kernel", "user-level", "mail", "system", "security/authorization", "syslogd", "line printer", "network news", "UUCP", "clock", "security/authorization", "FTP", "NTP", "log audit", "log alert", "clock", "local0", "local1", "local2", "local3", "local4", "local5", "local6", "local7"]`
 
 Labels for facility levels. These are defined in RFC3164.
 
+[id="plugins-{type}s-{plugin}-grok_pattern"]
+===== `grok_pattern`
+
+  * Value type is <<string,string>>
+  * Default value is `"<%{POSINT:priority}>%{SYSLOGLINE}"`
+
+The default value should read and properly parse syslog lines which are
+fully compliant with http://www.ietf.org/rfc/rfc3164.txt[RFC3164].
+
+You can override this value to parse non-standard lines with a valid grok
+pattern which will parse the received lines.  If the line is unable to
+be parsed, the `_grokparsefailure_sysloginput` tag will be added.
+
+The grok pattern must provide a `timestamp` field. If the `timestamp`
+field is omitted, or is unable to be parsed as `RFC3164` style or
+`ISO8601`, a `_dateparsefailure` tag will be added.
+
+
 [id="plugins-{type}s-{plugin}-host"]
-===== `host` 
+===== `host`
 
   * Value type is <<string,string>>
   * Default value is `"0.0.0.0"`
@@ -78,7 +100,7 @@ Labels for facility levels. These are defined in RFC3164.
 The address to listen on.
 
 [id="plugins-{type}s-{plugin}-locale"]
-===== `locale` 
+===== `locale`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -92,7 +114,7 @@ weekday names (pattern with EEE).
 
 
 [id="plugins-{type}s-{plugin}-port"]
-===== `port` 
+===== `port`
 
   * Value type is <<number,number>>
   * Default value is `514`
@@ -101,7 +123,7 @@ The port to listen on. Remember that ports less than 1024 (privileged
 ports) may require root to use.
 
 [id="plugins-{type}s-{plugin}-proxy_protocol"]
-===== `proxy_protocol` 
+===== `proxy_protocol`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -110,15 +132,38 @@ Proxy protocol support, only v1 is supported at this time
 http://www.haproxy.org/download/1.5/doc/proxy-protocol.txt
 
 [id="plugins-{type}s-{plugin}-severity_labels"]
-===== `severity_labels` 
+===== `severity_labels`
 
   * Value type is <<array,array>>
   * Default value is `["Emergency", "Alert", "Critical", "Error", "Warning", "Notice", "Informational", "Debug"]`
 
 Labels for severity levels. These are defined in RFC3164.
 
+[id="plugins-{type}s-{plugin}-syslog_field"]
+===== `syslog_field`
+
+  * Value type is <<string,string>>
+  * Default value is `"message"`
+
+Codecs process the data before the rest of the data is parsed. Some codecs,
+like CEF, put the syslog data into another field after pre-processing the
+data.  Use this option in conjunction with the `grok_pattern` configuration
+to allow the syslog input plugin to fully parse the syslog data in this case.
+
+[source,sh]
+-------
+input {
+  syslog {
+    port => 12345
+    codec => cef
+    syslog_field => "syslog"
+    grok_pattern => "<%{POSINT:priority}>%{SYSLOGTIMESTAMP:timestamp} CUSTOM GROK HERE"
+  }
+}
+-------
+
 [id="plugins-{type}s-{plugin}-timezone"]
-===== `timezone` 
+===== `timezone`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -132,7 +177,7 @@ Canonical ID is good as it takes care of daylight saving time for you
 For example, `America/Los_Angeles` or `Europe/France` are valid IDs.
 
 [id="plugins-{type}s-{plugin}-use_labels"]
-===== `use_labels` 
+===== `use_labels`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -143,3 +188,5 @@ Use label parsing for severity and facility levels.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
