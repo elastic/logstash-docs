@@ -1,13 +1,14 @@
 :plugin: tcp
 :type: input
 :default_plugin: 1
+:default_codec: line
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.0.3
-:release_date: 2017-12-27
-:changelog_url: https://github.com/logstash-plugins/logstash-input-tcp/blob/v5.0.3/CHANGELOG.md
+:version: v5.0.7
+:release_date: 2018-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-input-tcp/blob/v5.0.7/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -28,7 +29,7 @@ Like stdin and file inputs, each event is assumed to be one line of text.
 Can either accept connections from clients or connect to a server,
 depending on `mode`.
 
-#### Accepting log4j2 logs
+===== Accepting log4j2 logs
 
 Log4j2 can send JSON over a socket, and we can use that combined with our tcp
 input to accept the logs. 
@@ -186,3 +187,5 @@ For input, sets the field `sslsubject` to that of the client certificate.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:

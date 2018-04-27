@@ -1,13 +1,14 @@
 :plugin: csv
 :type: output
 :default_plugin: 1
+:default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.6
-:release_date: 2017-11-07
-:changelog_url: https://github.com/logstash-plugins/logstash-output-csv/blob/v3.0.6/CHANGELOG.md
+:version: v3.0.7
+:release_date: 2018-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-output-csv/blob/v3.0.7/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -174,3 +175,5 @@ may not make the values safe in your spreadsheet application
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
