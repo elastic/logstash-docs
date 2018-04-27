@@ -1,13 +1,14 @@
 :plugin: http_poller
 :type: input
 :default_plugin: 1
+:default_codec: json
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.4
-:release_date: 2017-11-07
-:changelog_url: https://github.com/logstash-plugins/logstash-input-http_poller/blob/v4.0.4/CHANGELOG.md
+:version: v4.0.5
+:release_date: 2018-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-input-http_poller/blob/v4.0.5/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -283,10 +284,7 @@ If you'd like to use an HTTP proxy . This supports multiple configuration syntax
   * Value type is <<number,number>>
   * Default value is `60`
 
-This module makes it easy to add a very fully configured HTTP client to logstash
-based on [Manticore](https://github.com/cheald/manticore).
-For an example of its usage see https://github.com/logstash-plugins/logstash-input-http_poller
-Timeout (in seconds) for the entire request
+Timeout (in seconds) for the entire request.
 
 [id="plugins-{type}s-{plugin}-retry_non_idempotent"]
 ===== `retry_non_idempotent` 
@@ -378,3 +376,5 @@ See https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/org/apache
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:

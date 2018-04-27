@@ -1,13 +1,14 @@
 :plugin: rabbitmq
 :type: input
 :default_plugin: 1
+:default_codec: json
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v6.0.2
-:release_date: 2017-11-07
-:changelog_url: https://github.com/logstash-plugins/logstash-input-rabbitmq/blob/v6.0.2/CHANGELOG.md
+:version: v6.0.3
+:release_date: 2018-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-input-rabbitmq/blob/v6.0.3/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -394,3 +395,5 @@ slash.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
