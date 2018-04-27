@@ -1,13 +1,14 @@
 :plugin: elasticsearch
 :type: input
 :default_plugin: 1
+:default_codec: json
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.2.0
-:release_date: 2018-01-15
-:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.2.0/CHANGELOG.md
+:version: v4.2.1
+:release_date: 2018-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.2.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -194,7 +195,11 @@ can be either IP, HOST, IP:port, or HOST:port. The port defaults to
   * Value type is <<string,string>>
   * Default value is `"logstash-*"`
 
-The index or alias to search.
+The index or alias to search. See
+https://www.elastic.co/guide/en/elasticsearch/reference/current/multi-index.html[Multi Indices documentation]
+in the Elasticsearch documentation for more information on how to reference
+multiple indices.
+
 
 [id="plugins-{type}s-{plugin}-password"]
 ===== `password` 
@@ -269,3 +274,5 @@ empty string authentication will be disabled.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:

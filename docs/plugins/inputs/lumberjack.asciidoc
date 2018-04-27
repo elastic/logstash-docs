@@ -1,13 +1,14 @@
 :plugin: lumberjack
 :type: input
 :default_plugin: 0
+:default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.4
-:release_date: 2017-11-07
-:changelog_url: https://github.com/logstash-plugins/logstash-input-lumberjack/blob/v3.1.4/CHANGELOG.md
+:version: v3.1.5
+:release_date: 2018-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-input-lumberjack/blob/v3.1.5/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -25,7 +26,7 @@ Receive events using the Lumberjack protocol.
 
 This input can be used to reliably and securely transport
 events between Logstash instances. To do so, use the
-<<plugins-outputs-lumberjack,lumberjack output plugin>>
+{logstash-ref}/plugins-outputs-lumberjack.html[lumberjack output plugin]
 in the sending Logstash instance(s).
 
 It can also be used to receive events from the deprecated
@@ -111,3 +112,5 @@ SSL key passphrase to use.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:

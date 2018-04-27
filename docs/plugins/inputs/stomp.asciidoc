@@ -1,13 +1,14 @@
 :plugin: stomp
 :type: input
 :default_plugin: 0
+:default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.7
-:release_date: 2017-11-07
-:changelog_url: https://github.com/logstash-plugins/logstash-input-stomp/blob/v3.0.7/CHANGELOG.md
+:version: v3.0.8
+:release_date: 2018-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-input-stomp/blob/v3.0.8/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -118,3 +119,5 @@ The vhost to use
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
