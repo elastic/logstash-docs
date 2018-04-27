@@ -1,13 +1,14 @@
 :plugin: beats
 :type: input
 :default_plugin: 1
+:default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.0.6
-:release_date: 2018-01-05
-:changelog_url: https://github.com/logstash-plugins/logstash-input-beats/blob/v5.0.6/CHANGELOG.md
+:version: v5.0.14
+:release_date: 2018-04-13
+:changelog_url: https://github.com/logstash-plugins/logstash-input-beats/blob/v5.0.14/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -44,7 +45,6 @@ output {
   }
 }
 ------------------------------------------------------------------------------
-
 <1> Starting with Logstash 6.0, the `document_type` option is
 deprecated due to the
 https://www.elastic.co/guide/en/elasticsearch/reference/6.0/removal-of-types.html[removal of types in Logstash 6.0].
@@ -55,7 +55,7 @@ configuration because Logstash sets the type to `doc` by default.
 IMPORTANT: If you are shipping events that span multiple lines, you need to
 use the https://www.elastic.co/guide/en/beats/filebeat/current/multiline-examples.html[configuration options available in Filebeat] to handle multiline events
 before sending the event data to Logstash. You cannot use the
-<<plugins-codecs-multiline>> codec to handle multiline events. Doing so will
+{logstash-ref}/plugins-codecs-multiline.html[Multiline codec plugin] to handle multiline events. Doing so will
 result in the failure to start Logstash.
 
 
@@ -223,3 +223,5 @@ The minimum TLS version allowed for the encrypted connections. The value must be
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
