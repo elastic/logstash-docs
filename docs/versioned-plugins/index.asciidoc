@@ -3,6 +3,8 @@
 // other books in our library.
 :versioned_docs: true
 
+:branch: current
+
 // Set include path for common files
 :include_path: ../include/6.x
 
