@@ -1,0 +1,349 @@
+:plugin: google_bigquery
+:type: output
+:default_codec: plain
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: %VERSION%
+:release_date: %RELEASE_DATE%
+:changelog_url: %CHANGELOG_URL%
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="plugins-{type}s-{plugin}"]
+
+=== Google BigQuery output plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+===== Summary
+
+This plugin uploads events to Google BigQuery using the streaming API
+so data can become available nearly immediately.
+
+You can configure it to flush periodically, after N events or after
+a certain amount of data is ingested.
+
+===== Environment Configuration
+
+You must enable BigQuery on your Google Cloud Storage (GCS) account and create a dataset to
+hold the tables this plugin generates.
+
+You must also grant the service account this plugin uses access to
+the dataset.
+
+You can use https://www.elastic.co/guide/en/logstash/current/event-dependent-configuration.html[Logstash conditionals]
+and multiple configuration blocks to upload events with different structures.
+
+===== Usage
+This is an example of logstash config:
+
+[source,ruby]
+--------------------------
+output {
+   google_bigquery {
+     project_id => "folkloric-guru-278"                        (required)
+     dataset => "logs"                                         (required)
+     csv_schema => "path:STRING,status:INTEGER,score:FLOAT"    (required) <1>
+     json_key_file => "/path/to/key.json"                      (optional) <2>
+     error_directory => "/tmp/bigquery-errors"                 (required)
+     date_pattern => "%Y-%m-%dT%H:00"                          (optional)
+     flush_interval_secs => 30                                 (optional)
+   }
+}
+--------------------------
+
+<1> Specify either a csv_schema or a json_schema.
+
+<2> If the key is not used, then the plugin tries to find
+https://cloud.google.com/docs/authentication/production[Application Default Credentials]
+
+===== Considerations
+
+* There is a small fee to insert data into BigQuery using the streaming API
+* This plugin buffers events in-memory, so make sure the flush configurations are appropriate
+  for your use-case and consider using
+  https://www.elastic.co/guide/en/logstash/current/persistent-queues.html[Logstash Persistent Queues]
+
+===== Additional Resources
+
+* https://cloud.google.com/docs/authentication/production[Application Default Credentials (ADC) Overview]
+* https://cloud.google.com/bigquery/[BigQuery Introduction]
+* https://cloud.google.com/bigquery/docs/schemas[BigQuery Schema Formats and Types]
+
+[id="plugins-{type}s-{plugin}-options"]
+==== Google BigQuery Output Configuration Options
+
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-batch_size>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-batch_size_bytes>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-csv_schema>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-dataset>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-date_pattern>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-deleter_interval_secs>> |<<number,number>>|__Deprecated__
+| <<plugins-{type}s-{plugin}-error_directory>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-flush_interval_secs>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-ignore_unknown_values>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-json_key_file>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-json_schema>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-key_password>> |<<string,string>>|__Deprecated__
+| <<plugins-{type}s-{plugin}-key_path>> |<<string,string>>|*Obsolete*
+| <<plugins-{type}s-{plugin}-project_id>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-service_account>> |<<string,string>>|__Deprecated__
+| <<plugins-{type}s-{plugin}-table_prefix>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-table_separator>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-temp_directory>> |<<string,string>>|__Deprecated__
+| <<plugins-{type}s-{plugin}-temp_file_prefix>> |<<string,string>>|__Deprecated__
+| <<plugins-{type}s-{plugin}-uploader_interval_secs>> |<<number,number>>|__Deprecated__
+|=======================================================================
+
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="plugins-{type}s-{plugin}-batch_size"]
+===== `batch_size`
+
+added[4.0.0]
+
+  * Value type is <<number,number>>
+  * Default value is `128`
+
+The number of messages to upload at a single time. (< 1000, default: 128)
+
+[id="plugins-{type}s-{plugin}-batch_size_bytes"]
+===== `batch_size_bytes`
+
+added[4.0.0]
+
+  * Value type is <<number,number>>
+  * Default value is `1_000_000`
+
+An approximate number of bytes to upload as part of a batch. Default: 1MB
+
+[id="plugins-{type}s-{plugin}-csv_schema"]
+===== `csv_schema` 
+
+  * Value type is <<string,string>>
+  * Default value is `nil`
+
+Schema for log data. It must follow the format `name1:type1(,name2:type2)*`.
+For example, `path:STRING,status:INTEGER,score:FLOAT`.
+
+[id="plugins-{type}s-{plugin}-dataset"]
+===== `dataset` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The BigQuery dataset the tables for the events will be added to.
+
+[id="plugins-{type}s-{plugin}-date_pattern"]
+===== `date_pattern` 
+
+  * Value type is <<string,string>>
+  * Default value is `"%Y-%m-%dT%H:00"`
+
+Time pattern for BigQuery table, defaults to hourly tables.
+Must Time.strftime patterns: www.ruby-doc.org/core-2.0/Time.html#method-i-strftime
+
+[id="plugins-{type}s-{plugin}-deleter_interval_secs"]
+===== `deleter_interval_secs`
+
+deprecated[4.0.0, Events are uploaded in real-time without being stored to disk.]
+
+  * Value type is <<number,number>>
+
+[id="plugins-{type}s-{plugin}-error_directory"]
+===== `error_directory`
+added[4.0.0]
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * Default value is `"/tmp/bigquery"`.
+
+The location to store events that could not be uploaded due to errors.
+Consider using an additional Logstash input to pipe the contents of
+these to an alert platform so you can manually fix the events.
+
+Or use https://cloud.google.com/storage/docs/gcs-fuse[GCS FUSE] to
+transparently upload to a GCS bucket.
+
+Files names follow the pattern `[table name]-[UNIX timestamp].log`
+
+[id="plugins-{type}s-{plugin}-flush_interval_secs"]
+===== `flush_interval_secs` 
+
+  * Value type is <<number,number>>
+  * Default value is `5`
+
+Uploads all data this often even if other upload criteria aren't met. Default: 5s
+
+[id="plugins-{type}s-{plugin}-ignore_unknown_values"]
+===== `ignore_unknown_values` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Indicates if BigQuery should ignore values that are not represented in the table schema.
+If true, the extra values are discarded.
+If false, BigQuery will reject the records with extra fields and the job will fail.
+The default value is false.
+
+NOTE: You may want to add a Logstash filter like the following to remove common fields it adds:
+
+[source,ruby]
+----------------------------------
+mutate {
+    remove_field => ["@version","@timestamp","path","host","type", "message"]
+}
+----------------------------------
+
+[id="plugins-{type}s-{plugin}-json_key_file"]
+===== `json_key_file`
+
+added[4.0.0, Replaces <<plugins-{type}s-{plugin}-key_password>>, <<plugins-{type}s-{plugin}-key_path>> and <<plugins-{type}s-{plugin}-service_account>>]
+
+  * Value type is <<string,string>>
+  * Default value is `nil`
+
+If logstash is running within Google Compute Engine, the plugin can use
+GCE's Application Default Credentials. Outside of GCE, you will need to
+specify a Service Account JSON key file.
+
+[id="plugins-{type}s-{plugin}-json_schema"]
+===== `json_schema` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `nil`
+
+Schema for log data as a hash.
+These can include nested records, descriptions, and modes.
+
+Example:
+[source,ruby]
+--------------------------
+json_schema => {
+  fields => [{
+    name => "endpoint"
+    type => "STRING"
+    description => "Request route"
+  }, {
+    name => "status"
+    type => "INTEGER"
+    mode => "NULLABLE"
+  }, {
+    name => "params"
+    type => "RECORD"
+    mode => "REPEATED"
+    fields => [{
+      name => "key"
+      type => "STRING"
+     }, {
+      name => "value"
+      type => "STRING"
+    }]
+  }]
+}
+--------------------------
+
+[id="plugins-{type}s-{plugin}-key_password"]
+===== `key_password`
+
+deprecated[4.0.0, Replaced by `json_key_file` or by using ADC. See <<plugins-{type}s-{plugin}-json_key_file>>]
+
+  * Value type is <<string,string>>
+
+
+[id="plugins-{type}s-{plugin}-key_path"]
+===== `key_path`
+
+  * Value type is <<string,string>>
+
+**Obsolete:** The PKCS12 key file format is no longer supported.
+
+Please use one of the following mechanisms:
+
+  * https://cloud.google.com/docs/authentication/production[Application Default Credentials (ADC)],
+    configured via environment variables on Compute Engine, Kubernetes Engine, App Engine, or
+    Cloud Functions.
+  * A JSON authentication key file. You can generate them in the console for the service account
+    like you did with the `.P12` file or with the following command:
+    `gcloud iam service-accounts keys create key.json --iam-account my-sa-123@my-project-123.iam.gserviceaccount.com`
+
+[id="plugins-{type}s-{plugin}-project_id"]
+===== `project_id` 
+
+  * This is a required setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Google Cloud Project ID (number, not Project Name!).
+
+[id="plugins-{type}s-{plugin}-service_account"]
+===== `service_account`
+
+deprecated[4.0.0, Replaced by `json_key_file` or by using ADC. See <<plugins-{type}s-{plugin}-json_key_file>>]
+
+  * Value type is <<string,string>>
+
+[id="plugins-{type}s-{plugin}-table_prefix"]
+===== `table_prefix` 
+
+  * Value type is <<string,string>>
+  * Default value is `"logstash"`
+
+BigQuery table ID prefix to be used when creating new tables for log data.
+Table name will be `<table_prefix><table_separator><date>`
+
+[id="plugins-{type}s-{plugin}-table_separator"]
+===== `table_separator` 
+
+  * Value type is <<string,string>>
+  * Default value is `"_"`
+
+BigQuery table separator to be added between the table_prefix and the
+date suffix.
+
+[id="plugins-{type}s-{plugin}-temp_directory"]
+===== `temp_directory`
+
+deprecated[4.0.0, Events are uploaded in real-time without being stored to disk.]
+
+  * Value type is <<string,string>>
+
+[id="plugins-{type}s-{plugin}-temp_file_prefix"]
+===== `temp_file_prefix`
+
+deprecated[4.0.0, Events are uploaded in real-time without being stored to disk]
+
+  * Value type is <<string,string>>
+
+[id="plugins-{type}s-{plugin}-uploader_interval_secs"]
+===== `uploader_interval_secs`
+
+deprecated[4.0.0, This field is no longer used]
+
+  * Value type is <<number,number>>
+  * Default value is `60`
+
+Uploader interval when uploading new files to BigQuery. Adjust time based
+on your time pattern (for example, for hourly files, this interval can be
+around one hour).
+
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
