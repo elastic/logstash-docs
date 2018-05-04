@@ -84,26 +84,26 @@ This plugin supports the following configuration options plus the <<{version}-pl
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<{version}-plugins-{type}s-{plugin}-batch_size>> |<<number,number>>|No
-| <<{version}-plugins-{type}s-{plugin}-batch_size_bytes>> |<<number,number>>|No
-| <<{version}-plugins-{type}s-{plugin}-csv_schema>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-dataset>> |<<string,string>>|Yes
-| <<{version}-plugins-{type}s-{plugin}-date_pattern>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-deleter_interval_secs>> |<<number,number>>|__Deprecated__
-| <<{version}-plugins-{type}s-{plugin}-error_directory>> |<<string,string>>|Yes
-| <<{version}-plugins-{type}s-{plugin}-flush_interval_secs>> |<<number,number>>|No
-| <<{version}-plugins-{type}s-{plugin}-ignore_unknown_values>> |<<boolean,boolean>>|No
-| <<{version}-plugins-{type}s-{plugin}-json_key_file>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-json_schema>> |<<hash,hash>>|No
-| <<{version}-plugins-{type}s-{plugin}-key_password>> |<<string,string>>|__Deprecated__
-| <<{version}-plugins-{type}s-{plugin}-key_path>> |<<string,string>>|*Obsolete*
-| <<{version}-plugins-{type}s-{plugin}-project_id>> |<<string,string>>|Yes
-| <<{version}-plugins-{type}s-{plugin}-service_account>> |<<string,string>>|__Deprecated__
-| <<{version}-plugins-{type}s-{plugin}-table_prefix>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-table_separator>> |<<string,string>>|No
-| <<{version}-plugins-{type}s-{plugin}-temp_directory>> |<<string,string>>|__Deprecated__
-| <<{version}-plugins-{type}s-{plugin}-temp_file_prefix>> |<<string,string>>|__Deprecated__
-| <<{version}-plugins-{type}s-{plugin}-uploader_interval_secs>> |<<number,number>>|__Deprecated__
+| <<{version}-plugins-{type}s-{plugin}-batch_size>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-batch_size_bytes>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-csv_schema>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-dataset>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-date_pattern>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-deleter_interval_secs>> |{logstash-ref}/configuration-file-structure.html#number[number]|__Deprecated__
+| <<{version}-plugins-{type}s-{plugin}-error_directory>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-flush_interval_secs>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-ignore_unknown_values>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-json_key_file>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-json_schema>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-key_password>> |{logstash-ref}/configuration-file-structure.html#string[string]|__Deprecated__
+| <<{version}-plugins-{type}s-{plugin}-key_path>> |{logstash-ref}/configuration-file-structure.html#string[string]|*Obsolete*
+| <<{version}-plugins-{type}s-{plugin}-project_id>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-service_account>> |{logstash-ref}/configuration-file-structure.html#string[string]|__Deprecated__
+| <<{version}-plugins-{type}s-{plugin}-table_prefix>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-table_separator>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-temp_directory>> |{logstash-ref}/configuration-file-structure.html#string[string]|__Deprecated__
+| <<{version}-plugins-{type}s-{plugin}-temp_file_prefix>> |{logstash-ref}/configuration-file-structure.html#string[string]|__Deprecated__
+| <<{version}-plugins-{type}s-{plugin}-uploader_interval_secs>> |{logstash-ref}/configuration-file-structure.html#number[number]|__Deprecated__
 |=======================================================================
 
 Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -116,7 +116,7 @@ output plugins.
 
 added[4.0.0]
 
-  * Value type is <<number,number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * Default value is `128`
 
 The number of messages to upload at a single time. (< 1000, default: 128)
@@ -126,7 +126,7 @@ The number of messages to upload at a single time. (< 1000, default: 128)
 
 added[4.0.0]
 
-  * Value type is <<number,number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * Default value is `1_000_000`
 
 An approximate number of bytes to upload as part of a batch. Default: 1MB
@@ -134,7 +134,7 @@ An approximate number of bytes to upload as part of a batch. Default: 1MB
 [id="{version}-plugins-{type}s-{plugin}-csv_schema"]
 ===== `csv_schema` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `nil`
 
 Schema for log data. It must follow the format `name1:type1(,name2:type2)*`.
@@ -144,7 +144,7 @@ For example, `path:STRING,status:INTEGER,score:FLOAT`.
 ===== `dataset` 
 
   * This is a required setting.
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * There is no default value for this setting.
 
 The BigQuery dataset the tables for the events will be added to.
@@ -152,7 +152,7 @@ The BigQuery dataset the tables for the events will be added to.
 [id="{version}-plugins-{type}s-{plugin}-date_pattern"]
 ===== `date_pattern` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `"%Y-%m-%dT%H:00"`
 
 Time pattern for BigQuery table, defaults to hourly tables.
@@ -163,14 +163,14 @@ Must Time.strftime patterns: www.ruby-doc.org/core-2.0/Time.html#method-i-strfti
 
 deprecated[4.0.0, Events are uploaded in real-time without being stored to disk.]
 
-  * Value type is <<number,number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
 
 [id="{version}-plugins-{type}s-{plugin}-error_directory"]
 ===== `error_directory`
 added[4.0.0]
 
   * This is a required setting.
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `"/tmp/bigquery"`.
 
 The location to store events that could not be uploaded due to errors.
@@ -185,7 +185,7 @@ Files names follow the pattern `[table name]-[UNIX timestamp].log`
 [id="{version}-plugins-{type}s-{plugin}-flush_interval_secs"]
 ===== `flush_interval_secs` 
 
-  * Value type is <<number,number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * Default value is `5`
 
 Uploads all data this often even if other upload criteria aren't met. Default: 5s
@@ -193,7 +193,7 @@ Uploads all data this often even if other upload criteria aren't met. Default: 5
 [id="{version}-plugins-{type}s-{plugin}-ignore_unknown_values"]
 ===== `ignore_unknown_values` 
 
-  * Value type is <<boolean,boolean>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
   * Default value is `false`
 
 Indicates if BigQuery should ignore values that are not represented in the table schema.
@@ -215,7 +215,7 @@ mutate {
 
 added[4.0.0, Replaces <<{version}-plugins-{type}s-{plugin}-key_password>>, <<{version}-plugins-{type}s-{plugin}-key_path>> and <<{version}-plugins-{type}s-{plugin}-service_account>>]
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `nil`
 
 If logstash is running within Google Compute Engine, the plugin can use
@@ -225,7 +225,7 @@ specify a Service Account JSON key file.
 [id="{version}-plugins-{type}s-{plugin}-json_schema"]
 ===== `json_schema` 
 
-  * Value type is <<hash,hash>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
   * Default value is `nil`
 
 Schema for log data as a hash.
@@ -263,13 +263,13 @@ json_schema => {
 
 deprecated[4.0.0, Replaced by `json_key_file` or by using ADC. See <<{version}-plugins-{type}s-{plugin}-json_key_file>>]
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
 
 
 [id="{version}-plugins-{type}s-{plugin}-key_path"]
 ===== `key_path`
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
 
 **Obsolete:** The PKCS12 key file format is no longer supported.
 
@@ -286,7 +286,7 @@ Please use one of the following mechanisms:
 ===== `project_id` 
 
   * This is a required setting.
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * There is no default value for this setting.
 
 Google Cloud Project ID (number, not Project Name!).
@@ -296,12 +296,12 @@ Google Cloud Project ID (number, not Project Name!).
 
 deprecated[4.0.0, Replaced by `json_key_file` or by using ADC. See <<{version}-plugins-{type}s-{plugin}-json_key_file>>]
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
 
 [id="{version}-plugins-{type}s-{plugin}-table_prefix"]
 ===== `table_prefix` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `"logstash"`
 
 BigQuery table ID prefix to be used when creating new tables for log data.
@@ -310,7 +310,7 @@ Table name will be `<table_prefix><table_separator><date>`
 [id="{version}-plugins-{type}s-{plugin}-table_separator"]
 ===== `table_separator` 
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
   * Default value is `"_"`
 
 BigQuery table separator to be added between the table_prefix and the
@@ -321,21 +321,21 @@ date suffix.
 
 deprecated[4.0.0, Events are uploaded in real-time without being stored to disk.]
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
 
 [id="{version}-plugins-{type}s-{plugin}-temp_file_prefix"]
 ===== `temp_file_prefix`
 
 deprecated[4.0.0, Events are uploaded in real-time without being stored to disk]
 
-  * Value type is <<string,string>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
 
 [id="{version}-plugins-{type}s-{plugin}-uploader_interval_secs"]
 ===== `uploader_interval_secs`
 
 deprecated[4.0.0, This field is no longer used]
 
-  * Value type is <<number,number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * Default value is `60`
 
 Uploader interval when uploading new files to BigQuery. Adjust time based
