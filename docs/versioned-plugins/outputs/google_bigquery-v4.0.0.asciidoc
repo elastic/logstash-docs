@@ -5,10 +5,10 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: %VERSION%
-:release_date: %RELEASE_DATE%
-:changelog_url: %CHANGELOG_URL%
-:include_path: ../../../../logstash/docs/include
+:version: v4.0.0
+:release_date: 2018-04-30
+:changelog_url: https://github.com/logstash-plugins/logstash-output-google_bigquery/blob/v4.0.0/CHANGELOG.md
+:include_path: ../include/6.x
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
