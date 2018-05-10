@@ -5,12 +5,14 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v3.0.5-plugins-outputs-loggly,v3.0.5>> | 2018-05-09
 | <<v3.0.4-plugins-outputs-loggly,v3.0.4>> | 2018-04-06
 | <<v3.0.3-plugins-outputs-loggly,v3.0.3>> | 2017-11-07
 | <<v3.0.2-plugins-outputs-loggly,v3.0.2>> | 2017-08-16
 | <<v3.0.1-plugins-outputs-loggly,v3.0.1>> | 2017-06-23
 |=======================================================================
 
+include::loggly-v3.0.5.asciidoc[]
 include::loggly-v3.0.4.asciidoc[]
 include::loggly-v3.0.3.asciidoc[]
 include::loggly-v3.0.2.asciidoc[]
