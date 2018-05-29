@@ -1,13 +1,14 @@
 :plugin: datadog_metrics
 :type: output
 :default_plugin: 0
+:default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.2
-:release_date: 2017-08-21
-:changelog_url: https://github.com/logstash-plugins/logstash-output-datadog_metrics/blob/v3.0.2/CHANGELOG.md
+:version: v3.0.4
+:release_date: 2018-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-output-datadog_metrics/blob/v3.0.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -129,3 +130,5 @@ How often (in seconds) to flush queued events to Datadog
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:

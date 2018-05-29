@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.11.4
-:release_date: 2018-03-26
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-netflow/blob/v3.11.4/CHANGELOG.md
+:version: v3.14.1
+:release_date: 2018-05-23
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-netflow/blob/v3.14.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -53,6 +53,7 @@ The following Netflow/IPFIX exporters are known to work with the most recent ver
 |nProbe                   |  y | y  |   y   | L7 DPI fields now also supported
 |Nokia BRAS               |    |    |   y   |
 |OpenBSD pflow            |  y | n  |   y   | http://man.openbsd.org/OpenBSD-current/man4/pflow.4
+|Sandvine Procera PacketLogic| |    |   y   | v15.1
 |Softflowd                |  y | y  |   y   | IPFIX supported in https://github.com/djmdjm/softflowd
 |Streamcore Streamgroomer |    | y  |       |
 |Palo Alto PAN-OS         |    | y  |       |
