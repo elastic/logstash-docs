@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v5.0.8-plugins-inputs-tcp,v5.0.8>> | 2018-05-30
 | <<v5.0.7-plugins-inputs-tcp,v5.0.7>> | 2018-04-06
 | <<v5.0.5-plugins-inputs-tcp,v5.0.5>> | 2018-03-21
 | <<v5.0.4-plugins-inputs-tcp,v5.0.4>> | 2018-03-08
@@ -18,6 +19,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v4.1.2-plugins-inputs-tcp,v4.1.2>> | 2017-06-23
 |=======================================================================
 
+include::tcp-v5.0.8.asciidoc[]
 include::tcp-v5.0.7.asciidoc[]
 include::tcp-v5.0.5.asciidoc[]
 include::tcp-v5.0.4.asciidoc[]
