@@ -1,0 +1,251 @@
+:plugin: google_cloud_storage
+:type: output
+:default_codec: plain
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.2.0
+:release_date: 2018-06-04
+:changelog_url: https://github.com/logstash-plugins/logstash-output-google_cloud_storage/blob/v3.2.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Google_cloud_storage output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Summary: plugin to upload log events to Google Cloud Storage (GCS), rolling
+files based on the date pattern provided as a configuration setting. Events
+are written to files locally and, once file is closed, this plugin uploads
+it to the configured bucket.
+
+For more info on Google Cloud Storage, please go to:
+https://cloud.google.com/products/cloud-storage
+
+In order to use this plugin, a Google service account must be used. For
+more information, please refer to:
+https://developers.google.com/storage/docs/authentication#service_accounts
+
+Recommendation: experiment with the settings depending on how much log
+data you generate, so the uploader can keep up with the generated logs.
+Using gzip output can be a good option to reduce network traffic when
+uploading the log files and in terms of storage costs as well.
+
+USAGE:
+This is an example of logstash config:
+
+[source,json]
+--------------------------
+output {
+   google_cloud_storage {
+     bucket => "my_bucket"                                     (required)
+     key_path => "/path/to/privatekey.p12"                     (required)
+     key_password => "notasecret"                              (optional)
+     service_account => "1234@developer.gserviceaccount.com"   (required)
+     temp_directory => "/tmp/logstash-gcs"                     (optional)
+     log_file_prefix => "logstash_gcs"                         (optional)
+     max_file_size_kbytes => 1024                              (optional)
+     output_format => "plain"                                  (optional)
+     date_pattern => "%Y-%m-%dT%H:00"                          (optional)
+     flush_interval_secs => 2                                  (optional)
+     gzip => false                                             (optional)
+     uploader_interval_secs => 60                              (optional)
+     include_uuid => true                                      (optional)
+     include_hostname => true                                  (optional)
+   }
+}
+--------------------------
+
+* Support logstash event variables to determine filename.
+* Turn Google API code into a Plugin Mixin (like AwsConfig).
+* There's no recover method, so if logstash/plugin crashes, files may not
+be uploaded to GCS.
+* Allow user to configure file name.
+* Allow parallel uploads for heavier loads (+ connection configuration if
+exposed by Ruby API client)
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Google_cloud_storage Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-bucket>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-date_pattern>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-flush_interval_secs>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-gzip>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-include_hostname>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-include_uuid>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-key_password>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-key_path>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-log_file_prefix>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-max_concurrent_uploads>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-max_file_size_kbytes>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-output_format>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["json", "plain"]`|No
+| <<{version}-plugins-{type}s-{plugin}-service_account>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-temp_directory>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-uploader_interval_secs>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-bucket"]
+===== `bucket` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+GCS bucket name, without "gs://" or any other prefix.
+
+[id="{version}-plugins-{type}s-{plugin}-date_pattern"]
+===== `date_pattern` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"%Y-%m-%dT%H:00"`
+
+Time pattern for log file, defaults to hourly files.
+Must Time.strftime patterns: www.ruby-doc.org/core-2.0/Time.html#method-i-strftime
+
+[id="{version}-plugins-{type}s-{plugin}-flush_interval_secs"]
+===== `flush_interval_secs` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `2`
+
+Flush interval in seconds for flushing writes to log files. 0 will flush
+on every message.
+
+[id="{version}-plugins-{type}s-{plugin}-gzip"]
+===== `gzip` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Gzip output stream when writing events to log files.
+
+[id="{version}-plugins-{type}s-{plugin}-include_hostname"]
+===== `include_hostname`
+
+added[3.1.0]
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Should the hostname be included in the file name?
+You may want to turn this off for privacy reasons or if you are running multiple
+instances of Logstash and need to match the files you create with a simple glob
+such as if you wanted to import files to BigQuery.
+
+
+[id="{version}-plugins-{type}s-{plugin}-include_uuid"]
+===== `include_uuid`
+
+added[3.1.0]
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Adds a UUID to the end of a file name.
+You may want to enable this feature so files don't clobber one another if you're
+running multiple instances of Logstash or if you expect frequent node restarts.
+
+[id="{version}-plugins-{type}s-{plugin}-key_password"]
+===== `key_password` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"notasecret"`
+
+GCS private key password.
+
+[id="{version}-plugins-{type}s-{plugin}-key_path"]
+===== `key_path` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+GCS path to private key file.
+
+[id="{version}-plugins-{type}s-{plugin}-log_file_prefix"]
+===== `log_file_prefix` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"logstash_gcs"`
+
+Log file prefix. Log file will follow the format:
+<prefix>_hostname_date<.part?>.log
+
+[id="{version}-plugins-{type}s-{plugin}-max_concurrent_uploads"]
+===== `max_concurrent_uploads`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `5`
+
+Sets the maximum number of concurrent uploads to Cloud Storage at a time.
+Uploads are I/O bound so it makes sense to tune this paramater with regards
+to the network bandwidth available and the latency between your server and
+Cloud Storage.
+
+[id="{version}-plugins-{type}s-{plugin}-max_file_size_kbytes"]
+===== `max_file_size_kbytes` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `10000`
+
+Sets max file size in kbytes. 0 disable max file check.
+
+[id="{version}-plugins-{type}s-{plugin}-output_format"]
+===== `output_format` 
+
+  * Value can be any of: `json`, `plain`
+  * Default value is `"plain"`
+
+The event format you want to store in files. Defaults to plain text.
+
+[id="{version}-plugins-{type}s-{plugin}-service_account"]
+===== `service_account` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+GCS service account.
+
+[id="{version}-plugins-{type}s-{plugin}-temp_directory"]
+===== `temp_directory` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `""`
+
+Directory where temporary files are stored.
+Defaults to /tmp/logstash-gcs-<random-suffix>
+
+[id="{version}-plugins-{type}s-{plugin}-uploader_interval_secs"]
+===== `uploader_interval_secs` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `60`
+
+Uploader interval when uploading new files to GCS. Adjust time based
+on your time pattern (for example, for hourly files, this interval can be
+around one hour).
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
