@@ -3,6 +3,8 @@
 
 include::include/plugin-intro.asciidoc[]
 
+include::inputs/azure_event_hubs-index.asciidoc[]
+
 include::inputs/beats-index.asciidoc[]
 
 include::inputs/cloudwatch-index.asciidoc[]
