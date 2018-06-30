@@ -5,6 +5,8 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v1.1.0-plugins-filters-math,v1.1.0>> | 2018-06-29
 |=======================================================================
 
+include::math-v1.1.0.asciidoc[]
 
