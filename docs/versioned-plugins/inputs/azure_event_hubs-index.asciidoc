@@ -5,8 +5,10 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v1.0.1-plugins-inputs-azure_event_hubs,v1.0.1>> | 2018-07-05
 | <<v1.0.0-plugins-inputs-azure_event_hubs,v1.0.0>> | 2018-06-26
 |=======================================================================
 
+include::azure_event_hubs-v1.0.1.asciidoc[]
 include::azure_event_hubs-v1.0.0.asciidoc[]
 
