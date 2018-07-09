@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.0.6
-:release_date: 2018-04-12
-:changelog_url: https://github.com/logstash-plugins/logstash-input-google_pubsub/blob/v1.0.6/CHANGELOG.md
+:version: v1.2.0
+:release_date: 2018-05-07
+:changelog_url: https://github.com/logstash-plugins/logstash-input-google_pubsub/blob/v1.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -134,9 +134,46 @@ input {
         # outside of GCE, you will need to specify the service account's
         # JSON key file below.
         #json_key_file => "/home/erjohnso/pkey.json"
+
+        # Should the plugin attempt to create the subscription on startup?
+        # This is not recommended for security reasons but may be useful in
+        # some cases.
+        #create_subscription => false
     }
 }
 output { stdout { codec => rubydebug } }
+----------------------------------
+
+==== Metadata and Attributes
+
+The original Pub/Sub message is preserved in the special Logstash 
+`[@metadata][pubsub_message]` field so you can fetch:
+
+* Message attributes
+* The origiginal base64 data
+* Pub/Sub message ID for de-duplication
+* Publish time
+
+You MUST extract any fields you want in a filter prior to the data being sent
+to an output because Logstash deletes `@metadata` fields otherwise.
+
+See the PubsubMessage
+https://cloud.google.com/pubsub/docs/reference/rest/v1/PubsubMessage[documentation]
+for a full description of the fields.
+
+Example to get the message ID:
+
+[source,ruby]
+----------------------------------	
+input {google_pubsub {...}}
+
+filter {
+  mutate {
+    add_field => { "messageId" => "%{[@metadata][pubsub_message][messageId]}" }
+  }
+}
+
+output {...}
 ----------------------------------
 
 
@@ -153,6 +190,8 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-project_id>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-subscription>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-topic>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-include_metadata>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-create_subscription>> |<<boolean,boolean>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -210,7 +249,25 @@ Note that the topic must be created manually with Cloud Logging
 pre-configured export to PubSub configured to use the defined topic.
 The subscription will be created automatically by the plugin.
 
+[id="plugins-{type}s-{plugin}-include_metadata"]
+===== `include_metadata` 
 
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`.
+
+If set true, will include the full message data in the `[@metadata][pubsub_message]` field.
+
+[id="plugins-{type}s-{plugin}-create_subscription"]
+===== `create_subscription`
+
+added[1.2.0]
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`.
+
+If true, the plugin will try to create the subscription before publishing.
+Note: this requires additional permissions to be granted to the client and is _not_
+recommended for most use-cases.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
