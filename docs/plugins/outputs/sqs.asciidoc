@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.1.1
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-output-sqs/blob/v5.1.1/CHANGELOG.md
+:version: v5.1.2
+:release_date: 2018-06-05
+:changelog_url: https://github.com/logstash-plugins/logstash-output-sqs/blob/v5.1.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -181,6 +181,15 @@ URI to proxy server if required
 
 The name of the target SQS queue. Note that this is just the name of the
 queue, not the URL or ARN.
+
+[id="plugins-{type}s-{plugin}-queue_owner_aws_account_id"]
+===== `queue_owner_aws_account_id`
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The owning account id of the target SQS queue. IAM permissions need to be
+configured on both accounts to function.
 
 [id="plugins-{type}s-{plugin}-region"]
 ===== `region` 

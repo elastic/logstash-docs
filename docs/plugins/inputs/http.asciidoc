@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.0
-:release_date: 2018-04-26
-:changelog_url: https://github.com/logstash-plugins/logstash-input-http/blob/v3.1.0/CHANGELOG.md
+:version: v3.2.0
+:release_date: 2018-05-10
+:changelog_url: https://github.com/logstash-plugins/logstash-input-http/blob/v3.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -184,6 +184,22 @@ Persistent Queue for the logstash pipeline.
   * Default value is `{"Content-Type"=>"text/plain"}`
 
 specify a custom set of response headers
+
+[id="plugins-{type}s-{plugin}-remote_host_target_field"]
+===== `remote_host_target_field` 
+
+  * Value type is <<string,string>>
+  * Default value is `"host"`
+
+specify a target field for the client host of the http request
+
+[id="plugins-{type}s-{plugin}-request_headers_target_field"]
+===== `request_headers_target_field` 
+
+  * Value type is <<string,string>>
+  * Default value is `"headers"`
+
+specify target field for the client host of the http request
 
 [id="plugins-{type}s-{plugin}-ssl"]
 ===== `ssl` 
