@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.1.0
-:release_date: 2018-04-26
-:changelog_url: https://github.com/logstash-plugins/logstash-input-google_pubsub/blob/v1.1.0/CHANGELOG.md
+:version: v1.2.0
+:release_date: 2018-05-07
+:changelog_url: https://github.com/logstash-plugins/logstash-input-google_pubsub/blob/v1.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -134,6 +134,11 @@ input {
         # outside of GCE, you will need to specify the service account's
         # JSON key file below.
         #json_key_file => "/home/erjohnso/pkey.json"
+
+        # Should the plugin attempt to create the subscription on startup?
+        # This is not recommended for security reasons but may be useful in
+        # some cases.
+        #create_subscription => false
     }
 }
 output { stdout { codec => rubydebug } }
@@ -186,6 +191,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-subscription>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-topic>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-include_metadata>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-create_subscription>> |<<boolean,boolean>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -250,6 +256,18 @@ The subscription will be created automatically by the plugin.
   * Default value is `false`.
 
 If set true, will include the full message data in the `[@metadata][pubsub_message]` field.
+
+[id="plugins-{type}s-{plugin}-create_subscription"]
+===== `create_subscription`
+
+added[1.2.0]
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`.
+
+If true, the plugin will try to create the subscription before publishing.
+Note: this requires additional permissions to be granted to the client and is _not_
+recommended for most use-cases.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]

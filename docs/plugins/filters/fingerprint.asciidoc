@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.2
-:release_date: 2017-11-07
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-fingerprint/blob/v3.1.2/CHANGELOG.md
+:version: v3.2.0
+:release_date: 2018-06-20
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-fingerprint/blob/v3.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -28,13 +28,10 @@ This can e.g. be used to create consistent document ids when inserting
 events into Elasticsearch, allowing events in Logstash to cause existing
 documents to be updated rather than new documents to be created.
 
-NOTE: When using any method other than 'UUID', 'PUNCTUATION' or 'MURMUR3'
-you must set the key, otherwise the plugin will raise an exception
-
 NOTE: When the `target` option is set to `UUID` the result won't be
 a consistent hash but a random
 https://en.wikipedia.org/wiki/Universally_unique_identifier[UUID].
-To generate UUIDs, prefer the <<plugins-filters-uuid,uuid filter>>.
+To generate UUIDs, prefer the {logstash-ref}/plugins-filters-uuid.html[uuid filter].
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Fingerprint Filter Configuration Options
@@ -81,7 +78,7 @@ fields are given, the target field will be an array with fingerprints
 of the source fields given.
 
 [id="plugins-{type}s-{plugin}-concatenate_all_fields"]
-===== `concatenate_sources` 
+===== `concatenate_all_fields` 
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -100,8 +97,7 @@ source fields given.
   * There is no default value for this setting.
 
 When used with the `IPV4_NETWORK` method fill in the subnet prefix length.
-Key is required with all methods except  `MURMUR3`, `PUNCTUATION` or `UUID`.
-With other methods fill in the HMAC key.
+With other methods, optionally fill in the HMAC key.
 
 [id="plugins-{type}s-{plugin}-method"]
 ===== `method` 
@@ -112,10 +108,12 @@ With other methods fill in the HMAC key.
 
 The fingerprint method to use.
 
-If set to `SHA1`, `SHA256`, `SHA384`, `SHA512`, or `MD5` the
-cryptographic keyed-hash function with the same name will be used to
-generate the fingerprint. If set to `MURMUR3` the non-cryptographic
-MurmurHash function will be used.
+If set to `SHA1`, `SHA256`, `SHA384`, `SHA512`, or `MD5` and a key is set,
+the cryptographic hash function with the same name will be used to generate
+the fingerprint. When a key set, the keyed-hash (HMAC) digest function will
+be used.
+
+If set to `MURMUR3` the non-cryptographic MurmurHash function will be used.
 
 If set to `IPV4_NETWORK` the input data needs to be a IPv4 address and
 the hash value will be the masked-out address using the number of bits

@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.3.2
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-input-s3/blob/v3.3.2/CHANGELOG.md
+:version: v3.3.5
+:release_date: 2018-05-17
+:changelog_url: https://github.com/logstash-plugins/logstash-input-s3/blob/v3.3.5/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -171,7 +171,7 @@ the connection to s3. See full list in https://docs.aws.amazon.com/sdkforruby/ap
         "secret_access_key" => "secret",
         "bucket" => "logstash-test",
         "additional_settings" => {
-          "force_path_style => true,
+          "force_path_style" => true,
           "follow_redirects" => false
         }
       }

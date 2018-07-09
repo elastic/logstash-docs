@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v8.0.6
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-input-kafka/blob/v8.0.6/CHANGELOG.md
+:version: v8.1.1
+:release_date: 2018-06-01
+:changelog_url: https://github.com/logstash-plugins/logstash-input-kafka/blob/v8.1.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -24,10 +24,9 @@ include::{include_path}/plugin_header.asciidoc[]
 
 This input will read events from a Kafka topic.
 
-This plugin uses Kafka Client 1.0.0. For broker compatibility, see the official https://cwiki.apache.org/confluence/display/KAFKA/Compatibility+Matrix[Kafka compatibility reference].
+This plugin uses Kafka Client 1.1.0. For broker compatibility, see the official https://cwiki.apache.org/confluence/display/KAFKA/Compatibility+Matrix[Kafka compatibility reference]. If the linked compatibility wiki is not up-to-date, please contact Kafka support/community to confirm compatibility.
 
-If you're using a plugin version that was released after {version}, see the https://www.elastic.co/guide/en/logstash/master/plugins-inputs-kafka.html[latest plugin documentation] for updated information about Kafka compatibility. If you require features not yet available in this plugin (including client version upgrades), please file an issue with details about what you need..
-
+If you require features not yet available in this plugin (including client version upgrades), please file an issue with details about what you need.
 
 This input supports connecting to Kafka over:
 
@@ -325,7 +324,7 @@ Java Class used to deserialize the record's key
   * There is no default value for this setting.
 
 The maximum amount of data per-partition the server will return. The maximum total memory used for a
-request will be <code>#partitions * max.partition.fetch.bytes</code>. This size must be at least
+request will be `#partitions * max.partition.fetch.bytes`. This size must be at least
 as large as the maximum message size the server allows or else it is possible for the producer to
 send messages larger than the consumer can fetch. If that happens, the consumer can get stuck trying
 to fetch a large message on a certain partition.
