@@ -94,13 +94,14 @@ sure that at least one of these options is different per Event Hub:
 ** storage_container (defaults to Event Hub name if not defined)
 ** consumer_group
 
+[id="plugins-{type}s-{plugin}-eh_config_models"]
 ==== Configuration models
 
 This plugin supports two configuration models: basic and advanced. Basic
 configuration is recommended for most use cases, and is illustrated in the
 examples throughout this topic.
 
-[[eh_basic_config]]
+[id="plugins-{type}s-{plugin}-eh_basic_config"]
 ===== Basic configuration (default)
 
 Basic configuration is the default and supports consuming from multiple Event
@@ -124,7 +125,7 @@ input {
 }
 ----
 
-[[eh_advanced_config]]
+[id="plugins-{type}s-{plugin}-eh_advanced_config"]
 ===== Advanced configuration
 The advanced configuration model accommodates deployments where different Event
 Hubs require different configurations. Options can be configured per Event Hub.
@@ -202,7 +203,7 @@ configurations, with the following exceptions. The basic configuration uses
 * Valid entries are `basic` or `advanced`
 * Default value is `basic`
 
-Sets configuration to either <<eh_basic_config>> or <<eh_advanced_config>>. 
+Sets configuration to either <<plugins-{type}s-{plugin}-eh_basic_config>> or <<plugins-{type}s-{plugin}-eh_advanced_config>>.
 
 [source,ruby]
 ----
