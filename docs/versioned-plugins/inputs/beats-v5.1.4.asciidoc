@@ -44,7 +44,7 @@ output {
   }
 }
 ------------------------------------------------------------------------------
-<1> Specifies the index to write events to. See <<versioned-indexes>> for
+<1> Specifies the index to write events to. See <<{version}-plugins-{type}s-{plugin}-versioned-indexes>> for
 more about this setting.
 <2> Starting with Logstash 6.0, the `document_type` option is
 deprecated due to the
@@ -59,7 +59,7 @@ before sending the event data to Logstash. You cannot use the
 {logstash-ref}/plugins-codecs-multiline.html[Multiline codec plugin] to handle multiline events. Doing so will
 result in the failure to start Logstash.
 
-[[versioned-indexes]]
+[id="{version}-plugins-{type}s-{plugin}-versioned-indexes"]
 ==== Versioned Beats Indices
 
 To minimize the impact of future schema changes on your existing indices and
@@ -90,7 +90,7 @@ This plugin supports the following configuration options plus the <<{version}-pl
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<{version}-plugins-{type}s-{plugin}-add_hostname>> |<<boolean, boolean>>|No
+| <<{version}-plugins-{type}s-{plugin}-add_hostname>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
 | <<{version}-plugins-{type}s-{plugin}-cipher_suites>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
 | <<{version}-plugins-{type}s-{plugin}-client_inactivity_timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
 | <<{version}-plugins-{type}s-{plugin}-host>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
