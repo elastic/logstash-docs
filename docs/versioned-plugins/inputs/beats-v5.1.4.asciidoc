@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.1.3
-:release_date: 2018-07-20
-:changelog_url: https://github.com/logstash-plugins/logstash-input-beats/blob/v5.1.3/CHANGELOG.md
+:version: v5.1.4
+:release_date: 2018-07-24
+:changelog_url: https://github.com/logstash-plugins/logstash-input-beats/blob/v5.1.4/CHANGELOG.md
 :include_path: ../include/6.x
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -90,6 +90,7 @@ This plugin supports the following configuration options plus the <<{version}-pl
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-add_hostname>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
 | <<{version}-plugins-{type}s-{plugin}-cipher_suites>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
 | <<{version}-plugins-{type}s-{plugin}-client_inactivity_timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
 | <<{version}-plugins-{type}s-{plugin}-host>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
@@ -111,6 +112,18 @@ Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of opt
 input plugins.
 
 &nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-add_hostname"]
+===== `add_hostname`
+
+  added[5.1.4, Field was added to allow users to control whether or not the `host` field is automatically added to events.]
+  deprecated[5.1.4, In future versions of this plugin, this setting will be removed, and the 'hosts' field will not be added to events.]
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Flag to determine whether to add `host` field to event using the value supplied by the beat in the `hostname` field.
+
 
 [id="{version}-plugins-{type}s-{plugin}-cipher_suites"]
 ===== `cipher_suites`
