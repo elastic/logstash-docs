@@ -1,0 +1,231 @@
+:plugin: google_pubsub
+:type: output
+:default_codec: json
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v1.0.0
+:release_date: 2018-07-27
+:changelog_url: https://github.com/logstash-plugins/logstash-output-google_pubsub/blob/v1.0.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Google Cloud Pub/Sub Output Plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+A Logstash plugin to upload log events to https://cloud.google.com/pubsub/[Google Cloud Pubsub].
+Events are batched and uploaded in the background for the sake of efficiency.
+Message payloads are serialized JSON representations of the events.
+
+Example use-cases:
+
+ * Stream events to Dataproc via Pub/Sub for real-time analysis.
+ * Forward events from an on-prem datacenter to the Logstash in the cloud.
+ * Use Pub/Sub as an scalable buffer to even out event flow between processing steps.
+
+Note: While this project is partially maintained by Google, this is not an official Google product.
+
+==== Environment Configuration
+
+To use this plugin, you must create a
+https://developers.google.com/storage/docs/authentication#service_accounts[service account]
+and grant it the publish permission on a topic.
+You MAY also use the https://cloud.google.com/docs/authentication/production[Application Default Credentials]
+assigned to a compute instance.
+
+The Pub/Sub topic __must__ exist before you run the plugin.
+
+
+==== Example Configurations
+
+===== Basic
+
+A basic configuration which only includes a project, topic, and JSON key file:
+
+[source,ruby]
+------------------------------------------------------------------------------
+output {
+  google_pubsub {
+    # Required attributes
+    project_id => "my_project"
+    topic => "my_topic"
+
+    # Optional if you're using app default credentials
+    json_key_file => "service_account_key.json"
+  }
+}
+------------------------------------------------------------------------------
+
+
+===== High Volume
+
+If you find that uploads are going too slowly, you can increase the message batching:
+
+[source,ruby]
+------------------------------------------------------------------------------
+output {
+  google_pubsub {
+    project_id => "my_project"
+    topic => "my_topic"
+    json_key_file => "service_account_key.json"
+
+    # Options for configuring the upload
+    message_count_threshold => 10000
+    delay_threshold_secs => 10
+    request_byte_threshold => 5MB
+  }
+}
+------------------------------------------------------------------------------
+
+
+===== Attributes
+
+You can attach additional attributes to each request.
+For example, you could attach a datacenter label to a log message to help with debugging:
+
+[source,ruby]
+------------------------------------------------------------------------------
+output {
+  google_pubsub {
+    project_id => "my_project"
+    topic => "my_topic"
+    json_key_file => "service_account_key.json"
+
+
+    attributes => {"origin" => "pacific-datacenter"}
+  }
+}
+------------------------------------------------------------------------------
+
+
+===== Different Codecs
+
+You can use codecs with this plugin to change the body of the events:
+
+[source,ruby]
+------------------------------------------------------------------------------
+output {
+  google_pubsub {
+    project_id => "my_project"
+    topic => "my_topic"
+    json_key_file => "service_account_key.json"
+
+
+    codec => plain {format => "%{[time]}: %{[message]}"}
+  }
+}
+------------------------------------------------------------------------------
+
+
+
+==== Additional Resources
+
+ * https://cloud.google.com/pubsub/[Cloud Pub/Sub Homepage]
+ * https://cloud.google.com/pubsub/pricing-summary/[Cloud Pub/Sub Pricing]
+ * https://cloud.google.com/iam/docs/service-accounts[IAM Service Accounts]
+ * https://cloud.google.com/docs/authentication/production[Application Default Credentials]
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Google Cloud Pub/Sub Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-project_id>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-topic>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-json_key_file>> |{logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-delay_threshold_secs>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-message_count_threshold>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-request_byte_threshold>> |{logstash-ref}/configuration-file-structure.html#bytes[bytes]|No
+| <<{version}-plugins-{type}s-{plugin}-attributes>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+[id="{version}-plugins-{type}s-{plugin}-project_id"]
+===== `project_id`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Google Cloud Project ID (name, not number).
+
+[id="{version}-plugins-{type}s-{plugin}-topic"]
+===== `topic`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Google Cloud Pub/Sub Topic. You must create the topic manually before running this plugin.
+
+[id="{version}-plugins-{type}s-{plugin}-json_key_file"]
+===== `json_key_file`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+The path to the key to authenticate your user to the bucket.
+This service user _must_ have the `pubsub.topics.publish` permission so it can publish to the topic.
+
+
+If Logstash is running within Google Compute Engine and no `json_key_file` is defined,
+the plugin will use GCE's Application Default Credentials.
+Outside of GCE, you must to specify a Service Account JSON key file.
+
+
+[id="{version}-plugins-{type}s-{plugin}-delay_threshold_secs"]
+===== `delay_threshold_secs`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default is: `5`
+
+Send the batch once this delay has passed, from the time the first message is queued.
+Must be greater than 0.
+
+
+[id="{version}-plugins-{type}s-{plugin}-message_count_threshold"]
+===== `message_count_threshold`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default is: `100`
+
+Once this many messages are queued, send all the messages in a single call, even if the delay threshold hasn't elapsed yet.
+Must be < 1000.
+A value of 0 will cause messages to instantly be sent but will reduce total throughput due to overhead.
+
+[id="{version}-plugins-{type}s-{plugin}-request_byte_threshold"]
+===== `request_byte_threshold`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#bytes[bytes]
+  * Default is: `1_000_000`
+
+Once the number of bytes in the batched request reaches this threshold, send all of the messages in
+a single call, even if neither the delay or message count thresholds have been exceeded yet.
+This includes full message payload size, including any attributes set.
+
+
+[id="{version}-plugins-{type}s-{plugin}-attributes"]
+===== `attributes`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * Default is: `{}`
+
+Attributes to add to the message in key: value formats.
+Keys and values MUST be strings.
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:

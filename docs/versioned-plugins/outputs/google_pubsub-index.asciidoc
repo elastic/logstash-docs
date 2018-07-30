@@ -1,0 +1,12 @@
+:plugin: google_pubsub
+:type: output
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v1.0.0-plugins-outputs-google_pubsub,v1.0.0>> | 2018-07-27
+|=======================================================================
+
+include::google_pubsub-v1.0.0.asciidoc[]
+

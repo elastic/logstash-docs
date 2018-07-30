@@ -35,6 +35,8 @@ include::outputs/google_bigquery-index.asciidoc[]
 
 include::outputs/google_cloud_storage-index.asciidoc[]
 
+include::outputs/google_pubsub-index.asciidoc[]
+
 include::outputs/graphite-index.asciidoc[]
 
 include::outputs/graphtastic-index.asciidoc[]
