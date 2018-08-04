@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.1.2
-:release_date: 2018-05-16
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-kv/blob/v4.1.2/CHANGELOG.md
+:version: v4.2.0
+:release_date: 2018-07-23
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-kv/blob/v4.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -72,6 +72,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-trim_value>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-value_split>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-value_split_pattern>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-whitespace>> |<<string,string>>, one of `["strict", "lenient"]`|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -445,6 +446,23 @@ cautious with lookaheads or lookbehinds and positional anchors.
 
 See `field_split_pattern` for examples.
 
+[id="plugins-{type}s-{plugin}-whitespace"]
+===== `whitespace`
+
+  * Value can be any of: `lenient`, `strict`
+  * Default value is `lenient`
+
+An option specifying whether to be _lenient_ or _strict_ with the acceptance of unnecessary
+whitespace surrounding the configured value-split sequence.
+
+By default the plugin is run in `lenient` mode, which ignores spaces that occur before or
+after the value-splitter. While this allows the plugin to make reasonable guesses with most
+input, in some situations it may be too lenient.
+
+You may want to enable `whitespace => strict` mode if you have control of the input data and
+can guarantee that no extra spaces are added surrounding the pattern you have defined for
+splitting values. Doing so will ensure that a _field-splitter_ sequence immediately following
+a _value-splitter_ will be interpreted as an empty field.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
