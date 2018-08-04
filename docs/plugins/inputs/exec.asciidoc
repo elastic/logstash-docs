@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.3.1
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-input-exec/blob/v3.3.1/CHANGELOG.md
+:version: v3.3.2
+:release_date: 2018-07-20
+:changelog_url: https://github.com/logstash-plugins/logstash-input-exec/blob/v3.3.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -75,7 +75,7 @@ Command to run. For example, `uptime`
 [id="plugins-{type}s-{plugin}-interval"]
 ===== `interval` 
 
-  * Value type is <<string,string>>
+  * Value type is <<number,number>>
   * There is no default value for this setting.
 
 Interval to run the command. Value is in seconds.
@@ -85,7 +85,7 @@ Either `interval` or `schedule` option must be defined.
 [id="plugins-{type}s-{plugin}-schedule"]
 ===== `schedule` 
 
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * There is no default value for this setting.
 
 Schedule of when to periodically run command.
