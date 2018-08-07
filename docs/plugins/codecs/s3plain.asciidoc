@@ -1,13 +1,13 @@
-:plugin: rubydebug
+:plugin: s3_plain
 :type: codec
-:default_plugin: 1
+:default_plugin: 0
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.6
-:release_date: 2018-07-27
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-rubydebug/blob/v3.0.6/CHANGELOG.md
+:version: v2.0.7
+:release_date: 2017-12-19
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-s3plain/blob/v2.0.7/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -15,33 +15,19 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 [id="plugins-{type}s-{plugin}"]
 
-=== Rubydebug codec plugin
+=== S3_plain
 
 include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-The rubydebug codec will output your Logstash event data using
-the Ruby Awesome Print library.
+The "s3_plain" codec is used for backward compatibility with previous version of the S3 Output
 
 
 [id="plugins-{type}s-{plugin}-options"]
-==== Rubydebug Codec Configuration Options
+==== S3_plain Codec Configuration Options
 
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<plugins-{type}s-{plugin}-metadata>> |<<boolean,boolean>>|No
 |=======================================================================
-
-&nbsp;
-
-[id="plugins-{type}s-{plugin}-metadata"]
-===== `metadata` 
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Should the event's metadata be included?
-
-
