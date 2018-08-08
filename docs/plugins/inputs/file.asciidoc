@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.1.3
-:release_date: 2018-06-14
-:changelog_url: https://github.com/logstash-plugins/logstash-input-file/blob/v4.1.3/CHANGELOG.md
+:version: v4.1.5
+:release_date: 2018-07-19
+:changelog_url: https://github.com/logstash-plugins/logstash-input-file/blob/v4.1.5/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -79,12 +79,6 @@ Read mode also allows for an action to take place after processing the file comp
 In the past attempts to simulate a Read mode while still assuming infinite streams
 was not ideal and a dedicated Read mode is an improvement.
 
-==== Reading from remote network volumes
-
-The file input is not tested on remote filesystems such as NFS, Samba, s3fs-fuse, etc. These
-remote filesystems typically have behaviors that are very different from local filesystems and
-are therefore unlikely to work correctly when used with the file input.
-
 ==== Tracking of current position in watched files
 
 The plugin keeps track of the current position in each file by
@@ -103,6 +97,10 @@ with the `sincedb_path` option.
 A different `sincedb_path` must be used for each input. Using the same
 path will cause issues. The read checkpoints for each input must be
 stored in a different path so the information does not override.
+
+Files are tracked via an identifier. This identifier is made up of the
+inode, major device number and minor device number. In windows, a different
+identifier is taken from a `kernel32` API call.
 
 Sincedb records can now be expired meaning that read positions of older files
 will not be remembered after a certain time period. File systems may need to reuse
@@ -124,6 +122,19 @@ old sincedb records converted to the new format, this is blank.
 On non-Windows systems you can obtain the inode number of a file
 with e.g. `ls -li`.
 
+==== Reading from remote network volumes
+
+The file input is not thoroughly tested on remote filesystems such as NFS,
+Samba, s3fs-fuse, etc, however NFS is occasionally tested. The file size as given by
+the remote FS client is used to govern how much data to read at any given time to
+prevent reading into allocated but yet unfilled memory.
+As we use the device major and minor in the identifier to track "last read"
+positions of files and on remount the device major and minor can change, the
+sincedb records may not match across remounts.
+Read mode might not be suitable for remote filesystems as the file size at
+discovery on the client side may not be the same as the file size on the remote side
+due to latency in the remote to client copy process.
+
 ==== File rotation in Tail mode
 
 File rotation is detected and handled by this input, regardless of
@@ -131,16 +142,15 @@ whether the file is rotated via a rename or a copy operation. To
 support programs that write to the rotated file for some time after
 the rotation has taken place, include both the original filename and
 the rotated filename (e.g. /var/log/syslog and /var/log/syslog.1) in
-the filename patterns to watch (the `path` option). Note that the
-rotated filename will be treated as a new file so if
-`start_position` is set to 'beginning' the rotated file will be
-reprocessed.
-
-With the default value of `start_position` ('end') any messages
-written to the end of the file between the last read operation prior
-to the rotation and its reopening under the new name (an interval
-determined by the `stat_interval` and `discover_interval` options)
-will not get picked up.
+the filename patterns to watch (the `path` option).
+For a rename, the inode will be detected as having moved from
+`/var/log/syslog` to `/var/log/syslog.1` and so the "state" is moved
+internally too, the old content will not be reread but any new content
+on the renamed file will be read.
+For copy/truncate the copied content into a new file path, if discovered, will
+be treated as a new discovery and be read from the beginning. The copied file
+paths should therefore not be in the filename patterns to watch (the `path` option).
+The truncation will be detected and the "last read" position updated to zero.
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== File Input Configuration Options
@@ -150,12 +160,12 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 [NOTE]
 Duration settings can be specified in text form e.g. "250 ms", this string will be converted into
 decimal seconds. There are quite a few supported natural and abbreviated durations,
-see <<string_duration,string duration>> for the details.
+see <<plugins-{type}s-{plugin}-string_duration,string_duration>> for the details.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<plugins-{type}s-{plugin}-close_older>> |<<number,number>> or <<string_duration,string duration>>|No
+| <<plugins-{type}s-{plugin}-close_older>> |<<number,number>> or <<plugins-{type}s-{plugin}-string_duration,string_duration>>|No
 | <<plugins-{type}s-{plugin}-delimiter>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-discover_interval>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-exclude>> |<<array,array>>|No
@@ -165,15 +175,15 @@ see <<string_duration,string duration>> for the details.
 | <<plugins-{type}s-{plugin}-file_completed_log_path>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-file_sort_by>> |<<string,string>>, one of `["last_modified", "path"]`|No
 | <<plugins-{type}s-{plugin}-file_sort_direction>> |<<string,string>>, one of `["asc", "desc"]`|No
-| <<plugins-{type}s-{plugin}-ignore_older>> |<<number,number>> or <<string_duration,string duration>>|No
+| <<plugins-{type}s-{plugin}-ignore_older>> |<<number,number>> or <<plugins-{type}s-{plugin}-string_duration,string_duration>>|No
 | <<plugins-{type}s-{plugin}-max_open_files>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-mode>> |<<string,string>>, one of `["tail", "read"]`|No
 | <<plugins-{type}s-{plugin}-path>> |<<array,array>>|Yes
-| <<plugins-{type}s-{plugin}-sincedb_clean_after>> |<<number,number>> or <<string_duration,string duration>>|No
+| <<plugins-{type}s-{plugin}-sincedb_clean_after>> |<<number,number>> or <<plugins-{type}s-{plugin}-string_duration,string_duration>>|No
 | <<plugins-{type}s-{plugin}-sincedb_path>> |<<string,string>>|No
-| <<plugins-{type}s-{plugin}-sincedb_write_interval>> |<<number,number>> or <<string_duration,string duration>>|No
+| <<plugins-{type}s-{plugin}-sincedb_write_interval>> |<<number,number>> or <<plugins-{type}s-{plugin}-string_duration,string_duration>>|No
 | <<plugins-{type}s-{plugin}-start_position>> |<<string,string>>, one of `["beginning", "end"]`|No
-| <<plugins-{type}s-{plugin}-stat_interval>> |<<number,number>> or <<string_duration,string duration>>|No
+| <<plugins-{type}s-{plugin}-stat_interval>> |<<number,number>> or <<plugins-{type}s-{plugin}-string_duration,string_duration>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -184,7 +194,7 @@ input plugins.
 [id="plugins-{type}s-{plugin}-close_older"]
 ===== `close_older`
 
-  * Value type is <<number,number>> or <<string_duration,string duration>>
+  * Value type is <<number,number>> or <<plugins-{type}s-{plugin}-string_duration,string_duration>>
   * Default value is `"1 hour"`
 
 The file input closes any files that were last read the specified
@@ -302,7 +312,7 @@ If you use special naming conventions for the file full paths then perhaps
 [id="plugins-{type}s-{plugin}-ignore_older"]
 ===== `ignore_older`
 
-  * Value type is <<number,number>> or <<string_duration,string duration>>
+  * Value type is <<number,number>> or <<plugins-{type}s-{plugin}-string_duration,string_duration>>
   * There is no default value for this setting.
 
 When the file input discovers a file that was last modified
@@ -362,7 +372,7 @@ on the {logstash-ref}/configuration-file-structure.html#array[Logstash configura
 [id="plugins-{type}s-{plugin}-sincedb_clean_after"]
 ===== `sincedb_clean_after`
 
-  * Value type is <<number,number>> or <<string_duration,string duration>>
+  * Value type is <<number,number>> or <<plugins-{type}s-{plugin}-string_duration,string_duration>>
   * The default value for this setting is "2 weeks".
   * If a number is specified then it is interpreted as *days* and can be decimal e.g. 0.5 is 12 hours.
 
@@ -386,7 +396,7 @@ NOTE: it must be a file path and not a directory path
 [id="plugins-{type}s-{plugin}-sincedb_write_interval"]
 ===== `sincedb_write_interval`
 
-  * Value type is <<number,number>> or <<string_duration,string duration>>
+  * Value type is <<number,number>> or <<plugins-{type}s-{plugin}-string_duration,string_duration>>
   * Default value is `"15 seconds"`
 
 How often (in seconds) to write a since database with the current position of
@@ -412,7 +422,7 @@ position recorded in the sincedb file will be used.
 [id="plugins-{type}s-{plugin}-stat_interval"]
 ===== `stat_interval`
 
-  * Value type is <<number,number>> or <<string_duration,string duration>>
+  * Value type is <<number,number>> or <<plugins-{type}s-{plugin}-string_duration,string_duration>>
   * Default value is `"1 second"`
 
 How often (in seconds) we stat files to see if they have been modified.
@@ -429,9 +439,8 @@ the pipeline is congested. So the overall loop time is a combination of the
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
 
-:default_codec!:
 
-[id="string_duration"]
+[id="plugins-{type}s-{plugin}-string_duration"]
 // Move this to the includes when we make string durations available generally.
 ==== String Durations
 
@@ -465,3 +474,4 @@ Supported values: `us` `usec` `usecs`, e.g. "600 us", "800 usec", "900 usecs"
 [NOTE]
 `micro` `micros` and `microseconds` are not supported
 
+:default_codec!:
