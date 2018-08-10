@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.5
-:release_date: 2018-06-07
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-elapsed/blob/v4.0.5/CHANGELOG.md
+:version: v4.1.0
+:release_date: 2018-07-31
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-elapsed/blob/v4.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -107,6 +107,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-start_tag>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-timeout>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-unique_id_field>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-keep_start_event>> |<<string,string>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -163,6 +164,17 @@ The name of the field containing the task ID.
 This value must uniquely identify the task in the system, otherwise
 it's impossible to match the couple of events.
 
+[id="plugins-{type}s-{plugin}-keep_start_event"]
+===== `keep_start_event`
+
+  * Value type is <<string,string>>
+  * Default value is `first`
+
+This property manages what to do when several events matched as a start one
+were received before the end event for the specified ID. There are two
+supported values: `first` or `last`. If it's set to `first` (default value),
+the first event matched as a start will be used; if it's set to `last`,
+the last one will be used.
 
 
 [id="plugins-{type}s-{plugin}-common-options"]
