@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.0.1
-:release_date: 2018-07-05
-:changelog_url: https://github.com/logstash-plugins/logstash-input-azure_event_hubs/blob/v1.0.1/CHANGELOG.md
+:version: v1.0.4
+:release_date: 2018-08-09
+:changelog_url: https://github.com/logstash-plugins/logstash-input-azure_event_hubs/blob/v1.0.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -49,10 +49,10 @@ Endpoint=sb://logstash.servicebus.windows.net/;SharedAccessKeyName=activity-log-
 ===== Blob Storage and connection string
 
 https://azure.microsoft.com/en-us/services/storage/blobs[Azure Blob Storage
-account] is an essential part of Azure-to-{ls} configuration. 
+account] is an essential part of Azure-to-Logstash configuration. 
 A Blob Storage account is a central location that enables multiple instances of
-{ls} to work together to process events. It records the
-offset (location) of processed events. On restart, {ls} resumes processing
+Logstash to work together to process events. It records the
+offset (location) of processed events. On restart, Logstash resumes processing
 exactly where it left off.
 
 Configuration notes:
@@ -60,7 +60,7 @@ Configuration notes:
 *  A Blob Storage account is highly recommended for use with this plugin, and is
 likely required for production servers.
 * The `storage_connection` option passes the blob storage connection string. 
-* Configure all {ls} instances to use the same `storage_connection` to get the
+* Configure all Logstash instances to use the same `storage_connection` to get the
 benefits of shared processing.
 
 Sample Blob Storage connection string:
@@ -73,16 +73,17 @@ DefaultEndpointsProtocol=https;AccountName=logstash;AccountKey=ETOPnkd/hDAWidkEp
 Find the connection string to Blob Storage here: 
 https://portal.azure.com[Azure Portal]`-> Blob Storage account -> Access keys`.
 
+[id="plugins-{type}s-{plugin}-best-practices"]
 ===== Best practices
 
 Here are some guidelines to help you avoid data conflicts that can cause lost
 events.
 
-* **Create a {ls} consumer group.** 
-Create a new consumer group specifically for {ls}}. Do not use the $default or
+* **Create a Logstash consumer group.** 
+Create a new consumer group specifically for Logstash. Do not use the $default or
 any other consumer group that might already be in use. Reusing consumer groups
-among non-related consumers can cause expected behavior and possibly lost
-events. All [ls] instances should use the same consumer group so that they can
+among non-related consumers can cause unexpected behavior and possibly lost
+events. All Logstash instances should use the same consumer group so that they can
 work together for processing events.
 * **Avoid overwriting offset with multiple Event Hubs.** 
 The offsets (position) of the Event Hubs are stored in the configured Azure Blob
@@ -94,14 +95,26 @@ sure that at least one of these options is different per Event Hub:
 ** storage_connection
 ** storage_container (defaults to Event Hub name if not defined)
 ** consumer_group
+* **Set number of threads correctly.** 
+The number of threads should equal the number of Event Hubs plus one (or more).
+Each Event Hub needs at least one thread. An additional thread is needed to help
+coordinate the other threads. The number of threads should not exceed the number
+of Event Hubs multiplied by the number of partitions per Event Hub plus one.
+Threads are currently available only as a global setting.
+** Sample scenario: Event Hubs = 4. Partitions on each Event Hub = 3.
+Minimum threads is 5 (4 Event Hubs plus one). Maximum threads is 13 (4 Event
+Hubs times 3 partitions plus one). 
+** If you’re collecting activity logs from one event hub instance, 
+then only 2 threads (1 Event Hub plus one) are required.
 
+[id="plugins-{type}s-{plugin}-eh_config_models"]
 ==== Configuration models
 
 This plugin supports two configuration models: basic and advanced. Basic
 configuration is recommended for most use cases, and is illustrated in the
 examples throughout this topic.
 
-[[eh_basic_config]]
+[id="plugins-{type}s-{plugin}-eh_basic_config"]
 ===== Basic configuration (default)
 
 Basic configuration is the default and supports consuming from multiple Event
@@ -125,7 +138,7 @@ input {
 }
 ----
 
-[[eh_advanced_config]]
+[id="plugins-{type}s-{plugin}-eh_advanced_config"]
 ===== Advanced configuration
 The advanced configuration model accommodates deployments where different Event
 Hubs require different configurations. Options can be configured per Event Hub.
@@ -194,8 +207,8 @@ input plugins.
 
 NOTE: All Event Hubs options are common to both basic and advanced
 configurations, with the following exceptions. The basic configuration uses
-`event-hub-connections`. The the advanced configuration uses `event_hubs` and
-`event_hub_connection`.
+`event_hub_connections` to support multiple connections. The advanced
+configuration uses `event_hubs` and `event_hub_connection` (singular).
 
 [id="plugins-{type}s-{plugin}-config_mode"]
 ===== `config_mode`
@@ -203,7 +216,7 @@ configurations, with the following exceptions. The basic configuration uses
 * Valid entries are `basic` or `advanced`
 * Default value is `basic`
 
-Sets configuration to either <<eh_basic_config>> or <<eh_advanced_config>>. 
+Sets configuration to either <<plugins-{type}s-{plugin}-eh_basic_config>> or <<plugins-{type}s-{plugin}-eh_advanced_config>>. 
 
 [source,ruby]
 ----
@@ -289,7 +302,7 @@ azure_event_hubs {
 * Set to `0` to disable.
   
 Interval in seconds to write checkpoints during batch processing. Checkpoints
-tell {ls} where to resume processing after a restart. Checkpoints are
+tell Logstash where to resume processing after a restart. Checkpoints are
 automatically written at the end of each batch, regardless of this setting. 
 
 Writing checkpoints too frequently can slow down processing unnecessarily. 
@@ -368,7 +381,7 @@ azure_event_hubs {
 
 Number of seconds to look back to find the initial position for pre-existing
 events. This option is used only if `initial_position` is set to `look_back`. If
-`storage_connection` is set, this configuration applies only the first time {ls}
+`storage_connection` is set, this configuration applies only the first time Logstash
 reads from the Event Hub. 
 
 [source,ruby]
@@ -425,7 +438,7 @@ azure_event_hubs {
 * Value type is <<string,string>>
 * Defaults to the Event Hub name if not defined
 
-Name of the storage container used to persist offsets and allow multiple instances of {ls}
+Name of the storage container used to persist offsets and allow multiple instances of Logstash
 to work together. 
  
 [source,ruby]
@@ -478,6 +491,8 @@ azure_event_hubs {
 }
 ----
 
+The number of threads should be the number of Event Hubs plus one or more. 
+See <<plugins-{type}s-{plugin}-best-practices>> for more information.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
