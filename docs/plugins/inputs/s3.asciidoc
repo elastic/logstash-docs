@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.3.5
-:release_date: 2018-05-17
-:changelog_url: https://github.com/logstash-plugins/logstash-input-s3/blob/v3.3.5/CHANGELOG.md
+:version: v3.3.7
+:release_date: 2018-07-20
+:changelog_url: https://github.com/logstash-plugins/logstash-input-s3/blob/v3.3.7/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -45,6 +45,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-delete>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-endpoint>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-exclude_pattern>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-include_object_properties>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-interval>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-prefix>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-proxy_uri>> |<<string,string>>|No
@@ -167,15 +168,24 @@ the connection to s3. See full list in https://docs.aws.amazon.com/sdkforruby/ap
 [source,ruby]
     input {
       s3 {
-        "access_key_id" => "1234",
-        "secret_access_key" => "secret",
-        "bucket" => "logstash-test",
+        "access_key_id" => "1234"
+        "secret_access_key" => "secret"
+        "bucket" => "logstash-test"
         "additional_settings" => {
-          "force_path_style" => true,
+          "force_path_style" => true
           "follow_redirects" => false
         }
       }
     }
+
+[id="plugins-{type}s-{plugin}-include_object_properties"]
+===== `include_object_properties`
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Whether or not to include the S3 object's properties (last_modified, content_type, metadata) into each Event at
+`[@metadata][s3]`. Regardless of this setting, `[@metdata][s3][key]` will always be present.
 
 [id="plugins-{type}s-{plugin}-interval"]
 ===== `interval` 

@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.1.4
-:release_date: 2018-02-15
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-dissect/blob/v1.1.4/CHANGELOG.md
+:version: v1.2.0
+:release_date: 2018-06-24
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-dissect/blob/v1.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -35,7 +35,7 @@ The dissection is described using a set of `%{}` sections:
 %{a} - %{b} - %{c}
 ....
 
-A *field* is the text from `%` to `}` inclusive.
+A *field* is the text from `%{` to `}` inclusive.
 
 A *delimiter* is the text between a `}` and next `%{` characters.
 
@@ -241,8 +241,8 @@ For example
 filter {
   dissect {
     convert_datatype => {
-      cpu => "float"
-      code => "int"
+      "cpu" => "float"
+      "code" => "int"
     }
   }
 }
