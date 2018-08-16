@@ -38,7 +38,6 @@ the `destination` field, but on no match the `fallback` setting string is
 used instead.
 
 Example:
-```
 [source,ruby]
     filter {
       translate {
@@ -53,7 +52,6 @@ Example:
         fallback => "I'm a teapot"
       }
     }
-```
 
 Occasionally, people find that they have a field with a variable sized array of
 values or objects that need some enrichment. The `iterate_on` setting helps in
