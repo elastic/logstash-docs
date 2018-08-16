@@ -5,12 +5,14 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v5.0.5-plugins-outputs-influxdb,v5.0.5>> | 2018-08-15
 | <<v5.0.4-plugins-outputs-influxdb,v5.0.4>> | 2018-04-06
 | <<v5.0.3-plugins-outputs-influxdb,v5.0.3>> | 2017-11-07
 | <<v5.0.2-plugins-outputs-influxdb,v5.0.2>> | 2017-08-16
 | <<v5.0.1-plugins-outputs-influxdb,v5.0.1>> | 2017-06-23
 |=======================================================================
 
+include::influxdb-v5.0.5.asciidoc[]
 include::influxdb-v5.0.4.asciidoc[]
 include::influxdb-v5.0.3.asciidoc[]
 include::influxdb-v5.0.2.asciidoc[]
