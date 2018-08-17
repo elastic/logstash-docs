@@ -3,8 +3,6 @@
 
 include::include/plugin-intro.asciidoc[]
 
-include::inputs/http-index.asciidoc[]
-
 include::inputs/jdbc-index.asciidoc[]
 
 include::inputs/udp-index.asciidoc[]
