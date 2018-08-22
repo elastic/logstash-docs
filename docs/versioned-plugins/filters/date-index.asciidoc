@@ -8,9 +8,11 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.1.9-plugins-filters-date,v3.1.9>> | 2017-11-07
 | <<v3.1.8-plugins-filters-date,v3.1.8>> | 2017-08-15
 | <<v3.1.7-plugins-filters-date,v3.1.7>> | 2017-06-23
+| <<v3.1.5-plugins-filters-date,v3.1.5>> | 2017-04-26
 |=======================================================================
 
 include::date-v3.1.9.asciidoc[]
 include::date-v3.1.8.asciidoc[]
 include::date-v3.1.7.asciidoc[]
+include::date-v3.1.5.asciidoc[]
 
