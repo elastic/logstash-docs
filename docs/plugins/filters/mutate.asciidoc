@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.3.1
-:release_date: 2018-02-02
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.3.1/CHANGELOG.md
+:version: v3.3.2
+:release_date: 2018-05-01
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.3.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -63,31 +63,38 @@ Convert a field's value to a different type, like turning a string to an
 integer. If the field value is an array, all members will be converted.
 If the field is a hash no action will be taken.
 
-If the conversion type is `boolean`, the acceptable values are:
+Valid conversion targets, and their expected behaviour with different inputs are:
 
-* **True:** `true`, `t`, `yes`, `y`, and `1`
-* **False:** `false`, `f`, `no`, `n`, and `0`
+ * `integer`:
+   - strings are parsed; comma-separators are supported (e.g., the string `"1,000"` produces an integer with value of one thousand); when strings have decimal parts, they are _truncated_.
+   - floats and decimals are _truncated_ (e.g., `3.99` becomes `3`, `-2.7` becomes `-2`)
+   - boolean true and boolean false are converted to `1` and `0` respectively
+ * `integer_eu`:
+   - same as `integer`, except string values support dot-separators and comma-decimals (e.g., `"1.000"` produces an integer with value of one thousand)
+ * `float`:
+   - integers are converted to floats
+   - strings are parsed; comma-separators and dot-decimals are supported (e.g., `"1,000.5"` produces an integer with value of one thousand and one half)
+   - boolean true and boolean false are converted to `1.0` and `0.0` respectively
+ * `float_eu`:
+   - same as `float`, except string values support dot-separators and comma-decimals (e.g., `"1.000,5"` produces an integer with value of one thousand and one half)
+ * `string`:
+   - all values are stringified and encoded with UTF-8
+ * `boolean`:
+   - strings `"true"`, `"t"`, `"yes"`, `"y"`, and `"1"` are converted to boolean `true`
+   - strings `"false"`, `"f"`, `"no"`, `"n"`, and `"0"` are converted to boolean `false`
+   - empty strings are converted to boolean `false`
+   - all other values pass straight through without conversion and log a warning message
 
-If a value other than these is provided, it will pass straight through
-and log a warning message.
-
-If the conversion type is `integer` and the value is a boolean, it will be converted as:
-* **True:**  `1`
-* **False:** `0`
-
-If you have numeric strings that have decimal commas (Europe and ex-colonies)
-e.g. "1.234,56" or "2.340", by using conversion targets of integer_eu or float_eu
-the convert function will treat "." as a group separator and "," as a decimal separator.
-
-Conversion targets of integer or float will now correctly handle "," as a group separator.
-
-Valid conversion targets are: integer, float, integer_eu, float_eu, string, and boolean.
+This plugin can convert multiple fields in the same document, see the example below.
 
 Example:
 [source,ruby]
     filter {
       mutate {
-        convert => { "fieldname" => "integer" }
+        convert => { 
+          "fieldname" => "integer"
+          "booleanfield" => "boolean"
+        }
       }
     }
 

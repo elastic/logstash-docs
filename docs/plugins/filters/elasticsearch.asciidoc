@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.3.0
-:release_date: 2018-01-15
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.3.0/CHANGELOG.md
+:version: v3.3.1
+:release_date: 2018-05-08
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.3.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -41,50 +41,56 @@ filter to find the matching "start" event based on some operation identifier.
 Then it copies the `@timestamp` field from the "start" event into a new field on
 the "end" event.  Finally, using a combination of the "date" filter and the
 "ruby" filter, we calculate the time duration in hours between the two events.
+
 [source,ruby]
 --------------------------------------------------
-      if [type] == "end" {
-         elasticsearch {
-            hosts => ["es-server"]
-            query => "type:start AND operation:%{[opid]}"
-            fields => { "@timestamp" => "started" }
-         }
+if [type] == "end" {
+   elasticsearch {
+      hosts => ["es-server"]
+      query => "type:start AND operation:%{[opid]}"
+      fields => { "@timestamp" => "started" }
+   }
 
-         date {
-            match => ["[started]", "ISO8601"]
-            target => "[started]"
-         }
+   date {
+      match => ["[started]", "ISO8601"]
+      target => "[started]"
+   }
 
-         ruby {
-            code => "event.set('duration_hrs', (event.get('@timestamp') - event.get('started')) / 3600)"
-         }
+   ruby {
+      code => "event.set('duration_hrs', (event.get('@timestamp') - event.get('started')) / 3600)"
+   }
+}
+--------------------------------------------------
+
+The example below reproduces the above example but utilises the query_template.
+This query_template represents a full Elasticsearch query DSL and supports the
+standard Logstash field substitution syntax.  The example below issues
+the same query as the first example but uses the template shown.
+
+[source,ruby]
+--------------------------------------------------
+if [type] == "end" {
+      elasticsearch {
+         hosts => ["es-server"]
+         query_template => "template.json"
+         fields => { "@timestamp" => "started" }
       }
 
- The example below reproduces the above example but utilises the query_template.  This query_template represents a full
- Elasticsearch query DSL and supports the standard Logstash field substitution syntax.  The example below issues
- the same query as the first example but uses the template shown.
+      date {
+         match => ["[started]", "ISO8601"]
+         target => "[started]"
+      }
 
-  if [type] == "end" {
-         elasticsearch {
-            hosts => ["es-server"]
-            query_template => "template.json"
-            fields => { "@timestamp" => "started" }
-         }
+      ruby {
+         code => "event.set('duration_hrs', (event.get('@timestamp') - event.get('started')) / 3600)"
+      }
+}
+--------------------------------------------------
 
-         date {
-            match => ["[started]", "ISO8601"]
-            target => "[started]"
-         }
+template.json:
 
-         ruby {
-            code => "event.set('duration_hrs', (event.get('@timestamp') - event.get('started')) / 3600)"
-         }
-  }
-
-
-
-  template.json:
-
+[source,json]
+--------------------------------------------------
  {
     "query": {
       "query_string": {
@@ -93,11 +99,30 @@ the "end" event.  Finally, using a combination of the "date" filter and the
     },
    "_source": ["@timestamp"]
  }
+--------------------------------------------------
 
-As illustrated above, through the use of 'opid', fields from the Logstash events can be referenced within the template.
+As illustrated above, through the use of 'opid', fields from the Logstash
+events can be referenced within the template.
 The template will be populated per event prior to being used to query Elasticsearch.
 
+Note that when you use `query_template`, the Logstash attributes `result_size`
+and `sort` will be ignored. They should be specified directly in the JSON
+template. Example:
+
+[source,json]
 --------------------------------------------------
+{
+  "size": 1,
+  "sort" : [ { "@timestamp" : "desc" } ],
+  "query": {
+    "query_string": {
+      "query": "type:start AND operation:%{[opid]}"
+    }
+  },
+  "_source": ["@timestamp"]
+}
+--------------------------------------------------
+
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Elasticsearch Filter Configuration Options

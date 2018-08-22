@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.1.1
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-output-s3/blob/v4.1.1/CHANGELOG.md
+:version: v4.1.2
+:release_date: 2018-05-02
+:changelog_url: https://github.com/logstash-plugins/logstash-output-s3/blob/v4.1.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -143,7 +143,7 @@ the connection to S3. See full list in https://docs.aws.amazon.com/sdkforruby/ap
         region => "eu-west-1",
         bucket => "logstash-test",
         additional_settings => {
-          "force_path_style => true,
+          "force_path_style" => true,
           "follow_redirects" => false
         }
       }
@@ -276,7 +276,7 @@ The AWS Secret Access Key
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
-Specifies wether or not to use S3's server side encryption. Defaults to no encryption.
+Specifies whether or not to use S3's server side encryption. Defaults to no encryption.
 
 [id="plugins-{type}s-{plugin}-server_side_encryption_algorithm"]
 ===== `server_side_encryption_algorithm` 

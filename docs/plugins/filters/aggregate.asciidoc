@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v2.7.2
-:release_date: 2017-11-16
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-aggregate/blob/v2.7.2/CHANGELOG.md
+:version: v2.8.0
+:release_date: 2018-03-18
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-aggregate/blob/v2.8.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -329,7 +329,7 @@ filter {
 * an aggregate map is tied to one task_id value which is tied to one task_id pattern. So if you have 2 filters with different task_id patterns, even if you have same task_id value, they won't share the same aggregate map.
 * in one filter configuration, it is recommanded to define a timeout option to protect the feature against unterminated tasks. It tells the filter to delete expired maps
 * if no timeout is defined, by default, all maps older than 1800 seconds are automatically deleted
-* all timeout options have to be defined in only one aggregate filter per task_id pattern (per pipeline). Timeout options are : timeout, inactivity_timeout, timeout_code, push_map_as_event_on_timeout, push_previous_map_as_event, timeout_task_id_field, timeout_tags
+* all timeout options have to be defined in only one aggregate filter per task_id pattern (per pipeline). Timeout options are : timeout, inactivity_timeout, timeout_code, push_map_as_event_on_timeout, push_previous_map_as_event, timeout_timestamp_field, timeout_task_id_field, timeout_tags
 * if `code` execution raises an exception, the error is logged and event is tagged '_aggregateexception'
 
 
@@ -363,6 +363,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-timeout_code>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-timeout_tags>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-timeout_task_id_field>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-timeout_timestamp_field>> |<<string,string>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -533,7 +534,7 @@ Example:
 [source,ruby]
     filter {
       aggregate {
-        timeout_tags => ["aggregate_timeout']
+        timeout_tags => ["aggregate_timeout"]
       }
     }
 
@@ -543,13 +544,43 @@ Example:
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-This option indicates the timeout generated event's field for the "task_id" value.
-The task id will then be set into the timeout event. This can help correlate which tasks have been timed out.
-
-For example, with option `timeout_task_id_field => "my_id"` ,when timeout task id is `"12345"`, the generated timeout event will contain `'my_id' => '12345'`.
+This option indicates the timeout generated event's field where the current "task_id" value will be set.
+This can help to correlate which tasks have been timed out.
 
 By default, if this option is not set, task id value won't be set into timeout generated event.
 
+Example:
+[source,ruby]
+    filter {
+      aggregate {
+        timeout_task_id_field => "task_id"
+      }
+    }
+
+[id="plugins-{type}s-{plugin}-timeout_timestamp_field"]
+===== `timeout_timestamp_field`
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+By default, timeout is computed using system time, where Logstash is running.
+
+When this option is set, timeout is computed using event timestamp field indicated in this option. 
+It means that when a first event arrives on aggregate filter and induces a map creation, map creation time will be equal to this event timestamp. 
+Then, each time a new event arrives on aggregate filter, event timestamp is compared to map creation time to check if timeout happened.
+
+This option is particularly useful when processing old logs with option `push_map_as_event_on_timeout => true`. 
+It lets to generate aggregated events based on timeout on old logs, where system time is inappropriate.
+
+Warning : so that this option works fine, it must be set on first aggregate filter.
+
+Example:
+[source,ruby]
+    filter {
+      aggregate {
+        timeout_timestamp_field => "@timestamp"
+      }
+    }
 
 
 [id="plugins-{type}s-{plugin}-common-options"]

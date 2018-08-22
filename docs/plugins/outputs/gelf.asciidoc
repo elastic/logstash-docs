@@ -1,13 +1,14 @@
 :plugin: gelf
 :type: output
 :default_plugin: 0
+:default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.4
-:release_date: 2017-08-16
-:changelog_url: https://github.com/logstash-plugins/logstash-output-gelf/blob/v3.1.4/CHANGELOG.md
+:version: v3.1.7
+:release_date: 2018-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-output-gelf/blob/v3.1.7/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -24,7 +25,7 @@ include::{include_path}/plugin_header.asciidoc[]
 This output generates messages in GELF format. This is most useful if you
 want to use Logstash to output events to Graylog2.
 
-More information at http://graylog2.org/gelf#specs[The Graylog2 GELF specs page]
+More information at http://docs.graylog.org/en/2.3/pages/gelf.html#gelf-payload-specification[The Graylog2 GELF specs page]
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Gelf Output Configuration Options
@@ -41,6 +42,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-ignore_metadata>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-level>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-protocol>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-sender>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-ship_metadata>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-ship_tags>> |<<boolean,boolean>>|No
@@ -58,7 +60,7 @@ output plugins.
   * Value type is <<number,number>>
   * Default value is `1420`
 
-The GELF chunksize. You usually don't need to change this.
+The chunksize. You usually don't need to change this.
 
 [id="plugins-{type}s-{plugin}-custom_fields"]
 ===== `custom_fields` 
@@ -123,6 +125,17 @@ are accepted: "emergency", "alert", "critical",  "warning", "notice", and
 
 Graylog2 server port number.
 
+[id="plugins-{type}s-{plugin}-protocol"]
+===== `protocol`
+
+By default, this plugin outputs via the UDP transfer protocol, but can be
+configured to use TCP instead.
+
+  * Value type is <<string,string>>
+  * Default value is `"UDP"`
+
+Values here can be either "TCP" or "UDP".
+
 [id="plugins-{type}s-{plugin}-sender"]
 ===== `sender` 
 
@@ -166,3 +179,5 @@ the event message is taken instead.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
