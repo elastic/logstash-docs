@@ -1,13 +1,14 @@
 :plugin: influxdb
 :type: output
 :default_plugin: 0
+:default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.0.3
-:release_date: 2017-11-07
-:changelog_url: https://github.com/logstash-plugins/logstash-output-influxdb/blob/v5.0.3/CHANGELOG.md
+:version: v5.0.5
+:release_date: 2018-08-15
+:changelog_url: https://github.com/logstash-plugins/logstash-output-influxdb/blob/v5.0.5/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -186,7 +187,7 @@ The number of time to retry recoverable errors before dropping the events.
 
 A value of -1 will cause the plugin to retry indefinately.
 A value of 0 will cause the plugin to never retry.
-Otherwise it will retry up to the specified mumber of times.
+Otherwise it will retry up to the specified number of times.
 
 
 [id="plugins-{type}s-{plugin}-measurement"]
@@ -229,7 +230,8 @@ The retention policy to use
 
 An array containing the names of fields to send to Influxdb as tags instead 
 of fields. Influxdb 0.9 convention is that values that do not change every
-request should be considered metadata and given as tags.
+request should be considered metadata and given as tags. Tags are only sent when
+present in `data_points` or if `user_event_fields_for_data_points` is `true`. 
 
 [id="plugins-{type}s-{plugin}-ssl"]
 ===== `ssl` 
@@ -265,7 +267,7 @@ Automatically use fields from the event as the data points sent to Influxdb
 
 The user who has access to the named database
 
-
-
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
