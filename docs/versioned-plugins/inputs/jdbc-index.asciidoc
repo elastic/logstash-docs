@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v4.3.12-plugins-inputs-jdbc,v4.3.12>> | 2018-08-29
 | <<v4.3.11-plugins-inputs-jdbc,v4.3.11>> | 2018-07-23
 | <<v4.3.9-plugins-inputs-jdbc,v4.3.9>> | 2018-04-06
 | <<v4.3.8-plugins-inputs-jdbc,v4.3.8>> | 2018-04-05
@@ -22,6 +23,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v4.2.1-plugins-inputs-jdbc,v4.2.1>> | 2017-06-23
 |=======================================================================
 
+include::jdbc-v4.3.12.asciidoc[]
 include::jdbc-v4.3.11.asciidoc[]
 include::jdbc-v4.3.9.asciidoc[]
 include::jdbc-v4.3.8.asciidoc[]
