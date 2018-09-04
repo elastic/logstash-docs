@@ -1,0 +1,59 @@
+[[integrated-plugins]]
+== Integrated plugins
+
+An integrated plugin combines two or more plugins into one gemspec. 
+This grouping makes it easier to install or update the plugins you need to perform a task.
+Explain more benefits.
+
+These integrated plugins are available:
+
+* <<aws-integrated,AWS>> (https://github.com/logstash-plugins/logstash-integration-aws)
+* <<zeromq-integrated,ZeroMQ>> (https://github.com/logstash-plugins/logstash-integration-zeromq)
+* Another
+* Another
+
+[[aws-integrated]]
+=== AWS integrated plugin
+
+The AWS integrated plugin provides functionality to help you get data into and out of Amazon Web Services (AWS).
+It consists of these individual plugins:
+
+|=======================================================================
+| Plugin | Description 
+| <<plugins-codecs-cloudfront,codec-cloudfront>> | Reads AWS CloudFront reports 
+| plugin-codec-cloudtrail | TBD: Figure out linking. Why is CloudTrail-codec not is LS Ref
+| <<plugins-inputs-cloudwatch,codec-cloudwatch>> | Pulls events from the Amazon Web Services CloudWatch API  
+| <<plugins-inputs-s3,input-s3>> | Streams events from files in a S3 bucket 
+| <<plugins-inputs-sqs,input-sqs>> | Pulls events from an Amazon Web Services Simple Queue Service queue 
+| <<plugins-outputs-cloudwatch,output-cloudwatch>> | Aggregates and sends metric data to AWS CloudWatch 
+| <<plugins-outputs-s3,output-s3>> | Sends Logstash events to the Amazon Simple Storage Service 
+| <<plugins-outputs-sns,output-sns>> | Sends events to Amazon's Simple Notification Service 
+| <<plugins-outputs-sqs,output-sqs>> | Pushes events to an Amazon Web Services Simple Queue Service queue 
+|=======================================================================
+
+
+
+[[zeromq-integrated]]
+=== ZeroMQ integrated plugin
+
+ZeroMQ
+
+input - https://github.com/logstash-plugins/logstash-input-zeromq
+
+filter - https://github.com/logstash-plugins/logstash-filter-zeromq
+
+output - https://github.com/logstash-plugins/logstash-output-zeromq
+
+mixin - https://github.com/logstash-plugins/logstash-mixin-zeromq
+
+
+
+
+
+
+
+
+
+
+
+
