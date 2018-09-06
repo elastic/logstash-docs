@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v9.2.0
-:release_date: 2018-06-09
-:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v9.2.0/CHANGELOG.md
+:version: v9.2.1
+:release_date: 2018-08-17
+:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v9.2.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -32,8 +32,15 @@ plugin to version 6.2.5 or higher.
 
 ================================================================================
 
-This plugin is the recommended method of storing logs in Elasticsearch.
-If you plan on using the Kibana web interface, you'll want to use this output.
+If you plan to use the Kibana web
+interface, use the Elasticsearch output plugin to get your log data into
+Elasticsearch. 
+
+TIP: You can run Elasticsearch on your own hardware, or use our
+https://www.elastic.co/cloud/elasticsearch-service[hosted {es} Service] on
+Elastic Cloud. The Elasticsearch Service is available on both AWS and GCP.
+https://www.elastic.co/cloud/elasticsearch-service/signup[Try the {es} Service
+for free].
 
 This output only speaks the HTTP protocol. HTTP is the preferred protocol for interacting with Elasticsearch as of Logstash 2.0.
 We strongly encourage the use of HTTP over the node protocol for a number of reasons. HTTP is only marginally slower,
@@ -638,8 +645,9 @@ a timeout occurs, the request will be retried.
   * Value type is <<path,path>>
   * There is no default value for this setting.
 
-The JKS truststore to validate the server's certificate.
-Use either `:truststore` or `:cacert`
+The truststore to validate the server's certificate.
+It can be either .jks or .p12.
+Use either `:truststore` or `:cacert`.
 
 [id="plugins-{type}s-{plugin}-truststore_password"]
 ===== `truststore_password` 
