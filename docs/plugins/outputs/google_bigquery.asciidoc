@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.1
-:release_date: 2018-05-03
-:changelog_url: https://github.com/logstash-plugins/logstash-output-google_bigquery/blob/v4.0.1/CHANGELOG.md
+:version: v4.1.0
+:release_date: 2018-09-07
+:changelog_url: https://github.com/logstash-plugins/logstash-output-google_bigquery/blob/v4.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -100,6 +100,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-key_path>> |<<string,string>>|*Obsolete*
 | <<plugins-{type}s-{plugin}-project_id>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-service_account>> |<<string,string>>|__Deprecated__
+| <<plugins-{type}s-{plugin}-skip_invalid_rows>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-table_prefix>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-table_separator>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-temp_directory>> |<<string,string>>|__Deprecated__
@@ -175,6 +176,9 @@ added[4.0.0]
   * Default value is `"/tmp/bigquery"`.
 
 The location to store events that could not be uploaded due to errors.
+By default if _any_ message in an insert is invalid all will fail.
+You can use <<plugins-{type}s-{plugin}-skip_invalid_rows>> to allow partial inserts.
+
 Consider using an additional Logstash input to pipe the contents of
 these to an alert platform so you can manually fix the events.
 
@@ -298,6 +302,17 @@ Google Cloud Project ID (number, not Project Name!).
 deprecated[4.0.0, Replaced by `json_key_file` or by using ADC. See <<plugins-{type}s-{plugin}-json_key_file>>]
 
   * Value type is <<string,string>>
+
+[id="plugins-{type}s-{plugin}-skip_invalid_rows"]
+===== `skip_invalid_rows`
+
+added[4.1.0]
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Insert all valid rows of a request, even if invalid rows exist.
+The default value is false, which causes the entire request to fail if any invalid rows exist.
 
 [id="plugins-{type}s-{plugin}-table_prefix"]
 ===== `table_prefix` 
