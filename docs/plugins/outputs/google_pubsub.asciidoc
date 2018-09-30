@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.0.0
-:release_date: 2018-07-27
-:changelog_url: https://github.com/logstash-plugins/logstash-output-google_pubsub/blob/v1.0.0/CHANGELOG.md
+:version: v1.0.1
+:release_date: 2018-09-25
+:changelog_url: https://github.com/logstash-plugins/logstash-output-google_pubsub/blob/v1.0.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -130,7 +130,7 @@ output {
 ==== Additional Resources
 
  * https://cloud.google.com/pubsub/[Cloud Pub/Sub Homepage]
- * https://cloud.google.com/pubsub/pricing-summary/[Cloud Pub/Sub Pricing]
+ * https://cloud.google.com/pubsub/pricing/[Cloud Pub/Sub Pricing]
  * https://cloud.google.com/iam/docs/service-accounts[IAM Service Accounts]
  * https://cloud.google.com/docs/authentication/production[Application Default Credentials]
 
