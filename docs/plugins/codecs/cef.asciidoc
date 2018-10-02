@@ -77,6 +77,14 @@ This setting allows the following character sequences to have special meaning:
   * Value type is <<boolean,boolean>>
   * There is no default value for this setting.
 
+[id="plugins-{type}s-{plugin}-reverse_mapping"]
+===== `reverse_mapping`
+
+  * Value type is <<<boolean,boolean>>
+  * Default value is `false`
+
+Set to true to adhere to the specifications and encode using the CEF key name (short name) for the CEF field names.
+
 [id="plugins-{type}s-{plugin}-fields"]
 ===== `fields` 
 
