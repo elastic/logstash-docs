@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.3.1
-:release_date: 2018-05-08
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.3.1/CHANGELOG.md
+:version: v3.4.0
+:release_date: 2018-09-14
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.4.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -90,25 +90,6 @@ if [type] == "end" {
 template.json:
 
 [source,json]
---------------------------------------------------
- {
-    "query": {
-      "query_string": {
-       "query": "type:start AND operation:%{[opid]}"
-      }
-    },
-   "_source": ["@timestamp"]
- }
---------------------------------------------------
-
-As illustrated above, through the use of 'opid', fields from the Logstash
-events can be referenced within the template.
-The template will be populated per event prior to being used to query Elasticsearch.
-
-Note that when you use `query_template`, the Logstash attributes `result_size`
-and `sort` will be ignored. They should be specified directly in the JSON
-template. Example:
-
 [source,json]
 --------------------------------------------------
 {
@@ -122,6 +103,14 @@ template. Example:
   "_source": ["@timestamp"]
 }
 --------------------------------------------------
+
+As illustrated above, through the use of 'opid', fields from the Logstash
+events can be referenced within the template.
+The template will be populated per event prior to being used to query Elasticsearch.
+
+Notice also that when you use `query_template`, the Logstash attributes `result_size`
+and `sort` will be ignored. They should be specified directly in the JSON
+template, as shown in the example above.
 
 
 [id="plugins-{type}s-{plugin}-options"]
@@ -213,7 +202,20 @@ Whether results should be sorted or not
   * Value type is <<array,array>>
   * Default value is `{}`
 
-Array of fields to copy from old event (found via elasticsearch) into new event
+An array of fields to copy from the old event (found via elasticsearch) into the
+new event, currently being processed.
+
+In the following example, the values of `@timestamp` and `event_id` on the event
+found via elasticsearch are copied to the current event's
+`started` and `start_id` fields, respectively:
+
+[source,ruby]
+--------------------------------------------------
+fields => {
+  "@timestamp" => "started"
+  "event_id" => "start_id"
+}
+--------------------------------------------------
 
 [id="plugins-{type}s-{plugin}-hosts"]
 ===== `hosts` 
