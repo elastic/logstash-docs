@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v7.1.2
-:release_date: 2018-08-01
-:changelog_url: https://github.com/logstash-plugins/logstash-output-kafka/blob/v7.1.2/CHANGELOG.md
+:version: v7.2.0
+:release_date: 2018-09-27
+:changelog_url: https://github.com/logstash-plugins/logstash-output-kafka/blob/v7.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -24,7 +24,7 @@ include::{include_path}/plugin_header.asciidoc[]
 
 Write events to a Kafka topic. 
 
-This plugin uses Kafka Client 1.1.0. For broker compatibility, see the official https://cwiki.apache.org/confluence/display/KAFKA/Compatibility+Matrix[Kafka compatibility reference]. If the linked compatibility wiki is not up-to-date, please contact Kafka support/community to confirm compatibility.
+This plugin uses Kafka Client 2.0.0. For broker compatibility, see the official https://cwiki.apache.org/confluence/display/KAFKA/Compatibility+Matrix[Kafka compatibility reference]. If the linked compatibility wiki is not up-to-date, please contact Kafka support/community to confirm compatibility.
 
 If you require features not yet available in this plugin (including client version upgrades), please file an issue with details about what you need.
 

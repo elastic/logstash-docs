@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.3.3
-:release_date: 2018-05-09
-:changelog_url: https://github.com/logstash-plugins/logstash-input-udp/blob/v3.3.3/CHANGELOG.md
+:version: v3.3.4
+:release_date: 2018-08-24
+:changelog_url: https://github.com/logstash-plugins/logstash-input-udp/blob/v3.3.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -41,6 +41,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-queue_size>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-receive_buffer_bytes>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-workers>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-source_ip_fieldname>> |<<string,string>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -102,7 +103,13 @@ Consult your operating system documentation if you need to increase this max all
 
 Number of threads processing packets
 
+[id="plugins-{type}s-{plugin}-source_ip_fieldname"]
+===== `source_ip_fieldname`
 
+  * Value type is <<string,string>>
+  * Default value is `"host"`
+
+The name of the field where the source IP address will be stored.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
