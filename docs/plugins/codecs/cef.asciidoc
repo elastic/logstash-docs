@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.0.3
-:release_date: 2018-06-19
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v5.0.3/CHANGELOG.md
+:version: v5.0.6
+:release_date: 2018-09-21
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v5.0.6/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -75,6 +75,14 @@ This setting allows the following character sequences to have special meaning:
   * OBSOLETE WARNING: This configuration item is obsolete and will prevent the pipeline from starting if used
   * Value type is <<boolean,boolean>>
   * There is no default value for this setting.
+
+[id="plugins-{type}s-{plugin}-reverse_mapping"]
+===== `reverse_mapping`
+
+  * Value type is <<<boolean,boolean>>
+  * Default value is `false`
+
+Set to true to adhere to the specifications and encode using the CEF key name (short name) for the CEF field names.
 
 [id="plugins-{type}s-{plugin}-fields"]
 ===== `fields` 
