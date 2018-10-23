@@ -42,6 +42,7 @@ The following input plugins are available below. For a list of Elastic supported
 | <<plugins-inputs-rss,rss>> | Captures the output of command line tools as an event | https://github.com/logstash-plugins/logstash-input-rss[logstash-input-rss]
 | <<plugins-inputs-s3,s3>> | Streams events from files in a S3 bucket | https://github.com/logstash-plugins/logstash-input-s3[logstash-input-s3]
 | <<plugins-inputs-salesforce,salesforce>> | Creates events based on a Salesforce SOQL query | https://github.com/logstash-plugins/logstash-input-salesforce[logstash-input-salesforce]
+| <<plugins-inputs-snmp,snmp>> | Polls network devices using Simple Network Management Protocol (SNMP) | https://github.com/logstash-plugins/logstash-input-snmp[logstash-input-snmp]
 | <<plugins-inputs-snmptrap,snmptrap>> | Creates events based on SNMP trap messages | https://github.com/logstash-plugins/logstash-input-snmptrap[logstash-input-snmptrap]
 | <<plugins-inputs-sqlite,sqlite>> | Creates events based on rows in an SQLite database | https://github.com/logstash-plugins/logstash-input-sqlite[logstash-input-sqlite]
 | <<plugins-inputs-sqs,sqs>> | Pulls events from an Amazon Web Services Simple Queue Service queue | https://github.com/logstash-plugins/logstash-input-sqs[logstash-input-sqs]
@@ -162,6 +163,9 @@ include::inputs/s3.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-salesforce/edit/master/docs/index.asciidoc
 include::inputs/salesforce.asciidoc[]
+
+:edit_url: https://github.com/logstash-plugins/logstash-input-snmp/edit/master/docs/index.asciidoc
+include::inputs/snmp.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-snmptrap/edit/master/docs/index.asciidoc
 include::inputs/snmptrap.asciidoc[]
