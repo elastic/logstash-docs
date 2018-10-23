@@ -7,6 +7,7 @@ The following output plugins are available below. For a list of Elastic supporte
 
 |=======================================================================
 | Plugin | Description | Github repository
+| <<plugins-outputs-appsearch,appsearch>> | Sends events to the Elastic App Search solution | https://github.com/logstash-plugins/logstash-output-appsearch[logstash-output-appsearch]
 | <<plugins-outputs-boundary,boundary>> | Sends annotations to Boundary based on Logstash events | https://github.com/logstash-plugins/logstash-output-boundary[logstash-output-boundary]
 | <<plugins-outputs-circonus,circonus>> | Sends annotations to Circonus based on Logstash events | https://github.com/logstash-plugins/logstash-output-circonus[logstash-output-circonus]
 | <<plugins-outputs-cloudwatch,cloudwatch>> | Aggregates and sends metric data to AWS CloudWatch | https://github.com/logstash-plugins/logstash-output-cloudwatch[logstash-output-cloudwatch]
@@ -59,6 +60,9 @@ The following output plugins are available below. For a list of Elastic supporte
 | <<plugins-outputs-xmpp,xmpp>> | Posts events over XMPP | https://github.com/logstash-plugins/logstash-output-xmpp[logstash-output-xmpp]
 | <<plugins-outputs-zabbix,zabbix>> | Sends events to a Zabbix server | https://github.com/logstash-plugins/logstash-output-zabbix[logstash-output-zabbix]
 |=======================================================================
+
+:edit_url: https://github.com/logstash-plugins/logstash-output-appsearch/edit/master/docs/index.asciidoc
+include::outputs/appsearch.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-boundary/edit/master/docs/index.asciidoc
 include::outputs/boundary.asciidoc[]
