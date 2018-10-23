@@ -1,0 +1,12 @@
+:plugin: appsearch
+:type: output
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v1.0.0.beta1-plugins-outputs-appsearch,v1.0.0.beta1>> | 2018-10-23
+|=======================================================================
+
+include::appsearch-v1.0.0.beta1.asciidoc[]
+
