@@ -1,0 +1,12 @@
+:plugin: snmp
+:type: input
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v1.0.0-plugins-inputs-snmp,v1.0.0>> | 2018-10-24
+|=======================================================================
+
+include::snmp-v1.0.0.asciidoc[]
+

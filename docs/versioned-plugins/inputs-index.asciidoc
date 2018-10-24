@@ -87,6 +87,8 @@ include::inputs/s3-index.asciidoc[]
 
 include::inputs/salesforce-index.asciidoc[]
 
+include::inputs/snmp-index.asciidoc[]
+
 include::inputs/snmptrap-index.asciidoc[]
 
 include::inputs/sqlite-index.asciidoc[]
