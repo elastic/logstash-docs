@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.3.3
-:release_date: 2018-08-15
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.3.3/CHANGELOG.md
+:version: v3.3.4
+:release_date: 2018-10-19
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.3.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -23,6 +23,44 @@ include::{include_path}/plugin_header.asciidoc[]
 
 The mutate filter allows you to perform general mutations on fields. You
 can rename, remove, replace, and modify fields in your events.
+
+[id="plugins-{type}s-{plugin}-proc_order"]
+===== Processing order
+
+Mutations in a config file are executed in this order:
+
+* coerce
+* rename
+* update
+* replace
+* convert
+* gsub
+* uppercase
+* capitalize
+* lowercase
+* strip
+* remove
+* split
+* join
+* merge
+* copy
+
+You can control the order by using separate mutate blocks.
+
+Example:
+[source,ruby]
+-----
+filter {
+    mutate {
+        split => ["hostname", "."]
+        add_field => { "shortHostname" => "%{hostname[0]}" }
+    }
+
+    mutate {    
+        rename => ["shortHostname", "hostname" ]
+    }
+}
+-----
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Mutate Filter Configuration Options

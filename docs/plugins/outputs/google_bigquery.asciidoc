@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.1.0
-:release_date: 2018-09-07
-:changelog_url: https://github.com/logstash-plugins/logstash-output-google_bigquery/blob/v4.1.0/CHANGELOG.md
+:version: v4.1.1
+:release_date: 2018-10-25
+:changelog_url: https://github.com/logstash-plugins/logstash-output-google_bigquery/blob/v4.1.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -24,25 +24,24 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ===== Summary
 
-This plugin uploads events to Google BigQuery using the streaming API
-so data can become available nearly immediately.
+This Logstash plugin uploads events to Google BigQuery using the streaming API
+so data can become available to query nearly immediately.
 
 You can configure it to flush periodically, after N events or after
 a certain amount of data is ingested.
 
 ===== Environment Configuration
 
-You must enable BigQuery on your Google Cloud Storage (GCS) account and create a dataset to
+You must enable BigQuery on your Google Cloud account and create a dataset to
 hold the tables this plugin generates.
 
-You must also grant the service account this plugin uses access to
-the dataset.
+You must also grant the service account this plugin uses access to the dataset.
 
 You can use https://www.elastic.co/guide/en/logstash/current/event-dependent-configuration.html[Logstash conditionals]
 and multiple configuration blocks to upload events with different structures.
 
 ===== Usage
-This is an example of logstash config:
+This is an example of Logstash config:
 
 [source,ruby]
 --------------------------
@@ -66,15 +65,18 @@ https://cloud.google.com/docs/authentication/production[Application Default Cred
 
 ===== Considerations
 
-* There is a small fee to insert data into BigQuery using the streaming API
+* There is a small fee to insert data into BigQuery using the streaming API.
 * This plugin buffers events in-memory, so make sure the flush configurations are appropriate
   for your use-case and consider using
-  https://www.elastic.co/guide/en/logstash/current/persistent-queues.html[Logstash Persistent Queues]
+  https://www.elastic.co/guide/en/logstash/current/persistent-queues.html[Logstash Persistent Queues].
+* Events will be flushed when <<plugins-{type}s-{plugin}-batch_size>>, <<plugins-{type}s-{plugin}-batch_size_bytes>>, or <<plugins-{type}s-{plugin}-flush_interval_secs>> is met, whatever comes first.
+  If you notice a delay in your processing or low throughput, try adjusting those settings.
 
 ===== Additional Resources
 
 * https://cloud.google.com/docs/authentication/production[Application Default Credentials (ADC) Overview]
 * https://cloud.google.com/bigquery/[BigQuery Introduction]
+* https://cloud.google.com/bigquery/quota[BigQuery Quotas and Limits]
 * https://cloud.google.com/bigquery/docs/schemas[BigQuery Schema Formats and Types]
 
 [id="plugins-{type}s-{plugin}-options"]
@@ -121,7 +123,12 @@ added[4.0.0]
   * Value type is <<number,number>>
   * Default value is `128`
 
-The number of messages to upload at a single time. (< 1000, default: 128)
+The maximum number of messages to upload at a single time.
+This number must be < 10,000.
+Batching can increase performance and throughput to a point, but at the cost of per-request latency.
+Too few rows per request and the overhead of each request can make ingestion inefficient.
+Too many rows per request and the throughput may drop.
+BigQuery recommends using about 500 rows per request, but experimentation with representative data (schema and data sizes) will help you determine the ideal batch size.
 
 [id="plugins-{type}s-{plugin}-batch_size_bytes"]
 ===== `batch_size_bytes`
@@ -131,10 +138,11 @@ added[4.0.0]
   * Value type is <<number,number>>
   * Default value is `1_000_000`
 
-An approximate number of bytes to upload as part of a batch. Default: 1MB
+An approximate number of bytes to upload as part of a batch.
+This number should be < 10MB or inserts may fail.
 
 [id="plugins-{type}s-{plugin}-csv_schema"]
-===== `csv_schema` 
+===== `csv_schema`
 
   * Value type is <<string,string>>
   * Default value is `nil`
@@ -143,7 +151,7 @@ Schema for log data. It must follow the format `name1:type1(,name2:type2)*`.
 For example, `path:STRING,status:INTEGER,score:FLOAT`.
 
 [id="plugins-{type}s-{plugin}-dataset"]
-===== `dataset` 
+===== `dataset`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -152,7 +160,7 @@ For example, `path:STRING,status:INTEGER,score:FLOAT`.
 The BigQuery dataset the tables for the events will be added to.
 
 [id="plugins-{type}s-{plugin}-date_pattern"]
-===== `date_pattern` 
+===== `date_pattern`
 
   * Value type is <<string,string>>
   * Default value is `"%Y-%m-%dT%H:00"`
@@ -188,15 +196,16 @@ transparently upload to a GCS bucket.
 Files names follow the pattern `[table name]-[UNIX timestamp].log`
 
 [id="plugins-{type}s-{plugin}-flush_interval_secs"]
-===== `flush_interval_secs` 
+===== `flush_interval_secs`
 
   * Value type is <<number,number>>
   * Default value is `5`
 
-Uploads all data this often even if other upload criteria aren't met. Default: 5s
+Uploads all data this often even if other upload criteria aren't met.
+
 
 [id="plugins-{type}s-{plugin}-ignore_unknown_values"]
-===== `ignore_unknown_values` 
+===== `ignore_unknown_values`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -223,12 +232,12 @@ added[4.0.0, Replaces <<plugins-{type}s-{plugin}-key_password>>, <<plugins-{type
   * Value type is <<string,string>>
   * Default value is `nil`
 
-If logstash is running within Google Compute Engine, the plugin can use
+If Logstash is running within Google Compute Engine, the plugin can use
 GCE's Application Default Credentials. Outside of GCE, you will need to
 specify a Service Account JSON key file.
 
 [id="plugins-{type}s-{plugin}-json_schema"]
-===== `json_schema` 
+===== `json_schema`
 
   * Value type is <<hash,hash>>
   * Default value is `nil`
@@ -288,7 +297,7 @@ Please use one of the following mechanisms:
     `gcloud iam service-accounts keys create key.json --iam-account my-sa-123@my-project-123.iam.gserviceaccount.com`
 
 [id="plugins-{type}s-{plugin}-project_id"]
-===== `project_id` 
+===== `project_id`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -315,7 +324,7 @@ Insert all valid rows of a request, even if invalid rows exist.
 The default value is false, which causes the entire request to fail if any invalid rows exist.
 
 [id="plugins-{type}s-{plugin}-table_prefix"]
-===== `table_prefix` 
+===== `table_prefix`
 
   * Value type is <<string,string>>
   * Default value is `"logstash"`
@@ -324,7 +333,7 @@ BigQuery table ID prefix to be used when creating new tables for log data.
 Table name will be `<table_prefix><table_separator><date>`
 
 [id="plugins-{type}s-{plugin}-table_separator"]
-===== `table_separator` 
+===== `table_separator`
 
   * Value type is <<string,string>>
   * Default value is `"_"`
