@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.3
-:release_date: 2018-02-21
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-grok/blob/v4.0.3/CHANGELOG.md
+:version: v4.0.4
+:release_date: 2018-10-19
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-grok/blob/v4.0.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -35,6 +35,20 @@ your own trivially. (See the `patterns_dir` setting)
 
 If you need help building patterns to match your logs, you will find the
 <http://grokdebug.herokuapp.com> and <http://grokconstructor.appspot.com/> applications quite useful!
+
+===== Grok or Dissect? Or both?
+
+The {logstash-ref}/plugins-filters-dissect.html[`dissect`] filter plugin
+is another way to extract unstructured event data into fields using delimiters.
+
+Dissect differs from Grok in that it does not use regular expressions and is faster. 
+Dissect works well when data is reliably repeated.
+Grok is a better choice when the structure of your text varies from line to line.
+
+You can use both Dissect and Grok for a hybrid use case when a section of the
+line is reliably repeated, but the entire line is not. The Dissect filter can
+deconstruct the section of the line that is repeated. The Grok filter can process
+the remaining field values with more regex predictability.
 
 ==== Grok Basics
 
@@ -207,20 +221,30 @@ If `true`, keep empty captures as event fields.
   * Value type is <<hash,hash>>
   * Default value is `{}`
 
-A hash of matches of field => value
+A hash that defines the mapping of _where to look_, and with which patterns.
 
-For example:
+For example, the following will match an existing value in the `message` field for the given pattern, and if a match is found will add the field `duration` to the event with the captured value:
 [source,ruby]
     filter {
-      grok { match => { "message" => "Duration: %{NUMBER:duration}" } }
+      grok {
+        match => {
+          "message" => "Duration: %{NUMBER:duration}"
+        }
+      }
     }
 
-If you need to match multiple patterns against a single field, the value can be an array of patterns
+If you need to match multiple patterns against a single field, the value can be an array of patterns:
 [source,ruby]
     filter {
-      grok { match => { "message" => [ "Duration: %{NUMBER:duration}", "Speed: %{NUMBER:speed}" ] } }
+      grok {
+        match => {
+          "message" => [
+            "Duration: %{NUMBER:duration}",
+            "Speed: %{NUMBER:speed}"
+          ]
+        }
+      }
     }
-
 
 [id="plugins-{type}s-{plugin}-named_captures_only"]
 ===== `named_captures_only` 
