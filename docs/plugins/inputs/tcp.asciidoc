@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.1.0
-:release_date: 2018-09-05
-:changelog_url: https://github.com/logstash-plugins/logstash-input-tcp/blob/v5.1.0/CHANGELOG.md
+:version: v5.2.0
+:release_date: 2018-10-24
+:changelog_url: https://github.com/logstash-plugins/logstash-input-tcp/blob/v5.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -84,6 +84,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-port>> |<<number,number>>|Yes
 | <<plugins-{type}s-{plugin}-proxy_protocol>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-ssl_cert>> |a valid filesystem path|No
+| <<plugins-{type}s-{plugin}-ssl_certificate_authorities>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-ssl_enable>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-ssl_extra_chain_certs>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-ssl_key>> |a valid filesystem path|No
@@ -141,7 +142,17 @@ http://www.haproxy.org/download/1.5/doc/proxy-protocol.txt
   * Value type is <<path,path>>
   * There is no default value for this setting.
 
-SSL certificate path
+Path to certificate in PEM format. This certificate will be presented
+to the connecting clients.
+
+[id="plugins-{type}s-{plugin}-ssl_certificate_authorities"]
+===== `ssl_extra_chain_certs`
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Validate client certificate or certificate chain against these authorities.
+You can define multiple files or paths. All the certificates will be read and added to the trust store.
 
 [id="plugins-{type}s-{plugin}-ssl_enable"]
 ===== `ssl_enable` 
@@ -157,8 +168,9 @@ Enable SSL (must be set for other `ssl_` options to take effect).
   * Value type is <<array,array>>
   * Default value is `[]`
 
-An Array of extra X509 certificates to be added to the certificate chain.
-Useful when the CA chain is not necessary in the system store.
+An Array of paths to extra X509 certificates.
+These are used together with the certificate to construct the certificate chain
+presented to the client.
 
 [id="plugins-{type}s-{plugin}-ssl_key"]
 ===== `ssl_key` 
@@ -166,7 +178,7 @@ Useful when the CA chain is not necessary in the system store.
   * Value type is <<path,path>>
   * There is no default value for this setting.
 
-SSL key path
+The path to the private key corresponding to the specified certificate (PEM format).
 
 [id="plugins-{type}s-{plugin}-ssl_key_passphrase"]
 ===== `ssl_key_passphrase` 
@@ -174,7 +186,7 @@ SSL key path
   * Value type is <<password,password>>
   * Default value is `nil`
 
-SSL key passphrase
+SSL key passphrase for the private key.
 
 [id="plugins-{type}s-{plugin}-ssl_verify"]
 ===== `ssl_verify` 
