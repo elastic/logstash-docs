@@ -1,7 +1,7 @@
 :plugin: snmp
 :type: input
 :default_plugin: 1
-:default_codec: plain
+:no_codec:
 
 // TO DO:  VERIFY default codec!
 
@@ -307,4 +307,4 @@ input {
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
 
-:default_codec!:
+:no_codec!:
