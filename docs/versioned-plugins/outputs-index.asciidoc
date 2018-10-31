@@ -3,8 +3,6 @@
 
 include::include/plugin-intro.asciidoc[]
 
-include::outputs/appsearch-index.asciidoc[]
-
 include::outputs/boundary-index.asciidoc[]
 
 include::outputs/circonus-index.asciidoc[]
