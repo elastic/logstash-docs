@@ -1,7 +1,7 @@
 :plugin: appsearch
 :type: output
 :default_plugin: 1
-:no_codec:
+:default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
@@ -100,4 +100,4 @@ Where to move the timestamp value that all Logstash events contain in the `@time
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
 
-:no_codec!:
+:default_codec!:
