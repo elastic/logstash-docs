@@ -38,6 +38,7 @@ produce an event with the payload as the 'message' field and a '_cefparsefailure
 | <<plugins-{type}s-{plugin}-fields>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-name>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-product>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-reverse_mapping>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-severity>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-signature>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-vendor>> |<<string,string>>|No
@@ -76,14 +77,6 @@ This setting allows the following character sequences to have special meaning:
   * Value type is <<boolean,boolean>>
   * There is no default value for this setting.
 
-[id="plugins-{type}s-{plugin}-reverse_mapping"]
-===== `reverse_mapping`
-
-  * Value type is <<<boolean,boolean>>
-  * Default value is `false`
-
-Set to true to adhere to the specifications and encode using the CEF key name (short name) for the CEF field names.
-
 [id="plugins-{type}s-{plugin}-fields"]
 ===== `fields` 
 
@@ -109,6 +102,14 @@ to help you build a new value from other parts of the event.
 
 Device product field in CEF header. The new value can include `%{foo}` strings
 to help you build a new value from other parts of the event.
+
+[id="plugins-{type}s-{plugin}-reverse_mapping"]
+===== `reverse_mapping`
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Set to true to adhere to the specifications and encode using the CEF key name (short name) for the CEF field names.
 
 [id="plugins-{type}s-{plugin}-sev"]
 ===== `sev`  (OBSOLETE)
