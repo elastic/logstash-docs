@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v2.1.1
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-input-cloudwatch/blob/v2.1.1/CHANGELOG.md
+:version: v2.2.4
+:release_date: 2018-09-17
+:changelog_url: https://github.com/logstash-plugins/logstash-input-cloudwatch/blob/v2.2.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -54,7 +54,7 @@ A sample policy for EC2 metrics is as follows:
 
 See http://aws.amazon.com/iam/ for more details on setting up AWS identities.
 
-# Configuration Example
+===== Configuration examples
 [source, ruby]
     input {
       cloudwatch {
@@ -65,6 +65,7 @@ See http://aws.amazon.com/iam/ for more details on setting up AWS identities.
       }
     }
 
+[source, ruby]
     input {
       cloudwatch {
         namespace => "AWS/EBS"
@@ -74,6 +75,7 @@ See http://aws.amazon.com/iam/ for more details on setting up AWS identities.
       }
     }
 
+[source, ruby]
     input {
       cloudwatch {
         namespace => "AWS/RDS"
@@ -96,7 +98,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-aws_credentials_file>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-combined>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-endpoint>> |<<string,string>>|No
-| <<plugins-{type}s-{plugin}-filters>> |<<array,array>>|Yes
+| <<plugins-{type}s-{plugin}-filters>> |<<array,array>>|See <<plugins-{type}s-{plugin}-filters,note>>
 | <<plugins-{type}s-{plugin}-interval>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-metrics>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-namespace>> |<<string,string>>|No
@@ -169,17 +171,19 @@ guaranteed to work correctly with the AWS SDK.
 [id="plugins-{type}s-{plugin}-filters"]
 ===== `filters` 
 
-  * This is a required setting.
+  * This setting can be required or optional. See note below.
   * Value type is <<array,array>>
   * There is no default value for this setting.
 
-Specify the filters to apply when fetching resources:
+NOTE: This setting is optional when the namespace is `AWS/EC2`. Otherwise this is a required field.
 
-This needs to follow the AWS convention of specifiying filters.
-Instances: { 'instance-id' => 'i-12344321' }
-Tags: { "tag:Environment" => "Production" }
-Volumes: { 'attachment.status' => 'attached' }
-Each namespace uniquely support certian dimensions. Please consult the documentation
+Specify the filters to apply when fetching resources. Follow the AWS convention:
+
+* Instances: { 'instance-id' => 'i-12344321' }
+* Tags: { "tag:Environment" => "Production" }
+* Volumes: { 'attachment.status' => 'attached' }
+
+Each namespace uniquely support certain dimensions. Please consult the documentation
 to ensure you're using valid filters.
 
 [id="plugins-{type}s-{plugin}-interval"]

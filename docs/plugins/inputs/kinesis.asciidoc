@@ -1,13 +1,14 @@
 :plugin: kinesis
 :type: input
 :default_plugin: 0
+:default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v2.0.7
-:release_date: 2017-11-14
-:changelog_url: https://github.com/logstash-plugins/logstash-input-kinesis/blob/v2.0.7/CHANGELOG.md
+:version: v2.0.8
+:release_date: 2018-09-25
+:changelog_url: https://github.com/logstash-plugins/logstash-input-kinesis/blob/v2.0.8/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -111,3 +112,5 @@ By default this is empty and the default chain will be used.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:

@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.1.2
-:release_date: 2018-05-02
-:changelog_url: https://github.com/logstash-plugins/logstash-output-s3/blob/v4.1.2/CHANGELOG.md
+:version: v4.1.6
+:release_date: 2018-09-25
+:changelog_url: https://github.com/logstash-plugins/logstash-output-s3/blob/v4.1.6/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -59,8 +59,8 @@ This is an example of logstash config:
 [source,ruby]
 output {
    s3{
-     access_key_id => "crazy_key"             (required)
-     secret_access_key => "monkey_access_key" (required)
+     access_key_id => "crazy_key"             (optional)
+     secret_access_key => "monkey_access_key" (optional)
      region => "eu-west-1"                    (optional, default = "us-east-1")
      bucket => "your_bucket"                  (required)
      size_file => 2048                        (optional) - Bytes
