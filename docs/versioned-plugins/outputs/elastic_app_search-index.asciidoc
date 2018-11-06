@@ -1,0 +1,12 @@
+:plugin: elastic_app_search
+:type: output
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v1.0.0.beta1-plugins-outputs-elastic_app_search,v1.0.0.beta1>> | 2018-11-06
+|=======================================================================
+
+include::elastic_app_search-v1.0.0.beta1.asciidoc[]
+
