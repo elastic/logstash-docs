@@ -1,14 +1,14 @@
-:plugin: appsearch
+:plugin: elastic_app_search
 :type: output
-:default_plugin: 0
+:default_plugin: 1
 :default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
 :version: v1.0.0.beta1
-:release_date: 2018-10-23
-:changelog_url: https://github.com/logstash-plugins/logstash-output-appsearch/blob/v1.0.0.beta1/CHANGELOG.md
+:release_date: 2018-11-06
+:changelog_url: https://github.com/logstash-plugins/logstash-output-elastic_app_search/blob/v1.0.0.beta1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -22,24 +22,25 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-This output lets you send events to Elastic's App Search solution.
+This output lets you send events to the Elastic App Search solution.
 On receiving a batch of events from the Logstash pipeline, the plugin
-will convert the events into documents and use App Search's bulk API
+converts the events into documents and uses the App Search bulk API
 to index multiple events in one request.
 
-Because App Search doesn't allow fields to being with `@timestamp`,
-by default the fields `@timestamp` and `@version` will be removed from
-each event prior to being sent to App Search. If you want to keep
-the `@timestamp` field you can use the
+App Search doesn't allow fields to begin with `@timestamp`.
+By default the `@timestamp` and `@version` fields will be removed from
+each event before the event is sent to App Search. If you want to keep
+the `@timestamp` field, you can use the
 <<plugins-{type}s-{plugin}-timestamp_destination,timestamp_destination>> option
-to store this timestamp in a different field.
+to store the timestamp in a different field.
 
-This gem does not support codec customization.
+NOTE: This gem does not support codec customization.
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== AppSearch Output Configuration Options
 
-This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
+This plugin supports the following configuration options plus the
+ <<plugins-{type}s-{plugin}-common-options>> described later.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
@@ -70,7 +71,7 @@ The private API Key with write permissions. Visit the https://app.swiftype.com/a
   * Value type is <<string,string>>
   * There is no default value
 
-What to use as id for app search documents. This can be an interpolated value
+The id for app search documents. This can be an interpolated value
 like `myapp-%{sequence_id}`. Reusing ids will cause documents to be rewritten.
 
 [id="plugins-{type}s-{plugin}-engine"]
@@ -95,7 +96,14 @@ The hostname of the App Search API that is associated with your App Search accou
   * Value type is <<string,string>>
   * There is no default value
 
-Where to move the timestamp value that all Logstash events contain in the `@timestamp` field. Since App Search doesn't support fields starting with `@timestamp`, by default this field will be deleted. If you wish to keep it, set this value to the name of the field where `@timestamp` will be copied to.
+Where to move the value from the `@timestamp` field. 
+
+All Logstash events contain a `@timestamp` field.
+App Search doesn't support fields starting with `@timestamp`, and 
+by default, the `@timestamp` field will be deleted. 
+
+To keep the timestamp field, set this value to the name of the field where you want `@timestamp` copied.
+
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
