@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v2.8.0
-:release_date: 2018-03-18
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-aggregate/blob/v2.8.0/CHANGELOG.md
+:version: v2.9.0
+:release_date: 2018-11-03
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-aggregate/blob/v2.9.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -241,7 +241,7 @@ In that case, you don't want to wait task timeout to flush aggregation map.
 ----------------------------------
 
 * The key point is that each time aggregate plugin detects a new `country_name`, it pushes previous aggregate map as a new Logstash event, and then creates a new empty map for the next country
-* When 5s timeout comes, the last aggregate map is pushed as a new event
+* When 3s timeout comes, the last aggregate map is pushed as a new event
 * Finally, initial events (which are not aggregated) are dropped because useless (thanks to `event.cancel()`)
 
 
@@ -398,11 +398,20 @@ Example:
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The code to execute to update map, using current event.
+The code to execute to update aggregated map, using current event.
 
-Or on the contrary, the code to execute to update event, using current map.
+Or on the contrary, the code to execute to update event, using aggregated map.
 
-You will have a 'map' variable and an 'event' variable available (that is the event itself).
+Available variables are :
+
+`event`: current Logstash event
+
+`map`: aggregated map associated to `task_id`, containing key/value pairs. Data structure is a ruby http://ruby-doc.org/core-1.9.1/Hash.html[Hash]
+
+`map_meta`: meta informations associated to aggregate map. It allows to set a custom `timeout` or `inactivity_timeout`. 
+It allows also to get `creation_timestamp`, `lastevent_timestamp` and `task_id`.
+
+When option push_map_as_event_on_timeout=true, if you set `map_meta.timeout=0` in `code` block, then aggregated map is immediately pushed as a new event.
 
 Example:
 [source,ruby]
