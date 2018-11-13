@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.0.5
-:release_date: 2018-06-27
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-jdbc_static/blob/v1.0.5/CHANGELOG.md
+:version: v1.0.6
+:release_date: 2018-10-29
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-jdbc_static/blob/v1.0.6/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -55,11 +55,11 @@ database connection.
 *lookups*::
 
 Perform lookup queries on the local database to enrich the events.
-Define as many lookups as needed to enhance the event from all
+Define as many lookups as needed to enrich the event from all
 lookup tables in one pass. Ideally the SQL statement should only
 return one row. Any rows are converted to Hash objects and are
 stored in a target field that is an Array.
-
++
 The following example config fetches data from a remote database, caches it in a
 local database, and uses lookups to enrich events with data cached in the local
 database.
@@ -132,6 +132,8 @@ filter {
 locally.
 <2> Defines the columns, types, and indexes used to build the local database
 structure. The column names and types should match the external database.
+The order of table definitions is significant and should match that of the loader queries.
+See <<plugins-{type}s-{plugin}-object_order>>.
 <3> Performs lookup queries on the local database to enrich the events.
 <4> Specifies the event field that will store the looked-up data. If the lookup
 returns multiple columns, the data is stored as a JSON object within the field.
@@ -246,6 +248,19 @@ whether the plugins are defined in a single pipeline, or multiple pipelines.
 However, after setting up the filter, you should watch the lookup results and
 view the logs to verify correct operation.
 ===============================
+
+[id="plugins-{type}s-{plugin}-object_order"]
+==== Loader column and local_db_object order dependency
+
+[IMPORTANT]
+===============================
+For loader performance reasons, the loading mechanism uses a CSV style file with an inbuilt
+Derby file import procedure to add the remote data to the local db. The retrieved columns
+are written to the CSV file as is and the file import procedure expects a 1 to 1 correspondence
+to the order of the columns specified in the local_db_object settings. Please ensure that this
+order is in place.
+===============================
+
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Jdbc_static Filter Configuration Options
@@ -508,7 +523,7 @@ must read the important multiple pipeline notice at the top of the page.
   * Default value is `[]`
 
 The array should contain one or more Hashes. Each Hash represents a lookup
-enhancement. Each Hash is validated according to the table below.
+enrichment. Each Hash is validated according to the table below.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
