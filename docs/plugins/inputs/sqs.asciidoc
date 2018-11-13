@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.1
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-input-sqs/blob/v3.1.1/CHANGELOG.md
+:version: v3.1.2
+:release_date: 2018-11-12
+:changelog_url: https://github.com/logstash-plugins/logstash-input-sqs/blob/v3.1.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -37,7 +37,7 @@ To use this plugin, you *must*:
 
  * Have an AWS account
  * Setup an SQS queue
- * Create an identify that has access to consume messages from the queue.
+ * Create an identity that has access to consume messages from the queue.
 
 The "consumer" identity must have the following permissions on the queue:
 
