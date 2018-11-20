@@ -5,8 +5,10 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v1.0.3-plugins-outputs-monasca_log_api,v1.0.3>> | 2018-11-20
 | <<v1.0.2-plugins-outputs-monasca_log_api,v1.0.2>> | 2017-10-25
 |=======================================================================
 
+include::monasca_log_api-v1.0.3.asciidoc[]
 include::monasca_log_api-v1.0.2.asciidoc[]
 
