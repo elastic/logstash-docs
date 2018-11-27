@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v9.2.1
-:release_date: 2018-08-17
-:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v9.2.1/CHANGELOG.md
+:version: v9.2.4
+:release_date: 2018-11-14
+:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v9.2.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -97,7 +97,7 @@ happens, the problem is logged as a warning, and the event is dropped. See
 ==== Batch Sizes
 
 This plugin attempts to send batches of events as a single request. However, if
-a request exceeds 20MB we will break it up until multiple batch requests. If a single document exceeds 20MB it will be sent as a single request.
+a request exceeds 20MB we will break it up into multiple batch requests. If a single document exceeds 20MB it will be sent as a single request.
 
 ==== DNS Caching
 
