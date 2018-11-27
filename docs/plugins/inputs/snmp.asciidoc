@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.0.0
-:release_date: 2018-10-24
-:changelog_url: https://github.com/logstash-plugins/logstash-input-snmp/blob/v1.0.0/CHANGELOG.md
+:version: v1.0.1
+:release_date: 2018-11-05
+:changelog_url: https://github.com/logstash-plugins/logstash-input-snmp/blob/v1.0.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -24,6 +24,8 @@ include::{include_path}/plugin_header.asciidoc[]
 
 The SNMP input polls network devices using Simple Network Management Protocol (SNMP)
 to gather information related to the current state of the devices operation.
+
+The SNMP input plugin supports SNMP v1, v2c, and v3 over UDP and TCP transport protocols.
 
 [id="plugins-{type}s-{plugin}-import-mibs"]
 ==== Importing MIBs 
@@ -54,19 +56,30 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<plugins-{type}s-{plugin}-auth_pass>> |<<password,password>>|No
-| <<plugins-{type}s-{plugin}-auth_protocol>> |<<string,string>>, one of `["md5", "sha", "sha2", "hmac128sha224", "hmac192sha256", "hmac256sha384", "hmac384sha512"]`|No
 | <<plugins-{type}s-{plugin}-get>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-hosts>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-interval>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-mib_paths>> |<<path,path>>|No
 | <<plugins-{type}s-{plugin}-oid_root_skip>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-walk>> |<<array,array>>|No
+|=======================================================================
+
+==== SNMPv3 Authentication Options
+
+This plugin supports the following SNMPv3 authentication options.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-auth_pass>> |<<password,password>>|No
+| <<plugins-{type}s-{plugin}-auth_protocol>> |<<string,string>>, one of `["md5", "sha", "sha2", "hmac128sha224", "hmac192sha256", "hmac256sha384", "hmac384sha512"]`|No
 | <<plugins-{type}s-{plugin}-priv_pass>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-priv_protocol>> |<<string,string>>, one of `["des", "3des", "aes", "aes128", "aes192", "aes256"]`|No
 | <<plugins-{type}s-{plugin}-security_level>> |<<string,string>>, one of `["noAuthNoPriv", "authNoPriv", "authPriv"]`|No
 | <<plugins-{type}s-{plugin}-security_name>> |<<string,string>>|No
-| <<plugins-{type}s-{plugin}-walk>> |<<array,array>>|No
 |=======================================================================
+
+==== SNMP Input Configuration Options
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
 input plugins.
@@ -218,9 +231,10 @@ The `priv_pass` option specifies the SNMPv3 encryption password
 [id="plugins-{type}s-{plugin}-priv_protocol"]
 ===== `priv_protocol`
 
-The `priv_protocol` option specifies the SNMPv3 privacy/encryption protocol
+The `priv_protocol` option specifies the SNMPv3 privacy/encryption protocol.
 
 * Value can be any of: `des`, `3des`, `aes`, `aes128`, `aes192`, `aes256`
+* Note that `aes` and `aes128` are equivalent
 * There is no default value for this setting
 
 [id="plugins-{type}s-{plugin}-security_name"]
