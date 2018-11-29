@@ -146,7 +146,7 @@ Path to certificate in PEM format. This certificate will be presented
 to the connecting clients.
 
 [id="plugins-{type}s-{plugin}-ssl_certificate_authorities"]
-===== `ssl_extra_chain_certs`
+===== `ssl_certificate_authorities`
 
   * Value type is <<array,array>>
   * Default value is `[]`
