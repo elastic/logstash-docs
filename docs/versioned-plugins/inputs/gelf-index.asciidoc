@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v3.2.0-plugins-inputs-gelf,v3.2.0>> | 2018-12-12
 | <<v3.1.1-plugins-inputs-gelf,v3.1.1>> | 2018-04-06
 | <<v3.1.0-plugins-inputs-gelf,v3.1.0>> | 2018-01-15
 | <<v3.0.7-plugins-inputs-gelf,v3.0.7>> | 2017-11-14
@@ -13,6 +14,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.0.4-plugins-inputs-gelf,v3.0.4>> | 2017-06-23
 |=======================================================================
 
+include::gelf-v3.2.0.asciidoc[]
 include::gelf-v3.1.1.asciidoc[]
 include::gelf-v3.1.0.asciidoc[]
 include::gelf-v3.0.7.asciidoc[]
