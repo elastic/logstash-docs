@@ -101,7 +101,7 @@ beta[]
 [NOTE]
 This feature requires an Elasticsearch instance of 6.6.0 or higher with at least a Basic license
 
-Logstash can use the {ref}/index-lifecycle-management.html[Index Lifecycle Management] to automate the management of indices over time.
+Logstash can use Index Lifecycle Management to automate the management of indices over time.
 
 To configure the Elasticsearch output to use Index Lifecycle Management, set the `ilm_enabled` flag to true in the output definition:
 
