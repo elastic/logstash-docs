@@ -85,7 +85,7 @@ filter {
 [id="{version}-plugins-{type}s-{plugin}-get"]
 ===== `get`
 
-  * Value type is <<hash,hash>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
   * There is no default value for this setting.
 
 If specified, get the values for the given keys from memcached, and store them in the corresponding fields on the event.
@@ -131,7 +131,7 @@ filter {
 
 For usages of this plugin that persist data to memcached (e.g., <<#plugins-{type}s-{plugin}-set,`set`>>), the time-to-live in seconds
 
-  * Value type is <<number,number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * The default value is `0` (no expiry)
 
 
