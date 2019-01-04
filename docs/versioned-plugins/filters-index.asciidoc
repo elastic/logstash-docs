@@ -67,6 +67,8 @@ include::filters/kv-index.asciidoc[]
 
 include::filters/math-index.asciidoc[]
 
+include::filters/memcached-index.asciidoc[]
+
 include::filters/metaevent-index.asciidoc[]
 
 include::filters/metricize-index.asciidoc[]
