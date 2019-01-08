@@ -1,0 +1,12 @@
+:plugin: http
+:type: filter
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v0.1.0-plugins-filters-http,v0.1.0>> | 2018-12-12
+|=======================================================================
+
+include::http-v0.1.0.asciidoc[]
+
