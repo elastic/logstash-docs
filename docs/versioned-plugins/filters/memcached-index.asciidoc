@@ -5,8 +5,10 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v0.1.1-plugins-filters-memcached,v0.1.1>> | 2019-01-10
 | <<v0.1.0-plugins-filters-memcached,v0.1.0>> | 2018-12-12
 |=======================================================================
 
+include::memcached-v0.1.1.asciidoc[]
 include::memcached-v0.1.0.asciidoc[]
 
