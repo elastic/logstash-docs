@@ -53,6 +53,8 @@ include::filters/grok-index.asciidoc[]
 
 include::filters/hashid-index.asciidoc[]
 
+include::filters/http-index.asciidoc[]
+
 include::filters/i18n-index.asciidoc[]
 
 include::filters/jdbc_static-index.asciidoc[]
