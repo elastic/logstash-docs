@@ -4,10 +4,10 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: %VERSION%
-:release_date: %RELEASE_DATE%
-:changelog_url: %CHANGELOG_URL%
-:include_path: ../../../../logstash/docs/include
+:version: v0.1.0
+:release_date: 2018-12-12
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-http/blob/v0.1.0/CHANGELOG.md
+:include_path: ../include/6.x
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
