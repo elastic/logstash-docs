@@ -94,9 +94,9 @@ Example:
     filter {
       translate {
         dictionary => { 
-          "100"         => "Continue",
-          "101"         => "Switching Protocols",
-          "merci"       => "thank you",
+          "100"         => "Continue"
+          "101"         => "Switching Protocols"
+          "merci"       => "thank you"
           "old version" => "new version"
         }
       }
