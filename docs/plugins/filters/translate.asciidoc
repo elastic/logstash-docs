@@ -92,9 +92,9 @@ Example:
 [source,ruby]
     filter {
       translate {
-        dictionary => [ "100", "Continue",
-                        "101", "Switching Protocols",
-                        "merci", "thank you",
+        dictionary => [ "100", "Continue"
+                        "101", "Switching Protocols"
+                        "merci", "thank you"
                         "old version", "new version" ]
       }
     }
