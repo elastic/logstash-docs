@@ -100,8 +100,9 @@ beta[]
 
 [IMPORTANT]
 To use Index Lifecycle Management feature, please upgrade this plugin to the latest available version
-using the Logstash plugin upgrader:
-`bin/logstash-plugin upgrade logstash-output-elasticsearch`
+using the Logstash plugin upgrader: +
+`bin/logstash-plugin upgrade logstash-output-elasticsearch` +
+The upgraded plugin should be version `9.3.1` or higher.
 
 
 [NOTE]
