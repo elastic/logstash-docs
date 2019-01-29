@@ -1,7 +1,7 @@
 :plugin: elastic_app_search
 :type: output
 :default_plugin: 1
-:no_codec:
+:default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
@@ -108,4 +108,4 @@ To keep the timestamp field, set this value to the name of the field where you w
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
 
-:no_codec!:
+:default_codec!:
