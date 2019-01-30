@@ -26,12 +26,14 @@ The following filter plugins are available below. For a list of Elastic supporte
 | <<plugins-filters-fingerprint,fingerprint>> | Fingerprints fields by replacing values with a consistent hash | https://github.com/logstash-plugins/logstash-filter-fingerprint[logstash-filter-fingerprint]
 | <<plugins-filters-geoip,geoip>> | Adds geographical information about an IP address | https://github.com/logstash-plugins/logstash-filter-geoip[logstash-filter-geoip]
 | <<plugins-filters-grok,grok>> | Parses unstructured event data into fields | https://github.com/logstash-plugins/logstash-filter-grok[logstash-filter-grok]
+| <<plugins-filters-http,http>> | Provides integration with external data in Memcached | https://github.com/logstash-plugins/logstash-filter-http[logstash-filter-http]
 | <<plugins-filters-i18n,i18n>> | Removes special characters from a field | https://github.com/logstash-plugins/logstash-filter-i18n[logstash-filter-i18n]
 | <<plugins-filters-jdbc_static>> | Enriches events with data pre-loaded from a remote database  | https://github.com/logstash-plugins/logstash-filter-jdbc_static[logstash-filter-jdbc_static]
 | <<plugins-filters-jdbc_streaming,jdbc_streaming>> | Enrich events with your database data | https://github.com/logstash-plugins/logstash-filter-jdbc_streaming[logstash-filter-jdbc_streaming]
 | <<plugins-filters-json,json>> | Parses JSON events | https://github.com/logstash-plugins/logstash-filter-json[logstash-filter-json]
 | <<plugins-filters-json_encode,json_encode>> | Serializes a field to JSON | https://github.com/logstash-plugins/logstash-filter-json_encode[logstash-filter-json_encode]
 | <<plugins-filters-kv,kv>> | Parses key-value pairs | https://github.com/logstash-plugins/logstash-filter-kv[logstash-filter-kv]
+| <<plugins-filters-memcached,memcached>> | Provides integration with external web services/REST APIs | https://github.com/logstash-plugins/logstash-filter-memcached[logstash-filter-memcached]
 | <<plugins-filters-metricize,metricize>> | Takes complex events containing a number of metrics and splits these up into multiple events, each holding a single metric | https://github.com/logstash-plugins/logstash-filter-metricize[logstash-filter-metricize]
 | <<plugins-filters-metrics,metrics>> | Aggregates metrics | https://github.com/logstash-plugins/logstash-filter-metrics[logstash-filter-metrics]
 | <<plugins-filters-mutate,mutate>> | Performs mutations on fields | https://github.com/logstash-plugins/logstash-filter-mutate[logstash-filter-mutate]
@@ -105,6 +107,12 @@ include::filters/geoip.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-grok/edit/master/docs/index.asciidoc
 include::filters/grok.asciidoc[]
 
+
+:edit_url: https://github.com/logstash-plugins/logstash-filter-http/edit/master/docs/index.asciidoc
+include::filters/http.asciidoc[]
+
+
+
 :edit_url: https://github.com/logstash-plugins/logstash-filter-i18n/edit/master/docs/index.asciidoc
 include::filters/i18n.asciidoc[]
 
@@ -122,6 +130,9 @@ include::filters/json_encode.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-filter-kv/edit/master/docs/index.asciidoc
 include::filters/kv.asciidoc[]
+
+:edit_url: https://github.com/logstash-plugins/logstash-filter-memcached/edit/master/docs/index.asciidoc
+include::filters/memcached.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-filter-metricize/edit/master/docs/index.asciidoc
 include::filters/metricize.asciidoc[]

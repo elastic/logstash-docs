@@ -99,6 +99,12 @@ happens, the problem is logged as a warning, and the event is dropped. See
 
 beta[]
 
+[IMPORTANT]
+To use Index Lifecycle Management feature, please upgrade this plugin to the latest available version
+using the Logstash plugin upgrader:
+`bin/logstash-plugin upgrade logstash-output-elasticsearch`.
+The upgraded plugin should be version `9.3.1` or higher.
+
 [NOTE]
 This feature requires an Elasticsearch instance of 6.6.0 or higher with at least a Basic license
 
