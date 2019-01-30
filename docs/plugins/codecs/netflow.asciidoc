@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.2.0
-:release_date: 2018-10-28
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-netflow/blob/v4.2.0/CHANGELOG.md
+:version: v3.14.1
+:release_date: 2018-05-23
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-netflow/blob/v3.14.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -31,7 +31,7 @@ This codec supports:
 * Netflow v9
 * IPFIX
 
-The following Netflow/IPFIX exporters have been seen and tested with the most recent version of the Netflow Codec:
+The following Netflow/IPFIX exporters are known to work with the most recent version of the netflow codec:
 
 [cols="6,^2,^2,^2,12",options="header"]
 |===========================================================================================
