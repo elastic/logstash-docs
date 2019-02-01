@@ -109,4 +109,3 @@ To keep the timestamp field, set this value to the name of the field where you w
 include::{include_path}/{type}.asciidoc[]
 
 :no_codec!:
-
