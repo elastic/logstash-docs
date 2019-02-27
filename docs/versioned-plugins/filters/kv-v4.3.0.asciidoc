@@ -360,7 +360,7 @@ with the provided value (see: <<{version}-plugins-{type}s-{plugin}-timeout_milli
 [id="{version}-plugins-{type}s-{plugin}-timeout_millis"]
 ===== `timeout_millis`
 
-  * Value type is <<number, number>>
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * The default value for this setting is 30000 (30 seconds).
   * Set to zero (`0`) to disable timeouts
 
