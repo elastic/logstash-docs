@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v4.3.0-plugins-filters-kv,v4.3.0>> | 2019-02-25
 | <<v4.2.1-plugins-filters-kv,v4.2.1>> | 2018-09-04
 | <<v4.2.0-plugins-filters-kv,v4.2.0>> | 2018-07-23
 | <<v4.1.2-plugins-filters-kv,v4.1.2>> | 2018-05-16
@@ -15,6 +16,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v4.0.1-plugins-filters-kv,v4.0.1>> | 2017-06-23
 |=======================================================================
 
+include::kv-v4.3.0.asciidoc[]
 include::kv-v4.2.1.asciidoc[]
 include::kv-v4.2.0.asciidoc[]
 include::kv-v4.1.2.asciidoc[]
