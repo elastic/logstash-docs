@@ -33,6 +33,8 @@ include::inputs/generator-index.asciidoc[]
 
 include::inputs/github-index.asciidoc[]
 
+include::inputs/google_cloud_storage-index.asciidoc[]
+
 include::inputs/google_pubsub-index.asciidoc[]
 
 include::inputs/graphite-index.asciidoc[]

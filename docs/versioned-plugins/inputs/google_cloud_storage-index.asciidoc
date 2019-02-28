@@ -1,0 +1,12 @@
+:plugin: google_cloud_storage
+:type: input
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v0.10.0-plugins-inputs-google_cloud_storage,v0.10.0>> | 2019-02-28
+|=======================================================================
+
+include::google_cloud_storage-v0.10.0.asciidoc[]
+

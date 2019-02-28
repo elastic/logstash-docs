@@ -1,0 +1,262 @@
+:plugin: google_cloud_storage
+:type: input
+:default_codec: plain
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v0.10.0
+:release_date: 2019-02-28
+:changelog_url: https://github.com/logstash-plugins/logstash-input-google_cloud_storage/blob/v0.10.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Google Cloud Storage Input Plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+[id="{version}-plugins-{type}s-{plugin}-description"]
+==== Description
+
+Extracts events from files in a Google Cloud Storage bucket.
+
+Example use-cases:
+
+ * Read https://cloud.google.com/stackdriver/[Stackdriver logs] from a Cloud Storage bucket into Elastic.
+ * Read gzipped logs from cold-storage into Elastic.
+ * Restore data from an Elastic dump.
+ * Extract data from Cloud Storage, transform it with Logstash and load it into BigQuery.
+
+Note: While this project is partially maintained by Google, this is not an official Google product.
+
+[id="{version}-plugins-{type}s-{plugin}-metadata-attributes"]
+==== Metadata Attributes
+
+The plugin exposes several metadata attributes about the object being read.
+You can access these later in the pipeline to augment the data or perform conditional logic.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+| Key | Type | Description
+| `[@metadata][gcs][bucket]` | `string` | The name of the bucket the file was read from.
+| `[@metadata][gcs][name]` | `string` | The name of the object.
+| `[@metadata][gcs][metadata]` | `object` | A map of metadata on the object.
+| `[@metadata][gcs][md5]` | `string` | MD5 hash of the data. Encoded using base64.
+| `[@metadata][gcs][crc32c]` | `string` | CRC32c checksum, as described in RFC 4960. Encoded using base64 in big-endian byte order.
+| `[@metadata][gcs][generation]` | `long` | The content generation of the object. Used for object versioning
+| `[@metadata][gcs][line]` | `long` | The position of the event in the file. 1 indexed.
+| `[@metadata][gcs][line_id]` | `string` | A deterministic, unique ID describing this line. This lets you do idempotent inserts into Elasticsearch.
+|=======================================================================
+
+More information about object metadata can be found in the
+https://cloud.google.com/storage/docs/json_api/v1/objects[official documentation].
+
+[id="{version}-plugins-{type}s-{plugin}-example-configurations"]
+==== Example Configurations
+
+===== Basic
+
+Basic configuration to read JSON logs every minute from `my-logs-bucket`.
+For example, https://cloud.google.com/stackdriver/[Stackdriver logs].
+
+[source,ruby]
+----------------------------------
+input {
+  google_cloud_storage {
+    interval => 60
+    bucket_id => "my-logs-bucket"
+    json_key_file => "/home/user/key.json"
+    file_matches => ".*json"
+    codec => "json_lines"
+  }
+}
+output { stdout { codec => rubydebug } }
+----------------------------------
+
+===== Idempotent Inserts into Elasticsearch
+
+If your pipeline might insert the same file multiple times you can use the `line_id` metadata key as a deterministic id.
+
+The ID has the format: `gs://<bucket_id>/<object_id>:<line_num>@<generation>`.
+`line_num` represents the nth event deserialized from the file starting at 1.
+`generation` is a unique id Cloud Storage generates for the object.
+When an object is overwritten it gets a new generation.
+
+[source,ruby]
+----------------------------------
+input {
+  google_cloud_storage {
+    bucket_id => "batch-jobs-output"
+  }
+}
+
+output {
+  elasticsearch {
+    document_id => "%{[@metadata][gcs][line_id]}"
+  }
+}
+----------------------------------
+
+===== From Cloud Storage to BigQuery
+
+Extract data from Cloud Storage, transform it with Logstash and load it into BigQuery.
+
+[source,ruby]
+----------------------------------
+input {
+  google_cloud_storage {
+    interval => 60
+    bucket_id => "batch-jobs-output"
+    file_matches => "purchases.*.csv"
+    json_key_file => "/home/user/key.json"
+    codec => "plain"
+  }
+}
+
+filter {
+  csv {
+    columns => ["transaction", "sku", "price"]
+    convert => {
+      "transaction" => "integer"
+      "price" => "float"
+    }
+  }
+}
+
+output {
+  google_bigquery {
+    project_id => "my-project"
+    dataset => "logs"
+    csv_schema => "transaction:INTEGER,sku:INTEGER,price:FLOAT"
+    json_key_file => "/path/to/key.json"
+    error_directory => "/tmp/bigquery-errors"
+    ignore_unknown_values => true
+  }
+}
+----------------------------------
+
+[id="{version}-plugins-{type}s-{plugin}-additional-resources"]
+==== Additional Resources
+
+ * https://cloud.google.com/storage/[Cloud Storage Homepage]
+ * https://cloud.google.com/storage/pricing-summary/[Cloud Storage Pricing]
+ * https://cloud.google.com/iam/docs/service-accounts[IAM Service Accounts]
+ * https://cloud.google.com/docs/authentication/production[Application Default Credentials]
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Google Cloud Storage Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-bucket_id>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-json_key_file>> |{logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-interval>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-file_matches>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-file_exclude>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-metadata_key>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-processed_db_path>> |{logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-delete>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-unpack_gzip>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+
+[id="{version}-plugins-{type}s-{plugin}-bucket_id"]
+===== `bucket_id`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The bucket containing your log files.
+
+[id="{version}-plugins-{type}s-{plugin}-json_key_file"]
+===== `json_key_file`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+The path to the key to authenticate your user to the bucket.
+This service user _should_ have the `storage.objects.update` permission so it can
+create metadata on the object preventing it from being scanned multiple times.
+
+[id="{version}-plugins-{type}s-{plugin}-interval"]
+===== `interval`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default is: `60`
+
+The number of seconds between looking for new files in your bucket.
+
+[id="{version}-plugins-{type}s-{plugin}-file_matches"]
+===== `file_matches`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default is: `.*\.log(\.gz)?`
+
+A regex pattern to filter files. Only files with names matching this will be considered.
+All files match by default.
+
+[id="{version}-plugins-{type}s-{plugin}-file_exclude"]
+===== `file_exclude`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default is: `^$`
+
+Any files matching this regex are excluded from processing.
+No files are excluded by default.
+
+[id="{version}-plugins-{type}s-{plugin}-metadata_key"]
+===== `metadata_key`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default is: `x-goog-meta-ls-gcs-input`
+
+This key will be set on the objects after they've been processed by the plugin. That way you can
+stop the plugin and not upload files again or prevent them from being uploaded by setting the
+field manually.
+
+NOTE: the key is a flag, if a file was partially processed before Logstash exited some events will be resent.
+
+[id="{version}-plugins-{type}s-{plugin}-processed_db_path"]
+===== `processed_db_path`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * Default is: `LOGSTASH_DATA/plugins/inputs/google_cloud_storage/db`.
+
+If set, the plugin will store the list of processed files locally.
+This allows you to create a service account for the plugin that does not have write permissions.
+However, the data will not be shared across multiple running instances of Logstash.
+
+[id="{version}-plugins-{type}s-{plugin}-delete"]
+===== `delete`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default is: `false`
+
+Should the log file be deleted after its contents have been updated?
+
+[id="{version}-plugins-{type}s-{plugin}-unpack_gzip"]
+===== `unpack_gzip`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default is: `true`
+
+If set to `true`, files ending in `.gz` are decompressed before they're parsed by the codec.
+The file will be skipped if it has the suffix, but can't be opened as a gzip, e.g.
+if it has a bad magic number.
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
