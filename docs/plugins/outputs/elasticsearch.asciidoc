@@ -1,14 +1,14 @@
 :plugin: elasticsearch
 :type: output
 :default_plugin: 1
-:default_codec: plain
+:no_codec:
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v9.3.0
-:release_date: 2018-12-18
-:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v9.3.0/CHANGELOG.md
+:version: v9.3.2
+:release_date: 2019-02-05
+:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v9.3.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -99,11 +99,8 @@ happens, the problem is logged as a warning, and the event is dropped. See
 
 beta[]
 
-[IMPORTANT]
-To use Index Lifecycle Management feature, please upgrade this plugin to the latest available version
-using the Logstash plugin upgrader:
-`bin/logstash-plugin upgrade logstash-output-elasticsearch`.
-The upgraded plugin should be version `9.3.1` or higher.
+[NOTE]
+The Index Lifecycle Management feature requires plugin version `9.3.1` or higher.
 
 [NOTE]
 This feature requires an Elasticsearch instance of 6.6.0 or higher with at least a Basic license
@@ -821,4 +818,4 @@ See also https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-in
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
 
-:default_codec!:
+:no_codec!:
