@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.2.0
-:release_date: 2018-10-24
-:changelog_url: https://github.com/logstash-plugins/logstash-input-tcp/blob/v5.2.0/CHANGELOG.md
+:version: v5.2.1
+:release_date: 2019-03-08
+:changelog_url: https://github.com/logstash-plugins/logstash-input-tcp/blob/v5.2.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -146,7 +146,7 @@ Path to certificate in PEM format. This certificate will be presented
 to the connecting clients.
 
 [id="plugins-{type}s-{plugin}-ssl_certificate_authorities"]
-===== `ssl_extra_chain_certs`
+===== `ssl_certificate_authorities`
 
   * Value type is <<array,array>>
   * Default value is `[]`
