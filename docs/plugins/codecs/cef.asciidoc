@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v6.0.0
-:release_date: 2019-01-11
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v6.0.0/CHANGELOG.md
+:version: v5.0.6
+:release_date: 2018-09-21
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v5.0.6/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -38,7 +38,6 @@ produce an event with the payload as the 'message' field and a '_cefparsefailure
 | <<plugins-{type}s-{plugin}-fields>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-name>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-product>> |<<string,string>>|No
-| <<plugins-{type}s-{plugin}-reverse_mapping>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-severity>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-signature>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-vendor>> |<<string,string>>|No
@@ -70,6 +69,21 @@ This setting allows the following character sequences to have special meaning:
 * `\\r` (backslash "r") - means carriage return (ASCII 0x0D)
 * `\\n` (backslash "n") - means newline (ASCII 0x0A)
 
+[id="plugins-{type}s-{plugin}-deprecated_v1_fields"]
+===== `deprecated_v1_fields`  (OBSOLETE)
+
+  * OBSOLETE WARNING: This configuration item is obsolete and will prevent the pipeline from starting if used
+  * Value type is <<boolean,boolean>>
+  * There is no default value for this setting.
+
+[id="plugins-{type}s-{plugin}-reverse_mapping"]
+===== `reverse_mapping`
+
+  * Value type is <<<boolean,boolean>>
+  * Default value is `false`
+
+Set to true to adhere to the specifications and encode using the CEF key name (short name) for the CEF field names.
+
 [id="plugins-{type}s-{plugin}-fields"]
 ===== `fields` 
 
@@ -96,14 +110,14 @@ to help you build a new value from other parts of the event.
 Device product field in CEF header. The new value can include `%{foo}` strings
 to help you build a new value from other parts of the event.
 
+[id="plugins-{type}s-{plugin}-sev"]
+===== `sev`  (OBSOLETE)
 
-[id="plugins-{type}s-{plugin}-reverse_mapping"]
-===== `reverse_mapping`
+  * OBSOLETE WARNING: This configuration item is obsolete and will prevent the pipeline from starting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
 
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
-
-Set to true to adhere to the specifications and encode using the CEF key name (short name) for the CEF field names.
+Obsolete severity field for CEF header use :severity instead.
 
 [id="plugins-{type}s-{plugin}-severity"]
 ===== `severity` 

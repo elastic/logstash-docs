@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.2.1
-:release_date: 2018-12-30
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-netflow/blob/v4.2.1/CHANGELOG.md
+:version: v3.14.1
+:release_date: 2018-05-23
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-netflow/blob/v3.14.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -31,34 +31,30 @@ This codec supports:
 * Netflow v9
 * IPFIX
 
-The following Netflow/IPFIX exporters have been seen and tested with the most recent version of the Netflow Codec:
+The following Netflow/IPFIX exporters are known to work with the most recent version of the netflow codec:
 
 [cols="6,^2,^2,^2,12",options="header"]
 |===========================================================================================
 |Netflow exporter         | v5 | v9 | IPFIX | Remarks
-|Barracuda Firewall       |    |    |   y   | With support for Extended Uniflow
-|Cisco ACI                |    | y  |       |
+|Barracuda Firewall       |    |    |   y   |
 |Cisco ASA                |    | y  |       |  
-|Cisco ASR 1k             |    |    |   N   | Fails because of duplicate fields
+|Cisco ASR 1k             |    |    |   n   | Fails because of duplicate fields
 |Cisco ASR 9k             |    | y  |       |  
 |Cisco IOS 12.x           |    | y  |       |  
-|Cisco ISR w/ HSL         |    | N  |       | Fails because of duplicate fields, see: https://github.com/logstash-plugins/logstash-codec-netflow/issues/93
+|Cisco ISR w/ HSL         |    | n  |       | Fails because of duplicate fields, see: https://github.com/logstash-plugins/logstash-codec-netflow/issues/93
 |Cisco WLC                |    | y  |       |
 |Citrix Netscaler         |    |    |   y   | Still some unknown fields, labeled netscalerUnknown<id>
 |fprobe                   |  y |    |       |
 |Fortigate FortiOS        |    | y  |       |
 |Huawei Netstream         |    | y  |       |
 |ipt_NETFLOW              |  y | y  |   y   |
-|IXIA packet broker       |    |    |   y   |
-|Juniper MX               |  y |    |   y   | SW > 12.3R8. Fails to decode IPFIX from Junos 16.1 due to duplicate field names which we currently don't support.
+|Juniper MX80             |  y |    |       | SW > 12.3R8
 |Mikrotik                 |  y |    |   y   | http://wiki.mikrotik.com/wiki/Manual:IP/Traffic_Flow
 |nProbe                   |  y | y  |   y   | L7 DPI fields now also supported
 |Nokia BRAS               |    |    |   y   |
-|OpenBSD pflow            |  y | N  |   y   | http://man.openbsd.org/OpenBSD-current/man4/pflow.4
-|Riverbed                 |    | N  |       | Not supported due to field ID conflicts. Workaround available in the definitions directory over at Elastiflow <https://github.com/robcowart/elastiflow>
+|OpenBSD pflow            |  y | n  |   y   | http://man.openbsd.org/OpenBSD-current/man4/pflow.4
 |Sandvine Procera PacketLogic| |    |   y   | v15.1
 |Softflowd                |  y | y  |   y   | IPFIX supported in https://github.com/djmdjm/softflowd
-|Sophos UTM               |    |    |   y   |
 |Streamcore Streamgroomer |    | y  |       |
 |Palo Alto PAN-OS         |    | y  |       |
 |Ubiquiti Edgerouter X    |    | y  |       | With MPLS labels

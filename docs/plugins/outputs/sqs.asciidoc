@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v6.0.0
-:release_date: 2019-01-11
-:changelog_url: https://github.com/logstash-plugins/logstash-output-sqs/blob/v6.0.0/CHANGELOG.md
+:version: v5.1.2
+:release_date: 2018-06-05
+:changelog_url: https://github.com/logstash-plugins/logstash-output-sqs/blob/v5.1.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!

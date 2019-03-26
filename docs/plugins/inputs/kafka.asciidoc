@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v9.0.0
-:release_date: 2019-01-11
-:changelog_url: https://github.com/logstash-plugins/logstash-input-kafka/blob/v9.0.0/CHANGELOG.md
+:version: v8.3.1
+:release_date: 2018-12-19
+:changelog_url: https://github.com/logstash-plugins/logstash-input-kafka/blob/v8.3.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
