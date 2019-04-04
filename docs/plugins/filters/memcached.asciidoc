@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v0.1.1
-:release_date: 2019-01-10
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-memcached/blob/v0.1.1/CHANGELOG.md
+:version: v1.0.0
+:release_date: 2019-02-04
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-memcached/blob/v1.0.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
