@@ -309,7 +309,7 @@ node (but will not store data). If you use the `node` protocol, you must permit
 bidirectional communication on the port 9300 (or whichever port you have
 configured).
 
-If you do not specify the `host` parameter, it will use  multicast for http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-discovery-zen.html[Elasticsearch discovery].  While this may work in a test/dev environment where multicast is enabled in 
+If you do not specify the `host` parameter, it will use  multicast for https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-discovery.html[Elasticsearch discovery].  While this may work in a test/dev environment where multicast is enabled in 
 Elasticsearch, we strongly recommend http://www.elastic.co/guide/en/elasticsearch/guide/current/important-configuration-changes.html#unicast[using unicast]
 in Elasticsearch.  To connect to an Elasticsearch cluster with unicast,
 you must include the `host` parameter (see relevant section above).  
