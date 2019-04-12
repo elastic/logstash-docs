@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v4.0.0-plugins-inputs-twitter,v4.0.0>> | 2019-04-12
 | <<v3.0.8-plugins-inputs-twitter,v3.0.8>> | 2018-04-06
 | <<v3.0.7-plugins-inputs-twitter,v3.0.7>> | 2017-11-07
 | <<v3.0.6-plugins-inputs-twitter,v3.0.6>> | 2017-08-16
@@ -12,6 +13,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.0.4-plugins-inputs-twitter,v3.0.4>> | 2017-05-08
 |=======================================================================
 
+include::twitter-v4.0.0.asciidoc[]
 include::twitter-v3.0.8.asciidoc[]
 include::twitter-v3.0.7.asciidoc[]
 include::twitter-v3.0.6.asciidoc[]
