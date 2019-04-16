@@ -146,7 +146,7 @@ A string of characters to use as single-character field delimiters for parsing o
 These characters form a regex character class and thus you must escape special regex
 characters like `[` or `]` using `\`.
 
-#### Example with URL Query Strings
+*Example with URL Query Strings*
 
 For example, to split out the args from a url query string such as
 `?pin=12345~0&d=123&e=foo@bar.com&oq=bobo&ss=12345`:
