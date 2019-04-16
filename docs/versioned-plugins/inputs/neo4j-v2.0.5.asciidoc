@@ -23,7 +23,7 @@ include::{include_path}/plugin_header.asciidoc[]
 This plugin gets data from a Neo4j database in predefined intervals. To fetch
 this data uses a given Cypher query.
 
-===== Usage:
+===== Usage
 [source, ruby]
 input {
   neo4j {
