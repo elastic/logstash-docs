@@ -27,7 +27,7 @@ Like stdin and file inputs, each event is assumed to be one line of text.
 Can either accept connections from clients or connect to a server,
 depending on `mode`.
 
-#### Accepting log4j2 logs
+===== Accepting log4j2 logs
 
 Log4j2 can send JSON over a socket, and we can use that combined with our tcp
 input to accept the logs. 
