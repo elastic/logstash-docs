@@ -20,12 +20,24 @@ END - REPLACES GENERATED VARIABLES
 
 This is a plugin for https://github.com/elastic/logstash[Logstash].
 
-It is fully free and fully open source. The license is Apache 2.0, meaning you are pretty much free to use it however you want in whatever way.
+It is fully free and fully open source. The license is Apache 2.0, meaning you
+are pretty much free to use it however you want in whatever way.
 
 ==== Description
 
-A general description goes here. 
+This plugin uses the cyber-kill-chain and MITRE representation language to
+enrich security logs with information about the attacker’s intent--what the
+attacker is trying to achieve, who they are targeting, and how they plan to
+carry out the attack. 
 
-Documentation for the https://github.com/empow/logstash-filter-empow-classifier/blob/master/README.md[filter-empow-classifier plugin] 
+The plugin receives a set of security values extracted from the security log
+(IDS signature IDs, Anti Virus hash value, or malware name, for example) as well
+as the product type and brand. This information is sent by the plugin to the
+Empow centralized classification service that automatically analyzes and gathers
+relevant textual information and - using NLP based ML algorithms - classifies
+the log into a specific intent. 
+
+Documentation for the 
+https://github.com/empow/logstash-filter-empow-classifier/blob/master/README.md[filter-empow-classifier plugin] 
 is maintained by the creators.
 
