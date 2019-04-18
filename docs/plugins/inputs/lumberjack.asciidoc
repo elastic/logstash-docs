@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.5
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-input-lumberjack/blob/v3.1.5/CHANGELOG.md
+:version: v3.1.6
+:release_date: 2019-04-15
+:changelog_url: https://github.com/logstash-plugins/logstash-input-lumberjack/blob/v3.1.6/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -34,6 +34,8 @@ https://github.com/elastic/logstash-forwarder[logstash-forwarder]
 tool that has been replaced by
 https://github.com/elastic/beats/tree/master/filebeat[Filebeat].
 
+NOTE: Consider using the {logstash-ref}/plugins-inputs-beats.html[Beats input plugin] instead.  
+The Beats input implements the Lumberjack protocol v1 and v2. 
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Lumberjack Input Configuration Options
