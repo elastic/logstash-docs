@@ -1,14 +1,14 @@
 :plugin: couchdb_changes
 :type: input
-:default_plugin: 1
+:default_plugin: 0
 :default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.5
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-input-couchdb_changes/blob/v3.1.5/CHANGELOG.md
+:version: v3.1.6
+:release_date: 2019-04-15
+:changelog_url: https://github.com/logstash-plugins/logstash-input-couchdb_changes/blob/v3.1.6/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -27,11 +27,11 @@ CouchDB http://guide.couchdb.org/draft/notifications.html[_changes] URI.
 Moreover, any "future" changes will automatically be streamed as well making it easy to synchronize
 your CouchDB data with any target destination
 
-### Upsert and delete
+===== Upsert and delete
 You can use event metadata to allow for document deletion.
 All non-delete operations are treated as upserts
 
-### Starting at a Specific Sequence
+===== Starting at a Specific Sequence
 The CouchDB input stores the last sequence number value in location defined by `sequence_path`.
 You can use this fact to start or resume the stream at a particular sequence.
 

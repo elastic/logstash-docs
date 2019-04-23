@@ -1,6 +1,6 @@
 :plugin: s3
 :type: input
-:default_plugin: 1
+:default_plugin: 0
 :default_codec: plain
 
 ///////////////////////////////////////////

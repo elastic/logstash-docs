@@ -1,6 +1,6 @@
 :plugin: snmp
 :type: input
-:default_plugin: 1
+:default_plugin: 0
 :no_codec:
 
 ///////////////////////////////////////////
