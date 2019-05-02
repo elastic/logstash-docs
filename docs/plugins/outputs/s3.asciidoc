@@ -14,8 +14,6 @@ For the list of Elastic supported plugins, please consult the https://www.elasti
 
 ==== Description
 
-INFORMATION:
-
 This plugin batches and uploads logstash events into Amazon Simple Storage Service (Amazon S3).
 
 Requirements:
