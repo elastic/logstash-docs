@@ -22,11 +22,10 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-INFORMATION:
-
 This plugin batches and uploads logstash events into Amazon Simple Storage Service (Amazon S3).
 
 Requirements:
+
 * Amazon S3 Bucket and S3 Access Permissions (Typically access_key_id and secret_access_key)
 * S3 PutObject permission
 
@@ -45,16 +44,10 @@ ls.s3.312bc026-2f5d-49bc-ae9f-5940cf4ad9a6.2013-04-18T10.00.tag_hello.part0.txt
 | part0 | this means if you indicate size_file then it will generate more parts if your file.size > size_file. When a file is full it will be pushed to the bucket and then deleted from the temporary directory. If a file is empty, it is simply deleted.  Empty files will not be pushed |
 |=======
 
-Crash Recovery:
-* This plugin will recover and upload temporary log files after crash/abnormal termination when using `restore` set to true
+===== Crash Recovery
+This plugin will recover and upload temporary log files after crash/abnormal termination when using `restore` set to true
 
-
-
-
-
-
-
-#### Usage:
+===== Usage
 This is an example of logstash config:
 [source,ruby]
 output {
