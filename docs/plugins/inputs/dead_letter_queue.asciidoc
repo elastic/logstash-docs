@@ -41,6 +41,12 @@ input {
 -----------------------------------------
 
 
+<<<<<<< HEAD
+=======
+For more information about processing events in the dead letter queue, see
+{logstash-ref}/dead-letter-queues.html[Dead Letter Queues].
+
+>>>>>>> 4d87e9fe2... Asciidoctor changes to plugins with jmx removed
 [id="plugins-{type}s-{plugin}-options"]
 ==== Dead_letter_queue Input Configuration Options
 

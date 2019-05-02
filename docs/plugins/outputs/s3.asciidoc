@@ -20,8 +20,6 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-INFORMATION:
-
 This plugin batches and uploads logstash events into Amazon Simple Storage Service (Amazon S3).
 
 Requirements:
