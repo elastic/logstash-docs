@@ -34,8 +34,8 @@ input {
 -----------------------------------------
 
 
-+For more information about processing events in the dead letter queue, see
-+{logstash-ref}/dead-letter-queues.html[Dead Letter Queues].
+For more information about processing events in the dead letter queue, see
+{logstash-ref}/dead-letter-queues.html[Dead Letter Queues].
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Dead_letter_queue Input Configuration Options
