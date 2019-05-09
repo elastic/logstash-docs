@@ -52,7 +52,7 @@ A sample policy for EC2 metrics is as follows:
 
 See http://aws.amazon.com/iam/ for more details on setting up AWS identities.
 
-# Configuration Example
+*Configuration Example*
 [source, ruby]
     input {
       cloudwatch {
