@@ -136,6 +136,8 @@ The timeslot counter is incremented once again.
 The timeslot expires if the maximum age has been exceeded.  The age is calculated
 based on the latest event timestamp and the max_age configuration option.
 
+[source,txt]
+-----
         ---[::.. DESIGN ..::]---
 
 +- [key_cache] -+  +-- [timeslot_cache] --+
@@ -155,6 +157,7 @@ based on the latest event timestamp and the max_age configuration option.
                    | [0000000120] => y    |
 |               |  | [..........] => N    |
 +---------------+  +----------------------+
+-----
 
 Frank de Jong (@frapex)
 Mike Pilone (@mikepilone)
