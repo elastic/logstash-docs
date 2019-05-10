@@ -50,7 +50,7 @@ this plugin using the `jdbc_fetch_size` configuration option. No fetch size
 is set by default in this plugin, so the specific driver's default size will
 be used.
 
-==== Usage:
+==== Usage
 
 Here is an example of setting up the plugin to fetch data from a MySQL database.
 First, we place the appropriate JDBC driver library in our current
