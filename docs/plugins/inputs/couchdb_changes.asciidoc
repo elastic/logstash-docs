@@ -19,11 +19,11 @@ CouchDB http://guide.couchdb.org/draft/notifications.html[_changes] URI.
 Moreover, any "future" changes will automatically be streamed as well making it easy to synchronize
 your CouchDB data with any target destination
 
-### Upsert and delete
+===== Upsert and delete
 You can use event metadata to allow for document deletion.
 All non-delete operations are treated as upserts
 
-### Starting at a Specific Sequence
+===== Starting at a Specific Sequence
 The CouchDB input stores the last sequence number value in location defined by `sequence_path`.
 You can use this fact to start or resume the stream at a particular sequence.
 
