@@ -281,12 +281,12 @@ your templates manually.
 
 
 [[plugins-outputs-elasticsearch-max_retries]]
-===== `max_retries` 
+===== `max_retries` (Deprecated)
 
   * Value type is <<number,number>>
   * Default value is `3`
 
-# DEPRECATED This setting no longer does anything. It will be marked obsolete in a future version.
+*DEPRECATED* This setting no longer does anything. It will be marked obsolete in a future version.
 
 [[plugins-outputs-elasticsearch-parent]]
 ===== `parent` 
