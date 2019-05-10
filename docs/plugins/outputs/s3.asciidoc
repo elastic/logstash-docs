@@ -28,7 +28,7 @@ ls.s3.ip-10-228-27-95.2013-04-18T10.00.tag_hello.part0.txt
 When a file is full it will be pushed to the bucket and then deleted from the temporary directory. If a file is empty, it is 
 simply deleted.  Empty files will not be pushed
 
-==== Crash Recovery:
+==== Crash Recovery
 
 This plugin will recover and upload temporary log files after crash/abnormal termination
 
@@ -49,7 +49,7 @@ If neither `size_file` nor `time_file` is specified, only one file for each tag 
 
 **WARNING:** Since no log rotation is triggered in this case, S3 Upload will only occur when Logstash restarts.
 
-==== Example Usage:
+==== Example Usage
 
 This is an example of logstash config:
 [source,ruby]
@@ -280,8 +280,6 @@ Specify how many workers to use to upload the files to S3
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
-
-
 
 [[plugins-outputs-s3-workers]]
 ===== `workers` 
