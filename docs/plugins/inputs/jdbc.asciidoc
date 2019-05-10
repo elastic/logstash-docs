@@ -238,7 +238,7 @@ input {
     ...
   }
 }
------------------------------------ 
+---------------------------------- 
  
 This will only convert column0 that has ISO-8859-1 as an original encoding.
 
