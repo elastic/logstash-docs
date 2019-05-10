@@ -61,7 +61,7 @@ this plugin using the `jdbc_fetch_size` configuration option. No fetch size
 is set by default in this plugin, so the specific driver's default size will
 be used.
 
-==== Usage:
+==== Usage
 
 Here is an example of setting up the plugin to fetch data from a MySQL database.
 First, we place the appropriate JDBC driver library in our current
@@ -240,7 +240,7 @@ input {
 }
 ----------------------------------- 
  
-this will only convert column0 that has ISO-8859-1 as an original encoding.
+This will only convert column0 that has ISO-8859-1 as an original encoding.
 
 [[plugins-inputs-jdbc-connection_retry_attempts]]
 ===== `connection_retry_attempts` 
