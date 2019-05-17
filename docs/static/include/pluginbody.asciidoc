@@ -881,24 +881,22 @@ please make sure to have this line in your gemspec:
 The gem version, designated by `s.version`, helps track changes to plugins over
 time.
 
-**Version messaging from Logstash**
+===== Version messaging from Logstash
 
 If you start Logstash with the `--verbose` flag, you will see messages like
 these to indicate the relative maturity indicated by the plugin version number:
 
-** **0.1.x**
-+
+* *0.1.x*
 -----
 This plugin isn't well supported by the community and likely has no maintainer.
 -----
 
-** **0.9.x**
-+
+* *0.9.x*
 -----
 This plugin should work but would benefit from use by folks like you. Please let us know if you find bugs or have suggestions on how to improve this plugin.
 -----
 
-** **1.x.x**
+* *1.x.x*
 You will no longer see a message indicating potential code immaturity when a
 plugin reaches version 1.0.0
 
