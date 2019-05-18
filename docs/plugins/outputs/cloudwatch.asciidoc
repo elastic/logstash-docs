@@ -5,7 +5,7 @@
 
 This output lets you aggregate and send metric data to AWS CloudWatch
 
-#### Summary:
+==== Summary
 This plugin is intended to be used on a logstash indexer agent (but that
 is not the only way, see below.)  In the intended scenario, one cloudwatch
 output plugin is configured, on the logstash indexer node, with just AWS API
@@ -29,7 +29,7 @@ Note: when logstash is stopped the queue is destroyed before it can be processed
 This is a known limitation of logstash and will hopefully be addressed in a
 future version.
 
-#### Details:
+==== Details
 There are two ways to configure this plugin, and they can be used in
 combination: event fields & per-output defaults
 
