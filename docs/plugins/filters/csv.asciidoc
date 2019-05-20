@@ -141,7 +141,7 @@ in the data than specified in this column list, extra columns will be auto-numbe
 Define a set of datatype conversions to be applied to columns.
 Possible conversions are integer, float, date, date_time, boolean
 
-# Example:
+*Example:*
 [source,ruby]
     filter {
       csv {
