@@ -16,6 +16,7 @@ image::static/images/basic_logstash_pipeline.png[]
 The following text represents the skeleton of a configuration pipeline:
 
 [source,shell]
+-----
 # The # character at the beginning of a line indicates a comment. Use
 # comments to describe your configuration.
 input {
@@ -27,6 +28,7 @@ input {
 # }
 output {
 }
+-----
 
 This skeleton is non-functional, because the input and output sections don’t have any valid options defined. The 
 examples in this tutorial build configuration files to address specific use cases.
