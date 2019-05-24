@@ -1,13 +1,13 @@
 :plugin: kv
 :type: filter
-:default_plugin: 1
+:default_plugin: 0
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.2.1
-:release_date: 2018-09-04
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-kv/blob/v4.2.1/CHANGELOG.md
+:version: v4.3.1
+:release_date: 2019-04-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-kv/blob/v4.3.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -66,6 +66,9 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-remove_char_value>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-source>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-target>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-tag_on_failure>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-tag_on_timeout>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-timeout_millis>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-transform_key>> |<<string,string>>, one of `["lowercase", "uppercase", "capitalize"]`|No
 | <<plugins-{type}s-{plugin}-transform_value>> |<<string,string>>, one of `["lowercase", "uppercase", "capitalize"]`|No
 | <<plugins-{type}s-{plugin}-trim_key>> |<<string,string>>|No
@@ -144,7 +147,7 @@ A string of characters to use as single-character field delimiters for parsing o
 These characters form a regex character class and thus you must escape special regex
 characters like `[` or `]` using `\`.
 
-#### Example with URL Query Strings
+*Example with URL Query Strings*
 
 For example, to split out the args from a url query string such as
 `?pin=12345~0&d=123&e=foo@bar.com&oq=bobo&ss=12345`:
@@ -335,6 +338,38 @@ event, as individual fields.
 For example, to place all keys into the event field kv:
 [source,ruby]
     filter { kv { target => "kv" } }
+
+[id="plugins-{type}s-{plugin}-tag_on_failure"]
+===== `tag_on_failure`
+
+  * Value type is <<string,string>>
+  * The default value for this setting is `_kv_filter_error`.
+
+When a kv operation causes a runtime exception to be thrown within the plugin,
+the operation is safely aborted without crashing the plugin, and the event is
+tagged with the provided value.
+
+[id="plugins-{type}s-{plugin}-tag_on_timeout"]
+===== `tag_on_timeout`
+
+  * Value type is <<string,string>>
+  * The default value for this setting is `_kv_filter_timeout`.
+
+When timeouts are enabled and a kv operation is aborted, the event is tagged
+with the provided value (see: <<plugins-{type}s-{plugin}-timeout_millis>>).
+
+[id="plugins-{type}s-{plugin}-timeout_millis"]
+===== `timeout_millis`
+
+  * Value type is <<number, number>>
+  * The default value for this setting is 30000 (30 seconds).
+  * Set to zero (`0`) to disable timeouts
+
+Timeouts provide a safeguard against inputs that are pathological against the
+regular expressions that are used to extract key/value pairs. When parsing an
+event exceeds this threshold the operation is aborted and the event is tagged
+in order to prevent the operation from blocking the pipeline
+(see: <<plugins-{type}s-{plugin}-tag_on_timeout>>).
 
 [id="plugins-{type}s-{plugin}-transform_key"]
 ===== `transform_key` 

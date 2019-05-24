@@ -1,6 +1,6 @@
 :plugin: sqs
 :type: output
-:default_plugin: 1
+:default_plugin: 0
 :default_codec: json
 
 ///////////////////////////////////////////

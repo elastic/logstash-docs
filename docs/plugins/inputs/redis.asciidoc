@@ -1,13 +1,14 @@
 :plugin: redis
 :type: input
-:default_plugin: 1
+:default_plugin: 0
+:default_codec: json
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.4
-:release_date: 2017-08-16
-:changelog_url: https://github.com/logstash-plugins/logstash-input-redis/blob/v3.1.4/CHANGELOG.md
+:version: v3.4.1
+:release_date: 2019-02-04
+:changelog_url: https://github.com/logstash-plugins/logstash-input-redis/blob/v3.4.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -46,11 +47,14 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-data_type>> |<<string,string>>, one of `["list", "channel", "pattern_channel"]`|Yes
 | <<plugins-{type}s-{plugin}-db>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-host>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-path>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-key>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-password>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-ssl>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-threads>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-timeout>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-command_map>> |<<hash,hash>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -59,7 +63,7 @@ input plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-batch_count"]
-===== `batch_count` 
+===== `batch_count`
 
   * Value type is <<number,number>>
   * Default value is `125`
@@ -67,18 +71,18 @@ input plugins.
 The number of events to return from Redis using EVAL.
 
 [id="plugins-{type}s-{plugin}-data_type"]
-===== `data_type` 
+===== `data_type`
 
   * This is a required setting.
   * Value can be any of: `list`, `channel`, `pattern_channel`
   * There is no default value for this setting.
 
-Specify either list or channel.  If `redis\_type` is `list`, then we will BLPOP the
-key.  If `redis\_type` is `channel`, then we will SUBSCRIBE to the key.
-If `redis\_type` is `pattern_channel`, then we will PSUBSCRIBE to the key.
+Specify either list or channel.  If `data_type` is `list`, then we will BLPOP the
+key.  If `data_type` is `channel`, then we will SUBSCRIBE to the key.
+If `data_type` is `pattern_channel`, then we will PSUBSCRIBE to the key.
 
 [id="plugins-{type}s-{plugin}-db"]
-===== `db` 
+===== `db`
 
   * Value type is <<number,number>>
   * Default value is `0`
@@ -86,15 +90,24 @@ If `redis\_type` is `pattern_channel`, then we will PSUBSCRIBE to the key.
 The Redis database number.
 
 [id="plugins-{type}s-{plugin}-host"]
-===== `host` 
+===== `host`
 
   * Value type is <<string,string>>
   * Default value is `"127.0.0.1"`
 
 The hostname of your Redis server.
 
+[id="plugins-{type}s-{plugin}-path"]
+===== `path`
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+  * Path will override Host configuration if both specified.
+
+The unix socket path of your Redis server.
+
 [id="plugins-{type}s-{plugin}-key"]
-===== `key` 
+===== `key`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -103,7 +116,7 @@ The hostname of your Redis server.
 The name of a Redis list or channel.
 
 [id="plugins-{type}s-{plugin}-password"]
-===== `password` 
+===== `password`
 
   * Value type is <<password,password>>
   * There is no default value for this setting.
@@ -111,15 +124,24 @@ The name of a Redis list or channel.
 Password to authenticate with. There is no authentication by default.
 
 [id="plugins-{type}s-{plugin}-port"]
-===== `port` 
+===== `port`
 
   * Value type is <<number,number>>
   * Default value is `6379`
 
 The port to connect on.
 
+[id="plugins-{type}s-{plugin}-ssl"]
+===== `ssl` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Enable SSL support.
+
+
 [id="plugins-{type}s-{plugin}-threads"]
-===== `threads` 
+===== `threads`
 
   * Value type is <<number,number>>
   * Default value is `1`
@@ -127,14 +149,24 @@ The port to connect on.
 
 
 [id="plugins-{type}s-{plugin}-timeout"]
-===== `timeout` 
+===== `timeout`
 
   * Value type is <<number,number>>
   * Default value is `5`
 
 Initial connection timeout in seconds.
 
+[id="plugins-{type}s-{plugin}-command_map"]
+===== `command_map`
 
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+  * key is the default command name, value is the renamed command.
+
+Configure renamed redis commands in the form of "oldname" => "newname".
+Redis allows for the renaming or disabling of commands in its protocol, see:  https://redis.io/topics/security
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:

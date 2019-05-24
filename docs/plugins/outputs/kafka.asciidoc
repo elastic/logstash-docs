@@ -1,14 +1,14 @@
 :plugin: kafka
 :type: output
-:default_plugin: 1
+:default_plugin: 0
 :default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v8.0.0
-:release_date: 2019-01-11
-:changelog_url: https://github.com/logstash-plugins/logstash-output-kafka/blob/v8.0.0/CHANGELOG.md
+:version: v8.0.1
+:release_date: 2019-02-12
+:changelog_url: https://github.com/logstash-plugins/logstash-output-kafka/blob/v8.0.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!

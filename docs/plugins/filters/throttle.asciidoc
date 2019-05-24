@@ -1,6 +1,6 @@
 :plugin: throttle
 :type: filter
-:default_plugin: 1
+:default_plugin: 0
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!

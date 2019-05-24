@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.6
-:release_date: 2018-09-04
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-clone/blob/v3.0.6/CHANGELOG.md
+:version: v4.0.0
+:release_date: 2019-02-11
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-clone/blob/v4.0.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -36,7 +36,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<plugins-{type}s-{plugin}-clones>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-clones>> |<<array,array>>|Yes
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -47,11 +47,13 @@ filter plugins.
 [id="plugins-{type}s-{plugin}-clones"]
 ===== `clones` 
 
+  * This is a required setting.
   * Value type is <<array,array>>
-  * Default value is `[]`
+  * There is no default value for this setting.
 
 A new clone will be created with the given type for each type in this list.
 
+Note: setting an empty array will not create any clones. A warning message is logged.
 
 
 [id="plugins-{type}s-{plugin}-common-options"]
