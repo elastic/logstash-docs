@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v3.2.4-plugins-filters-useragent,v3.2.4>> | 2019-05-24
 | <<v3.2.3-plugins-filters-useragent,v3.2.3>> | 2018-09-24
 | <<v3.2.2-plugins-filters-useragent,v3.2.2>> | 2017-11-07
 | <<v3.2.1-plugins-filters-useragent,v3.2.1>> | 2017-08-15
@@ -14,6 +15,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.1.0-plugins-filters-useragent,v3.1.0>> | 2017-05-10
 |=======================================================================
 
+include::useragent-v3.2.4.asciidoc[]
 include::useragent-v3.2.3.asciidoc[]
 include::useragent-v3.2.2.asciidoc[]
 include::useragent-v3.2.1.asciidoc[]
