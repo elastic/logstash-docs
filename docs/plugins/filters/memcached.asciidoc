@@ -111,7 +111,7 @@ filter {
   * Value type is <<hash,hash>>
   * There is no default value for this setting.
 
-If specified, extracts the values from the given event fields, and sets the corresponding keys to those values in memcached with the configured <<plugins-{type}s-{plugin}-ttl,ttl>>
+If specified, extracts the values from the given event fields, and sets the corresponding keys to those values in memcached with the configured <<#plugins-{type}s-{plugin}-ttl,ttl>>
 
   * keys are interpolated (e.g., if the event has a field `foo` with value `bar`, the key `sand/%{foo}` will evaluate to `sand/bar`)
   * fields can be nested references
@@ -130,7 +130,7 @@ filter {
 [id="plugins-{type}s-{plugin}-ttl"]
 ===== `ttl`
 
-For usages of this plugin that persist data to memcached (e.g., <<plugins-{type}s-{plugin}-set,`set`>>), the time-to-live in seconds
+For usages of this plugin that persist data to memcached (e.g., <<#plugins-{type}s-{plugin}-set,`set`>>), the time-to-live in seconds
 
   * Value type is <<number,number>>
   * The default value is `0` (no expiry)

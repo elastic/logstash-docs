@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.3.0
-:release_date: 2019-02-25
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-kv/blob/v4.3.0/CHANGELOG.md
+:version: v4.3.1
+:release_date: 2019-04-15
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-kv/blob/v4.3.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -147,7 +147,7 @@ A string of characters to use as single-character field delimiters for parsing o
 These characters form a regex character class and thus you must escape special regex
 characters like `[` or `]` using `\`.
 
-#### Example with URL Query Strings
+*Example with URL Query Strings*
 
 For example, to split out the args from a url query string such as
 `?pin=12345~0&d=123&e=foo@bar.com&oq=bobo&ss=12345`:
