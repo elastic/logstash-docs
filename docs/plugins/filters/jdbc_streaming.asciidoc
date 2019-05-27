@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.0.4
-:release_date: 2018-04-02
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-jdbc_streaming/blob/v1.0.4/CHANGELOG.md
+:version: v1.0.6
+:release_date: 2019-05-01
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-jdbc_streaming/blob/v1.0.6/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -32,7 +32,7 @@ filter {
   jdbc_streaming {
     jdbc_driver_library => "/path/to/mysql-connector-java-5.1.34-bin.jar"
     jdbc_driver_class => "com.mysql.jdbc.Driver"
-    jdbc_connection_string => ""jdbc:mysql://localhost:3306/mydatabase"
+    jdbc_connection_string => "jdbc:mysql://localhost:3306/mydatabase"
     jdbc_user => "me"
     jdbc_password => "secret"
     statement => "select * from WORLD.COUNTRY WHERE Code = :code"
