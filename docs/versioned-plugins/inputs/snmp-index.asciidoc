@@ -5,11 +5,13 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v1.2.0-plugins-inputs-snmp,v1.2.0>> | 2019-05-29
 | <<v1.1.0-plugins-inputs-snmp,v1.1.0>> | 2019-03-28
 | <<v1.0.1-plugins-inputs-snmp,v1.0.1>> | 2018-11-05
 | <<v1.0.0-plugins-inputs-snmp,v1.0.0>> | 2018-10-24
 |=======================================================================
 
+include::snmp-v1.2.0.asciidoc[]
 include::snmp-v1.1.0.asciidoc[]
 include::snmp-v1.0.1.asciidoc[]
 include::snmp-v1.0.0.asciidoc[]
