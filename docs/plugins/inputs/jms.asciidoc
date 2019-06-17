@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.5
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-input-jms/blob/v3.0.5/CHANGELOG.md
+:version: v3.0.6
+:release_date: 2019-05-29
+:changelog_url: https://github.com/logstash-plugins/logstash-input-jms/blob/v3.0.6/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -24,9 +24,12 @@ include::{include_path}/plugin_header.asciidoc[]
 
 Read events from a Jms Broker. Supports both Jms Queues and Topics.
 
-For more information about Jms, see <http://docs.oracle.com/javaee/6/tutorial/doc/bncdq.html>
-For more information about the Ruby Gem used, see <http://github.com/reidmorrison/jruby-jms>
+For more information about Jms, see <http://docs.oracle.com/javaee/6/tutorial/doc/bncdq.html>.
+For more information about the Ruby Gem used, see <http://github.com/reidmorrison/jruby-jms>.
 Here is a config example to pull from a queue:
+
+[source,ruby]
+----
  jms {
     include_header => false
     include_properties => false
@@ -38,7 +41,7 @@ Here is a config example to pull from a queue:
     yaml_file => "~/jms.yml"
     yaml_section => "mybroker"
   }
-
+----
 
 
 [id="plugins-{type}s-{plugin}-options"]
@@ -58,6 +61,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-interval>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-jndi_context>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-jndi_name>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-oracle_aq_buffered_messages>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-password>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-pub_sub>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-require_jars>> |<<array,array>>|No
@@ -82,7 +86,7 @@ input plugins.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Url to use when connecting to the JMS provider
+Url to use when connecting to the JMS provider.
 
 [id="plugins-{type}s-{plugin}-destination"]
 ===== `destination` 
@@ -99,7 +103,7 @@ Name of the destination queue or topic to use.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Name of JMS Provider Factory class
+Name of JMS Provider Factory class.
 
 [id="plugins-{type}s-{plugin}-include_body"]
 ===== `include_body` 
@@ -107,11 +111,14 @@ Name of JMS Provider Factory class
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-Include JMS Message Body in the event
-Supports TextMessage, MapMessage and ByteMessage
-If the JMS Message is a TextMessage or ByteMessage, then the value will be in the "message" field of the event
-If the JMS Message is a MapMessage, then all the key/value pairs will be added in the Hashmap of the event
-StreamMessage and ObjectMessage are not supported
+Include JMS Message Body in the event.
+Supports TextMessage, MapMessage and ByteMessage.
+
+If the JMS Message is a TextMessage or ByteMessage, then the value will be in
+the "message" field of the event. If the JMS Message is a MapMessage, then all
+the key/value pairs will be added in the Hashmap of the event.
+
+StreamMessage and ObjectMessage are not supported.
 
 [id="plugins-{type}s-{plugin}-include_header"]
 ===== `include_header` 
@@ -119,13 +126,15 @@ StreamMessage and ObjectMessage are not supported
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-A JMS message has three parts :
- Message Headers (required)
- Message Properties (optional)
- Message Bodies (optional)
-You can tell the input plugin which parts should be included in the event produced by Logstash
+A JMS message has three parts:
 
-Include JMS Message Header Field values in the event
+* Message Headers (required)
+* Message Properties (optional)
+* Message Bodies (optional)
+
+You can tell the input plugin which parts should be included in the event produced by Logstash.
+
+Include JMS Message Header Field values in the event.
 
 [id="plugins-{type}s-{plugin}-include_properties"]
 ===== `include_properties` 
@@ -133,7 +142,7 @@ Include JMS Message Header Field values in the event
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-Include JMS Message Properties Field values in the event
+Include JMS Message Properties Field values in the event.
 
 [id="plugins-{type}s-{plugin}-interval"]
 ===== `interval` 
@@ -151,8 +160,8 @@ This parameter has non influence in the case of a subcribed Topic.
   * Value type is <<hash,hash>>
   * There is no default value for this setting.
 
-Mandatory if jndi lookup is being used,
-contains details on how to connect to JNDI server
+Mandatory if jndi lookup is being used.
+Contains details on how to connect to JNDI server.
 
 [id="plugins-{type}s-{plugin}-jndi_name"]
 ===== `jndi_name` 
@@ -160,7 +169,16 @@ contains details on how to connect to JNDI server
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Name of JNDI entry at which the Factory can be found
+Name of JNDI entry at which the Factory can be found.
+
+[id="plugins-{type}s-{plugin}-oracle_aq_buffered_messages"]
+===== `oracle_aq_buffered_messages` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Receive Oracle AQ buffered messages.
+In this mode persistent Oracle AQ JMS messages will not be received.
 
 [id="plugins-{type}s-{plugin}-password"]
 ===== `password` 
@@ -168,7 +186,7 @@ Name of JNDI entry at which the Factory can be found
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Password to use when connecting to the JMS provider
+Password to use when connecting to the JMS provider.
 
 [id="plugins-{type}s-{plugin}-pub_sub"]
 ===== `pub_sub` 
@@ -196,7 +214,7 @@ java CLASSPATH prior to starting Logstash.
   * Value can be any of: `consumer`, `async`, `thread`
   * Default value is `"consumer"`
 
-Choose an implementation of the run block. Value can be either consumer, async or thread
+Choose an implementation of the run block. Value can be `consumer`, `async` or `thread`.
 
 [id="plugins-{type}s-{plugin}-selector"]
 ===== `selector` 
@@ -204,15 +222,13 @@ Choose an implementation of the run block. Value can be either consumer, async o
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Set the selector to use to get messages off the queue or topic
+Set the selector to use to get messages off the queue or topic.
 
 [id="plugins-{type}s-{plugin}-threads"]
 ===== `threads` 
 
   * Value type is <<number,number>>
   * Default value is `1`
-
-
 
 [id="plugins-{type}s-{plugin}-timeout"]
 ===== `timeout` 
@@ -228,7 +244,7 @@ Initial connection timeout in seconds.
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
-Convert the JMSTimestamp header field to the @timestamp value of the event
+Convert the JMSTimestamp header field to the @timestamp value of the event.
 
 [id="plugins-{type}s-{plugin}-username"]
 ===== `username` 
@@ -236,7 +252,7 @@ Convert the JMSTimestamp header field to the @timestamp value of the event
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Username to connect to JMS provider with
+Username to use for connecting to JMS provider.
 
 [id="plugins-{type}s-{plugin}-yaml_file"]
 ===== `yaml_file` 
@@ -253,7 +269,7 @@ Yaml config file
   * There is no default value for this setting.
 
 Yaml config file section name
-For some known examples, see: [Example jms.yml](https://github.com/reidmorrison/jruby-jms/blob/master/examples/jms.yml)
+For some known examples, see https://github.com/reidmorrison/jruby-jms/blob/master/examples/jms.yml[jms.yml examples].
 
 
 
