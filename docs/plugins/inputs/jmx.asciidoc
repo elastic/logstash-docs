@@ -27,7 +27,7 @@ Every `polling_frequency`, it scans a folder containing json configuration
 files describing JVMs to monitor with metrics to retrieve.
 Then a pool of threads will retrieve metrics and create events.
 
-Configuration
+==== Configuration
 
 In Logstash configuration, you must set the polling frequency,
 the number of thread used to poll metrics and a directory absolute path containing
