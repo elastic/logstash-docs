@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.7
-:release_date: 2019-02-04
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-es_bulk/blob/v3.0.7/CHANGELOG.md
+:version: v3.0.8
+:release_date: 2019-05-01
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-es_bulk/blob/v3.0.8/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -21,7 +21,7 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-This codec will decode the http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk.html[Elasticsearch bulk format]
+This codec will decode the {ref}/docs-bulk.html[Elasticsearch bulk format]
 into individual events, plus metadata into the `@metadata` field.
 
 Encoding is not supported at this time as the Elasticsearch

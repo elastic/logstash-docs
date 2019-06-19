@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.3.0
-:release_date: 2019-02-04
-:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.3.0/CHANGELOG.md
+:version: v4.3.1
+:release_date: 2019-05-01
+:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.3.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -164,11 +164,10 @@ It will be removed in the next major version of Logstash.
   * Value type is <<array,array>>
   * Default value is `["_index", "_type", "_id"]`
 
-If document metadata storage is requested by enabling the `docinfo`
-option, this option lists the metadata fields to save in the current
-event. See
-http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_document_metadata.html[Document Metadata]
-in the Elasticsearch documentation for more information.
+If document metadata storage is requested by enabling the `docinfo` option, this
+option lists the metadata fields to save in the current event. See
+{ref}/mapping-fields.html[Meta-Fields] in the Elasticsearch documentation for
+more information.
 
 [id="plugins-{type}s-{plugin}-docinfo_target"]
 ===== `docinfo_target` 
