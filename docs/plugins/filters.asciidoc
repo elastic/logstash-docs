@@ -38,6 +38,7 @@ The following filter plugins are available below. For a list of Elastic supporte
 | <<plugins-filters-metricize,metricize>> | Takes complex events containing a number of metrics and splits these up into multiple events, each holding a single metric | https://github.com/logstash-plugins/logstash-filter-metricize[logstash-filter-metricize]
 | <<plugins-filters-metrics,metrics>> | Aggregates metrics | https://github.com/logstash-plugins/logstash-filter-metrics[logstash-filter-metrics]
 | <<plugins-filters-mutate,mutate>> | Performs mutations on fields | https://github.com/logstash-plugins/logstash-filter-mutate[logstash-filter-mutate]
+| <<plugins-filters-oui,oui>> | Parses OUI data from MAC addresses | https://github.com/logstash-plugins/logstash-filter-oui[logstash-filter-oui]
 | <<plugins-filters-prune,prune>> | Prunes event data based on a list of fields to blacklist or whitelist | https://github.com/logstash-plugins/logstash-filter-prune[logstash-filter-prune]
 | <<plugins-filters-range,range>> | Checks that specified fields stay within given size or length limits | https://github.com/logstash-plugins/logstash-filter-range[logstash-filter-range]
 | <<plugins-filters-ruby,ruby>> | Executes arbitrary Ruby code | https://github.com/logstash-plugins/logstash-filter-ruby[logstash-filter-ruby]
@@ -143,6 +144,9 @@ include::filters/metrics.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-filter-mutate/edit/master/docs/index.asciidoc
 include::filters/mutate.asciidoc[]
+
+:edit_url: https://github.com/logstash-plugins/logstash-filter-oui/edit/master/docs/index.asciidoc
+include::filters/oui.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-filter-prune/edit/master/docs/index.asciidoc
 include::filters/prune.asciidoc[]
