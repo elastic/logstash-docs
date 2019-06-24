@@ -5,11 +5,13 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v1.0.2-plugins-filters-http,v1.0.2>> | 2019-06-24
 | <<v1.0.1-plugins-filters-http,v1.0.1>> | 2019-02-06
 | <<v1.0.0-plugins-filters-http,v1.0.0>> | 2019-01-11
 | <<v0.1.0-plugins-filters-http,v0.1.0>> | 2018-12-12
 |=======================================================================
 
+include::http-v1.0.2.asciidoc[]
 include::http-v1.0.1.asciidoc[]
 include::http-v1.0.0.asciidoc[]
 include::http-v0.1.0.asciidoc[]
