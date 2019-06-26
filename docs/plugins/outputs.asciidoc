@@ -27,6 +27,8 @@ The following output plugins are available below. For a list of Elastic supporte
 | <<plugins-outputs-http,http>> | Sends events to a generic HTTP or HTTPS endpoint | https://github.com/logstash-plugins/logstash-output-http[logstash-output-http]
 | <<plugins-outputs-influxdb,influxdb>> | Writes metrics to InfluxDB | https://github.com/logstash-plugins/logstash-output-influxdb[logstash-output-influxdb]
 | <<plugins-outputs-irc,irc>> | Writes events to IRC | https://github.com/logstash-plugins/logstash-output-irc[logstash-output-irc]
+| <<plugins-outputs-java_sink,java_sink>> | Discards any events received | https://github.com/elastic/logstash/blob/{branch}/logstash-core/src/main/java/org/logstash/plugins/outputs/Sink.java[core plugin]
+| <<plugins-outputs-java_stdout,java_stdout>> | Prints events to the STDOUT of the shell | https://github.com/elastic/logstash/blob/{branch}/logstash-core/src/main/java/org/logstash/plugins/outputs/Stdout.java[core plugin]
 | <<plugins-outputs-juggernaut,juggernaut>> | Pushes messages to the Juggernaut websockets server | https://github.com/logstash-plugins/logstash-output-juggernaut[logstash-output-juggernaut]
 | <<plugins-outputs-kafka,kafka>> | Writes events to a Kafka topic | https://github.com/logstash-plugins/logstash-output-kafka[logstash-output-kafka]
 | <<plugins-outputs-librato,librato>> | Sends metrics, annotations, and alerts to Librato based on Logstash events | https://github.com/logstash-plugins/logstash-output-librato[logstash-output-librato]
@@ -120,6 +122,12 @@ include::outputs/influxdb.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-irc/edit/master/docs/index.asciidoc
 include::outputs/irc.asciidoc[]
+
+:edit_url: https://github.com/elastic/logstash/blob/master/docs/static/core-plugins/outputs/java_sink.asciidoc
+include::../../../logstash/docs/static/core-plugins/outputs/java_sink.asciidoc[]
+
+:edit_url: https://github.com/elastic/logstash/blob/master/docs/static/core-plugins/outputs/java_stdout.asciidoc
+include::../../../logstash/docs/static/core-plugins/outputs/java_stdout.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-juggernaut/edit/master/docs/index.asciidoc
 include::outputs/juggernaut.asciidoc[]
