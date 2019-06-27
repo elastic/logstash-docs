@@ -53,6 +53,8 @@ include::outputs/influxdb-index.asciidoc[]
 
 include::outputs/irc-index.asciidoc[]
 
+include::outputs/java_output_example-index.asciidoc[]
+
 include::outputs/jira-index.asciidoc[]
 
 include::outputs/jms-index.asciidoc[]

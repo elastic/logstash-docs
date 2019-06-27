@@ -1,0 +1,12 @@
+:plugin: java_output_example
+:type: output
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v1.0.0-plugins-outputs-java_output_example,v1.0.0>> | 2019-05-07
+|=======================================================================
+
+include::java_output_example-v1.0.0.asciidoc[]
+
