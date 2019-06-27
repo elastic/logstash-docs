@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.8
-:release_date: 2018-01-12
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-csv/blob/v3.0.8/CHANGELOG.md
+:version: v3.0.10
+:release_date: 2019-04-17
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-csv/blob/v3.0.10/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -22,8 +22,8 @@ include::{include_path}/plugin_header.asciidoc[]
 ==== Description
 
 The CSV filter takes an event field containing CSV data, parses it,
-and stores it as individual fields (can optionally specify the names).
-This filter can also parse data with any separator, not just commas.
+and stores it as individual fields with optionally-specified field names.
+This filter can parse data with any separator, not just commas.
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Csv Filter Configuration Options
@@ -60,6 +60,8 @@ filter plugins.
 Define whether column names should be auto-detected from the header column or not.
 Defaults to false.
 
+Logstash pipeline workers must be set to `1` for this option to work.
+
 [id="plugins-{type}s-{plugin}-autogenerate_column_names"]
 ===== `autogenerate_column_names` 
 
@@ -92,6 +94,7 @@ Define a set of datatype conversions to be applied to columns.
 Possible conversions are integer, float, date, date_time, boolean
 
 Example:
+
 [source,ruby]
     filter {
       csv {
@@ -156,6 +159,8 @@ will result in the skipping of any row that exactly matches the specified column
 If skip_header and autodetect_column_names are specified then columns should not be specified, in this case
 autodetect_column_names will fill the columns setting in the background, from the first event seen, and any
 subsequent values that match what was autodetected will be skipped.
+
+Logstash pipeline workers must be set to `1` for this option to work.
 
 [id="plugins-{type}s-{plugin}-source"]
 ===== `source` 
