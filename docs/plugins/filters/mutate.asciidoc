@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.3.4
-:release_date: 2018-10-19
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.3.4/CHANGELOG.md
+:version: v3.5.0
+:release_date: 2019-06-17
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.5.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -84,6 +84,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-update>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-uppercase>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-capitalize>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-tag_on_failure>> |<<string,string>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -118,10 +119,15 @@ Valid conversion targets, and their expected behaviour with different inputs are
  * `string`:
    - all values are stringified and encoded with UTF-8
  * `boolean`:
-   - strings `"true"`, `"t"`, `"yes"`, `"y"`, and `"1"` are converted to boolean `true`
-   - strings `"false"`, `"f"`, `"no"`, `"n"`, and `"0"` are converted to boolean `false`
+   - integer 0 is converted to boolean `false`
+   - integer 1 is converted to boolean `true`
+   - float 0.0 is converted to boolean `false`
+   - float 1.0 is converted to boolean `true`
+   - strings `"true"`, `"t"`, `"yes"`, `"y"`, `"1"`and `"1.0"` are converted to boolean `true`
+   - strings `"false"`, `"f"`, `"no"`, `"n"`, `"0"` and `"0.0"` are converted to boolean `false`
    - empty strings are converted to boolean `false`
    - all other values pass straight through without conversion and log a warning message
+   - for arrays each value gets processed separately using rules above
 
 This plugin can convert multiple fields in the same document, see the example below.
 
@@ -367,6 +373,15 @@ Example:
         capitalize => [ "fieldname" ]
       }
     }
+
+[id="plugins-{type}s-{plugin}-tag_on_failure"]
+===== `tag_on_failure`
+
+  * Value type is <<string,string>>
+  * The default value for this setting is `_mutate_error`
+
+If a failure occurs during the application of this mutate filter, the rest of
+the operations are aborted and the provided tag is added to the event.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
