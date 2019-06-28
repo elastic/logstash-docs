@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.3.1
-:release_date: 2019-04-15
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-kv/blob/v4.3.1/CHANGELOG.md
+:version: v4.3.3
+:release_date: 2019-06-21
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-kv/blob/v4.3.3/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -361,7 +361,7 @@ with the provided value (see: <<plugins-{type}s-{plugin}-timeout_millis>>).
 [id="plugins-{type}s-{plugin}-timeout_millis"]
 ===== `timeout_millis`
 
-  * Value type is <<number, number>>
+  * Value type is <<number,number>>
   * The default value for this setting is 30000 (30 seconds).
   * Set to zero (`0`) to disable timeouts
 

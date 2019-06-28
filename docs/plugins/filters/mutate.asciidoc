@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.4.0
-:release_date: 2019-02-04
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.4.0/CHANGELOG.md
+:version: v3.5.0
+:release_date: 2019-06-17
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.5.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -84,6 +84,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-update>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-uppercase>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-capitalize>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-tag_on_failure>> |<<string,string>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -372,6 +373,15 @@ Example:
         capitalize => [ "fieldname" ]
       }
     }
+
+[id="plugins-{type}s-{plugin}-tag_on_failure"]
+===== `tag_on_failure`
+
+  * Value type is <<string,string>>
+  * The default value for this setting is `_mutate_error`
+
+If a failure occurs during the application of this mutate filter, the rest of
+the operations are aborted and the provided tag is added to the event.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
