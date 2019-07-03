@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.5
-:release_date: 2017-11-07
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-json/blob/v3.0.5/CHANGELOG.md
+:version: v3.1.0
+:release_date: 2019-06-17
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-json/blob/v3.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -15,7 +15,7 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 [id="plugins-{type}s-{plugin}"]
 
-=== Json filter plugin
+=== JSON filter plugin
 
 include::{include_path}/plugin_header.asciidoc[]
 
@@ -24,21 +24,21 @@ include::{include_path}/plugin_header.asciidoc[]
 This is a JSON parsing filter. It takes an existing field which contains JSON and
 expands it into an actual data structure within the Logstash event.
 
-By default it will place the parsed JSON in the root (top level) of the Logstash event, but this
+By default, it will place the parsed JSON in the root (top level) of the Logstash event, but this
 filter can be configured to place the JSON into any arbitrary event field, using the
 `target` configuration.
 
-This plugin has a few fallback scenario when something bad happen during the parsing of the event.
-If the JSON parsing fails on the data, the event will be untouched and it will be tagged with a
-`_jsonparsefailure` then you can use conditionals to clean the data. You can configured this tag with then
+This plugin has a few fallback scenarios when something bad happens during the parsing of the event.
+If the JSON parsing fails on the data, the event will be untouched and it will be tagged with
+`_jsonparsefailure`; you can then use conditionals to clean the data. You can configure this tag with the
 `tag_on_failure` option.
 
-If the parsed data contains a `@timestamp` field, we will try to use it for the event's `@timestamp`, if the
+If the parsed data contains a `@timestamp` field, the plugin will try to use it for the events `@timestamp`, and if the
 parsing fails, the field will be renamed to `_@timestamp` and the event will be tagged with a
 `_timestampparsefailure`.
 
 [id="plugins-{type}s-{plugin}-options"]
-==== Json Filter Configuration Options
+==== JSON Filter Configuration Options
 
 This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
@@ -62,7 +62,7 @@ filter plugins.
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
-Allow to skip filter on invalid json (allows to handle json and non-json data without warnings)
+Allows for skipping the filter on invalid JSON (this allows you to handle JSON and non-JSON data without warnings)
 
 [id="plugins-{type}s-{plugin}-source"]
 ===== `source` 
@@ -83,7 +83,7 @@ For example, if you have JSON data in the `message` field:
       }
     }
 
-The above would parse the json from the `message` field
+The above would parse the JSON from the `message` field.
 
 [id="plugins-{type}s-{plugin}-tag_on_failure"]
 ===== `tag_on_failure` 

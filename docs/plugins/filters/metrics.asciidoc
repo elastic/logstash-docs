@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.5
-:release_date: 2017-11-07
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-metrics/blob/v4.0.5/CHANGELOG.md
+:version: v4.0.6
+:release_date: 2019-02-05
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-metrics/blob/v4.0.6/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -52,7 +52,7 @@ metric in the following way:
 
 ==== `meter` values
 
-For a `meter => "something"` you will receive the following fields:
+For a `meter => "thing"` you will receive the following fields:
 
 * "[thing][count]" - the total count of events
 * "[thing][rate_1m]" - the per-second event rate in a 1-minute sliding window
@@ -156,7 +156,7 @@ filter plugins.
   * Value type is <<number,number>>
   * Default value is `-1`
 
-The clear interval, when all counter are reset.
+The clear interval, when all counters are reset.
 
 If set to -1, the default value, the metrics will never be cleared.
 Otherwise, should be a multiple of 5s.

@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.11
-:release_date: 2018-06-18
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-dns/blob/v3.0.11/CHANGELOG.md
+:version: v3.0.13
+:release_date: 2019-04-29
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-dns/blob/v3.0.13/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
