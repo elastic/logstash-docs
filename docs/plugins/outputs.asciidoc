@@ -21,6 +21,7 @@ The following output plugins are available below. For a list of Elastic supporte
 | <<plugins-outputs-ganglia,ganglia>> | Writes metrics to Ganglia's `gmond` | https://github.com/logstash-plugins/logstash-output-ganglia[logstash-output-ganglia]
 | <<plugins-outputs-gelf,gelf>> | Generates GELF formatted output for Graylog2 | https://github.com/logstash-plugins/logstash-output-gelf[logstash-output-gelf]
 | <<plugins-outputs-google_bigquery,google_bigquery>> | Writes events to Google BigQuery | https://github.com/logstash-plugins/logstash-output-google_bigquery[logstash-output-google_bigquery]
+| <<plugins-outputs-google_cloud_storage,google_cloud_storage>> | Uploads log events to Google Cloud Storage | https://github.com/logstash-plugins/logstash-output-google_cloud_storage[logstash-output-google_cloud_storage]
 | <<plugins-outputs-google_pubsub,google_pubsub>> | Uploads log events to Google Cloud Pubsub | https://github.com/logstash-plugins/logstash-output-google_pubsub[logstash-output-google_pubsub]
 | <<plugins-outputs-graphite,graphite>> | Writes metrics to Graphite | https://github.com/logstash-plugins/logstash-output-graphite[logstash-output-graphite]
 | <<plugins-outputs-graphtastic,graphtastic>> | Sends metric data on Windows | https://github.com/logstash-plugins/logstash-output-graphtastic[logstash-output-graphtastic]
@@ -102,6 +103,9 @@ include::outputs/gelf.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-google_bigquery/edit/master/docs/index.asciidoc
 include::outputs/google_bigquery.asciidoc[]
+
+:edit_url: https://github.com/logstash-plugins/logstash-output-google_cloud_storage/edit/master/docs/index.asciidoc
+include::outputs/google_cloud_storage.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-google_pubsub/edit/master/docs/index.asciidoc
 include::outputs/google_pubsub.asciidoc[]
