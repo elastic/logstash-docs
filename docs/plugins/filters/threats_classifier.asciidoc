@@ -1,0 +1,48 @@
+:plugin: threats_classifier
+:type: filter
+:default_plugin: 0
+
+///////////////////////////////////////////
+REPLACES GENERATED VARIABLES
+///////////////////////////////////////////
+:changelog_url: https://github.com/empow/logstash-filter-empow-classifier/blob/master/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+:gem: https://rubygems.org/gems/logstash-filter-empowclassifier
+///////////////////////////////////////////
+END - REPLACES GENERATED VARIABLES
+///////////////////////////////////////////
+
+[id="plugins-{type}s-{plugin}"]
+
+=== Threats_classifier filter plugin
+
+[subs="attributes"]
+++++
+<titleabbrev>{plugin}</titleabbrev>
+++++
+
+* This plugin was created and is maintained by a partner.
+* {changelog_url}[Change log]
+
+==== Installation
+
+For plugins not bundled by default, it is easy to install by running +bin/logstash-plugin install logstash-{type}-{plugin}+. See {logstash-ref}/working-with-plugins.html[Working with plugins] for more details.
+
+==== Description
+
+This plugin uses the cyber-kill-chain and MITRE representation language to
+enrich security logs with information about the attacker’s intent--what the
+attacker is trying to achieve, who they are targeting, and how they plan to
+carry out the attack.  
+
+==== Documentation
+
+Documentation for the 
+https://github.com/empow/logstash-filter-empow-classifier/blob/master/README.md[filter-threats_classifier plugin] 
+is maintained by the creators.
+
+==== Getting Help
+
+This is a third-party plugin. For bugs or feature requests, open an issue in the
+https://github.com/empow/logstash-filter-empow-classifier[plugins-{type}s-{plugin} Github repo].
+
