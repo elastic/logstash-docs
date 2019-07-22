@@ -22,7 +22,7 @@ The following codec plugins are available below. For a list of Elastic supported
 | <<plugins-codecs-gzip_lines,gzip_lines>> | Reads `gzip` encoded content | https://github.com/logstash-plugins/logstash-codec-gzip_lines[logstash-codec-gzip_lines]
 | <<plugins-codecs-jdots,jdots>> | Renders each processed event as a dot | https://github.com/elastic/logstash/blob/{branch}/logstash-core/src/main/java/org/logstash/plugins/codecs/Dots.java[core plugin]
 | <<plugins-codecs-java_line,java_line>> | Encodes and decodes line-oriented text data | https://github.com/elastic/logstash/blob/{branch}/logstash-core/src/main/java/org/logstash/plugins/codecs/Line.java[core plugin]
-| <<plugins-codecs-java_plain,java_plain>> | Processes text data with no delimiters between events | https://github.com/elastic/logstash/blob/{branch}/logstash-core/src/main/java/org/logstash/plugins/codecs/Plain.java[core plugin]
+//| <<plugins-codecs-java_plain,java_plain>> | Processes text data with no delimiters between events | https://github.com/elastic/logstash/blob/{branch}/logstash-core/src/main/java/org/logstash/plugins/codecs/Plain.java[core plugin]
 | <<plugins-codecs-json,json>> | Reads JSON formatted content, creating one event per element in a JSON array | https://github.com/logstash-plugins/logstash-codec-json[logstash-codec-json]
 | <<plugins-codecs-json_lines,json_lines>> | Reads newline-delimited JSON | https://github.com/logstash-plugins/logstash-codec-json_lines[logstash-codec-json_lines]
 | <<plugins-codecs-line,line>> | Reads line-oriented text data | https://github.com/logstash-plugins/logstash-codec-line[logstash-codec-line]
@@ -77,8 +77,8 @@ include::../../../logstash/docs/static/core-plugins/codecs/java_dots.asciidoc[]
 :edit_url: https://github.com/elastic/logstash/blob/master/docs/static/core-plugins/codecs/java_line.asciidoc
 include::../../../logstash/docs/static/core-plugins/codecs/java_line.asciidoc[]
 
-:edit_url: https://github.com/elastic/logstash/blob/master/docs/static/core-plugins/codecs/java_plain.asciidoc
-include::../../../logstash/docs/static/core-plugins/codecs/java_plain.asciidoc[]
+//:edit_url: https://github.com/elastic/logstash/blob/master/docs/static/core-plugins/codecs/java_plain.asciidoc
+//include::../../../logstash/docs/static/core-plugins/codecs/java_plain.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-codec-json/edit/master/docs/index.asciidoc
 include::codecs/json.asciidoc[]
