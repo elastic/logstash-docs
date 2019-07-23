@@ -58,12 +58,16 @@ Field names can be dynamic and include parts of the event using the `%{field}`.
 
 Example:
 [source,ruby]
+-----
     filter {
       csv {
         add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also add multiple fields at once:
     filter {
       csv {
@@ -73,6 +77,7 @@ Example:
         }
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add field `foo_hello` if it is present, with the
@@ -91,18 +96,23 @@ syntax.
 
 Example:
 [source,ruby]
+-----
     filter {
       csv {
         add_tag => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also add multiple tags at once:
     filter {
       csv {
         add_tag => [ "foo_%{somefield}", "taggedy_tag"]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
@@ -120,6 +130,59 @@ are not enough columns specified, the default column names are
 in the data than specified in this column list, extra columns will be auto-numbered:
 (e.g. "user_defined_1", "user_defined_2", "column3", "column4", etc.)
 
+<<<<<<< HEAD
+=======
+[[plugins-filters-csv-convert]]
+===== `convert` 
+
+  * Value type is <<hash,hash>>
+  * Default value is `{}`
+
+Define a set of datatype conversions to be applied to columns.
+Possible conversions are integer, float, date, date_time, boolean
+
+Example:
+[source,ruby]
+-----
+    filter {
+      csv {
+        convert => { "column1" => "integer", "column2" => "boolean" }
+      }
+    }
+-----
+
+[[plugins-filters-csv-enable_metric]]
+===== `enable_metric` 
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Disable or enable metric logging for this specific plugin instance
+by default we record all the metrics we can, but you can disable metrics collection
+for a specific plugin.
+
+[[plugins-filters-csv-id]]
+===== `id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Add a unique `ID` to the plugin configuration. If no ID is specified, Logstash will generate one. 
+It is strongly recommended to set this ID in your configuration. This is particularly useful 
+when you have two or more plugins of the same type, for example, if you have 2 grok filters. 
+Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
+
+[source,ruby]
+---------------------------------------------------------------------------------------------------
+output {
+ stdout {
+   id => "my_plugin_id"
+ }
+}
+---------------------------------------------------------------------------------------------------
+
+
+>>>>>>> 958a508e2... Fix formatting for code samples
 [[plugins-filters-csv-periodic_flush]]
 ===== `periodic_flush` 
 
@@ -147,20 +210,26 @@ Optional.
 
 If this filter is successful, remove arbitrary fields from this event.
 Fields names can be dynamic and include parts of the event using the %{field}
+
 Example:
 [source,ruby]
+-----
     filter {
       csv {
         remove_field => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also remove multiple fields at once:
     filter {
       csv {
         remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the field with name `foo_hello` if it is present. The second
@@ -178,18 +247,23 @@ syntax.
 
 Example:
 [source,ruby]
+-----
     filter {
       csv {
         remove_tag => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also remove multiple tags at once:
     filter {
       csv {
         remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the tag `foo_hello` if it is present. The second example
