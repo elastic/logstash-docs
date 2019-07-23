@@ -13,12 +13,15 @@ Drop filter.
 Drops everything that gets to this filter.
 
 This is best used in combination with conditionals, for example:
+
 [source,ruby]
+-----
     filter {
       if [loglevel] == "debug" {
         drop { }
       }
     }
+-----
 
 The above will only pass events to the drop filter if the loglevel field is
 `debug`. This will cause all events matching to be dropped.
@@ -70,12 +73,16 @@ Field names can be dynamic and include parts of the event using the `%{field}`.
 
 Example:
 [source,ruby]
+-----
     filter {
       drop {
         add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also add multiple fields at once:
     filter {
       drop {
@@ -85,6 +92,7 @@ Example:
         }
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add field `foo_hello` if it is present, with the
@@ -103,18 +111,23 @@ syntax.
 
 Example:
 [source,ruby]
+-----
     filter {
       drop {
         add_tag => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also add multiple tags at once:
     filter {
       drop {
         add_tag => [ "foo_%{somefield}", "taggedy_tag"]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
@@ -160,6 +173,8 @@ This is useful if you just need a percentage but not the whole.
 
 Example, to only drop around 40% of the events that have the field loglevel wiht value "debug".
 
+[source,ruby]
+-----
     filter {
       if [loglevel] == "debug" {
         drop {
@@ -167,6 +182,7 @@ Example, to only drop around 40% of the events that have the field loglevel wiht
         }
       }
     }
+-----
 
 [[plugins-filters-drop-periodic_flush]]
 ===== `periodic_flush` 
@@ -187,18 +203,23 @@ If this filter is successful, remove arbitrary fields from this event.
 Fields names can be dynamic and include parts of the event using the %{field}
 Example:
 [source,ruby]
+-----
     filter {
       drop {
         remove_field => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also remove multiple fields at once:
     filter {
       drop {
         remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the field with name `foo_hello` if it is present. The second
@@ -216,18 +237,23 @@ syntax.
 
 Example:
 [source,ruby]
+-----
     filter {
       drop {
         remove_tag => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also remove multiple tags at once:
     filter {
       drop {
         remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the tag `foo_hello` if it is present. The second example
