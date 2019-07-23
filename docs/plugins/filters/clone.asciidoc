@@ -59,12 +59,16 @@ Field names can be dynamic and include parts of the event using the `%{field}`.
 
 Example:
 [source,ruby]
+-----
     filter {
       clone {
         add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also add multiple fields at once:
     filter {
       clone {
@@ -74,6 +78,7 @@ Example:
         }
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add field `foo_hello` if it is present, with the
@@ -92,18 +97,23 @@ syntax.
 
 Example:
 [source,ruby]
+-----
     filter {
       clone {
         add_tag => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also add multiple tags at once:
     filter {
       clone {
         add_tag => [ "foo_%{somefield}", "taggedy_tag"]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
@@ -162,20 +172,26 @@ Optional.
 
 If this filter is successful, remove arbitrary fields from this event.
 Fields names can be dynamic and include parts of the event using the %{field}
+
 Example:
 [source,ruby]
+-----
     filter {
       clone {
         remove_field => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also remove multiple fields at once:
     filter {
       clone {
         remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the field with name `foo_hello` if it is present. The second
@@ -193,18 +209,23 @@ syntax.
 
 Example:
 [source,ruby]
+-----
     filter {
       clone {
         remove_tag => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also remove multiple tags at once:
     filter {
       clone {
         remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the tag `foo_hello` if it is present. The second example
