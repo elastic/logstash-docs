@@ -60,15 +60,23 @@ integer. Currently the only supported conversions are `int` and `float`.
 
 With that idea of a syntax and semantic, we can pull out useful fields from a
 sample log like this fictional http request log:
+
 [source,ruby]
+-----
     55.3.244.1 GET /index.html 15824 0.043
+-----
 
 The pattern for this could be:
+
 [source,ruby]
+-----
     %{IP:client} %{WORD:method} %{URIPATHPARAM:request} %{NUMBER:bytes} %{NUMBER:duration}
+-----
 
 A more realistic example, let's read these logs from a file:
+
 [source,ruby]
+-----
     input {
       file {
         path => "/var/log/http.log"
@@ -79,6 +87,7 @@ A more realistic example, let's read these logs from a file:
         match => { "message" => "%{IP:client} %{WORD:method} %{URIPATHPARAM:request} %{NUMBER:bytes} %{NUMBER:duration}" }
       }
     }
+-----
 
 After the grok filter, the event will have a few extra fields in it:
 
@@ -102,13 +111,19 @@ a few options.
 
 First, you can use the Oniguruma syntax for named capture which will
 let you match a piece of text and save it as a field:
+
 [source,ruby]
+-----
     (?<field_name>the pattern here)
+-----
 
 For example, postfix logs have a `queue id` that is an 10 or 11-character
 hexadecimal value. I can capture that easily like this:
+
 [source,ruby]
+-----
     (?<queue_id>[0-9A-F]{10,11})
+-----
 
 Alternately, you can create a custom patterns file.
 
@@ -118,21 +133,30 @@ Alternately, you can create a custom patterns file.
   the regexp for that pattern.
 
 For example, doing the postfix queue id example as above:
+
 [source,ruby]
+-----
     # contents of ./patterns/postfix:
     POSTFIX_QUEUEID [0-9A-F]{10,11}
+-----
 
 Then use the `patterns_dir` setting in this plugin to tell logstash where
 your custom patterns directory is. Here's a full example with a sample log:
+
 [source,ruby]
+-----
     Jan  1 06:25:43 mailserver14 postfix/cleanup[21403]: BEF25A72965: message-id=<20130101142543.5828399CCAF@mailserver14.example.com>
+-----
+
 [source,ruby]
+-----
     filter {
       grok {
         patterns_dir => ["./patterns"]
         match => { "message" => "%{SYSLOGBASE} %{POSTFIX_QUEUEID:queue_id}: %{GREEDYDATA:syslog_message}" }
       }
     }
+-----
 
 The above will match and result in the following fields:
 
@@ -202,12 +226,16 @@ Field names can be dynamic and include parts of the event using the `%{field}`.
 
 Example:
 [source,ruby]
+-----
     filter {
       grok {
         add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also add multiple fields at once:
     filter {
       grok {
@@ -217,6 +245,7 @@ Example:
         }
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add field `foo_hello` if it is present, with the
@@ -235,18 +264,23 @@ syntax.
 
 Example:
 [source,ruby]
+-----
     filter {
       grok {
         add_tag => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also add multiple tags at once:
     filter {
       grok {
         add_tag => [ "foo_%{somefield}", "taggedy_tag"]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
@@ -310,16 +344,20 @@ A hash of matches of field => value
 
 For example:
 [source,ruby]
+-----
     filter {
       grok { match => { "message" => "Duration: %{NUMBER:duration}" } }
     }
+-----
 
 If you need to match multiple patterns against a single field, the value can be an array of patterns
+
 [source,ruby]
+-----
     filter {
       grok { match => { "message" => [ "Duration: %{NUMBER:duration}", "Speed: %{NUMBER:speed}" ] } }
     }
-
+-----
 
 [[plugins-filters-grok-named_captures_only]]
 ===== `named_captures_only` 
@@ -341,13 +379,16 @@ This allows you to overwrite a value in a field that already exists.
 
 For example, if you have a syslog line in the `message` field, you can
 overwrite the `message` field with part of the match like so:
+
 [source,ruby]
+-----
     filter {
       grok {
         match => { "message" => "%{SYSLOGBASE} %{DATA:message}" }
         overwrite => [ "message" ]
       }
     }
+-----
 
 In this case, a line like `May 29 16:37:11 sadness logger: hello world`
 will be parsed and `hello world` will overwrite the original message.
@@ -364,16 +405,25 @@ necessarily need to define this yourself unless you are adding additional
 patterns. You can point to multiple pattern directories using this setting.
 Note that Grok will read all files in the directory matching the patterns_files_glob
 and assume it's a pattern file (including any tilde backup files). 
+
 [source,ruby]
+-----
     patterns_dir => ["/opt/logstash/patterns", "/opt/logstash/extra_patterns"]
+-----
 
 Pattern files are plain text with format:
+
 [source,ruby]
+-----
     NAME PATTERN
+-----
 
 For example:
+
 [source,ruby]
+-----
     NUMBER \d+
+-----
 
 The patterns are loaded when the pipeline is created.
 
@@ -403,20 +453,26 @@ Optional.
 
 If this filter is successful, remove arbitrary fields from this event.
 Fields names can be dynamic and include parts of the event using the %{field}
+
 Example:
 [source,ruby]
+-----
     filter {
       grok {
         remove_field => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also remove multiple fields at once:
     filter {
       grok {
         remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the field with name `foo_hello` if it is present. The second
@@ -434,18 +490,23 @@ syntax.
 
 Example:
 [source,ruby]
+-----
     filter {
       grok {
         remove_tag => [ "foo_%{somefield}" ]
       }
     }
+-----
+    
 [source,ruby]
+-----
     # You can also remove multiple tags at once:
     filter {
       grok {
         remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the tag `foo_hello` if it is present. The second example
