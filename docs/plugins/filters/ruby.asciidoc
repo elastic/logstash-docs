@@ -17,23 +17,28 @@ For the list of Elastic supported plugins, please consult the https://www.elasti
 Execute ruby code.
 
 For example, to cancel 90% of events, you can do this:
+
 [source,ruby]
+-----
     filter {
       ruby {
         # Cancel 90% of events
         code => "event.cancel if rand <= 0.90"
       }
     }
+-----
 
 If you need to create additional events, it cannot be done as in other filters where you would use `yield`,
 you must use a specific syntax `new_event_block.call(event)` like in this example duplicating the input event
+
 [source,ruby]
+-----
 filter {
   ruby {
     code => "new_event_block.call(event.clone)"
   }
 }
-
+-----
 
 &nbsp;
 
@@ -84,12 +89,15 @@ Field names can be dynamic and include parts of the event using the `%{field}`.
 
 Example:
 [source,ruby]
+-----
     filter {
       ruby {
         add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
       }
     }
+-----
 [source,ruby]
+-----
     # You can also add multiple fields at once:
     filter {
       ruby {
@@ -99,6 +107,7 @@ Example:
         }
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add field `foo_hello` if it is present, with the
@@ -117,18 +126,23 @@ syntax.
 
 Example:
 [source,ruby]
+-----
     filter {
       ruby {
         add_tag => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also add multiple tags at once:
     filter {
       ruby {
         add_tag => [ "foo_%{somefield}", "taggedy_tag"]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
@@ -199,20 +213,25 @@ Optional.
 
 If this filter is successful, remove arbitrary fields from this event.
 Fields names can be dynamic and include parts of the event using the %{field}
+
 Example:
 [source,ruby]
+-----
     filter {
       ruby {
         remove_field => [ "foo_%{somefield}" ]
       }
     }
+-----
 [source,ruby]
+-----
     # You can also remove multiple fields at once:
     filter {
       ruby {
         remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the field with name `foo_hello` if it is present. The second
@@ -230,18 +249,23 @@ syntax.
 
 Example:
 [source,ruby]
+-----
     filter {
       ruby {
         remove_tag => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also remove multiple tags at once:
     filter {
       ruby {
         remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the tag `foo_hello` if it is present. The second example

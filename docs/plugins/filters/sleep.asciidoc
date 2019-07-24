@@ -68,12 +68,16 @@ Field names can be dynamic and include parts of the event using the `%{field}`.
 
 Example:
 [source,ruby]
+-----
     filter {
       sleep {
         add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
       }
     }
+-----    
+    
 [source,ruby]
+-----
     # You can also add multiple fields at once:
     filter {
       sleep {
@@ -83,6 +87,7 @@ Example:
         }
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add field `foo_hello` if it is present, with the
@@ -101,18 +106,23 @@ syntax.
 
 Example:
 [source,ruby]
+-----
     filter {
       sleep {
         add_tag => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also add multiple tags at once:
     filter {
       sleep {
         add_tag => [ "foo_%{somefield}", "taggedy_tag"]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
@@ -137,12 +147,14 @@ Sleep on every N'th. This option is ignored in replay mode.
 
 Example:
 [source,ruby]
+-----
     filter {
       sleep {
         time => "1"   # Sleep 1 second
         every => 10   # on every 10th event
       }
     }
+-----
 
 [[plugins-filters-sleep-id]]
 ===== `id` 
@@ -182,20 +194,26 @@ Optional.
 
 If this filter is successful, remove arbitrary fields from this event.
 Fields names can be dynamic and include parts of the event using the %{field}
+
 Example:
 [source,ruby]
+-----
     filter {
       sleep {
         remove_field => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also remove multiple fields at once:
     filter {
       sleep {
         remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the field with name `foo_hello` if it is present. The second
@@ -213,18 +231,23 @@ syntax.
 
 Example:
 [source,ruby]
+-----
     filter {
       sleep {
         remove_tag => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also remove multiple tags at once:
     filter {
       sleep {
         remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the tag `foo_hello` if it is present. The second example
@@ -251,12 +274,14 @@ value of 0.25 will replay at 1/4th speed.
 
 For example:
 [source,ruby]
+-----
     filter {
       sleep {
         time => 2
         replay => true
       }
     }
+-----
 
 The above will sleep in such a way that it will perform
 replay 2-times faster than the original time speed.
@@ -276,11 +301,12 @@ to indicate the amount of time to sleep.
 
 Example:
 [source,ruby]
+-----
     filter {
       sleep {
         # Sleep 1 second for every event.
         time => "1"
       }
     }
-
+-----
 
