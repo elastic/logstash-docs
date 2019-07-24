@@ -81,12 +81,16 @@ Field names can be dynamic and include parts of the event using the `%{field}`.
 
 Example:
 [source,ruby]
+-----
     filter {
       json {
         add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also add multiple fields at once:
     filter {
       json {
@@ -96,6 +100,7 @@ Example:
         }
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add field `foo_hello` if it is present, with the
@@ -114,18 +119,23 @@ syntax.
 
 Example:
 [source,ruby]
+-----
     filter {
       json {
         add_tag => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also add multiple tags at once:
     filter {
       json {
         add_tag => [ "foo_%{somefield}", "taggedy_tag"]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
@@ -152,13 +162,13 @@ when you have two or more plugins of the same type, for example, if you have 2 g
 Adding a named ID in this case will help in monitoring Logstash when using the monitoring APIs.
 
 [source,ruby]
----------------------------------------------------------------------------------------------------
+-----
 output {
  stdout {
    id => "my_plugin_id"
  }
 }
----------------------------------------------------------------------------------------------------
+-----
 
 
 [[plugins-filters-json-periodic_flush]]
@@ -178,20 +188,26 @@ Optional.
 
 If this filter is successful, remove arbitrary fields from this event.
 Fields names can be dynamic and include parts of the event using the %{field}
+
 Example:
 [source,ruby]
+-----
     filter {
       json {
         remove_field => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also remove multiple fields at once:
     filter {
       json {
         remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the field with name `foo_hello` if it is present. The second
@@ -209,18 +225,23 @@ syntax.
 
 Example:
 [source,ruby]
+-----
     filter {
       json {
         remove_tag => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also remove multiple tags at once:
     filter {
       json {
         remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the tag `foo_hello` if it is present. The second example
@@ -242,16 +263,22 @@ Allow to skip filter on invalid json (allows to handle json and non-json data wi
   * There is no default value for this setting.
 
 The configuration for the JSON filter:
+
 [source,ruby]
+-----
     source => source_field
+-----
 
 For example, if you have JSON data in the `message` field:
+
 [source,ruby]
+-----
     filter {
       json {
         source => "message"
       }
     }
+-----
 
 The above would parse the json from the `message` field
 
@@ -274,12 +301,15 @@ Define the target field for placing the parsed data. If this setting is
 omitted, the JSON data will be stored at the root (top level) of the event.
 
 For example, if you want the data to be put in the `doc` field:
+
 [source,ruby]
+-----
     filter {
       json {
         target => "doc"
       }
     }
+-----
 
 JSON in the value of the `source` field will be expanded into a
 data structure in the `target` field.
