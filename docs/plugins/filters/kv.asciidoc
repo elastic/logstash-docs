@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.3.3
-:release_date: 2019-06-21
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-kv/blob/v4.3.3/CHANGELOG.md
+:version: v4.4.0
+:release_date: 2019-07-22
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-kv/blob/v4.4.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
