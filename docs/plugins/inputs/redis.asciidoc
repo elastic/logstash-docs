@@ -1,14 +1,13 @@
 :plugin: redis
 :type: input
 :default_plugin: 1
-:default_codec: json
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.4.1
-:release_date: 2019-02-04
-:changelog_url: https://github.com/logstash-plugins/logstash-input-redis/blob/v3.4.1/CHANGELOG.md
+:version: v3.1.4
+:release_date: 2017-08-16
+:changelog_url: https://github.com/logstash-plugins/logstash-input-redis/blob/v3.1.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -47,14 +46,11 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-data_type>> |<<string,string>>, one of `["list", "channel", "pattern_channel"]`|Yes
 | <<plugins-{type}s-{plugin}-db>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-host>> |<<string,string>>|No
-| <<plugins-{type}s-{plugin}-path>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-key>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-password>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
-| <<plugins-{type}s-{plugin}-ssl>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-threads>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-timeout>> |<<number,number>>|No
-| <<plugins-{type}s-{plugin}-command_map>> |<<hash,hash>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -96,15 +92,6 @@ The Redis database number.
   * Default value is `"127.0.0.1"`
 
 The hostname of your Redis server.
-
-[id="plugins-{type}s-{plugin}-path"]
-===== `path`
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-  * Path will override Host configuration if both specified.
-
-The unix socket path of your Redis server.
 
 [id="plugins-{type}s-{plugin}-key"]
 ===== `key`
@@ -156,17 +143,7 @@ Enable SSL support.
 
 Initial connection timeout in seconds.
 
-[id="plugins-{type}s-{plugin}-command_map"]
-===== `command_map`
 
-  * Value type is <<hash,hash>>
-  * There is no default value for this setting.
-  * key is the default command name, value is the renamed command.
-
-Configure renamed redis commands in the form of "oldname" => "newname".
-Redis allows for the renaming or disabling of commands in its protocol, see:  https://redis.io/topics/security
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
-
-:default_codec!:
