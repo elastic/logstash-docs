@@ -1,8 +1,6 @@
 [[plugins-outputs-cloudwatch]]
 === cloudwatch
 
-
-
 This output lets you aggregate and send metric data to AWS CloudWatch
 
 ==== Summary
@@ -33,12 +31,12 @@ future version.
 There are two ways to configure this plugin, and they can be used in
 combination: event fields & per-output defaults
 
-Event Field configuration...
+===== Event Field configuration
 You add fields to your events in inputs & filters and this output reads
 those fields to aggregate events.  The names of the fields read are
 configurable via the `field_*` options.
 
-Per-output defaults...
+===== Per-output defaults
 You set universal defaults in this output plugin's configuration, and
 if an event does not have a field for that option then the default is
 used.
