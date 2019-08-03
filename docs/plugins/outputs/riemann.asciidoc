@@ -87,7 +87,9 @@ All nested logstash fields will be mapped to riemann fields containing all paren
 separated by dots and the deepest value.
 
 As an example, the logstash event:
+
 [source,ruby]
+-----
    {
      "@timestamp":"2013-12-10T14:36:26.151+0000",
      "@version": 1,
@@ -97,14 +99,19 @@ As an example, the logstash event:
                        "key": "value"
                      }
    }
+-----
+
 Is mapped to this riemann event:
+
 [source,ruby]
+-----
   {
     :time 1386686186,
     :host host.domain.com,
     :message log message,
     :nested_field.key value
   }
+-----
 
 It can be used in conjunction with or independent of the riemann_event option.
 When used with the riemann_event any duplicate keys receive their value from
@@ -151,12 +158,14 @@ Any other field set here will be passed to Riemann as an event attribute.
 
 Example:
 [source,ruby]
+-----
     riemann {
         riemann_event => {
             "metric"  => "%{metric}"
             "service" => "%{service}"
         }
     }
+-----
 
 `metric` and `ttl` values will be coerced to a floating point value.
 Values which cannot be coerced will zero (0.0).
