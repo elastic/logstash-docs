@@ -69,15 +69,23 @@ apply to ALL the buckets.
 Bucket properties (NYI)
 Logstash hash of properties for the bucket
 i.e.
+
 [source,ruby]
+-----
     bucket_props => {
         "r" => "one"
         "w" => "one"
         "dw", "one
      }
+-----
+
 or
+
 [source,ruby]
+-----
     bucket_props => { "n_val" => "3" }
+-----
+
 Properties will be passed as-is
 
 [id="plugins-{type}s-{plugin}-enable_search"]
@@ -107,8 +115,12 @@ Enable SSL
 Indices
 Array of fields to add 2i on
 e.g.
+
 [source,ruby]
+-----
     `indices => ["source_host", "type"]
+-----
+
 Off by default as not everyone runs eleveldb
 
 [id="plugins-{type}s-{plugin}-key_name"]
@@ -132,11 +144,14 @@ The nodes of your Riak cluster
 This can be a single host or
 a Logstash hash of node/port pairs
 e.g
+
 [source,ruby]
+-----
     {
         "node1" => "8098"
         "node2" => "8098"
     }
+-----
 
 [id="plugins-{type}s-{plugin}-proto"]
 ===== `proto` 
@@ -163,10 +178,12 @@ here: https://github.com/basho/riak-ruby-client/wiki/Connecting-to-Riak
 You'll likely want something like this:
 
 [source, ruby]
+-----
     ssl_opts => {
        "pem" => "/etc/riak.pem"
        "ca_path" => "/usr/share/certificates"
     }
+-----
 
 Per the riak client docs, the above sample options
 will turn on SSL `VERIFY_PEER`
