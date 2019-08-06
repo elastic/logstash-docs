@@ -5,8 +5,10 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v0.11.1-plugins-inputs-google_cloud_storage,v0.11.1>> | 2019-04-15
 | <<v0.10.0-plugins-inputs-google_cloud_storage,v0.10.0>> | 2019-02-28
 |=======================================================================
 
+include::google_cloud_storage-v0.11.1.asciidoc[]
 include::google_cloud_storage-v0.10.0.asciidoc[]
 
