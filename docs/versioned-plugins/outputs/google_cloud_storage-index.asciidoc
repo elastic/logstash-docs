@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v4.1.0-plugins-outputs-google_cloud_storage,v4.1.0>> | 2019-08-08
 | <<v4.0.1-plugins-outputs-google_cloud_storage,v4.0.1>> | 2019-06-24
 | <<v4.0.0-plugins-outputs-google_cloud_storage,v4.0.0>> | 2019-03-18
 | <<v3.3.0-plugins-outputs-google_cloud_storage,v3.3.0>> | 2018-06-08
@@ -16,6 +17,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.0.3-plugins-outputs-google_cloud_storage,v3.0.3>> | 2017-06-23
 |=======================================================================
 
+include::google_cloud_storage-v4.1.0.asciidoc[]
 include::google_cloud_storage-v4.0.1.asciidoc[]
 include::google_cloud_storage-v4.0.0.asciidoc[]
 include::google_cloud_storage-v3.3.0.asciidoc[]

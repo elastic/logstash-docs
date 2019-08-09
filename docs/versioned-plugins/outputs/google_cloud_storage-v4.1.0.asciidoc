@@ -1,0 +1,312 @@
+:plugin: google_cloud_storage
+:type: output
+:default_codec: line
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v4.1.0
+:release_date: 2019-08-08
+:changelog_url: https://github.com/logstash-plugins/logstash-output-google_cloud_storage/blob/v4.1.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Google Cloud Storage output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+A plugin to upload log events to Google Cloud Storage (GCS), rolling
+files based on the date pattern provided as a configuration setting. Events
+are written to files locally and, once file is closed, this plugin uploads
+it to the configured bucket.
+
+For more info on Google Cloud Storage, please go to:
+https://cloud.google.com/products/cloud-storage
+
+In order to use this plugin, a Google service account must be used. For
+more information, please refer to:
+https://developers.google.com/storage/docs/authentication#service_accounts
+
+Recommendation: experiment with the settings depending on how much log
+data you generate, so the uploader can keep up with the generated logs.
+Using gzip output can be a good option to reduce network traffic when
+uploading the log files and in terms of storage costs as well.
+
+==== Usage
+
+This is an example of logstash config:
+
+[source,json]
+--------------------------
+output {
+   google_cloud_storage {
+     bucket => "my_bucket"                                     (required)
+     json_key_file => "/path/to/privatekey.json"               (optional)
+     temp_directory => "/tmp/logstash-gcs"                     (optional)
+     log_file_prefix => "logstash_gcs"                         (optional)
+     max_file_size_kbytes => 1024                              (optional)
+     output_format => "plain"                                  (optional)
+     date_pattern => "%Y-%m-%dT%H:00"                          (optional)
+     flush_interval_secs => 2                                  (optional)
+     gzip => false                                             (optional)
+     gzip_content_encoding => false                            (optional)
+     uploader_interval_secs => 60                              (optional)
+     include_uuid => true                                      (optional)
+     include_hostname => true                                  (optional)
+   }
+}
+--------------------------
+
+===== Additional Resources
+
+* https://cloud.google.com/docs/authentication/production[Application Default Credentials (ADC) Overview]
+* https://cloud.google.com/storage/[Cloud Storage Introduction]
+* https://cloud.google.com/storage/pricing[Pricing Information]
+
+
+==== Improvements TODO List
+
+* Support logstash event variables to determine filename.
+* Turn Google API code into a Plugin Mixin (like AwsConfig).
+* There's no recover method, so if logstash/plugin crashes, files may not
+be uploaded to GCS.
+* Allow user to configure file name.
+* Allow parallel uploads for heavier loads (+ connection configuration if
+exposed by Ruby API client)
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Google_cloud_storage Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-bucket>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-date_pattern>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-flush_interval_secs>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-gzip>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-gzip_content_encoding>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-include_hostname>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-include_uuid>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-json_key_file>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-key_password>> |{logstash-ref}/configuration-file-structure.html#string[string]|__Deprecated__
+| <<{version}-plugins-{type}s-{plugin}-key_path>> |{logstash-ref}/configuration-file-structure.html#string[string]|**Obsolete**
+| <<{version}-plugins-{type}s-{plugin}-log_file_prefix>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-max_concurrent_uploads>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-max_file_size_kbytes>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-output_format>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["json", "plain", nil]`|__Deprecated__
+| <<{version}-plugins-{type}s-{plugin}-service_account>> |{logstash-ref}/configuration-file-structure.html#string[string]|__Deprecated__
+| <<{version}-plugins-{type}s-{plugin}-temp_directory>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-uploader_interval_secs>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-bucket"]
+===== `bucket` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+GCS bucket name, without "gs://" or any other prefix.
+
+[id="{version}-plugins-{type}s-{plugin}-date_pattern"]
+===== `date_pattern` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"%Y-%m-%dT%H:00"`
+
+Time pattern for log file, defaults to hourly files.
+Must Time.strftime patterns: www.ruby-doc.org/core-2.0/Time.html#method-i-strftime
+
+[id="{version}-plugins-{type}s-{plugin}-flush_interval_secs"]
+===== `flush_interval_secs` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `2`
+
+Flush interval in seconds for flushing writes to log files. 0 will flush
+on every message.
+
+[id="{version}-plugins-{type}s-{plugin}-gzip"]
+===== `gzip` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Gzip output stream when writing events to log files, set
+`Content-Type` to `application/gzip` instead of `text/plain`, and
+use file suffix `.log.gz` instead of `.log`.
+
+[id="{version}-plugins-{type}s-{plugin}-gzip_content_encoding"]
+===== `gzip_content_encoding`
+
+added[3.3.0]
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Gzip output stream when writing events to log files and set `Content-Encoding` to `gzip`.
+This will upload your files as `gzip` saving network and storage costs, but they will be
+transparently decompressed when you read them from the storage bucket.
+
+See the Cloud Storage documentation on https://cloud.google.com/storage/docs/metadata#content-encoding[metadata] and 
+https://cloud.google.com/storage/docs/transcoding#content-type_vs_content-encoding[transcoding]
+for more information.
+
+**Note**: It is not recommended to use both `gzip_content_encoding` and `gzip`.
+This compresses your file _twice_, will increase the work your machine does and makes 
+the files larger than just compressing once.
+
+[id="{version}-plugins-{type}s-{plugin}-include_hostname"]
+===== `include_hostname`
+
+added[3.1.0]
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Should the hostname be included in the file name?
+You may want to turn this off for privacy reasons or if you are running multiple
+instances of Logstash and need to match the files you create with a simple glob
+such as if you wanted to import files to BigQuery.
+
+
+[id="{version}-plugins-{type}s-{plugin}-include_uuid"]
+===== `include_uuid`
+
+added[3.1.0]
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Adds a UUID to the end of a file name.
+You may want to enable this feature so files don't clobber one another if you're
+running multiple instances of Logstash or if you expect frequent node restarts.
+
+[id="{version}-plugins-{type}s-{plugin}-json_key_file"]
+===== `json_key_file`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `nil`
+
+The plugin can use
+https://cloud.google.com/docs/authentication/production[Application Default Credentials (ADC)],
+if it's running on Compute Engine, Kubernetes Engine, App Engine, or Cloud Functions.
+
+Outside of Google Cloud, you will need create a Service Account JSON key file through the
+web interface or with the following command:
+`gcloud iam service-accounts keys create key.json --iam-account my-sa-123@my-project-123.iam.gserviceaccount.com`
+
+[id="{version}-plugins-{type}s-{plugin}-key_password"]
+===== `key_password` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"notasecret"`
+
+**Deprecated** this feature is no longer used, the setting is now a part of <<{version}-plugins-{type}s-{plugin}-json_key_file>>.
+
+
+[id="{version}-plugins-{type}s-{plugin}-key_path"]
+===== `key_path`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+
+**Obsolete:** The PKCS12 key file format is no longer supported.
+Please use one of the following mechanisms:
+
+  * https://cloud.google.com/docs/authentication/production[Application Default Credentials (ADC)],
+    configured via environment variables on Compute Engine, Kubernetes Engine, App Engine, or
+    Cloud Functions.
+  * A JSON authentication key file. You can generate them in the console for the service account
+    like you did with the `.P12` file or with the following command:
+    `gcloud iam service-accounts keys create key.json --iam-account my-sa-123@my-project-123.iam.gserviceaccount.com`
+
+[id="{version}-plugins-{type}s-{plugin}-log_file_prefix"]
+===== `log_file_prefix` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"logstash_gcs"`
+
+Log file prefix. Log file will follow the format:
+<prefix>_hostname_date<.part?>.log
+
+[id="{version}-plugins-{type}s-{plugin}-max_concurrent_uploads"]
+===== `max_concurrent_uploads`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `5`
+
+Sets the maximum number of concurrent uploads to Cloud Storage at a time.
+Uploads are I/O bound so it makes sense to tune this paramater with regards
+to the network bandwidth available and the latency between your server and
+Cloud Storage.
+
+[id="{version}-plugins-{type}s-{plugin}-max_file_size_kbytes"]
+===== `max_file_size_kbytes` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `10000`
+
+Sets max file size in kbytes. 0 disable max file check.
+
+[id="{version}-plugins-{type}s-{plugin}-output_format"]
+===== `output_format` 
+
+  * Value can be any of: `json`, `plain`, or no value
+  * Default value is no value
+
+**Deprecated**, this feature will be removed in the next major release. Use codecs instead.
+
+  * If you are using the `json` value today, switch to the `json_lines` codec.
+  * If you are using the `plain` value today, switch to the `line` codec.
+
+The event format you want to store in files. Defaults to plain text.
+
+Note: if you want to use a codec you MUST not set this value.
+
+[id="{version}-plugins-{type}s-{plugin}-service_account"]
+===== `service_account` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+**Deprecated** this feature is no longer used, the setting is now a part of <<{version}-plugins-{type}s-{plugin}-json_key_file>>.
+
+[id="{version}-plugins-{type}s-{plugin}-temp_directory"]
+===== `temp_directory` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `""`
+
+Directory where temporary files are stored.
+Defaults to /tmp/logstash-gcs-<random-suffix>
+
+[id="{version}-plugins-{type}s-{plugin}-uploader_interval_secs"]
+===== `uploader_interval_secs` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `60`
+
+Uploader interval when uploading new files to GCS. Adjust time based
+on your time pattern (for example, for hourly files, this interval can be
+around one hour).
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
