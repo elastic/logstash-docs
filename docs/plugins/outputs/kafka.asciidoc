@@ -301,12 +301,12 @@ A value less than zero is a configuration error.
 The amount of time to wait before attempting to retry a failed produce request to a given topic partition.
 
 [id="plugins-{type}s-{plugin}-sasl_jaas_config"]
-===== `sasl_jaas_config`
+===== `sasl_jaas_config` 
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-JAAS configuration setting local to this plugin instance, as opposed to settings using config file configured using `jaas_path`, which are shared across the JVM. This allows each plugin instance to have its own configuration.
+JAAS configuration setting local to this plugin instance, as opposed to settings using config file configured using `jaas_path`, which are shared across the JVM. This allows each plugin instance to have its own configuration. 
 
 If both `sasl_jaas_config` and `jaas_path` configurations are set, the setting here takes precedence.
 
