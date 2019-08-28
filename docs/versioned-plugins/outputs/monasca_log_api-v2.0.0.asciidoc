@@ -1,0 +1,182 @@
+:plugin: monasca_log_api
+:type: output
+:default_codec: json
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v2.0.0
+:release_date: 2019-08-28
+:changelog_url: https://github.com/logstash-plugins/logstash-output-monasca_log_api/blob/v2.0.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Monasca_log_api output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+relative requirements
+This Logstash Output plugin, sends events to monasca-api.
+It authenticates against keystone and gets a token.
+The token is used to authenticate against the monasca-api and send log events.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Monasca_log_api Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-delay>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-dimensions>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-elapsed_time_sec>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-keystone_api_insecure>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-keystone_api_url>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-max_data_size_kb>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-monasca_log_api_insecure>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-monasca_log_api_url>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-num_of_logs>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-password>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-project_domain_name>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-project_name>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-user_domain_name>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-username>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-delay"]
+===== `delay` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `10`
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-dimensions"]
+===== `dimensions` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * There is no default value for this setting.
+
+global dimensions
+
+[id="{version}-plugins-{type}s-{plugin}-elapsed_time_sec"]
+===== `elapsed_time_sec` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `30`
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-keystone_api_insecure"]
+===== `keystone_api_insecure` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-keystone_api_url"]
+===== `keystone_api_url` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+keystone configuration
+
+[id="{version}-plugins-{type}s-{plugin}-max_data_size_kb"]
+===== `max_data_size_kb` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `5120`
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-monasca_log_api_insecure"]
+===== `monasca_log_api_insecure` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-monasca_log_api_url"]
+===== `monasca_log_api_url` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+monasca-log-api configuration
+
+[id="{version}-plugins-{type}s-{plugin}-num_of_logs"]
+===== `num_of_logs` 
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `125`
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-password"]
+===== `password` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-project_domain_name"]
+===== `project_domain_name` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-project_name"]
+===== `project_name` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-user_domain_name"]
+===== `user_domain_name` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-username"]
+===== `username` 
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
