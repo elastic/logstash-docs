@@ -5,10 +5,12 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v1.0.2-plugins-outputs-google_pubsub,v1.0.2>> | 2019-09-18
 | <<v1.0.1-plugins-outputs-google_pubsub,v1.0.1>> | 2018-09-25
 | <<v1.0.0-plugins-outputs-google_pubsub,v1.0.0>> | 2018-07-27
 |=======================================================================
 
+include::google_pubsub-v1.0.2.asciidoc[]
 include::google_pubsub-v1.0.1.asciidoc[]
 include::google_pubsub-v1.0.0.asciidoc[]
 
