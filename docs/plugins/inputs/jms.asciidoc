@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.0
-:release_date: 2019-06-17
-:changelog_url: https://github.com/logstash-plugins/logstash-input-jms/blob/v3.1.0/CHANGELOG.md
+:version: v3.1.1
+:release_date: 2019-07-08
+:changelog_url: https://github.com/logstash-plugins/logstash-input-jms/blob/v3.1.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -36,7 +36,6 @@ JMS configurations can be done either entirely in the Logstash configuration fil
 
 
 ==== Sample Configuration using Logstash Configuration Only
-
 
 Configurations can be configured either entirely in Logstash configuration, or via a combination of Logstash configuration
 and yaml file, which can be useful for sharing similar configurations across multiple inputs and outputs.
@@ -87,7 +86,6 @@ The JMS plugin can also be configured using JNDI if desired.
 <7> Keystore and Truststore to use when connecting to the JMS provider, if required.
 <8> Parts of the JMS Message to include in the event - headers, properties and the message body can be included or
     excluded from the event.
-
 <9> Message selector: Use this to filter messages to be processed. The whole selector query should be double-quoted,
     string property values should be single quoted, and numeric property vaues should not be quoted.
     See JMS provider documentation for exact syntax.
@@ -352,6 +350,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-durable_subscriber_client_id>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-durable_subscriber_name>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-factory>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-factory_settings>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-include_body>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-include_header>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-include_properties>> |<<boolean,boolean>>|No
@@ -444,6 +443,18 @@ is set to `true`. Please consult your JMS Provider documentation for constraints
   * There is no default value for this setting.
 
 Full name (including package name) of Java connection factory used to create a connection with your JMS provider.
+
+[id="plugins-{type}s-{plugin}-factory_settings"]
+===== `factory_settings`
+
+  * Value type is <<hash,hash>>
+  * There is no default value for this setting.
+
+Hash of implementation specific configuration values to set on the connection factory of the JMS provider. Each JMS
+ Provider will have its own set of parameters that can be used here. These parameters are mapped to `set` methods on
+ the provided connection factory, and can be supplied in either 'snake' or 'camel' case. For example, a hash including
+ `exclusive_consumer => true` would call `setExclusiveConsumer(true)` on the supplied connection factory.
+ See your JMS provider documentation for implementation specific details.
 
 [id="plugins-{type}s-{plugin}-include_body"]
 ===== `include_body`
