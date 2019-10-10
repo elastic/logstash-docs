@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.6
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-output-librato/blob/v3.0.6/CHANGELOG.md
+:version: v3.0.7
+:release_date: 2019-10-09
+:changelog_url: https://github.com/logstash-plugins/logstash-output-librato/blob/v3.0.7/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -131,6 +131,7 @@ Example:
 -----
     
 Additionally, you can override the `measure_time` for the event. Must be a unix timestamp:
+
 [source,ruby]
 -----
     {
@@ -161,6 +162,7 @@ Example:
         "name" => "apache_bytes"
     }
 -----
+
 Additionally, you can override the `measure_time` for the event. Must be a unix timestamp:
 
 [source,ruby]
@@ -172,6 +174,7 @@ Additionally, you can override the `measure_time` for the event. Must be a unix 
         "measure_time" => "%{my_unixtime_field}
     }
 -----
+
 Default is to use the event's timestamp
 
 

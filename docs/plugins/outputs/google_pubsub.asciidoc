@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.0.1
-:release_date: 2018-09-25
-:changelog_url: https://github.com/logstash-plugins/logstash-output-google_pubsub/blob/v1.0.1/CHANGELOG.md
+:version: v1.0.2
+:release_date: 2019-09-18
+:changelog_url: https://github.com/logstash-plugins/logstash-output-google_pubsub/blob/v1.0.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -79,9 +79,9 @@ output {
     json_key_file => "service_account_key.json"
 
     # Options for configuring the upload
-    message_count_threshold => 10000
+    message_count_threshold => 1000
     delay_threshold_secs => 10
-    request_byte_threshold => 5MB
+    request_byte_threshold => 5000000
   }
 }
 ------------------------------------------------------------------------------
@@ -210,7 +210,7 @@ A value of 0 will cause messages to instantly be sent but will reduce total thro
 ===== `request_byte_threshold`
 
   * Value type is <<bytes,bytes>>
-  * Default is: `1_000_000`
+  * Default is: `1000000`
 
 Once the number of bytes in the batched request reaches this threshold, send all of the messages in
 a single call, even if neither the delay or message count thresholds have been exceeded yet.
