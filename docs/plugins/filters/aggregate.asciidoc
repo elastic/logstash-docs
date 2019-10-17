@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v2.9.0
-:release_date: 2018-11-03
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-aggregate/blob/v2.9.0/CHANGELOG.md
+:version: v2.9.1
+:release_date: 2019-09-22
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-aggregate/blob/v2.9.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -229,7 +229,7 @@ In that case, you don't want to wait task timeout to flush aggregation map.
      aggregate {
        task_id => "%{country_name}"
        code => "
-         map['country_name'] = event.get('country_name')
+         map['country_name'] ||= event.get('country_name')
          map['towns'] ||= []
          map['towns'] << {'town_name' => event.get('town_name')}
          event.cancel()
@@ -242,7 +242,8 @@ In that case, you don't want to wait task timeout to flush aggregation map.
 
 * The key point is that each time aggregate plugin detects a new `country_name`, it pushes previous aggregate map as a new Logstash event, and then creates a new empty map for the next country
 * When 3s timeout comes, the last aggregate map is pushed as a new event
-* Finally, initial events (which are not aggregated) are dropped because useless (thanks to `event.cancel()`)
+* Initial events (which are not aggregated) are dropped because useless (thanks to `event.cancel()`)
+* Last point: if a field is not fulfilled for every event (say "town_postcode" field), the `||=` operator will let you to push into aggregate map, the first "not null" value. Example: `map['town_postcode'] ||= event.get('town_postcode')`
 
 
 [id="plugins-{type}s-{plugin}-example5"]
@@ -250,7 +251,7 @@ In that case, you don't want to wait task timeout to flush aggregation map.
 
 Fifth use case: like example #3, there is no end event.
 
-Events keep comming for an indefinite time and you want to push the aggregation map as soon as possible after the last user interaction without waiting for the `timeout`.
+Events keep coming for an indefinite time and you want to push the aggregation map as soon as possible after the last user interaction without waiting for the `timeout`.
 
 This allows to have the aggregated events pushed closer to real time.
 
@@ -261,7 +262,7 @@ We can track a user by its ID through the events, however once the user stops in
 
 There is no specific event indicating the end of the user's interaction.
 
-The user ineraction will be considered as ended when no events for the specified user (task_id) arrive after the specified inactivity_timeout`.
+The user interaction will be considered as ended when no events for the specified user (task_id) arrive after the specified inactivity_timeout`.
 
 If the user continues interacting for longer than `timeout` seconds (since first event), the aggregation map will still be deleted and pushed as a new event when timeout occurs.
 
@@ -296,7 +297,7 @@ filter {
    code => "map['clicks'] ||= 0; map['clicks'] += 1;"
    push_map_as_event_on_timeout => true
    timeout_task_id_field => "user_id"
-   timeout => 3600 # 1 hour timeout, user activity will be considered finished one hour after the first event, even if events keep comming
+   timeout => 3600 # 1 hour timeout, user activity will be considered finished one hour after the first event, even if events keep coming
    inactivity_timeout => 300 # 5 minutes timeout, user activity will be considered finished if no new events arrive 5 minutes after the last event
    timeout_tags => ['_aggregatetimeout']
    timeout_code => "event.set('several_clicks', event.get('clicks') > 1)"
@@ -327,7 +328,7 @@ filter {
 * in the final event, you can execute a last code (for instance, add map data to final event)
 * after the final event, the map attached to task is deleted (thanks to `end_of_task => true`)
 * an aggregate map is tied to one task_id value which is tied to one task_id pattern. So if you have 2 filters with different task_id patterns, even if you have same task_id value, they won't share the same aggregate map.
-* in one filter configuration, it is recommanded to define a timeout option to protect the feature against unterminated tasks. It tells the filter to delete expired maps
+* in one filter configuration, it is recommended to define a timeout option to protect the feature against unterminated tasks. It tells the filter to delete expired maps
 * if no timeout is defined, by default, all maps older than 1800 seconds are automatically deleted
 * all timeout options have to be defined in only one aggregate filter per task_id pattern (per pipeline). Timeout options are : timeout, inactivity_timeout, timeout_code, push_map_as_event_on_timeout, push_previous_map_as_event, timeout_timestamp_field, timeout_task_id_field, timeout_tags
 * if `code` execution raises an exception, the error is logged and event is tagged '_aggregateexception'

@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.3.2
-:release_date: 2018-07-20
-:changelog_url: https://github.com/logstash-plugins/logstash-input-exec/blob/v3.3.2/CHANGELOG.md
+:version: v3.3.3
+:release_date: 2019-09-10
+:changelog_url: https://github.com/logstash-plugins/logstash-input-exec/blob/v3.3.3/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -28,6 +28,12 @@ Notes:
 
 * The `command` field of this event will be the command run.
 * The `message` field of this event will be the entire stdout of the command.
+
+===== IMPORTANT
+
+The exec input ultimately uses `fork` to spawn a child process.
+Using fork duplicates the parent process address space (in our case, **logstash and the JVM**); this is mitigated with OS copy-on-write but ultimately you can end up allocating lots of memory just for a "simple" executable.
+If the exec input fails with errors like `ENOMEM: Cannot allocate memory` it is an indication that there is not enough non-JVM-heap physical memory to perform the fork.
 
 
 Example:
