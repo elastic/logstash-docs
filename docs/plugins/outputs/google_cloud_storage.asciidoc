@@ -1,14 +1,14 @@
 :plugin: google_cloud_storage
 :type: output
 :default_plugin: 0
-:default_codec: plain
+:default_codec: line
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.1
-:release_date: 2019-06-24
-:changelog_url: https://github.com/logstash-plugins/logstash-output-google_cloud_storage/blob/v4.0.1/CHANGELOG.md
+:version: v4.1.0
+:release_date: 2019-08-08
+:changelog_url: https://github.com/logstash-plugins/logstash-output-google_cloud_storage/blob/v4.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -102,7 +102,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-log_file_prefix>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-max_concurrent_uploads>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-max_file_size_kbytes>> |<<number,number>>|No
-| <<plugins-{type}s-{plugin}-output_format>> |<<string,string>>, one of `["json", "plain"]`|No
+| <<plugins-{type}s-{plugin}-output_format>> |<<string,string>>, one of `["json", "plain", nil]`|__Deprecated__
 | <<plugins-{type}s-{plugin}-service_account>> |<<string,string>>|__Deprecated__
 | <<plugins-{type}s-{plugin}-temp_directory>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-uploader_interval_secs>> |<<number,number>>|No
@@ -265,10 +265,17 @@ Sets max file size in kbytes. 0 disable max file check.
 [id="plugins-{type}s-{plugin}-output_format"]
 ===== `output_format` 
 
-  * Value can be any of: `json`, `plain`
-  * Default value is `"plain"`
+  * Value can be any of: `json`, `plain`, or no value
+  * Default value is no value
+
+**Deprecated**, this feature will be removed in the next major release. Use codecs instead.
+
+  * If you are using the `json` value today, switch to the `json_lines` codec.
+  * If you are using the `plain` value today, switch to the `line` codec.
 
 The event format you want to store in files. Defaults to plain text.
+
+Note: if you want to use a codec you MUST not set this value.
 
 [id="plugins-{type}s-{plugin}-service_account"]
 ===== `service_account` 

@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.4
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-output-riak/blob/v3.0.4/CHANGELOG.md
+:version: v3.0.5
+:release_date: 2019-10-09
+:changelog_url: https://github.com/logstash-plugins/logstash-output-riak/blob/v3.0.5/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -172,11 +172,11 @@ No mix and match
   * Value type is <<hash,hash>>
   * There is no default value for this setting.
 
-SSL Options
-Options for SSL connections
-Only applied if SSL is enabled
+Options for SSL connections.
+Only applied if SSL is enabled.
 Logstash hash that maps to the riak-client options
-here: https://github.com/basho/riak-ruby-client/wiki/Connecting-to-Riak
+here: https://github.com/basho/riak-ruby-client/wiki/Connecting-to-Riak.
+
 You'll likely want something like this:
 
 [source, ruby]
