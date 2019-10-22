@@ -227,7 +227,7 @@ mutate {
 [id="plugins-{type}s-{plugin}-json_key_file"]
 ===== `json_key_file`
 
-added[4.0.0, Replaces <<plugins-{type}s-{plugin}-key_password>>, <<plugins-{type}s-{plugin}-key_path>> and <<plugins-{type}s-{plugin}-service_account>>]
+added[4.0.0, "Replaces <<plugins-{type}s-{plugin}-key_password>>, <<plugins-{type}s-{plugin}-key_path>> and <<plugins-{type}s-{plugin}-service_account>>."]
 
   * Value type is <<string,string>>
   * Default value is `nil`
