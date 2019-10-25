@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.13
-:release_date: 2019-04-29
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-dns/blob/v3.0.13/CHANGELOG.md
+:version: v3.1.1
+:release_date: 2019-10-24
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-dns/blob/v3.1.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -56,7 +56,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-hit_cache_ttl>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-hostsfile>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-max_retries>> |<<number,number>>|No
-| <<plugins-{type}s-{plugin}-nameserver>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-nameserver>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-resolve>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-reverse>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-timeout>> |<<number,number>>|No
@@ -127,10 +127,28 @@ number of times to retry a failed resolve/reverse
 [id="plugins-{type}s-{plugin}-nameserver"]
 ===== `nameserver` 
 
-  * Value type is <<array,array>>
+  * Value type is <<hash,hash>>, and is composed of:
+  ** a required `address` key, whose value is either a <<string,string>> or an <<array,array>>, representing one or more nameserver ip addresses
+  ** an optional `search` key, whose value is either a <<string,string>> or an <<array,array>>, representing between one and six search domains (e.g., with search domain `com`, a query for `example` will match DNS entries for `example.com`)
+  ** an optional `ndots` key, used in conjunction with `search`, whose value is a <<number,number>>, representing the minimum number of dots in a domain name being resolved that will _prevent_ the search domains from being used (default `1`; this option is rarely needed)
+  * For backward-compatibility, values of <<string,string>> and <<array,array>> are also accepted, representing one or more nameserver ip addresses _without_ search domains.
   * There is no default value for this setting.
 
-Use custom nameserver(s). For example: `["8.8.8.8", "8.8.4.4"]`
+Use custom nameserver(s). For example:
+
+[source,ruby]
+    filter {
+      dns {
+        nameserver => {
+          address => ["8.8.8.8", "8.8.4.4"]
+          search  => ["internal.net"]
+        }
+      }
+    }
+
+If `nameserver` is not specified then `/etc/resolv.conf` will be read to
+configure the resolver using the `nameserver`, `domain`,
+`search` and `ndots` directives in `/etc/resolv.conf`.
 
 [id="plugins-{type}s-{plugin}-resolve"]
 ===== `resolve` 
