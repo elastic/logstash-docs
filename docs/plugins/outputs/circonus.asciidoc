@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.5
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-output-circonus/blob/v3.0.5/CHANGELOG.md
+:version: v3.0.6
+:release_date: 2019-10-09
+:changelog_url: https://github.com/logstash-plugins/logstash-output-circonus/blob/v3.0.6/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -59,10 +59,16 @@ All values will be passed through `event.sprintf`
 
 Example:
 [source,ruby]
+-----
   ["title":"Logstash event", "description":"Logstash event for %{host}"]
+-----
+
 or
+
 [source,ruby]
+-----
   ["title":"Logstash event", "description":"Logstash event for %{host}", "parent_id", "1"]
+-----
 
 [id="plugins-{type}s-{plugin}-api_token"]
 ===== `api_token` 
