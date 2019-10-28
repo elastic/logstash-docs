@@ -123,8 +123,7 @@ Logstash has the following flags. You can use the `--help` flag to display this 
   The default is 3 seconds.
   
 *`--allow-env`*::
-  experimental[]
-  Enables templating of environment variable
+  experimental[] Enables templating of environment variable
   values. Instances of `${VAR}` in strings will be replaced
   with the respective environment variable value named "VAR".
   The default is false.
