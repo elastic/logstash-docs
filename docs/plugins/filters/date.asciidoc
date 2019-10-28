@@ -12,8 +12,11 @@ The date filter is used for parsing dates from fields, and then using that
 date or timestamp as the logstash timestamp for the event.
 
 For example, syslog events usually have timestamps like this:
+
 [source,ruby]
+-----
     "Apr 17 09:32:01"
+-----
 
 You would use the date format `MMM dd HH:mm:ss` to parse this.
 
@@ -77,12 +80,16 @@ Field names can be dynamic and include parts of the event using the `%{field}`.
 
 Example:
 [source,ruby]
+-----
     filter {
       date {
         add_field => { "foo_%{somefield}" => "Hello world, from %{host}" }
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also add multiple fields at once:
     filter {
       date {
@@ -92,6 +99,7 @@ Example:
         }
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add field `foo_hello` if it is present, with the
@@ -110,18 +118,23 @@ syntax.
 
 Example:
 [source,ruby]
+-----
     filter {
       date {
         add_tag => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also add multiple tags at once:
     filter {
       date {
         add_tag => [ "foo_%{somefield}", "taggedy_tag"]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would add a tag `foo_hello` (and the second example would of course add a `taggedy_tag` tag).
@@ -145,15 +158,16 @@ for a specific plugin.
 Add a unique `ID` to the plugin instance, this `ID` is used for tracking
 information for a specific configuration of the plugin.
 
-```
+[source,ruby]
+-----
 output {
  stdout {
    id => "ABC"
  }
 }
-```
+-----
 
-If you don't explicitely set this variable Logstash will generate a unique name.
+If you don't explicitly set this variable, Logstash will generate a unique name.
 
 [[plugins-filters-date-locale]]
 ===== `locale` 
@@ -180,9 +194,12 @@ An array with field name first, and format patterns following, `[ field,
 formats... ]`
 
 If your time field has multiple possible formats, you can do this:
+
 [source,ruby]
-    match => [ "logdate", "MMM dd YYY HH:mm:ss",
-              "MMM  d YYY HH:mm:ss", "ISO8601" ]
+-----
+    match => [ "logdate", "MMM dd yyyy HH:mm:ss",
+              "MMM  d yyyy HH:mm:ss", "ISO8601" ]
+-----
 
 The above will match a syslog (rfc3164) or `iso8601` timestamp.
 
@@ -197,12 +214,15 @@ to help you save time and ensure correctness of date parsing.
 
 For example, if you have a field `logdate`, with a value that looks like
 `Aug 13 2010 00:03:44`, you would use this configuration:
+
 [source,ruby]
+-----
     filter {
       date {
         match => [ "logdate", "MMM dd YYYY HH:mm:ss" ]
       }
     }
+-----
 
 If your field is nested in your structure, you can use the nested
 syntax `[foo][bar]` to match its value. For more information, please refer to
@@ -290,20 +310,27 @@ Optional.
 
 If this filter is successful, remove arbitrary fields from this event.
 Fields names can be dynamic and include parts of the event using the %{field}
+
 Example:
+
 [source,ruby]
+-----
     filter {
       date {
         remove_field => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also remove multiple fields at once:
     filter {
       date {
         remove_field => [ "foo_%{somefield}", "my_extraneous_field" ]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the field with name `foo_hello` if it is present. The second
@@ -321,18 +348,23 @@ syntax.
 
 Example:
 [source,ruby]
+-----
     filter {
       date {
         remove_tag => [ "foo_%{somefield}" ]
       }
     }
+-----
+
 [source,ruby]
+-----
     # You can also remove multiple tags at once:
     filter {
       date {
         remove_tag => [ "foo_%{somefield}", "sad_unwanted_tag"]
       }
     }
+-----
 
 If the event has field `"somefield" == "hello"` this filter, on success,
 would remove the tag `foo_hello` if it is present. The second example
