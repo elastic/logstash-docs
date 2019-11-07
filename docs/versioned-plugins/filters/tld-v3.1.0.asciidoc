@@ -1,0 +1,73 @@
+:plugin: tld
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.1.0
+:release_date: 2019-11-07
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-tld/blob/v3.1.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Tld filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This example filter will replace the contents of the default
+message field with whatever you specify in the configuration.
+
+It is only intended to be used as an example.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Tld Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-source>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-target>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-source"]
+===== `source`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"message"`
+
+Setting the config_name here is required. This is how you
+configure this filter from your Logstash config.
+
+filter {
+  example {
+    message => "My message..."
+  }
+}
+
+The source field to parse
+
+[id="{version}-plugins-{type}s-{plugin}-target"]
+===== `target`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"tld"`
+
+The target field to place all the data
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
