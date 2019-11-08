@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v3.3.0-plugins-codecs-fluent,v3.3.0>> | 2019-11-08
 | <<v3.2.0-plugins-codecs-fluent,v3.2.0>> | 2018-02-06
 | <<v3.1.5-plugins-codecs-fluent,v3.1.5>> | 2017-11-07
 | <<v3.1.4-plugins-codecs-fluent,v3.1.4>> | 2017-10-12
@@ -12,6 +13,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.1.2-plugins-codecs-fluent,v3.1.2>> | 2017-06-23
 |=======================================================================
 
+include::fluent-v3.3.0.asciidoc[]
 include::fluent-v3.2.0.asciidoc[]
 include::fluent-v3.1.5.asciidoc[]
 include::fluent-v3.1.4.asciidoc[]
