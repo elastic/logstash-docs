@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.3
-:release_date: 2017-11-07
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-prune/blob/v3.0.3/CHANGELOG.md
+:version: v3.0.4
+:release_date: 2019-09-12
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-prune/blob/v3.0.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -25,8 +25,8 @@ The prune filter is for removing fields from events based on
 whitelists or blacklist of field names or their values (names and
 values can also be regular expressions).
 
-This can e.g. be useful if you have a <<plugins-filters-json,json>>
-or <<plugins-filters-kv,kv>> filter that creates a number of fields
+This can e.g. be useful if you have a {logstash-ref}/plugins-filters-json.html[json]
+or {logstash-ref}/plugins-filters-kv.html[kv] filter that creates a number of fields
 with names that you don't necessarily know the names of beforehand,
 and you only want to keep a subset of them.
 
@@ -140,6 +140,7 @@ Include only fields only if their names match specified regexps, default to empt
 
 Include specified fields only if their values match one of the supplied regular expressions.
 In case field values are arrays, each array item is matched against the regular expressions and only matching array items will be included.
+By default all fields that are not listed in this setting are kept unless pruned by other settings.
 [source,ruby]
     filter {
       prune {

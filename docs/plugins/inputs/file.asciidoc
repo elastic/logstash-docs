@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.1.10
-:release_date: 2019-03-12
-:changelog_url: https://github.com/logstash-plugins/logstash-input-file/blob/v4.1.10/CHANGELOG.md
+:version: v4.1.11
+:release_date: 2019-09-25
+:changelog_url: https://github.com/logstash-plugins/logstash-input-file/blob/v4.1.11/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -380,7 +380,7 @@ The sincedb record now has a last active timestamp associated with it.
 If no changes are detected in a tracked file in the last N days its sincedb
 tracking record expires and will not be persisted.
 This option helps protect against the inode recycling problem.
-Filebeat has a {filebeat-ref}/faq.html#inode-reuse-issue[FAQ about inode recycling].
+Filebeat has a {filebeat-ref}/inode-reuse-issue.html[FAQ about inode recycling].
 
 [id="plugins-{type}s-{plugin}-sincedb_path"]
 ===== `sincedb_path`

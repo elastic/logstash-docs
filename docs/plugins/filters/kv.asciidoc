@@ -361,7 +361,7 @@ with the provided value (see: <<plugins-{type}s-{plugin}-timeout_millis>>).
 [id="plugins-{type}s-{plugin}-timeout_millis"]
 ===== `timeout_millis`
 
-  * Value type is <<number, number>>
+  * Value type is <<number,number>>
   * The default value for this setting is 30000 (30 seconds).
   * Set to zero (`0`) to disable timeouts
 

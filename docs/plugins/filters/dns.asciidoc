@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.13
-:release_date: 2019-04-29
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-dns/blob/v3.0.13/CHANGELOG.md
+:version: v3.0.14
+:release_date: 2019-10-18
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-dns/blob/v3.0.14/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -130,7 +130,14 @@ number of times to retry a failed resolve/reverse
   * Value type is <<array,array>>
   * There is no default value for this setting.
 
-Use custom nameserver(s). For example: `["8.8.8.8", "8.8.4.4"]`
+Use custom nameserver(s). For example: `["8.8.8.8", "8.8.4.4"]`.
+If `nameserver` is not specified then `/etc/resolv.conf` will be read to
+configure the resolver using the `nameserver`, `domain`,
+`search` and `ndots` directives in `/etc/resolv.conf`.
+
+Note that nameservers normally resolve fully qualified domain names (FQDN)
+and relying on `/etc/resolv.conf` can be useful to provide a domains search
+list to resolve underqualified host names for example.
 
 [id="plugins-{type}s-{plugin}-resolve"]
 ===== `resolve` 
