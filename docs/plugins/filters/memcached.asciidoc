@@ -130,7 +130,7 @@ filter {
 [id="plugins-{type}s-{plugin}-ttl"]
 ===== `ttl`
 
-For usages of this plugin that persist data to memcached (e.g., <<#plugins-{type}s-{plugin}-set,`set`>>), the time-to-live in seconds
+For usages of this plugin that persist data to memcached (e.g., <<plugins-{type}s-{plugin}-set,`set`>>), the time-to-live in seconds
 
   * Value type is <<number,number>>
   * The default value is `0` (no expiry)
