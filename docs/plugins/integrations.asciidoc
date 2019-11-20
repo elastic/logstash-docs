@@ -1,0 +1,18 @@
+[[plugin-integrations]]
+== Plugin integrations
+
+Plugin integrations combine related plugins--inputs, outputs, and sometimes
+filters and codecs--into one package. 
+
+|=======================================================================
+| Plugin Integration | Description | Github repository
+| <<plugins-integration-kafka,kafka>> | Plugins for use with the Kafka distributed streaming platform. | https://github.com/logstash-plugins/logstash-integration-kafka[logstash-integration-kafka]
+| <<plugins-integration-rabbitmq,rabbitmq>> | Plugins for processing events to or from a RabbitMQ exchange. | https://github.com/logstash-plugins/logstash-integration-rabbitmq[logstash-integration-rabbitmq]
+|=======================================================================
+
+:edit_url: https://github.com/logstash-plugins/logstash-codec-avro/edit/master/docs/index.asciidoc
+include::integrations/kafka.asciidoc[]
+
+:edit_url: https://github.com/logstash-plugins/logstash-codec-cef/edit/master/docs/index.asciidoc
+include::integrations/rabbitmq.asciidoc[]
+
