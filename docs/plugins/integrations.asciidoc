@@ -10,9 +10,8 @@ filters and codecs--into one package.
 | <<plugins-integration-rabbitmq,rabbitmq>> | Plugins for processing events to or from a RabbitMQ exchange. | https://github.com/logstash-plugins/logstash-integration-rabbitmq[logstash-integration-rabbitmq]
 |=======================================================================
 
-:edit_url: https://github.com/logstash-plugins/logstash-codec-avro/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-integration-kafka/edit/master/docs/index.asciidoc
 include::integrations/kafka.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-codec-cef/edit/master/docs/index.asciidoc
 include::integrations/rabbitmq.asciidoc[]
-
