@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.1.10
-:release_date: 2019-08-20
-:changelog_url: https://github.com/logstash-plugins/logstash-output-s3/blob/v4.1.10/CHANGELOG.md
+:version: v4.2.0
+:release_date: 2019-11-18
+:changelog_url: https://github.com/logstash-plugins/logstash-output-s3/blob/v4.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -101,7 +101,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-signature_version>> |<<string,string>>, one of `["v2", "v4"]`|No
 | <<plugins-{type}s-{plugin}-size_file>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-ssekms_key_id>> |<<string,string>>|No
-| <<plugins-{type}s-{plugin}-storage_class>> |<<string,string>>, one of `["STANDARD", "REDUCED_REDUNDANCY", "STANDARD_IA"]`|No
+| <<plugins-{type}s-{plugin}-storage_class>> |<<string,string>>, one of `["STANDARD", "REDUCED_REDUNDANCY", "STANDARD_IA", "ONEZONE_IA"]`|No
 | <<plugins-{type}s-{plugin}-temporary_directory>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-time_file>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-upload_multipart_threshold>> |<<number,number>>|No
@@ -332,7 +332,7 @@ http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingKMSEncryption.html
 [id="plugins-{type}s-{plugin}-storage_class"]
 ===== `storage_class` 
 
-  * Value can be any of: `STANDARD`, `REDUCED_REDUNDANCY`, `STANDARD_IA`
+  * Value can be any of: `STANDARD`, `REDUCED_REDUNDANCY`, `STANDARD_IA`, `ONEZONE_IA`
   * Default value is `"STANDARD"`
 
 Specifies what S3 storage class to use when uploading the file.
