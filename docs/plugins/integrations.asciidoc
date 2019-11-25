@@ -13,5 +13,5 @@ filters and codecs--into one package.
 :edit_url: https://github.com/logstash-plugins/logstash-integration-kafka/edit/master/docs/index.asciidoc
 include::integrations/kafka.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-codec-cef/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-integration-rabbitmq/edit/master/docs/index.asciidoc
 include::integrations/rabbitmq.asciidoc[]
