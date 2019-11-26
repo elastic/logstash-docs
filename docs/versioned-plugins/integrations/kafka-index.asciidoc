@@ -1,0 +1,12 @@
+:plugin: kafka
+:type: integration
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v10.0.0-plugins-integrations-kafka,v10.0.0>> | 2019-10-15
+|=======================================================================
+
+include::kafka-v10.0.0.asciidoc[]
+

@@ -1,0 +1,14 @@
+:plugin: rabbitmq
+:type: integration
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v7.0.1-plugins-integrations-rabbitmq,v7.0.1>> | 2019-11-14
+| <<v7.0.0-plugins-integrations-rabbitmq,v7.0.0>> | 2019-10-15
+|=======================================================================
+
+include::rabbitmq-v7.0.1.asciidoc[]
+include::rabbitmq-v7.0.0.asciidoc[]
+

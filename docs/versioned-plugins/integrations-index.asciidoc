@@ -1,0 +1,9 @@
+:type: integration
+:type_uc: Integration
+
+include::include/plugin-intro.asciidoc[]
+
+include::integrations/kafka-index.asciidoc[]
+
+include::integrations/rabbitmq-index.asciidoc[]
+
