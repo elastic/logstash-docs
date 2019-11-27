@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v1.1.0-plugins-filters-jdbc_static,v1.1.0>> | 2019-11-27
 | <<v1.0.7-plugins-filters-jdbc_static,v1.0.7>> | 2019-10-29
 | <<v1.0.6-plugins-filters-jdbc_static,v1.0.6>> | 2018-10-29
 | <<v1.0.5-plugins-filters-jdbc_static,v1.0.5>> | 2018-06-27
@@ -15,6 +16,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v1.0.0-plugins-filters-jdbc_static,v1.0.0>> | 2018-01-11
 |=======================================================================
 
+include::jdbc_static-v1.1.0.asciidoc[]
 include::jdbc_static-v1.0.7.asciidoc[]
 include::jdbc_static-v1.0.6.asciidoc[]
 include::jdbc_static-v1.0.5.asciidoc[]
