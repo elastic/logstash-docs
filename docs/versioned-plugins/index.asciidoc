@@ -18,6 +18,8 @@ include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
 
 :edit_url!:
 
+include::integrations-index.asciidoc[] 
+
 include::inputs-index.asciidoc[]
 
 include::outputs-index.asciidoc[]
