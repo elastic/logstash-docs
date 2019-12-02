@@ -1,11 +1,11 @@
 [[plugin-integrations]]
-== Plugin integrations
+== Integration plugins
 
-Plugin integrations combine related plugins--inputs, outputs, and sometimes
+Integration plugins combine related plugins--inputs, outputs, and sometimes
 filters and codecs--into one package. 
 
 |=======================================================================
-| Plugin Integration | Description | Github repository
+| Integration Plugin | Description | Github repository
 | <<plugins-integrations-kafka,kafka>> | Plugins for use with the Kafka distributed streaming platform. | https://github.com/logstash-plugins/logstash-integration-kafka[logstash-integration-kafka]
 | <<plugins-integrations-rabbitmq,rabbitmq>> | Plugins for processing events to or from a RabbitMQ broker. | https://github.com/logstash-plugins/logstash-integration-rabbitmq[logstash-integration-rabbitmq]
 |=======================================================================
