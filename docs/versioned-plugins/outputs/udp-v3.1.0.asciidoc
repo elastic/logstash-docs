@@ -1,0 +1,91 @@
+:plugin: udp
+:type: output
+:default_codec: json
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.1.0
+:release_date: 2019-12-17
+:changelog_url: https://github.com/logstash-plugins/logstash-output-udp/blob/v3.1.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Udp output plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Send events over UDP
+
+Keep in mind that UDP does not provide delivery or duplicate protection guarantees.
+Even when this plugin succeeds at writing to the UDP socket, there is no guarantee that
+the recipient will receive exactly one copy of the event.
+
+When this plugin fails to write to the UDP socket, by default the event will be dropped
+and the error message will be logged. The <<{version}-plugins-{type}s-{plugin}-retry_count>> option
+in conjunction with the <<{version}-plugins-{type}s-{plugin}-retry_backoff_ms>> option can be used
+to retry a failed write for a number of times before dropping the event.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Udp Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-host>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-port>> |{logstash-ref}/configuration-file-structure.html#number[number]|Yes
+| <<{version}-plugins-{type}s-{plugin}-retry_count>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-retry_backoff_ms>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-host"]
+===== `host`
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The address to send messages to
+
+[id="{version}-plugins-{type}s-{plugin}-port"]
+===== `port`
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * There is no default value for this setting.
+
+The port to send messages on
+
+[id="{version}-plugins-{type}s-{plugin}-retry_count"]
+===== `retry_count`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+* Default value is `0`
+
+The number of times to retry a failed UPD socket write
+
+[id="{version}-plugins-{type}s-{plugin}-retry_backoff_ms"]
+===== `retry_backoff_ms`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+* Default value is `10`
+
+The amount of time to wait in milliseconds before attempting to retry a failed UPD socket write
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
