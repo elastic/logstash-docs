@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v7.0.0
-:release_date: 2019-10-15
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-rabbitmq/blob/v7.0.0/CHANGELOG.md
+:version: v7.0.2
+:release_date: 2019-12-03
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-rabbitmq/blob/v7.0.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -117,7 +117,7 @@ input plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-ack"]
-===== `ack` 
+===== `ack`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -132,16 +132,21 @@ This will only send an ack back every `prefetch_count` messages.
 Working in batches provides a performance boost here.
 
 [id="plugins-{type}s-{plugin}-arguments"]
-===== `arguments` 
+===== `arguments`
 
   * Value type is <<array,array>>
   * Default value is `{}`
 
-Extra queue arguments as an array.
-To make a RabbitMQ queue mirrored, use: `{"x-ha-policy" => "all"}`
+Optional queue arguments as an array.
+
+Relevant RabbitMQ doc guides:
+
+ * https://www.rabbitmq.com/queues.html#optional-arguments[Optional queue arguments]
+ * https://www.rabbitmq.com/parameters.html#policies[Policies]
+ * https://www.rabbitmq.com/quorum-queues.html[Quorum Queues]
 
 [id="plugins-{type}s-{plugin}-auto_delete"]
-===== `auto_delete` 
+===== `auto_delete`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -152,15 +157,16 @@ on the broker, queueing up messages until a consumer comes along to
 consume them.
 
 [id="plugins-{type}s-{plugin}-automatic_recovery"]
-===== `automatic_recovery` 
+===== `automatic_recovery`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-Set this to automatically recover from a broken connection. You almost certainly don't want to override this!!!
+Set this to https://www.rabbitmq.com/connections.html#automatic-recovery[automatically recover] from a broken connection.
+You almost certainly don't want to override this!
 
 [id="plugins-{type}s-{plugin}-connect_retry_interval"]
-===== `connect_retry_interval` 
+===== `connect_retry_interval`
 
   * Value type is <<number,number>>
   * Default value is `1`
@@ -168,7 +174,7 @@ Set this to automatically recover from a broken connection. You almost certainly
 Time in seconds to wait before retrying a connection
 
 [id="plugins-{type}s-{plugin}-connection_timeout"]
-===== `connection_timeout` 
+===== `connection_timeout`
 
   * Value type is <<number,number>>
   * There is no default value for this setting.
@@ -176,7 +182,7 @@ Time in seconds to wait before retrying a connection
 The default connection timeout in milliseconds. If not specified the timeout is infinite.
 
 [id="plugins-{type}s-{plugin}-durable"]
-===== `durable` 
+===== `durable`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -184,7 +190,7 @@ The default connection timeout in milliseconds. If not specified the timeout is 
 Is this queue durable? (aka; Should it survive a broker restart?)
 
 [id="plugins-{type}s-{plugin}-exchange"]
-===== `exchange` 
+===== `exchange`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -193,7 +199,7 @@ The name of the exchange to bind the queue to. Specify `exchange_type`
 as well to declare the exchange if it does not exist
 
 [id="plugins-{type}s-{plugin}-exchange_type"]
-===== `exchange_type` 
+===== `exchange_type`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -202,7 +208,7 @@ The type of the exchange to bind to. Specifying this will cause this plugin
 to declare the exchange if it does not exist.
 
 [id="plugins-{type}s-{plugin}-exclusive"]
-===== `exclusive` 
+===== `exclusive`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -212,15 +218,16 @@ that declared them and will be deleted when it is closed (e.g. due to a Logstash
 restart).
 
 [id="plugins-{type}s-{plugin}-heartbeat"]
-===== `heartbeat` 
+===== `heartbeat`
 
   * Value type is <<number,number>>
   * There is no default value for this setting.
 
-Heartbeat delay in seconds. If unspecified no heartbeats will be sent
+https://www.rabbitmq.com/heartbeats.html[Heartbeat timeout] in seconds.
+If unspecified then heartbeat timeout of 60 seconds will be used.
 
 [id="plugins-{type}s-{plugin}-host"]
-===== `host` 
+===== `host`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -239,7 +246,7 @@ recovery attempts of the hosts is chosen at random and connected to.
 Note that only one host connection is active at a time.
 
 [id="plugins-{type}s-{plugin}-key"]
-===== `key` 
+===== `key`
 
   * Value type is <<string,string>>
   * Default value is `"logstash"`
@@ -251,7 +258,7 @@ This is only relevant for direct or topic exchanges.
 * Wildcards are not valid on direct exchanges.
 
 [id="plugins-{type}s-{plugin}-metadata_enabled"]
-===== `metadata_enabled` 
+===== `metadata_enabled`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -259,7 +266,7 @@ This is only relevant for direct or topic exchanges.
 Enable the storage of message headers and properties in `@metadata`. This may impact performance
 
 [id="plugins-{type}s-{plugin}-passive"]
-===== `passive` 
+===== `passive`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -271,7 +278,7 @@ a queue that already exists, the queue options for this plugin
 (durable etc) must match those of the existing queue.
 
 [id="plugins-{type}s-{plugin}-password"]
-===== `password` 
+===== `password`
 
   * Value type is <<password,password>>
   * Default value is `"guest"`
@@ -279,7 +286,7 @@ a queue that already exists, the queue options for this plugin
 RabbitMQ password
 
 [id="plugins-{type}s-{plugin}-port"]
-===== `port` 
+===== `port`
 
   * Value type is <<number,number>>
   * Default value is `5672`
@@ -287,7 +294,7 @@ RabbitMQ password
 RabbitMQ port to connect on
 
 [id="plugins-{type}s-{plugin}-prefetch_count"]
-===== `prefetch_count` 
+===== `prefetch_count`
 
   * Value type is <<number,number>>
   * Default value is `256`
@@ -297,7 +304,7 @@ option, specifies the number of outstanding unacknowledged
 messages allowed.
 
 [id="plugins-{type}s-{plugin}-queue"]
-===== `queue` 
+===== `queue`
 
   * Value type is <<string,string>>
   * Default value is `""`
@@ -322,7 +329,7 @@ left empty, a transient queue with an randomly chosen name
 will be created.
 
 [id="plugins-{type}s-{plugin}-ssl"]
-===== `ssl` 
+===== `ssl`
 
   * Value type is <<boolean,boolean>>
   * There is no default value for this setting.
@@ -333,7 +340,7 @@ Specify ssl_certificate_path and ssl_certificate_password if you need
 certificate verification
 
 [id="plugins-{type}s-{plugin}-ssl_certificate_password"]
-===== `ssl_certificate_password` 
+===== `ssl_certificate_password`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -341,7 +348,7 @@ certificate verification
 Password for the encrypted PKCS12 (.p12) certificate file specified in ssl_certificate_path
 
 [id="plugins-{type}s-{plugin}-ssl_certificate_path"]
-===== `ssl_certificate_path` 
+===== `ssl_certificate_path`
 
   * Value type is <<path,path>>
   * There is no default value for this setting.
@@ -349,7 +356,7 @@ Password for the encrypted PKCS12 (.p12) certificate file specified in ssl_certi
 Path to an SSL certificate in PKCS12 (.p12) format used for verifying the remote host
 
 [id="plugins-{type}s-{plugin}-ssl_version"]
-===== `ssl_version` 
+===== `ssl_version`
 
   * Value type is <<string,string>>
   * Default value is `"TLSv1.2"`
@@ -357,7 +364,7 @@ Path to an SSL certificate in PKCS12 (.p12) format used for verifying the remote
 Version of the SSL protocol to use.
 
 [id="plugins-{type}s-{plugin}-subscription_retry_interval_seconds"]
-===== `subscription_retry_interval_seconds` 
+===== `subscription_retry_interval_seconds`
 
   * This is a required setting.
   * Value type is <<number,number>>
@@ -367,13 +374,13 @@ Amount of time in seconds to wait after a failed subscription request
 before retrying. Subscribes can fail if the server goes away and then comes back.
 
 [id="plugins-{type}s-{plugin}-threads"]
-===== `threads` 
+===== `threads`
 
   * Value type is <<number,number>>
   * Default value is `1`
 
 [id="plugins-{type}s-{plugin}-user"]
-===== `user` 
+===== `user`
 
   * Value type is <<string,string>>
   * Default value is `"guest"`
@@ -381,7 +388,7 @@ before retrying. Subscribes can fail if the server goes away and then comes back
 RabbitMQ username
 
 [id="plugins-{type}s-{plugin}-vhost"]
-===== `vhost` 
+===== `vhost`
 
   * Value type is <<string,string>>
   * Default value is `"/"`

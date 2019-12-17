@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.1
-:release_date: 2019-07-08
-:changelog_url: https://github.com/logstash-plugins/logstash-input-jms/blob/v3.1.1/CHANGELOG.md
+:version: v3.1.2
+:release_date: 2019-12-05
+:changelog_url: https://github.com/logstash-plugins/logstash-input-jms/blob/v3.1.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -334,6 +334,37 @@ JMS provider will throw an exception causing the plugin to fail OR the syntax wi
 be silently dropped - this can happen with incorrect quoting of string properties in the selector definition. All
 selector definitions must be double quoted in the Logstash configuration file, and string property values must be
 single quoted, and numeric property values not quoted at all.
+
+
+===== Failed to create Event with MissingConverterException
+
+Messages from certain JMS providers may contain headers or properties that Logstash cannot interpret, which can lead to
+error messages such as:
+
+
+[source,txt]
+-----
+[2019-11-25T08:04:28,769][ERROR][logstash.inputs.jms      ] Failed to create event {:message=>Java::ComSolacesystemsJmsMessage::SolTextMessage: ...
+Attributes: {:jms_correlation_id=>"xxxx", :jms_delivery_mode_sym=>:non_persistent, :jms_destination=>"destination", :jms_expiration=>0, :jms_message_id=>"xxxxxx", :jms_priority=>0, :jms_redelivered=>false, :jms_reply_to=>#<Java::ComSolacesystemsJmsImpl::SolTopicImpl:0xdeadbeef>, :jms_timestamp=>1574669008862, :jms_type=>nil}
+Properties: nil, :exception=>org.logstash.MissingConverterException: Missing Converter handling for full class name=com.solacesystems.jms.impl.SolTopicImpl, simple name=SolTopicImpl, :backtrace=>["org.logstash.Valuefier.fallbackConvert(Valuefier.java:98)..."]}
+:exception=>org.logstash.MissingConverterException: Missing Converter handling for full class name=com.solacesystems.jms.impl.SolTopicImpl
+-----
+
+To get around this, use the `skip_headers` or `skip_properties` configuration setting to avoid attempting to process
+the offending header or property in the message.
+
+In the example shown above, this attribute is causing the
+`MissingConverterException`:
+
+`jms_reply_to=>#<Java::ComSolacesystemsJmsImpl::SolTopicImpl:0xdeadbeef>`
+
+
+To avoid this error, the configuration should include the following line:
+
+[source,ruby]
+-----
+skip_headers => ["jms_reply_to"]
+-----
 
 
 [id="plugins-{type}s-{plugin}-options"]
