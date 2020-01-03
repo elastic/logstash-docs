@@ -6,7 +6,7 @@ filters and codecs--into one package.
 
 |=======================================================================
 | Integration Plugin | Description | Github repository
-| <<plugins-integrations-jdbc,jdbc>> | Plugins for use with d satabases that provide JDBC drivers. | https://github.com/logstash-plugins/logstash-integration-jdbc[logstash-integration-jdbc]
+| <<plugins-integrations-jdbc,jdbc>> | Plugins for use with databases that provide JDBC drivers. | https://github.com/logstash-plugins/logstash-integration-jdbc[logstash-integration-jdbc]
 | <<plugins-integrations-kafka,kafka>> | Plugins for use with the Kafka distributed streaming platform. | https://github.com/logstash-plugins/logstash-integration-kafka[logstash-integration-kafka]
 | <<plugins-integrations-rabbitmq,rabbitmq>> | Plugins for processing events to or from a RabbitMQ broker. | https://github.com/logstash-plugins/logstash-integration-rabbitmq[logstash-integration-rabbitmq]
 |=======================================================================
