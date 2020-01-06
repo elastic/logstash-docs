@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v4.1.12-plugins-inputs-file,v4.1.12>> | 2020-01-06
 | <<v4.1.11-plugins-inputs-file,v4.1.11>> | 2019-09-25
 | <<v4.1.10-plugins-inputs-file,v4.1.10>> | 2019-03-12
 | <<v4.1.9-plugins-inputs-file,v4.1.9>> | 2018-12-19
@@ -22,6 +23,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v4.0.2-plugins-inputs-file,v4.0.2>> | 2017-06-23
 |=======================================================================
 
+include::file-v4.1.12.asciidoc[]
 include::file-v4.1.11.asciidoc[]
 include::file-v4.1.10.asciidoc[]
 include::file-v4.1.9.asciidoc[]
