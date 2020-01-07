@@ -167,7 +167,7 @@ include::filters/split.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-syslog_pri/edit/master/docs/index.asciidoc
 include::filters/syslog_pri.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-threats_classiifer/edit/master/docs/index.asciidoc
+:edit_url: 
 include::filters/threats_classifier.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-filter-throttle/edit/master/docs/index.asciidoc
