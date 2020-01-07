@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v6.0.1
-:release_date: 2019-09-11
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v6.0.1/CHANGELOG.md
+:version: v6.1.0
+:release_date: 2019-12-20
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v6.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
