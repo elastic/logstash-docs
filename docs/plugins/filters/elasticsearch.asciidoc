@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.6.1
-:release_date: 2019-11-12
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.6.1/CHANGELOG.md
+:version: v3.7.0
+:release_date: 2020-01-08
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.7.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -123,6 +123,8 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-aggregation_fields>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-ca_file>> |a valid filesystem path|No
+| <<plugins-{type}s-{plugin}-cloud_auth>> |<<password,password>>|No
+| <<plugins-{type}s-{plugin}-cloud_id>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-docinfo_fields>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-enable_sort>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-fields>> |<<array,array>>|No
@@ -299,6 +301,26 @@ Tags the event on failure to look up previous log event information. This can be
   * There is no default value for this setting.
 
 Basic Auth - username
+
+[id="plugins-{type}s-{plugin}-cloud_auth"]
+===== `cloud_auth`
+
+  * Value type is <<password,password>>
+  * There is no default value for this setting.
+
+Cloud authentication string ("<username>:<password>" format) is an alternative for the `user`/`password` pair.
+
+For mode details, check out the https://www.elastic.co/guide/en/logstash/current/connecting-to-cloud.html#_cloud_auth[Logstash-to-Cloud documentation]
+
+[id="plugins-{type}s-{plugin}-cloud_id"]
+===== `cloud_id`
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Cloud ID, from the Elastic Cloud web console. If set `hosts` should not be used.
+
+For mode details, check out the https://www.elastic.co/guide/en/logstash/current/connecting-to-cloud.html#_cloud_id[Logstash-to-Cloud documentation]
 
 
 
