@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.4.0
-:release_date: 2019-12-09
-:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.4.0/CHANGELOG.md
+:version: v4.5.0
+:release_date: 2020-01-08
+:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.5.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -88,6 +88,8 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |=======================================================================
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-ca_file>> |a valid filesystem path|No
+| <<plugins-{type}s-{plugin}-cloud_auth>> |<<password,password>>|No
+| <<plugins-{type}s-{plugin}-cloud_id>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-docinfo>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-docinfo_fields>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-docinfo_target>> |<<string,string>>|No
@@ -114,8 +116,27 @@ input plugins.
   * Value type is <<path,path>>
   * There is no default value for this setting.
 
-SSL Certificate Authority file in PEM encoded format, must also
-include any chain certificates as necessary.
+SSL Certificate Authority file in PEM encoded format, must also include any chain certificates as necessary.
+
+[id="plugins-{type}s-{plugin}-cloud_auth"]
+===== `cloud_auth`
+
+  * Value type is <<password,password>>
+  * There is no default value for this setting.
+
+Cloud authentication string ("<username>:<password>" format) is an alternative for the `user`/`password` pair.
+
+For more info, check out the https://www.elastic.co/guide/en/logstash/current/connecting-to-cloud.html#_cloud_auth[Logstash-to-Cloud documentation]
+
+[id="plugins-{type}s-{plugin}-cloud_id"]
+===== `cloud_id`
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Cloud ID, from the Elastic Cloud web console. If set `hosts` should not be used.
+
+For more info, check out the https://www.elastic.co/guide/en/logstash/current/connecting-to-cloud.html#_cloud_id[Logstash-to-Cloud documentation]
 
 [id="plugins-{type}s-{plugin}-docinfo"]
 ===== `docinfo` 
