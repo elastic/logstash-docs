@@ -3,6 +3,8 @@
 
 include::include/plugin-intro.asciidoc[]
 
+include::integrations/jdbc-index.asciidoc[]
+
 include::integrations/kafka-index.asciidoc[]
 
 include::integrations/rabbitmq-index.asciidoc[]
