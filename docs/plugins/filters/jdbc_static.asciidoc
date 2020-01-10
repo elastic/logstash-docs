@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.1.0
-:release_date: 2019-11-27
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-jdbc_static/blob/v1.1.0/CHANGELOG.md
+:version: v5.0.0
+:release_date: 2020-01-09
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-jdbc/blob/v5.0.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -135,7 +135,7 @@ structure. The column names and types should match the external database.
 The order of table definitions is significant and should match that of the loader queries.
 See <<plugins-{type}s-{plugin}-object_order>>.
 <3> Performs lookup queries on the local database to enrich the events.
-<4> Local lookup queries can also use prepared statements where the parameters 
+<4> Local lookup queries can also use prepared statements where the parameters
 follow the positional ordering.
 <5> Specifies the event field that will store the looked-up data. If the lookup
 returns multiple columns, the data is stored as a JSON object within the field.
@@ -549,8 +549,8 @@ default id is used instead.
 query::
 A SQL SELECT statement that is executed to achieve the lookup. To use
 parameters, use named parameter syntax, for example
-`"SELECT * FROM MYTABLE WHERE ID = :id"`. Alternatively, the `?` sign 
-can be used as a prepared statement parameter, in which case 
+`"SELECT * FROM MYTABLE WHERE ID = :id"`. Alternatively, the `?` sign
+can be used as a prepared statement parameter, in which case
 the `prepared_parameters` array is used to populate the values
 
 parameters::
@@ -571,10 +571,10 @@ like this: `parameters => { "p1" => "%{[id]}-%{[loc_id]}" }`.
 prepared_parameters::
 An Array, where the position is related to the position of the `?` in
 the query syntax. The values of array follow the same semantic of `parameters`.
-If `prepared_parameters` is valorized the filter is forced to use JDBC's 
-prepared statement to query the local database. 
+If `prepared_parameters` is valorized the filter is forced to use JDBC's
+prepared statement to query the local database.
 Prepared statements provides two benefits: one on the performance side, because
-avoid the DBMS to parse and compile the SQL expression for every call; 
+avoid the DBMS to parse and compile the SQL expression for every call;
 the other benefit is on the security side, using prepared statements
 avoid SQL-injection attacks based on query string concatenation.
 
