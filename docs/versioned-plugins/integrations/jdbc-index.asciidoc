@@ -5,8 +5,10 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v5.0.1-plugins-integrations-jdbc,v5.0.1>> | 2020-02-04
 | <<v5.0.0-plugins-integrations-jdbc,v5.0.0>> | 2020-01-09
 |=======================================================================
 
+include::jdbc-v5.0.1.asciidoc[]
 include::jdbc-v5.0.0.asciidoc[]
 
