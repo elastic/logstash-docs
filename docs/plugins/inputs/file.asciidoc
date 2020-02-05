@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.1.12
-:release_date: 2020-01-06
-:changelog_url: https://github.com/logstash-plugins/logstash-input-file/blob/v4.1.12/CHANGELOG.md
+:version: v4.1.15
+:release_date: 2020-02-04
+:changelog_url: https://github.com/logstash-plugins/logstash-input-file/blob/v4.1.15/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
