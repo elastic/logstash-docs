@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v10.3.0
-:release_date: 2020-01-03
-:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v10.3.0/CHANGELOG.md
+:version: v10.3.1
+:release_date: 2020-01-20
+:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v10.3.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -336,7 +336,7 @@ The .cer or .pem file to validate the server's certificate
 
 Cloud authentication string ("<username>:<password>" format) is an alternative for the `user`/`password` pair.
 
-For more details, check out the https://www.elastic.co/guide/en/logstash/current/connecting-to-cloud.html#_cloud_auth[cloud documentation]
+For mode details, check out the https://www.elastic.co/guide/en/logstash/current/connecting-to-cloud.html#_cloud_auth[cloud documentation]
 
 [id="plugins-{type}s-{plugin}-cloud_id"]
 ===== `cloud_id`
@@ -346,7 +346,7 @@ For more details, check out the https://www.elastic.co/guide/en/logstash/current
 
 Cloud ID, from the Elastic Cloud web console. If set `hosts` should not be used.
 
-For more details, check out the https://www.elastic.co/guide/en/logstash/current/connecting-to-cloud.html#_cloud_id[cloud documentation]
+For mode details, check out the https://www.elastic.co/guide/en/logstash/current/connecting-to-cloud.html#_cloud_id[cloud documentation]
 
 [id="plugins-{type}s-{plugin}-doc_as_upsert"]
 ===== `doc_as_upsert` 
@@ -627,6 +627,8 @@ which is bad.
 Set the address of a forward HTTP proxy.
 This used to accept hashes as arguments but now only accepts
 arguments of the URI type to prevent leaking credentials.
+An empty string is treated as if proxy was not set, this is useful when using
+environment variables e.g. `proxy => '${LS_PROXY:}'`.
 
 [id="plugins-{type}s-{plugin}-resurrect_delay"]
 ===== `resurrect_delay` 
