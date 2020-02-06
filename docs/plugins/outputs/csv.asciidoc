@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.7
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-output-csv/blob/v3.0.7/CHANGELOG.md
+:version: v3.0.8
+:release_date: 2020-01-14
+:changelog_url: https://github.com/logstash-plugins/logstash-output-csv/blob/v3.0.8/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -70,7 +70,7 @@ the plugin will recreate the file. Default => true
 
 Options for CSV output. This is passed directly to the Ruby stdlib to_csv function.
 Full documentation is available on the http://ruby-doc.org/stdlib-2.0.0/libdoc/csv/rdoc/index.html[Ruby CSV documentation page].
-A typical use case would be to use alternative column or row seperators eg: `csv_options => {"col_sep" => "\t" "row_sep" => "\r\n"}` gives tab seperated data with windows line endings
+A typical use case would be to use alternative column or row separators eg: `csv_options => {"col_sep" => "\t" "row_sep" => "\r\n"}` gives tab separated data with windows line endings
 
 [id="plugins-{type}s-{plugin}-dir_mode"]
 ===== `dir_mode` 
@@ -143,14 +143,18 @@ This output writes events to files on disk. You can use fields
 from the event as parts of the filename and/or path.
 
 By default, this output writes one event per line in **json** format.
-You can customise the line format using the `line` codec like
+You can customise the line format using the `line` codec like:
+
 [source,ruby]
+-----
 output {
  file {
    path => ...
    codec => line { format => "custom format: %{message}"}
  }
 }
+-----
+
 The path to the file to write. Event fields can be used here,
 like `/var/log/logstash/%{host}/%{application}`
 One may also utilize the path option for date-based log
@@ -175,5 +179,6 @@ may not make the values safe in your spreadsheet application
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
+
 
 :default_codec!:

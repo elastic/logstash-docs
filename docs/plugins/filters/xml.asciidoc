@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.7
-:release_date: 2019-02-27
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-xml/blob/v4.0.7/CHANGELOG.md
+:version: v4.1.0
+:release_date: 2020-01-28
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-xml/blob/v4.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -35,6 +35,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-force_array>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-force_content>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-namespaces>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-parser_options>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-remove_namespaces>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-source>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-store_xml>> |<<boolean,boolean>>|No
@@ -88,6 +89,17 @@ filter {
   }
 }
 
+[id="plugins-{type}s-{plugin}-parser_options"]
+===== `parser_options`
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Setting XML parser options allows for more control of the parsing process.
+By default the parser is not strict and thus accepts some invalid content.
+Currently supported options are:
+
+ - `strict` - forces the parser to fail early instead of accumulating errors when content is not valid xml.
 
 [id="plugins-{type}s-{plugin}-remove_namespaces"]
 ===== `remove_namespaces` 

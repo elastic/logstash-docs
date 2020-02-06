@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.5.0
-:release_date: 2020-01-08
-:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.5.0/CHANGELOG.md
+:version: v4.6.0
+:release_date: 2020-01-27
+:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.6.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -96,6 +96,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-hosts>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-index>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-password>> |<<password,password>>|No
+| <<plugins-{type}s-{plugin}-proxy>> |<<uri,uri>>|No
 | <<plugins-{type}s-{plugin}-query>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-schedule>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-scroll>> |<<string,string>>|No
@@ -231,6 +232,16 @@ multiple indices.
 The password to use together with the username in the `user` option
 when authenticating to the Elasticsearch server. If set to an empty
 string authentication will be disabled.
+
+[id="plugins-{type}s-{plugin}-proxy"]
+===== `proxy`
+
+* Value type is <<uri,uri>>
+* There is no default value for this setting.
+
+Set the address of a forward HTTP proxy.
+An empty string is treated as if proxy was not set, this is useful when using
+environment variables e.g. `proxy => '${LS_PROXY:}'`.
 
 [id="plugins-{type}s-{plugin}-query"]
 ===== `query` 
