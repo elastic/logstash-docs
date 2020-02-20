@@ -13,6 +13,7 @@ The following codec plugins are available below. For a list of Elastic supported
 | <<plugins-codecs-cloudfront,cloudfront>> | Reads AWS CloudFront reports | https://github.com/logstash-plugins/logstash-codec-cloudfront[logstash-codec-cloudfront]
 | <<plugins-codecs-cloudtrail,cloudtrail>> | Reads AWS CloudTrail log files| https://github.com/logstash-plugins/logstash-codec-cloudtrail[logstash-codec-cloudtrail]
 | <<plugins-codecs-collectd,collectd>> | Reads events from the `collectd` binary protocol using UDP. | https://github.com/logstash-plugins/logstash-codec-collectd[logstash-codec-collectd]
+| <<plugins-codecs-csv,csv>> | Takes CSV data, parses it, and passes it along. | https://github.com/logstash-plugins/logstash-codec-csv[logstash-codec-csv]
 | <<plugins-codecs-dots,dots>> | Sends 1 dot per event to `stdout` for performance tracking | https://github.com/logstash-plugins/logstash-codec-dots[logstash-codec-dots]
 | <<plugins-codecs-edn,edn>> | Reads EDN format data | https://github.com/logstash-plugins/logstash-codec-edn[logstash-codec-edn]
 | <<plugins-codecs-edn_lines,edn_lines>> | Reads newline-delimited EDN format data | https://github.com/logstash-plugins/logstash-codec-edn_lines[logstash-codec-edn_lines]
@@ -46,6 +47,9 @@ include::codecs/cloudtrail.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-codec-collectd/edit/master/docs/index.asciidoc
 include::codecs/collectd.asciidoc[]
+
+:edit_url: https://github.com/logstash-plugins/logstash-codec-csv/edit/master/docs/index.asciidoc
+include::codecs/csv.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-codec-dots/edit/master/docs/index.asciidoc
 include::codecs/dots.asciidoc[]
