@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v4.3.0-plugins-filters-grok,v4.3.0>> | 2020-02-21
 | <<v4.2.0-plugins-filters-grok,v4.2.0>> | 2019-11-18
 | <<v4.1.1-plugins-filters-grok,v4.1.1>> | 2019-08-08
 | <<v4.1.0-plugins-filters-grok,v4.1.0>> | 2019-07-22
@@ -19,6 +20,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.4.1-plugins-filters-grok,v3.4.1>> | 2017-05-10
 |=======================================================================
 
+include::grok-v4.3.0.asciidoc[]
 include::grok-v4.2.0.asciidoc[]
 include::grok-v4.1.1.asciidoc[]
 include::grok-v4.1.0.asciidoc[]
