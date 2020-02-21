@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.2.0
-:release_date: 2019-11-18
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-grok/blob/v4.2.0/CHANGELOG.md
+:version: v4.3.0
+:release_date: 2020-02-21
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-grok/blob/v4.3.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -345,6 +345,14 @@ successful match
   * Default value is `"_groktimeout"`
 
 Tag to apply if a grok regexp times out.
+
+[id="plugins-{type}s-{plugin}-target"]
+===== `target`
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting
+
+Define target namespace for placing matches.
 
 [id="plugins-{type}s-{plugin}-timeout_millis"]
 ===== `timeout_millis` 
