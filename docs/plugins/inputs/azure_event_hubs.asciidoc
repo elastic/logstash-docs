@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.1.2
-:release_date: 2019-05-28
-:changelog_url: https://github.com/logstash-plugins/logstash-input-azure_event_hubs/blob/v1.1.2/CHANGELOG.md
+:version: v1.1.4
+:release_date: 2020-02-29
+:changelog_url: https://github.com/logstash-plugins/logstash-input-azure_event_hubs/blob/v1.1.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -100,7 +100,8 @@ The number of threads should equal the number of Event Hubs plus one (or more).
 Each Event Hub needs at least one thread. An additional thread is needed to help
 coordinate the other threads. The number of threads should not exceed the number
 of Event Hubs multiplied by the number of partitions per Event Hub plus one.
-Threads are currently available only as a global setting.
+Threads are currently available only as a global setting.  If you are using multiple 
+pipelines, the threads setting applies to each pipeline independently.  
 ** Sample scenario: Event Hubs = 4. Partitions on each Event Hub = 3.
 Minimum threads is 5 (4 Event Hubs plus one). Maximum threads is 13 (4 Event
 Hubs times 3 partitions plus one). 
