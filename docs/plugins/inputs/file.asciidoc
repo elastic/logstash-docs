@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.1.11
-:release_date: 2019-09-25
-:changelog_url: https://github.com/logstash-plugins/logstash-input-file/blob/v4.1.11/CHANGELOG.md
+:version: v4.1.16
+:release_date: 2020-02-20
+:changelog_url: https://github.com/logstash-plugins/logstash-input-file/blob/v4.1.16/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -169,6 +169,7 @@ see <<plugins-{type}s-{plugin}-string_duration,string_duration>> for the details
 | <<plugins-{type}s-{plugin}-delimiter>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-discover_interval>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-exclude>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-exit_after_read>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-file_chunk_count>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-file_chunk_size>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-file_completed_action>> |<<string,string>>, one of `["delete", "log", "log_and_delete"]`|No
@@ -241,6 +242,19 @@ patterns are valid here, too. For example, if you have
 In Tail mode, you might want to exclude gzipped files:
 [source,ruby]
     exclude => "*.gz"
+
+[id="plugins-{type}s-{plugin}-exit_after_read"]
+===== `exit_after_read`
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+This option can be used in `read` mode to enforce closing all watchers when file gets read.
+Can be used in situation when content of the file is static and won't change during execution.
+When set to `true` it also disables active discovery of the files - only files that were in 
+the directories when process was started will be read.
+It supports `sincedb` entries. When file was processed once, then modified - next run will only
+read newly added entries.
 
 [id="plugins-{type}s-{plugin}-file_chunk_count"]
 ===== `file_chunk_count`
@@ -380,7 +394,7 @@ The sincedb record now has a last active timestamp associated with it.
 If no changes are detected in a tracked file in the last N days its sincedb
 tracking record expires and will not be persisted.
 This option helps protect against the inode recycling problem.
-Filebeat has a {filebeat-ref}/faq.html#inode-reuse-issue[FAQ about inode recycling].
+Filebeat has a {filebeat-ref}/inode-reuse-issue.html[FAQ about inode recycling].
 
 [id="plugins-{type}s-{plugin}-sincedb_path"]
 ===== `sincedb_path`
