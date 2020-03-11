@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v3.5.1-plugins-inputs-redis,v3.5.1>> | 2020-03-11
 | <<v3.5.0-plugins-inputs-redis,v3.5.0>> | 2019-08-20
 | <<v3.4.1-plugins-inputs-redis,v3.4.1>> | 2019-02-04
 | <<v3.4.0-plugins-inputs-redis,v3.4.0>> | 2018-09-27
@@ -16,6 +17,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.1.3-plugins-inputs-redis,v3.1.3>> | 2017-06-23
 |=======================================================================
 
+include::redis-v3.5.1.asciidoc[]
 include::redis-v3.5.0.asciidoc[]
 include::redis-v3.4.1.asciidoc[]
 include::redis-v3.4.0.asciidoc[]
