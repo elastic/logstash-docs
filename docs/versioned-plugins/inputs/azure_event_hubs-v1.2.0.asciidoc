@@ -1,0 +1,500 @@
+:plugin: azure_event_hubs
+:type: input
+:default_codec: plain
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v1.2.0
+:release_date: 2020-03-12
+:changelog_url: https://github.com/logstash-plugins/logstash-input-azure_event_hubs/blob/v1.2.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Azure Event Hubs plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This plugin consumes events from
+https://azure.microsoft.com/en-us/services/event-hubs[Azure Event Hubs], a
+highly scalable data streaming platform and event ingestion service. Event
+producers send events to the Azure Event Hub, and this plugin consumes those
+events for use with Logstash.
+
+Many Azure services integrate with the Azure Event Hubs.
+https://docs.microsoft.com/en-us/azure/monitoring-and-diagnostics/monitoring-overview-azure-monitor[Azure
+Monitor], for example, integrates with Azure Event Hubs to provide infrastructure metrics.
+
+===== Event Hub connection string
+
+The plugin uses the connection string to access Azure Events Hubs. Find the
+connection string here: https://portal.azure.com[Azure Portal]`-> Event Hub ->
+Shared access polices`. The event_hub_connections option passes the Event Hub
+connection strings for the basic configuration.
+
+Sample connection string:
+
+[source,text]
+----
+Endpoint=sb://logstash.servicebus.windows.net/;SharedAccessKeyName=activity-log-read-only;SharedAccessKey=mm6AbDcEfj8lk7sjsbzoTJ10qAkiSaG663YykEAG2eg=;EntityPath=insights-operational-logs
+----
+
+===== Blob Storage and connection string
+
+https://azure.microsoft.com/en-us/services/storage/blobs[Azure Blob Storage
+account] is an essential part of Azure-to-Logstash configuration.
+A Blob Storage account is a central location that enables multiple instances of
+Logstash to work together to process events. It records the
+offset (location) of processed events. On restart, Logstash resumes processing
+exactly where it left off.
+
+Configuration notes:
+
+*  A Blob Storage account is highly recommended for use with this plugin, and is
+likely required for production servers.
+* The `storage_connection` option passes the blob storage connection string.
+* Configure all Logstash instances to use the same `storage_connection` to get the
+benefits of shared processing.
+
+Sample Blob Storage connection string:
+
+[source,text]
+----
+DefaultEndpointsProtocol=https;AccountName=logstash;AccountKey=ETOPnkd/hDAWidkEpPZDiXffQPku/SZdXhPSLnfqdRTalssdEuPkZwIcouzXjCLb/xPZjzhmHfwRCGo0SBSw==;EndpointSuffix=core.windows.net
+----
+
+Find the connection string to Blob Storage here:
+https://portal.azure.com[Azure Portal]`-> Blob Storage account -> Access keys`.
+
+[id="{version}-plugins-{type}s-{plugin}-best-practices"]
+===== Best practices
+
+Here are some guidelines to help you avoid data conflicts that can cause lost
+events.
+
+* **Create a Logstash consumer group.**
+Create a new consumer group specifically for Logstash. Do not use the $default or
+any other consumer group that might already be in use. Reusing consumer groups
+among non-related consumers can cause unexpected behavior and possibly lost
+events. All Logstash instances should use the same consumer group so that they can
+work together for processing events.
+* **Avoid overwriting offset with multiple Event Hubs.**
+The offsets (position) of the Event Hubs are stored in the configured Azure Blob
+store. The Azure Blob store uses paths like a file system to store the offsets.
+If the paths between multiple Event Hubs overlap, then the offsets may be stored
+incorrectly.
+To avoid duplicate file paths, use the advanced configuration model and make
+sure that at least one of these options is different per Event Hub:
+** storage_connection
+** storage_container (defaults to Event Hub name if not defined)
+** consumer_group
+* **Set number of threads correctly.**
+The number of threads should equal the number of Event Hubs plus one (or more).
+Each Event Hub needs at least one thread. An additional thread is needed to help
+coordinate the other threads. The number of threads should not exceed the number
+of Event Hubs multiplied by the number of partitions per Event Hub plus one.
+Threads are currently available only as a global setting.  If you are using multiple
+pipelines, the threads setting applies to each pipeline independently.
+** Sample scenario: Event Hubs = 4. Partitions on each Event Hub = 3.
+Minimum threads is 5 (4 Event Hubs plus one). Maximum threads is 13 (4 Event
+Hubs times 3 partitions plus one).
+** If you’re collecting activity logs from one event hub instance,
+then only 2 threads (1 Event Hub plus one) are required.
+
+[id="{version}-plugins-{type}s-{plugin}-eh_config_models"]
+==== Configuration models
+
+This plugin supports two configuration models: basic and advanced. Basic
+configuration is recommended for most use cases, and is illustrated in the
+examples throughout this topic.
+
+[id="{version}-plugins-{type}s-{plugin}-eh_basic_config"]
+===== Basic configuration (default)
+
+Basic configuration is the default and supports consuming from multiple Event
+Hubs. All Events Hubs, except for the connection string, share the same
+configuration.
+
+You supply a list of Event Hub connection strings, complete with the Event Hub
+EntityPath that defines the Event Hub name. All other configuration settings are
+shared.
+
+[source,ruby]
+----
+input {
+   azure_event_hubs {
+      event_hub_connections => ["Endpoint=sb://example1...EntityPath=insights-logs-errors", "Endpoint=sb://example2...EntityPath=insights-metrics-pt1m"]
+      threads => 8
+      decorate_events => true
+      consumer_group => "logstash"
+      storage_connection => "DefaultEndpointsProtocol=https;AccountName=example...."
+   }
+}
+----
+
+[id="{version}-plugins-{type}s-{plugin}-eh_advanced_config"]
+===== Advanced configuration
+The advanced configuration model accommodates deployments where different Event
+Hubs require different configurations. Options can be configured per Event Hub.
+You provide a list of Event Hub names through the `event_hubs` option. Under
+each name, specify the configuration for that Event Hub. Options can be defined
+globally or expressed per Event Hub.
+
+If the same configuration option appears in both the global and `event_hub`
+sections, the more specific (event_hub) setting takes precedence.
+
+NOTE: Advanced configuration is not necessary or recommended for most use cases.
+
+[source,ruby]
+----
+input {
+   azure_event_hubs {
+     config_mode => "advanced"
+     threads => 8
+     decorate_events => true
+     storage_connection => "DefaultEndpointsProtocol=https;AccountName=example...."
+     event_hubs => [
+        {"insights-operational-logs" => {
+         event_hub_connection => "Endpoint=sb://example1..."
+         initial_position => "beginning"
+         consumer_group => "iam_team"
+        }},
+      {"insights-metrics-pt1m" => {
+         event_hub_connection => "Endpoint=sb://example2..."
+         initial_position => "end"
+         consumer_group => "db_team"
+       }}
+     ]
+   }
+}
+----
+
+In this example, `storage_connection` and `decorate_events` are applied globally.
+The two Event Hubs each have their own  settings for `consumer_groups`
+and `initial_position`.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Azure Event Hubs Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-config_mode>> |{logstash-ref}/configuration-file-structure.html#string[string], (`basic` or `advanced`)|No
+| <<{version}-plugins-{type}s-{plugin}-event_hubs>> |{logstash-ref}/configuration-file-structure.html#array[array]|Yes, when `config_mode => advanced`
+| <<{version}-plugins-{type}s-{plugin}-event_hub_connections>> |{logstash-ref}/configuration-file-structure.html#array[array]|Yes, when `config_mode => basic`
+| <<{version}-plugins-{type}s-{plugin}-event_hub_connection>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes, when `config_mode => advanced`
+| <<{version}-plugins-{type}s-{plugin}-checkpoint_interval>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-consumer_group>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-decorate_events>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-initial_position>> |{logstash-ref}/configuration-file-structure.html#string[string], (`beginning`, `end`, or `look_back`)|No
+| <<{version}-plugins-{type}s-{plugin}-initial_position_look_back>> |{logstash-ref}/configuration-file-structure.html#number[number]|No, unless `initial_position => look_back`
+| <<{version}-plugins-{type}s-{plugin}-max_batch_size>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-storage_connection>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-storage_container>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-threads>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+NOTE: All Event Hubs options are common to both basic and advanced
+configurations, with the following exceptions. The basic configuration uses
+`event_hub_connections` to support multiple connections. The advanced
+configuration uses `event_hubs` and `event_hub_connection` (singular).
+
+[id="{version}-plugins-{type}s-{plugin}-config_mode"]
+===== `config_mode`
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* Valid entries are `basic` or `advanced`
+* Default value is `basic`
+
+Sets configuration to either <<{version}-plugins-{type}s-{plugin}-eh_basic_config>> or <<{version}-plugins-{type}s-{plugin}-eh_advanced_config>>.
+
+[source,ruby]
+----
+azure_event_hubs {
+   event_hub_connections => ["Endpoint=sb://example1...;EntityPath=event_hub_name1"  , "Endpoint=sb://example2...;EntityPath=event_hub_name2"  ]
+}
+----
+
+[id="{version}-plugins-{type}s-{plugin}-event_hubs"]
+===== `event_hubs`
+* Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+* No default value
+* Ignored for basic configuration
+* Required for advanced configuration
+
+Defines the Event Hubs to be read. An array of hashes where each entry is a
+hash of the Event Hub name and its configuration options.
+
+[source,ruby]
+----
+azure_event_hubs {
+  config_mode => "advanced"
+  event_hubs => [
+      { "event_hub_name1" => {
+          event_hub_connection => "Endpoint=sb://example1..."
+      }},
+      { "event_hub_name2" => {
+          event_hub_connection => "Endpoint=sb://example2..."
+          storage_connection => "DefaultEndpointsProtocol=https;AccountName=example...."
+          storage_container => "my_container"
+     }}
+   ]
+   consumer_group => "logstash" # shared across all Event Hubs
+}
+----
+
+[id="{version}-plugins-{type}s-{plugin}-event_hub_connections"]
+===== `event_hub_connections`
+* Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+* No default value
+* Required for basic configuration
+
+List of connection strings that identifies the Event Hubs to be read. Connection
+strings include the EntityPath for the Event Hub.
+
+The `event_hub_connections` option is defined
+per Event Hub. All other configuration options are shared among Event Hubs.
+
+[source,ruby]
+----
+azure_event_hubs {
+   event_hub_connections => ["Endpoint=sb://example1...;EntityPath=event_hub_name1"  , "Endpoint=sb://example2...;EntityPath=event_hub_name2"  ]
+}
+----
+
+[id="{version}-plugins-{type}s-{plugin}-event_hub_connection"]
+===== `event_hub_connection`
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* No default value
+* Valid only for advanced configuration
+
+Connection string that identifies the Event Hub to be read. Advanced
+configuration options can be set per Event Hub. This option modifies
+`event_hub_name`, and should be nested under it. (See sample.) This option
+accepts only one connection string.
+
+[source,ruby]
+----
+azure_event_hubs {
+   config_mode => "advanced"
+   event_hubs => [
+     { "event_hub_name1" => {
+        event_hub_connection => "Endpoint=sb://example1...;EntityPath=event_hub_name1"
+     }}
+   ]
+}
+----
+
+[id="{version}-plugins-{type}s-{plugin}-checkpoint_interval"]
+===== `checkpoint_interval`
+* Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+* Default value is `5` seconds
+* Set to `0` to disable.
+
+Interval in seconds to write checkpoints during batch processing. Checkpoints
+tell Logstash where to resume processing after a restart. Checkpoints are
+automatically written at the end of each batch, regardless of this setting.
+
+Writing checkpoints too frequently can slow down processing unnecessarily.
+
+[source,ruby]
+----
+azure_event_hubs {
+   event_hub_connections => ["Endpoint=sb://example1...;EntityPath=event_hub_name1"]
+   checkpoint_interval => 5
+}
+----
+
+[id="{version}-plugins-{type}s-{plugin}-consumer_group"]
+===== `consumer_group`
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* Default value is `$Default`
+
+Consumer group used to read the Event Hub(s). Create a consumer group
+specifically for Logstash. Then ensure that all instances of Logstash use that
+consumer group so that they can work together properly.
+
+[source,ruby]
+----
+azure_event_hubs {
+   event_hub_connections => ["Endpoint=sb://example1...;EntityPath=event_hub_name1"]
+   consumer_group => "logstash"
+}
+----
+
+[id="{version}-plugins-{type}s-{plugin}-decorate_events"]
+===== `decorate_events`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+* Default value is `false`
+
+Adds metadata about the Event Hub, including Event Hub name, consumer_group,
+processor_host, partition, offset, sequence, timestamp, and event_size.
+
+[source,ruby]
+----
+azure_event_hubs {
+   event_hub_connections => ["Endpoint=sb://example1...;EntityPath=event_hub_name1"]
+   decorate_events => true
+}
+----
+
+[id="{version}-plugins-{type}s-{plugin}-initial_position"]
+===== `initial_position`
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* Valid arguments are `beginning`, `end`, `look_back`
+* Default value is `beginning`
+
+When first reading from an Event Hub, start from this position:
+
+* `beginning` reads all pre-existing events in the Event Hub
+* `end` does not read any pre-existing events in the Event Hub
+* `look_back` reads `end` minus a number of seconds worth of pre-existing events.
+You control the number of seconds using the `initial_position_look_back` option.
+
+Note: If `storage_connection` is set, the `initial_position` value is used only
+the first time Logstash reads from the Event Hub.
+
+[source,ruby]
+----
+azure_event_hubs {
+   event_hub_connections => ["Endpoint=sb://example1...;EntityPath=event_hub_name1"]
+   initial_position => "beginning"
+}
+----
+
+[id="{version}-plugins-{type}s-{plugin}-initial_position_look_back"]
+===== `initial_position_look_back`
+* Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+* Default value is `86400`
+* Used only if `initial_position` is set to `look-back`
+
+Number of seconds to look back to find the initial position for pre-existing
+events. This option is used only if `initial_position` is set to `look_back`. If
+`storage_connection` is set, this configuration applies only the first time Logstash
+reads from the Event Hub.
+
+[source,ruby]
+----
+azure_event_hubs {
+   event_hub_connections => ["Endpoint=sb://example1...;EntityPath=event_hub_name1"]
+   initial_position => "look_back"
+   initial_position_look_back => 86400
+}
+----
+
+[id="{version}-plugins-{type}s-{plugin}-max_batch_size"]
+===== `max_batch_size`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+* Default value is `125`
+
+Maximum number of events retrieved and processed together. A checkpoint is
+created after each batch. Increasing this value may help with performance, but
+requires more memory.
+
+[source,ruby]
+----
+azure_event_hubs {
+   event_hub_connections => ["Endpoint=sb://example1...;EntityPath=event_hub_name1"]
+   max_batch_size => 125
+}
+----
+
+[id="{version}-plugins-{type}s-{plugin}-storage_connection"]
+===== `storage_connection`
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* No default value
+
+Connection string for blob account storage. Blob account storage persists the
+offsets between restarts, and ensures that multiple instances of Logstash
+process different partitions.
+When this value is set, restarts resume where processing left off.
+When this value is not set, the `initial_position` value is used on every restart.
+
+We strongly recommend that you define this value for production environments.
+
+
+[source,ruby]
+----
+azure_event_hubs {
+   event_hub_connections => ["Endpoint=sb://example1...;EntityPath=event_hub_name1"]
+   storage_connection => "DefaultEndpointsProtocol=https;AccountName=example...."
+}
+----
+
+[id="{version}-plugins-{type}s-{plugin}-storage_container"]
+===== `storage_container`
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* Defaults to the Event Hub name if not defined
+
+Name of the storage container used to persist offsets and allow multiple instances of Logstash
+to work together.
+
+[source,ruby]
+----
+azure_event_hubs {
+   event_hub_connections => ["Endpoint=sb://example1...;EntityPath=event_hub_name1"]
+   storage_connection => "DefaultEndpointsProtocol=https;AccountName=example...."
+   storage_container => "my_container"
+}
+----
+
+To avoid overwriting offsets, you can use different storage containers. This is
+particularly important if you are monitoring two Event Hubs with the same name.
+You can use the advanced configuration model to configure different storage
+containers.
+
+[source,ruby]
+----
+azure_event_hubs {
+     config_mode => "advanced"
+     consumer_group => "logstash"
+     storage_connection => "DefaultEndpointsProtocol=https;AccountName=example...."
+     event_hubs => [
+        {"insights-operational-logs" => {
+         event_hub_connection => "Endpoint=sb://example1..."
+         storage_container => "insights-operational-logs-1"
+        }},
+        {"insights-operational-logs" => {
+         event_hub_connection => "Endpoint=sb://example2..."
+         storage_container => "insights-operational-logs-2"
+        }}
+     ]
+   }
+----
+
+[id="{version}-plugins-{type}s-{plugin}-threads"]
+===== `threads`
+* Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+* Minimum value is `2`
+* Default value is `4`
+
+Total number of threads used to process events. The value you set here applies
+to all Event Hubs. Even with advanced configuration, this value is a global
+setting, and can't be set per event hub.
+
+[source,ruby]
+----
+azure_event_hubs {
+   threads => 4
+}
+----
+
+The number of threads should be the number of Event Hubs plus one or more.
+See <<{version}-plugins-{type}s-{plugin}-best-practices>> for more information.
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
