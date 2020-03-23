@@ -1,4 +1,4 @@
-:plugin: s3_sns_sqs
+:plugin: s3-sns-sqs
 :type: input
 :default_plugin: 0
 
