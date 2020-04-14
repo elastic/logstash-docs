@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v10.0.0
-:release_date: 2019-10-15
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v10.0.0/CHANGELOG.md
+:version: v10.0.1
+:release_date: 2020-03-12
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v10.0.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -221,9 +221,12 @@ This will add a field named `kafka` to the logstash event containing the followi
   * Value type is <<string,string>>
   * Default value is `"true"`
 
-If true, periodically commit to Kafka the offsets of messages already returned by the consumer. 
 This committed offset will be used when the process fails as the position from
 which the consumption will begin.
+
+If true, periodically commit to Kafka the offsets of messages already returned by
+the consumer. If value is `false` however, the offset is committed every time the
+consumer fetches the data from the topic.
 
 [id="plugins-{type}s-{plugin}-exclude_internal_topics"]
 ===== `exclude_internal_topics` 
