@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v10.0.1
-:release_date: 2020-03-12
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v10.0.1/CHANGELOG.md
+:version: v10.1.0
+:release_date: 2020-03-26
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v10.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -74,6 +74,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-message_key>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-metadata_fetch_timeout_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-metadata_max_age_ms>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-partitioner>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-receive_buffer_bytes>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-reconnect_backoff_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-request_timeout_ms>> |<<string,string>>|No
@@ -248,6 +249,21 @@ the timeout setting for initial metadata request to fetch topic metadata.
   * Default value is `300000`
 
 the max time in milliseconds before a metadata refresh is forced.
+
+[id="plugins-{type}s-{plugin}-partitioner"]
+===== `partitioner`
+
+* Value type is <<string,string>>
+* There is no default value for this setting.
+
+The default behavior is to hash the `message_key` of an event to get the partition.
+When no message key is present, the plugin picks a partition in a round-robin fashion.
+
+Available options for choosing a partitioning strategy are as follows:
+
+* `default` use the default partitioner as described above
+* `round_robin` distributes writes to all partitions equally, regardless of `message_key`
+* `uniform_sticky` sticks to a partition for the duration of a batch than randomly picks a new one
 
 [id="plugins-{type}s-{plugin}-receive_buffer_bytes"]
 ===== `receive_buffer_bytes` 

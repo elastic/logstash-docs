@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.7.0
-:release_date: 2020-01-08
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.7.0/CHANGELOG.md
+:version: v3.7.1
+:release_date: 2020-04-09
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.7.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -310,7 +310,7 @@ Basic Auth - username
 
 Cloud authentication string ("<username>:<password>" format) is an alternative for the `user`/`password` pair.
 
-For mode details, check out the https://www.elastic.co/guide/en/logstash/current/connecting-to-cloud.html#_cloud_auth[Logstash-to-Cloud documentation]
+For more info, check out the https://www.elastic.co/guide/en/logstash/current/connecting-to-cloud.html#_cloud_auth[Logstash-to-Cloud documentation]
 
 [id="plugins-{type}s-{plugin}-cloud_id"]
 ===== `cloud_id`
@@ -320,7 +320,7 @@ For mode details, check out the https://www.elastic.co/guide/en/logstash/current
 
 Cloud ID, from the Elastic Cloud web console. If set `hosts` should not be used.
 
-For mode details, check out the https://www.elastic.co/guide/en/logstash/current/connecting-to-cloud.html#_cloud_id[Logstash-to-Cloud documentation]
+For more info, check out the https://www.elastic.co/guide/en/logstash/current/connecting-to-cloud.html#_cloud_id[Logstash-to-Cloud documentation]
 
 
 
