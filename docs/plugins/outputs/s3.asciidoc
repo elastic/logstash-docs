@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.3.0
-:release_date: 2020-02-11
-:changelog_url: https://github.com/logstash-plugins/logstash-output-s3/blob/v4.3.0/CHANGELOG.md
+:version: v4.3.1
+:release_date: 2020-03-12
+:changelog_url: https://github.com/logstash-plugins/logstash-output-s3/blob/v4.3.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -284,8 +284,19 @@ Session name to use when assuming an IAM role.
   * Value can be any of: `size_and_time`, `size`, `time`
   * Default value is `"size_and_time"`
 
-Define the strategy to use to decide when we need to rotate the file and push it to S3,
-The default strategy is to check for both size and time, the first one to match will rotate the file.
+Controls when to close the file and push it to S3. 
+
+If you set this value to `size`, it uses the value set in
+<<plugins-{type}s-{plugin}-size_file,`size_file`>>.
+If you set this value to `time`, it uses the value set in
+<<plugins-{type}s-{plugin}-time_file,`time_file`>>.
+If you set this value to `size_and_time`, it uses the values from
+<<plugins-{type}s-{plugin}-size_file,`size_file`>> and
+<<plugins-{type}s-{plugin}-time_file,`time_file`>>, and splits the file when
+either one matches. 
+
+The default strategy checks both size and time. The first value to
+match triggers file rotation.
 
 [id="plugins-{type}s-{plugin}-secret_access_key"]
 ===== `secret_access_key` 
@@ -334,8 +345,9 @@ specified here
   * Value type is <<number,number>>
   * Default value is `5242880`
 
-Set the size of file in bytes, this means that files on bucket when dimension > file_size, are stored in two or more files.
-If you have tags then it will generate a specific size file for every tags
+Set the file size in bytes. When the number of bytes exceeds the `size_file`
+value, a new file is created. If you use tags, Logstash generates a specific size
+file for every tag.
 
 [id="plugins-{type}s-{plugin}-ssekms_key_id"]
 ===== `ssekms_key_id` 
@@ -374,9 +386,8 @@ default to the current OS temporary directory in linux /tmp/logstash
   * Default value is `15`
 
 Set the time, in MINUTES, to close the current sub_time_section of bucket.
-If you define file_size you have a number of files in consideration of the section and the current tag.
-0 stay all time on listener, beware if you specific 0 and size_file 0, because you will not put the file on bucket,
-for now the only thing this plugin can do is to put the file when logstash restart.
+If <<plugins-{type}s-{plugin}-rotation_strategy,`rotation_strategy`>> is set to `time` or `size_and_time`, then `time_file` cannot be set to 0. 
+Otherwise, the plugin raises a configuration error.
 
 [id="plugins-{type}s-{plugin}-upload_multipart_threshold"]
 ===== `upload_multipart_threshold`
@@ -408,8 +419,10 @@ Specify how many workers to use to upload the files to S3
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-The common use case is to define permission on the root bucket and give Logstash full access to write its logs.
-In some circumstances you need finer grained permission on subfolder, this allows you to disable the check at startup.
+The common use case is to define permissions on the root bucket and give Logstash
+full access to write logs. 
+In some circumstances, you need more granular permissions on the subfolder. This
+allows you to disable the check at startup.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
