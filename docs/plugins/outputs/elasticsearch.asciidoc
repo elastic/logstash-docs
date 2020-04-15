@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v10.3.3
-:release_date: 2020-02-28
-:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v10.3.3/CHANGELOG.md
+:version: v10.4.1
+:release_date: 2020-03-27
+:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v10.4.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -21,6 +21,21 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
+
+.Compatibility Note
+[NOTE]
+================================================================================
+When connected to Elasticsearch 7.x, modern versions of this plugin
+use the required `_doc` document-type when inserting documents.
+
+If you are using an earlier version of Logstash and wish to connect to
+Elasticsearch 7.x, first upgrade Logstash to version 6.8 to ensure it
+picks up changes to the Elasticsearch index template.
+
+If you are using a custom <<plugins-{type}s-{plugin}-template>>,
+ensure your template uses the `_doc` document-type before
+connecting to Elasticsearch 7.x.
+================================================================================
 
 .Compatibility Note
 [NOTE]
@@ -502,7 +517,7 @@ NOTE: `ilm_rollover_alias` does NOT support dynamic variable substitution as `in
 ===== `index` 
 
   * Value type is <<string,string>>
-  * Default value is `"logstash-%{+YYYY.MM.dd}"`
+  * Default value is `"logstash-%{+yyyy.MM.dd}"`
 
 The index to write events to. This can be dynamic using the `%{foo}` syntax.
 The default value will partition your indices by day so you can more easily
