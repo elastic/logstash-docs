@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v10.1.0
-:release_date: 2020-03-26
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v10.1.0/CHANGELOG.md
+:version: v10.2.0
+:release_date: 2020-04-30
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v10.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -48,14 +48,18 @@ If you want the full content of your events to be sent as json, you should set t
       }
     }
     
-For more information see http://kafka.apache.org/documentation.html#theproducer
+For more information see https://kafka.apache.org/24/documentation.html#theproducer
 
-Kafka producer configuration: http://kafka.apache.org/documentation.html#newproducerconfigs
+Kafka producer configuration: https://kafka.apache.org/24/documentation.html#producerconfigs
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Kafka Output Configuration Options
 
 This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
+
+NOTE: Some of these options map to a Kafka option. Defaults usually reflect the Kafka default setting,
+and might change if Kafka's producer defaults change.
+See the https://kafka.apache.org/24/documentation for more details.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
@@ -77,7 +81,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-partitioner>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-receive_buffer_bytes>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-reconnect_backoff_ms>> |<<number,number>>|No
-| <<plugins-{type}s-{plugin}-request_timeout_ms>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-request_timeout_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-retries>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-retry_backoff_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-sasl_jaas_config>> |<<string,string>>|No
@@ -120,7 +124,7 @@ acks=all, This means the leader will wait for the full set of in-sync replicas t
 ===== `batch_size` 
 
   * Value type is <<number,number>>
-  * Default value is `16384`
+  * Default value is `16384`.
 
 The producer will attempt to batch records together into fewer requests whenever multiple
 records are being sent to the same partition. This helps performance on both the client
@@ -142,7 +146,7 @@ subset of brokers.
 ===== `buffer_memory` 
 
   * Value type is <<number,number>>
-  * Default value is `33554432`
+  * Default value is `33554432` (32MB).
 
 The total bytes of memory the producer can use to buffer records waiting to be sent to the server.
 
@@ -222,7 +226,7 @@ to allow other records to be sent so that the sends can be batched together.
 ===== `max_request_size` 
 
   * Value type is <<number,number>>
-  * Default value is `1048576`
+  * Default value is `1048576` (1MB).
 
 The maximum size of a request
 
@@ -232,23 +236,23 @@ The maximum size of a request
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The key for the message
+The key for the message.
 
 [id="plugins-{type}s-{plugin}-metadata_fetch_timeout_ms"]
 ===== `metadata_fetch_timeout_ms` 
 
   * Value type is <<number,number>>
-  * Default value is `60000`
+  * Default value is `60000` milliseconds (60 seconds).
 
-the timeout setting for initial metadata request to fetch topic metadata.
+The timeout setting for initial metadata request to fetch topic metadata.
 
 [id="plugins-{type}s-{plugin}-metadata_max_age_ms"]
 ===== `metadata_max_age_ms` 
 
   * Value type is <<number,number>>
-  * Default value is `300000`
+  * Default value is `300000` milliseconds (5 minutes).
 
-the max time in milliseconds before a metadata refresh is forced.
+The max time in milliseconds before a metadata refresh is forced.
 
 [id="plugins-{type}s-{plugin}-partitioner"]
 ===== `partitioner`
@@ -269,7 +273,7 @@ Available options for choosing a partitioning strategy are as follows:
 ===== `receive_buffer_bytes` 
 
   * Value type is <<number,number>>
-  * Default value is `32768`
+  * Default value is `32768` (32KB).
 
 The size of the TCP receive buffer to use when reading data
 
@@ -277,15 +281,15 @@ The size of the TCP receive buffer to use when reading data
 ===== `reconnect_backoff_ms` 
 
   * Value type is <<number,number>>
-  * Default value is `10`
+  * Default value is `50`.
 
 The amount of time to wait before attempting to reconnect to a given host when a connection fails.
 
 [id="plugins-{type}s-{plugin}-request_timeout_ms"]
 ===== `request_timeout_ms` 
 
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
+  * Value type is <<number,number>>
+  * Default value is `40000` milliseconds (40 seconds).
 
 The configuration controls the maximum amount of time the client will wait
 for the response of a request. If the response is not received before the timeout
@@ -312,7 +316,7 @@ A value less than zero is a configuration error.
 ===== `retry_backoff_ms` 
 
   * Value type is <<number,number>>
-  * Default value is `100`
+  * Default value is `100` milliseconds.
 
 The amount of time to wait before attempting to retry a failed produce request to a given topic partition.
 
@@ -365,7 +369,7 @@ Security protocol to use, which can be either of PLAINTEXT,SSL,SASL_PLAINTEXT,SA
 ===== `send_buffer_bytes` 
 
   * Value type is <<number,number>>
-  * Default value is `131072`
+  * Default value is `131072` (128KB).
 
 The size of the TCP send buffer to use when sending data.
 
