@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.2.6
-:release_date: 2019-02-05
-:changelog_url: https://github.com/logstash-plugins/logstash-output-file/blob/v4.2.6/CHANGELOG.md
+:version: v4.3.0
+:release_date: 2020-04-27
+:changelog_url: https://github.com/logstash-plugins/logstash-output-file/blob/v4.3.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -50,6 +50,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-flush_interval>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-gzip>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-path>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-stale_cleanup_interval>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-write_behavior>> |<<string,string>>|No
 |=======================================================================
 
@@ -133,6 +134,15 @@ E.g.: `path => "./test-%{+YYYY-MM-dd}.txt"` to create
 If you use an absolute path you cannot start with a dynamic string.
 E.g: `/%{myfield}/`, `/test-%{myfield}/` are not valid paths
 
+[id="plugins-{type}s-{plugin}-stale_cleanup_interval"]
+===== `stale_cleanup_interval`
+
+  * Value type is <<number,number>>
+  * Default value is `10`
+
+Defines the interval, in seconds, between the stale files cleanup runs.
+The stale files cleanup cycle closes inactive files (i.e files not written to since the last cycle).
+
 [id="plugins-{type}s-{plugin}-write_behavior"]
 ===== `write_behavior`
 
@@ -141,8 +151,8 @@ E.g: `/%{myfield}/`, `/test-%{myfield}/` are not valid paths
 
 If `append`, the file will be opened for appending and each new event will be written at the end of the file.
 If `overwrite`, the file will be truncated before writing and only the most recent event will appear in the file.
-
 [id="plugins-{type}s-{plugin}-common-options"]
+
 include::{include_path}/{type}.asciidoc[]
 
 :default_codec!:
