@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.4.1
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-input-syslog/blob/v3.4.1/CHANGELOG.md
+:version: v3.4.2
+:release_date: 2020-04-28
+:changelog_url: https://github.com/logstash-plugins/logstash-input-syslog/blob/v3.4.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -173,8 +173,8 @@ The valid IDs are listed on the [Joda.org available time zones page](http://joda
 This is useful in case the time zone cannot be extracted from the value,
 and is not the platform default.
 If this is not specified the platform default will be used.
-Canonical ID is good as it takes care of daylight saving time for you
-For example, `America/Los_Angeles` or `Europe/France` are valid IDs.
+Canonical ID is good as it takes care of daylight saving time for you.
+For example, `America/Los_Angeles` or `Europe/Paris` are valid IDs.
 
 [id="plugins-{type}s-{plugin}-use_labels"]
 ===== `use_labels`
