@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v7.0.3
-:release_date: 2020-03-16
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-rabbitmq/blob/v7.0.3/CHANGELOG.md
+:version: v7.1.0
+:release_date: 2020-05-13
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-rabbitmq/blob/v7.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -35,7 +35,7 @@ and other parts of the RabbitMQ documentation are useful for deeper
 understanding.
 
 The properties of messages received will be stored in the
-`[@metadata][rabbitmq_properties]` field if the `@metadata_enabled` setting is checked.
+`[@metadata][rabbitmq_properties]` field if the `@metadata_enabled` setting is enabled.
 Note that storing metadata may degrade performance.
 The following properties may be available (in most cases dependent on whether
 they were set by the sender):
@@ -188,6 +188,8 @@ The default connection timeout in milliseconds. If not specified the timeout is 
   * Default value is `false`
 
 Is this queue durable? (aka; Should it survive a broker restart?)
+If consuming directly from a queue you must set this value to match the existing queue setting,
+otherwise the connection will fail due to an inequivalent arg error.
 
 [id="plugins-{type}s-{plugin}-exchange"]
 ===== `exchange`
@@ -260,8 +262,14 @@ This is only relevant for direct or topic exchanges.
 [id="plugins-{type}s-{plugin}-metadata_enabled"]
 ===== `metadata_enabled`
 
-  * Value type is <<boolean,boolean>>
-  * Default value is `false`
+  * Value type is <<string,string>>
+  * Accepted values are:
+    - `none`: no metadata is added
+    - `basic`: headers and properties are added
+    - `extended`: headers, properties, and raw payload are added
+    - `false`: deprecated alias for `none`
+    - `true`: deprecated alias for `basic`
+  * Default value is `none`
 
 Enable the storage of message headers and properties in `@metadata`. This may impact performance
 

@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.6.0
-:release_date: 2020-01-27
-:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.6.0/CHANGELOG.md
+:version: v4.6.1
+:release_date: 2020-05-08
+:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.6.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -21,16 +21,6 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
-
-.Compatibility Note
-[NOTE]
-================================================================================
-Starting with Elasticsearch 5.3, there's an {ref}/modules-http.html[HTTP setting]
-called `http.content_type.required`. If this option is set to `true`, and you
-are using Logstash 2.4 through 5.2, you need to update the Elasticsearch input
-plugin to version 4.0.2 or higher.
-
-================================================================================
 
 Read from an Elasticsearch cluster, based on search query results.
 This is useful for replaying test logs, reindexing, etc.
@@ -174,11 +164,6 @@ Example
       }
     }
 
-
-NOTE: Starting with Logstash 6.0, the `document_type` option is
-deprecated due to the
-https://www.elastic.co/guide/en/elasticsearch/reference/6.0/removal-of-types.html[removal of types in Logstash 6.0].
-It will be removed in the next major version of Logstash.
 
 [id="plugins-{type}s-{plugin}-docinfo_fields"]
 ===== `docinfo_fields` 
