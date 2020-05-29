@@ -29,17 +29,17 @@ The following input plugins are available below. For a list of Elastic supported
 | <<plugins-inputs-irc,irc>> | Reads events from an IRC server | https://github.com/logstash-plugins/logstash-input-irc[logstash-input-irc]
 | <<plugins-inputs-java_generator,java_generator>> | Generates synthetic log events | https://github.com/elastic/logstash/blob/{branch}/logstash-core/src/main/java/org/logstash/plugins/inputs/Generator.java[core plugin]
 | <<plugins-inputs-java_stdin,java_stdin>> | Reads events from standard input| https://github.com/elastic/logstash/blob/{branch}/logstash-core/src/main/java/org/logstash/plugins/inputs/Stdin.java[core plugin]
-| <<plugins-inputs-jdbc,jdbc>> | Creates events from JDBC data | https://github.com/logstash-plugins/logstash-input-jdbc[logstash-input-jdbc]
+| <<plugins-inputs-jdbc,jdbc>> | Creates events from JDBC data | https://github.com/logstash-plugins/logstash-integration-jdbc[logstash-integration-jdbc]
 | <<plugins-inputs-jms,jms>> | Reads events from a Jms Broker | https://github.com/logstash-plugins/logstash-input-jms[logstash-input-jms]
 | <<plugins-inputs-jmx,jmx>> | Retrieves metrics from remote Java applications over JMX | https://github.com/logstash-plugins/logstash-input-jmx[logstash-input-jmx]
-| <<plugins-inputs-kafka,kafka>> | Reads events from a Kafka topic | https://github.com/logstash-plugins/logstash-input-kafka[logstash-input-kafka]
+| <<plugins-inputs-kafka,kafka>> | Reads events from a Kafka topic | https://github.com/logstash-plugins/logstash-integration-kafka[logstash-integration-kafka]
 | <<plugins-inputs-kinesis,kinesis>> | Receives events through an AWS Kinesis stream | https://github.com/logstash-plugins/logstash-input-kinesis[logstash-input-kinesis]
 | <<plugins-inputs-log4j,log4j>> | Reads events over a TCP socket from a Log4j `SocketAppender` object | https://github.com/logstash-plugins/logstash-input-log4j[logstash-input-log4j]
 | <<plugins-inputs-lumberjack,lumberjack>> | Receives events using the Lumberjack protocl | https://github.com/logstash-plugins/logstash-input-lumberjack[logstash-input-lumberjack]
 | <<plugins-inputs-meetup,meetup>> | Captures the output of command line tools as an event | https://github.com/logstash-plugins/logstash-input-meetup[logstash-input-meetup]
 | <<plugins-inputs-pipe,pipe>> | Streams events from a long-running command pipe | https://github.com/logstash-plugins/logstash-input-pipe[logstash-input-pipe]
 | <<plugins-inputs-puppet_facter,puppet_facter>> | Receives facts from a Puppet server | https://github.com/logstash-plugins/logstash-input-puppet_facter[logstash-input-puppet_facter]
-| <<plugins-inputs-rabbitmq,rabbitmq>> | Pulls events from a RabbitMQ exchange | https://github.com/logstash-plugins/logstash-input-rabbitmq[logstash-input-rabbitmq]
+| <<plugins-inputs-rabbitmq,rabbitmq>> | Pulls events from a RabbitMQ exchange | https://github.com/logstash-plugins/logstash-integration-rabbitmq[logstash-integration-rabbitmq]
 | <<plugins-inputs-redis,redis>> | Reads events from a Redis instance | https://github.com/logstash-plugins/logstash-input-redis[logstash-input-redis]
 | <<plugins-inputs-relp,relp>> | Receives RELP events over a TCP socket | https://github.com/logstash-plugins/logstash-input-relp[logstash-input-relp]
 | <<plugins-inputs-rss,rss>> | Captures the output of command line tools as an event | https://github.com/logstash-plugins/logstash-input-rss[logstash-input-rss]
@@ -129,7 +129,7 @@ include::../../../logstash/docs/static/core-plugins/inputs/java_generator.asciid
 :edit_url: https://github.com/elastic/logstash/blob/master/docs/static/core-plugins/inputs/java_stdin.asciidoc
 include::../../../logstash/docs/static/core-plugins/inputs/java_stdin.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-jdbc/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-integration-jdbc/edit/master/docs/input-jdbc.asciidoc
 include::inputs/jdbc.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-jms/edit/master/docs/index.asciidoc
@@ -138,7 +138,7 @@ include::inputs/jms.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-input-jmx/edit/master/docs/index.asciidoc
 include::inputs/jmx.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-kafka/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-integration-kafka/edit/master/docs/input-kafka.asciidoc
 include::inputs/kafka.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-kinesis/edit/master/docs/index.asciidoc
@@ -159,7 +159,7 @@ include::inputs/pipe.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-input-puppet_facter/edit/master/docs/index.asciidoc
 include::inputs/puppet_facter.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-rabbitmq/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-integration-rabbitmq/edit/master/docs/input-rabbitmq.asciidoc
 include::inputs/rabbitmq.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-redis/edit/master/docs/index.asciidoc
