@@ -31,7 +31,7 @@ The following output plugins are available below. For a list of Elastic supporte
 | <<plugins-outputs-sink,sink>> | Discards any events received | https://github.com/elastic/logstash/blob/{branch}/logstash-core/src/main/java/org/logstash/plugins/outputs/Sink.java[core plugin]
 | <<plugins-outputs-java_stdout,java_stdout>> | Prints events to the STDOUT of the shell | https://github.com/elastic/logstash/blob/{branch}/logstash-core/src/main/java/org/logstash/plugins/outputs/Stdout.java[core plugin]
 | <<plugins-outputs-juggernaut,juggernaut>> | Pushes messages to the Juggernaut websockets server | https://github.com/logstash-plugins/logstash-output-juggernaut[logstash-output-juggernaut]
-| <<plugins-outputs-kafka,kafka>> | Writes events to a Kafka topic | https://github.com/logstash-plugins/logstash-output-kafka[logstash-output-kafka]
+| <<plugins-outputs-kafka,kafka>> | Writes events to a Kafka topic | https://github.com/logstash-plugins/logstash-integration-kafka[logstash-integration-kafka]
 | <<plugins-outputs-librato,librato>> | Sends metrics, annotations, and alerts to Librato based on Logstash events | https://github.com/logstash-plugins/logstash-output-librato[logstash-output-librato]
 | <<plugins-outputs-loggly,loggly>> | Ships logs to Loggly | https://github.com/logstash-plugins/logstash-output-loggly[logstash-output-loggly]
 | <<plugins-outputs-lumberjack,lumberjack>> | Sends events using the `lumberjack` protocol | https://github.com/logstash-plugins/logstash-output-lumberjack[logstash-output-lumberjack]
@@ -42,7 +42,7 @@ The following output plugins are available below. For a list of Elastic supporte
 | <<plugins-outputs-opentsdb,opentsdb>> | Writes metrics to OpenTSDB | https://github.com/logstash-plugins/logstash-output-opentsdb[logstash-output-opentsdb]
 | <<plugins-outputs-pagerduty,pagerduty>> | Sends notifications based on preconfigured services and escalation policies | https://github.com/logstash-plugins/logstash-output-pagerduty[logstash-output-pagerduty]
 | <<plugins-outputs-pipe,pipe>> | Pipes events to another program's standard input | https://github.com/logstash-plugins/logstash-output-pipe[logstash-output-pipe]
-| <<plugins-outputs-rabbitmq,rabbitmq>> | Pushes events to a RabbitMQ exchange | https://github.com/logstash-plugins/logstash-output-rabbitmq[logstash-output-rabbitmq]
+| <<plugins-outputs-rabbitmq,rabbitmq>> | Pushes events to a RabbitMQ exchange | https://github.com/logstash-plugins/logstash-integration-rabbitmq[logstash-integration-rabbitmq]
 | <<plugins-outputs-redis,redis>> | Sends events to a Redis queue using the `RPUSH` command | https://github.com/logstash-plugins/logstash-output-redis[logstash-output-redis]
 | <<plugins-outputs-redmine,redmine>> | Creates tickets using the Redmine API | https://github.com/logstash-plugins/logstash-output-redmine[logstash-output-redmine]
 | <<plugins-outputs-riak,riak>> | Writes events to the Riak distributed key/value store | https://github.com/logstash-plugins/logstash-output-riak[logstash-output-riak]
@@ -136,7 +136,7 @@ include::../../../logstash/docs/static/core-plugins/outputs/java_stdout.asciidoc
 :edit_url: https://github.com/logstash-plugins/logstash-output-juggernaut/edit/master/docs/index.asciidoc
 include::outputs/juggernaut.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-output-kafka/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-integration-kafka/edit/master/docs/output-kafka.asciidoc
 include::outputs/kafka.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-librato/edit/master/docs/index.asciidoc
@@ -169,7 +169,7 @@ include::outputs/pagerduty.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-output-pipe/edit/master/docs/index.asciidoc
 include::outputs/pipe.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-output-rabbitmq/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-integration-rabbitmq/edit/master/docs/output-rabbitmq.asciidoc
 include::outputs/rabbitmq.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-redis/edit/master/docs/index.asciidoc

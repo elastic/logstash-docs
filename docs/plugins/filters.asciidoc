@@ -30,8 +30,8 @@ The following filter plugins are available below. For a list of Elastic supporte
 | <<plugins-filters-http,http>> | Provides integration with external web services/REST APIs | https://github.com/logstash-plugins/logstash-filter-http[logstash-filter-http]
 | <<plugins-filters-i18n,i18n>> | Removes special characters from a field | https://github.com/logstash-plugins/logstash-filter-i18n[logstash-filter-i18n]
 | <<plugins-filters-java_uuid,java_uuid>> | Generates a UUID and adds it to each processed event | https://github.com/elastic/logstash/blob/{branch}/logstash-core/src/main/java/org/logstash/plugins/filters/Uuid.java[core plugin]
-| <<plugins-filters-jdbc_static>> | Enriches events with data pre-loaded from a remote database  | https://github.com/logstash-plugins/logstash-filter-jdbc_static[logstash-filter-jdbc_static]
-| <<plugins-filters-jdbc_streaming,jdbc_streaming>> | Enrich events with your database data | https://github.com/logstash-plugins/logstash-filter-jdbc_streaming[logstash-filter-jdbc_streaming]
+| <<plugins-filters-jdbc_static>> | Enriches events with data pre-loaded from a remote database  | https://github.com/logstash-plugins/logstash-integration-jdbc[logstash-integration-jdbc]
+| <<plugins-filters-jdbc_streaming,jdbc_streaming>> | Enrich events with your database data | https://github.com/logstash-plugins/logstash-integration-jdbc[logstash-integration-jdbc]
 | <<plugins-filters-json,json>> | Parses JSON events | https://github.com/logstash-plugins/logstash-filter-json[logstash-filter-json]
 | <<plugins-filters-json_encode,json_encode>> | Serializes a field to JSON | https://github.com/logstash-plugins/logstash-filter-json_encode[logstash-filter-json_encode]
 | <<plugins-filters-kv,kv>> | Parses key-value pairs | https://github.com/logstash-plugins/logstash-filter-kv[logstash-filter-kv]
@@ -122,10 +122,10 @@ include::filters/i18n.asciidoc[]
 :edit_url: https://github.com/elastic/logstash/blob/master/docs/static/core-plugins/filters/java_uuid.asciidoc
 include::../../../logstash/docs/static/core-plugins/filters/java_uuid.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-filter-jdbc_static/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-integration-jdbc/edit/master/docs/filter-jdbc_static.asciidoc
 include::filters/jdbc_static.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-filter-jdbc_streaming/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-integration-jdbc/edit/master/docs/filter-jdbc_streaming.asciidoc
 include::filters/jdbc_streaming.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-filter-json/edit/master/docs/index.asciidoc
