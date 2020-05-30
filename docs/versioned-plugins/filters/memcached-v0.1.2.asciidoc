@@ -1,0 +1,139 @@
+:plugin: memcached
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v0.1.2
+:release_date: 2020-03-03
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-memcached/blob/v0.1.2/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Memcached filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+The Memcached filter provides integration with external data in Memcached.
+
+It currently provides the following facilities:
+ - `get`: get values for one or more memcached keys and inject them into the event at the provided paths
+ - `set`: set values from the event to the corresponding memcached keys
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Memcached Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-hosts>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-namespace>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-get>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-set>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-ttl>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-hosts"]
+===== `hosts`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `localhost`
+
+The `hosts` parameter accepts an array of addresses corresponding to memcached instances.
+
+Hosts can be specified via FQDN (e.g., `example.com`), an IPV4 address (e.g., `123.45.67.89`), or an IPV6 address (e.g. `::1` or `2001:0db8:85a3:0000:0000:8a2e:0370:7334`).
+If your memcached host uses a non-standard port, the port can be specified by appending a colon (`:`) and the port number; to include a port with an IPv6 address, the address must first be wrapped in square-brackets (`[` and `]`), e.g., `[::1]:11211`.
+
+If more than one host is specified, requests will be distributed to the given hosts using a modulus of the CRC-32 checksum of each key.
+
+[id="{version}-plugins-{type}s-{plugin}-namespace"]
+===== `namespace`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+If specified, prefix all memcached keys with the given string followed by a colon (`:`); this is useful if all keys being used by this plugin share a common prefix.
+
+EXAMPLE:
+
+In the following configuration, we would GET `fruit:banana` and `fruit:apple` from memcached:
+----
+filter {
+  memcached {
+    namespace => "fruit"
+    get => {
+      "banana" => "[fruit-stats][banana]"
+      "apple"  => "[fruit-stats][apple]
+    }
+  }
+}
+----
+
+[id="{version}-plugins-{type}s-{plugin}-get"]
+===== `get`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * There is no default value for this setting.
+
+If specified, get the values for the given keys from memcached, and store them in the corresponding fields on the event.
+
+  * keys are interpolated (e.g., if the event has a field `foo` with value `bar`, the key `sand/%{foo}` will evaluate to `sand/bar`)
+  * fields can be nested references
+
+----
+filter {
+  memcached {
+    get => {
+      "memcached-key-1" => "field1"
+      "memcached-key-2" => "[nested][field2]"
+    }
+  }
+}
+----
+
+[id="{version}-plugins-{type}s-{plugin}-set"]
+===== `set`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * There is no default value for this setting.
+
+If specified, extracts the values from the given event fields, and sets the corresponding keys to those values in memcached with the configured <<{version}-plugins-{type}s-{plugin}-ttl,ttl>>
+
+  * keys are interpolated (e.g., if the event has a field `foo` with value `bar`, the key `sand/%{foo}` will evaluate to `sand/bar`)
+  * fields can be nested references
+
+----
+filter {
+  memcached {
+    set => {
+      "field1"           => "memcached-key-1"
+      "[nested][field2]" => "memcached-key-2"
+    }
+  }
+}
+----
+
+[id="{version}-plugins-{type}s-{plugin}-ttl"]
+===== `ttl`
+
+For usages of this plugin that persist data to memcached (e.g., <<{version}-plugins-{type}s-{plugin}-set,`set`>>), the time-to-live in seconds
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * The default value is `0` (no expiry)
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

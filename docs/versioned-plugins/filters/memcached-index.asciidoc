@@ -5,16 +5,20 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v1.1.0-plugins-filters-memcached,v1.1.0>> | 2020-05-29
 | <<v1.0.2-plugins-filters-memcached,v1.0.2>> | 2020-01-24
 | <<v1.0.1-plugins-filters-memcached,v1.0.1>> | 2019-05-31
 | <<v1.0.0-plugins-filters-memcached,v1.0.0>> | 2019-02-04
+| <<v0.1.2-plugins-filters-memcached,v0.1.2>> | 2020-03-03
 | <<v0.1.1-plugins-filters-memcached,v0.1.1>> | 2019-01-10
 | <<v0.1.0-plugins-filters-memcached,v0.1.0>> | 2018-12-12
 |=======================================================================
 
+include::memcached-v1.1.0.asciidoc[]
 include::memcached-v1.0.2.asciidoc[]
 include::memcached-v1.0.1.asciidoc[]
 include::memcached-v1.0.0.asciidoc[]
+include::memcached-v0.1.2.asciidoc[]
 include::memcached-v0.1.1.asciidoc[]
 include::memcached-v0.1.0.asciidoc[]
 
