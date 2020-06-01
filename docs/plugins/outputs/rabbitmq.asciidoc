@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v7.0.3
-:release_date: 2020-03-16
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-rabbitmq/blob/v7.0.3/CHANGELOG.md
+:version: v7.1.0
+:release_date: 2020-05-13
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-rabbitmq/blob/v7.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -169,7 +169,8 @@ Key to route to by default. Defaults to 'logstash'
   * Value type is <<hash,hash>>
   * Default value is `{}`
 
-Add properties to be set per-message here, such as 'content_type', 'priority'
+Add properties to be set per-message here, such as 'content_type', 'priority'.
+Values can be {logstash-ref}/event-dependent-configuration.html#sprintf[`sprintf` templates], whose value for each message will be populated from the event.
 
 Example:
 [source,ruby]
