@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.7
-:release_date: 2019-09-17
-:changelog_url: https://github.com/logstash-plugins/logstash-input-imap/blob/v3.0.7/CHANGELOG.md
+:version: v3.1.0
+:release_date: 2020-05-27
+:changelog_url: https://github.com/logstash-plugins/logstash-input-imap/blob/v3.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -45,6 +45,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-lowercase_headers>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-password>> |<<password,password>>|Yes
 | <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-save_attachments>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-secure>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-sincedb_path>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-strip_attachments>> |<<boolean,boolean>>|No
@@ -139,15 +140,19 @@ content-type as the event message.
   * Value type is <<number,number>>
   * There is no default value for this setting.
 
+[id="plugins-{type}s-{plugin}-save_attachments"]
+===== `save_attachments`
 
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+When set to true the content of attachments will be included in the `attachments.data` field.
 
 [id="plugins-{type}s-{plugin}-secure"]
 ===== `secure`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
-
-
 
 [id="plugins-{type}s-{plugin}-sincedb_path"]
 ===== `sincedb_path`
