@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.6.1
-:release_date: 2020-05-08
-:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.6.1/CHANGELOG.md
+:version: v4.7.0
+:release_date: 2020-06-03
+:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.7.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -69,6 +69,16 @@ Further documentation describing this syntax can be found
 https://github.com/jmettraux/rufus-scheduler#parsing-cronlines-and-time-strings[here].
 
 
+[id="plugins-{type}s-{plugin}-auth"]
+==== Authentication
+
+Authentication to a secure Elasticsearch cluster is possible using _one_ of the following options:
+
+* <<plugins-{type}s-{plugin}-user>> AND <<plugins-{type}s-{plugin}-password>>
+* <<plugins-{type}s-{plugin}-cloud_auth>>
+* <<plugins-{type}s-{plugin}-api_key>>
+
+
 [id="plugins-{type}s-{plugin}-options"]
 ==== Elasticsearch Input Configuration Options
 
@@ -77,6 +87,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-api_key>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-ca_file>> |a valid filesystem path|No
 | <<plugins-{type}s-{plugin}-cloud_auth>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-cloud_id>> |<<string,string>>|No
@@ -100,6 +111,16 @@ Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options suppo
 input plugins.
 
 &nbsp;
+
+[id="plugins-{type}s-{plugin}-api_key"]
+===== `api_key`
+
+  * Value type is <<password,password>>
+  * There is no default value for this setting.
+
+Authenticate using Elasticsearch API key. Note that this option also requires enabling the `ssl` option.
+
+Format is `id:api_key` where `id` and `api_key` are as returned by the Elasticsearch https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html[Create API key API].
 
 [id="plugins-{type}s-{plugin}-ca_file"]
 ===== `ca_file` 
