@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v10.2.0
-:release_date: 2020-04-30
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v10.2.0/CHANGELOG.md
+:version: v10.3.0
+:release_date: 2020-06-18
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v10.3.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -24,7 +24,7 @@ include::{include_path}/plugin_header.asciidoc[]
 
 Write events to a Kafka topic. 
 
-This plugin uses Kafka Client 2.1.0. For broker compatibility, see the official https://cwiki.apache.org/confluence/display/KAFKA/Compatibility+Matrix[Kafka compatibility reference]. If the linked compatibility wiki is not up-to-date, please contact Kafka support/community to confirm compatibility.
+This plugin uses Kafka Client 2.3.0. For broker compatibility, see the official https://cwiki.apache.org/confluence/display/KAFKA/Compatibility+Matrix[Kafka compatibility reference]. If the linked compatibility wiki is not up-to-date, please contact Kafka support/community to confirm compatibility.
 
 If you require features not yet available in this plugin (including client version upgrades), please file an issue with details about what you need.
 
@@ -68,6 +68,7 @@ See the https://kafka.apache.org/24/documentation for more details.
 | <<plugins-{type}s-{plugin}-batch_size>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-bootstrap_servers>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-buffer_memory>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-client_dns_lookup>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-client_id>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-compression_type>> |<<string,string>>, one of `["none", "gzip", "snappy", "lz4"]`|No
 | <<plugins-{type}s-{plugin}-jaas_path>> |a valid filesystem path|No
@@ -149,6 +150,17 @@ subset of brokers.
   * Default value is `33554432` (32MB).
 
 The total bytes of memory the producer can use to buffer records waiting to be sent to the server.
+
+[id="plugins-{type}s-{plugin}-client_dns_lookup"]
+===== `client_dns_lookup` 
+
+  * Value type is <<string,string>>
+  * Default value is `"default"`
+
+How DNS lookups should be done. If set to `use_all_dns_ips`, when the lookup returns multiple 
+IP addresses for a hostname, they will all be attempted to connect to before failing the 
+connection. If the value is `resolve_canonical_bootstrap_servers_only` each entry will be 
+resolved and expanded into a list of canonical names.
 
 [id="plugins-{type}s-{plugin}-client_id"]
 ===== `client_id` 

@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.0.2
-:release_date: 2020-01-24
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-memcached/blob/v1.0.2/CHANGELOG.md
+:version: v1.1.0
+:release_date: 2020-05-29
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-memcached/blob/v1.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -77,6 +77,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-namespace>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-get>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-set>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-tag_on_failure>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-ttl>> |<<number,number>>|No
 |=======================================================================
 
@@ -164,6 +165,16 @@ filter {
   }
 }
 ----
+
+[id="plugins-{type}s-{plugin}-tag_on_failure"]
+===== `tag_on_failure`
+
+  * Value type is <<string,string>>
+  * The default value for this setting is `_memcached_failure`.
+
+When a memcached operation causes a runtime exception to be thrown within the plugin,
+the operation is safely aborted without crashing the plugin, and the event is
+tagged with the provided value.
 
 [id="plugins-{type}s-{plugin}-ttl"]
 ===== `ttl`

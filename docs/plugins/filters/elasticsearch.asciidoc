@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.7.1
-:release_date: 2020-04-09
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.7.1/CHANGELOG.md
+:version: v3.8.0
+:release_date: 2020-06-03
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.8.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -21,18 +21,8 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-.Compatibility Note
-[NOTE]
-================================================================================
-Starting with Elasticsearch 5.3, there's an {ref}/modules-http.html[HTTP setting]
-called `http.content_type.required`. If this option is set to `true`, and you
-are using Logstash 2.4 through 5.2, you need to update the Elasticsearch filter
-plugin to version 3.1.1 or higher.
-
-================================================================================
-
 Search Elasticsearch for a previous log event and copy some fields from it
-into the current event.  Below are two complete examples of how this filter might
+into the current event. Below are two complete examples of how this filter might
 be used.
 
 The first example uses the legacy 'query' parameter where the user is limited to an Elasticsearch query_string.
@@ -112,6 +102,14 @@ Notice also that when you use `query_template`, the Logstash attributes `result_
 and `sort` will be ignored. They should be specified directly in the JSON
 template, as shown in the example above.
 
+[id="plugins-{type}s-{plugin}-auth"]
+==== Authentication
+
+Authentication to a secure Elasticsearch cluster is possible using _one_ of the following options:
+
+* <<plugins-{type}s-{plugin}-user>> AND <<plugins-{type}s-{plugin}-password>>
+* <<plugins-{type}s-{plugin}-cloud_auth>>
+* <<plugins-{type}s-{plugin}-api_key>>
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Elasticsearch Filter Configuration Options
@@ -122,6 +120,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |=======================================================================
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-aggregation_fields>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-api_key>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-ca_file>> |a valid filesystem path|No
 | <<plugins-{type}s-{plugin}-cloud_auth>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-cloud_id>> |<<string,string>>|No
@@ -162,6 +161,16 @@ Example:
         }
       }
     }
+
+[id="plugins-{type}s-{plugin}-api_key"]
+===== `api_key`
+
+  * Value type is <<password,password>>
+  * There is no default value for this setting.
+
+Authenticate using Elasticsearch API key. Note that this option also requires enabling the `ssl` option.
+
+Format is `id:api_key` where `id` and `api_key` are as returned by the Elasticsearch https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html[Create API key API].
 
 [id="plugins-{type}s-{plugin}-ca_file"]
 ===== `ca_file` 
