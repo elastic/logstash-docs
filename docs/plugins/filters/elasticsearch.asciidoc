@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.8.0
-:release_date: 2020-06-03
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.8.0/CHANGELOG.md
+:version: v3.9.0
+:release_date: 2020-06-25
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.9.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -130,6 +130,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-hosts>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-index>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-password>> |<<password,password>>|No
+| <<plugins-{type}s-{plugin}-proxy>> |<<uri,uri>>|No
 | <<plugins-{type}s-{plugin}-query>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-query_template>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-result_size>> |<<number,number>>|No
@@ -171,6 +172,16 @@ Example:
 Authenticate using Elasticsearch API key. Note that this option also requires enabling the `ssl` option.
 
 Format is `id:api_key` where `id` and `api_key` are as returned by the Elasticsearch https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html[Create API key API].
+
+[id="plugins-{type}s-{plugin}-proxy"]
+===== `proxy`
+
+* Value type is <<uri,uri>>
+* There is no default value for this setting.
+
+Set the address of a forward HTTP proxy.
+An empty string is treated as if proxy was not set, and is useful when using
+environment variables e.g. `proxy => '${LS_PROXY:}'`.
 
 [id="plugins-{type}s-{plugin}-ca_file"]
 ===== `ca_file` 

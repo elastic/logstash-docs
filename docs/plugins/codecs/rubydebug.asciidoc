@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.6
-:release_date: 2018-07-27
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-rubydebug/blob/v3.0.6/CHANGELOG.md
+:version: v3.1.0
+:release_date: 2020-07-08
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-rubydebug/blob/v3.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -22,7 +22,7 @@ include::{include_path}/plugin_header.asciidoc[]
 ==== Description
 
 The rubydebug codec will output your Logstash event data using
-the Ruby Awesome Print library.
+the Ruby Amazing Print library.
 
 
 [id="plugins-{type}s-{plugin}-options"]
