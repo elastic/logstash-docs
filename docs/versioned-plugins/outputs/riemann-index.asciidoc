@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v3.0.7-plugins-outputs-riemann,v3.0.7>> | 2020-07-15
 | <<v3.0.6-plugins-outputs-riemann,v3.0.6>> | 2020-01-08
 | <<v3.0.5-plugins-outputs-riemann,v3.0.5>> | 2019-10-09
 | <<v3.0.4-plugins-outputs-riemann,v3.0.4>> | 2018-04-06
@@ -13,6 +14,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.0.1-plugins-outputs-riemann,v3.0.1>> | 2017-06-23
 |=======================================================================
 
+include::riemann-v3.0.7.asciidoc[]
 include::riemann-v3.0.6.asciidoc[]
 include::riemann-v3.0.5.asciidoc[]
 include::riemann-v3.0.4.asciidoc[]
