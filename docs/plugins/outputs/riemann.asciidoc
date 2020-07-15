@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.6
-:release_date: 2020-01-08
-:changelog_url: https://github.com/logstash-plugins/logstash-output-riemann/blob/v3.0.6/CHANGELOG.md
+:version: v3.0.7
+:release_date: 2020-07-15
+:changelog_url: https://github.com/logstash-plugins/logstash-output-riemann/blob/v3.0.7/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
