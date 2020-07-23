@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v3.4.4-plugins-inputs-syslog,v3.4.4>> | 2020-07-23
 | <<v3.4.3-plugins-inputs-syslog,v3.4.3>> | 2020-05-19
 | <<v3.4.2-plugins-inputs-syslog,v3.4.2>> | 2020-04-28
 | <<v3.4.1-plugins-inputs-syslog,v3.4.1>> | 2018-04-06
@@ -16,6 +17,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.2.1-plugins-inputs-syslog,v3.2.1>> | 2017-06-23
 |=======================================================================
 
+include::syslog-v3.4.4.asciidoc[]
 include::syslog-v3.4.3.asciidoc[]
 include::syslog-v3.4.2.asciidoc[]
 include::syslog-v3.4.1.asciidoc[]
