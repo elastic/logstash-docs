@@ -297,8 +297,8 @@ This allows you to set the maximum number of hits returned per scroll.
   * Sensible values range from 2 to about 8.
 
 In some cases, it is possible to improve overall throughput by consuming multiple
-distinct slices of a query simultaneously using
-https://www.elastic.co/guide/en/elasticsearch/reference/current/paginate-search-results.html#slice-scroll[sliced scrolls],
+distinct slices of a query simultaneously using the
+https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html#sliced-scroll[Sliced Scroll API],
 especially if the pipeline is spending significant time waiting on Elasticsearch
 to provide results.
 
