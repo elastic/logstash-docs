@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.4.1
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-input-syslog/blob/v3.4.1/CHANGELOG.md
+:version: v3.4.3
+:release_date: 2020-05-19
+:changelog_url: https://github.com/logstash-plugins/logstash-input-syslog/blob/v3.4.3/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -71,7 +71,14 @@ input plugins.
   * Value type is <<array,array>>
   * Default value is `["kernel", "user-level", "mail", "system", "security/authorization", "syslogd", "line printer", "network news", "UUCP", "clock", "security/authorization", "FTP", "NTP", "log audit", "log alert", "clock", "local0", "local1", "local2", "local3", "local4", "local5", "local6", "local7"]`
 
-Labels for facility levels. These are defined in RFC3164.
+Labels for facility levels defined in RFC3164.
+
+You can use this option to override the integer->label mapping for syslog inputs
+that behave differently than the RFCs. 
+
+Provide a zero-indexed array with all of your facility labels _in order_.
+If a log message contains a facility number with no corresponding entry,
+the facility_label is not added to the event.
 
 [id="plugins-{type}s-{plugin}-grok_pattern"]
 ===== `grok_pattern`
@@ -137,7 +144,11 @@ http://www.haproxy.org/download/1.5/doc/proxy-protocol.txt
   * Value type is <<array,array>>
   * Default value is `["Emergency", "Alert", "Critical", "Error", "Warning", "Notice", "Informational", "Debug"]`
 
-Labels for severity levels. These are defined in RFC3164.
+Labels for severity levels defined in RFC3164.
+
+Provide a zero-indexed array with all of your severity labels _in order_.
+If a log message contains a severity label with no corresponding entry,
+the severity_label is not added to the event.
 
 [id="plugins-{type}s-{plugin}-syslog_field"]
 ===== `syslog_field`
@@ -173,8 +184,8 @@ The valid IDs are listed on the [Joda.org available time zones page](http://joda
 This is useful in case the time zone cannot be extracted from the value,
 and is not the platform default.
 If this is not specified the platform default will be used.
-Canonical ID is good as it takes care of daylight saving time for you
-For example, `America/Los_Angeles` or `Europe/France` are valid IDs.
+Canonical ID is good as it takes care of daylight saving time for you.
+For example, `America/Los_Angeles` or `Europe/Paris` are valid IDs.
 
 [id="plugins-{type}s-{plugin}-use_labels"]
 ===== `use_labels`
