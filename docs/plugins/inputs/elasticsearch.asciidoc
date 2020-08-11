@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.7.0
-:release_date: 2020-06-03
-:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.7.0/CHANGELOG.md
+:version: v4.7.1
+:release_date: 2020-08-10
+:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.7.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -182,6 +182,19 @@ Example
         index => "copy-of-production.%{[@metadata][_index]}"
         document_type => "%{[@metadata][_type]}"
         document_id => "%{[@metadata][_id]}"
+      }
+    }
+
+If set, you can use metadata information in the <<plugins-{type}s-{plugin}-add_field>> common option.
+
+Example
+[source, ruby]
+    input {
+      elasticsearch {
+        docinfo => true
+        add_field => {
+          identifier => %{[@metadata][_index]}:%{[@metadata][_type]}:%{[@metadata][_id]}"
+        }
       }
     }
 
