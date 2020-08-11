@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.0.1
-:release_date: 2019-02-06
-:changelog_url: https://github.com/logstash-plugins/logstash-input-http_poller/blob/v5.0.1/CHANGELOG.md
+:version: v5.0.2
+:release_date: 2020-08-05
+:changelog_url: https://github.com/logstash-plugins/logstash-input-http_poller/blob/v5.0.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -96,8 +96,6 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<plugins-{type}s-{plugin}-user>> |<<string,string>>|no
-| <<plugins-{type}s-{plugin}-password>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-automatic_retries>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-cacert>> |a valid filesystem path|No
 | <<plugins-{type}s-{plugin}-client_cert>> |a valid filesystem path|No
@@ -110,6 +108,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-keystore_password>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-keystore_type>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-metadata_target>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-password>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-pool_max>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-pool_max_per_route>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-proxy>> |<<,>>|No
@@ -122,6 +121,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-truststore_password>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-truststore_type>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-urls>> |<<hash,hash>>|Yes
+| <<plugins-{type}s-{plugin}-user>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-validate_after_inactivity>> |<<number,number>>|No
 |=======================================================================
 
@@ -129,23 +129,6 @@ Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options suppo
 input plugins.
 
 &nbsp;
-
-[id="plugins-{type}s-{plugin}-user"]
-===== `user` 
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Username to use with HTTP authentication for ALL requests. Note that you can also set this per-URL.
-If you set this you must also set the `password` option.
-
-[id="plugins-{type}s-{plugin}-password"]
-===== `password` 
-
-  * Value type is <<password,password>>
-  * There is no default value for this setting.
-
-Password to be used in conjunction with the username for HTTP authentication.
 
 [id="plugins-{type}s-{plugin}-automatic_retries"]
 ===== `automatic_retries` 
@@ -249,6 +232,14 @@ Specify the keystore type here. One of `JKS` or `PKCS12`. Default is `JKS`
 If you'd like to work with the request/response metadata.
 Set this value to the name of the field you'd like to store a nested
 hash of metadata.
+
+[id="plugins-{type}s-{plugin}-password"]
+===== `password` 
+
+  * Value type is <<password,password>>
+  * There is no default value for this setting.
+
+Password to be used in conjunction with <<plugins-{type}s-{plugin}-user>> for HTTP authentication.
 
 [id="plugins-{type}s-{plugin}-pool_max"]
 ===== `pool_max` 
@@ -358,7 +349,45 @@ Specify the truststore type here. One of `JKS` or `PKCS12`. Default is `JKS`
   * There is no default value for this setting.
 
 A Hash of urls in this format : `"name" => "url"`.
-The name and the url will be passed in the outputed event
+The name and the url will be passed in the outputted event.
+
+The values in urls can be either:
+
+* a string url (which will be issued as an HTTP GET).
+* a sub-hash containing many useful keys provided by the Manticore backend:
+** url: the String url
+** method: (optional) the HTTP method to use (defaults to GET)
+** user: (optional) the HTTP Basic Auth user. The user must be under 
+   an auth sub-hash for Manticore, but this plugin also accepts it either way.
+** password: (optional) the HTTP Basic Auth password. The password 
+   must be under an auth sub-hash for Manticore, but this plugin accepts it either way.
+** headers: a hash containing key-value pairs of headers.
+** body: a string (supported only on POST and PUT requests)
+** possibly other options mentioned in the 
+   https://www.rubydoc.info/github/cheald/manticore/Manticore/Client#http-instance_method[Manticore docs].
+   Note that Manticore options that are not explicitly documented above are not
+   thoroughly tested and therefore liable to break in unexpected ways if we
+   replace the backend.
+
+*Notes:*
+
+* Passwords specified as a part of `urls` are prone to exposure in plugin log output. 
+The plugin does not declare them as passwords, and therefore doesn't wrap them in
+leak-reducing wrappers as we do elsewhere.
+* We don't guarantee that boolean-type options like Manticore's `follow_redirects` are supported
+correctly. The strings `true` or `false` may get passed through, and in ruby any
+string is "truthy."
+* Our implementation of this plugin precludes the ability to specify auth[:eager]
+as anything other than true
+
+[id="plugins-{type}s-{plugin}-user"]
+===== `user` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Username to use with HTTP authentication for ALL requests. Note that you can also set this per-URL.
+If you set this you must also set the <<plugins-{type}s-{plugin}-password>> option.
 
 [id="plugins-{type}s-{plugin}-validate_after_inactivity"]
 ===== `validate_after_inactivity` 

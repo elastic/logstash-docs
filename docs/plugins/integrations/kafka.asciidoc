@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v10.4.0
-:release_date: 2020-07-03
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v10.4.0/CHANGELOG.md
+:version: v10.5.0
+:release_date: 2020-07-20
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v10.5.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
