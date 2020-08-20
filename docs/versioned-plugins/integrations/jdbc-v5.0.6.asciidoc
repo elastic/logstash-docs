@@ -1,0 +1,32 @@
+:plugin: jdbc
+:type: integration
+:no_codec:
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v5.0.6
+:release_date: 2020-08-20
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-jdbc/blob/v5.0.6/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== JDBC Integration Plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+The JDBC Integration Plugin provides integrated plugins for working with databases that provide JDBC drivers:
+
+ - {logstash-ref}/plugins-inputs-jdbc.html[JDBC Input Plugin]
+ - {logstash-ref}/plugins-filters-jdbc_static.html[JDBC Static Filter Plugin]
+ - {logstash-ref}/plugins-filters-jdbc_streaming.html[JDBC Streaming Filter Plugin]
+
+:no_codec!:
+
+
