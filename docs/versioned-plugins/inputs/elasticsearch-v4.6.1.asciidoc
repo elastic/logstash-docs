@@ -116,7 +116,7 @@ SSL Certificate Authority file in PEM encoded format, must also include any chai
 
 Cloud authentication string ("<username>:<password>" format) is an alternative for the `user`/`password` pair.
 
-For more info, check out the https://www.elastic.co/guide/en/logstash/current/connecting-to-cloud.html#_cloud_auth[Logstash-to-Cloud documentation]
+For more info, check out the https://www.elastic.co/guide/en/logstash/7.7/connecting-to-cloud.html#_cloud_auth[Logstash-to-Cloud documentation]
 
 [id="{version}-plugins-{type}s-{plugin}-cloud_id"]
 ===== `cloud_id`
@@ -126,7 +126,7 @@ For more info, check out the https://www.elastic.co/guide/en/logstash/current/co
 
 Cloud ID, from the Elastic Cloud web console. If set `hosts` should not be used.
 
-For more info, check out the https://www.elastic.co/guide/en/logstash/current/connecting-to-cloud.html#_cloud_id[Logstash-to-Cloud documentation]
+For more info, check out the https://www.elastic.co/guide/en/logstash/7.7/connecting-to-cloud.html#_cloud_id[Logstash-to-Cloud documentation]
 
 [id="{version}-plugins-{type}s-{plugin}-docinfo"]
 ===== `docinfo`
@@ -202,7 +202,7 @@ can be either IP, HOST, IP:port, or HOST:port. The port defaults to
   * Default value is `"logstash-*"`
 
 The index or alias to search. See
-https://www.elastic.co/guide/en/elasticsearch/reference/current/multi-index.html[Multi Indices documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/7.7/multi-index.html[Multi Indices documentation]
 in the Elasticsearch documentation for more information on how to reference
 multiple indices.
 
@@ -234,7 +234,7 @@ environment variables e.g. `proxy => '${LS_PROXY:}'`.
   * Default value is `'{ "sort": [ "_doc" ] }'`
 
 The query to be executed. Read the
-https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html[Elasticsearch query DSL documentation]
+https://www.elastic.co/guide/en/elasticsearch/reference/7.7/query-dsl.html[Elasticsearch query DSL documentation]
 for more information.
 
 [id="{version}-plugins-{type}s-{plugin}-schedule"]
@@ -275,8 +275,8 @@ This allows you to set the maximum number of hits returned per scroll.
   * Sensible values range from 2 to about 8.
 
 In some cases, it is possible to improve overall throughput by consuming multiple
-distinct slices of a query simultaneously using the
-https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html#sliced-scroll[Sliced Scroll API],
+distinct slices of a query simultaneously using
+https://www.elastic.co/guide/en/elasticsearch/reference/7.7/search-request-body.html#sliced-scroll[sliced scrolls],
 especially if the pipeline is spending significant time waiting on Elasticsearch
 to provide results.
 
