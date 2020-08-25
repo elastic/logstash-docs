@@ -2,13 +2,14 @@
 :type: integration
 :default_plugin: 1
 :no_codec:
+:kafka_client: 2.4
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v10.5.0
-:release_date: 2020-07-20
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v10.5.0/CHANGELOG.md
+:version: v10.5.1
+:release_date: 2020-08-20
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v10.5.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -22,11 +23,15 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-The Kafka Integration Plugin provides integrated plugins for working with the https://kafka.apache.org/[Kafka] distributed streaming platform.
+The Kafka Integration Plugin provides integrated plugins for working with the
+https://kafka.apache.org/[Kafka] distributed streaming platform.
 
  - {logstash-ref}/plugins-inputs-kafka.html[Kafka Input Plugin]
  - {logstash-ref}/plugins-outputs-kafka.html[Kafka Output Plugin]
  
-This plugin uses Kafka Client 2.4. For broker compatibility, see the official https://cwiki.apache.org/confluence/display/KAFKA/Compatibility+Matrix[Kafka compatibility reference]. If the linked compatibility wiki is not up-to-date, please contact Kafka support/community to confirm compatibility.
+This plugin uses Kafka Client {kafka_client}. For broker compatibility, see the official
+https://cwiki.apache.org/confluence/display/KAFKA/Compatibility+Matrix[Kafka
+compatibility reference]. If the linked compatibility wiki is not up-to-date,
+please contact Kafka support/community to confirm compatibility.
 
 :no_codec!:

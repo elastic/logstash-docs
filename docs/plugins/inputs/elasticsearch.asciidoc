@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.7.1
-:release_date: 2020-08-10
-:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.7.1/CHANGELOG.md
+:version: v4.8.1
+:release_date: 2020-08-20
+:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.8.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -91,6 +91,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-ca_file>> |a valid filesystem path|No
 | <<plugins-{type}s-{plugin}-cloud_auth>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-cloud_id>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-connect_timeout_seconds>> | <<number,number>>|No
 | <<plugins-{type}s-{plugin}-docinfo>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-docinfo_fields>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-docinfo_target>> |<<string,string>>|No
@@ -99,11 +100,13 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-password>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-proxy>> |<<uri,uri>>|No
 | <<plugins-{type}s-{plugin}-query>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-request_timeout_seconds>> | <<number,number>>|No
 | <<plugins-{type}s-{plugin}-schedule>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-scroll>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-size>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-slices>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-ssl>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-socket_timeout_seconds>> | <<number,number>>|No
 | <<plugins-{type}s-{plugin}-user>> |<<string,string>>|No
 |=======================================================================
 
@@ -149,6 +152,15 @@ For more info, check out the https://www.elastic.co/guide/en/logstash/current/co
 Cloud ID, from the Elastic Cloud web console. If set `hosts` should not be used.
 
 For more info, check out the https://www.elastic.co/guide/en/logstash/current/connecting-to-cloud.html#_cloud_id[Logstash-to-Cloud documentation]
+
+[id="plugins-{type}s-{plugin}-connect_timeout_seconds"]
+===== `connect_timeout_seconds`
+
+  * Value type is <<number,number>>
+  * Default value is `10`
+
+The maximum amount of time, in seconds, to wait while establishing a connection to Elasticsearch.
+Connect timeouts tend to occur when Elasticsearch or an intermediate proxy is overloaded with requests and has exhausted its connection pool.
 
 [id="plugins-{type}s-{plugin}-docinfo"]
 ===== `docinfo` 
@@ -272,6 +284,16 @@ The query to be executed. Read the
 https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html[Elasticsearch query DSL documentation]
 for more information.
 
+[id="plugins-{type}s-{plugin}-request_timeout_seconds"]
+===== `request_timeout_seconds`
+
+  * Value type is <<number,number>>
+  * Default value is `60`
+
+The maximum amount of time, in seconds, for a single request to Elasticsearch.
+Request timeouts tend to occur when an individual page of data is very large, such as when it contains large-payload
+documents and/or the <<plugins-{type}s-{plugin}-size>> has been specified as a large value.
+
 [id="plugins-{type}s-{plugin}-schedule"]
 ===== `schedule` 
 
@@ -334,6 +356,15 @@ instructions into the query.
 
 If enabled, SSL will be used when communicating with the Elasticsearch
 server (i.e. HTTPS will be used instead of plain HTTP).
+
+[id="plugins-{type}s-{plugin}-socket_timeout_seconds"]
+===== `socket_timeout_seconds`
+
+  * Value type is <<number,number>>
+  * Default value is `60`
+
+The maximum amount of time, in seconds, to wait on an incomplete response from Elasticsearch while no additional data has been appended.
+Socket timeouts usually occur while waiting for the first byte of a response, such as when executing a particularly complex query.
 
 [id="plugins-{type}s-{plugin}-user"]
 ===== `user` 
