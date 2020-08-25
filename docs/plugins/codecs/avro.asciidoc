@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.2.3
-:release_date: 2017-11-07
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-avro/blob/v3.2.3/CHANGELOG.md
+:version: v3.2.4
+:release_date: 2020-08-21
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-avro/blob/v3.2.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -39,6 +39,17 @@ Logstash events into an Avro file.
 This codec is for deserializing individual Avro records. It is not for reading
 Avro files. Avro files have a unique format that must be handled upon input.
 
+.Partial deserialization
+[NOTE]
+================================================================================
+Avro format is known to support partial deserialization of arbitrary fields,
+providing a schema containing a subset of the schema which was used to serialize
+the data.
+This codec *doesn't support partial deserialization of arbitrary fields*.
+Partial deserialization _might_ work only when providing a schema which contains
+the first `N` fields of the schema used to serialize the data (and 
+in the same order).
+================================================================================
 
 ==== Usage
 Example usage with Kafka input.

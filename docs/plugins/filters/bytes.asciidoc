@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.0.2
-:release_date: 2018-06-04
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-bytes/blob/v1.0.2/CHANGELOG.md
+:version: v1.0.3
+:release_date: 2020-08-18
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-bytes/blob/v1.0.3/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -37,7 +37,7 @@ This plugin understands:
 ==== Examples
 
 
-[cols="<,<",options="header",]
+[cols="<,<,<",options="header",]
 |=======================================================================
 |Input string |Conversion method | Numeric value in bytes
 |40|`binary` or `metric`|40
