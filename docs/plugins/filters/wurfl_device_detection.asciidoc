@@ -1,0 +1,54 @@
+:plugin: wurfl_device_detection
+:type: filter
+:default_plugin: 0
+
+///////////////////////////////////////////
+REPLACES GENERATED VARIABLES
+///////////////////////////////////////////
+:changelog_url: https://github.com/WURFL/logstash-filter-wurfl_device_detection/blob/master/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+:gem: https://rubygems.org/gems/logstash-filter-wurfl_device_detection
+///////////////////////////////////////////
+END - REPLACES GENERATED VARIABLES
+///////////////////////////////////////////
+
+[id="plugins-{type}s-{plugin}"]
+
+=== Wurfl_device_detection filter plugin
+
+[subs="attributes"]
+++++
+<titleabbrev>{plugin}</titleabbrev>
+++++
+
+* This plugin was created and is maintained by a contributor.
+* {changelog_url}[Change log]
+
+==== Installation
+
+You can easily install plugins that are not bundled by default. Run
++bin/logstash-plugin install logstash-{type}-{plugin}+. See
+{logstash-ref}/working-with-plugins.html[Working with plugins] for more details.
+
+==== Description
+
+This plugin uses
+https://www.scientiamobile.com/products/wurfl-microservice/[WURFL Microservice]
+by ScientiaMobile to enrich logs with device information, such as brand and model
+name, OS name and version, and so forth.
+You can integrate WURFL Device Detection capabilities into applications for
+use-cases such as mobile optimization, targeted advertising, Event Streams
+analysis, and device analytics.
+
+==== Documentation
+
+Documentation for the {type}-{plugin} plugin is maintained by the creators:
+
+* https://github.com/WURFL/logstash-filter-wurfl_device_detection/blob/master/README.md[README.md] 
+* https://github.com/WURFL/logstash-filter-wurfl_device_detection/blob/master/docs/index.asciidoc[plugin documentation]
+
+==== Getting Help
+
+This is a third-party plugin. For bugs or feature requests, open an issue in the
+https://github.com/WURFL/logstash-filter-wurfl_device_detection[plugins-{type}s-{plugin} Github repo].
+
