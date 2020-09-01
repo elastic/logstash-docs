@@ -1,0 +1,216 @@
+:plugin: kinesis
+:type: input
+:default_codec: plain
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v2.1.2
+:release_date: 2020-09-01
+:changelog_url: https://github.com/logstash-plugins/logstash-input-kinesis/blob/v2.1.2/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Kinesis input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+You can use this plugin to receive events through
+http://docs.aws.amazon.com/kinesis/latest/dev/introduction.html[AWS Kinesis].
+This plugin uses the http://docs.aws.amazon.com/kinesis/latest/dev/kinesis-record-processor-implementation-app-java.html[Java Kinesis Client
+Library]. The documentation at
+https://github.com/awslabs/amazon-kinesis-client will be useful.
+
+AWS credentials can be specified either through environment variables, or an
+IAM instance role. The library uses a DynamoDB table for worker coordination,
+so you'll need to grant access to that as well as to the Kinesis stream. The
+DynamoDB table has the same name as the `application_name` configuration
+option, which defaults to "logstash".
+
+The library can optionally also send worker statistics to CloudWatch.
+
+[id="{version}-plugins-{type}s-{plugin}-usage"]
+==== Usage
+
+[source,ruby]
+-----
+input {
+  kinesis {
+    kinesis_stream_name => "my-logging-stream"
+    codec => json { }
+  }
+}
+-----
+
+[id="{version}-plugins-{type}s-{plugin}-cloudwatch"]
+==== Using with CloudWatch Logs
+
+If you want to read a CloudWatch Logs subscription stream, you'll also
+need to install and configure the
+https://github.com/threadwaste/logstash-codec-cloudwatch_logs[CloudWatch Logs
+Codec].
+
+[id="{version}-plugins-{type}s-{plugin}-authentication"]
+==== Authentication
+
+This plugin uses the default AWS SDK auth chain,
+https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/auth/DefaultAWSCredentialsProviderChain.html[DefaultAWSCredentialsProviderChain],
+to determine which credentials the client will use, unless `profile` is set, in
+which case
+http://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/auth/profile/ProfileCredentialsProvider.html[ProfileCredentialsProvider]
+is used.
+
+The default chain reads the credentials in this order:
+
+ * `AWS_ACCESS_KEY_ID` / `AWS_SECRET_KEY` environment variables
+ * `~/.aws/credentials` credentials file
+ * EC2 instance profile
+
+The credentials need access to the following services:
+
+* AWS Kinesis
+* AWS DynamoDB. The client library stores information for worker coordination in DynamoDB (offsets and active worker per partition)
+* AWS CloudWatch. If the metrics are enabled the credentials need CloudWatch update permissions granted.
+
+See the
+https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/auth/DefaultAWSCredentialsProviderChain.html[AWS documentation]
+for more information on the default chain.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Kinesis Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-application_name>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-checkpoint_interval_seconds>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-initial_position_in_stream>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-kinesis_stream_name>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-metrics>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `[nil, "cloudwatch"]`|No
+| <<{version}-plugins-{type}s-{plugin}-profile>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-region>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-role_arn>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-role_session_name>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-additional_settings>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-application_name"]
+===== `application_name`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"logstash"`
+
+The application name used for the dynamodb coordination table. Must be
+unique for this kinesis stream.
+
+[id="{version}-plugins-{type}s-{plugin}-checkpoint_interval_seconds"]
+===== `checkpoint_interval_seconds`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `60`
+
+How many seconds between worker checkpoints to dynamodb.
+
+[id="{version}-plugins-{type}s-{plugin}-initial_position_in_stream"]
+===== `initial_position_in_stream`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"TRIM_HORIZON"`
+
+The value for initialPositionInStream. Accepts "TRIM_HORIZON" or "LATEST".
+
+[id="{version}-plugins-{type}s-{plugin}-kinesis_stream_name"]
+===== `kinesis_stream_name`
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The kinesis stream name.
+
+[id="{version}-plugins-{type}s-{plugin}-metrics"]
+===== `metrics`
+
+  * Value can be any of: ``, `cloudwatch`
+  * Default value is `nil`
+
+Worker metric tracking. By default this is disabled, set it to "cloudwatch"
+to enable the cloudwatch integration in the Kinesis Client Library.
+
+[id="{version}-plugins-{type}s-{plugin}-profile"]
+===== `profile`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The AWS profile name for authentication.
+This ensures that the `~/.aws/credentials` AWS auth provider is used.
+By default this is empty and the default chain will be used.
+
+[id="{version}-plugins-{type}s-{plugin}-region"]
+===== `region`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"us-east-1"`
+
+The AWS region for Kinesis, DynamoDB, and CloudWatch (if enabled)
+
+[id="{version}-plugins-{type}s-{plugin}-role_arn"]
+===== `role_arn`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The AWS role to assume. This can be used, for example, to access a Kinesis stream in a different AWS
+account. This role will be assumed after the default credentials or profile credentials are created. By default
+this is empty and a role will not be assumed.
+
+[id="{version}-plugins-{type}s-{plugin}-role_session_name"]
+===== `role_session_name`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `logstash`
+
+Session name to use when assuming an IAM role. This is recorded in CloudTrail logs for example.
+
+[id="{version}-plugins-{type}s-{plugin}-additional_settings"]
+===== `additional_settings`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* There is no default value for this setting
+
+The KCL provides several configuration options which can be set in
+https://github.com/awslabs/amazon-kinesis-client/blob/master/amazon-kinesis-client-multilang/src/main/java/software/amazon/kinesis/coordinator/KinesisClientLibConfiguration.java[KinesisClientLibConfiguration].
+These options are configured via various function calls that all begin with
+`with`. Some of these functions take complex types, which are not supported.
+However, you may invoke any one of the `withX()` functions that take a primitive
+by providing key-value pairs in `snake_case`.
+
+Example:
+
+To set the dynamodb read and write capacity values, use these functions:
+`withInitialLeaseTableReadCapacity` and `withInitialLeaseTableWriteCapacity`.
+
+[source,text]
+----
+additional_settings => {"initial_lease_table_read_capacity" => 25, "initial_lease_table_write_capacity" => 100}
+----
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
