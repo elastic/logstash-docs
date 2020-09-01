@@ -43,7 +43,7 @@ The following filter plugins are available below. For a list of Elastic supporte
 | <<plugins-filters-range,range>> | Checks that specified fields stay within given size or length limits | https://github.com/logstash-plugins/logstash-filter-range[logstash-filter-range]
 | <<plugins-filters-ruby,ruby>> | Executes arbitrary Ruby code | https://github.com/logstash-plugins/logstash-filter-ruby[logstash-filter-ruby]
 | <<plugins-filters-sleep,sleep>> | Sleeps for a specified time span | https://github.com/logstash-plugins/logstash-filter-sleep[logstash-filter-sleep]
-| <<plugins-filters-split,split>> | Splits multi-line messages into distinct events | https://github.com/logstash-plugins/logstash-filter-split[logstash-filter-split]
+| <<plugins-filters-split,split>> | Splits multi-line messages, strings, or arrays into distinct events | https://github.com/logstash-plugins/logstash-filter-split[logstash-filter-split]
 | <<plugins-filters-syslog_pri,syslog_pri>> | Parses the `PRI` (priority) field of a `syslog` message | https://github.com/logstash-plugins/logstash-filter-syslog_pri[logstash-filter-syslog_pri]
 | <<plugins-filters-threats_classifier,threats_classifier>> | Enriches security logs with information about the attacker’s intent  | https://github.com/empow/logstash-filter-threats_classifier[logstash-filter-threats_classifier]
 | <<plugins-filters-throttle,throttle>> | Throttles the number of events | https://github.com/logstash-plugins/logstash-filter-throttle[logstash-filter-throttle]
