@@ -53,6 +53,7 @@ The following filter plugins are available below. For a list of Elastic supporte
 | <<plugins-filters-urldecode,urldecode>> | Decodes URL-encoded fields | https://github.com/logstash-plugins/logstash-filter-urldecode[logstash-filter-urldecode]
 | <<plugins-filters-useragent,useragent>> | Parses user agent strings into fields  | https://github.com/logstash-plugins/logstash-filter-useragent[logstash-filter-useragent]
 | <<plugins-filters-uuid,uuid>> | Adds a UUID to events | https://github.com/logstash-plugins/logstash-filter-uuid[logstash-filter-uuid]
+| <<plugins-filters-wurfl_device_detection,wurfl_device_detection>> | Enriches logs with device information such as brand, model, OS | https://github.com/WURFL/logstash-filter-wurfl_device_detection[logstash-filter-wurfl_device_detection]
 | <<plugins-filters-xml,xml>> | Parses XML into fields | https://github.com/logstash-plugins/logstash-filter-xml[logstash-filter-xml]
 |=======================================================================
 
@@ -190,6 +191,9 @@ include::filters/useragent.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-filter-uuid/edit/master/docs/index.asciidoc
 include::filters/uuid.asciidoc[]
+
+:edit_url: 
+include::filters/wurfl_device_detection.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-filter-xml/edit/master/docs/index.asciidoc
 include::filters/xml.asciidoc[]
