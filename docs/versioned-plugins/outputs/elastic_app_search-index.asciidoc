@@ -5,10 +5,12 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v1.1.1-plugins-outputs-elastic_app_search,v1.1.1>> | 2020-09-16
 | <<v1.1.0-plugins-outputs-elastic_app_search,v1.1.0>> | 2020-07-08
 | <<v1.0.0-plugins-outputs-elastic_app_search,v1.0.0>> | 2019-06-12
 |=======================================================================
 
+include::elastic_app_search-v1.1.1.asciidoc[]
 include::elastic_app_search-v1.1.0.asciidoc[]
 include::elastic_app_search-v1.0.0.asciidoc[]
 
