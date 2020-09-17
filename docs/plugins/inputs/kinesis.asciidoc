@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v2.1.1
-:release_date: 2019-02-16
-:changelog_url: https://github.com/logstash-plugins/logstash-input-kinesis/blob/v2.1.1/CHANGELOG.md
+:version: v2.1.2
+:release_date: 2020-09-01
+:changelog_url: https://github.com/logstash-plugins/logstash-input-kinesis/blob/v2.1.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
