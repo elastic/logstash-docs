@@ -58,7 +58,7 @@ configuration:
         hosts: ["your-logstash-host:5000"]
 
 For more details on configuring filebeat, see 
-https://www.elastic.co/guide/en/beats/filebeat/5.4/filebeat-configuration.html[the filebeat configuration guide].
+https://www.elastic.co/guide/en/beats/filebeat/5.4/filebeat-configuration.html[Configure Filebeat].
 
 ===== Configuring Logstash to receive from filebeat
 
