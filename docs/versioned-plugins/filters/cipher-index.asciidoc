@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v4.0.1-plugins-filters-cipher,v4.0.1>> | 2020-09-23
 | <<v4.0.0-plugins-filters-cipher,v4.0.0>> | 2019-01-11
 | <<v3.0.1-plugins-filters-cipher,v3.0.1>> | 2017-11-07
 | <<v3.0.0-plugins-filters-cipher,v3.0.0>> | 2017-10-02
@@ -12,6 +13,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v2.0.6-plugins-filters-cipher,v2.0.6>> | 2017-06-23
 |=======================================================================
 
+include::cipher-v4.0.1.asciidoc[]
 include::cipher-v4.0.0.asciidoc[]
 include::cipher-v3.0.1.asciidoc[]
 include::cipher-v3.0.0.asciidoc[]
