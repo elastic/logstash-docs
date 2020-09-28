@@ -28,7 +28,6 @@ The following output plugins are available below. For a list of Elastic supporte
 | <<plugins-outputs-http,http>> | Sends events to a generic HTTP or HTTPS endpoint | https://github.com/logstash-plugins/logstash-output-http[logstash-output-http]
 | <<plugins-outputs-influxdb,influxdb>> | Writes metrics to InfluxDB | https://github.com/logstash-plugins/logstash-output-influxdb[logstash-output-influxdb]
 | <<plugins-outputs-irc,irc>> | Writes events to IRC | https://github.com/logstash-plugins/logstash-output-irc[logstash-output-irc]
-| <<plugins-outputs-sink,sink>> | Discards any events received | https://github.com/elastic/logstash/blob/{branch}/logstash-core/src/main/java/org/logstash/plugins/outputs/Sink.java[core plugin]
 | <<plugins-outputs-java_stdout,java_stdout>> | Prints events to the STDOUT of the shell | https://github.com/elastic/logstash/blob/{branch}/logstash-core/src/main/java/org/logstash/plugins/outputs/Stdout.java[core plugin]
 | <<plugins-outputs-juggernaut,juggernaut>> | Pushes messages to the Juggernaut websockets server | https://github.com/logstash-plugins/logstash-output-juggernaut[logstash-output-juggernaut]
 | <<plugins-outputs-kafka,kafka>> | Writes events to a Kafka topic | https://github.com/logstash-plugins/logstash-integration-kafka[logstash-integration-kafka]
@@ -48,6 +47,7 @@ The following output plugins are available below. For a list of Elastic supporte
 | <<plugins-outputs-riak,riak>> | Writes events to the Riak distributed key/value store | https://github.com/logstash-plugins/logstash-output-riak[logstash-output-riak]
 | <<plugins-outputs-riemann,riemann>> | Sends metrics to Riemann | https://github.com/logstash-plugins/logstash-output-riemann[logstash-output-riemann]
 | <<plugins-outputs-s3,s3>> | Sends Logstash events to the Amazon Simple Storage Service | https://github.com/logstash-plugins/logstash-output-s3[logstash-output-s3]
+| <<plugins-outputs-sink,sink>> | Discards any events received | https://github.com/elastic/logstash/blob/{branch}/logstash-core/src/main/java/org/logstash/plugins/outputs/Sink.java[core plugin]
 | <<plugins-outputs-sns,sns>> | Sends events to Amazon's Simple Notification Service | https://github.com/logstash-plugins/logstash-output-sns[logstash-output-sns]
 | <<plugins-outputs-solr_http,solr_http>> | Stores and indexes logs in Solr | https://github.com/logstash-plugins/logstash-output-solr_http[logstash-output-solr_http]
 | <<plugins-outputs-sqs,sqs>> | Pushes events to an Amazon Web Services Simple Queue Service queue | https://github.com/logstash-plugins/logstash-output-sqs[logstash-output-sqs]
@@ -127,9 +127,6 @@ include::outputs/influxdb.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-output-irc/edit/master/docs/index.asciidoc
 include::outputs/irc.asciidoc[]
 
-:edit_url: https://github.com/elastic/logstash/blob/master/docs/static/core-plugins/outputs/java_sink.asciidoc
-include::../../../logstash/docs/static/core-plugins/outputs/java_sink.asciidoc[]
-
 :edit_url: https://github.com/elastic/logstash/blob/master/docs/static/core-plugins/outputs/java_stdout.asciidoc
 include::../../../logstash/docs/static/core-plugins/outputs/java_stdout.asciidoc[]
 
@@ -186,6 +183,9 @@ include::outputs/riemann.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-s3/edit/master/docs/index.asciidoc
 include::outputs/s3.asciidoc[]
+
+:edit_url: https://github.com/elastic/logstash/blob/master/docs/static/core-plugins/outputs/java_sink.asciidoc
+include::../../../logstash/docs/static/core-plugins/outputs/java_sink.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-sns/edit/master/docs/index.asciidoc
 include::outputs/sns.asciidoc[]
