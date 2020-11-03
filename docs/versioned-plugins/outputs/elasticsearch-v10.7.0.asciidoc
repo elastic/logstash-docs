@@ -716,9 +716,7 @@ Set max interval in seconds between bulk retries.
   * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
   * Default value is `1`
 
-The number of times Elasticsearch should internally retry an update/upserted document
-See the https://www.elastic.co/guide/en/elasticsearch/guide/{branch}/partial-updates.html[partial updates]
-for more info
+The number of times Elasticsearch should internally retry an update/upserted document.
 
 [id="{version}-plugins-{type}s-{plugin}-routing"]
 ===== `routing`
