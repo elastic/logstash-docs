@@ -1,6 +1,7 @@
 :plugin: elasticsearch
 :type: output
 :no_codec:
+:branch: 7.9
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
@@ -29,8 +30,8 @@ This output only speaks the HTTP protocol as it is the preferred protocol for
 interacting with Elasticsearch. In previous versions it was possible to
 communicate with Elasticsearch through the transport protocol, which is now
 reserved for internal cluster communication between nodes
-https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-transport.html[communication between nodes].
-Using the https://www.elastic.co/guide/en/elasticsearch/reference/current/java-clients.html[transport protocol]
+https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/modules-transport.html[communication between nodes].
+Using the https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/java-clients.html[transport protocol]
 to communicate with the cluster has been deprecated in Elasticsearch 7.0.0 and
 will be removed in 8.0.0
 
@@ -103,7 +104,7 @@ Example:
 
 **What to do in case there is no field in the event containing the destination index prefix?**
 
-You can use the `mutate` filter and conditionals to add a `[@metadata]` field (see https://www.elastic.co/guide/en/logstash/current/event-dependent-configuration.html#metadata) to set
+You can use the `mutate` filter and conditionals to add a `[@metadata]` field (see https://www.elastic.co/guide/en/logstash/{branch}/event-dependent-configuration.html#metadata) to set
 the destination index for each event. The `[@metadata]` fields will not be sent to Elasticsearch.
 
 Example:
@@ -220,7 +221,7 @@ not reevaluate its DNS value while the keepalive is in effect.
 
 This plugin supports request and response compression. Response compression is enabled by default and
 for Elasticsearch versions 5.0 and later, the user doesn't have to set any configs in Elasticsearch for
-it to send back compressed response. For versions before 5.0, `http.compression` must be set to `true` https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-http.html#modules-http[in
+it to send back compressed response. For versions before 5.0, `http.compression` must be set to `true` https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/modules-http.html#modules-http[in
 Elasticsearch] to take advantage of response compression when using this plugin
 
 For requests compression, regardless of the Elasticsearch version, users have to enable `http_compression`
@@ -321,7 +322,7 @@ The Elasticsearch action to perform. Valid actions are:
 - A sprintf style string to change the action based on the content of the event. The value `%{[foo]}`
   would use the foo field for the action
 
-For more details on actions, check out the http://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html[Elasticsearch bulk API documentation]
+For more details on actions, check out the http://www.elastic.co/guide/en/elasticsearch/reference/{branch}/docs-bulk.html[Elasticsearch bulk API documentation]
 
 [id="{version}-plugins-{type}s-{plugin}-api_key"]
 ===== `api_key`
@@ -331,7 +332,7 @@ For more details on actions, check out the http://www.elastic.co/guide/en/elasti
 
 Authenticate using Elasticsearch API key. Note that this option also requires enabling the `ssl` option.
 
-Format is `id:api_key` where `id` and `api_key` are as returned by the Elasticsearch https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html[Create API key API].
+Format is `id:api_key` where `id` and `api_key` are as returned by the Elasticsearch https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/security-api-create-api-key.html[Create API key API].
 
 [id="{version}-plugins-{type}s-{plugin}-bulk_path"]
 ===== `bulk_path`
@@ -358,7 +359,7 @@ The .cer or .pem file to validate the server's certificate
 
 Cloud authentication string ("<username>:<password>" format) is an alternative for the `user`/`password` pair.
 
-For more details, check out the https://www.elastic.co/guide/en/logstash/current/connecting-to-cloud.html#_cloud_auth[Logstash-to-Cloud documentation]
+For more details, check out the https://www.elastic.co/guide/en/logstash/{branch}/connecting-to-cloud.html[Logstash-to-Cloud documentation]
 
 [id="{version}-plugins-{type}s-{plugin}-cloud_id"]
 ===== `cloud_id`
@@ -368,7 +369,7 @@ For more details, check out the https://www.elastic.co/guide/en/logstash/current
 
 Cloud ID, from the Elastic Cloud web console. If set `hosts` should not be used.
 
-For more details, check out the https://www.elastic.co/guide/en/logstash/current/connecting-to-cloud.html#_cloud_id[Logstash-to-Cloud documentation]
+For more details, check out the https://www.elastic.co/guide/en/logstash/{branch}/connecting-to-cloud.html[Logstash-to-Cloud documentation]
 
 [id="{version}-plugins-{type}s-{plugin}-doc_as_upsert"]
 ===== `doc_as_upsert`
@@ -466,7 +467,7 @@ If you have custom firewall rules you may need to change this
   * Default value is `[//127.0.0.1]`
 
 Sets the host(s) of the remote instance. If given an array it will load balance requests across the hosts specified in the `hosts` parameter.
-Remember the `http` protocol uses the http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-http.html#modules-http[http] address (eg. 9200, not 9300).
+Remember the `http` protocol uses the http://www.elastic.co/guide/en/elasticsearch/reference/{branch}/modules-http.html#modules-http[http] address (eg. 9200, not 9300).
 
 Examples:
 
@@ -476,7 +477,7 @@ Examples:
     `["https://127.0.0.1:9200"]`
     `["https://127.0.0.1:9200/mypath"]` (If using a proxy on a subpath)
 
-It is important to exclude http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html[dedicated master nodes] from the `hosts` list
+It is important to exclude http://www.elastic.co/guide/en/elasticsearch/reference/{branch}/modules-node.html[dedicated master nodes] from the `hosts` list
 to prevent LS from sending bulk requests to the master nodes.  So this parameter should only reference either data or client nodes in Elasticsearch.
 
 Any special characters present in the URLs here MUST be URL escaped! This means `#` should be put in as `%23` for instance.
@@ -712,7 +713,7 @@ Set max interval in seconds between bulk retries.
   * Default value is `1`
 
 The number of times Elasticsearch should internally retry an update/upserted document
-See the https://www.elastic.co/guide/en/elasticsearch/guide/current/partial-updates.html[partial updates]
+See the https://www.elastic.co/guide/en/elasticsearch/guide/{branch}/partial-updates.html[partial updates]
 for more info
 
 [id="{version}-plugins-{type}s-{plugin}-routing"]
@@ -944,11 +945,12 @@ See https://www.elastic.co/blog/elasticsearch-versioning-support.
 
 The version_type to use for indexing.
 See https://www.elastic.co/blog/elasticsearch-versioning-support.
-See also https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html#_version_types
+See also https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/docs-index_.html#_version_types
 
 
 
 [id="{version}-plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
 
+:branch!: 
 :no_codec!:
