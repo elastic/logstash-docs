@@ -138,7 +138,7 @@ SSL Certificate Authority file in PEM encoded format, must also include any chai
 
 Cloud authentication string ("<username>:<password>" format) is an alternative for the `user`/`password` pair.
 
-For more info, check out the https://www.elastic.co/guide/en/logstash/{branch}/connecting-to-cloud.html#_cloud_auth[Logstash-to-Cloud documentation]
+For more info, check out the https://www.elastic.co/guide/en/logstash/{branch}/connecting-to-cloud.html[Logstash-to-Cloud documentation]
 
 [id="{version}-plugins-{type}s-{plugin}-cloud_id"]
 ===== `cloud_id`
@@ -148,7 +148,7 @@ For more info, check out the https://www.elastic.co/guide/en/logstash/{branch}/c
 
 Cloud ID, from the Elastic Cloud web console. If set `hosts` should not be used.
 
-For more info, check out the https://www.elastic.co/guide/en/logstash/{branch}/connecting-to-cloud.html#_cloud_id[Logstash-to-Cloud documentation]
+For more info, check out the https://www.elastic.co/guide/en/logstash/{branch}/connecting-to-cloud.html[Logstash-to-Cloud documentation]
 
 [id="{version}-plugins-{type}s-{plugin}-docinfo"]
 ===== `docinfo`
