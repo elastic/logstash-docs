@@ -319,7 +319,7 @@ For mode details, check out the https://www.elastic.co/guide/en/logstash/7.7/con
 
 Cloud ID, from the Elastic Cloud web console. If set `hosts` should not be used.
 
-For mode details, check out the https://www.elastic.co/guide/en/logstash/7.7/connecting-to-cloud.html[Logstash-to-Cloud documentation]
+For more details, check out the https://www.elastic.co/guide/en/logstash/7.7/connecting-to-cloud.html[Logstash-to-Cloud documentation]
 
 [id="{version}-plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
