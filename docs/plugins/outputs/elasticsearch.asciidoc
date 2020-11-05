@@ -31,9 +31,9 @@ interacting with Elasticsearch. In previous versions it was possible to
 communicate with Elasticsearch through the transport protocol, which is now
 reserved for internal cluster communication between nodes
 https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/modules-transport.html[communication between nodes].
-Using the https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/java-clients.html[transport protocol] 
-to communicate with the cluster has been deprecated in Elasticsearch 7.0.0 and
-will be removed in 8.0.0
+
+Using the transport protocol for cluster communication has been deprecated
+in Elasticsearch 7.0.0 and will be removed in 8.0.0.
 
 You can learn more about Elasticsearch at <https://www.elastic.co/products/elasticsearch>
 
