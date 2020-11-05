@@ -260,7 +260,7 @@ for more info at: https://www.elastic.co/guide/en/elasticsearch/reference/master
   * There is no default value for this setting.
 
 File path to elasticsearch query in DSL format. Read the Elasticsearch query documentation
-for more info at: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
+for more info at: https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/query-dsl.html
 
 [id="plugins-{type}s-{plugin}-result_size"]
 ===== `result_size` 
@@ -310,7 +310,7 @@ Basic Auth - username
 
 Cloud authentication string ("<username>:<password>" format) is an alternative for the `user`/`password` pair.
 
-For mode details, check out the https://www.elastic.co/guide/en/logstash/current/connecting-to-cloud.html#_cloud_auth[Logstash-to-Cloud documentation]
+For mode details, check out the https://www.elastic.co/guide/en/logstash/{branch}/connecting-to-cloud.html#_cloud_auth[Logstash-to-Cloud documentation]
 
 [id="plugins-{type}s-{plugin}-cloud_id"]
 ===== `cloud_id`
@@ -320,7 +320,7 @@ For mode details, check out the https://www.elastic.co/guide/en/logstash/current
 
 Cloud ID, from the Elastic Cloud web console. If set `hosts` should not be used.
 
-For mode details, check out the https://www.elastic.co/guide/en/logstash/current/connecting-to-cloud.html#_cloud_id[Logstash-to-Cloud documentation]
+For mode details, check out the https://www.elastic.co/guide/en/logstash/{branch}/connecting-to-cloud.html#_cloud_id[Logstash-to-Cloud documentation]
 
 
 
