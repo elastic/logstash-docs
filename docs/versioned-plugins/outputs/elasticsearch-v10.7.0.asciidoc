@@ -953,5 +953,4 @@ See also https://www.elastic.co/guide/en/elasticsearch/reference/7.10/docs-index
 [id="{version}-plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
 
-
 :no_codec!:
