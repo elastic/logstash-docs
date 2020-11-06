@@ -360,7 +360,7 @@ For more details, check out the {logstash-ref}/connecting-to-cloud.html[Logstash
 
 Cloud ID, from the Elastic Cloud web console. If set `hosts` should not be used.
 
-For more details, check out the {logstash-ref}/connecting-to-cloud.htm[Logstash-to-Cloud documentation]
+For more details, check out the {logstash-ref}/connecting-to-cloud.html[Logstash-to-Cloud documentation]
 
 [id="plugins-{type}s-{plugin}-doc_as_upsert"]
 ===== `doc_as_upsert` 
