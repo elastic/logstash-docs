@@ -1,6 +1,7 @@
 :plugin: elasticsearch
 :type: output
 :no_codec:
+:branch: 7.10
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
@@ -19,6 +20,10 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 include::{include_path}/plugin_header.asciidoc[]
 
+==== TEST TEST TEST TEST
+
+
+
 ==== Description
 
 If you plan to use the Kibana web interface to analyze data transformed by
@@ -29,8 +34,8 @@ This output only speaks the HTTP protocol as it is the preferred protocol for
 interacting with Elasticsearch. In previous versions it was possible to
 communicate with Elasticsearch through the transport protocol, which is now
 reserved for internal cluster communication between nodes
-https://www.elastic.co/guide/en/elasticsearch/reference/7.10/modules-transport.html[communication between nodes].
-Using the https://www.elastic.co/guide/en/elasticsearch/reference/7.10/java-clients.html[transport protocol]
+{ref}/modules-transport.html[communication between nodes].
+Using the {ref}/java-clients.html[transport protocol]
 to communicate with the cluster has been deprecated in Elasticsearch 7.0.0 and
 will be removed in 8.0.0
 
@@ -224,7 +229,7 @@ enabled by default for HTTP and for Elasticsearch versions 5.0 and later.
 You don't have to set any configs in Elasticsearch for it to send back a
 compressed response. For versions before 5.0, or if HTTPS is enabled,
 `http.compression` must be set to `true`
-https://www.elastic.co/guide/en/elasticsearch/reference/7.10/modules-http.html#modules-http[in
+{ref}/modules-http.html#modules-http[in
 Elasticsearch] to take advantage of response compression when using this plugin.
 
 For requests compression, regardless of the Elasticsearch version, enable the
@@ -325,7 +330,7 @@ The Elasticsearch action to perform. Valid actions are:
 - A sprintf style string to change the action based on the content of the event. The value `%{[foo]}`
   would use the foo field for the action
 
-For more details on actions, check out the http://www.elastic.co/guide/en/elasticsearch/reference/7.10/docs-bulk.html[Elasticsearch bulk API documentation]
+For more details on actions, check out the {ref}/docs-bulk.html[Elasticsearch bulk API documentation]
 
 [id="{version}-plugins-{type}s-{plugin}-api_key"]
 ===== `api_key`
@@ -953,4 +958,5 @@ See also https://www.elastic.co/guide/en/elasticsearch/reference/7.10/docs-index
 [id="{version}-plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
 
+:branch!:
 :no_codec!:
