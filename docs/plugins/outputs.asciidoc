@@ -15,6 +15,7 @@ The following output plugins are available below. For a list of Elastic supporte
 | <<plugins-outputs-datadog_metrics,datadog_metrics>> | Sends metrics to DataDogHQ based on Logstash events | https://github.com/logstash-plugins/logstash-output-datadog_metrics[logstash-output-datadog_metrics]
 | <<plugins-outputs-elastic_app_search,elastic_app_search>> | Sends events to the Elastic App Search solution | https://github.com/logstash-plugins/logstash-output-elastic_app_search[logstash-output-elastic_app_search]
 | <<plugins-outputs-elasticsearch,elasticsearch>> | Stores logs in Elasticsearch | https://github.com/logstash-plugins/logstash-output-elasticsearch[logstash-output-elasticsearch]
+| <<plugins-outputs-elasticsearch_data_streams,elasticsearch_data_streams>> | Sends time series data to Elasticsearch | https://github.com/logstash-plugins/logstash-output-elasticsearch_data_streams[logstash-output-elasticsearch_data_streams]
 | <<plugins-outputs-email,email>> | Sends email to a specified address when output is received | https://github.com/logstash-plugins/logstash-output-email[logstash-output-email]
 | <<plugins-outputs-exec,exec>> | Runs a command for a matching event | https://github.com/logstash-plugins/logstash-output-exec[logstash-output-exec]
 | <<plugins-outputs-file,file>> | Writes events to files on disk | https://github.com/logstash-plugins/logstash-output-file[logstash-output-file]
@@ -87,6 +88,9 @@ include::outputs/elastic_app_search.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/edit/master/docs/index.asciidoc
 include::outputs/elasticsearch.asciidoc[]
+
+:edit_url: https://github.com/logstash-plugins/logstash-output-elasticsearch_data_streams/edit/master/docs/index.asciidoc
+include::outputs/elasticsearch_data_streams.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-email/edit/master/docs/index.asciidoc
 include::outputs/email.asciidoc[]
