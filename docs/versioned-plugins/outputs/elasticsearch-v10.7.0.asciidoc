@@ -22,6 +22,69 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== TEST TEST TEST TEST
 
+Link/branch testing:
+
+* Full attributes (such as `{ref}` and `{logstash-ref}`)
+* Hard-codes links with `{branch}` attribute (set at beginning and cleared at end of each file)
+* Hard-coded links
+
+Verify:
+
+* Effectiveness. Does the approach produce the results we want?
+* Spillover. Do settings spill over into next files?
+** Test case: Try setting, but not clearing a branch attribute 
+* Make sure that clearing the document-level branch setting doesn't clear the
+global setting.
+
+Ease of use:
+
+* Which approach will make it easier to fix when `current` cutover breaks links?
+* Which approach will be most obvious and straightforward if somebody else has to make a quick fix? 
+
+Thoughts and ramblings:
+
+* We could conditionally add a branch attribute to VPR, but we would have to clear it
+outside of the VPR include file. Probably more trouble than it's worth.
+** What would happen if we set it and left it blank?  Maybe we could set it to
+`current` and then override by setting attribute value if links break.
+* Fix at break time by adding one of the previous link formats and possibly a
+branch attribute (set and clear).
+
+Final thoughts:
+
+* Whatever we decide, we need to document the approach for consistency and repeatability.
+
+
+===== Links using full attributes
+
+{ref}/modules-transport.html[communication between nodes] from Line 53
+
+Using the {ref}/java-clients.html[transport protocol] from Line 54
+
+See {logstash-ref}/dead-letter-queues.html[dead-letter-queues] from Line 177
+
+===== Hard-coded links using `{branch}` attribute
+
+https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/modules-transport.html[communication between nodes] from Line 53
+
+Using the https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/java-clients.html[transport protocol] from Line 54
+
+See https://www.elastic.co/guide/en/logstash/{branch}/dead-letter-queues.html[dead-letter-queues] from Line 177
+
+Format is `id:api_key` where `id` and `api_key` are as returned by the
+Elasticsearch
+https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/security-api-create-api-key.html[Create
+API key API] from Line 356.
+
+
+===== Hard-coded links
+
+See https://www.elastic.co/guide/en/logstash/7.10/dead-letter-queues.html[dead-letter-queues] from Line 177
+
+Format is `id:api_key` where `id` and `api_key` are as returned by the
+Elasticsearch
+https://www.elastic.co/guide/en/elasticsearch/reference/7.10/security-api-create-api-key.html[Create
+API key API] from Line 356.
 
 
 ==== Description

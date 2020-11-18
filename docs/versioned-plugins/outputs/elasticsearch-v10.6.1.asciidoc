@@ -19,6 +19,46 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 include::{include_path}/plugin_header.asciidoc[]
 
+==== TEST TEST TEST TEST
+
+Link/branch testing
+
+Test notes:  This file doesn't have any additional file-level attributes set (or cleared).
+
+===== Links using full attributes
+
+{ref}/modules-transport.html[communication between nodes] from Line 53
+
+Using the {ref}/java-clients.html[transport protocol] from Line 54
+
+See {logstash-ref}/dead-letter-queues.html[dead-letter-queues] from Line 177
+
+===== Hard-coded links using `{branch}` attribute
+
+https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/modules-transport.html[communication between nodes] from Line 53
+
+Using the https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/java-clients.html[transport protocol] from Line 54
+
+See https://www.elastic.co/guide/en/logstash/{branch}/dead-letter-queues.html[dead-letter-queues] from Line 177
+
+Format is `id:api_key` where `id` and `api_key` are as returned by the
+Elasticsearch
+https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/security-api-create-api-key.html[Create
+API key API] from Line 356.
+
+
+===== Hard-coded links
+
+See https://www.elastic.co/guide/en/logstash/7.10/dead-letter-queues.html[dead-letter-queues] from Line 177
+
+Format is `id:api_key` where `id` and `api_key` are as returned by the
+Elasticsearch
+https://www.elastic.co/guide/en/elasticsearch/reference/7.10/security-api-create-api-key.html[Create
+API key API] from Line 356.
+
+
+
+
 ==== Description
 
 If you plan to use the Kibana web interface to analyze data transformed by
