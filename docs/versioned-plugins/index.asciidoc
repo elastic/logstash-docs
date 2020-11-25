@@ -10,9 +10,6 @@
 
 include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
 
-// Override ref and logstash-ref settings imported from shared/attributes.asciidoc
-:ref: http://www.elastic.co/guide/en/elasticsearch/reference/{branch}
-:logstash-ref: http://www.elastic.co/guide/en/logstash/{branch}
 
 [[logstash-plugin-reference]]
 = Logstash Versioned Plugin Reference
