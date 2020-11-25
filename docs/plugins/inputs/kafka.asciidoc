@@ -9,9 +9,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v10.5.1
-:release_date: 2020-08-20
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v10.5.1/CHANGELOG.md
+:version: v10.5.3
+:release_date: 2020-10-21
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v10.5.3/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -315,7 +315,11 @@ before answering the request.
 
 The identifier of the group this consumer belongs to. Consumer group is a single logical subscriber
 that happens to be made up of multiple processors. Messages in a topic will be distributed to all
-Logstash instances with the same `group_id`
+Logstash instances with the same `group_id`.
+
+NOTE: In cases when multiple inputs are being used in a single pipeline, reading from different topics,
+it's essential to set a different `group_id => ...` for each input. Setting a unique `client_id => ...`
+is also recommended.
 
 [id="plugins-{type}s-{plugin}-heartbeat_interval_ms"]
 ===== `heartbeat_interval_ms` 
