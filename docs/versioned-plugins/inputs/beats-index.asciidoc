@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v6.0.12-plugins-inputs-beats,v6.0.12>> | 2020-12-01
 | <<v6.0.11-plugins-inputs-beats,v6.0.11>> | 2020-06-03
 | <<v6.0.10-plugins-inputs-beats,v6.0.10>> | 2020-05-12
 | <<v6.0.9-plugins-inputs-beats,v6.0.9>> | 2020-03-06
@@ -63,6 +64,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.1.17-plugins-inputs-beats,v3.1.17>> | 2017-06-05
 |=======================================================================
 
+include::beats-v6.0.12.asciidoc[]
 include::beats-v6.0.11.asciidoc[]
 include::beats-v6.0.10.asciidoc[]
 include::beats-v6.0.9.asciidoc[]
