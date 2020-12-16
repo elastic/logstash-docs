@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v4.9.0-plugins-inputs-elasticsearch,v4.9.0>> | 2020-12-16
 | <<v4.8.1-plugins-inputs-elasticsearch,v4.8.1>> | 2020-08-20
 | <<v4.8.0-plugins-inputs-elasticsearch,v4.8.0>> | 2020-08-17
 | <<v4.7.1-plugins-inputs-elasticsearch,v4.7.1>> | 2020-08-10
@@ -27,6 +28,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v4.0.4-plugins-inputs-elasticsearch,v4.0.4>> | 2017-06-23
 |=======================================================================
 
+include::elasticsearch-v4.9.0.asciidoc[]
 include::elasticsearch-v4.8.1.asciidoc[]
 include::elasticsearch-v4.8.0.asciidoc[]
 include::elasticsearch-v4.7.1.asciidoc[]
