@@ -377,7 +377,7 @@ Socket timeouts usually occur while waiting for the first byte of a response, su
 [id="plugins-{type}s-{plugin}-target"]
 ===== `target`
 
-* Value type is https://www.elastic.co/guide/en/logstash/master/field-references-deepdive.html[field reference]
+* Value type is {logstash-ref}/field-references-deepdive.html[field reference]
 * There is no default value for this setting.
 
 Without a `target`, events are created from each hit's `_source` at the root level.
