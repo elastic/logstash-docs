@@ -3,10 +3,21 @@
 // other books in our library.
 :versioned_docs: true
 
-:branch: current
 
 // Set include path for common files
 :include_path: ../include/6.x
+
+/////
+Version overrides to manage versioning quirks between versioned plugins and stack/ecs.
+
+On occasion, we'll need to make adjustments in a generated file to fix broken links.
+In that case, add a version override setting to the plugin file (such as inputs/beats-v6.1.0.asciidoc).
+Be sure to reset the in-file value back to the default value here to avoid spillover into
+other files.  
+/////
+
+:branch: current
+:ecs_version: current
 
 include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
 
