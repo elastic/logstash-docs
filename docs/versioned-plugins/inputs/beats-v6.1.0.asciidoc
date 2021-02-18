@@ -164,7 +164,7 @@ Close Idle clients after X seconds of inactivity.
 ** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
 ** Otherwise, the default value is `disabled`.
 
-Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
+Controls this plugin's compatibility with the Elastic Common Schema (ECS).
 The value of this setting affects the keys for the Beats connection's metadata on the event:
 
 .Metadata Location by `ecs_compatibility` value
