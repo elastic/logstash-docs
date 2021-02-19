@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.8
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-output-cloudwatch/blob/v3.0.8/CHANGELOG.md
+:version: v3.0.9
+:release_date: 2021-02-11
+:changelog_url: https://github.com/logstash-plugins/logstash-output-cloudwatch/blob/v3.0.9/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
