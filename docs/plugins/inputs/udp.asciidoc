@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.3.4
-:release_date: 2018-08-24
-:changelog_url: https://github.com/logstash-plugins/logstash-input-udp/blob/v3.3.4/CHANGELOG.md
+:version: v3.4.0
+:release_date: 2021-02-08
+:changelog_url: https://github.com/logstash-plugins/logstash-input-udp/blob/v3.4.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -27,6 +27,18 @@ configuration item is `port`, which specifies the udp port logstash
 will listen on for event streams.
 
 
+[id="plugins-{type}s-{plugin}-ecs_metadata"]
+===== Event Metadata and the Elastic Common Schema (ECS)
+
+This plugin adds a field containing the source IP address of the UDP packet.
+By default, the IP address is stored in the host field.
+When ECS is enabled (in <<plugins-{type}s-{plugin}-ecs_compatibility>>), the
+source IP address is stored in the [host][ip] field.
+
+You can customize the field name using the <<plugins-{type}s-{plugin}-source_ip_fieldname>>.
+See <<plugins-{type}s-{plugin}-ecs_compatibility>> for more information.
+
+
 [id="plugins-{type}s-{plugin}-options"]
 ==== Udp Input Configuration Options
 
@@ -36,12 +48,13 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |=======================================================================
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-buffer_size>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-ecs_compatibility>> | <<string,string>>|No
 | <<plugins-{type}s-{plugin}-host>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-port>> |<<number,number>>|Yes
 | <<plugins-{type}s-{plugin}-queue_size>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-receive_buffer_bytes>> |<<number,number>>|No
-| <<plugins-{type}s-{plugin}-workers>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-source_ip_fieldname>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-workers>> |<<number,number>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -56,6 +69,28 @@ input plugins.
   * Default value is `65536`
 
 The maximum packet size to read from the network
+
+[id="plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+* Value type is <<string,string>>
+* Supported values are:
+** `disabled`: unstructured connection metadata added at root level
+** `v1`: structured connection metadata added under ECS compliant namespaces
+* Default value depends on which version of Logstash is running:
+** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
+** Otherwise, the default value is `disabled`.
+
+Controls this plugin's compatibility with the https://www.elastic.co/guide/en/ecs/current/index.html[Elastic Common Schema (ECS)].
+The value of this setting affects the placement of a TCP connection's metadata on events.
+
+.Metadata Location by `ecs_compatibility` value
+[cols="<l,<l,e,<e"]
+|=======================================================================
+|`disabled`              |`v1`                      |Availability |Description
+
+|host                    |[host][ip]                |Always       |Source IP of UDP packet
+|=======================================================================
 
 [id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
@@ -95,6 +130,23 @@ If option is not set, the operating system default is used.
 The operating system will use the max allowed value if receive_buffer_bytes is larger than allowed.
 Consult your operating system documentation if you need to increase this max allowed value.
 
+[id="plugins-{type}s-{plugin}-source_ip_fieldname"]
+===== `source_ip_fieldname`
+
+* Value type is <<string,string>>
+* Default value could be `"host"` or `[host][ip]` depending on the value of <<plugins-{type}s-{plugin}-ecs_compatibility>>
+
+The name of the field where the source IP address will be stored.
+See <<plugins-{type}s-{plugin}-ecs_metadata>> for more information on how ECS compatibility settings affect these defaults.
+
+Example:
+[source,ruby]
+    input {
+      udp {
+        source_ip_fieldname => "[appliace][monitoring][ip]"
+      }
+    }
+
 [id="plugins-{type}s-{plugin}-workers"]
 ===== `workers` 
 
@@ -102,14 +154,6 @@ Consult your operating system documentation if you need to increase this max all
   * Default value is `2`
 
 Number of threads processing packets
-
-[id="plugins-{type}s-{plugin}-source_ip_fieldname"]
-===== `source_ip_fieldname`
-
-  * Value type is <<string,string>>
-  * Default value is `"host"`
-
-The name of the field where the source IP address will be stored.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
