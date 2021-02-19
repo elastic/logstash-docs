@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.6
-:release_date: 2020-06-30
-:changelog_url: https://github.com/logstash-plugins/logstash-input-salesforce/blob/v3.0.6/CHANGELOG.md
+:version: v3.0.7
+:release_date: 2021-02-04
+:changelog_url: https://github.com/logstash-plugins/logstash-input-salesforce/blob/v3.0.7/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -39,6 +39,10 @@ https://help.salesforce.com/apex/HTViewHelpDoc?id=user_security_token.htm
 
 In addition to specifying an sObject, you can also supply a list of API fields
 that will be used in the SOQL query.
+
+==== HTTP proxy
+
+If your infrastructure uses a HTTP proxy, you can set the `SALESFORCE_PROXY_URI` environment variable with the desired URI value (e.g `export SALESFORCE_PROXY_URI="http://proxy.example.com:123"`).
 
 ==== Example
 This example prints all the Salesforce Opportunities to standard out
