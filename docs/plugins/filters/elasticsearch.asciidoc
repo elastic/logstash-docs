@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.9.0
-:release_date: 2020-06-25
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.9.0/CHANGELOG.md
+:version: v3.9.3
+:release_date: 2021-01-26
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.9.3/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -25,7 +25,8 @@ Search Elasticsearch for a previous log event and copy some fields from it
 into the current event. Below are two complete examples of how this filter might
 be used.
 
-The first example uses the legacy 'query' parameter where the user is limited to an Elasticsearch query_string.
+The first example uses the legacy 'query' parameter where the user is limited to
+an Elasticsearch query_string.
 Whenever logstash receives an "end" event, it uses this elasticsearch
 filter to find the matching "start" event based on some operation identifier.
 Then it copies the `@timestamp` field from the "start" event into a new field on
@@ -111,6 +112,12 @@ Authentication to a secure Elasticsearch cluster is possible using _one_ of the 
 * <<plugins-{type}s-{plugin}-cloud_auth>>
 * <<plugins-{type}s-{plugin}-api_key>>
 
+[id="plugins-{type}s-{plugin}-autz"]
+==== Authorization
+
+Authorization to a secure Elasticsearch cluster requires `read` permission at index level and `monitoring` permissions at cluster level.
+The `monitoring` permission at cluster level is necessary to perform periodic connectivity checks.
+
 [id="plugins-{type}s-{plugin}-options"]
 ==== Elasticsearch Filter Configuration Options
 
@@ -169,19 +176,11 @@ Example:
   * Value type is <<password,password>>
   * There is no default value for this setting.
 
-Authenticate using Elasticsearch API key. Note that this option also requires enabling the `ssl` option.
+Authenticate using Elasticsearch API key. Note that this option also requires
+enabling the `ssl` option.
 
-Format is `id:api_key` where `id` and `api_key` are as returned by the Elasticsearch {ref}/security-api-create-api-key.html[Create API key API].
-
-[id="plugins-{type}s-{plugin}-proxy"]
-===== `proxy`
-
-* Value type is <<uri,uri>>
-* There is no default value for this setting.
-
-Set the address of a forward HTTP proxy.
-An empty string is treated as if proxy was not set, and is useful when using
-environment variables e.g. `proxy => '${LS_PROXY:}'`.
+Format is `id:api_key` where `id` and `api_key` are as returned by the
+Elasticsearch {ref}/security-api-create-api-key.html[Create API key API].
 
 [id="plugins-{type}s-{plugin}-ca_file"]
 ===== `ca_file` 
@@ -190,6 +189,28 @@ environment variables e.g. `proxy => '${LS_PROXY:}'`.
   * There is no default value for this setting.
 
 SSL Certificate Authority file
+
+[id="plugins-{type}s-{plugin}-cloud_auth"]
+===== `cloud_auth`
+
+  * Value type is <<password,password>>
+  * There is no default value for this setting.
+
+Cloud authentication string ("<username>:<password>" format) is an alternative for the `user`/`password` pair.
+
+For more info, check out the
+{logstash-ref}/connecting-to-cloud.html[Logstash-to-Cloud documentation].
+
+[id="plugins-{type}s-{plugin}-cloud_id"]
+===== `cloud_id`
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Cloud ID, from the Elastic Cloud web console. If set `hosts` should not be used.
+
+For more info, check out the
+{logstash-ref}/connecting-to-cloud.html[Logstash-to-Cloud documentation].
 
 [id="plugins-{type}s-{plugin}-docinfo_fields"]
 ===== `docinfo_fields` 
@@ -264,14 +285,26 @@ Field substitution (e.g. `index-name-%{date_field}`) is available
 
 Basic Auth - password
 
+[id="plugins-{type}s-{plugin}-proxy"]
+===== `proxy`
+
+* Value type is <<uri,uri>>
+* There is no default value for this setting.
+
+Set the address of a forward HTTP proxy.
+An empty string is treated as if proxy was not set, and is useful when using
+environment variables e.g. `proxy => '${LS_PROXY:}'`.
+
 [id="plugins-{type}s-{plugin}-query"]
 ===== `query` 
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Elasticsearch query string. Read the Elasticsearch query string documentation.
-for more info at: https://www.elastic.co/guide/en/elasticsearch/reference/master/query-dsl-query-string-query.html#query-string-syntax
+Elasticsearch query string. More information is available in the
+{ref}/query-dsl-query-string-query.html#query-string-syntax[Elasticsearch query
+string documentation].
+
 
 [id="plugins-{type}s-{plugin}-query_template"]
 ===== `query_template` 
@@ -279,8 +312,8 @@ for more info at: https://www.elastic.co/guide/en/elasticsearch/reference/master
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-File path to elasticsearch query in DSL format. Read the Elasticsearch query documentation
-for more info at: {ref}/query-dsl.html
+File path to elasticsearch query in DSL format. More information is available in
+the {ref}/query-dsl.html[Elasticsearch query documentation].
 
 [id="plugins-{type}s-{plugin}-result_size"]
 ===== `result_size` 
@@ -321,27 +354,6 @@ Tags the event on failure to look up previous log event information. This can be
   * There is no default value for this setting.
 
 Basic Auth - username
-
-[id="plugins-{type}s-{plugin}-cloud_auth"]
-===== `cloud_auth`
-
-  * Value type is <<password,password>>
-  * There is no default value for this setting.
-
-Cloud authentication string ("<username>:<password>" format) is an alternative for the `user`/`password` pair.
-
-For more info, check out the {logstash-ref}/connecting-to-cloud.html[Logstash-to-Cloud documentation]
-
-[id="plugins-{type}s-{plugin}-cloud_id"]
-===== `cloud_id`
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-Cloud ID, from the Elastic Cloud web console. If set `hosts` should not be used.
-
-For more info, check out the {logstash-ref}/connecting-to-cloud.html[Logstash-to-Cloud documentation]
-
 
 
 [id="plugins-{type}s-{plugin}-common-options"]
