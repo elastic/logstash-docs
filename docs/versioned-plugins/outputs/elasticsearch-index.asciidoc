@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v10.8.4-plugins-outputs-elasticsearch,v10.8.4>> | 2021-02-24
 | <<v10.8.3-plugins-outputs-elasticsearch,v10.8.3>> | 2021-02-22
 | <<v10.8.2-plugins-outputs-elasticsearch,v10.8.2>> | 2021-01-19
 | <<v10.8.1-plugins-outputs-elasticsearch,v10.8.1>> | 2020-12-02
@@ -63,6 +64,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v7.3.2-plugins-outputs-elasticsearch,v7.3.2>> | 2017-05-26
 |=======================================================================
 
+include::elasticsearch-v10.8.4.asciidoc[]
 include::elasticsearch-v10.8.3.asciidoc[]
 include::elasticsearch-v10.8.2.asciidoc[]
 include::elasticsearch-v10.8.1.asciidoc[]
