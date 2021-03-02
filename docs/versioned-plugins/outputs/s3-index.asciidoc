@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v4.3.4-plugins-outputs-s3,v4.3.4>> | 2021-03-02
 | <<v4.3.3-plugins-outputs-s3,v4.3.3>> | 2021-01-19
 | <<v4.3.2-plugins-outputs-s3,v4.3.2>> | 2020-05-28
 | <<v4.3.1-plugins-outputs-s3,v4.3.1>> | 2020-03-12
@@ -29,6 +30,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v4.0.8-plugins-outputs-s3,v4.0.8>> | 2017-06-23
 |=======================================================================
 
+include::s3-v4.3.4.asciidoc[]
 include::s3-v4.3.3.asciidoc[]
 include::s3-v4.3.2.asciidoc[]
 include::s3-v4.3.1.asciidoc[]
