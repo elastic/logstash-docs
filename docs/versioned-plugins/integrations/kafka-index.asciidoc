@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v10.7.2-plugins-integrations-kafka,v10.7.2>> | 2021-03-05
 | <<v10.7.1-plugins-integrations-kafka,v10.7.1>> | 2021-02-11
 | <<v10.7.0-plugins-integrations-kafka,v10.7.0>> | 2020-12-03
 | <<v10.6.0-plugins-integrations-kafka,v10.6.0>> | 2020-10-28
@@ -20,6 +21,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v10.0.0-plugins-integrations-kafka,v10.0.0>> | 2019-10-15
 |=======================================================================
 
+include::kafka-v10.7.2.asciidoc[]
 include::kafka-v10.7.1.asciidoc[]
 include::kafka-v10.7.0.asciidoc[]
 include::kafka-v10.6.0.asciidoc[]
