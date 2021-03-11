@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v3.6.0-plugins-inputs-s3,v3.6.0>> | 2021-03-11
 | <<v3.5.0-plugins-inputs-s3,v3.5.0>> | 2020-03-19
 | <<v3.4.1-plugins-inputs-s3,v3.4.1>> | 2018-09-14
 | <<v3.4.0-plugins-inputs-s3,v3.4.0>> | 2018-08-27
@@ -24,6 +25,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.1.5-plugins-inputs-s3,v3.1.5>> | 2017-06-23
 |=======================================================================
 
+include::s3-v3.6.0.asciidoc[]
 include::s3-v3.5.0.asciidoc[]
 include::s3-v3.4.1.asciidoc[]
 include::s3-v3.4.0.asciidoc[]
