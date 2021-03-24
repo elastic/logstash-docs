@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v6.0.7
-:release_date: 2021-02-09
-:changelog_url: https://github.com/logstash-plugins/logstash-input-tcp/blob/v6.0.7/CHANGELOG.md
+:version: v6.0.8
+:release_date: 2021-03-23
+:changelog_url: https://github.com/logstash-plugins/logstash-input-tcp/blob/v6.0.8/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -203,7 +203,9 @@ For input, sets the field `sslsubject` to that of the client certificate.
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
-Instruct the socket to use TCP keep alives. Uses OS defaults for keep alive settings.
+Instruct the socket to use TCP keep alive. If it's `true` then the underlying socket
+will use the OS defaults settings for keep alive. If it's `false` it doesn't configure any
+keep alive setting for the underlying socket.
 
 [id="plugins-{type}s-{plugin}-dns_reverse_lookup_enabled"]
 ===== `dns_reverse_lookup_enabled`
