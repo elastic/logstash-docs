@@ -26,13 +26,13 @@ NOTE: This plugin is deprecated. It is recommended that you use filebeat to coll
 
 The following section is a guide for how to migrate from SocketAppender to use filebeat.
 
-To migrate away from log4j SocketAppender to using filebeat, you will need to make these changes:
+To migrate away from log4j SocketAppender to using filebeat, you will need to make 3 changes:
 
-* Configure your log4j.properties (in your app) to write to a local file.
-* Install and configure filebeat to collect those logs and ship them to Logstash
-* Configure Logstash to use the beats input.
+1) Configure your log4j.properties (in your app) to write to a local file.
+2) Install and configure filebeat to collect those logs and ship them to Logstash
+3) Configure Logstash to use the beats input.
 
-===== Configuring log4j for writing to local files
+.Configuring log4j for writing to local files
 
 In your log4j.properties file, remove SocketAppender and replace it with RollingFileAppender. 
 
@@ -48,10 +48,10 @@ For example, you can use the following log4j.properties configuration to write d
 
 Configuring log4j.properties in more detail is outside the scope of this migration guide.
 
-===== Configuring filebeat
+.Configuring filebeat
 
 Next,
-https://www.elastic.co/guide/en/beats/filebeat/{branch}/filebeat-installation-configuration.html[install
+https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-installation.html[install
 filebeat]. Based on the above log4j.properties, we can use this filebeat
 configuration:
 
@@ -67,9 +67,9 @@ configuration:
         hosts: ["your-logstash-host:5000"]
 
 For more details on configuring filebeat, see 
-https://www.elastic.co/guide/en/beats/filebeat/{branch}/configuring-howto-filebeat.html[Configure Filebeat].
+https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-configuration.html[the filebeat configuration guide].
 
-===== Configuring Logstash to receive from filebeat
+.Configuring Logstash to receive from filebeat
 
 Finally, configure Logstash with a beats input:
 
@@ -84,7 +84,7 @@ It is strongly recommended that you also enable TLS in filebeat and logstash
 beats input for protection and safety of your log data..
 
 For more details on configuring the beats input, see
-https://www.elastic.co/guide/en/logstash/{branch}/plugins-inputs-beats.html[the logstash beats input documentation].
+https://www.elastic.co/guide/en/logstash/current/plugins-inputs-beats.html[the logstash beats input documentation].
 
 ==== Description
 
