@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v6.0.5
-:release_date: 2021-02-16
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-geoip/blob/v6.0.5/CHANGELOG.md
+:version: v7.1.0
+:release_date: 2021-03-25
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-geoip/blob/v7.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -22,21 +22,40 @@ include::{include_path}/plugin_header.asciidoc[]
 ==== Description
 
 The GeoIP filter adds information about the geographical location of IP addresses,
-based on data from the Maxmind GeoLite2 databases.
+based on data from the MaxMind GeoLite2 databases.
 
 ==== Supported Databases
 
-This plugin is bundled with https://dev.maxmind.com/geoip/geoip2/geolite2[GeoLite2] City database out of the box. From Maxmind's description --
+This plugin is bundled with https://dev.maxmind.com/geoip/geoip2/geolite2[GeoLite2] City database out of the box. From MaxMind's description --
 "GeoLite2 databases are free IP geolocation databases comparable to, but less accurate than, MaxMind’s
 GeoIP2 databases". Please see GeoIP Lite2 license for more details.
 
-https://www.maxmind.com/en/geoip2-databases[Commercial databases] from Maxmind are also supported in this plugin.
+https://www.maxmind.com/en/geoip2-databases[Commercial databases] from MaxMind are also supported in this plugin.
 
 If you need to use databases other than the bundled GeoLite2 City, you can download them directly
-from Maxmind's website and use the `database` option to specify their location. The GeoLite2 databases
+from MaxMind's website and use the `database` option to specify their location. The GeoLite2 databases
 can be https://dev.maxmind.com/geoip/geoip2/geolite2[downloaded from here].
 
 If you would like to get Autonomous System Number(ASN) information, you can use the GeoLite2-ASN database.
+
+[id="plugins-{type}s-{plugin}-database_license"]
+==== Database License
+
+https://www.maxmind.com[MaxMind] changed from releasing the GeoIP database under
+a Creative Commons (CC) license to a proprietary end-user license agreement
+(EULA).  The MaxMind EULA requires Logstash to update the MaxMind database
+within 30 days of a database update. If Logstash fails to download the database
+for 30 days, it will stop the pipeline in order to maintain compliance.
+
+The GeoIP filter plugin can manage the database for users running the Logstash default
+distribution, or you can manage
+database updates on your own. The behavior is controlled by the `database` setting.
+When you use the default `database` setting, the auto-update feature ensures that the plugin is
+using the latest version of the database.
+Otherwise, you are responsible for maintaining compliance.
+
+The Logstash open source distribution uses the MaxMind Creative Commons license
+database by default.
 
 ==== Details
 
@@ -74,6 +93,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-cache_size>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-database>> |a valid filesystem path|No
 | <<plugins-{type}s-{plugin}-default_database_type>> |`City` or `ASN`|No
+| <<plugins-{type}s-{plugin}-ecs_compatibility>> | <<string,string>>|No
 | <<plugins-{type}s-{plugin}-fields>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-source>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-tag_on_failure>> |<<array,array>>|No
@@ -110,14 +130,16 @@ number of cache misses and waste memory.
 ===== `database`
 
   * Value type is <<path,path>>
-  * There is no default value for this setting.
+  * If not specified, the database defaults to the GeoLite2 City database that ships with Logstash.
 
-The path to Maxmind's database file that Logstash should use. The default database is GeoLite2-City.
-GeoLite2-City, GeoLite2-Country, GeoLite2-ASN are the free databases from Maxmind that are supported.
-GeoIP2-City, GeoIP2-ISP, GeoIP2-Country are the commercial databases from Maxmind that are supported.
+The path to MaxMind's database file that Logstash should use. The default database is GeoLite2-City.
+GeoLite2-City, GeoLite2-Country, GeoLite2-ASN are the free databases from MaxMind that are supported.
+GeoIP2-City, GeoIP2-ISP, GeoIP2-Country are the commercial databases from MaxMind that are supported.
 
-If not specified, this will default to the GeoLite2 City database that ships
-with Logstash.
+Database auto-update applies to default distribution. When `database` points to user's database path,
+auto-update will be disabled.
+See
+<<plugins-{type}s-{plugin}-database_license,Database License>> for more information.
 
 [id="plugins-{type}s-{plugin}-default_database_type"]
 ===== `default_database_type`
@@ -141,8 +163,22 @@ are included in the event.
 
 For the built-in GeoLite2 City database, the following are available:
 `city_name`, `continent_code`, `country_code2`, `country_code3`, `country_name`,
-`dma_code`, `ip`, `latitude`, `longitude`, `postal_code`, `region_code`,
+`dma_code`, `ip`, `latitude`, `location`, `longitude`, `postal_code`, `region_code`,
 `region_name` and `timezone`.
+
+[id="plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+* Value type is <<string,string>>
+* Supported values are:
+** `disabled`: unstructured geo data added at root level
+** `v1`: uses fields that are compatible with Elastic Common Schema (for example, `[client][geo][country_name]`)
+* Default value depends on which version of Logstash is running:
+** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
+** Otherwise, the default value is `disabled`.
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
+The value of this setting affects the _default_ value of <<plugins-{type}s-{plugin}-target>>.
 
 [id="plugins-{type}s-{plugin}-source"]
 ===== `source`
@@ -165,8 +201,15 @@ Tags the event on failure to look up geo information. This can be used in later 
 [id="plugins-{type}s-{plugin}-target"]
 ===== `target`
 
+  * This is an optional setting with condition.
   * Value type is <<string,string>>
-  * Default value is `"geoip"`
+  * Default value depends on whether <<plugins-{type}s-{plugin}-ecs_compatibility>> is enabled:
+  ** ECS Compatibility disabled: `geoip`
+  ** ECS Compatibility enabled: If `source` is an `ip` sub-field, eg. `[client][ip]`,
+      `target` will automatically set to the parent field, in this example `client`,
+      otherwise, `target` is a required setting
+  *** `geo` field is nested in `[client][geo]`
+  *** ECS compatible values are `client`, `destination`, `host`, `observer`, `server`, `source`
 
 Specify the field into which Logstash should store the geoip data.
 This can be useful, for example, if you have `src_ip` and `dst_ip` fields and

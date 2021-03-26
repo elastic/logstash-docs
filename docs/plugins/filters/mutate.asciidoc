@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.5.0
-:release_date: 2019-06-17
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.5.0/CHANGELOG.md
+:version: v3.5.1
+:release_date: 2021-03-10
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.5.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -52,8 +52,8 @@ Example:
 -----
 filter {
     mutate {
-        split => ["hostname", "."]
-        add_field => { "shortHostname" => "%{hostname[0]}" }
+        split => { "hostname" => "." }
+        add_field => { "shortHostname" => "%{[hostname][0]}" }
     }
 
     mutate {    
@@ -112,10 +112,10 @@ Valid conversion targets, and their expected behaviour with different inputs are
    - same as `integer`, except string values support dot-separators and comma-decimals (e.g., `"1.000"` produces an integer with value of one thousand)
  * `float`:
    - integers are converted to floats
-   - strings are parsed; comma-separators and dot-decimals are supported (e.g., `"1,000.5"` produces an integer with value of one thousand and one half)
+   - strings are parsed; comma-separators and dot-decimals are supported (e.g., `"1,000.5"` produces a float with value of one thousand and one half)
    - boolean true and boolean false are converted to `1.0` and `0.0` respectively
  * `float_eu`:
-   - same as `float`, except string values support dot-separators and comma-decimals (e.g., `"1.000,5"` produces an integer with value of one thousand and one half)
+   - same as `float`, except string values support dot-separators and comma-decimals (e.g., `"1.000,5"` produces a float with value of one thousand and one half)
  * `string`:
    - all values are stringified and encoded with UTF-8
  * `boolean`:
