@@ -1,0 +1,141 @@
+:plugin: clone
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v4.1.0
+:release_date: 2021-03-26
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-clone/blob/v4.1.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Clone filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+The clone filter is for duplicating events.
+A clone will be created for each type in the clone list.
+The original event is left unchanged.
+Created events are inserted into the pipeline
+as normal events and will be processed by the remaining pipeline configuration
+starting from the filter that generated them (i.e. this plugin).
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Clone Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-clones>> |{logstash-ref}/configuration-file-structure.html#array[array]|Yes
+| <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>> | {logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-clones"]
+===== `clones`
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * There is no default value for this setting.
+  * a new clone will be created with a `type` of the given value in this list when ECS is disabled
+  * a new clone will be created with a `tags` of the given value in this list when ECS is enabled
+
+Note: setting an empty array will not create any clones. A warning message is logged.
+
+[id="{version}-plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* Supported values are:
+** `disabled`: does not use ECS-compatible field names
+** `v1`: uses fields that are compatible with Elastic Common Schema
+* Default value depends on which version of Logstash is running:
+** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
+** Otherwise, the default value is `disabled`.
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
+The value of this setting affects the behavior of the <<{version}-plugins-{type}s-{plugin}-clones>>
+
+Example:
+[source,ruby]
+    filter {
+      clone {
+        clones => ["sun", "moon"]
+      }
+    }
+
+ECS disabled
+[source,text]
+-----
+{
+      "@version" => "1",
+      "sequence" => 0,
+       "message" => "Hello World!",
+    "@timestamp" => 2021-03-24T11:20:36.226Z,
+          "host" => "example.com"
+}
+{
+      "@version" => "1",
+      "sequence" => 0,
+       "message" => "Hello World!",
+    "@timestamp" => 2021-03-24T11:20:36.226Z,
+          "type" => "sun",
+          "host" => "example.com"
+}
+{
+      "@version" => "1",
+      "sequence" => 0,
+       "message" => "Hello World!",
+    "@timestamp" => 2021-03-24T11:20:36.226Z,
+          "type" => "moon",
+          "host" => "example.com"
+}
+-----
+
+ECS enabled
+[source,text]
+-----
+{
+      "sequence" => 0,
+    "@timestamp" => 2021-03-23T20:25:10.042Z,
+       "message" => "Hello World!",
+      "@version" => "1",
+          "host" => "example.com"
+}
+{
+          "tags" => [
+        [0] "sun"
+    ],
+      "sequence" => 0,
+    "@timestamp" => 2021-03-23T20:25:10.042Z,
+       "message" => "Hello World!",
+      "@version" => "1",
+          "host" => "example.com"
+}
+{
+          "tags" => [
+        [0] "moon"
+    ],
+      "sequence" => 0,
+    "@timestamp" => 2021-03-23T20:25:10.042Z,
+       "message" => "Hello World!",
+      "@version" => "1",
+          "host" => "example.com"
+}
+-----
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
