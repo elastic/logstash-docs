@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.4.5
-:release_date: 2021-01-11
-:changelog_url: https://github.com/logstash-plugins/logstash-input-syslog/blob/v3.4.5/CHANGELOG.md
+:version: v3.5.0
+:release_date: 2021-03-22
+:changelog_url: https://github.com/logstash-plugins/logstash-input-syslog/blob/v3.5.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -48,6 +48,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-ecs_compatibility>> | <<string,string>>|No
 | <<plugins-{type}s-{plugin}-facility_labels>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-grok_pattern>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-host>> |<<string,string>>|No
@@ -64,6 +65,20 @@ Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options suppo
 input plugins.
 
 &nbsp;
+
+[id="plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+  * Value type is <<string,string>>
+  * Supported values are:
+    ** `disabled`: does not use ECS-compatible field names (for example, `priority` for syslog priority)
+    ** `v1`: uses fields that are compatible with Elastic Common Schema (for example, `[log][syslog][priority]`)
+  * Default value depends on which version of Logstash is running:
+    ** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
+    ** Otherwise, the default value is `disabled`.
+
+Controls this plugin's compatibility with the
+{ecs-ref}[Elastic Common Schema (ECS)].
 
 [id="plugins-{type}s-{plugin}-facility_labels"]
 ===== `facility_labels`
@@ -85,6 +100,9 @@ the facility_label is not added to the event.
 
   * Value type is <<string,string>>
   * Default value is `"<%{POSINT:priority}>%{SYSLOGLINE}"`
+  * Default value depends on whether <<plugins-{type}s-{plugin}-ecs_compatibility>> is enabled:
+    ** ECS Compatibility disabled: `"<%{POSINT:priority}>%{SYSLOGLINE}"`
+    ** ECS Compatibility enabled: `"<%{POSINT:[log][syslog][priority]:int}>%{SYSLOGLINE}"`
 
 The default value should read and properly parse syslog lines which are
 fully compliant with http://www.ietf.org/rfc/rfc3164.txt[RFC3164].
