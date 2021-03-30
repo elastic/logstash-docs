@@ -8,6 +8,7 @@ The following input plugins are available below. For a list of Elastic supported
 |=======================================================================
 | Plugin | Description | Github repository
 | <<plugins-inputs-azure_event_hubs,azure_event_hubs>> | Receives events from Azure Event Hubs | https://github.com/logstash-plugins/logstash-input-azure_event_hubs[azure_event_hubs]
+| <<plugins-inputs-agent,agent>> | Receives events from the Elastic Agent framework | https://github.com/logstash-plugins/logstash-input-beats[logstash-input-beats]
 | <<plugins-inputs-beats,beats>> | Receives events from the Elastic Beats framework | https://github.com/logstash-plugins/logstash-input-beats[logstash-input-beats]
 | <<plugins-inputs-cloudwatch,cloudwatch>> | Pulls events from the Amazon Web Services CloudWatch API  | https://github.com/logstash-plugins/logstash-input-cloudwatch[logstash-input-cloudwatch]
 | <<plugins-inputs-couchdb_changes,couchdb_changes>> | Streams events from CouchDB's `_changes` URI | https://github.com/logstash-plugins/logstash-input-couchdb_changes[logstash-input-couchdb_changes]
@@ -65,6 +66,9 @@ The following input plugins are available below. For a list of Elastic supported
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-azure_event_hubs/edit/master/docs/index.asciidoc
 include::inputs/azure_event_hubs.asciidoc[]
+
+:edit_url:
+include::inputs/agent.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-beats/edit/master/docs/index.asciidoc
 include::inputs/beats.asciidoc[]
