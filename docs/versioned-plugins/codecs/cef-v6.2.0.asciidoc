@@ -1,0 +1,261 @@
+:plugin: cef
+:type: codec
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v6.2.0
+:release_date: 2021-04-06
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v6.2.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Cef codec plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Implementation of a Logstash codec for the ArcSight Common Event Format (CEF)
+Based on Revision 20 of Implementing ArcSight CEF, dated from June 05, 2013
+https://community.saas.hpe.com/dcvta86296/attachments/dcvta86296/connector-documentation/1116/1/CommonEventFormatv23.pdf
+
+If this codec receives a payload from an input that is not a valid CEF message, then it will
+produce an event with the payload as the 'message' field and a '_cefparsefailure' tag.
+
+==== Compatibility with the Elastic Common Schema (ECS)
+
+This plugin can be used to decode CEF events _into_ the Elastic Common Schema, or to encode ECS-compatible events into CEF.
+It can also be used _without_ ECS, encoding and decoding events using only CEF-defined field names and keys.
+
+The ECS Compatibility mode for a specific plugin instance can be controlled by setting <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>> when defining the codec:
+
+[source,sh]
+-----
+    input {
+      tcp {
+        # ...
+        codec => cef {
+          ecs_compatibility => v1
+        }
+      }
+    }
+-----
+
+If left unspecified, the value of the `pipeline.ecs_compatibility` setting is used.
+
+===== Timestamps and ECS Compatiblity
+
+When running in ECS Compatibility Mode, timestamp-type fields are parsed and normalized
+to specific points on the timeline.
+
+Because the CEF format allows ambiguous timestamp formats, some reasonable assumptions are made:
+
+ - When the timestamp does not include a year, we assume it happened in the recent past
+   (or _very_ near future to accommodate out-of-sync clocks and timezone offsets).
+ - When the timestamp does not include UTC-offset information, we use the event's
+   timezone (`dtz` or `deviceTimeZone` field), or fall through to this plugin's
+   <<{version}-plugins-{type}s-{plugin}-default_timezone>>.
+ - Localized timestamps are parsed using the provided <<{version}-plugins-{type}s-{plugin}-locale>>.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Cef Codec Configuration Options
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-default_timezone>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-delimiter>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-device>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-fields>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-locale>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-name>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-product>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-reverse_mapping>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-severity>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-signature>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-vendor>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-version>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-default_timezone"]
+===== `default_timezone`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* Supported values are:
+** https://en.wikipedia.org/wiki/List_of_tz_database_time_zones[Timezone names] (such as `Europe/Moscow`, `America/Argentina/Buenos_Aires`)
+** UTC Offsets (such as `-08:00`, `+03:00`)
+* The default value is your system time zone
+* This option has no effect when _encoding_.
+
+When parsing timestamp fields in ECS mode and encountering timestamps that
+do not contain UTC-offset information, the `deviceTimeZone` (`dtz`) field
+from the CEF payload is used to interpret the given time. If the event does
+not include timezone information, this `default_timezone` is used instead.
+
+[id="{version}-plugins-{type}s-{plugin}-delimiter"]
+===== `delimiter`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+If your input puts a delimiter between each CEF event, you'll want to set
+this to be that delimiter.
+
+For example, with the TCP input, you probably want to put this:
+
+    input {
+      tcp {
+        codec => cef { delimiter => "\r\n" }
+        # ...
+      }
+    }
+
+This setting allows the following character sequences to have special meaning:
+
+* `\\r` (backslash "r") - means carriage return (ASCII 0x0D)
+* `\\n` (backslash "n") - means newline (ASCII 0x0A)
+
+[id="{version}-plugins-{type}s-{plugin}-device"]
+===== `device`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* Supported values are:
+** `observer`: indicates that device-specific fields represent the device used to _observe_ the event.
+** `host`: indicates that device-specific fields represent the device on which the event _occurred_.
+* The default value for this setting is `observer`.
+* Option has no effect when <<{version}-plugins-{type}s-{plugin}-ecs_compatibility,`ecs_compatibility => disabled`>>.
+* Option has no effect when _encoding_
+
+Defines a set of device-specific CEF fields as either representing the device on which an
+event _occurred_, or merely the device from which the event was _observed_.
+This causes the relevant fields to be routed to either the `host` or the `observer`
+top-level groupings.
+
+If the codec handles data from a variety of sources, the ECS recommendation is to use `observer`.
+
+[id="{version}-plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* Supported values are:
+** `disabled`: uses CEF-defined field names in the event (e.g., `bytesIn`, `sourceAddress`)
+** `v1`: supports ECS-compatible event fields (e.g., `[source,shell][bytes]`, `[source,shell][ip]`)
+* Default value depends on which version of Logstash is running:
+** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
+** Otherwise, the default value is `disabled`.
+
+Controls this plugin's compatibility with the
+{ecs-ref}[Elastic Common Schema (ECS)]
+(ECS)].
+
+[id="{version}-plugins-{type}s-{plugin}-fields"]
+===== `fields`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `[]`
+  * Option has no effect when _decoding_
+
+When this codec is used in an Output Plugin, a list of fields can be provided to be included in CEF extensions part as key/value pairs.
+
+[id="{version}-plugins-{type}s-{plugin}-locale"]
+===== `locale`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* Supported values are:
+** Abbreviated language_COUNTRY format (e.g., `en_GB`, `pt_BR`)
+** Valid https://tools.ietf.org/html/bcp47[IETF BCP 47] language tag (e.g., `zh-cmn-Hans-CN`)
+* The default value is your system locale
+* Option has no effect when _encoding_
+
+When parsing timestamp fields in ECS mode and encountering timestamps in
+a localized format, this `locale` is used to interpret locale-specific strings
+such as month abbreviations.
+
+[id="{version}-plugins-{type}s-{plugin}-name"]
+===== `name`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"Logstash"`
+  * Option has no effect when _decoding_
+
+When this codec is used in an Output Plugin, this option can be used to specify the
+value of the name field in the CEF header. The new value can include `%{foo}` strings
+to help you build a new value from other parts of the event.
+
+[id="{version}-plugins-{type}s-{plugin}-product"]
+===== `product`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"Logstash"`
+  * Option has no effect when _decoding_
+
+When this codec is used in an Output Plugin, this option can be used to specify the
+value of the device product field in CEF header. The new value can include `%{foo}` strings
+to help you build a new value from other parts of the event.
+
+
+[id="{version}-plugins-{type}s-{plugin}-reverse_mapping"]
+===== `reverse_mapping`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+  * Option has no effect when _decoding_
+
+Set to true to adhere to the specifications and encode using the CEF key name (short name) for the CEF field names.
+
+[id="{version}-plugins-{type}s-{plugin}-severity"]
+===== `severity`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"6"`
+  * Option has no effect when _decoding_
+
+When this codec is used in an Output Plugin, this option can be used to specify the
+value of the severity field in CEF header. The new value can include `%{foo}` strings
+to help you build a new value from other parts of the event.
+
+Defined as field of type string to allow sprintf. The value will be validated
+to be an integer in the range from 0 to 10 (including).
+All invalid values will be mapped to the default of 6.
+
+[id="{version}-plugins-{type}s-{plugin}-signature"]
+===== `signature`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"Logstash"`
+  * Option has no effect when _decoding_
+
+When this codec is used in an Output Plugin, this option can be used to specify the
+value of the signature ID field in CEF header. The new value can include `%{foo}` strings
+to help you build a new value from other parts of the event.
+
+[id="{version}-plugins-{type}s-{plugin}-vendor"]
+===== `vendor`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"Elasticsearch"`
+  * Option has no effect when _decoding_
+
+When this codec is used in an Output Plugin, this option can be used to specify the
+value of the device vendor field in CEF header. The new value can include `%{foo}` strings
+to help you build a new value from other parts of the event.
+
+[id="{version}-plugins-{type}s-{plugin}-version"]
+===== `version`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"1.0"`
+  * Option has no effect when _decoding_
+
+When this codec is used in an Output Plugin, this option can be used to specify the
+value of the device version field in CEF header. The new value can include `%{foo}` strings
+to help you build a new value from other parts of the event.
+
