@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.1.0
-:release_date: 2021-03-26
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-clone/blob/v4.1.0/CHANGELOG.md
+:version: v4.1.1
+:release_date: 2021-04-14
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-clone/blob/v4.1.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -23,10 +23,23 @@ include::{include_path}/plugin_header.asciidoc[]
 
 The clone filter is for duplicating events.
 A clone will be created for each type in the clone list.
-The original event is left unchanged.
+The original event is left unchanged and a `type` field is added to the clone.
 Created events are inserted into the pipeline 
 as normal events and will be processed by the remaining pipeline configuration 
 starting from the filter that generated them (i.e. this plugin).
+
+==== Event Metadata and the Elastic Common Schema (ECS)
+This plugin adds a tag to a cloned event.
+By default, the tag is stored in the `type` field.
+When ECS is enabled, the tag is stored in the `tags` array field.
+
+Here’s how ECS compatibility mode affects output.
+[cols="<l,<l,e,<e"]
+|=======================================================================
+| ECS disabled | ECS v1 | Availability | Description
+
+| type | tags | Always | a tag of cloned event
+|=======================================================================
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Clone Filter Configuration Options
