@@ -13,6 +13,5 @@ The `input-elastic_agent` plugin is the next generation of the
 <<input-beats-index,input-beats plugin>>, and is based on the
 https://github.com/logstash-plugins/logstash-input-beats[the same github repository].
 
-<<input-beats-index,Beats plugins>> versioned v6.1.3 and higher have an {type}-{plugin} counterpart.
 To see which plugin version you have installed, run 
 `bin/logstash-plugin list --verbose`.
