@@ -15,8 +15,6 @@ include::inputs/dead_letter_queue-index.asciidoc[]
 
 include::inputs/drupal_dblog-index.asciidoc[]
 
-include::inputs/elastic_agent-index.asciidoc[]
-
 include::inputs/elasticsearch-index.asciidoc[]
 
 include::inputs/eventlog-index.asciidoc[]
