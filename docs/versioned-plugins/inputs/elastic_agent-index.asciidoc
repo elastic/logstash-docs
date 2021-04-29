@@ -1,0 +1,17 @@
+:plugin: elastic_agent
+:type: input
+
+[id="{type}-{plugin}-index"]
+
+== Versioned {plugin} {type} plugin
+[subs="attributes"]
+++++
+<titleabbrev>{plugin}</titleabbrev>
+++++
+
+The `input-elastic_agent` plugin is the next generation of the
+<<input-beats-index,input-beats plugin>>, and is based on the
+https://github.com/logstash-plugins/logstash-input-beats[the same github repository].
+
+To see which plugin version you have installed, run 
+`bin/logstash-plugin list --verbose`.
