@@ -3,6 +3,8 @@
 
 include::include/plugin-intro.asciidoc[]
 
+include::integrations/elastic_enterprise_search-index.asciidoc[]
+
 include::integrations/jdbc-index.asciidoc[]
 
 include::integrations/kafka-index.asciidoc[]
