@@ -1,0 +1,202 @@
+:plugin: useragent
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.3.1
+:release_date: 2021-05-05
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-useragent/blob/v3.3.1/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Useragent filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Parse user agent strings into structured data based on BrowserScope data
+
+UserAgent filter, adds information about user agent like name, version, operating
+system, and device.
+
+The plugin ships with the *regexes.yaml* database made available from ua-parser
+with an Apache 2.0 license. For more details on ua-parser, see
+<https://github.com/ua-parser/uap-core/>.
+
+==== Compatibility with the Elastic Common Schema (ECS)
+
+This plugin can be used to parse user-agent (UA) _into_ fields compliant with the Elastic Common Schema.
+Here's how
+<<{version}-plugins-{type}s-{plugin}-ecs_compatibility,ECS compatibility mode>> affects
+output.
+
+[cols="<l,<l,e,<e"]
+|=======================================================================
+|ECS disabled |ECS v1 |Description |Notes
+
+|[name]     |[user_agent][name]                                  |Detected UA name |
+| N/A       |[user_agent][version]                               |Detected UA version |Only available in ECS mode
+|[major]    |[@metadata][filter][user_agent][version][major]     |UA major version |Only as meta-data in ECS mode
+|[minor]    |[@metadata][filter][user_agent][version][minor]     |UA minor version |Only as meta-data in ECS mode
+|[patch]    |[@metadata][filter][user_agent][version][patch]     |UA patch version |Only as meta-data in ECS mode
+|[os_name]  |[user_agent][os][name]                              |Detected operating-system name |
+| N/A       |[user_agent][os][version]                           |Detected OS version |Only available in ECS mode
+|[os_major] |[@metadata][filter][user_agent][os][version][major] |OS major version |Only as meta-data in ECS mode
+|[os_minor] |[@metadata][filter][user_agent][os][version][minor] |OS minor version |Only as meta-data in ECS mode
+|[os_patch] |[@metadata][filter][user_agent][os][version][patch] |OS patch version |Only as meta-data in ECS mode
+|[os_full]  |[user_agent][os][full]                              |Full operating-system name |
+|[device]   |[user_agent][device][name]                          |Device name |
+|=======================================================================
+
+Example:
+[source,ruby]
+    filter {
+      useragent {
+        source => 'message'
+      }
+    }
+
+Given an event with the `message` field set as: `Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0) Gecko/20100101 Firefox/45.0`
+produces the following fields:
+
+[source,ruby]
+-----
+    {
+        "name"=>"Firefox",
+        "version"=>"45.0",
+        "major"=>"45",
+        "minor"=>"0",
+        "os_name"=>"Mac OS X",
+        "os_version"=>"10.11",
+        "os_full"=>"Mac OS X 10.11",
+        "os_major"=>"10",
+        "os_minor"=>"11",
+        "device"=>"Mac"
+    }
+-----
+
+**and with ECS enabled:**
+[source,ruby]
+-----
+    {
+        "user_agent"=>{
+            "name"=>"Firefox",
+            "version"=>"45.0",
+            "os"=>{
+                "name"=>"Mac OS X",
+                "version"=>"10.11",
+                "full"=>"Mac OS X 10.11"
+            },
+            "device"=>{"name"=>"Mac"},
+        }
+    }
+-----
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Useragent Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-lru_cache_size>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-prefix>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-regexes>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-source>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-target>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* Supported values are:
+** `disabled`: does not use ECS-compatible field names (fields might be set at the root of the event)
+** `v1`: uses fields that are compatible with Elastic Common Schema (for example, `[user_agent][version]`)
+* Default value depends on which version of Logstash is running:
+** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
+** Otherwise, the default value is `disabled`.
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
+The value of this setting affects the _default_ value of <<{version}-plugins-{type}s-{plugin}-target>>.
+
+[id="{version}-plugins-{type}s-{plugin}-lru_cache_size"]
+===== `lru_cache_size`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `100000`
+
+UA parsing is surprisingly expensive. This filter uses an LRU cache to take advantage of the fact that
+user agents are often found adjacent to one another in log files and rarely have a random distribution.
+The higher you set this the more likely an item is to be in the cache and the faster this filter will run.
+However, if you set this too high you can use more memory than desired.
+
+Experiment with different values for this option to find the best performance for your dataset.
+
+This MUST be set to a value > 0. There is really no reason to not want this behavior, the overhead is minimal
+and the speed gains are large.
+
+It is important to note that this config value is global. That is to say all instances of the user agent filter
+share the same cache. The last declared cache size will 'win'. The reason for this is that there would be no benefit
+to having multiple caches for different instances at different points in the pipeline, that would just increase the
+number of cache misses and waste memory.
+
+[id="{version}-plugins-{type}s-{plugin}-prefix"]
+===== `prefix`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `""`
+
+A string to prepend to all of the extracted keys
+
+[id="{version}-plugins-{type}s-{plugin}-regexes"]
+===== `regexes`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+If not specified, this will default to the `regexes.yaml` that ships
+with logstash. Otherwise use the provided `regexes.yaml` file.
+
+You can find the latest version of this here:
+<https://github.com/ua-parser/uap-core/blob/master/regexes.yaml>
+
+[id="{version}-plugins-{type}s-{plugin}-source"]
+===== `source`
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The field containing the user agent string. If this field is an
+array, only the first value will be used.
+
+[id="{version}-plugins-{type}s-{plugin}-target"]
+===== `target`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value depends on whether <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>> is enabled:
+    ** ECS Compatibility disabled: no default value for this setting
+    ** ECS Compatibility enabled: `"user_agent"`
+
+The name of the field to assign user agent data into.
+
+If not specified user agent data will be stored in the root of the event.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
