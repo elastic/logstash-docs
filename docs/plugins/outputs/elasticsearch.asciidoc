@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.0.1
-:release_date: 2021-04-20
-:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v11.0.1/CHANGELOG.md
+:version: v11.0.2
+:release_date: 2021-05-10
+:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v11.0.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -515,7 +515,7 @@ overwritten with a warning.
 * Default value is `logs`.
 
 The data stream type used to construct the data stream at index time.
-Currently, only `logs` and `metrics`are supported.
+Currently, only `logs`, `metrics` and `synthetics` are supported.
 
 [id="plugins-{type}s-{plugin}-doc_as_upsert"]
 ===== `doc_as_upsert`
