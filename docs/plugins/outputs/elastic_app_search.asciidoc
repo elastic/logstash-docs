@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.1.1
-:release_date: 2020-09-16
-:changelog_url: https://github.com/logstash-plugins/logstash-output-elastic_app_search/blob/v1.1.1/CHANGELOG.md
+:version: v1.2.0
+:release_date: 2021-05-04
+:changelog_url: https://github.com/logstash-plugins/logstash-output-elastic_app_search/blob/v1.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -84,7 +84,46 @@ like `myapp-%{sequence_id}`. Reusing ids will cause documents to be rewritten.
   * Value type is <<string,string>>
   * There is no default value
 
-The Engine name. Engine is your search engine created in App Search, an information repository that includes the indexed document records.
+The name of the search engine you created in App Search, an information
+repository that includes the indexed document records.
+The `engine` field supports
+{logstash-ref}/event-dependent-configuration.html#sprintf[sprintf format] to
+allow the engine name to be derived from a field value from each event, for
+example `engine-%{engine_name}`.
+
+Invalid engine names cause ingestion to stop until the field value can be resolved into a valid engine name.
+This situation can happen if the interpolated field value resolves to a value without a matching engine,
+or, if the field is missing from the event and cannot be resolved at all.
+
+TIP: Consider adding a "default" engine type in the configuration to catch errors if
+the field is missing from the event.
+
+Example:
+
+
+
+[source,ruby]
+----------------------------------
+input {
+  stdin {
+    codec => json
+  }
+}
+
+filter {
+  if ![engine_name] {
+    mutate {
+      add_field => {"engine_name" => "default"}
+    }
+  }
+}
+
+output {
+  appsearch {
+    engine => "engine_%{[engine_name]}"
+  }
+}
+----------------------------------
 
 [id="plugins-{type}s-{plugin}-host"]
 ===== `host`
