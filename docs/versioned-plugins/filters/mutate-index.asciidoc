@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v3.5.2-plugins-filters-mutate,v3.5.2>> | 2021-05-12
 | <<v3.5.1-plugins-filters-mutate,v3.5.1>> | 2021-03-10
 | <<v3.5.0-plugins-filters-mutate,v3.5.0>> | 2019-06-17
 | <<v3.4.0-plugins-filters-mutate,v3.4.0>> | 2019-02-04
@@ -18,6 +19,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.1.5-plugins-filters-mutate,v3.1.5>> | 2017-06-23
 |=======================================================================
 
+include::mutate-v3.5.2.asciidoc[]
 include::mutate-v3.5.1.asciidoc[]
 include::mutate-v3.5.0.asciidoc[]
 include::mutate-v3.4.0.asciidoc[]
