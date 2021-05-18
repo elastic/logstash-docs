@@ -1,0 +1,12 @@
+:plugin: elastic_workplace_search
+:type: output
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v2.1.0-plugins-outputs-elastic_workplace_search,v2.1.0>> | 2021-05-18
+|=======================================================================
+
+include::elastic_workplace_search-v2.1.0.asciidoc[]
+

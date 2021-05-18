@@ -5,8 +5,10 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v2.1.0-plugins-integrations-elastic_enterprise_search,v2.1.0>> | 2021-05-18
 | <<v2.0.0-plugins-integrations-elastic_enterprise_search,v2.0.0>> | 2021-05-05
 |=======================================================================
 
+include::elastic_enterprise_search-v2.1.0.asciidoc[]
 include::elastic_enterprise_search-v2.0.0.asciidoc[]
 

@@ -19,6 +19,8 @@ include::outputs/datadog_metrics-index.asciidoc[]
 
 include::outputs/elastic_app_search-index.asciidoc[]
 
+include::outputs/elastic_workplace_search-index.asciidoc[]
+
 include::outputs/elasticsearch-index.asciidoc[]
 
 include::outputs/elasticsearch_java-index.asciidoc[]
