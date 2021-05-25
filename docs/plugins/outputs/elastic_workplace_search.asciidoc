@@ -1,0 +1,148 @@
+:plugin: elastic_workplace_search
+:type: output
+:default_plugin: 1
+:no_codec:
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v2.1.0
+:release_date: 2021-05-18
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-elastic_enterprise_search/blob/v2.1.0/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="plugins-{type}s-{plugin}"]
+
+=== Elastic Workplace Search output plugin
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This output lets you send events to the Elastic Workplace Search solution.
+On receiving a batch of events from the Logstash pipeline, the plugin
+converts the events into documents and uses the Workplace Search bulk API
+to index multiple events in one request.
+
+Workplace Search doesn't allow fields to begin with `@timestamp`.
+By default the `@timestamp` and `@version` fields will be removed from
+each event before the event is sent to Workplace Search. If you want to keep
+the `@timestamp` field, you can use the
+<<plugins-{type}s-{plugin}-timestamp_destination,timestamp_destination>> option
+to store the timestamp in a different field.
+
+NOTE: This gem does not support codec customization.
+
+[id="plugins-{type}s-{plugin}-options"]
+==== Workplace Search Output Configuration Options
+
+This plugin supports the following configuration options plus the
+<<plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-access_token>> |<<password,password>>|Yes
+| <<plugins-{type}s-{plugin}-document_id>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-source>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-timestamp_destination>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-url>> |<<string,string>>|Yes
+|=======================================================================
+
+Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="plugins-{type}s-{plugin}-access_token"]
+===== `access_token`
+
+* Value type is <<password,password>>
+* There is no default value
+
+The source access token. Visit the source overview page in the Workplace Search dashboard to find the token associated with your source.
+
+[id="plugins-{type}s-{plugin}-document_id"]
+===== `document_id`
+
+* Value type is <<string,string>>
+* There is no default value
+
+The id for workplace search documents. This can be an interpolated value
+like `myapp-%{sequence_id}`. Reusing ids will cause documents to be rewritten.
+
+[id="plugins-{type}s-{plugin}-source"]
+===== `source`
+
+* Value type is <<string,string>>
+* There is no default value
+
+The ID of the source you created in Workplace Search.
+The `source` field supports
+{logstash-ref}/event-dependent-configuration.html#sprintf[sprintf format] to
+allow the source ID to be derived from a field value from each event, for
+example `%{source_id}`.
+
+Invalid source IDs cause ingestion to stop until the field value can be resolved into a valid source ID.
+This situation can happen if the interpolated field value resolves to a value without a matching source,
+or, if the field is missing from the event and cannot be resolved at all.
+
+TIP: Consider adding a "default" source type in the configuration to catch errors if
+the field is missing from the event.
+
+Example:
+
+
+
+[source,ruby]
+----------------------------------
+input {
+  stdin {
+    codec => json
+  }
+}
+
+filter {
+  if ![source_id] {
+    mutate {
+      add_field => {"source_id" => "default"}
+    }
+  }
+}
+
+output {
+  elastic_workplace_search {
+    source => "%{[source_id]}"
+  }
+}
+----------------------------------
+
+[id="plugins-{type}s-{plugin}-timestamp_destination"]
+===== `timestamp_destination`
+
+* Value type is <<string,string>>
+* There is no default value
+
+Where to move the value from the `@timestamp` field.
+
+All Logstash events contain a `@timestamp` field.
+Workplace Search doesn't support fields starting with `@timestamp`, and
+by default, the `@timestamp` field will be deleted.
+
+To keep the timestamp field, set this value to the name of the field where you want `@timestamp` copied.
+
+[id="plugins-{type}s-{plugin}-url"]
+===== `url`
+
+* Value type is <<string,string>>
+* There is no default value
+
+The value of the API endpoint in the form of a URL.
+
+[id="plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:no_codec!:
