@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.5.1
-:release_date: 2021-03-10
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.5.1/CHANGELOG.md
+:version: v3.5.2
+:release_date: 2021-05-12
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.5.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -57,7 +57,7 @@ filter {
     }
 
     mutate {    
-        rename => ["shortHostname", "hostname" ]
+        rename => {"shortHostname" => "hostname"}
     }
 }
 -----

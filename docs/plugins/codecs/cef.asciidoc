@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v6.2.0
-:release_date: 2021-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v6.2.0/CHANGELOG.md
+:version: v6.2.1
+:release_date: 2021-04-28
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v6.2.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -49,9 +49,9 @@ The ECS Compatibility mode for a specific plugin instance can be controlled by s
 
 If left unspecified, the value of the `pipeline.ecs_compatibility` setting is used.
 
-===== Timestamps and ECS Compatiblity
+===== Timestamps and ECS compatiblity
 
-When running in ECS Compatibility Mode, timestamp-type fields are parsed and normalized
+When decoding in ECS Compatibility Mode, timestamp-type fields are parsed and normalized
 to specific points on the timeline.
 
 Because the CEF format allows ambiguous timestamp formats, some reasonable assumptions are made:
@@ -62,6 +62,252 @@ Because the CEF format allows ambiguous timestamp formats, some reasonable assum
    timezone (`dtz` or `deviceTimeZone` field), or fall through to this plugin's
    <<plugins-{type}s-{plugin}-default_timezone>>.
  - Localized timestamps are parsed using the provided <<plugins-{type}s-{plugin}-locale>>.
+
+[id="plugins-{type}s-{plugin}-field-mapping"]
+===== Field mapping
+
+The header fields from each CEF payload is expanded to the following fields, depending on whether ECS is enabled.
+
+[id="plugins-{type}s-{plugin}-header-field"]
+====== Header field mapping
+|=====
+|ECS Disabled | ECS Field
+
+|`cefVersion`        |`[cef][version]`
+|`deviceVendor`      |`[observer][vendor]`
+|`deviceProduct`     |`[observer][product]`
+|`deviceVersion`     |`[observer][version]`
+|`deviceEventClassId`|`[event][code]`
+|`name`              |`[cef][name]`
+|`severity`          |`[event][severity]`
+|=====
+
+When decoding CEF payloads with `ecs_compatibility => disabled`, the abbreviated CEF Keys found in extensions are expanded, and CEF Field Names are inserted at the root level of the event.
+
+When decoding in an ECS Compatibility mode, the ECS Fields are populated from the corresponding CEF Field Names _or_ CEF Keys found in the payload's extensions.
+
+The following is a mapping between these fields.
+
+// Templates for short-hand notes in the table below
+:cef-ambiguous-higher:        pass:quotes[Multiple possible CEF fields map to this ECS Field. When decoding, the last entry encountered wins. When encoding, this field has _higher_ priority.]
+:cef-ambiguous-lower:         pass:quotes[Multiple possible CEF fields map to this ECS Field. When decoding, the last entry encountered wins. When encoding, this field has _lower_ priority.]
+:cef-normalize-timestamp:     pass:quotes[This field contains a timestamp. In ECS Compatibility Mode, it is parsed to a specific point in time.]
+:cef-plugin-config-condition: pass:quotes[When plugin configured with]
+
+
+[id="plugins-{type}s-{plugin}-ext-field"]
+====== Extension field mapping
+|=======================================================================================================================
+|CEF Field Name (optional CEF Key)              |ECS Field
+
+|`agentAddress` (`agt`)                         |`[agent][ip]`
+|`agentDnsDomain`                               |`[cef][agent][registered_domain]`
+
+                                                 {cef-ambiguous-higher}
+|`agentHostName` (`ahost`)                      |`[agent][name]`
+|`agentId` (`aid`)                              |`[agent][id]`
+|`agentMacAddress` (`amac`)                     |`[agent][mac]`
+|`agentNtDomain`                                |`[cef][agent][registered_domain]`
+
+                                                 {cef-ambiguous-lower}
+|`agentReceiptTime` (`art`)                     |`[event][created]`
+
+                                                 {cef-normalize-timestamp}
+|`agentTimeZone` (`atz`)                        |`[cef][agent][timezone]`
+|`agentTranslatedAddress`                       |`[cef][agent][nat][ip]`
+|`agentTranslatedZoneExternalID`                |`[cef][agent][translated_zone][external_id]`
+|`agentTranslatedZoneURI`                       |`[cef][agent][translated_zone][uri]`
+|`agentType` (`at`)                             |`[agent][type]`
+|`agentVersion` (`av`)                          |`[agent][version]`
+|`agentZoneExternalID`                          |`[cef][agent][zone][external_id]`
+|`agentZoneURI`                                 |`[cef][agent][zone][uri]`
+|`applicationProtocol` (`app`)                  |`[network][protocol]`
+|`baseEventCount` (`cnt`)                       |`[cef][base_event_count]`
+|`bytesIn` (`in`)                               |`[source][bytes]`
+|`bytesOut` (`out`)                             |`[destination][bytes]`
+|`categoryDeviceType` (`catdt`)                 |`[cef][device_type]`
+|`customerExternalID`                           |`[organization][id]`
+|`customerURI`                                  |`[organization][name]`
+|`destinationAddress` (`dst`)                   |`[destination][ip]`
+|`destinationDnsDomain`                         |`[destination][registered_domain]`
+
+                                                 {cef-ambiguous-higher}
+|`destinationGeoLatitude` (`dlat`)              |`[destination][geo][location][lat]`
+|`destinationGeoLongitude` (`dlong`)            |`[destination][geo][location][lon]`
+|`destinationHostName` (`dhost`)                |`[destination][domain]`
+|`destinationMacAddress` (`dmac`)               |`[destination][mac]`
+|`destinationNtDomain` (`dntdom`)               |`[destination][registered_domain]`
+
+                                                 {cef-ambiguous-lower}
+|`destinationPort` (`dpt`)                      |`[destination][port]`
+|`destinationProcessId` (`dpid`)                |`[destination][process][pid]`
+|`destinationProcessName` (`dproc`)             |`[destination][process][name]`
+|`destinationServiceName`                       |`[destination][service][name]`
+|`destinationTranslatedAddress`                 |`[destination][nat][ip]`
+|`destinationTranslatedPort`                    |`[destination][nat][port]`
+|`destinationTranslatedZoneExternalID`          |`[cef][destination][translated_zone][external_id]`
+|`destinationTranslatedZoneURI`                 |`[cef][destination][translated_zone][uri]`
+|`destinationUserId` (`duid`)                   |`[destination][user][id]`
+|`destinationUserName` (`duser`)                |`[destination][user][name]`
+|`destinationUserPrivileges` (`dpriv`)          |`[destination][user][group][name]`
+|`destinationZoneExternalID`                    |`[cef][destination][zone][external_id]`
+|`destinationZoneURI`                           |`[cef][destination][zone][uri]`
+|`deviceAction` (`act`)                         |`[event][action]`
+.2+|`deviceAddress` (`dvc`)                     |`[observer][ip]`
+
+                                                 {cef-plugin-config-condition} `device => observer`
+                                                |`[host][ip]`
+
+                                                 {cef-plugin-config-condition} `device => host`
+|`deviceCustomFloatingPoint1` (`cfp1`)          |`[cef][device_custom_floating_point_1][value]`
+|`deviceCustomFloatingPoint1Label` (`cfp1Label`)|`[cef][device_custom_floating_point_1][label]`
+|`deviceCustomFloatingPoint2` (`cfp2`)          |`[cef][device_custom_floating_point_2][value]`
+|`deviceCustomFloatingPoint2Label` (`cfp2Label`)|`[cef][device_custom_floating_point_2][label]`
+|`deviceCustomFloatingPoint3` (`cfp3`)          |`[cef][device_custom_floating_point_3][value]`
+|`deviceCustomFloatingPoint3Label` (`cfp3Label`)|`[cef][device_custom_floating_point_3][label]`
+|`deviceCustomFloatingPoint4` (`cfp4`)          |`[cef][device_custom_floating_point_4][value]`
+|`deviceCustomFloatingPoint4Label` (`cfp4Label`)|`[cef][device_custom_floating_point_4][label]`
+|`deviceCustomIPv6Address1` (`c6a1`)            |`[cef][device_custom_ipv6_address_1][value]`
+|`deviceCustomIPv6Address1Label` (`c6a1Label`)  |`[cef][device_custom_ipv6_address_1][label]`
+|`deviceCustomIPv6Address2` (`c6a2`)            |`[cef][device_custom_ipv6_address_2][value]`
+|`deviceCustomIPv6Address2Label` (`c6a2Label`)  |`[cef][device_custom_ipv6_address_2][label]`
+|`deviceCustomIPv6Address3` (`c6a3`)            |`[cef][device_custom_ipv6_address_3][value]`
+|`deviceCustomIPv6Address3Label` (`c6a3Label`)  |`[cef][device_custom_ipv6_address_3][label]`
+|`deviceCustomIPv6Address4` (`c6a4`)            |`[cef][device_custom_ipv6_address_4][value]`
+|`deviceCustomIPv6Address4Label` (`c6a4Label`)  |`[cef][device_custom_ipv6_address_4][label]`
+|`deviceCustomNumber1` (`cn1`)                  |`[cef][device_custom_number_1][value]`
+|`deviceCustomNumber1Label` (`cn1Label`)        |`[cef][device_custom_number_1][label]`
+|`deviceCustomNumber2` (`cn2`)                  |`[cef][device_custom_number_2][value]`
+|`deviceCustomNumber2Label` (`cn2Label`)        |`[cef][device_custom_number_2][label]`
+|`deviceCustomNumber3` (`cn3`)                  |`[cef][device_custom_number_3][value]`
+|`deviceCustomNumber3Label` (`cn3Label`)        |`[cef][device_custom_number_3][label]`
+|`deviceCustomString1` (`cs1`)                  |`[cef][device_custom_string_1][value]`
+|`deviceCustomString1Label` (`cs1Label`)        |`[cef][device_custom_string_1][label]`
+|`deviceCustomString2` (`cs2`)                  |`[cef][device_custom_string_2][value]`
+|`deviceCustomString2Label` (`cs2Label`)        |`[cef][device_custom_string_2][label]`
+|`deviceCustomString3` (`cs3`)                  |`[cef][device_custom_string_3][value]`
+|`deviceCustomString3Label` (`cs3Label`)        |`[cef][device_custom_string_3][label]`
+|`deviceCustomString4` (`cs4`)                  |`[cef][device_custom_string_4][value]`
+|`deviceCustomString4Label` (`cs4Label`)        |`[cef][device_custom_string_4][label]`
+|`deviceCustomString5` (`cs5`)                  |`[cef][device_custom_string_5][value]`
+|`deviceCustomString5Label` (`cs5Label`)        |`[cef][device_custom_string_5][label]`
+|`deviceCustomString6` (`cs6`)                  |`[cef][device_custom_string_6][value]`
+|`deviceCustomString6Label` (`cs6Label`)        |`[cef][device_custom_string_6][label]`
+|`deviceDirection`                              |`[network][direction]`
+.2+|`deviceDnsDomain`                           |`[observer][registered_domain]`
+
+                                                 {cef-plugin-config-condition} `device => observer`.
+                                                |`[host][registered_domain]`
+
+                                                 {cef-plugin-config-condition} `device => host`.
+|`deviceEventCategory` (`cat`)                  |`[cef][category]`
+.2+|`deviceExternalId`                          |`[observer][name]`
+
+                                                 {cef-plugin-config-condition} `device => observer`.
+                                                |`[host][id]`
+
+                                                 {cef-plugin-config-condition} `device => host`.
+|`deviceFacility`                               |`[log][syslog][facility][code]`
+.2+|`deviceHostName` (`dvchost`)                |`[observer][hostname]`
+
+                                                 {cef-plugin-config-condition} `device => observer`.
+                                                |`[host][name]`
+
+                                                 {cef-plugin-config-condition} `device => host`.
+|`deviceInboundInterface`                       |`[observer][ingress][interface][name]`
+.2+|`deviceMacAddress` (`dvcmac`)               |`[observer][mac]`
+
+                                                 {cef-plugin-config-condition} `device => observer`.
+                                                |`[host][mac]`
+
+                                                 {cef-plugin-config-condition} `device => host`.
+|`deviceNtDomain`                               |`[cef][nt_domain]`
+|`deviceOutboundInterface`                      |`[observer][egress][interface][name]`
+|`devicePayloadId`                              |`[cef][payload_id]`
+|`deviceProcessId` (`dvcpid`)                   |`[process][pid]`
+|`deviceProcessName`                            |`[process][name]`
+|`deviceReceiptTime` (`rt`)                     |`@timestamp`
+
+                                                 {cef-normalize-timestamp}
+|`deviceTimeZone` (`dtz`)                       |`[event][timezone]`
+|`deviceTranslatedAddress`                      |`[host][nat][ip]`
+|`deviceTranslatedZoneExternalID`               |`[cef][translated_zone][external_id]`
+|`deviceTranslatedZoneURI`                      |`[cef][translated_zone][uri]`
+|`deviceVersion`                                |`[observer][version]`
+|`deviceZoneExternalID`                         |`[cef][zone][external_id]`
+|`deviceZoneURI`                                |`[cef][zone][uri]`
+|`endTime` (`end`)                              |`[event][end]`
+
+                                                 {cef-normalize-timestamp}
+|`eventId`                                      |`[event][id]`
+|`eventOutcome` (`outcome`)                     |`[event][outcome]`
+|`externalId`                                   |`[cef][external_id]`
+|`fileCreateTime`                               |`[file][created]`
+|`fileHash`                                     |`[file][hash]]`
+|`fileId`                                       |`[file][inode]`
+|`fileModificationTime`                         |`[file][mtime]`
+
+                                                 {cef-normalize-timestamp}
+|`fileName` (`fname`)                           |`[file][name]`
+|`filePath`                                     |`[file][path]`
+|`filePermission`                               |`[file][group]`
+|`fileSize` (`fsize`)                           |`[file][size]`
+|`fileType`                                     |`[file][extension]`
+|`managerReceiptTime` (`mrt`)                   |`[event][ingested]`
+
+                                                 {cef-normalize-timestamp}
+|`message` (`msg`)                              |`[message]`
+|`oldFileCreateTime`                            |`[cef][old_file][created]`
+
+                                                 {cef-normalize-timestamp}
+|`oldFileHash`                                  |`[cef][old_file][hash]`
+|`oldFileId`                                    |`[cef][old_file][inode]`
+|`oldFileModificationTime`                      |`[cef][old_file][mtime]`
+
+                                                 {cef-normalize-timestamp}
+|`oldFileName`                                  |`[cef][old_file][name]`
+|`oldFilePath`                                  |`[cef][old_file][path]`
+|`oldFilePermission`                            |`[cef][old_file][group]`
+|`oldFileSize`                                  |`[cef][old_file][size]`
+|`oldFileType`                                  |`[cef][old_file][extension]`
+|`rawEvent`                                     |`[event][original]`
+|`Reason` (`reason`)                            |`[event][reason]`
+|`requestClientApplication`                     |`[user_agent][original]`
+|`requestContext`                               |`[http][request][referrer]`
+|`requestCookies`                               |`[cef][request][cookies]`
+|`requestMethod`                                |`[http][request][method]`
+|`requestUrl` (`request`)                       |`[url][original]`
+|`sourceAddress` (`src`)                        |`[source][ip]`
+|`sourceDnsDomain`                              |`[source][registered_domain]`
+
+                                                 {cef-ambiguous-higher}
+|`sourceGeoLatitude` (`slat`)                   |`[source][geo][location][lat]`
+|`sourceGeoLongitude` (`slong`)                 |`[source][geo][location][lon]`
+|`sourceHostName` (`shost`)                     |`[source][domain]`
+|`sourceMacAddress` (`smac`)                    |`[source][mac]`
+|`sourceNtDomain` (`sntdom`)                    |`[source][registered_domain]`
+
+                                                 {cef-ambiguous-lower}
+|`sourcePort` (`spt`)                           |`[source][port]`
+|`sourceProcessId` (`spid`)                     |`[source][process][pid]`
+|`sourceProcessName` (`sproc`)                  |`[source][process][name]`
+|`sourceServiceName`                            |`[source][service][name]`
+|`sourceTranslatedAddress`                      |`[source][nat][ip]`
+|`sourceTranslatedPort`                         |`[source][nat][port]`
+|`sourceTranslatedZoneExternalID`               |`[cef][source][translated_zone][external_id]`
+|`sourceTranslatedZoneURI`                      |`[cef][source][translated_zone][uri]`
+|`sourceUserId` (`suid`)                        |`[source][user][id]`
+|`sourceUserName` (`suser`)                     |`[source][user][name]`
+|`sourceUserPrivileges` (`spriv`)               |`[source][user][group][name]`
+|`sourceZoneExternalID`                         |`[cef][source][zone][external_id]`
+|`sourceZoneURI`                                |`[cef][source][zone][uri]`
+|`startTime` (`start`)                          |`[event][start]`
+
+                                                 {cef-normalize-timestamp}
+|`transportProtocol` (`proto`)                  |`[network][transport]`
+|`type`                                         |`[cef][type]`
+|=======================================================================================================================
+
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Cef Codec Configuration Options
@@ -259,4 +505,3 @@ to help you build a new value from other parts of the event.
 When this codec is used in an Output Plugin, this option can be used to specify the
 value of the device version field in CEF header. The new value can include `%{foo}` strings
 to help you build a new value from other parts of the event.
-
