@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.2.4
-:release_date: 2019-01-30
-:changelog_url: https://github.com/logstash-plugins/logstash-output-http/blob/v5.2.4/CHANGELOG.md
+:version: v5.2.5
+:release_date: 2021-05-27
+:changelog_url: https://github.com/logstash-plugins/logstash-output-http/blob/v5.2.5/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -87,7 +87,10 @@ output plugins.
 
 How many times should the client retry a failing URL. We highly recommend NOT setting this value
 to zero if keepalive is enabled. Some servers incorrectly end keepalives early requiring a retry!
-Note: if `retry_non_idempotent` is set only GET, HEAD, PUT, DELETE, OPTIONS, and TRACE requests will be retried.
+Only IO related failures will be retried, such as connection timeouts and unreachable hosts.
+Valid but non 2xx HTTP responses will always be retried, regardless of the value of this setting,
+unless `retry_failed` is set.
+Note: if `retry_non_idempotent` is NOT set only GET, HEAD, PUT, DELETE, OPTIONS, and TRACE requests will be retried.
 
 [id="plugins-{type}s-{plugin}-cacert"]
 ===== `cacert` 
@@ -317,6 +320,7 @@ Set this to false if you don't want this output to retry failed requests
   * Default value is `false`
 
 If `automatic_retries` is enabled this will cause non-idempotent HTTP verbs (such as POST) to be retried.
+This only affects connectivity related errors (see related `automatic_retries` setting).
 
 [id="plugins-{type}s-{plugin}-retryable_codes"]
 ===== `retryable_codes` 
