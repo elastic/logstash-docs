@@ -1,6 +1,6 @@
 :plugin: elastic_app_search
 :type: output
-:default_plugin: 0
+:default_plugin: 1
 :no_codec:
 
 ///////////////////////////////////////////
