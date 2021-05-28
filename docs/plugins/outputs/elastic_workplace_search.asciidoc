@@ -1,3 +1,4 @@
+:integration: elastic_enterprise_search
 :plugin: elastic_workplace_search
 :type: output
 :default_plugin: 1
@@ -18,7 +19,7 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 === Elastic Workplace Search output plugin
 
-include::{include_path}/plugin_header.asciidoc[]
+include::{include_path}/plugin_header-integration.asciidoc
 
 ==== Description
 
