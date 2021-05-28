@@ -1,5 +1,5 @@
 :integration: elastic_enterprise_search
-:plugin: elastic_app_search
+:plugin: elastic_workplace_search
 :type: output
 :default_plugin: 1
 :no_codec:
@@ -17,22 +17,20 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 [id="plugins-{type}s-{plugin}"]
 
-=== Elastic App Search output plugin
+=== Elastic Workplace Search output plugin
 
-include::{include_path}/plugin_header-integration.asciidoc[]
+include::{include_path}/plugin_header-integration.asciidoc
 
 ==== Description
 
-This output lets you send events to the Elastic App Search solution,
-both the https://www.elastic.co/downloads/app-search[self-managed] or
-the https://www.elastic.co/cloud/app-search-service[managed] service.
+This output lets you send events to the Elastic Workplace Search solution.
 On receiving a batch of events from the Logstash pipeline, the plugin
-converts the events into documents and uses the App Search bulk API
+converts the events into documents and uses the Workplace Search bulk API
 to index multiple events in one request.
 
-App Search doesn't allow fields to begin with `@timestamp`.
+Workplace Search doesn't allow fields to begin with `@timestamp`.
 By default the `@timestamp` and `@version` fields will be removed from
-each event before the event is sent to App Search. If you want to keep
+each event before the event is sent to Workplace Search. If you want to keep
 the `@timestamp` field, you can use the
 <<plugins-{type}s-{plugin}-timestamp_destination,timestamp_destination>> option
 to store the timestamp in a different field.
@@ -40,7 +38,7 @@ to store the timestamp in a different field.
 NOTE: This gem does not support codec customization.
 
 [id="plugins-{type}s-{plugin}-options"]
-==== AppSearch Output configuration options
+==== Workplace Search Output Configuration Options
 
 This plugin supports the following configuration options plus the
 <<plugins-{type}s-{plugin}-common-options>> described later.
@@ -48,13 +46,11 @@ This plugin supports the following configuration options plus the
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<plugins-{type}s-{plugin}-api_key>> |<<password,password>>|Yes
+| <<plugins-{type}s-{plugin}-access_token>> |<<password,password>>|Yes
 | <<plugins-{type}s-{plugin}-document_id>> |<<string,string>>|No
-| <<plugins-{type}s-{plugin}-engine>> |<<string,string>>|Yes
-| <<plugins-{type}s-{plugin}-host>> |<<string,string>>|No
-| <<plugins-{type}s-{plugin}-path>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-source>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-timestamp_destination>> |<<string,string>>|No
-| <<plugins-{type}s-{plugin}-url>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-url>> |<<string,string>>|Yes
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -62,13 +58,13 @@ output plugins.
 
 &nbsp;
 
-[id="plugins-{type}s-{plugin}-api_key"]
-===== `api_key`
+[id="plugins-{type}s-{plugin}-access_token"]
+===== `access_token`
 
 * Value type is <<password,password>>
 * There is no default value
 
-The private API Key with write permissions. Visit the https://app.swiftype.com/as/credentials[Credentials] in the App Search dashboard to find the key associated with your account.
+The source access token. Visit the source overview page in the Workplace Search dashboard to find the token associated with your source.
 
 [id="plugins-{type}s-{plugin}-document_id"]
 ===== `document_id`
@@ -76,27 +72,26 @@ The private API Key with write permissions. Visit the https://app.swiftype.com/a
 * Value type is <<string,string>>
 * There is no default value
 
-The id for app search documents. This can be an interpolated value
+The id for workplace search documents. This can be an interpolated value
 like `myapp-%{sequence_id}`. Reusing ids will cause documents to be rewritten.
 
-[id="plugins-{type}s-{plugin}-engine"]
-===== `engine`
+[id="plugins-{type}s-{plugin}-source"]
+===== `source`
 
 * Value type is <<string,string>>
 * There is no default value
 
-The name of the search engine you created in App Search, an information
-repository that includes the indexed document records.
-The `engine` field supports
+The ID of the source you created in Workplace Search.
+The `source` field supports
 {logstash-ref}/event-dependent-configuration.html#sprintf[sprintf format] to
-allow the engine name to be derived from a field value from each event, for
-example `engine-%{engine_name}`.
+allow the source ID to be derived from a field value from each event, for
+example `%{source_id}`.
 
-Invalid engine names cause ingestion to stop until the field value can be resolved into a valid engine name.
-This situation can happen if the interpolated field value resolves to a value without a matching engine,
+Invalid source IDs cause ingestion to stop until the field value can be resolved into a valid source ID.
+This situation can happen if the interpolated field value resolves to a value without a matching source,
 or, if the field is missing from the event and cannot be resolved at all.
 
-TIP: Consider adding a "default" engine type in the configuration to catch errors if
+TIP: Consider adding a "default" source type in the configuration to catch errors if
 the field is missing from the event.
 
 Example:
@@ -112,36 +107,19 @@ input {
 }
 
 filter {
-  if ![engine_name] {
+  if ![source_id] {
     mutate {
-      add_field => {"engine_name" => "default"}
+      add_field => {"source_id" => "default"}
     }
   }
 }
 
 output {
-  appsearch {
-    engine => "engine_%{[engine_name]}"
+  elastic_workplace_search {
+    source => "%{[source_id]}"
   }
 }
 ----------------------------------
-
-[id="plugins-{type}s-{plugin}-host"]
-===== `host`
-
-* Value type is <<string,string>>
-* There is no default value
-
-The hostname of the App Search API that is associated with your App Search account.
-Set this when using the https://www.elastic.co/cloud/app-search-service[Elastic App Search managed service].
-
-[id="plugins-{type}s-{plugin}-path"]
-===== `path`
-
-* Value type is <<string,string>>
-* Default value is `/api/as/v1/`
-
-The path that is appended to the `url` parameter when connecting to a https://www.elastic.co/downloads/app-search[self-managed Elastic App Search].
 
 [id="plugins-{type}s-{plugin}-timestamp_destination"]
 ===== `timestamp_destination`
@@ -152,7 +130,7 @@ The path that is appended to the `url` parameter when connecting to a https://ww
 Where to move the value from the `@timestamp` field.
 
 All Logstash events contain a `@timestamp` field.
-App Search doesn't support fields starting with `@timestamp`, and
+Workplace Search doesn't support fields starting with `@timestamp`, and
 by default, the `@timestamp` field will be deleted.
 
 To keep the timestamp field, set this value to the name of the field where you want `@timestamp` copied.
@@ -163,8 +141,7 @@ To keep the timestamp field, set this value to the name of the field where you w
 * Value type is <<string,string>>
 * There is no default value
 
-The value of the API endpoint in the form of a URL. Note: The value of the of the `path` setting will be will be appended to this URL.
-Set this when using the https://www.elastic.co/downloads/app-search[self-managed Elastic App Search].
+The value of the API endpoint in the form of a URL.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
