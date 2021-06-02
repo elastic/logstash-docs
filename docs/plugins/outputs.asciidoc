@@ -82,8 +82,11 @@ include::outputs/datadog.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-output-datadog_metrics/edit/master/docs/index.asciidoc
 include::outputs/datadog_metrics.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-output-elastic_app_search/edit/master/docs/index.asciidoc
+:edit_url:
 include::outputs/elastic_app_search.asciidoc[]
+
+:edit_url: 
+include::outputs/elastic_workplace_search.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/edit/master/docs/index.asciidoc
 include::outputs/elasticsearch.asciidoc[]
