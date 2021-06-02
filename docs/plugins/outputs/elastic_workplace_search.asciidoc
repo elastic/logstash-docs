@@ -7,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v2.1.0
-:release_date: 2021-05-18
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-elastic_enterprise_search/blob/v2.1.0/CHANGELOG.md
+:version: v2.1.1
+:release_date: 2021-06-02
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-elastic_enterprise_search/blob/v2.1.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -19,7 +19,7 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 === Elastic Workplace Search output plugin
 
-include::{include_path}/plugin_header-integration.asciidoc
+include::{include_path}/plugin_header-integration.asciidoc[]
 
 ==== Description
 
