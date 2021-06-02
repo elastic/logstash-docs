@@ -19,7 +19,7 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 === Elastic Workplace Search output plugin
 
-include::{include_path}/plugin_header-integration.asciidoc
+include::{include_path}/plugin_header-integration.asciidoc[]
 
 ==== Description
 
