@@ -13,7 +13,8 @@ The following output plugins are available below. For a list of Elastic supporte
 | <<plugins-outputs-csv,csv>> | Writes events to disk in a delimited format | https://github.com/logstash-plugins/logstash-output-csv[logstash-output-csv]
 | <<plugins-outputs-datadog,datadog>> | Sends events to DataDogHQ based on Logstash events | https://github.com/logstash-plugins/logstash-output-datadog[logstash-output-datadog]
 | <<plugins-outputs-datadog_metrics,datadog_metrics>> | Sends metrics to DataDogHQ based on Logstash events | https://github.com/logstash-plugins/logstash-output-datadog_metrics[logstash-output-datadog_metrics]
-| <<plugins-outputs-elastic_app_search,elastic_app_search>> | Sends events to the Elastic App Search solution | https://github.com/logstash-plugins/logstash-output-elastic_app_search[logstash-output-elastic_app_search]
+| <<plugins-outputs-elastic_app_search,elastic_app_search>> | Sends events to the https://www.elastic.co/app-search/[Elastic App Search] solution | https://github.com/logstash-plugins/logstash-output-elastic_app_search[logstash-integration-elastic_enterprise_search]
+| <<plugins-outputs-elastic_workplace_search,elastic_workplace_search>> | Sends events to the https://www.elastic.co/enterprise-search[Elastic Workplace Search] solution | https://github.com/logstash-plugins/logstash-output-elastic_app_search[logstash-integration-elastic_enterprise_search]
 | <<plugins-outputs-elasticsearch,elasticsearch>> | Stores logs in Elasticsearch | https://github.com/logstash-plugins/logstash-output-elasticsearch[logstash-output-elasticsearch]
 | <<plugins-outputs-email,email>> | Sends email to a specified address when output is received | https://github.com/logstash-plugins/logstash-output-email[logstash-output-email]
 | <<plugins-outputs-exec,exec>> | Runs a command for a matching event | https://github.com/logstash-plugins/logstash-output-exec[logstash-output-exec]
@@ -82,8 +83,11 @@ include::outputs/datadog.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-output-datadog_metrics/edit/master/docs/index.asciidoc
 include::outputs/datadog_metrics.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-output-elastic_app_search/edit/master/docs/index.asciidoc
+:edit_url:
 include::outputs/elastic_app_search.asciidoc[]
+
+:edit_url: 
+include::outputs/elastic_workplace_search.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/edit/master/docs/index.asciidoc
 include::outputs/elasticsearch.asciidoc[]
