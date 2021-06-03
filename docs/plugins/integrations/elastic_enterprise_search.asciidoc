@@ -25,7 +25,7 @@ include::{include_path}/plugin_header.asciidoc[]
 The Elastic Enterprise Search integration plugin provides integrated plugins for working with App Search and Workplace Search services:
 
 * {logstash-ref}/plugins-outputs-elastic_app_search.html[App Search Output Plugin]
-* {logstash-ref}/plugins-outputs-elastic_workplace_search.html[Workplace Search Output Plugin]
+* Workplace Search Output Plugin
 
 
 :no_codec!:
