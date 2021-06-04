@@ -1,7 +1,6 @@
-:integration: elastic_enterprise_search
 :plugin: elastic_app_search
 :type: output
-:default_plugin: 0
+:default_plugin: 1
 :no_codec:
 
 ///////////////////////////////////////////
@@ -19,7 +18,7 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 === App Search output plugin
 
-include::{include_path}/plugin_header-integration.asciidoc[]
+include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
