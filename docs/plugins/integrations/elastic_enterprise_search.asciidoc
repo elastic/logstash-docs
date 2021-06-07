@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v2.1.1
-:release_date: 2021-06-02
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-elastic_enterprise_search/blob/v2.1.1/CHANGELOG.md
+:version: v2.1.2
+:release_date: 2021-06-07
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-elastic_enterprise_search/blob/v2.1.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -22,7 +22,7 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-The Elastic Enterprise Search integration plugin provides integrated plugins for working with Elastic App Search and Elastic Workplace Search services:
+The Elastic Enterprise Search integration plugin provides integrated plugins for working with https://www.elastic.co/app-search[Elastic App Search] and https://www.elastic.co/workplace-search[Elastic Workplace Search] services:
 
 * {logstash-ref}/plugins-outputs-elastic_app_search.html[Elastic App Search output plugin]
 * {logstash-ref}/plugins-outputs-elastic_workplace_search.html[Elastic Workplace Search output plugin]
