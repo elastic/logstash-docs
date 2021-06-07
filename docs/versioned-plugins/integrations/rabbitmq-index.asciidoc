@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v7.3.0-plugins-integrations-rabbitmq,v7.3.0>> | 2021-06-07
 | <<v7.2.0-plugins-integrations-rabbitmq,v7.2.0>> | 2021-01-11
 | <<v7.1.1-plugins-integrations-rabbitmq,v7.1.1>> | 2020-08-20
 | <<v7.1.0-plugins-integrations-rabbitmq,v7.1.0>> | 2020-05-13
@@ -14,6 +15,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v7.0.0-plugins-integrations-rabbitmq,v7.0.0>> | 2019-10-15
 |=======================================================================
 
+include::rabbitmq-v7.3.0.asciidoc[]
 include::rabbitmq-v7.2.0.asciidoc[]
 include::rabbitmq-v7.1.1.asciidoc[]
 include::rabbitmq-v7.1.0.asciidoc[]
