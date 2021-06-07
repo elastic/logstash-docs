@@ -7,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v2.1.1
-:release_date: 2021-06-02
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-elastic_enterprise_search/blob/v2.1.1/CHANGELOG.md
+:version: v2.1.2
+:release_date: 2021-06-07
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-elastic_enterprise_search/blob/v2.1.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -23,7 +23,7 @@ include::{include_path}/plugin_header-integration.asciidoc[]
 
 ==== Description
 
-This output lets you send events to the Elastic App Search solution,
+This output lets you send events to the https://www.elastic.co/app-search[Elastic App Search] solution,
 both the https://www.elastic.co/downloads/app-search[self-managed] or
 the https://www.elastic.co/cloud/app-search-service[managed] service.
 On receiving a batch of events from the Logstash pipeline, the plugin
