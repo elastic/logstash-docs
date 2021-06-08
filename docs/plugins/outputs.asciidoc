@@ -7,13 +7,15 @@ The following output plugins are available below. For a list of Elastic supporte
 
 |=======================================================================
 | Plugin | Description | Github repository
+| <<plugins-outputs-elastic_app_search,app_search>> | Sends events to the https://www.elastic.co/app-search/[Elastic App Search] solution | https://github.com/logstash-plugins/logstash-output-elastic_app_search[logstash-integration-elastic_enterprise_search]
 | <<plugins-outputs-boundary,boundary>> | Sends annotations to Boundary based on Logstash events | https://github.com/logstash-plugins/logstash-output-boundary[logstash-output-boundary]
 | <<plugins-outputs-circonus,circonus>> | Sends annotations to Circonus based on Logstash events | https://github.com/logstash-plugins/logstash-output-circonus[logstash-output-circonus]
 | <<plugins-outputs-cloudwatch,cloudwatch>> | Aggregates and sends metric data to AWS CloudWatch | https://github.com/logstash-plugins/logstash-output-cloudwatch[logstash-output-cloudwatch]
 | <<plugins-outputs-csv,csv>> | Writes events to disk in a delimited format | https://github.com/logstash-plugins/logstash-output-csv[logstash-output-csv]
 | <<plugins-outputs-datadog,datadog>> | Sends events to DataDogHQ based on Logstash events | https://github.com/logstash-plugins/logstash-output-datadog[logstash-output-datadog]
 | <<plugins-outputs-datadog_metrics,datadog_metrics>> | Sends metrics to DataDogHQ based on Logstash events | https://github.com/logstash-plugins/logstash-output-datadog_metrics[logstash-output-datadog_metrics]
-| <<plugins-outputs-elastic_app_search,elastic_app_search>> | Sends events to the Elastic App Search solution | https://github.com/logstash-plugins/logstash-output-elastic_app_search[logstash-output-elastic_app_search]
+| <<plugins-outputs-elastic_app_search,elastic_app_search>> | Sends events to the https://www.elastic.co/app-search/[Elastic App Search] solution | https://github.com/logstash-plugins/logstash-output-elastic_app_search[logstash-integration-elastic_enterprise_search]
+| <<plugins-outputs-elastic_workplace_search,elastic_workplace_search>> | Sends events to the https://www.elastic.co/enterprise-search[Elastic Workplace Search] solution | https://github.com/logstash-plugins/logstash-output-elastic_app_search[logstash-integration-elastic_enterprise_search]
 | <<plugins-outputs-elasticsearch,elasticsearch>> | Stores logs in Elasticsearch | https://github.com/logstash-plugins/logstash-output-elasticsearch[logstash-output-elasticsearch]
 | <<plugins-outputs-email,email>> | Sends email to a specified address when output is received | https://github.com/logstash-plugins/logstash-output-email[logstash-output-email]
 | <<plugins-outputs-exec,exec>> | Runs a command for a matching event | https://github.com/logstash-plugins/logstash-output-exec[logstash-output-exec]
@@ -60,6 +62,7 @@ The following output plugins are available below. For a list of Elastic supporte
 | <<plugins-outputs-udp,udp>> | Sends events over UDP | https://github.com/logstash-plugins/logstash-output-udp[logstash-output-udp]
 | <<plugins-outputs-webhdfs,webhdfs>> | Sends Logstash events to HDFS using the `webhdfs` REST API | https://github.com/logstash-plugins/logstash-output-webhdfs[logstash-output-webhdfs]
 | <<plugins-outputs-websocket,websocket>> | Publishes messages to a websocket | https://github.com/logstash-plugins/logstash-output-websocket[logstash-output-websocket]
+| <<plugins-outputs-elastic_workplace_search,workplace_search>> | Sends events to the https://www.elastic.co/enterprise-search[Elastic Workplace Search] solution | https://github.com/logstash-plugins/logstash-output-elastic_app_search[logstash-integration-elastic_enterprise_search]
 | <<plugins-outputs-xmpp,xmpp>> | Posts events over XMPP | https://github.com/logstash-plugins/logstash-output-xmpp[logstash-output-xmpp]
 | <<plugins-outputs-zabbix,zabbix>> | Sends events to a Zabbix server | https://github.com/logstash-plugins/logstash-output-zabbix[logstash-output-zabbix]
 |=======================================================================
@@ -84,6 +87,9 @@ include::outputs/datadog_metrics.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-elastic_app_search/edit/master/docs/index.asciidoc
 include::outputs/elastic_app_search.asciidoc[]
+
+:edit_url: 
+include::outputs/elastic_workplace_search.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/edit/master/docs/index.asciidoc
 include::outputs/elasticsearch.asciidoc[]

@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.0.7
-:release_date: 2021-04-15
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-jdbc/blob/v5.0.7/CHANGELOG.md
+:version: v5.1.1
+:release_date: 2021-05-26
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-jdbc/blob/v5.1.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -423,7 +423,7 @@ according to the table below.
 |=======================================================================
 |Setting |Input type|Required
 | id|string|No
-| table|string|Yes
+| local_table|string|Yes
 | query|string|Yes
 | max_rows|number|No
 | jdbc_connection_string|string|No
@@ -439,7 +439,7 @@ id::
 An optional identifier. This is used to identify the loader that is
 generating error messages and log lines.
 
-table::
+local_table::
 The destination table in the local lookup database that the loader will fill.
 
 query::

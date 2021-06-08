@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.10
-:release_date: 2019-04-17
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-csv/blob/v3.0.10/CHANGELOG.md
+:version: v3.1.0
+:release_date: 2021-06-03
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-csv/blob/v3.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -25,6 +25,12 @@ The CSV filter takes an event field containing CSV data, parses it,
 and stores it as individual fields with optionally-specified field names.
 This filter can parse data with any separator, not just commas.
 
+[id="plugins-{type}s-{plugin}-ecs_metadata"]
+==== Event Metadata and the Elastic Common Schema (ECS)
+The plugin behaves the same regardless of ECS compatibility, except giving a warning when ECS is enabled and `target` isn't set.
+
+TIP: Set the `target` option to avoid potential schema conflicts.
+
 [id="plugins-{type}s-{plugin}-options"]
 ==== Csv Filter Configuration Options
 
@@ -37,6 +43,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-autogenerate_column_names>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-columns>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-convert>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-ecs_compatibility>> | <<string,string>>|No
 | <<plugins-{type}s-{plugin}-quote_char>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-separator>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-skip_empty_columns>> |<<boolean,boolean>>|No
@@ -105,6 +112,18 @@ Example:
       }
     }
 
+[id="plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+* Value type is <<string,string>>
+* Supported values are:
+** `disabled`: does not use ECS-compatible field names
+** `v1`: uses the value in `target` as field name
+
+Controls this plugin's compatibility with the
+{ecs-ref}[Elastic Common Schema (ECS)].
+See <<plugins-{type}s-{plugin}-ecs_metadata>> for detailed information.
+
 [id="plugins-{type}s-{plugin}-quote_char"]
 ===== `quote_char` 
 
@@ -154,10 +173,10 @@ This tag can referenced by users if they wish to cancel events using an 'if' con
 Define whether the header should be skipped.
 Defaults to false. If set to true, the header will be skipped.
 Assumes that header is not repeated within further rows as such rows will also be skipped.
-If skip_header is set without autodetect_column_names being set then columns should be set which
+If `skip_header` is set without `autodetect_column_names` being set then columns should be set which
 will result in the skipping of any row that exactly matches the specified column values.
-If skip_header and autodetect_column_names are specified then columns should not be specified, in this case
-autodetect_column_names will fill the columns setting in the background, from the first event seen, and any
+If `skip_header` and `autodetect_column_names` are specified then columns should not be specified, in this case
+`autodetect_column_names` will fill the columns setting in the background, from the first event seen, and any
 subsequent values that match what was autodetected will be skipped.
 
 Logstash pipeline workers must be set to `1` for this option to work.
@@ -179,7 +198,6 @@ data structure.
 
 Define target field for placing the data.
 Defaults to writing to the root of the event.
-
 
 
 [id="plugins-{type}s-{plugin}-common-options"]

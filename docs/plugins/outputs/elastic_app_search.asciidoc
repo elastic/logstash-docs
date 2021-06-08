@@ -1,3 +1,4 @@
+:integration: elastic_enterprise_search
 :plugin: elastic_app_search
 :type: output
 :default_plugin: 1
@@ -6,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.1.1
-:release_date: 2020-09-16
-:changelog_url: https://github.com/logstash-plugins/logstash-output-elastic_app_search/blob/v1.1.1/CHANGELOG.md
+:version: v2.1.2
+:release_date: 2021-06-07
+:changelog_url: https://github.com/logstash-plugins/logstash-output-elastic_app_search/blob/v1.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -16,20 +17,20 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 [id="plugins-{type}s-{plugin}"]
 
-=== App Search output plugin
+=== Elastic App Search output plugin
 
-include::{include_path}/plugin_header.asciidoc[]
+include::{include_path}/plugin_header-integration.asciidoc[]
 
 ==== Description
 
-This output lets you send events to the Elastic App Search solution, 
+This output lets you send events to the https://www.elastic.co/app-search[Elastic App Search] solution, 
 both the https://www.elastic.co/downloads/app-search[self-managed] or 
 the https://www.elastic.co/cloud/app-search-service[managed] service.
 On receiving a batch of events from the Logstash pipeline, the plugin
 converts the events into documents and uses the App Search bulk API
 to index multiple events in one request.
 
-App Search doesn't allow fields to begin with `@timestamp`.
+Elastic App Search doesn't allow fields to begin with `@timestamp`.
 By default the `@timestamp` and `@version` fields will be removed from
 each event before the event is sent to App Search. If you want to keep
 the `@timestamp` field, you can use the
@@ -39,7 +40,7 @@ to store the timestamp in a different field.
 NOTE: This gem does not support codec customization.
 
 [id="plugins-{type}s-{plugin}-options"]
-==== AppSearch Output Configuration Options
+==== App Search Output Configuration Options
 
 This plugin supports the following configuration options plus the
  <<plugins-{type}s-{plugin}-common-options>> described later.
@@ -84,7 +85,46 @@ like `myapp-%{sequence_id}`. Reusing ids will cause documents to be rewritten.
   * Value type is <<string,string>>
   * There is no default value
 
-The Engine name. Engine is your search engine created in App Search, an information repository that includes the indexed document records.
+The name of the search engine you created in App Search, an information
+repository that includes the indexed document records.
+The `engine` field supports
+{logstash-ref}/event-dependent-configuration.html#sprintf[sprintf format] to
+allow the engine name to be derived from a field value from each event, for
+example `engine-%{engine_name}`.
+
+Invalid engine names cause ingestion to stop until the field value can be resolved into a valid engine name.
+This situation can happen if the interpolated field value resolves to a value without a matching engine,
+or, if the field is missing from the event and cannot be resolved at all.
+
+TIP: Consider adding a "default" engine type in the configuration to catch errors if
+the field is missing from the event.
+
+Example:
+
+
+
+[source,ruby]
+----------------------------------
+input {
+  stdin {
+    codec => json
+  }
+}
+
+filter {
+  if ![engine_name] {
+    mutate {
+      add_field => {"engine_name" => "default"}
+    }
+  }
+}
+
+output {
+  appsearch {
+    engine => "engine_%{[engine_name]}"
+  }
+}
+----------------------------------
 
 [id="plugins-{type}s-{plugin}-host"]
 ===== `host`
