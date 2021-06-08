@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v3.1.1-plugins-filters-csv,v3.1.1>> | 2021-06-08
 | <<v3.1.0-plugins-filters-csv,v3.1.0>> | 2021-06-03
 | <<v3.0.10-plugins-filters-csv,v3.0.10>> | 2019-04-17
 | <<v3.0.8-plugins-filters-csv,v3.0.8>> | 2018-01-12
@@ -15,6 +16,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.0.3-plugins-filters-csv,v3.0.3>> | 2017-05-24
 |=======================================================================
 
+include::csv-v3.1.1.asciidoc[]
 include::csv-v3.1.0.asciidoc[]
 include::csv-v3.0.10.asciidoc[]
 include::csv-v3.0.8.asciidoc[]
