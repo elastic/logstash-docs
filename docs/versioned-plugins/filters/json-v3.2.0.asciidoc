@@ -1,0 +1,141 @@
+:plugin: json
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.2.0
+:release_date: 2021-06-17
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-json/blob/v3.2.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== JSON filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This is a JSON parsing filter. It takes an existing field which contains JSON and
+expands it into an actual data structure within the Logstash event.
+
+By default, it will place the parsed JSON in the root (top level) of the Logstash event, but this
+filter can be configured to place the JSON into any arbitrary event field, using the
+`target` configuration.
+
+This plugin has a few fallback scenarios when something bad happens during the parsing of the event.
+If the JSON parsing fails on the data, the event will be untouched and it will be tagged with
+`_jsonparsefailure`; you can then use conditionals to clean the data. You can configure this tag with the
+`tag_on_failure` option.
+
+If the parsed data contains a `@timestamp` field, the plugin will try to use it for the events `@timestamp`, and if the
+parsing fails, the field will be renamed to `_@timestamp` and the event will be tagged with a
+`_timestampparsefailure`.
+
+[id="{version}-plugins-{type}s-{plugin}-ecs_metadata"]
+==== Event Metadata and the Elastic Common Schema (ECS)
+
+The plugin behaves the same regardless of ECS compatibility, except giving a warning when ECS is enabled and `target` isn't set.
+
+TIP: Set the `target` option to avoid potential schema conflicts.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== JSON Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>> | {logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-skip_on_invalid_json>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-source>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-tag_on_failure>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-target>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* Supported values are:
+** `disabled`: does not use ECS-compatible field names
+** `v1`: Elastic Common Schema compliant behavior (warns when `target` isn't set)
+
+Controls this plugin's compatibility with the
+{ecs-ref}[Elastic Common Schema (ECS)].
+See <<{version}-plugins-{type}s-{plugin}-ecs_metadata>> for detailed information.
+
+[id="{version}-plugins-{type}s-{plugin}-skip_on_invalid_json"]
+===== `skip_on_invalid_json`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Allows for skipping the filter on invalid JSON (this allows you to handle JSON and non-JSON data without warnings)
+
+[id="{version}-plugins-{type}s-{plugin}-source"]
+===== `source`
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The configuration for the JSON filter:
+[source,ruby]
+    source => source_field
+
+For example, if you have JSON data in the `message` field:
+[source,ruby]
+    filter {
+      json {
+        source => "message"
+      }
+    }
+
+The above would parse the JSON from the `message` field.
+
+[id="{version}-plugins-{type}s-{plugin}-tag_on_failure"]
+===== `tag_on_failure`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `["_jsonparsefailure"]`
+
+Append values to the `tags` field when there has been no
+successful match
+
+[id="{version}-plugins-{type}s-{plugin}-target"]
+===== `target`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Define the target field for placing the parsed data. If this setting is
+omitted, the JSON data will be stored at the root (top level) of the event.
+
+For example, if you want the data to be put in the `doc` field:
+[source,ruby]
+    filter {
+      json {
+        target => "doc"
+      }
+    }
+
+JSON in the value of the `source` field will be expanded into a
+data structure in the `target` field.
+
+NOTE: if the `target` field already exists, it will be overwritten!
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

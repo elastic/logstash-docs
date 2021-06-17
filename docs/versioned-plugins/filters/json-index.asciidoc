@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v3.2.0-plugins-filters-json,v3.2.0>> | 2021-06-17
 | <<v3.1.0-plugins-filters-json,v3.1.0>> | 2019-06-17
 | <<v3.0.6-plugins-filters-json,v3.0.6>> | 2019-02-04
 | <<v3.0.5-plugins-filters-json,v3.0.5>> | 2017-11-07
@@ -12,6 +13,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.0.3-plugins-filters-json,v3.0.3>> | 2017-06-23
 |=======================================================================
 
+include::json-v3.2.0.asciidoc[]
 include::json-v3.1.0.asciidoc[]
 include::json-v3.0.6.asciidoc[]
 include::json-v3.0.5.asciidoc[]
