@@ -1,0 +1,437 @@
+:plugin: http
+:type: input
+:default_codec: plain
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.4.1
+:release_date: 2021-06-18
+:changelog_url: https://github.com/logstash-plugins/logstash-input-http/blob/v3.4.1/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Http input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Using this input you can receive single or multiline events over http(s).
+Applications can send an HTTP request to the endpoint started by this input and
+Logstash will convert it into an event for subsequent processing. Users
+can pass plain text, JSON, or any formatted data and use a corresponding codec with this
+input. For Content-Type `application/json` the `json` codec is used, but for all other
+data formats, `plain` codec is used.
+
+This input can also be used to receive webhook requests to integrate with other services
+and applications. By taking advantage of the vast plugin ecosystem available in Logstash
+you can trigger actionable events right from your application.
+
+[id="{version}-plugins-{type}s-{plugin}-ecs_metadata"]
+==== Event Metadata and the Elastic Common Schema (ECS)
+In addition to decoding the events, this input will add HTTP headers containing connection information to each event.
+When ECS compatibility is disabled, the headers are stored in the `headers` field, which has the potential to create confusion and schema conflicts downstream.
+When ECS is enabled, we can ensure a pipeline maintains access to this metadata throughout the event's lifecycle without polluting the top-level namespace.
+
+Here’s how ECS compatibility mode affects output.
+[cols="<l,<l,e,<e"]
+|=======================================================================
+| ECS disabled | ECS v1 | Availability | Description
+
+| [host] | [host][ip] | Always | Host IP address
+| [headers] | [@metadata][input][http][request][headers] | Always | Complete HTTP headers
+| [headers][http_version] | [http][version] | Always | HTTP version
+| [headers][http_user_agent] | [user_agent][original] | Always | client user agent
+| [headers][http_host] | [url][domain] and [url][port] | Always | host domain and port
+| [headers][request_method] | [http][method] | Always | HTTP method
+| [headers][request_path] | [url][path] | Always | Query path
+| [headers][content_length] | [http][request][body][bytes] | Always | Request content length
+| [headers][content_type] | [http][request][mime_type] | Always | Request mime type
+|=======================================================================
+
+==== Blocking Behavior
+
+The HTTP protocol doesn't deal well with long running requests. This plugin will either return
+a 429 (busy) error when Logstash is backlogged, or it will time out the request.
+
+If a 429 error is encountered clients should sleep, backing off exponentially with some random
+jitter, then retry their request.
+
+This plugin will block if the Logstash queue is blocked and there are available HTTP input threads.
+This will cause most HTTP clients to time out. Sent events will still be processed in this case. This
+behavior is not optimal and will be changed in a future release. In the future, this plugin will always
+return a 429 if the queue is busy, and will not time out in the event of a busy queue.
+
+==== Security
+This plugin supports standard HTTP basic authentication headers to identify the requester.
+You can pass in a username, password combination while sending data to this input
+
+You can also setup SSL and send data securely over https, with multiple options such as
+validating the client's certificate.
+
+[id="{version}-plugins-{type}s-{plugin}-codec-settings"]
+==== Codec settings
+This plugin has two configuration options for codecs: `codec` and `additional_codecs`.
+
+Values in `additional_codecs` are prioritized over those specified in the
+`codec` option. That is, the default `codec` is applied only if no codec
+for the request's content-type is found in the `additional_codecs` setting.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Http Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-additional_codecs>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-cipher_suites>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>> | {logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-host>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-keystore>> |{logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-keystore_password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-port>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-max_pending_requests>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-response_headers>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-response_code>> |{logstash-ref}/configuration-file-structure.html#number[number], one of `[200, 201, 202, 204]`|No
+| <<{version}-plugins-{type}s-{plugin}-ssl>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_certificate>> |a valid filesystem path|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_handshake_timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_key>> |a valid filesystem path|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_key_passphrase>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_verify_mode>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["none", "peer", "force_peer"]`|No
+| <<{version}-plugins-{type}s-{plugin}-threads>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-tls_max_version>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-tls_min_version>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-user>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-verify_mode>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["none", "peer", "force_peer"]`|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-additional_codecs"]
+===== `additional_codecs`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * Default value is `{"application/json"=>"json"}`
+
+Apply specific codecs for specific content types.
+The default codec will be applied only after this list is checked
+and no codec for the request's content-type is found
+
+[id="{version}-plugins-{type}s-{plugin}-cipher_suites"]
+===== `cipher_suites`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `java.lang.String[TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256]@459cfcca`
+
+The list of ciphers suite to use, listed by priorities.
+
+[id="{version}-plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* Supported values are:
+** `disabled`: unstructured connection metadata added at root level
+** `v1`: headers added under `[@metadata][http][header]`. Some are copied to structured ECS fields `http`, `url`, `user_agent` and `host`
+
+Controls this plugin's compatibility with the
+{ecs-ref}[Elastic Common Schema (ECS)].
+See <<{version}-plugins-{type}s-{plugin}-ecs_metadata>> for detailed information.
+
+Example output:
+
+**Sample output: ECS disabled**
+[source,text]
+-----
+{
+    "@version" => "1",
+    "headers" => {
+           "request_path" => "/twitter/tweet/1",
+            "http_accept" => "*/*",
+           "http_version" => "HTTP/1.1",
+         "request_method" => "PUT",
+              "http_host" => "localhost:8080",
+        "http_user_agent" => "curl/7.64.1",
+         "content_length" => "5",
+           "content_type" => "application/x-www-form-urlencoded"
+    },
+    "@timestamp" => 2021-05-28T19:27:28.609Z,
+    "host" => "127.0.0.1",
+    "message" => "hello"
+}
+-----
+
+**Sample output: ECS enabled**
+[source,text]
+-----
+{
+    "@version" => "1",
+    "user_agent" => {
+        "original" => "curl/7.64.1"
+    },
+    "http" => {
+        "method" => "PUT",
+        "request" => {
+            "mime_type" => "application/x-www-form-urlencoded",
+            "body" => {
+                "bytes" => "5"
+            }
+        },
+        "version" => "HTTP/1.1"
+    },
+    "url" => {
+          "port" => "8080",
+        "domain" => "snmp1",
+          "path" => "/twitter/tweet/1"
+    },
+    "@timestamp" => 2021-05-28T23:32:38.222Z,
+    "host" => {
+        "ip" => "127.0.0.1"
+    },
+    "message" => "hello",
+}
+-----
+
+[id="{version}-plugins-{type}s-{plugin}-host"]
+===== `host`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"0.0.0.0"`
+
+The host or ip to bind
+
+[id="{version}-plugins-{type}s-{plugin}-keystore"]
+===== `keystore`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+  * This option is deprecated
+
+The JKS keystore to validate the client's certificates
+
+Note: This option is deprecated and it will be removed in the next major version of Logstash.
+Use `ssl_certificate` and `ssl_key` instead.
+
+[id="{version}-plugins-{type}s-{plugin}-keystore_password"]
+===== `keystore_password`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+  * This option is deprecated
+
+Set the truststore password
+
+Note: This option is deprecated and it will be removed in the next major version of Logstash.
+Use `ssl_certificate` and `ssl_key` instead.
+
+[id="{version}-plugins-{type}s-{plugin}-password"]
+===== `password`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Password for basic authorization
+
+[id="{version}-plugins-{type}s-{plugin}-port"]
+===== `port`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `8080`
+
+The TCP port to bind to
+
+[id="{version}-plugins-{type}s-{plugin}-max_content_length"]
+===== `max_content_length`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is 104857600
+
+The max content of an HTTP request in bytes. It defaults to 100mb.
+
+[id="{version}-plugins-{type}s-{plugin}-max_pending_requests"]
+===== `max_pending_requests`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is 200
+
+Maximum number of incoming requests to store in a temporary queue before being processed by worker threads.
+If a request arrives and the queue is full a 429 response will be returned immediately.
+This queue exists to deal with micro bursts of events and to improve overall throughput,
+so it should be changed very carefully as it can lead to memory pressure and impact performance.
+If you need to deal both periodic or unforeseen spikes in incoming requests consider enabling the
+Persistent Queue for the logstash pipeline.
+
+[id="{version}-plugins-{type}s-{plugin}-response_code"]
+===== `response_code`
+
+  * Value can be any of: 200, 201, 202, 204
+  * Default value is `200`
+
+The HTTP return code if the request is processed successfully.
+
+Other return codes may happen in the case of an error condition, such as
+invalid credentials (401), internal errors (503) or backpressure (429).
+
+If 204 (No Content) is set, the response body will not be sent in the response.
+
+[id="{version}-plugins-{type}s-{plugin}-response_headers"]
+===== `response_headers`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * Default value is `{"Content-Type"=>"text/plain"}`
+
+specify a custom set of response headers
+
+[id="{version}-plugins-{type}s-{plugin}-remote_host_target_field"]
+===== `remote_host_target_field`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"host"` when ECS is disabled
+  * Default value is `[host][ip]` when ECS is enabled
+
+specify a target field for the client host of the http request
+
+[id="{version}-plugins-{type}s-{plugin}-request_headers_target_field"]
+===== `request_headers_target_field`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"headers"` when ECS is disabled
+  * Default value is `[@metadata][http][header]` when ECS is enabled
+
+specify target field for the client host of the http request
+
+[id="{version}-plugins-{type}s-{plugin}-ssl"]
+===== `ssl`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Events are by default sent in plain text. You can
+enable encryption by setting `ssl` to true and configuring
+the `ssl_certificate` and `ssl_key` options.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_certificate"]
+===== `ssl_certificate`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+SSL certificate to use.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities"]
+===== `ssl_certificate_authorities`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `[]`
+
+Validate client certificates against these authorities.
+You can define multiple files or paths. All the certificates will
+be read and added to the trust store. You need to configure the `ssl_verify_mode`
+to `peer` or `force_peer` to enable the verification.
+
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_handshake_timeout"]
+===== `ssl_handshake_timeout`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `10000`
+
+Time in milliseconds for an incomplete ssl handshake to timeout
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_key"]
+===== `ssl_key`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+SSL key to use.
+NOTE: This key need to be in the PKCS8 format, you can convert it with https://www.openssl.org/docs/man1.1.0/apps/pkcs8.html[OpenSSL]
+for more information.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_key_passphrase"]
+===== `ssl_key_passphrase`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+SSL key passphrase to use.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_verify_mode"]
+===== `ssl_verify_mode`
+
+  * Value can be any of: `none`, `peer`, `force_peer`
+  * Default value is `"none"`
+
+By default the server doesn't do any client verification.
+
+`peer` will make the server ask the client to provide a certificate.
+If the client provides a certificate, it will be validated.
+
+`force_peer` will make the server ask the client to provide a certificate.
+If the client doesn't provide a certificate, the connection will be closed.
+
+This option needs to be used with `ssl_certificate_authorities` and a defined list of CAs.
+
+[id="{version}-plugins-{type}s-{plugin}-threads"]
+===== `threads`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is number of processors
+
+Number of threads to use for both accepting connections and handling requests
+
+[id="{version}-plugins-{type}s-{plugin}-tls_max_version"]
+===== `tls_max_version`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `1.2`
+
+The maximum TLS version allowed for the encrypted connections. The value must be the one of the following:
+1.0 for TLS 1.0, 1.1 for TLS 1.1, 1.2 for TLS 1.2
+
+[id="{version}-plugins-{type}s-{plugin}-tls_min_version"]
+===== `tls_min_version`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `1`
+
+The minimum TLS version allowed for the encrypted connections. The value must be one of the following:
+1.0 for TLS 1.0, 1.1 for TLS 1.1, 1.2 for TLS 1.2
+
+[id="{version}-plugins-{type}s-{plugin}-user"]
+===== `user`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Username for basic authorization
+
+[id="{version}-plugins-{type}s-{plugin}-verify_mode"]
+===== `verify_mode`
+
+  * Value can be any of: `none`, `peer`, `force_peer`
+  * Default value is `"none"`
+  * This option is deprecated
+
+Set the client certificate verification method. Valid methods: none, peer, force_peer
+
+Note: This option is deprecated and it will be removed in the next major version of Logstash.
+Use `ssl_verify_mode` instead.
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
