@@ -7,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v6.1.3
-:release_date: 2021-04-21
-:changelog_url: https://github.com/logstash-plugins/logstash-input-beats/blob/v6.1.3/CHANGELOG.md
+:version: v6.1.5
+:release_date: 2021-06-21
+:changelog_url: https://github.com/logstash-plugins/logstash-input-beats/blob/v6.1.5/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -18,6 +18,9 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 [id="plugins-{type}s-{plugin}"]
 
 === {plugin-uc} input plugin
+
+NOTE: The `input-elastic_agent` plugin is the next generation of the
+`input-beats` plugin. They currently share a common codebase.
 
 include::{include_path}/plugin_header.asciidoc[]
 
@@ -33,7 +36,7 @@ The following example shows how to configure Logstash to listen on port
 -----
 
 input {
-  beats {
+  {plugin} {
     port => 5044
   }
 }
@@ -47,7 +50,7 @@ output {
 -----
 <1> `%{[@metadata][beat]}` sets the first part of the index name to the value
 of the `beat` metadata field and `%{[@metadata][version]}` sets the second part to
-the {plugin-uc}'s version. For example:
+the {plugin-uc} version. For example:
 metricbeat-7.4.0.
 
 Events indexed into Elasticsearch with the Logstash configuration shown here
