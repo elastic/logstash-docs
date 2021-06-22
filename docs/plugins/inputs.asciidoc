@@ -12,6 +12,7 @@ The following input plugins are available below. For a list of Elastic supported
 | <<plugins-inputs-cloudwatch,cloudwatch>> | Pulls events from the Amazon Web Services CloudWatch API  | https://github.com/logstash-plugins/logstash-input-cloudwatch[logstash-input-cloudwatch]
 | <<plugins-inputs-couchdb_changes,couchdb_changes>> | Streams events from CouchDB's `_changes` URI | https://github.com/logstash-plugins/logstash-input-couchdb_changes[logstash-input-couchdb_changes]
 | <<plugins-inputs-dead_letter_queue,dead_letter_queue>> | read events from Logstash's dead letter queue | https://github.com/logstash-plugins/logstash-input-dead_letter_queue[logstash-input-dead_letter_queue]
+| <<plugins-inputs-elastic_agent,elastic_agent>> | Receives events from the Elastic Agent framework | https://github.com/logstash-plugins/logstash-input-beats[logstash-input-beats] (shared)
 | <<plugins-inputs-elasticsearch,elasticsearch>> | Reads query results from an Elasticsearch cluster | https://github.com/logstash-plugins/logstash-input-elasticsearch[logstash-input-elasticsearch]
 | <<plugins-inputs-exec,exec>> | Captures the output of a shell command as an event | https://github.com/logstash-plugins/logstash-input-exec[logstash-input-exec]
 | <<plugins-inputs-file,file>> | Streams events from files | https://github.com/logstash-plugins/logstash-input-file[logstash-input-file]
@@ -77,6 +78,9 @@ include::inputs/couchdb_changes.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-dead_letter_queue/edit/master/docs/index.asciidoc
 include::inputs/dead_letter_queue.asciidoc[]
+
+:edit_url:
+include::inputs/elastic_agent.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/edit/master/docs/index.asciidoc
 include::inputs/elasticsearch.asciidoc[]
