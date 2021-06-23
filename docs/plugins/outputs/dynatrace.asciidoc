@@ -32,7 +32,7 @@ For plugins not bundled by default, it is easy to install by running
 
 ==== Description
 
-This plugin send Logstah events to the Dynatrace Generic log ingest API v2. 
+This plugin sends Logstash events to the Dynatrace Generic log ingest API v2. 
 
 ==== Documentation
  
