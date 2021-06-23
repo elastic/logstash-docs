@@ -1,15 +1,15 @@
-:plugin: beats
+:plugin: elastic_agent
 :type: input
 :default_plugin: 1
 :default_codec: plain
-:plugin-uc: Beats
+:plugin-uc: Elastic Agent
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v6.1.5
-:release_date: 2021-06-21
-:changelog_url: https://github.com/logstash-plugins/logstash-input-beats/blob/v6.1.5/CHANGELOG.md
+:version: v6.1.2
+:release_date: 2021-04-12
+:changelog_url: https://github.com/logstash-plugins/logstash-input-beats/blob/v6.1.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -50,7 +50,7 @@ output {
 -----
 <1> `%{[@metadata][beat]}` sets the first part of the index name to the value
 of the `beat` metadata field and `%{[@metadata][version]}` sets the second part to
-the {plugin-uc} version. For example:
+the {plugin-uc}'s version. For example:
 metricbeat-7.4.0.
 
 Events indexed into Elasticsearch with the Logstash configuration shown here
