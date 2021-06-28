@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v2.1.2
-:release_date: 2020-09-01
-:changelog_url: https://github.com/logstash-plugins/logstash-input-kinesis/blob/v2.1.2/CHANGELOG.md
+:version: v2.2.0
+:release_date: 2021-06-28
+:changelog_url: https://github.com/logstash-plugins/logstash-input-kinesis/blob/v2.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -93,9 +93,11 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-application_name>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-checkpoint_interval_seconds>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-http_proxy>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-initial_position_in_stream>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-kinesis_stream_name>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-metrics>> |<<string,string>>, one of `[nil, "cloudwatch"]`|No
+| <<plugins-{type}s-{plugin}-non_proxy_hosts>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-profile>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-region>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-role_arn>> |<<string,string>>|No
@@ -125,6 +127,14 @@ unique for this kinesis stream.
 
 How many seconds between worker checkpoints to dynamodb.
 
+[id="plugins-{type}s-{plugin}-http_proxy"]
+===== `http_proxy`
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Proxy support for Kinesis, DynamoDB, and CloudWatch (if enabled).
+
 [id="plugins-{type}s-{plugin}-initial_position_in_stream"]
 ===== `initial_position_in_stream`
 
@@ -150,6 +160,14 @@ The kinesis stream name.
 
 Worker metric tracking. By default this is disabled, set it to "cloudwatch"
 to enable the cloudwatch integration in the Kinesis Client Library.
+
+[id="plugins-{type}s-{plugin}-non_proxy_hosts"]
+===== `non_proxy_hosts`
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Hosts that should be excluded from proxying, separated by the "|" (pipe) character.
 
 [id="plugins-{type}s-{plugin}-profile"]
 ===== `profile`
@@ -207,7 +225,7 @@ To set the dynamodb read and write capacity values, use these functions:
 
 [source,text]
 ----
-additional_settings => {"initial_lease_table_read_capacity" => 25, "initial_lease_table_write_capacity" => 100}
+additional_settings => {"initial_lease_table_read_capacity" => 25 "initial_lease_table_write_capacity" => 100}
 ----
 
 
