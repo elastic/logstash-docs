@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.6.0
-:release_date: 2021-03-11
-:changelog_url: https://github.com/logstash-plugins/logstash-input-s3/blob/v3.6.0/CHANGELOG.md
+:version: v3.7.0
+:release_date: 2021-06-24
+:changelog_url: https://github.com/logstash-plugins/logstash-input-s3/blob/v3.7.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -32,6 +32,21 @@ Files ending in `.gz` are handled as gzip'ed files.
 
 Files that are archived to AWS Glacier will be skipped.
 
+[id="plugins-{type}s-{plugin}-ecs_metadata"]
+==== Event Metadata and the Elastic Common Schema (ECS)
+This plugin adds cloudfront metadata to event.
+When ECS compatibility is disabled, the value is stored in the root level.
+When ECS is enabled, the value is stored in the `@metadata` where it can be used by other plugins in your pipeline.
+
+Here’s how ECS compatibility mode affects output.
+[cols="<l,<l,e,<e"]
+|=======================================================================
+| ECS disabled | ECS v1 | Availability | Description
+
+| cloudfront_fields | [@metadata][s3][cloudfront][fields] | available when the file is a CloudFront log | column names of log
+| cloudfront_version | [@metadata][s3][cloudfront][version] | available when the file is a CloudFront log | version of log
+|=======================================================================
+
 [id="plugins-{type}s-{plugin}-options"]
 ==== S3 Input Configuration Options
 
@@ -48,6 +63,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-backup_to_dir>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-bucket>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-delete>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-ecs_compatibility>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-endpoint>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-exclude_pattern>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-gzip_pattern>> |<<string,string>>|No
@@ -97,12 +113,12 @@ the connection to s3. See full list in https://docs.aws.amazon.com/sdkforruby/ap
 [source,ruby]
     input {
       s3 {
-        "access_key_id" => "1234"
-        "secret_access_key" => "secret"
-        "bucket" => "logstash-test"
-        "additional_settings" => {
-          "force_path_style" => true
-          "follow_redirects" => false
+        access_key_id => "1234"
+        secret_access_key => "secret"
+        bucket => "logstash-test"
+        additional_settings => {
+          force_path_style => true
+          follow_redirects => false
         }
       }
     }
@@ -167,6 +183,18 @@ The name of the S3 bucket.
   * Default value is `false`
 
 Whether to delete processed files from the original bucket.
+
+[id="plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+  * Value type is <<string,string>>
+  * Supported values are:
+  ** `disabled`: does not use ECS-compatible field names
+  ** `v1`: uses metadata fields that are compatible with Elastic Common Schema
+
+Controls this plugin's compatibility with the
+{ecs-ref}[Elastic Common Schema (ECS)].
+See <<plugins-{type}s-{plugin}-ecs_metadata>> for detailed information.
 
 [id="plugins-{type}s-{plugin}-endpoint"]
 ===== `endpoint`
