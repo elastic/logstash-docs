@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v6.2.1
-:release_date: 2021-04-28
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v6.2.1/CHANGELOG.md
+:version: v6.2.2
+:release_date: 2021-06-22
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v6.2.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -167,6 +167,28 @@ The following is a mapping between these fields.
 |`deviceCustomFloatingPoint3Label` (`cfp3Label`)|`[cef][device_custom_floating_point_3][label]`
 |`deviceCustomFloatingPoint4` (`cfp4`)          |`[cef][device_custom_floating_point_4][value]`
 |`deviceCustomFloatingPoint4Label` (`cfp4Label`)|`[cef][device_custom_floating_point_4][label]`
+|`deviceCustomFloatingPoint5` (`cfp5`)          |`[cef][device_custom_floating_point_5][value]`
+|`deviceCustomFloatingPoint5Label` (`cfp5Label`)|`[cef][device_custom_floating_point_5][label]`
+|`deviceCustomFloatingPoint6` (`cfp6`)          |`[cef][device_custom_floating_point_6][value]`
+|`deviceCustomFloatingPoint6Label` (`cfp6Label`)|`[cef][device_custom_floating_point_6][label]`
+|`deviceCustomFloatingPoint7` (`cfp7`)          |`[cef][device_custom_floating_point_7][value]`
+|`deviceCustomFloatingPoint7Label` (`cfp7Label`)|`[cef][device_custom_floating_point_7][label]`
+|`deviceCustomFloatingPoint8` (`cfp8`)          |`[cef][device_custom_floating_point_8][value]`
+|`deviceCustomFloatingPoint8Label` (`cfp8Label`)|`[cef][device_custom_floating_point_8][label]`
+|`deviceCustomFloatingPoint9` (`cfp9`)          |`[cef][device_custom_floating_point_9][value]`
+|`deviceCustomFloatingPoint9Label` (`cfp9Label`)|`[cef][device_custom_floating_point_9][label]`
+|`deviceCustomFloatingPoint10` (`cfp10`)        |`[cef][device_custom_floating_point_10][value]`
+|`deviceCustomFloatingPoint10Label` (`cfp10Label`)|`[cef][device_custom_floating_point_10][label]`
+|`deviceCustomFloatingPoint11` (`cfp11`)        |`[cef][device_custom_floating_point_11][value]`
+|`deviceCustomFloatingPoint11Label` (`cfp11Label`)|`[cef][device_custom_floating_point_11][label]`
+|`deviceCustomFloatingPoint12` (`cfp12`)        |`[cef][device_custom_floating_point_12][value]`
+|`deviceCustomFloatingPoint12Label` (`cfp12Label`)|`[cef][device_custom_floating_point_12][label]`
+|`deviceCustomFloatingPoint13` (`cfp13`)        |`[cef][device_custom_floating_point_13][value]`
+|`deviceCustomFloatingPoint13Label` (`cfp13Label`)|`[cef][device_custom_floating_point_13][label]`
+|`deviceCustomFloatingPoint14` (`cfp14`)        |`[cef][device_custom_floating_point_14][value]`
+|`deviceCustomFloatingPoint14Label` (`cfp14Label`)|`[cef][device_custom_floating_point_14][label]`
+|`deviceCustomFloatingPoint15` (`cfp15`)        |`[cef][device_custom_floating_point_15][value]`
+|`deviceCustomFloatingPoint15Label` (`cfp15Label`)|`[cef][device_custom_floating_point_15][label]`
 |`deviceCustomIPv6Address1` (`c6a1`)            |`[cef][device_custom_ipv6_address_1][value]`
 |`deviceCustomIPv6Address1Label` (`c6a1Label`)  |`[cef][device_custom_ipv6_address_1][label]`
 |`deviceCustomIPv6Address2` (`c6a2`)            |`[cef][device_custom_ipv6_address_2][value]`
@@ -175,12 +197,58 @@ The following is a mapping between these fields.
 |`deviceCustomIPv6Address3Label` (`c6a3Label`)  |`[cef][device_custom_ipv6_address_3][label]`
 |`deviceCustomIPv6Address4` (`c6a4`)            |`[cef][device_custom_ipv6_address_4][value]`
 |`deviceCustomIPv6Address4Label` (`c6a4Label`)  |`[cef][device_custom_ipv6_address_4][label]`
+|`deviceCustomIPv6Address5` (`c6a5`)            |`[cef][device_custom_ipv6_address_5][value]`
+|`deviceCustomIPv6Address5Label` (`c6a5Label`)  |`[cef][device_custom_ipv6_address_5][label]`
+|`deviceCustomIPv6Address6` (`c6a6`)            |`[cef][device_custom_ipv6_address_6][value]`
+|`deviceCustomIPv6Address6Label` (`c6a6Label`)  |`[cef][device_custom_ipv6_address_6][label]`
+|`deviceCustomIPv6Address7` (`c6a7`)            |`[cef][device_custom_ipv6_address_7][value]`
+|`deviceCustomIPv6Address7Label` (`c6a7Label`)  |`[cef][device_custom_ipv6_address_7][label]`
+|`deviceCustomIPv6Address8` (`c6a8`)            |`[cef][device_custom_ipv6_address_8][value]`
+|`deviceCustomIPv6Address8Label` (`c6a8Label`)  |`[cef][device_custom_ipv6_address_8][label]`
+|`deviceCustomIPv6Address9` (`c6a9`)            |`[cef][device_custom_ipv6_address_9][value]`
+|`deviceCustomIPv6Address9Label` (`c6a9Label`)  |`[cef][device_custom_ipv6_address_9][label]`
+|`deviceCustomIPv6Address10` (`c6a10`)          |`[cef][device_custom_ipv6_address_10][value]`
+|`deviceCustomIPv6Address10Label` (`c6a10Label`)|`[cef][device_custom_ipv6_address_10][label]`
+|`deviceCustomIPv6Address11` (`c6a11`)          |`[cef][device_custom_ipv6_address_11][value]`
+|`deviceCustomIPv6Address11Label` (`c6a11Label`)|`[cef][device_custom_ipv6_address_11][label]`
+|`deviceCustomIPv6Address12` (`c6a12`)          |`[cef][device_custom_ipv6_address_12][value]`
+|`deviceCustomIPv6Address12Label` (`c6a12Label`)|`[cef][device_custom_ipv6_address_12][label]`
+|`deviceCustomIPv6Address13` (`c6a13`)          |`[cef][device_custom_ipv6_address_13][value]`
+|`deviceCustomIPv6Address13Label` (`c6a13Label`)|`[cef][device_custom_ipv6_address_13][label]`
+|`deviceCustomIPv6Address14` (`c6a14`)          |`[cef][device_custom_ipv6_address_14][value]`
+|`deviceCustomIPv6Address14Label` (`c6a14Label`)|`[cef][device_custom_ipv6_address_14][label]`
+|`deviceCustomIPv6Address15` (`c6a15`)          |`[cef][device_custom_ipv6_address_15][value]`
+|`deviceCustomIPv6Address15Label` (`c6a15Label`)|`[cef][device_custom_ipv6_address_15][label]`
 |`deviceCustomNumber1` (`cn1`)                  |`[cef][device_custom_number_1][value]`
 |`deviceCustomNumber1Label` (`cn1Label`)        |`[cef][device_custom_number_1][label]`
 |`deviceCustomNumber2` (`cn2`)                  |`[cef][device_custom_number_2][value]`
 |`deviceCustomNumber2Label` (`cn2Label`)        |`[cef][device_custom_number_2][label]`
 |`deviceCustomNumber3` (`cn3`)                  |`[cef][device_custom_number_3][value]`
 |`deviceCustomNumber3Label` (`cn3Label`)        |`[cef][device_custom_number_3][label]`
+|`deviceCustomNumber4` (`cn4`)                  |`[cef][device_custom_number_4][value]`
+|`deviceCustomNumber4Label` (`cn4Label`)        |`[cef][device_custom_number_4][label]`
+|`deviceCustomNumber5` (`cn5`)                  |`[cef][device_custom_number_5][value]`
+|`deviceCustomNumber5Label` (`cn5Label`)        |`[cef][device_custom_number_5][label]`
+|`deviceCustomNumber6` (`cn6`)                  |`[cef][device_custom_number_6][value]`
+|`deviceCustomNumber6Label` (`cn6Label`)        |`[cef][device_custom_number_6][label]`
+|`deviceCustomNumber7` (`cn7`)                  |`[cef][device_custom_number_7][value]`
+|`deviceCustomNumber7Label` (`cn7Label`)        |`[cef][device_custom_number_7][label]`
+|`deviceCustomNumber8` (`cn8`)                  |`[cef][device_custom_number_8][value]`
+|`deviceCustomNumber8Label` (`cn8Label`)        |`[cef][device_custom_number_8][label]`
+|`deviceCustomNumber9` (`cn9`)                  |`[cef][device_custom_number_9][value]`
+|`deviceCustomNumber9Label` (`cn9Label`)        |`[cef][device_custom_number_9][label]`
+|`deviceCustomNumber10` (`cn10`)                |`[cef][device_custom_number_10][value]`
+|`deviceCustomNumber10Label` (`cn10Label`)      |`[cef][device_custom_number_10][label]`
+|`deviceCustomNumber11` (`cn11`)                |`[cef][device_custom_number_11][value]`
+|`deviceCustomNumber11Label` (`cn11Label`)      |`[cef][device_custom_number_11][label]`
+|`deviceCustomNumber12` (`cn12`)                |`[cef][device_custom_number_12][value]`
+|`deviceCustomNumber12Label` (`cn12Label`)      |`[cef][device_custom_number_12][label]`
+|`deviceCustomNumber13` (`cn13`)                |`[cef][device_custom_number_13][value]`
+|`deviceCustomNumber13Label` (`cn13Label`)      |`[cef][device_custom_number_13][label]`
+|`deviceCustomNumber14` (`cn14`)                |`[cef][device_custom_number_14][value]`
+|`deviceCustomNumber14Label` (`cn14Label`)      |`[cef][device_custom_number_14][label]`
+|`deviceCustomNumber15` (`cn15`)                |`[cef][device_custom_number_15][value]`
+|`deviceCustomNumber15Label` (`cn15Label`)      |`[cef][device_custom_number_15][label]`
 |`deviceCustomString1` (`cs1`)                  |`[cef][device_custom_string_1][value]`
 |`deviceCustomString1Label` (`cs1Label`)        |`[cef][device_custom_string_1][label]`
 |`deviceCustomString2` (`cs2`)                  |`[cef][device_custom_string_2][value]`
@@ -193,6 +261,24 @@ The following is a mapping between these fields.
 |`deviceCustomString5Label` (`cs5Label`)        |`[cef][device_custom_string_5][label]`
 |`deviceCustomString6` (`cs6`)                  |`[cef][device_custom_string_6][value]`
 |`deviceCustomString6Label` (`cs6Label`)        |`[cef][device_custom_string_6][label]`
+|`deviceCustomString7` (`cs7`)                  |`[cef][device_custom_string_7][value]`
+|`deviceCustomString7Label` (`cs7Label`)        |`[cef][device_custom_string_7][label]`
+|`deviceCustomString8` (`cs8`)                  |`[cef][device_custom_string_8][value]`
+|`deviceCustomString8Label` (`cs8Label`)        |`[cef][device_custom_string_8][label]`
+|`deviceCustomString9` (`cs9`)                  |`[cef][device_custom_string_9][value]`
+|`deviceCustomString9Label` (`cs9Label`)        |`[cef][device_custom_string_9][label]`
+|`deviceCustomString10` (`cs10`)                |`[cef][device_custom_string_10][value]`
+|`deviceCustomString10Label` (`cs10Label`)      |`[cef][device_custom_string_10][label]`
+|`deviceCustomString11` (`cs11`)                |`[cef][device_custom_string_11][value]`
+|`deviceCustomString11Label` (`cs11Label`)      |`[cef][device_custom_string_11][label]`
+|`deviceCustomString12` (`cs12`)                |`[cef][device_custom_string_12][value]`
+|`deviceCustomString12Label` (`cs12Label`)      |`[cef][device_custom_string_12][label]`
+|`deviceCustomString13` (`cs13`)                |`[cef][device_custom_string_13][value]`
+|`deviceCustomString13Label` (`cs13Label`)      |`[cef][device_custom_string_13][label]`
+|`deviceCustomString14` (`cs14`)                |`[cef][device_custom_string_14][value]`
+|`deviceCustomString14Label` (`cs14Label`)      |`[cef][device_custom_string_14][label]`
+|`deviceCustomString15` (`cs15`)                |`[cef][device_custom_string_15][value]`
+|`deviceCustomString15Label` (`cs15Label`)      |`[cef][device_custom_string_15][label]`
 |`deviceDirection`                              |`[network][direction]`
 .2+|`deviceDnsDomain`                           |`[observer][registered_domain]`
 
@@ -243,7 +329,7 @@ The following is a mapping between these fields.
 |`eventOutcome` (`outcome`)                     |`[event][outcome]`
 |`externalId`                                   |`[cef][external_id]`
 |`fileCreateTime`                               |`[file][created]`
-|`fileHash`                                     |`[file][hash]]`
+|`fileHash`                                     |`[file][hash]`
 |`fileId`                                       |`[file][inode]`
 |`fileModificationTime`                         |`[file][mtime]`
 
