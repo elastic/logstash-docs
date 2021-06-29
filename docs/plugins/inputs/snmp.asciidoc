@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.2.2
-:release_date: 2020-03-16
-:changelog_url: https://github.com/logstash-plugins/logstash-input-snmp/blob/v1.2.2/CHANGELOG.md
+:version: v1.2.7
+:release_date: 2020-10-05
+:changelog_url: https://github.com/logstash-plugins/logstash-input-snmp/blob/v1.2.7/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -144,6 +144,18 @@ input {
   snmp {
     get => ["1.3.6.1.2.1.1.1.0"]
     hosts => [{host => "udp:127.0.0.1/161" community => "public"}, {host => "udp:192.168.0.1/161" community => "private"}]
+  }
+}
+-----
+
+*Specifying IPv6 hosts*
+
+[source,ruby]
+-----
+input {
+  snmp {
+    get => ["1.3.6.1.2.1.1.1.0"]
+    hosts => [{host => "udp:[::1]/161" community => "public"}, {host => "udp:[2001:db8::2:1]/161" community => "private"}]
   }
 }
 -----
