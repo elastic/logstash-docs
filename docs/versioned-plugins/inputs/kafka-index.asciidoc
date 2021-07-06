@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v10.7.7-plugins-inputs-kafka,v10.7.7>> | 2021-07-06
 | <<v10.7.6-plugins-inputs-kafka,v10.7.6>> | 2021-05-31
 | <<v10.7.5-plugins-inputs-kafka,v10.7.5>> | 2021-05-26
 | <<v10.7.4-plugins-inputs-kafka,v10.7.4>> | 2021-04-14
@@ -43,6 +44,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v6.3.0-plugins-inputs-kafka,v6.3.0>> | 2017-05-11
 |=======================================================================
 
+include::kafka-v10.7.7.asciidoc[]
 include::kafka-v10.7.6.asciidoc[]
 include::kafka-v10.7.5.asciidoc[]
 include::kafka-v10.7.4.asciidoc[]
