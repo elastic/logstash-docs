@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
 :version: v2.1.2
 :release_date: 2021-06-07
-:changelog_url: https://github.com/logstash-plugins/logstash-output-elastic_app_search/blob/v1.2.0/CHANGELOG.md
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-elastic_enterprise_search/blob/v2.1.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -23,14 +23,14 @@ include::{include_path}/plugin_header-integration.asciidoc[]
 
 ==== Description
 
-This output lets you send events to the https://www.elastic.co/app-search[Elastic App Search] solution, 
-both the https://www.elastic.co/downloads/app-search[self-managed] or 
+This output lets you send events to the https://www.elastic.co/app-search[Elastic App Search] solution,
+both the https://www.elastic.co/downloads/app-search[self-managed] or
 the https://www.elastic.co/cloud/app-search-service[managed] service.
 On receiving a batch of events from the Logstash pipeline, the plugin
 converts the events into documents and uses the App Search bulk API
 to index multiple events in one request.
 
-Elastic App Search doesn't allow fields to begin with `@timestamp`.
+App Search doesn't allow fields to begin with `@timestamp`.
 By default the `@timestamp` and `@version` fields will be removed from
 each event before the event is sent to App Search. If you want to keep
 the `@timestamp` field, you can use the
@@ -40,10 +40,10 @@ to store the timestamp in a different field.
 NOTE: This gem does not support codec customization.
 
 [id="plugins-{type}s-{plugin}-options"]
-==== App Search Output Configuration Options
+==== AppSearch Output configuration options
 
 This plugin supports the following configuration options plus the
- <<plugins-{type}s-{plugin}-common-options>> described later.
+<<plugins-{type}s-{plugin}-common-options>> described later.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
@@ -65,16 +65,16 @@ output plugins.
 [id="plugins-{type}s-{plugin}-api_key"]
 ===== `api_key`
 
-  * Value type is <<password,password>>
-  * There is no default value
+* Value type is <<password,password>>
+* There is no default value
 
 The private API Key with write permissions. Visit the https://app.swiftype.com/as/credentials[Credentials] in the App Search dashboard to find the key associated with your account.
 
 [id="plugins-{type}s-{plugin}-document_id"]
 ===== `document_id`
 
-  * Value type is <<string,string>>
-  * There is no default value
+* Value type is <<string,string>>
+* There is no default value
 
 The id for app search documents. This can be an interpolated value
 like `myapp-%{sequence_id}`. Reusing ids will cause documents to be rewritten.
@@ -82,8 +82,8 @@ like `myapp-%{sequence_id}`. Reusing ids will cause documents to be rewritten.
 [id="plugins-{type}s-{plugin}-engine"]
 ===== `engine`
 
-  * Value type is <<string,string>>
-  * There is no default value
+* Value type is <<string,string>>
+* There is no default value
 
 The name of the search engine you created in App Search, an information
 repository that includes the indexed document records.
@@ -129,8 +129,8 @@ output {
 [id="plugins-{type}s-{plugin}-host"]
 ===== `host`
 
-  * Value type is <<string,string>>
-  * There is no default value
+* Value type is <<string,string>>
+* There is no default value
 
 The hostname of the App Search API that is associated with your App Search account.
 Set this when using the https://www.elastic.co/cloud/app-search-service[Elastic App Search managed service].
@@ -138,30 +138,30 @@ Set this when using the https://www.elastic.co/cloud/app-search-service[Elastic 
 [id="plugins-{type}s-{plugin}-path"]
 ===== `path`
 
-  * Value type is <<string,string>>
-  * Default value is `/api/as/v1/`
+* Value type is <<string,string>>
+* Default value is `/api/as/v1/`
 
 The path that is appended to the `url` parameter when connecting to a https://www.elastic.co/downloads/app-search[self-managed Elastic App Search].
 
 [id="plugins-{type}s-{plugin}-timestamp_destination"]
 ===== `timestamp_destination`
 
-  * Value type is <<string,string>>
-  * There is no default value
+* Value type is <<string,string>>
+* There is no default value
 
-Where to move the value from the `@timestamp` field. 
+Where to move the value from the `@timestamp` field.
 
 All Logstash events contain a `@timestamp` field.
-App Search doesn't support fields starting with `@timestamp`, and 
-by default, the `@timestamp` field will be deleted. 
+App Search doesn't support fields starting with `@timestamp`, and
+by default, the `@timestamp` field will be deleted.
 
 To keep the timestamp field, set this value to the name of the field where you want `@timestamp` copied.
 
 [id="plugins-{type}s-{plugin}-url"]
 ===== `url`
 
-  * Value type is <<string,string>>
-  * There is no default value
+* Value type is <<string,string>>
+* There is no default value
 
 The value of the API endpoint in the form of a URL. Note: The value of the of the `path` setting will be will be appended to this URL.
 Set this when using the https://www.elastic.co/downloads/app-search[self-managed Elastic App Search].

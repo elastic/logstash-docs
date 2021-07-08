@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.7
-:release_date: 2018-09-13
-:changelog_url: https://github.com/logstash-plugins/logstash-input-heartbeat/blob/v3.0.7/CHANGELOG.md
+:version: v3.1.0
+:release_date: 2021-07-01
+:changelog_url: https://github.com/logstash-plugins/logstash-input-heartbeat/blob/v3.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -27,6 +27,26 @@ Generate heartbeat messages.
 The general intention of this is to test the performance and
 availability of Logstash.
 
+[id="plugins-{type}s-{plugin}-ecs"]
+==== Elastic Common Schema (ECS)
+
+This plugin could provide a field, originally named `clock`, to track `epoch` or `sequence` incremental numbers. When
+<<plugins-{type}s-{plugin}-ecs_compatibility,ECS compatibility mode>> is enabled that value is now present in the
+event's `[event][sequence]` subfield.
+
+When <<plugins-{type}s-{plugin}-ecs_compatibility,ECS compatibility mode>> is enabled the use of `message` as
+selector of sequence type is not available and only <<plugins-{type}s-{plugin}-sequence>> is considered. In this
+case if `message` contains sequence selector strings it's ignored.
+
+The existing `host` field is moved to `[host][name]` when ECS is enabled.
+
+[cols="<l,<l,e,<e"]
+|============================================================================================================
+|`disabled`    |`v1`              |Availability                       |Description
+
+|[host]        |[host][name]      |Always                             |Name or address of the host is running the plugin
+|[clock]       |[event][sequence] |When `sequence` setting enables it |Increment counter based on seconds or from local 0 based counter
+|============================================================================================================
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Heartbeat Input Configuration Options
@@ -37,8 +57,10 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |=======================================================================
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-count>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-ecs_compatibility>> | <<string,string>>|No
 | <<plugins-{type}s-{plugin}-interval>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-message>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-sequence>> |<<string,string>> one of `["none", "epoch", "sequence"]`|No
 | <<plugins-{type}s-{plugin}-threads>> |<<number,number>>|No
 |=======================================================================
 
@@ -55,6 +77,20 @@ input plugins.
 
 How many times to iterate.
 This is typically used only for testing purposes.
+
+[id="plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+* Value type is <<string,string>>
+* Supported values are:
+** `disabled`: `clock` counter field added at root level
+** `v1`: ECS compliant `[event][sequence]` counter field added to the event
+* Default value depends on which version of Logstash is running:
+** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
+** Otherwise, the default value is `disabled`.
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)]. 
+Refer to <<plugins-{type}s-{plugin}-ecs>> in this topic for detailed information.
 
 [id="plugins-{type}s-{plugin}-interval"]
 ===== `interval` 
@@ -74,16 +110,48 @@ The default, `60`, means send a message every 60 seconds.
 
 The message string to use in the event.
 
-If you set this to `epoch` then this plugin will use the current
+If you set this value to `epoch`, then this plugin will use the current
 timestamp in unix timestamp (which is by definition, UTC).  It will
 output this value into a field called `clock`
 
-If you set this to `sequence` then this plugin will send a sequence of
+If you set this value to `sequence`, then this plugin will send a sequence of
 numbers beginning at 0 and incrementing each interval.  It will
 output this value into a field called `clock`
 
 Otherwise, this value will be used verbatim as the event message. It
 will output this value into a field called `message`
+
+NOTE: Usage of `epoch`  and `sequence` in `message` setting is deprecated.
+Consider using <<plugins-{type}s-{plugin}-sequence>> settings, which takes precedence
+over the usage of `message` setting as selector.
+
+NOTE: If <<plugins-{type}s-{plugin}-ecs_compatibility,ECS compatibility mode>> is enabled
+and `message` contains `epoch` or `sequence`, it is ignored and is not present as a field in
+the generated event.
+
+
+[id="plugins-{type}s-{plugin}-sequence"]
+===== `sequence`
+
+* Value can be any of: `none`, `epoch`, `sequence`
+* Default value is `"none""`
+
+If you set this value to `none`, then no sequence field is added.
+
+If you set this value to `epoch`, then this plugin will use the current
+timestamp in unix timestamp (which is by definition, UTC).  It will
+output this value into a field called `clock` if <<plugins-{type}s-{plugin}-ecs_compatibility,ECS compatibility mode>>
+is disabled. Otherwise, the field name is `[event][sequence]`.
+
+If you set this value to `sequence`, then this plugin will send a sequence of
+numbers beginning at 0 and incrementing each interval.  It will
+output this value into a field called `clock` if <<plugins-{type}s-{plugin}-ecs_compatibility,ECS compatibility mode>>
+is disabled. Otherwise, the field name is `[event][sequence]`
+
+If `sequence` is defined, it takes precedence over `message` configuration.
+If `message` doesn't have `epoch` or `sequence` values, it will be present in the generated event together with `clock`
+field.
+
 
 [id="plugins-{type}s-{plugin}-threads"]
 ===== `threads` 

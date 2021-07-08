@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v6.1.1
-:release_date: 2021-06-18
-:changelog_url: https://github.com/logstash-plugins/logstash-input-tcp/blob/v6.1.1/CHANGELOG.md
+:version: v6.2.0
+:release_date: 2021-06-28
+:changelog_url: https://github.com/logstash-plugins/logstash-input-tcp/blob/v6.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -71,6 +71,52 @@ event timestamp
       }
     }
 
+[id="plugins-{type}s-{plugin}-ecs_metadata"]
+==== Event Metadata and the Elastic Common Schema (ECS)
+
+In addition to decoding the events, this input will add metadata about the TCP connection itself to each event.
+This can be helpful when applications are configured to send events directly to this input's TCP listener without including information about themselves.
+
+Historically, this metadata was added to a variety of non-standard top-level fields, which had the potential to create confusion and schema conflicts downstream.
+With ECS compatibility mode, we can ensure a pipeline still has access to this metadata throughout the event's lifecycle without polluting the top-level namespace.
+
+[cols="3,7,5"]
+|=======================================================================
+| Metadata Group                                     | ecs: `v1`, `v8`                       | ecs: `disabled`
+
+.3+|Source Metadata from the TCP connection
+on which events are being received, including
+the sender's name, ip, and outbound port.       l|[@metadata][input][tcp][source][name] l|[host]
+l|[@metadata][input][tcp][source][ip]   l|[@metadata][ip_address]
+l|[@metadata][input][tcp][source][port] l|[port]
+
+.2+|Proxy Metadata from a proxied TCP connection.
+Available when receiving events by proxy and
+`proxy_protocol => true`                        l|[@metadata][input][tcp][proxy][ip]    l|[proxy_host]
+l|[@metadata][input][tcp][proxy][port]  l|[proxy_port]
+
+.1+|SSL Subject Metadata from a secured TCP
+connection. Available when `ssl_enable => true`
+AND `ssl_verify => true`                        l|[@metadata][input][tcp][ssl][subject] l|[sslsubject]
+|=======================================================================
+
+For example, the Elastic Common Schema reserves the https://www.elastic.co/guide/en/ecs/current/ecs-host.html[top-level `host` field] for information about the host on which the event happened.
+If an event is missing this metadata, it can be copied into place from the source TCP connection metadata that has been added to the event:
+
+[source,txt]
+-----
+filter {
+  if [@metadata][input][tcp][source] and not [host] {
+    mutate {
+      copy {
+        "[@metadata][input][tcp][source][name]" => "[host][name]"
+        "[@metadata][input][tcp][source][ip]"   => "[host][ip]"
+      }
+    }
+  }
+}
+-----
+
 [id="plugins-{type}s-{plugin}-options"]
 ==== Tcp Input Configuration Options
 
@@ -80,6 +126,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |=======================================================================
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-dns_reverse_lookup_enabled>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-ecs_compatibility>> | <<string,string>>|No
 | <<plugins-{type}s-{plugin}-host>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-mode>> |<<string,string>>, one of `["server", "client"]`|No
 | <<plugins-{type}s-{plugin}-port>> |<<number,number>>|Yes
@@ -108,6 +155,20 @@ input plugins.
 It is possible to avoid DNS reverse-lookups by disabling this setting. If disabled,
 the address metadata that is added to events will contain the source address as-specified
 at the TCP layer and IPs will not be resolved to hostnames.
+
+[id="plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+* Value type is <<string,string>>
+* Supported values are:
+** `disabled`: unstructured connection metadata added at root level
+** `v1`,`v8`: structured connection metadata added under `[@metadata][input][tcp]`
+* Default value depends on which version of Logstash is running:
+** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
+** Otherwise, the default value is `disabled`.
+
+Controls this plugin's compatibility with the https://www.elastic.co/guide/en/ecs/current/index.html[Elastic Common Schema (ECS)].
+The value of this setting affects the <<plugins-{type}s-{plugin}-ecs_metadata,placement of a TCP connection's metadata>> on events.
 
 [id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
