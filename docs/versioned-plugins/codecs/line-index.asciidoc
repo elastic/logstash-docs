@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v3.1.0-plugins-codecs-line,v3.1.0>> | 2021-07-08
 | <<v3.0.8-plugins-codecs-line,v3.0.8>> | 2017-12-19
 | <<v3.0.7-plugins-codecs-line,v3.0.7>> | 2017-12-15
 | <<v3.0.6-plugins-codecs-line,v3.0.6>> | 2017-12-12
@@ -13,6 +14,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.0.3-plugins-codecs-line,v3.0.3>> | 2017-06-23
 |=======================================================================
 
+include::line-v3.1.0.asciidoc[]
 include::line-v3.0.8.asciidoc[]
 include::line-v3.0.7.asciidoc[]
 include::line-v3.0.6.asciidoc[]
