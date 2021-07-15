@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.0
-:release_date: 2021-07-08
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-line/blob/v3.1.0/CHANGELOG.md
+:version: v3.1.1
+:release_date: 2021-07-15
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-line/blob/v3.1.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -21,14 +21,20 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-Line-oriented text data.
+Reads line-oriented text data.
 
-Decoding behavior: Only whole line events will be emitted.
+Decoding behavior:: Only whole line events are emitted.
 
-Encoding behavior: Each event will be emitted with a trailing newline.
+Encoding behavior:: Each event is emitted with a trailing newline.
+
+[id="plugins-{type}s-{plugin}-ecs"]
+==== Compatibility with the Elastic Common Schema (ECS)
+
+This plugin is compatible with the {ecs-ref}[Elastic Common Schema (ECS)]. 
+No additional configuration is required. 
 
 [id="plugins-{type}s-{plugin}-options"]
-==== Line Codec Configuration Options
+==== Line codec configuration options
 
 [cols="<,<,<",options="header",]
 |=======================================================================
