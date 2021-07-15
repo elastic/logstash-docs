@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.0
-:release_date: 2019-12-17
-:changelog_url: https://github.com/logstash-plugins/logstash-output-udp/blob/v3.1.0/CHANGELOG.md
+:version: v3.2.0
+:release_date: 2021-07-14
+:changelog_url: https://github.com/logstash-plugins/logstash-output-udp/blob/v3.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -42,7 +42,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |=======================================================================
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-host>> |<<string,string>>|Yes
-| <<plugins-{type}s-{plugin}-port>> |<<number,number>>|Yes
+| <<plugins-{type}s-{plugin}-port>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-retry_count>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-retry_backoff_ms>> |<<number,number>>|No
 |=======================================================================
@@ -65,10 +65,10 @@ The address to send messages to
 ===== `port` 
 
   * This is a required setting.
-  * Value type is <<number,number>>
+  * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The port to send messages on
+The port to send messages on. This can be dynamic using the `%{[target][port]}` syntax.
 
 [id="plugins-{type}s-{plugin}-retry_count"]
 ===== `retry_count`
