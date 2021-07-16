@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.4.1
-:release_date: 2020-08-03
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-kv/blob/v4.4.1/CHANGELOG.md
+:version: v4.5.0
+:release_date: 2021-07-14
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-kv/blob/v4.5.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -45,6 +45,13 @@ in case your data is not structured using `=` signs and whitespace.
 For example, this filter can also be used to parse query parameters like
 `foo=bar&baz=fizz` by setting the `field_split` parameter to `&`.
 
+[id="plugins-{type}s-{plugin}-ecs_metadata"]
+==== Event Metadata and the Elastic Common Schema (ECS)
+
+The plugin behaves the same regardless of ECS compatibility, except giving a warning when ECS is enabled and `target` isn't set.
+
+TIP: Set the `target` option to avoid potential schema conflicts.
+
 [id="plugins-{type}s-{plugin}-options"]
 ==== Kv Filter Configuration Options
 
@@ -55,6 +62,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-allow_duplicate_values>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-default_keys>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-ecs_compatibility>> | <<string,string>>|No
 | <<plugins-{type}s-{plugin}-exclude_keys>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-field_split>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-field_split_pattern>> |<<string,string>>|No
@@ -117,6 +125,17 @@ in case these keys do not exist in the source field being parsed.
                          "to", "default@dev.null" ]
       }
     }
+
+[id="plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+  * Value type is <<string,string>>
+  * Supported values are:
+    ** `disabled`: does not use ECS-compatible field names
+    ** `v1`: Elastic Common Schema compliant behavior (warns when `target` isn't set)
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
+See <<plugins-{type}s-{plugin}-ecs_metadata>> for detailed information.
 
 [id="plugins-{type}s-{plugin}-exclude_keys"]
 ===== `exclude_keys` 
