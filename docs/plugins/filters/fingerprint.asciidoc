@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.3.0
-:release_date: 2021-06-08
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-fingerprint/blob/v3.3.0/CHANGELOG.md
+:version: v3.3.2
+:release_date: 2021-07-13
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-fingerprint/blob/v3.3.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -24,7 +24,7 @@ include::{include_path}/plugin_header.asciidoc[]
 Create consistent hashes (fingerprints) of one or more fields and store
 the result in a new field.
 
-You can use this plugin to create consistent document ids when  events are
+You can use this plugin to create consistent document ids when events are
 inserted into Elasticsearch. This approach means that existing documents can be
 updated instead of creating new documents.
 
@@ -180,10 +180,9 @@ With other methods, optionally fill in the HMAC key.
 
 The fingerprint method to use.
 
-If set to `SHA1`, `SHA256`, `SHA384`, `SHA512`, or `MD5` and a key is set,
-the cryptographic hash function with the same name will be used to generate
-the fingerprint. When a key set, the keyed-hash (HMAC) digest function will
-be used.
+If set to `SHA1`, `SHA256`, `SHA384`, `SHA512`, or `MD5` and a key is set, the
+corresponding cryptographic hash function and the keyed-hash (HMAC) digest function
+are used to generate the fingerprint.
 
 If set to `MURMUR3` the non-cryptographic 64 bit MurmurHash function will be used.
 
