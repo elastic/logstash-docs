@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.1.4
-:release_date: 2021-07-09
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-jdbc/blob/v5.1.4/CHANGELOG.md
+:version: v5.1.2
+:release_date: 2021-06-28
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-jdbc/blob/v5.1.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -265,17 +265,8 @@ order is in place.
 ===============================
 
 
-[id="plugins-{type}s-{plugin}-ecs"]
-==== Compatibility with the Elastic Common Schema (ECS)
-
-This plugin is compatible with the {ecs-ref}[Elastic Common Schema (ECS)]. 
-It behaves the same regardless of ECS compatibility, except giving a warning when ECS is enabled and `target` isn't set.
-
-TIP: Set the `target` option to avoid potential schema conflicts.
-
-
 [id="plugins-{type}s-{plugin}-options"]
-==== Jdbc_static filter configuration options
+==== Jdbc_static Filter Configuration Options
 
 This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 

@@ -7,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.1.4
-:release_date: 2021-07-09
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-jdbc/blob/v5.1.4/CHANGELOG.md
+:version: v5.1.2
+:release_date: 2021-06-28
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-jdbc/blob/v5.1.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
