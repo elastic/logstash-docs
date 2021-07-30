@@ -38,11 +38,13 @@ The following example shows how to configure Logstash to listen on port
 ifeval::["{plugin}"=="beats"]
 ["source","sh",subs="attributes"]
 -----
+
 input {
   {plugin} {
     port => 5044
   }
 }
+
 output {
   elasticsearch {
     hosts => ["http://localhost:9200"]
@@ -67,11 +69,13 @@ endif::[]
 ifeval::["{plugin}"!="beats"]
 ["source","sh",subs="attributes"]
 -----
+
 input {
   {plugin} {
     port => 5044
   }
 }
+
 output {
   elasticsearch {
     hosts => ["http://localhost:9200"]
@@ -96,6 +100,15 @@ Filebeat] to handle multiline events before sending the event data to Logstash.
 You cannot use the {logstash-ref}/plugins-codecs-multiline.html[Multiline codec
 plugin] to handle multiline events. Doing so will result in the failure to start
 Logstash.
+endif::[]
+
+//Content for Elastic Agent
+ifeval::["{plugin}"!="beats"]
+[id="plugins-{type}s-{plugin}-limitations"]
+===== Elastic Agent and Fleet limitations
+
+Early releases of Elastic Agent and Fleet have some limitations, including support for advanced Beats settings like multiline, processors, and so forth. 
+For more information, see {fleet-guide}/fleet-limitations.html[Limitations of this release]. 
 endif::[]
 
 //Content for Beats
