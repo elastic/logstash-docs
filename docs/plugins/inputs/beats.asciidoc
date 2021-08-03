@@ -38,11 +38,13 @@ The following example shows how to configure Logstash to listen on port
 ifeval::["{plugin}"=="beats"]
 ["source","sh",subs="attributes"]
 -----
+
 input {
   {plugin} {
     port => 5044
   }
 }
+
 output {
   elasticsearch {
     hosts => ["http://localhost:9200"]
@@ -67,11 +69,13 @@ endif::[]
 ifeval::["{plugin}"!="beats"]
 ["source","sh",subs="attributes"]
 -----
+
 input {
   {plugin} {
     port => 5044
   }
 }
+
 output {
   elasticsearch {
     hosts => ["http://localhost:9200"]
