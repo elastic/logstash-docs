@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.6
-:release_date: 2017-11-07
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-edn/blob/v3.0.6/CHANGELOG.md
+:version: v3.1.0
+:release_date: 2021-08-04
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-edn/blob/v3.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -22,5 +22,37 @@ include::{include_path}/plugin_header.asciidoc[]
 ==== Description
 
 Reads and produces EDN format data.
+
+[id="plugins-{type}s-{plugin}-options"]
+==== Edn Codec configuration options
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-target>> |<<string,string>>|No
+|=======================================================================
+
+&nbsp;
+
+[id="plugins-{type}s-{plugin}-target"]
+===== `target`
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+  * The option is only relevant while decoding.
+
+Define the target field for placing the decoded fields.
+If this setting is not set, data will be stored at the root (top level) of the event.
+
+For example, if you want data to be put under the `document` field:
+[source,ruby]
+    input {
+      tcp {
+        port => 4242
+        codec => edn {
+          target => "[document]"
+        }
+      }
+    }
 
 
