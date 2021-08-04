@@ -1,0 +1,66 @@
+:plugin: stdin
+:type: input
+:default_codec: line
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.4.0
+:release_date: 2021-08-04
+:changelog_url: https://github.com/logstash-plugins/logstash-input-stdin/blob/v3.4.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Stdin input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Read events from standard input.
+
+By default, each event is assumed to be one line. If you
+want to join lines, you'll want to use the multiline codec.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Stdin Input Configuration Options
+
+This plugin supports the following configuration options.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>> | {logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* Supported values are:
+** `disabled`: does not use ECS-compatible field names (using `host` field to store host name)
+** `v1`,`v8`: uses fields that are compatible with Elastic Common Schema (using `[host][hostname]`)
+* Default value depends on which version of Logstash is running:
+** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
+** Otherwise, the default value is `disabled`.
+
+Controls this plugin's compatibility with the
+{ecs-ref}[Elastic Common Schema (ECS)].
+
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:

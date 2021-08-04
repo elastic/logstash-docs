@@ -1,0 +1,57 @@
+:plugin: edn_lines
+:type: codec
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.1.0
+:release_date: 2021-08-04
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-edn_lines/blob/v3.1.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Edn_lines codec plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Reads and produces newline-delimited EDN format data.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Edn_lines Codec configuration options
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-target>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-target"]
+===== `target`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+  * The option is only relevant while decoding.
+
+Define the target field for placing the decoded fields.
+If this setting is not set, data will be stored at the root (top level) of the event.
+
+For example, if you want data to be put under the `document` field:
+[source,ruby]
+    input {
+      tcp {
+        port => 4242
+        codec => edn_lines {
+          target => "[document]"
+        }
+      }
+    }
+
+
