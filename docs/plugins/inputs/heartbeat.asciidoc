@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.0
-:release_date: 2021-07-01
-:changelog_url: https://github.com/logstash-plugins/logstash-input-heartbeat/blob/v3.1.0/CHANGELOG.md
+:version: v3.1.1
+:release_date: 2021-08-04
+:changelog_url: https://github.com/logstash-plugins/logstash-input-heartbeat/blob/v3.1.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -42,7 +42,7 @@ The existing `host` field is moved to `[host][name]` when ECS is enabled.
 
 [cols="<l,<l,e,<e"]
 |============================================================================================================
-|`disabled`    |`v1`              |Availability                       |Description
+|`disabled`    |`v1`, `v8`        |Availability                       |Description
 
 |[host]        |[host][name]      |Always                             |Name or address of the host is running the plugin
 |[clock]       |[event][sequence] |When `sequence` setting enables it |Increment counter based on seconds or from local 0 based counter
@@ -84,7 +84,7 @@ This is typically used only for testing purposes.
 * Value type is <<string,string>>
 * Supported values are:
 ** `disabled`: `clock` counter field added at root level
-** `v1`: ECS compliant `[event][sequence]` counter field added to the event
+** `v1`,`v8`: ECS compliant `[event][sequence]` counter field added to the event
 * Default value depends on which version of Logstash is running:
 ** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
 ** Otherwise, the default value is `disabled`.
