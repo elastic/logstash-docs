@@ -1,0 +1,521 @@
+:plugin: http_poller
+:type: input
+:default_codec: json
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v5.1.0
+:release_date: 2021-08-19
+:changelog_url: https://github.com/logstash-plugins/logstash-input-http_poller/blob/v5.1.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Http_poller input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This Logstash input plugin allows you to call an HTTP API, decode the output of it into event(s), and
+send them on their merry way. The idea behind this plugins came from a need to read springboot
+metrics endpoint, instead of configuring jmx to monitor my java application memory/gc/ etc.
+
+==== Example
+Reads from a list of urls and decodes the body of the response with a codec.
+The config should look like this:
+
+[source,ruby]
+----------------------------------
+input {
+  http_poller {
+    urls => {
+      test1 => "http://localhost:9200"
+      test2 => {
+        # Supports all options supported by ruby's Manticore HTTP client
+        method => get
+        user => "AzureDiamond"
+        password => "hunter2"
+        url => "http://localhost:9200/_cluster/health"
+        headers => {
+          Accept => "application/json"
+        }
+     }
+    }
+    request_timeout => 60
+    # Supports "cron", "every", "at" and "in" schedules by rufus scheduler
+    schedule => { cron => "* * * * * UTC"}
+    codec => "json"
+    # A hash of request metadata info (timing, response headers, etc.) will be sent here
+    metadata_target => "http_poller_metadata"
+  }
+}
+
+output {
+  stdout {
+    codec => rubydebug
+  }
+}
+----------------------------------
+
+Using the HTTP poller with custom a custom CA or self signed cert.
+
+If you have a self signed cert you will need to convert your server's certificate to a valid# `.jks` or `.p12` file. An easy way to do it is to run the following one-liner, substituting your server's URL for the placeholder `MYURL` and `MYPORT`.
+
+[source,ruby]
+----------------------------------
+openssl s_client -showcerts -connect MYURL:MYPORT </dev/null 2>/dev/null|openssl x509 -outform PEM > downloaded_cert.pem; keytool -import -alias test -file downloaded_cert.pem -keystore downloaded_truststore.jks
+----------------------------------
+
+The above snippet will create two files `downloaded_cert.pem` and `downloaded_truststore.jks`. You will be prompted to set a password for the `jks` file during this process. To configure logstash use a config like the one that follows.
+
+
+[source,ruby]
+----------------------------------
+ http_poller {
+   urls => {
+     myurl => "https://myhostname:1234"
+   }
+   truststore => "/path/to/downloaded_truststore.jks"
+   truststore_password => "mypassword"
+   schedule => { cron => "* * * * * UTC"}
+ }
+----------------------------------
+
+
+[id="{version}-plugins-{type}s-{plugin}-ecs_metadata"]
+==== Event Metadata and the Elastic Common Schema (ECS)
+
+This input will add metadata about the HTTP connection itself to each event.
+
+When ECS compatibility is disabled, metadata was added to a variety of non-standard top-level fields, which has the potential to create confusion and schema conflicts downstream.
+
+With ECS Compatibility Mode, we can ensure a pipeline maintains access to this metadata throughout the event's lifecycle without polluting the top-level namespace.
+
+Here’s how ECS compatibility mode affects output.
+[cols="<l,<l,e,<e"]
+|=======================================================================
+| ECS disabled | ECS v1 | Availability | Description
+
+| [@metadata][host] | [@metadata][input][http_poller][request][host][hostname] | Always | Hostname
+| [@metadata][code] | [@metadata][input][http_poller][response][status_code] | When server responds a valid status code | HTTP response code
+| [@metadata][response_headers] | [@metadata][input][http_poller][response][headers] | When server responds with headers | HTTP headers of the response
+| [@metadata][response_message] | [@metadata][input][http_poller][response][status_message] | When server responds with status line | message of status line of HTTP headers
+| [@metadata][runtime_seconds] | [@metadata][input][http_poller][response][elapsed_time_ns] | When server responds a valid status code | elapsed time of calling endpoint. ECS v1 shows in nanoseconds.
+| [http_request_failure][runtime_seconds] | [event][duration] | When server throws exception | elapsed time of calling endpoint. ECS v1 shows in nanoseconds.
+| [@metadata][times_retried] | [@metadata][input][http_poller][request][retry_count] | When the poller calls server successfully | retry count from http client library
+| [@metadata][name] / [http_request_failure][name] | [@metadata][input][http_poller][request][name] | Always | The key of `urls` from poller config
+| [@metadata][request] / [http_request_failure][request]| [@metadata][input][http_poller][request][original] | Always | The whole object of `urls` from poller config
+| [http_request_failure][error] | [error][message] | When server throws exception | Error message
+| [http_request_failure][backtrace] | [error][stack_trace] | When server throws exception | Stack trace of error
+| -- | [url][full] | When server throws exception | The URL of the endpoint
+| -- | [http][request][method] | When server throws exception | HTTP request method
+| -- | [host][hostname] | When server throws exception | Hostname
+|=======================================================================
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Http_poller Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-automatic_retries>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-cacert>> |a valid filesystem path|No
+| <<{version}-plugins-{type}s-{plugin}-client_cert>> |a valid filesystem path|No
+| <<{version}-plugins-{type}s-{plugin}-client_key>> |a valid filesystem path|No
+| <<{version}-plugins-{type}s-{plugin}-connect_timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-cookies>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>> | {logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-follow_redirects>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-keepalive>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-keystore>> |a valid filesystem path|No
+| <<{version}-plugins-{type}s-{plugin}-keystore_password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-keystore_type>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-metadata_target>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-pool_max>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-pool_max_per_route>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-proxy>> |<<,>>|No
+| <<{version}-plugins-{type}s-{plugin}-request_timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-retry_non_idempotent>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-schedule>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|Yes
+| <<{version}-plugins-{type}s-{plugin}-socket_timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-target>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-truststore>> |a valid filesystem path|No
+| <<{version}-plugins-{type}s-{plugin}-truststore_password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-truststore_type>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-urls>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|Yes
+| <<{version}-plugins-{type}s-{plugin}-user>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-validate_after_inactivity>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-automatic_retries"]
+===== `automatic_retries`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `1`
+
+How many times should the client retry a failing URL. We highly recommend NOT setting this value
+to zero if keepalive is enabled. Some servers incorrectly end keepalives early requiring a retry!
+Note: if `retry_non_idempotent` is set only GET, HEAD, PUT, DELETE, OPTIONS, and TRACE requests will be retried.
+
+[id="{version}-plugins-{type}s-{plugin}-cacert"]
+===== `cacert`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+If you need to use a custom X.509 CA (.pem certs) specify the path to that here
+
+[id="{version}-plugins-{type}s-{plugin}-client_cert"]
+===== `client_cert`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+If you'd like to use a client certificate (note, most people don't want this) set the path to the x509 cert here
+
+[id="{version}-plugins-{type}s-{plugin}-client_key"]
+===== `client_key`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+If you're using a client certificate specify the path to the encryption key here
+
+[id="{version}-plugins-{type}s-{plugin}-connect_timeout"]
+===== `connect_timeout`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `10`
+
+Timeout (in seconds) to wait for a connection to be established. Default is `10s`
+
+[id="{version}-plugins-{type}s-{plugin}-cookies"]
+===== `cookies`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Enable cookie support. With this enabled the client will persist cookies
+across requests as a normal web browser would. Enabled by default
+
+[id="{version}-plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* Supported values are:
+** `disabled`: unstructured data added at root level
+** `v1`: uses `error`, `url` and `http` fields that are compatible with Elastic Common Schema
+
+Controls this plugin's compatibility with the
+{ecs-ref}[Elastic Common Schema (ECS)].
+See <<{version}-plugins-{type}s-{plugin}-ecs_metadata>> for detailed information.
+
+Example output:
+
+**Sample output: ECS disabled**
+[source,text]
+-----
+{
+    "http_poller_data" => {
+        "@version" => "1",
+        "@timestamp" => 2021-01-01T00:43:22.388Z,
+        "status" => "UP"
+    },
+    "@version" => "1",
+    "@timestamp" => 2021-01-01T00:43:22.389Z,
+}
+-----
+
+**Sample output: ECS enabled**
+[source,text]
+-----
+{
+    "http_poller_data" => {
+        "status" => "UP",
+        "@version" => "1",
+        "event" => {
+            "original" => "{\"status\":\"UP\"}"
+        },
+        "@timestamp" => 2021-01-01T00:40:59.558Z
+    },
+    "@version" => "1",
+    "@timestamp" => 2021-01-01T00:40:59.559Z
+}
+-----
+
+**Sample error output: ECS enabled**
+[source,text]
+----
+{
+    "@timestamp" => 2021-07-09T09:53:48.721Z,
+    "@version" => "1",
+    "host" => {
+        "hostname" => "MacBook-Pro"
+    },
+    "http" => {
+        "request" => {
+            "method" => "get"
+        }
+    },
+    "event" => {
+        "duration" => 259019
+    },
+    "error" => {
+        "stack_trace" => nil,
+        "message" => "Connection refused (Connection refused)"
+    },
+    "url" => {
+        "full" => "http://localhost:8080/actuator/health"
+    },
+    "tags" => [
+        [0] "_http_request_failure"
+    ]
+}
+----
+
+[id="{version}-plugins-{type}s-{plugin}-follow_redirects"]
+===== `follow_redirects`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Should redirects be followed? Defaults to `true`
+
+[id="{version}-plugins-{type}s-{plugin}-keepalive"]
+===== `keepalive`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Turn this on to enable HTTP keepalive support. We highly recommend setting `automatic_retries` to at least
+one with this to fix interactions with broken keepalive implementations.
+
+[id="{version}-plugins-{type}s-{plugin}-keystore"]
+===== `keystore`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+If you need to use a custom keystore (`.jks`) specify that here. This does not work with .pem keys!
+
+[id="{version}-plugins-{type}s-{plugin}-keystore_password"]
+===== `keystore_password`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Specify the keystore password here.
+Note, most .jks files created with keytool require a password!
+
+[id="{version}-plugins-{type}s-{plugin}-keystore_type"]
+===== `keystore_type`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"JKS"`
+
+Specify the keystore type here. One of `JKS` or `PKCS12`. Default is `JKS`
+
+[id="{version}-plugins-{type}s-{plugin}-metadata_target"]
+===== `metadata_target`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"@metadata"`
+
+If you'd like to work with the request/response metadata.
+Set this value to the name of the field you'd like to store a nested
+hash of metadata.
+
+[id="{version}-plugins-{type}s-{plugin}-password"]
+===== `password`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Password to be used in conjunction with <<{version}-plugins-{type}s-{plugin}-user>> for HTTP authentication.
+
+[id="{version}-plugins-{type}s-{plugin}-pool_max"]
+===== `pool_max`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `50`
+
+Max number of concurrent connections. Defaults to `50`
+
+[id="{version}-plugins-{type}s-{plugin}-pool_max_per_route"]
+===== `pool_max_per_route`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `25`
+
+Max number of concurrent connections to a single host. Defaults to `25`
+
+[id="{version}-plugins-{type}s-{plugin}-proxy"]
+===== `proxy`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+If you'd like to use an HTTP proxy . This supports multiple configuration syntaxes:
+
+1. Proxy host in form: `http://proxy.org:1234`
+2. Proxy host in form: `{host => "proxy.org", port => 80, scheme => 'http', user => 'username@host', password => 'password'}`
+3. Proxy host in form: `{url =>  'http://proxy.org:1234', user => 'username@host', password => 'password'}`
+
+[id="{version}-plugins-{type}s-{plugin}-request_timeout"]
+===== `request_timeout`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `60`
+
+Timeout (in seconds) for the entire request.
+
+[id="{version}-plugins-{type}s-{plugin}-retry_non_idempotent"]
+===== `retry_non_idempotent`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+If `automatic_retries` is enabled this will cause non-idempotent HTTP verbs (such as POST) to be retried.
+
+[id="{version}-plugins-{type}s-{plugin}-schedule"]
+===== `schedule`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * There is no default value for this setting.
+
+Schedule of when to periodically poll from the urls
+Format: A hash with
+  + key: "cron" | "every" | "in" | "at"
+  + value: string
+Examples:
+  a) { "every" => "1h" }
+  b) { "cron" => "* * * * * UTC" }
+See: rufus/scheduler for details about different schedule options and value string format
+
+[id="{version}-plugins-{type}s-{plugin}-socket_timeout"]
+===== `socket_timeout`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `10`
+
+Timeout (in seconds) to wait for data on the socket. Default is `10s`
+
+[id="{version}-plugins-{type}s-{plugin}-target"]
+===== `target`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Define the target field for placing the received data. If this setting is omitted, the data will be stored at the root (top level) of the event.
+
+TIP: When ECS is enabled, set `target` in the codec (if the codec has a `target` option).
+Example: `codec => json { target => "TARGET_FIELD_NAME" }`
+
+
+[id="{version}-plugins-{type}s-{plugin}-truststore"]
+===== `truststore`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+If you need to use a custom truststore (`.jks`) specify that here. This does not work with .pem certs!
+
+[id="{version}-plugins-{type}s-{plugin}-truststore_password"]
+===== `truststore_password`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Specify the truststore password here.
+Note, most .jks files created with keytool require a password!
+
+[id="{version}-plugins-{type}s-{plugin}-truststore_type"]
+===== `truststore_type`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"JKS"`
+
+Specify the truststore type here. One of `JKS` or `PKCS12`. Default is `JKS`
+
+[id="{version}-plugins-{type}s-{plugin}-urls"]
+===== `urls`
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * There is no default value for this setting.
+
+A Hash of urls in this format : `"name" => "url"`.
+The name and the url will be passed in the outputted event.
+
+The values in urls can be either:
+
+* a string url (which will be issued as an HTTP GET).
+* a sub-hash containing many useful keys provided by the Manticore backend:
+** url: the String url
+** method: (optional) the HTTP method to use (defaults to GET)
+** user: (optional) the HTTP Basic Auth user. The user must be under
+   an auth sub-hash for Manticore, but this plugin also accepts it either way.
+** password: (optional) the HTTP Basic Auth password. The password
+   must be under an auth sub-hash for Manticore, but this plugin accepts it either way.
+** headers: a hash containing key-value pairs of headers.
+** body: a string (supported only on POST and PUT requests)
+** possibly other options mentioned in the
+   https://www.rubydoc.info/github/cheald/manticore/Manticore/Client#http-instance_method[Manticore docs].
+   Note that Manticore options that are not explicitly documented above are not
+   thoroughly tested and therefore liable to break in unexpected ways if we
+   replace the backend.
+
+*Notes:*
+
+* Passwords specified as a part of `urls` are prone to exposure in plugin log output.
+The plugin does not declare them as passwords, and therefore doesn't wrap them in
+leak-reducing wrappers as we do elsewhere.
+* We don't guarantee that boolean-type options like Manticore's `follow_redirects` are supported
+correctly. The strings `true` or `false` may get passed through, and in ruby any
+string is "truthy."
+* Our implementation of this plugin precludes the ability to specify auth[:eager]
+as anything other than true
+
+[id="{version}-plugins-{type}s-{plugin}-user"]
+===== `user`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Username to use with HTTP authentication for ALL requests. Note that you can also set this per-URL.
+If you set this you must also set the <<{version}-plugins-{type}s-{plugin}-password>> option.
+
+[id="{version}-plugins-{type}s-{plugin}-validate_after_inactivity"]
+===== `validate_after_inactivity`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `200`
+
+How long to wait before checking for a stale connection to determine if a keepalive request is needed.
+Consider setting this value lower than the default, possibly to 0, if you get connection errors regularly.
+
+This client is based on Apache Commons' HTTP implementation. Here's how the
+https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/org/apache/http/impl/conn/PoolingHttpClientConnectionManager.html#setValidateAfterInactivity(int)[Apache
+Commons documentation] describes this option: "Defines period of inactivity in
+milliseconds after which persistent connections must be re-validated prior to
+being leased to the consumer. Non-positive value passed to this method disables
+connection validation. This check helps detect connections that have become
+stale (half-closed) while kept inactive in the pool."
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:

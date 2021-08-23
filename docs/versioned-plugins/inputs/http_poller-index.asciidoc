@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v5.1.0-plugins-inputs-http_poller,v5.1.0>> | 2021-08-19
 | <<v5.0.2-plugins-inputs-http_poller,v5.0.2>> | 2020-08-05
 | <<v5.0.1-plugins-inputs-http_poller,v5.0.1>> | 2019-02-06
 | <<v5.0.0-plugins-inputs-http_poller,v5.0.0>> | 2019-01-30
@@ -21,6 +22,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.3.0-plugins-inputs-http_poller,v3.3.0>> | 2017-05-08
 |=======================================================================
 
+include::http_poller-v5.1.0.asciidoc[]
 include::http_poller-v5.0.2.asciidoc[]
 include::http_poller-v5.0.1.asciidoc[]
 include::http_poller-v5.0.0.asciidoc[]
