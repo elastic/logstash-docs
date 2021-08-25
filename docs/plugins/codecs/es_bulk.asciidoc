@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.8
-:release_date: 2019-05-01
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-es_bulk/blob/v3.0.8/CHANGELOG.md
+:version: v3.1.0
+:release_date: 2021-08-19
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-es_bulk/blob/v3.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -37,4 +37,49 @@ Values in `additional_codecs` are prioritized over those specified in the
 `codec` option. That is, the default `codec` is applied only if no codec
 for the request's content-type is found in the `additional_codecs` setting.
 
+[id="plugins-{type}s-{plugin}-ecs_metadata"]
+==== Event Metadata and the Elastic Common Schema (ECS)
 
+When ECS compatibility is disabled, the metadata is stored in the `[@metadata]` field.
+When ECS is enabled, the metadata is stored in the `[@metadata][codec][es_bulk]` field.
+
+[id="plugins-{type}s-{plugin}-options"]
+==== ES Bulk Codec Configuration Options
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-ecs_compatibility>> | <<string,string>>|No
+| <<plugins-{type}s-{plugin}-target>> |<<string,string>>|No
+|=======================================================================
+
+[id="plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+* Value type is <<string,string>>
+* Supported values are:
+** `disabled`: unstructured metadata added at @metadata
+** `v1`: uses `[@metadata][codec][es_bulk]` fields
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
+
+[id="plugins-{type}s-{plugin}-target"]
+===== `target`
+
+* Value type is <<string,string>>
+* There is no default value for this setting.
+
+Define the target field for placing the values. If this setting is not
+set, the data will be stored at the root (top level) of the event.
+
+For example, if you want data to be put under the `document` field:
+[source,ruby]
+----------------------------------
+input {
+  kafka {
+    codec => es_bulk {
+        target => "[document]"
+    }
+  }
+}
+----------------------------------
