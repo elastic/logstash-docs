@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.2.1
-:release_date: 2018-12-30
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-netflow/blob/v4.2.1/CHANGELOG.md
+:version: v4.2.2
+:release_date: 2021-08-01
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-netflow/blob/v4.2.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
