@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.0.2
-:release_date: 2020-08-05
-:changelog_url: https://github.com/logstash-plugins/logstash-input-http_poller/blob/v5.0.2/CHANGELOG.md
+:version: v5.1.0
+:release_date: 2021-08-19
+:changelog_url: https://github.com/logstash-plugins/logstash-input-http_poller/blob/v5.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -88,6 +88,36 @@ The above snippet will create two files `downloaded_cert.pem` and `downloaded_tr
 ----------------------------------
 
 
+[id="plugins-{type}s-{plugin}-ecs_metadata"]
+==== Event Metadata and the Elastic Common Schema (ECS)
+
+This input will add metadata about the HTTP connection itself to each event.
+
+When ECS compatibility is disabled, metadata was added to a variety of non-standard top-level fields, which has the potential to create confusion and schema conflicts downstream.
+
+With ECS Compatibility Mode, we can ensure a pipeline maintains access to this metadata throughout the event's lifecycle without polluting the top-level namespace.
+
+Here’s how ECS compatibility mode affects output.
+[cols="<l,<l,e,<e"]
+|=======================================================================
+| ECS disabled | ECS v1 | Availability | Description
+
+| [@metadata][host] | [@metadata][input][http_poller][request][host][hostname] | Always | Hostname
+| [@metadata][code] | [@metadata][input][http_poller][response][status_code] | When server responds a valid status code | HTTP response code
+| [@metadata][response_headers] | [@metadata][input][http_poller][response][headers] | When server responds with headers | HTTP headers of the response
+| [@metadata][response_message] | [@metadata][input][http_poller][response][status_message] | When server responds with status line | message of status line of HTTP headers
+| [@metadata][runtime_seconds] | [@metadata][input][http_poller][response][elapsed_time_ns] | When server responds a valid status code | elapsed time of calling endpoint. ECS v1 shows in nanoseconds.
+| [http_request_failure][runtime_seconds] | [event][duration] | When server throws exception | elapsed time of calling endpoint. ECS v1 shows in nanoseconds.
+| [@metadata][times_retried] | [@metadata][input][http_poller][request][retry_count] | When the poller calls server successfully | retry count from http client library
+| [@metadata][name] / [http_request_failure][name] | [@metadata][input][http_poller][request][name] | Always | The key of `urls` from poller config
+| [@metadata][request] / [http_request_failure][request]| [@metadata][input][http_poller][request][original] | Always | The whole object of `urls` from poller config
+| [http_request_failure][error] | [error][message] | When server throws exception | Error message
+| [http_request_failure][backtrace] | [error][stack_trace] | When server throws exception | Stack trace of error
+| -- | [url][full] | When server throws exception | The URL of the endpoint
+| -- | [http][request][method] | When server throws exception | HTTP request method
+| -- | [host][hostname] | When server throws exception | Hostname
+|=======================================================================
+
 [id="plugins-{type}s-{plugin}-options"]
 ==== Http_poller Input Configuration Options
 
@@ -102,6 +132,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-client_key>> |a valid filesystem path|No
 | <<plugins-{type}s-{plugin}-connect_timeout>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-cookies>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-ecs_compatibility>> | <<string,string>>|No
 | <<plugins-{type}s-{plugin}-follow_redirects>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-keepalive>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-keystore>> |a valid filesystem path|No
@@ -180,6 +211,81 @@ Timeout (in seconds) to wait for a connection to be established. Default is `10s
 
 Enable cookie support. With this enabled the client will persist cookies
 across requests as a normal web browser would. Enabled by default
+
+[id="plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+* Value type is <<string,string>>
+* Supported values are:
+** `disabled`: unstructured data added at root level
+** `v1`: uses `error`, `url` and `http` fields that are compatible with Elastic Common Schema
+
+Controls this plugin's compatibility with the
+{ecs-ref}[Elastic Common Schema (ECS)].
+See <<plugins-{type}s-{plugin}-ecs_metadata>> for detailed information.
+
+Example output:
+
+**Sample output: ECS disabled**
+[source,text]
+-----
+{
+    "http_poller_data" => {
+        "@version" => "1",
+        "@timestamp" => 2021-01-01T00:43:22.388Z,
+        "status" => "UP"
+    },
+    "@version" => "1",
+    "@timestamp" => 2021-01-01T00:43:22.389Z,
+}
+-----
+
+**Sample output: ECS enabled**
+[source,text]
+-----
+{
+    "http_poller_data" => {
+        "status" => "UP",
+        "@version" => "1",
+        "event" => {
+            "original" => "{\"status\":\"UP\"}"
+        },
+        "@timestamp" => 2021-01-01T00:40:59.558Z
+    },
+    "@version" => "1",
+    "@timestamp" => 2021-01-01T00:40:59.559Z
+}
+-----
+
+**Sample error output: ECS enabled**
+[source,text]
+----
+{
+    "@timestamp" => 2021-07-09T09:53:48.721Z,
+    "@version" => "1",
+    "host" => {
+        "hostname" => "MacBook-Pro"
+    },
+    "http" => {
+        "request" => {
+            "method" => "get"
+        }
+    },
+    "event" => {
+        "duration" => 259019
+    },
+    "error" => {
+        "stack_trace" => nil,
+        "message" => "Connection refused (Connection refused)"
+    },
+    "url" => {
+        "full" => "http://localhost:8080/actuator/health"
+    },
+    "tags" => [
+        [0] "_http_request_failure"
+    ]
+}
+----
 
 [id="plugins-{type}s-{plugin}-follow_redirects"]
 ===== `follow_redirects` 
@@ -315,6 +421,10 @@ Timeout (in seconds) to wait for data on the socket. Default is `10s`
   * There is no default value for this setting.
 
 Define the target field for placing the received data. If this setting is omitted, the data will be stored at the root (top level) of the event.
+
+TIP: When ECS is enabled, set `target` in the codec (if the codec has a `target` option).
+Example: `codec => json { target => "TARGET_FIELD_NAME" }`
+
 
 [id="plugins-{type}s-{plugin}-truststore"]
 ===== `truststore` 
