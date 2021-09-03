@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.5.2
-:release_date: 2021-05-12
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.5.2/CHANGELOG.md
+:version: v3.5.3
+:release_date: 2021-08-30
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.5.3/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -265,6 +265,13 @@ Example:
   * There is no default value for this setting.
 
 Rename one or more fields.
+
+If the destination field already exists, its value is replaced.
+
+If one of the source fields doesn't exist, no action is performed for that field.
+(This is not considered an error; the `tag_on_failure` tag is not applied.)
+
+When renaming multiple fields, the order of operations is not guaranteed.
 
 Example:
 [source,ruby]
