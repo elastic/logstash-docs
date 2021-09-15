@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v1.2.8-plugins-inputs-snmp,v1.2.8>> | 2021-09-15
 | <<v1.2.7-plugins-inputs-snmp,v1.2.7>> | 2020-10-05
 | <<v1.2.6-plugins-inputs-snmp,v1.2.6>> | 2020-09-21
 | <<v1.2.5-plugins-inputs-snmp,v1.2.5>> | 2020-08-26
@@ -18,6 +19,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v1.0.0-plugins-inputs-snmp,v1.0.0>> | 2018-10-24
 |=======================================================================
 
+include::snmp-v1.2.8.asciidoc[]
 include::snmp-v1.2.7.asciidoc[]
 include::snmp-v1.2.6.asciidoc[]
 include::snmp-v1.2.5.asciidoc[]
