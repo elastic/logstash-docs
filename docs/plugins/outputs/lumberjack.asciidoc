@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.8
-:release_date: 2021-02-11
-:changelog_url: https://github.com/logstash-plugins/logstash-output-lumberjack/blob/v3.1.8/CHANGELOG.md
+:version: v3.1.9
+:release_date: 2021-08-30
+:changelog_url: https://github.com/logstash-plugins/logstash-output-lumberjack/blob/v3.1.9/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -62,7 +62,11 @@ send them to the logstash server.
   * Value type is <<array,array>>
   * There is no default value for this setting.
 
-list of addresses lumberjack can send to
+List of addresses lumberjack can send to. When the plugin needs to connect to the remote
+peer, it randomly selects one of the hosts. 
+
+When the plugin is registered, it opens a connection to one of the hosts.
+If the plugin detects a connection error, it selects a different host from the list and opens a new connection.
 
 [id="plugins-{type}s-{plugin}-idle_flush_time"]
 ===== `idle_flush_time` 
