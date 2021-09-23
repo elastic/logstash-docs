@@ -1,0 +1,83 @@
+:plugin: fluent
+:type: codec
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.4.1
+:release_date: 2021-09-22
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-fluent/blob/v3.4.1/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Fluent codec plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This codec handles fluentd's msgpack schema.
+
+For example, you can receive logs from `fluent-logger-ruby` with:
+[source,ruby]
+    input {
+      tcp {
+        codec => fluent
+        port => 4000
+      }
+    }
+
+And from your ruby code in your own application:
+[source,ruby]
+    logger = Fluent::Logger::FluentLogger.new(nil, :host => "example.log", :port => 4000)
+    logger.post("some_tag", { "your" => "data", "here" => "yay!" })
+
+
+NOTE: Fluent uses second-precision for events, so you will not see sub-second precision
+on events processed by this codec.
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Fluent Codec configuration options
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-nanosecond_precision>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-target>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-nanosecond_precision"]
+===== `nanosecond_precision`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Enables sub-second level precision while encoding events.
+
+[id="{version}-plugins-{type}s-{plugin}-target"]
+===== `target`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Define the target field for placing the decoded values. If this setting is not
+set, data will be stored at the root (top level) of the event.
+
+For example, if you want data to be put under the `logs` field:
+[source,ruby]
+    input {
+      tcp {
+        codec => fluent {
+          target => "[logs]"
+        }
+        port => 4000
+      }
+    }
+
