@@ -1,4 +1,21 @@
-// These VPR settings correspond to the LSR settings in logstash/docs/include/attributes-ls.asciidoc
-// When we update one, we must update the other
+/////
+These VPR settings correspond to the LSR settings in logstash/docs/include/attributes-ls.asciidoc
+When we update one, we must update the other
+/////
 
-:ecs-default: Any value in {logstash-ref}/logstash-settings-file.html[`logstash.yml`] for pipeline.ecs_compatibility other than disabled is considered BETA and unsupported until Logstash 8.0 and the final 7.x version are released. Having this pipeline level flag set will cause even patch-level upgrades to automatically consume breaking changes in the upgraded plugins, changing the shape of data the plugin produces.
+/////
+Use caution when employing this approach, as there are versioning implications. 
+
+The Versioned Plugin Reference isn't stack versioned. 
+This detail could make consistent messaging across plugins and versions tricky. 
+If we apply an attribute and then change the text, the new text will be applied to every version (past, present, and future) of every plugin using the attribute.
+
+One possibility: introduce a new attribute for each major change to messaging, and replace the old attribute with the new one in the source file. Then the updated messaging will be applied only to applicable plugin versions and newer.
+/////
+
+/////
+Attribute text formatted without hard wrap is deliberate. 
+Otherwise, text breaks at return and content isn't displayed in its entirety. 
+/////
+
+:ecs-default: The `pipeline.ecs_compatibility` setting is available in {logstash-ref}/logstash-settings-file.html[`logstash.yml`] and `pipelines.yml`. Any value in `pipeline.ecs_compatibility` other than `disabled` is considered BETA and unsupported until Logstash 8.0 and the final 7.x version are released. Having this pipeline level flag set will cause even patch-level upgrades to automatically consume breaking changes in the upgraded plugins, changing the shape of data the plugin produces.
