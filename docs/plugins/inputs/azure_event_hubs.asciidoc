@@ -32,6 +32,14 @@ Many Azure services integrate with the Azure Event Hubs.
 https://docs.microsoft.com/en-us/azure/monitoring-and-diagnostics/monitoring-overview-azure-monitor[Azure
 Monitor], for example, integrates with Azure Event Hubs to provide infrastructure metrics. 
 
+===== Test attribute HERE
+
+{ecs-default}
+
+NOTE: {ecs-default}
+
+
+
 ===== Event Hub connection string
 
 The plugin uses the connection string to access Azure Events Hubs. Find the
