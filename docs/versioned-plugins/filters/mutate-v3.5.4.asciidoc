@@ -44,7 +44,7 @@ Mutations in a config file are executed in this order:
 * merge
 * copy
 
-Warning: Each mutation must be in its own code block if the sequence of operations needs to be preserved.
+IMPORTANT: Each mutation must be in its own code block if the sequence of operations needs to be preserved.
 
 Example:
 [source,ruby]
