@@ -20,7 +20,7 @@ other files.
 :ecs_version: current
 
 include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
-
+include::./include/attributes-ls-vpr.asciidoc[]
 
 [[logstash-plugin-reference]]
 = Logstash Versioned Plugin Reference
