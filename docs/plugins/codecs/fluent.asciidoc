@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.4.0
-:release_date: 2021-08-09
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-fluent/blob/v3.4.0/CHANGELOG.md
+:version: v3.4.1
+:release_date: 2021-09-22
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-fluent/blob/v3.4.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
