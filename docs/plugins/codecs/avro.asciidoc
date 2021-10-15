@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.3.0
-:release_date: 2021-08-19
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-avro/blob/v3.3.0/CHANGELOG.md
+:version: v3.2.4
+:release_date: 2020-08-21
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-avro/blob/v3.2.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -26,11 +26,6 @@ Read serialized Avro records as Logstash events
 This plugin is used to serialize Logstash events as 
 Avro datums, as well as deserializing Avro datums into 
 Logstash events.
-
-[id="plugins-{type}s-{plugin}-ecs_metadata"]
-==== Event Metadata and the Elastic Common Schema (ECS)
-
-The plugin behaves the same regardless of ECS compatibility, except adding the original message to `[event][original]`.
 
 ==== Encoding
 
@@ -82,24 +77,11 @@ output {
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<plugins-{type}s-{plugin}-ecs_compatibility>> | <<string,string>>|No
 | <<plugins-{type}s-{plugin}-schema_uri>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-tag_on_failure>> |<<boolean,boolean>>|No
-| <<plugins-{type}s-{plugin}-target>> |<<string,string>>|No
 |=======================================================================
 
 &nbsp;
-
-[id="plugins-{type}s-{plugin}-ecs_compatibility"]
-===== `ecs_compatibility`
-
-* Value type is <<string,string>>
-* Supported values are:
-** `disabled`: Avro data added at root level
-** `v1`,`v8`: Elastic Common Schema compliant behavior (`[event][original]` is also added)
-
-Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
-
 
 [id="plugins-{type}s-{plugin}-schema_uri"]
 ===== `schema_uri` 
@@ -123,25 +105,4 @@ example:
 
 tag events with `_avroparsefailure` when decode fails
 
-[id="plugins-{type}s-{plugin}-target"]
-===== `target`
 
-* Value type is <<string,string>>
-* There is no default value for this setting.
-* This is only relevant when decode data into an event
-
-Define the target field for placing the values. If this setting is not
-set, the Avro data will be stored at the root (top level) of the event.
-
-*Example*
-[source,ruby]
-----------------------------------
-input {
-  kafka {
-    codec => avro {
-        schema_uri => "/tmp/schema.avsc"
-        target => "[document]"
-    }
-  }
-}
-----------------------------------
