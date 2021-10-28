@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v5.1.7-plugins-filters-jdbc_streaming,v5.1.7>> | 2021-10-28
 | <<v5.1.6-plugins-filters-jdbc_streaming,v5.1.6>> | 2021-10-12
 | <<v5.1.5-plugins-filters-jdbc_streaming,v5.1.5>> | 2021-08-04
 | <<v5.1.4-plugins-filters-jdbc_streaming,v5.1.4>> | 2021-07-09
@@ -31,6 +32,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v1.0.1-plugins-filters-jdbc_streaming,v1.0.1>> | 2017-06-23
 |=======================================================================
 
+include::jdbc_streaming-v5.1.7.asciidoc[]
 include::jdbc_streaming-v5.1.6.asciidoc[]
 include::jdbc_streaming-v5.1.5.asciidoc[]
 include::jdbc_streaming-v5.1.4.asciidoc[]
