@@ -31,7 +31,7 @@ An event is generated first
 ==== Compatibility with the Elastic Common Schema (ECS)
 
 This plugin uses different field names depending on whether {ecs-ref}[ECS-compatibility]
-in enabled (see also <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>>).
+is enabled. See <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>>.
 
 |========
 | ECS Disabled | ECS v1, v8 | Description
