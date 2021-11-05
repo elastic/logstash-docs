@@ -1,0 +1,160 @@
+:plugin: generator
+:type: input
+:default_codec: plain
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.1.0
+:release_date: 2021-11-04
+:changelog_url: https://github.com/logstash-plugins/logstash-input-generator/blob/v3.1.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Generator input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Generate random log events.
+
+The general intention of this is to test performance of plugins.
+
+An event is generated first
+
+[id="{version}-plugins-{type}s-{plugin}-ecs"]
+==== Compatibility with the Elastic Common Schema (ECS)
+
+This plugin uses different field names depending on whether {ecs-ref}[ECS-compatibility]
+in enabled (see also <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>>).
+
+|========
+| ECS Disabled | ECS v1, v8 | Description
+
+| `host`  | `[host][name]` | The name of the {ls} host that processed the event
+| `sequence` | `[event][sequence]` | The sequence number for the generated event
+|========
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Generator Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-count>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-lines>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-message>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-threads>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-count"]
+===== `count`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `0`
+
+Set how many messages should be generated.
+
+The default, `0`, means generate an unlimited number of events.
+
+[id="{version}-plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Supported values are:
+    ** `disabled`: uses backwards compatible field names, such as `[host]`
+    ** `v1`, `v8`: uses fields that are compatible with ECS, such as `[host][name]`
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
+See <<{version}-plugins-{type}s-{plugin}-ecs>> for detailed information.
+
+
+**Sample output: ECS enabled**
+[source,ruby]
+-----
+{
+    "message" => "Hello world!",
+    "event" => {
+        "sequence" => 0
+    },
+    "host" => {
+        "name" => "the-machine"
+    }
+}
+-----
+
+**Sample output: ECS disabled**
+[source,ruby]
+-----
+{
+    "message" => "Hello world!",
+    "sequence" => 0,
+    "host" => "the-machine"
+}
+-----
+
+[id="{version}-plugins-{type}s-{plugin}-lines"]
+===== `lines`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * There is no default value for this setting.
+
+The lines to emit, in order. This option cannot be used with the 'message'
+setting.
+
+Example:
+[source,ruby]
+    input {
+      generator {
+        lines => [
+          "line 1",
+          "line 2",
+          "line 3"
+        ]
+        # Emit all lines 3 times.
+        count => 3
+      }
+    }
+
+The above will emit `line 1` then `line 2` then `line 3`, then `line 1`, etc...
+
+[id="{version}-plugins-{type}s-{plugin}-message"]
+===== `message`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"Hello world!"`
+
+The message string to use in the event.
+
+If you set this to `stdin` then this plugin will read a single line from
+stdin and use that as the message string for every event.
+
+Otherwise, this value will be used verbatim as the event message.
+
+[id="{version}-plugins-{type}s-{plugin}-threads"]
+===== `threads`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `1`
+
+
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
