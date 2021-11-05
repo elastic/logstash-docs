@@ -5,6 +5,8 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v11.2.3-plugins-outputs-elasticsearch,v11.2.3>> | 2021-11-02
+| <<v11.2.2-plugins-outputs-elasticsearch,v11.2.2>> | 2021-11-02
 | <<v11.2.1-plugins-outputs-elasticsearch,v11.2.1>> | 2021-10-14
 | <<v11.2.0-plugins-outputs-elasticsearch,v11.2.0>> | 2021-10-12
 | <<v11.1.0-plugins-outputs-elasticsearch,v11.1.0>> | 2021-09-28
@@ -74,6 +76,8 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v7.3.2-plugins-outputs-elasticsearch,v7.3.2>> | 2017-05-26
 |=======================================================================
 
+include::elasticsearch-v11.2.3.asciidoc[]
+include::elasticsearch-v11.2.2.asciidoc[]
 include::elasticsearch-v11.2.1.asciidoc[]
 include::elasticsearch-v11.2.0.asciidoc[]
 include::elasticsearch-v11.1.0.asciidoc[]
