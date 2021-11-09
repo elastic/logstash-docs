@@ -9,9 +9,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v10.8.1
-:release_date: 2021-07-13
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v10.8.1/CHANGELOG.md
+:version: v10.8.2
+:release_date: 2021-11-04
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v10.8.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -42,6 +42,13 @@ This input supports connecting to Kafka over:
 * Kerberos SASL (requires plugin version 5.1.0 or later) 
 
 By default security is disabled but can be turned on as needed.
+
+[NOTE]
+=======
+This plugin does not support using a proxy when communicating to the Kafka broker.  
+
+This plugin does support using a proxy when communicating to the Schema Registry using the <<plugins-{type}s-{plugin}-schema_registry_proxy>> option.
+=======
 
 The Logstash Kafka consumer handles group management and uses the default offset management
 strategy using Kafka topics.
@@ -277,7 +284,7 @@ which the consumption will begin.
 
 If true, periodically commit to Kafka the offsets of messages already returned by
 the consumer. If value is `false` however, the offset is committed every time the
-consumer fetches the data from the topic.
+consumer writes data fetched from the topic to the in-memory or persistent queue.
 
 [id="plugins-{type}s-{plugin}-exclude_internal_topics"]
 ===== `exclude_internal_topics` 
