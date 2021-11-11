@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.1.1
-:release_date: 2021-04-14
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-clone/blob/v4.1.1/CHANGELOG.md
+:version: v4.2.0
+:release_date: 2021-11-10
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-clone/blob/v4.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -36,7 +36,7 @@ When ECS is enabled, the tag is stored in the `tags` array field.
 Here’s how ECS compatibility mode affects output.
 [cols="<l,<l,e,<e"]
 |=======================================================================
-| ECS disabled | ECS v1 | Availability | Description
+| ECS disabled | ECS `v1`, `v8` | Availability | Description
 
 | type | tags | Always | a tag of cloned event
 |=======================================================================
@@ -75,7 +75,7 @@ Note: setting an empty array will not create any clones. A warning message is lo
 * Value type is <<string,string>>
 * Supported values are:
 ** `disabled`: does not use ECS-compatible field names
-** `v1`: uses fields that are compatible with Elastic Common Schema
+** `v1`, `v8`: uses fields that are compatible with Elastic Common Schema
 * Default value depends on which version of Logstash is running:
 ** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
 ** Otherwise, the default value is `disabled`.
