@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.0
-:release_date: 2021-03-16
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-syslog_pri/blob/v3.1.0/CHANGELOG.md
+:version: v3.1.1
+:release_date: 2021-11-10
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-syslog_pri/blob/v3.1.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -54,7 +54,7 @@ filter plugins.
 * Value type is <<string,string>>
 * Supported values are:
 ** `disabled`: does not use ECS-compatible field names (for example, `syslog_severity_code` for syslog severity)
-** `v1`: uses fields that are compatible with Elastic Common Schema (for example, `[log][syslog][severity][code]`)
+** `v1`, `v8`: uses fields that are compatible with Elastic Common Schema (for example, `[log][syslog][severity][code]`)
 * Default value depends on which version of Logstash is running:
 ** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
 ** Otherwise, the default value is `disabled`.
