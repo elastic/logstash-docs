@@ -1,0 +1,220 @@
+:plugin: syslog
+:type: input
+:default_codec: plain
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.6.0
+:release_date: 2021-11-11
+:changelog_url: https://github.com/logstash-plugins/logstash-input-syslog/blob/v3.6.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Syslog input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Read syslog messages as events over the network.
+
+This input is a good choice if you already use syslog today.
+It is also a good choice if you want to receive logs from
+appliances and network devices where you cannot run your own
+log collector.
+
+Of course, 'syslog' is a very muddy term. By default, this input only
+supports `RFC3164` syslog with some small modifications. However, some
+non-standard syslog formats can be read and parsed if a functional
+`grok_pattern` is provided. The date format is still only allowed to be
+`RFC3164` style or `ISO8601`.
+
+For more information see the http://www.ietf.org/rfc/rfc3164.txt[RFC3164 page].
+
+Note: This input will start listeners on both TCP and UDP.
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Syslog Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>> | {logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-facility_labels>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-grok_pattern>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-host>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-locale>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-port>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-proxy_protocol>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-severity_labels>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-syslog_field>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-timezone>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-use_labels>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Supported values are:
+    ** `disabled`: does not use ECS-compatible field names (for example, `priority` for syslog priority)
+    ** `v1`,`v8`: uses fields that are compatible with Elastic Common Schema (for example, `[log][syslog][priority]`)
+  * Default value depends on which version of Logstash is running:
+    ** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
+    ** Otherwise, the default value is `disabled`.
+
+Controls this plugin's compatibility with the
+{ecs-ref}[Elastic Common Schema (ECS)].
+
+[id="{version}-plugins-{type}s-{plugin}-facility_labels"]
+===== `facility_labels`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `["kernel", "user-level", "mail", "system", "security/authorization", "syslogd", "line printer", "network news", "UUCP", "clock", "security/authorization", "FTP", "NTP", "log audit", "log alert", "clock", "local0", "local1", "local2", "local3", "local4", "local5", "local6", "local7"]`
+
+Labels for facility levels defined in RFC3164.
+
+You can use this option to override the integer->label mapping for syslog inputs
+that behave differently than the RFCs.
+
+Provide a zero-indexed array with all of your facility labels _in order_.
+If a log message contains a facility number with no corresponding entry,
+the facility_label is not added to the event.
+
+[id="{version}-plugins-{type}s-{plugin}-grok_pattern"]
+===== `grok_pattern`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"<%{POSINT:priority}>%{SYSLOGLINE}"`
+  * Default value depends on whether <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>> is enabled:
+    ** ECS Compatibility disabled: `"<%{POSINT:priority}>%{SYSLOGLINE}"`
+    ** ECS Compatibility enabled: `"<%{POSINT:[log][syslog][priority]:int}>%{SYSLOGLINE}"`
+
+The default value should read and properly parse syslog lines which are
+fully compliant with http://www.ietf.org/rfc/rfc3164.txt[RFC3164].
+
+You can override this value to parse non-standard lines with a valid grok
+pattern which will parse the received lines.  If the line is unable to
+be parsed, the `_grokparsefailure_sysloginput` tag will be added.
+
+The grok pattern must provide a `timestamp` field. If the `timestamp`
+field is omitted, or is unable to be parsed as `RFC3164` style or
+`ISO8601`, a `_dateparsefailure` tag will be added.
+
+
+[id="{version}-plugins-{type}s-{plugin}-host"]
+===== `host`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"0.0.0.0"`
+
+The address to listen on.
+
+[id="{version}-plugins-{type}s-{plugin}-locale"]
+===== `locale`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Specify a locale to be used for date parsing using either IETF-BCP47 or POSIX language tag.
+Simple examples are `en`,`en-US` for BCP47 or `en_US` for POSIX.
+If not specified, the platform default will be used.
+
+The locale is mostly necessary to be set for parsing month names (pattern with MMM) and
+weekday names (pattern with EEE).
+
+
+[id="{version}-plugins-{type}s-{plugin}-port"]
+===== `port`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `514`
+
+The port to listen on. Remember that ports less than 1024 (privileged
+ports) may require root to use.
+
+[id="{version}-plugins-{type}s-{plugin}-proxy_protocol"]
+===== `proxy_protocol`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Proxy protocol support, only v1 is supported at this time
+http://www.haproxy.org/download/1.5/doc/proxy-protocol.txt
+
+[id="{version}-plugins-{type}s-{plugin}-severity_labels"]
+===== `severity_labels`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `["Emergency", "Alert", "Critical", "Error", "Warning", "Notice", "Informational", "Debug"]`
+
+Labels for severity levels defined in RFC3164.
+
+Provide a zero-indexed array with all of your severity labels _in order_.
+If a log message contains a severity label with no corresponding entry,
+the severity_label is not added to the event.
+
+[id="{version}-plugins-{type}s-{plugin}-syslog_field"]
+===== `syslog_field`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"message"`
+
+Codecs process the data before the rest of the data is parsed. Some codecs,
+like CEF, put the syslog data into another field after pre-processing the
+data.  Use this option in conjunction with the `grok_pattern` configuration
+to allow the syslog input plugin to fully parse the syslog data in this case.
+
+[source,sh]
+-------
+input {
+  syslog {
+    port => 12345
+    codec => cef
+    syslog_field => "syslog"
+    grok_pattern => "<%{POSINT:priority}>%{SYSLOGTIMESTAMP:timestamp} CUSTOM GROK HERE"
+  }
+}
+-------
+
+[id="{version}-plugins-{type}s-{plugin}-timezone"]
+===== `timezone`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Specify a time zone canonical ID to be used for date parsing.
+The valid IDs are listed on the [Joda.org available time zones page](http://joda-time.sourceforge.net/timezones.html).
+This is useful in case the time zone cannot be extracted from the value,
+and is not the platform default.
+If this is not specified the platform default will be used.
+Canonical ID is good as it takes care of daylight saving time for you.
+For example, `America/Los_Angeles` or `Europe/Paris` are valid IDs.
+
+[id="{version}-plugins-{type}s-{plugin}-use_labels"]
+===== `use_labels`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Use label parsing for severity and facility levels.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
