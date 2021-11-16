@@ -1,0 +1,188 @@
+:plugin: exec
+:type: input
+:default_codec: plain
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.4.0
+:release_date: 2021-11-16
+:changelog_url: https://github.com/logstash-plugins/logstash-input-exec/blob/v3.4.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Exec input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Periodically run a shell command and capture the whole output as an event.
+
+[NOTE]
+========
+* The `command` field of this event will be the command run.
+* The `message` field of this event will be the entire stdout of the command.
+========
+
+IMPORTANT: The exec input ultimately uses `fork` to spawn a child process.
+Using fork duplicates the parent process address space (in our case, **logstash and the JVM**); this is mitigated with OS copy-on-write but ultimately you can end up allocating lots of memory just for a "simple" executable.
+If the exec input fails with errors like `ENOMEM: Cannot allocate memory` it is an indication that there is not enough non-JVM-heap physical memory to perform the fork.
+
+
+Example:
+
+[source,ruby]
+----------------------------------
+input {
+  exec {
+    command => "echo 'hi!'"
+    interval => 30
+  }
+}
+----------------------------------
+
+This will execute `echo` command every 30 seconds.
+
+[id="{version}-plugins-{type}s-{plugin}-ecs"]
+==== Compatibility with the Elastic Common Schema (ECS)
+
+This plugin adds metadata about the event's source, and can be configured to do so
+in an {ecs-ref}[ECS-compatible] way with <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>>.
+This metadata is added after the event has been decoded by the appropriate codec,
+and will not overwrite existing values.
+
+|========
+| ECS Disabled               | ECS v1 , v8               | Description
+
+| `host`                     | `[host][name]`            | The name of the {ls} host that processed the event
+| `command`                  | `[process][command_line]` | The command run by the plugin
+| `[@metadata][exit_status]` | `[process][exit_code]`    | The exit code of the process
+| --                         | `[@metadata][input][exec][process][elapsed_time]`
+                                                         | The elapsed time the command took to run in nanoseconds
+| `[@metadata][duration]`    | --                        | Command duration in seconds as a floating point number (deprecated)
+|========
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Exec Input configuration options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-command>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-interval>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-schedule>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-command"]
+===== `command`
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Command to run. For example, `uptime`
+
+[id="{version}-plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Supported values are:
+    ** `disabled`: uses backwards compatible field names, such as `[host]`
+    ** `v1`, `v8`: uses fields that are compatible with ECS, such as `[host][name]`
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
+See <<{version}-plugins-{type}s-{plugin}-ecs>> for detailed information.
+
+
+**Sample output: ECS enabled**
+[source,ruby]
+-----
+{
+    "message" => "hi!\n",
+    "process" => {
+        "command_line" => "echo 'hi!'",
+        "exit_code" => 0
+    },
+    "host" => {
+        "name" => "deus-ex-machina"
+    },
+
+    "@metadata" => {
+        "input" => {
+            "exec" => {
+                "process" => {
+                    "elapsed_time"=>3042
+                }
+            }
+        }
+    }
+}
+-----
+
+**Sample output: ECS disabled**
+[source,ruby]
+-----
+{
+    "message" => "hi!\n",
+    "command" => "echo 'hi!'",
+    "host" => "deus-ex-machina",
+
+    "@metadata" => {
+        "exit_status" => 0,
+        "duration" => 0.004388
+    }
+}
+-----
+
+[id="{version}-plugins-{type}s-{plugin}-interval"]
+===== `interval`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * There is no default value for this setting.
+
+Interval to run the command. Value is in seconds.
+
+Either `interval` or `schedule` option must be defined.
+
+[id="{version}-plugins-{type}s-{plugin}-schedule"]
+===== `schedule`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Schedule of when to periodically run command.
+
+This scheduling syntax is powered by https://github.com/jmettraux/rufus-scheduler[rufus-scheduler].
+The syntax is cron-like with some extensions specific to Rufus (e.g. timezone support).
+
+Examples:
+
+|==========================================================
+| `* 5 * 1-3 *`               | will execute every minute of 5am every day of January through March.
+| `0 * * * *`                 | will execute on the 0th minute of every hour every day.
+| `0 6 * * * America/Chicago` | will execute at 6:00am (UTC/GMT -5) every day.
+|==========================================================
+
+Further documentation describing this syntax can be found https://github.com/jmettraux/rufus-scheduler#parsing-cronlines-and-time-strings[here].
+
+Either `interval` or `schedule` option must be defined.
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
