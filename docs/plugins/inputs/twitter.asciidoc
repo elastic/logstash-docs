@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.3
-:release_date: 2020-10-06
-:changelog_url: https://github.com/logstash-plugins/logstash-input-twitter/blob/v4.0.3/CHANGELOG.md
+:version: v4.1.0
+:release_date: 2021-11-18
+:changelog_url: https://github.com/logstash-plugins/logstash-input-twitter/blob/v4.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -24,6 +24,46 @@ include::{include_path}/plugin_header.asciidoc[]
 
 Ingest events from the Twitter Streaming API.
 
+Example:
+[source,ruby]
+    input {
+      twitter {
+        consumer_key => '...'
+        consumer_secret => '...'
+        oauth_token => '...'
+        oauth_token_secret => '...'
+        keywords => [ 'logstash' ]
+      }
+    }
+
+Sample event fields generated:
+
+[source,ruby]
+-----
+    {
+        "@timestamp" => 2019-09-23T16:41:53.000Z,
+        "message" => "I forgot how fun it is to write @logstash configs !!! Thank you @jordansissel and @elastic !!!"
+        "user" => "missnebun",
+        "in-reply-to" => nil,
+        "retweeted" => false,
+        "source" => "http://twitter.com/missnebun/status/1176174859833004037",
+        "user_mentions" => [
+            { "screen_name"=>"logstash", "name"=>"logstash", "id"=>217155915 },
+            { "screen_name"=>"jordansissel", "name"=>"@jordansissel", "id"=>15782607 },
+            { "screen_name"=>"elastic", "name"=>"Elastic", "id"=>84512601 }],
+        "symbols" => [],
+        "hashtags" => [],
+        "client" => "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>"
+    }
+-----
+
+[id="plugins-{type}s-{plugin}-ecs"]
+==== Compatibility with the Elastic Common Schema (ECS)
+
+Twitter streams are very specific and do not map easily to the {ecs-ref}[Elastic Common Schema (ECS)].
+We recommend setting a <<plugins-{type}s-{plugin}-target>> when <<plugins-{type}s-{plugin}-ecs_compatibility,ECS compatibility mode>> is enabled.
+The plugin issues a warning in the log when a `target` isn't set.
+
 [id="plugins-{type}s-{plugin}-options"]
 ==== Twitter Input Configuration Options
 
@@ -34,6 +74,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-consumer_key>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-consumer_secret>> |<<password,password>>|Yes
+| <<plugins-{type}s-{plugin}-ecs_compatibility>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-follows>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-full_tweet>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-ignore_retweets>> |<<boolean,boolean>>|No
@@ -47,6 +88,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-rate_limit_reset_in>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-use_proxy>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-use_samples>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-target>> |<<string,string>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -78,6 +120,19 @@ Your Twitter App's consumer secret
 If you don't have one of these, you can create one by
 registering a new application with Twitter:
 <https://dev.twitter.com/apps/new>
+
+[id="plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+  * Value type is <<string,string>>
+  * Supported values are:
+    ** `disabled`: does not use ECS-compatible field names (fields might be set at the root of the event)
+    ** `v1`, `v8`: avoids field names that might conflict with Elastic Common Schema (for example, Twitter specific properties)
+  * Default value depends on which version of Logstash is running:
+    ** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
+    ** Otherwise, the default value is `disabled`.
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
 
 [id="plugins-{type}s-{plugin}-follows"]
 ===== `follows` 
@@ -221,6 +276,17 @@ Returns a small random sample of all public statuses. The tweets returned
 by the default access level are the same, so if two different clients connect
 to this endpoint, they will see the same tweets. If set to true, the keywords, 
 follows, locations, and languages options will be ignored. Default => false
+
+[id="plugins-{type}s-{plugin}-target"]
+===== `target`
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+Without a `target`, events are created from tweets at the root level.
+When the `target` is set to a field reference, the tweet data is placed in the target field instead.
+
+This option can be useful to avoid populating unknown fields when a downstream schema such as ECS is enforced.
 
 
 
