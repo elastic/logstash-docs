@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.7
-:release_date: 2021-02-04
-:changelog_url: https://github.com/logstash-plugins/logstash-input-salesforce/blob/v3.0.7/CHANGELOG.md
+:version: v3.1.0
+:release_date: 2021-11-11
+:changelog_url: https://github.com/logstash-plugins/logstash-input-salesforce/blob/v3.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -82,6 +82,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-security_token>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-sfdc_fields>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-sfdc_filters>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-sfdc_instance_url>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-sfdc_object_name>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-to_underscores>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-use_test_sandbox>> |<<boolean,boolean>>|No
@@ -162,6 +163,19 @@ These options will be added to the WHERE clause in the
 SOQL statement. Additional fields can be filtered on by
 adding field1 = value1 AND field2 = value2 AND...
 
+[id="plugins-{type}s-{plugin}-sfdc_instance_url"]
+===== `sfdc_instance_url`
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The url of a Salesforce instance. Provide the url if you want to connect
+to your Salesforce instance instead of
+`login.salesforce.com` or `test.salesforce.com` at login.
+
+Use either this or the `use_test_sandbox` configuration option
+but not both to configure the url to which the plugin connects to.
+
 [id="plugins-{type}s-{plugin}-sfdc_object_name"]
 ===== `sfdc_object_name` 
 
@@ -187,6 +201,10 @@ Setting this to true will convert SFDC's NamedFields__c to named_fields__c
 
 Set this to true to connect to a sandbox sfdc instance
 logging in through test.salesforce.com
+
+Use either this or the `sfdc_instance_url` configuration option
+but not both to configure the url to which the plugin connects to.
+
 
 [id="plugins-{type}s-{plugin}-username"]
 ===== `username` 
