@@ -1,0 +1,352 @@
+:plugin: http
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v1.1.0
+:release_date: 2021-12-03
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-http/blob/v1.1.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== HTTP filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+The HTTP filter provides integration with external web services/REST APIs.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== HTTP Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-body>> | String, Array or Hash |No
+| <<{version}-plugins-{type}s-{plugin}-body_format>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-headers>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-query>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-target_body>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-target_headers>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-url>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-verb>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+There are also multiple configuration options related to the HTTP connectivity:
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-automatic_retries>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-cacert>> |a valid filesystem path|No
+| <<{version}-plugins-{type}s-{plugin}-client_cert>> |a valid filesystem path|No
+| <<{version}-plugins-{type}s-{plugin}-client_key>> |a valid filesystem path|No
+| <<{version}-plugins-{type}s-{plugin}-connect_timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-cookies>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-follow_redirects>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-keepalive>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-keystore>> |a valid filesystem path|No
+| <<{version}-plugins-{type}s-{plugin}-keystore_password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-keystore_type>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-pool_max>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-pool_max_per_route>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-proxy>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-request_timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-retry_non_idempotent>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-socket_timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-truststore>> |a valid filesystem path|No
+| <<{version}-plugins-{type}s-{plugin}-truststore_password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-truststore_type>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-user>> |{logstash-ref}/configuration-file-structure.html#string[string]|no
+| <<{version}-plugins-{type}s-{plugin}-validate_after_inactivity>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-body"]
+===== `body`
+
+  * Value type can be a {logstash-ref}/configuration-file-structure.html#string[string], {logstash-ref}/configuration-file-structure.html#number[number], {logstash-ref}/configuration-file-structure.html#array[array] or {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * There is no default value
+
+The body of the HTTP request to be sent.
+
+[id="{version}-plugins-{type}s-{plugin}-body_format"]
+===== `body_format`
+
+  * Value type can be either `"json"` or `"text"`
+  * Default value is `"text"`
+
+If set to `"json"` the body will be serialized as JSON. Otherwise it is sent as is.
+
+[id="{version}-plugins-{type}s-{plugin}-headers"]
+===== `headers`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * There is no default value
+
+The HTTP headers to be sent in the request. Both the names of the headers and their
+values can reference values from event fields.
+
+[id="{version}-plugins-{type}s-{plugin}-query"]
+===== `query`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * There is no default value
+
+Define the query string parameters (key-value pairs) to be sent in the HTTP request.
+
+[id="{version}-plugins-{type}s-{plugin}-target_body"]
+===== `target_body`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * There is no default value
+
+Define the target field for placing the body of the HTTP response. If this setting is omitted, the data will be stored in the "body" field.
+
+[id="{version}-plugins-{type}s-{plugin}-target_headers"]
+===== `target_headers`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * There is no default value
+
+Define the target field for placing the headers of the HTTP response. If this setting is omitted, the data will be stored in the "headers" field.
+
+[id="{version}-plugins-{type}s-{plugin}-url"]
+===== `url`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value
+
+The URL to send the request to. The value can be fetched from event fields.
+
+[id="{version}-plugins-{type}s-{plugin}-verb"]
+===== `verb`
+
+  * Value type can be either `"GET"`, `"HEAD"`, `"PATCH"`, `"DELETE"`, `"POST"`, `"PUT"`
+  * Default value is `"GET"`
+
+The verb to be used for the HTTP request.
+
+[id="{version}-plugins-{type}s-{plugin}-connectivity-options"]
+==== HTTP Filter Connectivity Options
+
+[id="{version}-plugins-{type}s-{plugin}-automatic_retries"]
+===== `automatic_retries`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `1`
+
+How many times should the client retry a failing URL. We highly recommend NOT setting this value
+to zero if keepalive is enabled. Some servers incorrectly end keepalives early requiring a retry!
+Note: if `retry_non_idempotent` is set only GET, HEAD, PUT, DELETE, OPTIONS, and TRACE requests will be retried.
+
+[id="{version}-plugins-{type}s-{plugin}-cacert"]
+===== `cacert`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+If you need to use a custom X.509 CA (.pem certs) specify the path to that here
+
+[id="{version}-plugins-{type}s-{plugin}-client_cert"]
+===== `client_cert`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+If you'd like to use a client certificate (note, most people don't want this) set the path to the x509 cert here
+
+[id="{version}-plugins-{type}s-{plugin}-client_key"]
+===== `client_key`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+If you're using a client certificate specify the path to the encryption key here
+
+[id="{version}-plugins-{type}s-{plugin}-connect_timeout"]
+===== `connect_timeout`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `10`
+
+Timeout (in seconds) to wait for a connection to be established. Default is `10s`
+
+[id="{version}-plugins-{type}s-{plugin}-cookies"]
+===== `cookies`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Enable cookie support. With this enabled the client will persist cookies
+across requests as a normal web browser would. Enabled by default
+
+[id="{version}-plugins-{type}s-{plugin}-follow_redirects"]
+===== `follow_redirects`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Should redirects be followed? Defaults to `true`
+
+[id="{version}-plugins-{type}s-{plugin}-keepalive"]
+===== `keepalive`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Turn this on to enable HTTP keepalive support. We highly recommend setting `automatic_retries` to at least
+one with this to fix interactions with broken keepalive implementations.
+
+[id="{version}-plugins-{type}s-{plugin}-keystore"]
+===== `keystore`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+If you need to use a custom keystore (`.jks`) specify that here. This does not work with .pem keys!
+
+[id="{version}-plugins-{type}s-{plugin}-keystore_password"]
+===== `keystore_password`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Specify the keystore password here.
+Note, most .jks files created with keytool require a password!
+
+[id="{version}-plugins-{type}s-{plugin}-keystore_type"]
+===== `keystore_type`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"JKS"`
+
+Specify the keystore type here. One of `JKS` or `PKCS12`. Default is `JKS`
+
+[id="{version}-plugins-{type}s-{plugin}-password"]
+===== `password`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Password to be used in conjunction with the username for HTTP authentication.
+
+[id="{version}-plugins-{type}s-{plugin}-pool_max"]
+===== `pool_max`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `50`
+
+Max number of concurrent connections. Defaults to `50`
+
+[id="{version}-plugins-{type}s-{plugin}-pool_max_per_route"]
+===== `pool_max_per_route`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `25`
+
+Max number of concurrent connections to a single host. Defaults to `25`
+
+[id="{version}-plugins-{type}s-{plugin}-proxy"]
+===== `proxy`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+If you'd like to use an HTTP proxy . This supports multiple configuration syntaxes:
+
+1. Proxy host in form: `http://proxy.org:1234`
+2. Proxy host in form: `{host => "proxy.org", port => 80, scheme => 'http', user => 'username@host', password => 'password'}`
+3. Proxy host in form: `{url =>  'http://proxy.org:1234', user => 'username@host', password => 'password'}`
+
+[id="{version}-plugins-{type}s-{plugin}-request_timeout"]
+===== `request_timeout`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `60`
+
+Timeout (in seconds) for the entire request.
+
+[id="{version}-plugins-{type}s-{plugin}-retry_non_idempotent"]
+===== `retry_non_idempotent`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+If `automatic_retries` is enabled this will cause non-idempotent HTTP verbs (such as POST) to be retried.
+
+[id="{version}-plugins-{type}s-{plugin}-socket_timeout"]
+===== `socket_timeout`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `10`
+
+Timeout (in seconds) to wait for data on the socket. Default is `10s`
+
+[id="{version}-plugins-{type}s-{plugin}-truststore"]
+===== `truststore`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+If you need to use a custom truststore (`.jks`) specify that here. This does not work with .pem certs!
+
+[id="{version}-plugins-{type}s-{plugin}-truststore_password"]
+===== `truststore_password`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Specify the truststore password here.
+Note, most .jks files created with keytool require a password!
+
+[id="{version}-plugins-{type}s-{plugin}-truststore_type"]
+===== `truststore_type`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"JKS"`
+
+Specify the truststore type here. One of `JKS` or `PKCS12`. Default is `JKS`
+
+[id="{version}-plugins-{type}s-{plugin}-user"]
+===== `user`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Username to use with HTTP authentication for ALL requests. Note that you can also set this per-URL.
+If you set this you must also set the `password` option.
+
+[id="{version}-plugins-{type}s-{plugin}-validate_after_inactivity"]
+===== `validate_after_inactivity`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `200`
+
+How long to wait before checking for a stale connection to determine if a keepalive request is needed.
+Consider setting this value lower than the default, possibly to 0, if you get connection errors regularly.
+
+This client is based on Apache Commons. Here's how the
+https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/org/apache/http/impl/conn/PoolingHttpClientConnectionManager.html#setValidateAfterInactivity(int)[Apache
+Commons documentation] describes this option: "Defines period of inactivity in
+milliseconds after which persistent connections must be re-validated prior to
+being leased to the consumer. Non-positive value passed to this method disables
+connection validation. This check helps detect connections that have become
+stale (half-closed) while kept inactive in the pool."
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
