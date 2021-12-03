@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.6
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-input-snmptrap/blob/v3.0.6/CHANGELOG.md
+:version: v3.1.0
+:release_date: 2021-11-19
+:changelog_url: https://github.com/logstash-plugins/logstash-input-snmptrap/blob/v3.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -24,13 +24,25 @@ include::{include_path}/plugin_header.asciidoc[]
 
 Read snmp trap messages as events
 
-Resulting `@message` looks like :
+Resulting `message` field resembles:
 [source,ruby]
   #<SNMP::SNMPv1_Trap:0x6f1a7a4 @varbind_list=[#<SNMP::VarBind:0x2d7bcd8f @value="teststring",
   @name=[1.11.12.13.14.15]>], @timestamp=#<SNMP::TimeTicks:0x1af47e9d @value=55>, @generic_trap=6,
   @enterprise=[1.2.3.4.5.6], @source_ip="127.0.0.1", @agent_addr=#<SNMP::IpAddress:0x29a4833e @value="\xC0\xC1\xC2\xC3">,
   @specific_trap=99>
 
+
+[id="plugins-{type}s-{plugin}-ecs"]
+==== Compatibility with the Elastic Common Schema (ECS)
+
+Because SNMP data has specific field names based on OIDs, we recommend setting a <<plugins-{type}s-{plugin}-target>>.
+The source host field changes based on <<plugins-{type}s-{plugin}-ecs_compatibility>>.
+
+[cols="<l,<l,e,<e"]
+|=======================================================================
+|ECS disabled |ECS v1, v8    |Description
+|[host]       |[host][ip]    |IP address of the host e.g. "192.168.1.11"
+|=======================================================================
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Snmptrap Input Configuration Options
@@ -41,8 +53,10 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |=======================================================================
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-community>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-ecs_compatibility>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-host>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-target>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-yamlmibdir>> |<<string,string>>|No
 |=======================================================================
 
@@ -58,6 +72,19 @@ input plugins.
   * Default value is `"public"`
 
 SNMP Community String to listen for.
+
+[id="plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+  * Value type is <<string,string>>
+  * Supported values are:
+    ** `disabled`: does not use ECS-compatible field names (fields might be set at the root of the event)
+    ** `v1`, `v8`: avoids field names that might conflict with Elastic Common Schema (for example, the `host` field)
+  * Default value depends on which version of Logstash is running:
+   ** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
+   ** Otherwise, the default value is `disabled`.
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
 
 [id="plugins-{type}s-{plugin}-host"]
 ===== `host` 
@@ -75,6 +102,17 @@ The address to listen on
 
 The port to listen on. Remember that ports less than 1024 (privileged
 ports) may require root to use. hence the default of 1062.
+
+[id="plugins-{type}s-{plugin}-target"]
+===== `target`
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting
+
+The name of the field under which SNMP payloads are assigned.
+If not specified data will be stored in the root of the event.
+
+Setting a target is recommended when <<plugins-{type}s-{plugin}-ecs_compatibility>> is enabled.
 
 [id="plugins-{type}s-{plugin}-yamlmibdir"]
 ===== `yamlmibdir` 
