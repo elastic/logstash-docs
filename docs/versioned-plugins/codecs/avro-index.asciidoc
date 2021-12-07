@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v3.3.1-plugins-codecs-avro,v3.3.1>> | 2021-12-07
 | <<v3.3.0-plugins-codecs-avro,v3.3.0>> | 2021-08-19
 | <<v3.2.4-plugins-codecs-avro,v3.2.4>> | 2020-08-21
 | <<v3.2.3-plugins-codecs-avro,v3.2.3>> | 2017-11-07
@@ -13,6 +14,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.2.0-plugins-codecs-avro,v3.2.0>> | 2017-05-19
 |=======================================================================
 
+include::avro-v3.3.1.asciidoc[]
 include::avro-v3.3.0.asciidoc[]
 include::avro-v3.2.4.asciidoc[]
 include::avro-v3.2.3.asciidoc[]
