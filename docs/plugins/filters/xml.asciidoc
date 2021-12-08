@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.1.2
-:release_date: 2021-06-23
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-xml/blob/v4.1.2/CHANGELOG.md
+:version: v4.1.3
+:release_date: 2021-12-07
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-xml/blob/v4.1.3/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -100,6 +100,18 @@ By default the parser is not strict and thus accepts some invalid content.
 Currently supported options are:
 
  - `strict` - forces the parser to fail early instead of accumulating errors when content is not valid xml.
+ 
+Control characters such as ASCII 0x0 are not allowed and _always_ result in non-valid XML.
+
+When XML content is not valid, it will be tagged as `_xmlparsefailure`.
+
+XML specs:
+
+* XML 1.0 Spec: https://www.w3.org/TR/2008/REC-xml-20081126/#charsets
+* XML 1.1 Spec: https://www.w3.org/TR/xml11/#charsets
+
+
+ 
 
 [id="plugins-{type}s-{plugin}-remove_namespaces"]
 ===== `remove_namespaces` 
@@ -188,10 +200,12 @@ destination field. Multiple values returned will be pushed onto the
 destination field as an array. As such, multiple matches across
 multiple source fields will produce duplicate entries in the field.
 
-More on XPath: http://www.w3schools.com/xml/xml_xpath.asp
+[id="plugins-{type}s-{plugin}-xpath_resources"]
+====== Additional XPath resources
 
-The XPath functions are particularly powerful:
-http://www.w3schools.com/xsl/xsl_functions.asp
+For more information on XPath, see https://www.w3schools.com/xml/xml_xpath.asp.
+
+The https://www.w3schools.com/xml/xsl_functions.asp[XPath functions] are particularly powerful. 
 
 
 
