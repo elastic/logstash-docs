@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.0
-:release_date: 2021-11-11
-:changelog_url: https://github.com/logstash-plugins/logstash-input-salesforce/blob/v3.1.0/CHANGELOG.md
+:version: v3.2.0
+:release_date: 2021-12-07
+:changelog_url: https://github.com/logstash-plugins/logstash-input-salesforce/blob/v3.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -86,6 +86,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-sfdc_object_name>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-to_underscores>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-use_test_sandbox>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-use_tooling_api>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-username>> |<<string,string>>|Yes
 |=======================================================================
 
@@ -205,6 +206,18 @@ logging in through test.salesforce.com
 Use either this or the `sfdc_instance_url` configuration option
 but not both to configure the url to which the plugin connects to.
 
+[id="plugins-{type}s-{plugin}-use_tooling_api"]
+===== `use_tooling_api`
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Set this to true to connect to the sfdc tooling api instead of the regular
+sfdc rest api. See
+https://developer.salesforce.com/docs/atlas.en-us.api_tooling.meta/api_tooling
+for details about the sfdc tooling api. Use cases for the sfdc tooling api
+include reading apex unit test results, flow coverage results (e.g. coverage
+of elements of sfdc flows) and security health check risks.
 
 [id="plugins-{type}s-{plugin}-username"]
 ===== `username` 
