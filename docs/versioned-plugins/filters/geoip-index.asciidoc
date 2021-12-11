@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v7.2.6-plugins-filters-geoip,v7.2.6>> | 2021-12-10
 | <<v7.2.5-plugins-filters-geoip,v7.2.5>> | 2021-11-10
 | <<v7.2.4-plugins-filters-geoip,v7.2.4>> | 2021-10-29
 | <<v7.2.3-plugins-filters-geoip,v7.2.3>> | 2021-09-29
@@ -32,6 +33,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v4.1.1-plugins-filters-geoip,v4.1.1>> | 2017-05-15
 |=======================================================================
 
+include::geoip-v7.2.6.asciidoc[]
 include::geoip-v7.2.5.asciidoc[]
 include::geoip-v7.2.4.asciidoc[]
 include::geoip-v7.2.3.asciidoc[]
