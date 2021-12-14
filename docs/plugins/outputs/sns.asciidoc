@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.7
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-output-sns/blob/v4.0.7/CHANGELOG.md
+:version: v4.0.8
+:release_date: 2021-11-30
+:changelog_url: https://github.com/logstash-plugins/logstash-output-sns/blob/v4.0.8/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!

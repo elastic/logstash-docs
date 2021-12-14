@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.5.4
-:release_date: 2021-09-29
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.5.4/CHANGELOG.md
+:version: v3.5.6
+:release_date: 2021-12-02
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.5.6/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -22,7 +22,7 @@ include::{include_path}/plugin_header.asciidoc[]
 ==== Description
 
 The mutate filter allows you to perform general mutations on fields. You
-can rename, remove, replace, and modify fields in your events.
+can rename, replace, and modify fields in your events.
 
 [id="plugins-{type}s-{plugin}-proc_order"]
 ===== Processing order
@@ -39,7 +39,6 @@ Mutations in a config file are executed in this order:
 * capitalize
 * lowercase
 * strip
-* remove
 * split
 * join
 * merge
@@ -101,6 +100,14 @@ filter plugins.
 Convert a field's value to a different type, like turning a string to an
 integer. If the field value is an array, all members will be converted.
 If the field is a hash no action will be taken.
+
+.Conversion insights
+[NOTE]
+================================================================================
+The values are converted using Ruby semantics.
+Be aware that using `float` and `float_eu` converts the value to a double-precision 64-bit IEEE 754 floating point decimal number.
+In order to maintain precision due to the conversion, you should use a `double` in the Elasticsearch mappings.
+================================================================================
 
 Valid conversion targets, and their expected behaviour with different inputs are:
 
