@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v6.2.4-plugins-inputs-tcp,v6.2.4>> | 2021-12-15
 | <<v6.2.3-plugins-inputs-tcp,v6.2.3>> | 2021-12-10
 | <<v6.2.2-plugins-inputs-tcp,v6.2.2>> | 2021-11-11
 | <<v6.2.1-plugins-inputs-tcp,v6.2.1>> | 2021-08-25
@@ -22,6 +23,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v6.0.2-plugins-inputs-tcp,v6.0.2>> | 2019-03-09
 | <<v6.0.1-plugins-inputs-tcp,v6.0.1>> | 2019-03-08
 | <<v6.0.0-plugins-inputs-tcp,v6.0.0>> | 2019-01-11
+| <<v5.2.4-plugins-inputs-tcp,v5.2.4>> | 2021-12-15
 | <<v5.2.3-plugins-inputs-tcp,v5.2.3>> | 2019-06-05
 | <<v5.2.2-plugins-inputs-tcp,v5.2.2>> | 2019-03-09
 | <<v5.2.1-plugins-inputs-tcp,v5.2.1>> | 2019-03-08
@@ -43,6 +45,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v4.1.2-plugins-inputs-tcp,v4.1.2>> | 2017-06-23
 |=======================================================================
 
+include::tcp-v6.2.4.asciidoc[]
 include::tcp-v6.2.3.asciidoc[]
 include::tcp-v6.2.2.asciidoc[]
 include::tcp-v6.2.1.asciidoc[]
@@ -60,6 +63,7 @@ include::tcp-v6.0.3.asciidoc[]
 include::tcp-v6.0.2.asciidoc[]
 include::tcp-v6.0.1.asciidoc[]
 include::tcp-v6.0.0.asciidoc[]
+include::tcp-v5.2.4.asciidoc[]
 include::tcp-v5.2.3.asciidoc[]
 include::tcp-v5.2.2.asciidoc[]
 include::tcp-v5.2.1.asciidoc[]
