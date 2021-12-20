@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.0
-:release_date: 2020-05-27
-:changelog_url: https://github.com/logstash-plugins/logstash-input-imap/blob/v3.1.0/CHANGELOG.md
+:version: v3.2.0
+:release_date: 2021-12-06
+:changelog_url: https://github.com/logstash-plugins/logstash-input-imap/blob/v3.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -27,6 +27,15 @@ Read mails from IMAP server
 Periodically scan an IMAP folder (`INBOX` by default) and move any read messages
 to the trash.
 
+[id="plugins-{type}s-{plugin}-ecs"]
+==== Compatibility with the Elastic Common Schema (ECS)
+
+The plugin includes sensible defaults that change based on <<plugins-{type}s-{plugin}-ecs_compatibility,ECS compatibility mode>>.
+When ECS compatibility is disabled, mail headers and attachments are targeted at the root level.
+When targeting an ECS version, headers and attachments target `@metadata` sub-fields unless configured otherwise in order
+to avoid conflict with ECS fields.
+See <<plugins-{type}s-{plugin}-headers_target>>, and <<plugins-{type}s-{plugin}-attachments_target>>.
+
 [id="plugins-{type}s-{plugin}-options"]
 ==== Imap Input Configuration Options
 
@@ -35,12 +44,15 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-attachments_target>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-check_interval>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-content_type>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-delete>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-ecs_compatibility>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-expunge>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-fetch_count>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-folder>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-headers_target>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-host>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-lowercase_headers>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-password>> |<<password,password>>|Yes
@@ -59,6 +71,16 @@ input plugins.
 
 &nbsp;
 
+[id="plugins-{type}s-{plugin}-attachments_target"]
+===== `attachments_target`
+
+  * Value type is <<string,string>>
+  * Default value depends on whether <<plugins-{type}s-{plugin}-ecs_compatibility>> is enabled:
+    ** ECS Compatibility disabled: `"[attachments]"`
+    ** ECS Compatibility enabled: `"[@metadata][input][imap][attachments]"
+
+The name of the field under which mail attachments information will be added, if <<plugins-{type}s-{plugin}-save_attachments>> is set.
+
 [id="plugins-{type}s-{plugin}-check_interval"]
 ===== `check_interval`
 
@@ -73,8 +95,7 @@ input plugins.
   * Value type is <<string,string>>
   * Default value is `"text/plain"`
 
-For multipart messages, use the first part that has this
-content-type as the event message.
+For multipart messages, use the first part that has this content-type as the event message.
 
 [id="plugins-{type}s-{plugin}-delete"]
 ===== `delete`
@@ -83,6 +104,21 @@ content-type as the event message.
   * Default value is `false`
 
 
+
+[id="plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+  * Value type is <<string,string>>
+  * Supported values are:
+    ** `disabled`: does not use ECS-compatible field names (for example, `From` header field is added to the event)
+    ** `v1`, `v8`: avoids field names that might conflict with Elastic Common Schema (for example, the `From` header is added as metadata)
+  * Default value depends on which version of Logstash is running:
+    ** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
+    ** Otherwise, the default value is `disabled`.
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
+The value of this setting affects the _default_ value of <<plugins-{type}s-{plugin}-headers_target>> and
+<<plugins-{type}s-{plugin}-attachments_target>>.
 
 [id="plugins-{type}s-{plugin}-expunge"]
 ===== `expunge`
@@ -107,6 +143,19 @@ content-type as the event message.
   * Default value is `"INBOX"`
 
 
+
+[id="plugins-{type}s-{plugin}-headers_target"]
+===== `headers_target`
+
+  * Value type is <<string,string>>
+  * Default value depends on whether <<plugins-{type}s-{plugin}-ecs_compatibility>> is enabled:
+    ** ECS Compatibility disabled: no default value (for example, the subject header is stored under the `"subject"` name)
+    ** ECS Compatibility enabled: `"[@metadata][input][imap][headers]"`
+
+The name of the field under which mail headers will be added.
+
+Setting `headers_target => ''` skips headers processing and no header is added to the event.
+Except the date header, if present, which is always used as the event's `@timestamp`.
 
 [id="plugins-{type}s-{plugin}-host"]
 ===== `host`

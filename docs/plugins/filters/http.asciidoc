@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.0.2
-:release_date: 2019-06-24
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-http/blob/v1.0.2/CHANGELOG.md
+:version: v1.2.0
+:release_date: 2021-12-06
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-http/blob/v1.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -23,6 +23,14 @@ include::{include_path}/plugin_header.asciidoc[]
 
 The HTTP filter provides integration with external web services/REST APIs.
 
+[id="plugins-{type}s-{plugin}-ecs"]
+==== Compatibility with the Elastic Common Schema (ECS)
+
+The plugin includes sensible defaults that change based on <<plugins-{type}s-{plugin}-ecs_compatibility,ECS compatibility mode>>.
+When targeting an ECS version, headers are set as `@metadata` and the `target_body` is a required option.
+See <<plugins-{type}s-{plugin}-target_body>>, and <<plugins-{type}s-{plugin}-target_headers>>.
+
+
 [id="plugins-{type}s-{plugin}-options"]
 ==== HTTP Filter Configuration Options
 
@@ -33,6 +41,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-body>> | String, Array or Hash |No
 | <<plugins-{type}s-{plugin}-body_format>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-ecs_compatibility>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-headers>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-query>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-target_body>> |<<string,string>>|No
@@ -92,6 +101,22 @@ The body of the HTTP request to be sent.
 
 If set to `"json"` the body will be serialized as JSON. Otherwise it is sent as is.
 
+[id="plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+  * Value type is <<string,string>>
+  * Supported values are:
+    ** `disabled`: does not use ECS-compatible field names (for example, response headers target `headers` field by default)
+    ** `v1`, `v8`: avoids field names that might conflict with Elastic Common Schema (for example, headers are added as metadata)
+  * Default value depends on which version of Logstash is running:
+    ** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
+    ** Otherwise, the default value is `disabled`.
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
+The value of this setting affects the _default_ value of <<plugins-{type}s-{plugin}-target_body>> and
+<<plugins-{type}s-{plugin}-target_headers>>.
+
+
 [id="plugins-{type}s-{plugin}-headers"]
 ===== `headers`
 
@@ -113,17 +138,21 @@ Define the query string parameters (key-value pairs) to be sent in the HTTP requ
 ===== `target_body`
 
   * Value type is <<hash,hash>>
-  * There is no default value
+  * Default value depends on whether <<plugins-{type}s-{plugin}-ecs_compatibility>> is enabled:
+    ** ECS Compatibility disabled: `"[body]"
+    ** ECS Compatibility enabled: no default value, needs to be specified explicitly
 
-Define the target field for placing the body of the HTTP response. If this setting is omitted, the data will be stored in the "body" field.
+Define the target field for placing the body of the HTTP response.
 
 [id="plugins-{type}s-{plugin}-target_headers"]
 ===== `target_headers`
 
   * Value type is <<hash,hash>>
-  * There is no default value
+  * Default value depends on whether <<plugins-{type}s-{plugin}-ecs_compatibility>> is enabled:
+    ** ECS Compatibility disabled: `"[headers]"`
+    ** ECS Compatibility enabled: `"[@metadata][filter][http][response][headers]"`
 
-Define the target field for placing the headers of the HTTP response. If this setting is omitted, the data will be stored in the "headers" field.
+Define the target field for placing the headers of the HTTP response.
 
 [id="plugins-{type}s-{plugin}-url"]
 ===== `url`
@@ -136,7 +165,7 @@ The URL to send the request to. The value can be fetched from event fields.
 [id="plugins-{type}s-{plugin}-verb"]
 ===== `verb`
 
-  * Value type can be either `"GET"`, `"HEAD"`, `"PATCH"`, `"DELETE"`, `"POST"`
+  * Value type can be either `"GET"`, `"HEAD"`, `"PATCH"`, `"DELETE"`, `"POST"`, `"PUT"`
   * Default value is `"GET"`
 
 The verb to be used for the HTTP request.
