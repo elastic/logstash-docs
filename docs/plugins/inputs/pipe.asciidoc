@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.7
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-input-pipe/blob/v3.0.7/CHANGELOG.md
+:version: v3.1.0
+:release_date: 2021-11-18
+:changelog_url: https://github.com/logstash-plugins/logstash-input-pipe/blob/v3.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -28,6 +28,23 @@ By default, each event is assumed to be one line. If you
 want to join lines, you'll want to use the multiline codec.
 
 
+[id="plugins-{type}s-{plugin}-ecs"]
+==== Compatibility with the Elastic Common Schema (ECS)
+
+This plugin adds extra fields about the event's source. 
+Configure the <<plugins-{type}s-{plugin}-ecs_compatibility>> option if you want
+to ensure that these fields are compatible with {ecs-ref}[ECS].
+
+These fields are added after the event has been decoded by the appropriate codec,
+and will not overwrite existing values.
+
+|========
+| ECS Disabled | ECS v1 , v8               | Description
+
+| `host`       | `[host][name]`            | The name of the {ls} host that processed the event
+| `command`    | `[process][command_line]` | The command run by the plugin
+|========
+
 [id="plugins-{type}s-{plugin}-options"]
 ==== Pipe Input Configuration Options
 
@@ -37,6 +54,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |=======================================================================
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-command>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-ecs_compatibility>> |<<string,string>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -55,8 +73,51 @@ Command to run and read events from, one line at a time.
 
 Example:
 [source,ruby]
-   command => "echo hello world"
+-----
+input {
+  pipe {
+    command => "echo ¡Hola!"
+  }
+}
+-----
 
+[id="plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+  * Value type is <<string,string>>
+  * Supported values are:
+    ** `disabled`: uses backwards compatible field names, such as `[host]`
+    ** `v1`, `v8`: uses fields that are compatible with ECS, such as `[host][name]`
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
+See <<plugins-{type}s-{plugin}-ecs>> for detailed information.
+
+
+**Sample output: ECS enabled**
+[source,ruby]
+-----
+{
+    "@timestamp"=>2021-11-16T09:18:45.306Z,
+    "message" => "¡Hola!",
+    "process" => {
+        "command_line" => "echo '¡Hola!'"
+    },
+    "host" => {
+        "name" => "deus-ex-machina"
+    }
+}
+-----
+
+**Sample output: ECS disabled**
+[source,ruby]
+-----
+{
+    "@timestamp"=>2021-11-16T09:18:45.306Z,
+    "message" => "¡Hola!",
+    "command" => "echo '¡Hola!'",
+    "host" => "deus-ex-machina"
+}
+-----
 
 
 [id="plugins-{type}s-{plugin}-common-options"]

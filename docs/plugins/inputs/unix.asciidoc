@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.7
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-input-unix/blob/v3.0.7/CHANGELOG.md
+:version: v3.1.0
+:release_date: 2021-11-22
+:changelog_url: https://github.com/logstash-plugins/logstash-input-unix/blob/v3.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -29,6 +29,23 @@ Like `stdin` and `file` inputs, each event is assumed to be one line of text.
 Can either accept connections from clients or connect to a server,
 depending on `mode`.
 
+[id="plugins-{type}s-{plugin}-ecs"]
+==== Compatibility with the Elastic Common Schema (ECS)
+
+This plugin adds extra fields about the event's source. 
+Configure the <<plugins-{type}s-{plugin}-ecs_compatibility>> option if you want
+to ensure that these fields are compatible with {ecs-ref}[ECS].
+
+These fields are added after the event has been decoded by the appropriate codec,
+and will not overwrite existing values.
+
+|========
+| ECS Disabled | ECS v1 , v8      | Description
+
+| `host`       | `[host][name]`   | The name of the {ls} host that processed the event
+| `path`       | `[file][path]`   | The socket path configured in the plugin
+|========
+
 [id="plugins-{type}s-{plugin}-options"]
 ==== Unix Input Configuration Options
 
@@ -38,6 +55,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |=======================================================================
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-data_timeout>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-ecs_compatibility>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-force_unlink>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-mode>> |<<string,string>>, one of `["server", "client"]`|No
 | <<plugins-{type}s-{plugin}-path>> |<<string,string>>|Yes
@@ -59,6 +77,44 @@ The 'read' timeout in seconds. If a particular connection is idle for
 more than this timeout period, we will assume it is dead and close it.
 
 If you never want to timeout, use -1.
+
+[id="plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+  * Value type is <<string,string>>
+  * Supported values are:
+    ** `disabled`: uses backwards compatible field names, such as `[host]`
+    ** `v1`, `v8`: uses fields that are compatible with ECS, such as `[host][name]`
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
+See <<plugins-{type}s-{plugin}-ecs>> for detailed information.
+
+
+**Sample output: ECS enabled**
+[source,ruby]
+-----
+{
+    "@timestamp" => 2021-11-16T13:20:06.308Z,
+    "file" => {
+      "path" => "/tmp/sock41299"
+    },
+    "host" => {
+      "name" => "deus-ex-machina"
+    },
+    "message" => "foo"
+}
+-----
+
+**Sample output: ECS disabled**
+[source,ruby]
+-----
+{
+    "@timestamp" => 2021-11-16T13:20:06.308Z,
+    "path" => "/tmp/sock41299",
+    "host" => "deus-ex-machina",
+    "message" => "foo"
+}
+-----
 
 [id="plugins-{type}s-{plugin}-force_unlink"]
 ===== `force_unlink` 
