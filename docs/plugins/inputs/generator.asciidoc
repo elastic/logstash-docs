@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.6
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-input-generator/blob/v3.0.6/CHANGELOG.md
+:version: v3.1.0
+:release_date: 2021-11-04
+:changelog_url: https://github.com/logstash-plugins/logstash-input-generator/blob/v3.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -28,6 +28,19 @@ The general intention of this is to test performance of plugins.
 
 An event is generated first
 
+[id="plugins-{type}s-{plugin}-ecs"]
+==== Compatibility with the Elastic Common Schema (ECS)
+
+This plugin uses different field names depending on whether {ecs-ref}[ECS-compatibility]
+in enabled (see also <<plugins-{type}s-{plugin}-ecs_compatibility>>).
+
+|========
+| ECS Disabled | ECS v1, v8 | Description
+
+| `host`  | `[host][name]` | The name of the {ls} host that processed the event
+| `sequence` | `[event][sequence]` | The sequence number for the generated event
+|========
+
 [id="plugins-{type}s-{plugin}-options"]
 ==== Generator Input Configuration Options
 
@@ -37,6 +50,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |=======================================================================
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-count>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-ecs_compatibility>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-lines>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-message>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-threads>> |<<number,number>>|No
@@ -56,6 +70,42 @@ input plugins.
 Set how many messages should be generated.
 
 The default, `0`, means generate an unlimited number of events.
+
+[id="plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+  * Value type is <<string,string>>
+  * Supported values are:
+    ** `disabled`: uses backwards compatible field names, such as `[host]`
+    ** `v1`, `v8`: uses fields that are compatible with ECS, such as `[host][name]`
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
+See <<plugins-{type}s-{plugin}-ecs>> for detailed information.
+
+
+**Sample output: ECS enabled**
+[source,ruby]
+-----
+{
+    "message" => "Hello world!",
+    "event" => {
+        "sequence" => 0
+    },
+    "host" => {
+        "name" => "the-machine"
+    }
+}
+-----
+
+**Sample output: ECS disabled**
+[source,ruby]
+-----
+{
+    "message" => "Hello world!",
+    "sequence" => 0,
+    "host" => "the-machine"
+}
+-----
 
 [id="plugins-{type}s-{plugin}-lines"]
 ===== `lines` 
@@ -80,7 +130,7 @@ Example:
       }
     }
 
-The above will emit `line 1` then `line 2` then `line`, then `line 1`, etc...
+The above will emit `line 1` then `line 2` then `line 3`, then `line 1`, etc...
 
 [id="plugins-{type}s-{plugin}-message"]
 ===== `message` 
