@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.2
-:release_date: 2019-12-05
-:changelog_url: https://github.com/logstash-plugins/logstash-input-jms/blob/v3.1.2/CHANGELOG.md
+:version: v3.2.0
+:release_date: 2021-11-19
+:changelog_url: https://github.com/logstash-plugins/logstash-input-jms/blob/v3.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -34,6 +34,14 @@ JMS configurations can be done either entirely in the Logstash configuration fil
   configurations, should also use the combination of yaml file and Logstash configuration.
 
 
+[id="plugins-{type}s-{plugin}-ecs"]
+==== Compatibility with the Elastic Common Schema (ECS)
+
+JMS data is application specific. ECS compliance for fields depends on the use case.
+The plugin includes sensible defaults that change based on <<plugins-{type}s-{plugin}-ecs_compatibility,ECS compatibility mode>>.
+When ECS compatibility is disabled, headers, properties, and payload are targeted at the root level of the event to maintain compatibility with legacy usage of this plugin.
+When targeting an ECS version, headers and properties target `@metadata` sub-fields unless configured otherwise in order to avoid conflict with ECS fields.
+See <<plugins-{type}s-{plugin}-headers_target>>, <<plugins-{type}s-{plugin}-properties_target>> and <<plugins-{type}s-{plugin}-target>>.
 
 ==== Sample Configuration using Logstash Configuration Only
 
@@ -61,7 +69,7 @@ The JMS plugin can also be configured using JNDI if desired.
         truststore => '/Users/logstash-user/security/truststore.jks'
         truststore_password => 'yet_another_secret'
         # Parts of the JMS message to be included <8>
-        include_header => false
+        include_headers => false
         include_properties => false
         include_body => true
         # Message selector
@@ -99,7 +107,7 @@ The JMS plugin can also be configured using JNDI if desired.
  input {
     jms {
         # Logstash Configuration Settings. <1>
-        include_header => false
+        include_headers => false
         include_properties => false
         include_body => true
         use_jms_timestamp => false
@@ -145,7 +153,7 @@ This section contains sample configurations for connecting to a JMS provider tha
  input {
     jms {
         # Logstash Configuration File Settings <1>
-        include_header => false
+        include_headers => false
         include_properties => false
         include_body => true
         use_jms_timestamp => false
@@ -206,7 +214,7 @@ This section contains sample configurations for connecting to a JMS provider tha
  input {
     jms {
         # Logstash specific configuration settings <1>
-        include_header => false
+        include_headers => false
         include_properties => false
         include_body => true
         use_jms_timestamp => false
@@ -380,10 +388,13 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-durable_subscriber>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-durable_subscriber_client_id>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-durable_subscriber_name>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-ecs_compatibility>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-factory>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-factory_settings>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-headers_target>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-include_body>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-include_header>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-include_headers>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-include_properties>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-interval>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-jndi_context>> |<<hash,hash>>|No
@@ -392,6 +403,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-keystore_password>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-oracle_aq_buffered_messages>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-password>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-properties_target>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-pub_sub>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-require_jars>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-runner>> |<<string,string>>|__Deprecated__
@@ -399,6 +411,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-skip_headers>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-skip_properties>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-system_properties>> |<<hash,hash>>|No
+| <<plugins-{type}s-{plugin}-target>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-threads>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-timeout>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-truststore>> |a valid filesystem path|No
@@ -430,6 +443,8 @@ Url to use when connecting to the JMS provider. This is only relevant for non-JN
   * There is no default value for this setting.
 
 Name of the destination queue or topic to use.
+
+TIP: If the destination setting doesn't appear to be working properly, try this format: `<JMS module name>!<JMS queue name>`.
 
 [id="plugins-{type}s-{plugin}-durable_subscriber"]
 ===== `durable_subscriber`
@@ -467,6 +482,21 @@ This represents the value of the client ID for a durable subscribtion, and is on
 This represents the value of the subscriber name for a durable subscribtion, and is only used if `durable_subscriber`
 is set to `true`. Please consult your JMS Provider documentation for constraints and requirements for this setting.
 
+[id="plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+  * Value type is <<string,string>>
+  * Supported values are:
+    ** `disabled`: does not use ECS-compatible field names (fields might be set at the root of the event)
+    ** `v1`, `v8`: avoids field names that might conflict with Elastic Common Schema (for example, JMS specific properties)
+  * Default value depends on which version of Logstash is running:
+    ** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
+    ** Otherwise, the default value is `disabled`.
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
+The value of this setting affects the _default_ value of <<plugins-{type}s-{plugin}-headers_target>> and
+<<plugins-{type}s-{plugin}-properties_target>>.
+
 [id="plugins-{type}s-{plugin}-factory"]
 ===== `factory`
 
@@ -487,6 +517,16 @@ Hash of implementation specific configuration values to set on the connection fa
  `exclusive_consumer => true` would call `setExclusiveConsumer(true)` on the supplied connection factory.
  See your JMS provider documentation for implementation specific details.
 
+[id="plugins-{type}s-{plugin}-headers_target"]
+===== `headers_target`
+
+  * Value type is <<string,string>>
+  * Default value depends on whether <<plugins-{type}s-{plugin}-ecs_compatibility>> is enabled:
+    ** ECS Compatibility disabled: no default value for this setting
+    ** ECS Compatibility enabled: `"[@metadata][input][jms][headers]"
+
+The name of the field under which JMS headers will be added, if <<plugins-{type}s-{plugin}-include_headers>> is set.
+
 [id="plugins-{type}s-{plugin}-include_body"]
 ===== `include_body`
 
@@ -494,11 +534,12 @@ Hash of implementation specific configuration values to set on the connection fa
   * Default value is `true`
 
 Include JMS Message Body in the event.
-Supports TextMessage, MapMessage and ByteMessage.
+Supports TextMessage, MapMessage and BytesMessage.
 
-If the JMS Message is a TextMessage or ByteMessage, then the value will be in
+If the JMS Message is a TextMessage or BytesMessage, then the value will be in
 the "message" field of the event. If the JMS Message is a MapMessage, then all
-the key/value pairs will be added in the Hashmap of the event.
+the key/value pairs will be added at the top-level of the event by default.
+To avoid pollution of the top-level namespace, when receiving a MapMessage, use the <<plugins-{type}s-{plugin}-target>>.
 
 StreamMessage and ObjectMessage are not supported.
 
@@ -506,17 +547,41 @@ StreamMessage and ObjectMessage are not supported.
 ===== `include_header`
 
   * Value type is <<boolean,boolean>>
+  * This option is deprecated
+
+Note: This option is deprecated and it will be removed in the next major version of Logstash.
+Use `include_headers` instead.
+
+[id="plugins-{type}s-{plugin}-include_headers"]
+===== `include_headers`
+
+  * Value type is <<boolean,boolean>>
   * Default value is `true`
 
 A JMS message has three parts:
 
-* Message Headers (required)
-* Message Properties (optional)
-* Message Bodies (optional)
+  * Message Headers (required)
+  * Message Properties (optional)
+  * Message Body (optional)
 
 You can tell the input plugin which parts should be included in the event produced by Logstash.
 
-Include JMS Message Header Field values in the event.
+Include standard JMS message header field values in the event.
+Example headers:
+[source,ruby]
+-----
+    {
+        "jms_message_id" => "ID:amqhost-39547-1636977297920-71:1:1:1:1",
+        "jms_timestamp" => 1636977329102,
+        "jms_expiration" => 0,
+        "jms_delivery_mode" => "persistent",
+        "jms_redelivered" => false,
+        "jms_destination" => "topic://41ad5342149901ad",
+        "jms_priority" => 4,
+        "jms_type" => "sample",
+        "jms_correlation_id" => "28d975cb-14ff-4285-841e-05ef1e0a7ab2"
+    }
+-----
 
 [id="plugins-{type}s-{plugin}-include_properties"]
 ===== `include_properties`
@@ -589,6 +654,16 @@ Only for use with Oracle AQ
 
 Password to use when connecting to the JMS provider.
 
+[id="plugins-{type}s-{plugin}-properties_target"]
+===== `properties_target`
+
+  * Value type is <<string,string>>
+  * Default value depends on whether <<plugins-{type}s-{plugin}-ecs_compatibility>> is enabled:
+    ** ECS Compatibility disabled: no default value for this setting
+    ** ECS Compatibility enabled: `"[@metadata][input][jms][properties]"
+
+The name of the field under which JMS properties will be added, if <<plugins-{type}s-{plugin}-include_properties>> is set.
+
 [id="plugins-{type}s-{plugin}-pub_sub"]
 ===== `pub_sub`
 
@@ -649,6 +724,17 @@ If `include_properties` is set, a list of properties to skip processing on can b
 
 Any System properties that the JMS provider requires can be set either in a Hash here, or in `jvm.options`
 
+[id="plugins-{type}s-{plugin}-target"]
+===== `target`
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The name of the field to assign MapMessage data into.
+If not specified data will be stored in the root of the event.
+
+NOTE: For TextMessage and BytesMessage the `target` has no effect. Use the codec setting instead
+e.g. `codec => json { target => "[jms]" }`.
 
 [id="plugins-{type}s-{plugin}-threads"]
 ===== `threads`
@@ -656,7 +742,7 @@ Any System properties that the JMS provider requires can be set either in a Hash
   * Value type is <<number,number>>
   * Default value is `1`
 
-* Note that if pub_sub is set to true, this value *must* be 1. A configuration error will be thrown otherwise
+NOTE: If pub_sub is set to `true`, this value *must* be `1`. A configuration error will be thrown otherwise!
 
 [id="plugins-{type}s-{plugin}-timeout"]
 ===== `timeout`
