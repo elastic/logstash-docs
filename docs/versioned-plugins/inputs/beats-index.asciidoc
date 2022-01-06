@@ -33,6 +33,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v6.0.2-plugins-inputs-beats,v6.0.2>> | 2019-09-11
 | <<v6.0.1-plugins-inputs-beats,v6.0.1>> | 2019-08-13
 | <<v6.0.0-plugins-inputs-beats,v6.0.0>> | 2019-02-04
+| <<v5.1.11-plugins-inputs-beats,v5.1.11>> | 2022-01-05
 | <<v5.1.10-plugins-inputs-beats,v5.1.10>> | 2021-12-18
 | <<v5.1.9-plugins-inputs-beats,v5.1.9>> | 2019-10-02
 | <<v5.1.8-plugins-inputs-beats,v5.1.8>> | 2018-11-30
@@ -108,6 +109,7 @@ include::beats-v6.0.3.asciidoc[]
 include::beats-v6.0.2.asciidoc[]
 include::beats-v6.0.1.asciidoc[]
 include::beats-v6.0.0.asciidoc[]
+include::beats-v5.1.11.asciidoc[]
 include::beats-v5.1.10.asciidoc[]
 include::beats-v5.1.9.asciidoc[]
 include::beats-v5.1.8.asciidoc[]
