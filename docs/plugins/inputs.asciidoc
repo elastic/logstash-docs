@@ -64,169 +64,169 @@ The following input plugins are available below. For a list of Elastic supported
 | <<plugins-inputs-xmpp,xmpp>> | Receives events over the XMPP/Jabber protocol | https://github.com/logstash-plugins/logstash-input-xmpp[logstash-input-xmpp]
 |=======================================================================
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-azure_event_hubs/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-azure_event_hubs/edit/main/docs/index.asciidoc
 include::inputs/azure_event_hubs.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-beats/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-beats/edit/main/docs/index.asciidoc
 include::inputs/beats.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-cloudwatch/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-cloudwatch/edit/main/docs/index.asciidoc
 include::inputs/cloudwatch.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-couchdb_changes/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-couchdb_changes/edit/main/docs/index.asciidoc
 include::inputs/couchdb_changes.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-dead_letter_queue/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-dead_letter_queue/edit/main/docs/index.asciidoc
 include::inputs/dead_letter_queue.asciidoc[]
 
 :edit_url:
 include::inputs/elastic_agent.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/edit/main/docs/index.asciidoc
 include::inputs/elasticsearch.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-exec/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-exec/edit/main/docs/index.asciidoc
 include::inputs/exec.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-file/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-file/edit/main/docs/index.asciidoc
 include::inputs/file.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-ganglia/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-ganglia/edit/main/docs/index.asciidoc
 include::inputs/ganglia.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-gelf/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-gelf/edit/main/docs/index.asciidoc
 include::inputs/gelf.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-generator/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-generator/edit/main/docs/index.asciidoc
 include::inputs/generator.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-github/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-github/edit/main/docs/index.asciidoc
 include::inputs/github.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-google_cloud_storage/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-google_cloud_storage/edit/main/docs/index.asciidoc
 include::inputs/google_cloud_storage.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-google_pubsub/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-google_pubsub/edit/main/docs/index.asciidoc
 include::inputs/google_pubsub.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-graphite/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-graphite/edit/main/docs/index.asciidoc
 include::inputs/graphite.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-heartbeat/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-heartbeat/edit/main/docs/index.asciidoc
 include::inputs/heartbeat.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-http/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-http/edit/main/docs/index.asciidoc
 include::inputs/http.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-http_poller/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-http_poller/edit/main/docs/index.asciidoc
 include::inputs/http_poller.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-imap/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-imap/edit/main/docs/index.asciidoc
 include::inputs/imap.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-irc/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-irc/edit/main/docs/index.asciidoc
 include::inputs/irc.asciidoc[]
 
-:edit_url: https://github.com/elastic/logstash/blob/master/docs/static/core-plugins/inputs/java_generator.asciidoc
+:edit_url: https://github.com/elastic/logstash/blob/main/docs/static/core-plugins/inputs/java_generator.asciidoc
 include::../../../logstash/docs/static/core-plugins/inputs/java_generator.asciidoc[]
 
-:edit_url: https://github.com/elastic/logstash/blob/master/docs/static/core-plugins/inputs/java_stdin.asciidoc
+:edit_url: https://github.com/elastic/logstash/blob/main/docs/static/core-plugins/inputs/java_stdin.asciidoc
 include::../../../logstash/docs/static/core-plugins/inputs/java_stdin.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-integration-jdbc/edit/master/docs/input-jdbc.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-integration-jdbc/edit/main/docs/input-jdbc.asciidoc
 include::inputs/jdbc.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-jms/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-jms/edit/main/docs/index.asciidoc
 include::inputs/jms.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-jmx/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-jmx/edit/main/docs/index.asciidoc
 include::inputs/jmx.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-integration-kafka/edit/master/docs/input-kafka.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-integration-kafka/edit/main/docs/input-kafka.asciidoc
 include::inputs/kafka.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-kinesis/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-kinesis/edit/main/docs/index.asciidoc
 include::inputs/kinesis.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-log4j/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-log4j/edit/main/docs/index.asciidoc
 include::inputs/log4j.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-lumberjack/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-lumberjack/edit/main/docs/index.asciidoc
 include::inputs/lumberjack.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-meetup/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-meetup/edit/main/docs/index.asciidoc
 include::inputs/meetup.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-pipe/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-pipe/edit/main/docs/index.asciidoc
 include::inputs/pipe.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-puppet_facter/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-puppet_facter/edit/main/docs/index.asciidoc
 include::inputs/puppet_facter.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-integration-rabbitmq/edit/master/docs/input-rabbitmq.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-integration-rabbitmq/edit/main/docs/input-rabbitmq.asciidoc
 include::inputs/rabbitmq.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-redis/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-redis/edit/main/docs/index.asciidoc
 include::inputs/redis.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-relp/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-relp/edit/main/docs/index.asciidoc
 include::inputs/relp.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-rss/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-rss/edit/main/docs/index.asciidoc
 include::inputs/rss.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-s3/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-s3/edit/main/docs/index.asciidoc
 include::inputs/s3.asciidoc[]
 
 :edit_url: 
 include::inputs/s3-sns-sqs.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-salesforce/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-salesforce/edit/main/docs/index.asciidoc
 include::inputs/salesforce.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-snmp/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-snmp/edit/main/docs/index.asciidoc
 include::inputs/snmp.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-snmptrap/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-snmptrap/edit/main/docs/index.asciidoc
 include::inputs/snmptrap.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-sqlite/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-sqlite/edit/main/docs/index.asciidoc
 include::inputs/sqlite.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-sqs/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-sqs/edit/main/docs/index.asciidoc
 include::inputs/sqs.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-stdin/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-stdin/edit/main/docs/index.asciidoc
 include::inputs/stdin.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-stomp/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-stomp/edit/main/docs/index.asciidoc
 include::inputs/stomp.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-syslog/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-syslog/edit/main/docs/index.asciidoc
 include::inputs/syslog.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-tcp/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-tcp/edit/main/docs/index.asciidoc
 include::inputs/tcp.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-twitter/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-twitter/edit/main/docs/index.asciidoc
 include::inputs/twitter.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-udp/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-udp/edit/main/docs/index.asciidoc
 include::inputs/udp.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-unix/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-unix/edit/main/docs/index.asciidoc
 include::inputs/unix.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-varnishlog/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-varnishlog/edit/main/docs/index.asciidoc
 include::inputs/varnishlog.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-websocket/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-websocket/edit/main/docs/index.asciidoc
 include::inputs/websocket.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-wmi/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-wmi/edit/main/docs/index.asciidoc
 include::inputs/wmi.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-xmpp/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-input-xmpp/edit/main/docs/index.asciidoc
 include::inputs/xmpp.asciidoc[]
 
 
