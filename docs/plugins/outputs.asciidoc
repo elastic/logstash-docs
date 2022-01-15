@@ -89,13 +89,13 @@ include::outputs/datadog_metrics.asciidoc[]
 :edit_url: 
 include::outputs/dynatrace.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-output-elastic_app_search/edit/main/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-integration-elastic_enterprise_search/edit/main/docs/output-elastic_app_search.asciidoc
 include::outputs/elastic_app_search.asciidoc[]
 
-:edit_url: 
+:edit_url: https://github.com/logstash-plugins/logstash-integration-elastic_enterprise_search/edit/main/docs/output-elastic_workplace_search.asciidoc
 include::outputs/elastic_workplace_search.asciidoc[]
 
-:edit_url: 
+:edit_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/edit/main/docs/index.asciidoc
 include::outputs/elasticsearch.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-email/edit/main/docs/index.asciidoc
