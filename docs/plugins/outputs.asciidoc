@@ -137,7 +137,7 @@ include::outputs/influxdb.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-output-irc/edit/main/docs/index.asciidoc
 include::outputs/irc.asciidoc[]
 
-:edit_url: https://github.com/elastic/logstash/blob/main/docs/static/core-plugins/outputs/java_stdout.asciidoc
+:edit_url: https://github.com/elastic/logstash/edit/main/docs/static/core-plugins/outputs/java_stdout.asciidoc
 include::../../../logstash/docs/static/core-plugins/outputs/java_stdout.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-juggernaut/edit/main/docs/index.asciidoc
@@ -194,7 +194,7 @@ include::outputs/riemann.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-output-s3/edit/main/docs/index.asciidoc
 include::outputs/s3.asciidoc[]
 
-:edit_url: https://github.com/elastic/logstash/blob/main/docs/static/core-plugins/outputs/java_sink.asciidoc
+:edit_url: https://github.com/elastic/logstash/edit/main/docs/static/core-plugins/outputs/java_sink.asciidoc
 include::../../../logstash/docs/static/core-plugins/outputs/java_sink.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-sns/edit/main/docs/index.asciidoc
