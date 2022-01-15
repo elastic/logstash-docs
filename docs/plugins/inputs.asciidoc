@@ -127,10 +127,10 @@ include::inputs/imap.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-input-irc/edit/main/docs/index.asciidoc
 include::inputs/irc.asciidoc[]
 
-:edit_url: https://github.com/elastic/logstash/blob/main/docs/static/core-plugins/inputs/java_generator.asciidoc
+:edit_url: https://github.com/elastic/logstash/edit/main/docs/static/core-plugins/inputs/java_generator.asciidoc
 include::../../../logstash/docs/static/core-plugins/inputs/java_generator.asciidoc[]
 
-:edit_url: https://github.com/elastic/logstash/blob/main/docs/static/core-plugins/inputs/java_stdin.asciidoc
+:edit_url: https://github.com/elastic/logstash/edit/main/docs/static/core-plugins/inputs/java_stdin.asciidoc
 include::../../../logstash/docs/static/core-plugins/inputs/java_stdin.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-integration-jdbc/edit/main/docs/input-jdbc.asciidoc
