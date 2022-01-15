@@ -75,13 +75,13 @@ include::codecs/graphite.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-codec-gzip_lines/edit/main/docs/index.asciidoc
 include::codecs/gzip_lines.asciidoc[]
 
-:edit_url: https://github.com/elastic/logstash/blob/main/docs/static/core-plugins/codecs/java_dots.asciidoc
+:edit_url: https://github.com/elastic/logstash/edit/main/docs/static/core-plugins/codecs/java_dots.asciidoc
 include::../../../logstash/docs/static/core-plugins/codecs/java_dots.asciidoc[]
 
-:edit_url: https://github.com/elastic/logstash/blob/main/docs/static/core-plugins/codecs/java_line.asciidoc
+:edit_url: https://github.com/elastic/logstash/edit/main/docs/static/core-plugins/codecs/java_line.asciidoc
 include::../../../logstash/docs/static/core-plugins/codecs/java_line.asciidoc[]
 
-:edit_url: https://github.com/elastic/logstash/blob/main/docs/static/core-plugins/codecs/java_plain.asciidoc
+:edit_url: https://github.com/elastic/logstash/edit/main/docs/static/core-plugins/codecs/java_plain.asciidoc
 include::../../../logstash/docs/static/core-plugins/codecs/java_plain.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-codec-json/edit/main/docs/index.asciidoc
