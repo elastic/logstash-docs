@@ -12,14 +12,16 @@ filters and codecs--into one package.
 | <<plugins-integrations-rabbitmq,rabbitmq>> | Plugins for processing events to or from a RabbitMQ broker. | https://github.com/logstash-plugins/logstash-integration-rabbitmq[logstash-integration-rabbitmq]
 |=======================================================================
 
-:edit_url: https://github.com/logstash-plugins/logstash-integration-elastic_enterprise_search/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-integration-elastic_enterprise_search/edit/main/docs/index.asciidoc
 include::integrations/elastic_enterprise_search.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-integration-jdbc/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-integration-jdbc/edit/main/docs/index.asciidoc
 include::integrations/jdbc.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-integration-kafka/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-integration-kafka/edit/main/docs/index.asciidoc
 include::integrations/kafka.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-integration-rabbitmq/edit/master/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-integration-rabbitmq/edit/main/docs/index.asciidoc
 include::integrations/rabbitmq.asciidoc[]
+
+:edit_url: 
