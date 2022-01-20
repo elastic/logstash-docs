@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.3.1
-:release_date: 2021-11-05
-:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v11.3.1/CHANGELOG.md
+:version: v11.4.1
+:release_date: 2022-01-19
+:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v11.4.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -118,12 +118,8 @@ output {
 
 ==== Writing to different indices: best practices
 
-[NOTE]
-================================================================================
-You cannot use dynamic variable substitution when `ilm_enabled` is `true` and
-when using `ilm_rollover_alias`.
-
-================================================================================
+NOTE: You cannot use dynamic variable substitution when `ilm_enabled` is `true` 
+and when using `ilm_rollover_alias`.
 
 If you're sending events to the same Elasticsearch cluster, but you're targeting different indices you can:
 
@@ -510,7 +506,7 @@ overwritten with a warning.
 * Default value is `logs`.
 
 The data stream type used to construct the data stream at index time.
-Currently, only `logs`, `metrics` and `synthetics` are supported.
+Currently, only `logs`, `metrics`, `synthetics` and `traces` are supported.
 
 [id="plugins-{type}s-{plugin}-doc_as_upsert"]
 ===== `doc_as_upsert`

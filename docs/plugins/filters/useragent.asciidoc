@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.3.2
-:release_date: 2021-11-10
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-useragent/blob/v3.3.2/CHANGELOG.md
+:version: v3.3.3
+:release_date: 2021-12-22
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-useragent/blob/v3.3.3/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -39,21 +39,23 @@ output.
 
 [cols="<l,<l,e,<e"]
 |=======================================================================
-|ECS disabled |ECS v1 |Description |Notes
+|ECS disabled |ECS v1, v8 |Description |Notes
 
-|[name]     |[user_agent][name]                                  |Detected UA name |
-| N/A       |[user_agent][version]                               |Detected UA version |Only available in ECS mode
-|[major]    |[@metadata][filter][user_agent][version][major]     |UA major version |Only as meta-data in ECS mode
-|[minor]    |[@metadata][filter][user_agent][version][minor]     |UA minor version |Only as meta-data in ECS mode
-|[patch]    |[@metadata][filter][user_agent][version][patch]     |UA patch version |Only as meta-data in ECS mode
-|[os_name]  |[user_agent][os][name]                              |Detected operating-system name |
-| N/A       |[user_agent][os][version]                           |Detected OS version |Only available in ECS mode
-|[os_major] |[@metadata][filter][user_agent][os][version][major] |OS major version |Only as meta-data in ECS mode
-|[os_minor] |[@metadata][filter][user_agent][os][version][minor] |OS minor version |Only as meta-data in ECS mode
-|[os_patch] |[@metadata][filter][user_agent][os][version][patch] |OS patch version |Only as meta-data in ECS mode
-|[os_full]  |[user_agent][os][full]                              |Full operating-system name |
-|[device]   |[user_agent][device][name]                          |Device name |
+|[name]        |[user_agent][name]                                  |Detected UA name |
+|[version]*    |[user_agent][version]                               |Detected UA version |Only available in ECS mode
+|[major]       |[@metadata][filter][user_agent][version][major]     |UA major version |Only as meta-data in ECS mode
+|[minor]       |[@metadata][filter][user_agent][version][minor]     |UA minor version |Only as meta-data in ECS mode
+|[patch]       |[@metadata][filter][user_agent][version][patch]     |UA patch version |Only as meta-data in ECS mode
+|[os_name]     |[user_agent][os][name]                              |Detected operating-system name |
+|[os_version]* |[user_agent][os][version]                           |Detected OS version |Only available in ECS mode
+|[os_major]    |[@metadata][filter][user_agent][os][version][major] |OS major version |Only as meta-data in ECS mode
+|[os_minor]    |[@metadata][filter][user_agent][os][version][minor] |OS minor version |Only as meta-data in ECS mode
+|[os_patch]    |[@metadata][filter][user_agent][os][version][patch] |OS patch version |Only as meta-data in ECS mode
+|[os_full]     |[user_agent][os][full]                              |Full operating-system name |
+|[device]      |[user_agent][device][name]                          |Device name |
 |=======================================================================
+
+NOTE: `[version]` and `[os_version]` fields were added in Logstash **7.14** and are not available by default in earlier versions.
 
 Example:
 [source,ruby]
@@ -70,11 +72,11 @@ produces the following fields:
 -----
     {
         "name"=>"Firefox",
-        "version"=>"45.0",
+        "version"=>"45.0", # since plugin version 3.3.0
         "major"=>"45",
         "minor"=>"0",
         "os_name"=>"Mac OS X",
-        "os_version"=>"10.11",
+        "os_version"=>"10.11", # since plugin version 3.3.0
         "os_full"=>"Mac OS X 10.11",
         "os_major"=>"10",
         "os_minor"=>"11",

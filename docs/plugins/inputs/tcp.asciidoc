@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v6.2.5
-:release_date: 2021-12-18
-:changelog_url: https://github.com/logstash-plugins/logstash-input-tcp/blob/v6.2.5/CHANGELOG.md
+:version: v6.2.6
+:release_date: 2022-01-05
+:changelog_url: https://github.com/logstash-plugins/logstash-input-tcp/blob/v6.2.6/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -106,9 +106,9 @@ If an event is missing this metadata, it can be copied into place from the sourc
 [source,txt]
 -----
 filter {
-  if [@metadata][input][tcp][source] and not [host] {
+  if [@metadata][input][tcp][source] and ![host] {
     mutate {
-      copy {
+      copy => {
         "[@metadata][input][tcp][source][name]" => "[host][name]"
         "[@metadata][input][tcp][source][ip]"   => "[host][ip]"
       }
