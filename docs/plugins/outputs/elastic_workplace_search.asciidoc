@@ -7,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v2.1.2
-:release_date: 2021-06-07
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-elastic_enterprise_search/blob/v2.1.2/CHANGELOG.md
+:version: v2.2.0
+:release_date: 2022-01-24
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-elastic_enterprise_search/blob/v2.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -117,6 +117,8 @@ filter {
 output {
   elastic_workplace_search {
     source => "%{[source_id]}"
+    access_token => "abracadabra"
+    url => "http://workplace.search.com:3002"
   }
 }
 ----------------------------------
@@ -141,7 +143,17 @@ To keep the timestamp field, set this value to the name of the field where you w
 * Value type is <<string,string>>
 * There is no default value
 
-The value of the API endpoint in the form of a URL.
+The value of the API endpoint in the form of a URL. 
+
+**Examples**
+
+On premise instance:
+
+`http://workplace.company.com:3002`
+
+Elastic Cloud instance:  
+
+`https://7c455f508468426cb53912be65548117.ent-search.eu-west-1.aws.cloud.es.io`
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
