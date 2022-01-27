@@ -26,7 +26,7 @@ data. The Elasticsearch output plugin can store both time series datasets (such
 as logs, events, and metrics) and non-time series data in Elasticsearch.
 
 You can https://www.elastic.co/elasticsearch/[learn more about Elasticsearch] on
-the website landing page or in the {ref}[Elasticsearch documentation].
+the website landing page or in the https://www.elastic.co/guide/en/elasticsearch/reference/{branch}[Elasticsearch documentation].
 
 .Compatibility Note
 [NOTE]
@@ -206,7 +206,7 @@ The Index Lifecycle Management feature requires plugin version `9.3.1` or higher
 [NOTE]
 This feature requires an Elasticsearch instance of 6.6.0 or higher with at least a Basic license
 
-Logstash can use {ref}/index-lifecycle-management.html[Index Lifecycle
+Logstash can use https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/index-lifecycle-management.html[Index Lifecycle
 Management] to automate the management of indices over time.
 
 The use of Index Lifecycle Management is controlled by the `ilm_enabled`
@@ -229,7 +229,7 @@ rollover index of `{now/d}-00001`, which will name indices on the date that the
 index is rolled over, followed by an incrementing number. Note that the pattern
 must end with a dash and a number that will be incremented.
 
-See the {ref}/indices-rollover-index.html#_using_date_math_with_the_rollover_api[Rollover
+See the https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/indices-rollover-index.html#_using_date_math_with_the_rollover_api[Rollover
 API documentation] for more details on naming.
 
 The rollover alias, ilm pattern and policy can be modified.
@@ -255,7 +255,7 @@ NOTE: If the index property is supplied in the output definition, it will be ove
 
 ==== Batch Sizes
 
-This plugin attempts to send batches of events to the {ref}/docs-bulk.html[{es}
+This plugin attempts to send batches of events to the https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/docs-bulk.html[{es}
 Bulk API] as a single request. However, if a batch exceeds 20MB we break it up
 into multiple bulk requests. If a single document exceeds 20MB it is sent as a
 single request.
@@ -390,7 +390,7 @@ The Elasticsearch action to perform. Valid actions are:
 - A sprintf style string to change the action based on the content of the event. The value `%{[foo]}`
   would use the foo field for the action
 
-For more details on actions, check out the {ref}/docs-bulk.html[Elasticsearch bulk API documentation].
+For more details on actions, check out the https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/docs-bulk.html[Elasticsearch bulk API documentation].
 
 [id="{version}-plugins-{type}s-{plugin}-api_key"]
 ===== `api_key`
@@ -402,7 +402,7 @@ Authenticate using Elasticsearch API key. Note that this option also requires
 enabling the `ssl` option.
 
 Format is `id:api_key` where `id` and `api_key` are as returned by the
-Elasticsearch {ref}/security-api-create-api-key.html[Create API key API].
+Elasticsearch https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/security-api-create-api-key.html[Create API key API].
 
 [id="{version}-plugins-{type}s-{plugin}-bulk_path"]
 ===== `bulk_path`
@@ -607,7 +607,7 @@ If you have custom firewall rules you may need to change this
 
 Sets the host(s) of the remote instance. If given an array it will load balance
 requests across the hosts specified in the `hosts` parameter. Remember the
-`http` protocol uses the {ref}/modules-http.html#modules-http[http] address (eg.
+`http` protocol uses the https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/modules-http.html#modules-http[http] address (eg.
 9200, not 9300).
 
 Examples:
@@ -618,7 +618,7 @@ Examples:
     `["https://127.0.0.1:9200"]`
     `["https://127.0.0.1:9200/mypath"]` (If using a proxy on a subpath)
 
-Exclude {ref}/modules-node.html[dedicated master nodes] from the `hosts` list to
+Exclude https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/modules-node.html[dedicated master nodes] from the `hosts` list to
 prevent Logstash from sending bulk requests to the master nodes. This parameter
 should reference only data or client nodes in Elasticsearch.
 
@@ -646,7 +646,7 @@ NOTE: This output plugin reads compressed _responses_ from {es} regardless
   * Default value is `auto`
 
 The default setting of `auto` will automatically enable
-{ref}/index-lifecycle-management.html[Index Lifecycle Management], if the
+https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/index-lifecycle-management.html[Index Lifecycle Management], if the
 Elasticsearch cluster is running Elasticsearch version `7.0.0` or higher with
 the ILM feature enabled, and disable it otherwise.
 
@@ -666,12 +666,12 @@ Elasticsearch cluster version 6.6.0 or later.
   * Default value is `{now/d}-000001`
 
 Pattern used for generating indices managed by
-{ref}/index-lifecycle-management.html[Index Lifecycle Management]. The value
+https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/index-lifecycle-management.html[Index Lifecycle Management]. The value
 specified in the pattern will be appended to the write alias, and incremented
 automatically when a new index is created by ILM.
 
 Date Math can be used when specifying an ilm pattern, see
-{ref}/indices-rollover-index.html#_using_date_math_with_the_rollover_api[Rollover
+https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/indices-rollover-index.html#_using_date_math_with_the_rollover_api[Rollover
 API docs] for details.
 
 NOTE: Updating the pattern will require the index template to be rewritten.
@@ -681,7 +681,7 @@ incremented when indices rollover.
 
 NOTE: The pattern is a 6-digit string padded by zeros, regardless of prior index name.
 Example: 000001. See
-{ref}/indices-rollover-index.html#rollover-index-api-path-params[Rollover path
+https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/indices-rollover-index.html#rollover-index-api-path-params[Rollover path
 parameters API docs] for details.
 
 [id="{version}-plugins-{type}s-{plugin}-ilm_policy"]
@@ -1127,7 +1127,7 @@ blog] for more information.
 
 The version_type to use for indexing. See the
 https://www.elastic.co/blog/elasticsearch-versioning-support[versioning support
-blog] and {ref}/docs-index_.html#_version_types[Version types] in the
+blog] and https://www.elastic.co/guide/en/elasticsearch/reference/{branch}/docs-index_.html#_version_types[Version types] in the
 Elasticsearch documentation.
 
 
