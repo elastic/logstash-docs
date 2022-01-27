@@ -7,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v2.1.2
-:release_date: 2021-06-07
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-elastic_enterprise_search/blob/v2.1.2/CHANGELOG.md
+:version: v2.2.0
+:release_date: 2022-01-24
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-elastic_enterprise_search/blob/v2.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -120,7 +120,7 @@ filter {
 }
 
 output {
-  appsearch {
+  elastic_app_search {
     engine => "engine_%{[engine_name]}"
   }
 }
@@ -132,8 +132,21 @@ output {
 * Value type is <<string,string>>
 * There is no default value
 
-The hostname of the App Search API that is associated with your App Search account.
-Set this when using the https://www.elastic.co/cloud/app-search-service[Elastic App Search managed service].
+The hostname of the App Search SaaS API that is associated with your App Search account.
+This is used only by Swiftype App Search, and has the form of `host-1ab2cd`.
+Set this when using the https://swiftype.com/documentation/app-search/getting-started [Swiftype App Search managed service].
+
+NOTE: This is valid only for Swiftype SaaS AppSearch accounts, could be removed in future versions.
+
+[source,ruby]
+----------------------------------
+output {
+  elastic_app_search {
+    api_key => "private-somethingsecrethere"
+    host => "host-1ab2cd"
+  }
+}
+----------------------------------
 
 [id="plugins-{type}s-{plugin}-path"]
 ===== `path`
@@ -141,7 +154,22 @@ Set this when using the https://www.elastic.co/cloud/app-search-service[Elastic 
 * Value type is <<string,string>>
 * Default value is `/api/as/v1/`
 
-The path that is appended to the `url` parameter when connecting to a https://www.elastic.co/downloads/app-search[self-managed Elastic App Search].
+
+The `path` setting is used only for Swiftype SaaS AppSearch and could be removed in future versions.
+If configured, it needs the `host` which refers to a Swiftype's AppSearch instance.
+
+Note: When connecting to a https://www.elastic.co/downloads/app-search[self-managed Elastic App Search] the path is appended to the `url` parameter.
+
+[source,ruby]
+----------------------------------
+output {
+  elastic_app_search {
+    api_key => "private-somethingsecrethere"
+    url => "https://localhost:3002"
+    path => "/api"
+  }
+}
+----------------------------------
 
 [id="plugins-{type}s-{plugin}-timestamp_destination"]
 ===== `timestamp_destination`
