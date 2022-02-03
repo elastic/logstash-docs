@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.5.0
-:release_date: 2021-07-14
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-kv/blob/v4.5.0/CHANGELOG.md
+:version: v4.6.0
+:release_date: 2022-01-31
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-kv/blob/v4.6.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -61,6 +61,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |=======================================================================
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-allow_duplicate_values>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-allow_empty_values>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-default_keys>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-ecs_compatibility>> | <<string,string>>|No
 | <<plugins-{type}s-{plugin}-exclude_keys>> |<<array,array>>|No
@@ -109,6 +110,17 @@ you could use this configuration:
         allow_duplicate_values => false
       }
     }
+
+[id="plugins-{type}s-{plugin}-allow_empty_values"]
+===== `allow_empty_values`
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+A bool option for explicitly including empty values.
+When set to true, empty values will be added to the event.
+
+NOTE: Parsing empty values typically requires <<plugins-{type}s-{plugin}-whitespace,`whitespace => strict`>>.
 
 [id="plugins-{type}s-{plugin}-default_keys"]
 ===== `default_keys` 
