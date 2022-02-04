@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.7
-:release_date: 2021-05-04
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-ruby/blob/v3.1.7/CHANGELOG.md
+:version: v3.1.8
+:release_date: 2022-01-24
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-ruby/blob/v3.1.8/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -171,6 +171,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-path>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-script_params>> |<<hash,hash>>,{}|No
 | <<plugins-{type}s-{plugin}-tag_on_exception>> |<<string,string>>,_rubyexception|No
+| <<plugins-{type}s-{plugin}-tag_with_exception_message>> |<<boolean,boolean>>,_false|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -222,6 +223,16 @@ of your ruby script file defined in `path`.
 
 Tag to add to events in case the ruby code (either inline or file based)
 causes an exception.
+
+[id="plugins-{type}s-{plugin}-tag_with_exception_message"]
+===== `tag_with_exception_message`
+
+* Value type is <<boolean,boolean>>
+* Default value is `false`
+
+If `true` adds a tag to the event that is the concatenation of `tag_with_exception_message`
+and the exception message.
+
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
