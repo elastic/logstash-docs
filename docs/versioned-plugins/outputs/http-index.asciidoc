@@ -5,6 +5,8 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v5.4.0-plugins-outputs-http,v5.4.0>> | 2022-02-09
+| <<v5.3.0-plugins-outputs-http,v5.3.0>> | 2022-02-01
 | <<v5.2.5-plugins-outputs-http,v5.2.5>> | 2021-05-27
 | <<v5.2.4-plugins-outputs-http,v5.2.4>> | 2019-01-30
 | <<v5.2.3-plugins-outputs-http,v5.2.3>> | 2018-11-27
@@ -23,6 +25,8 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v4.3.0-plugins-outputs-http,v4.3.0>> | 2017-05-08
 |=======================================================================
 
+include::http-v5.4.0.asciidoc[]
+include::http-v5.3.0.asciidoc[]
 include::http-v5.2.5.asciidoc[]
 include::http-v5.2.4.asciidoc[]
 include::http-v5.2.3.asciidoc[]
