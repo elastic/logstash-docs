@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.3
-:release_date: 2020-11-19
-:changelog_url: https://github.com/logstash-plugins/logstash-input-sqs/blob/v3.1.3/CHANGELOG.md
+:version: v3.2.0
+:release_date: 2022-01-29
+:changelog_url: https://github.com/logstash-plugins/logstash-input-sqs/blob/v3.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -93,6 +93,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-polling_frequency>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-proxy_uri>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-queue>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-queue_owner_aws_account_id>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-region>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-role_arn>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-role_session_name>> |<<string,string>>|No
@@ -188,6 +189,14 @@ URI to proxy server if required
   * There is no default value for this setting.
 
 Name of the SQS Queue name to pull messages from. Note that this is just the name of the queue, not the URL or ARN.
+
+[id="plugins-{type}s-{plugin}-queue_owner_aws_account_id"]
+===== `queue_owner_aws_account_id` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+ID of the AWS account owning the queue if you want to use a https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-basic-examples-of-sqs-policies.html#grant-two-permissions-to-one-account[cross-account queue] with embedded policy. Note that AWS SDK only support numerical account ID and not account aliases.
 
 [id="plugins-{type}s-{plugin}-region"]
 ===== `region` 
