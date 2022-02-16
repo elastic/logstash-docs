@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.1
-:release_date: 2020-09-23
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-cipher/blob/v4.0.1/CHANGELOG.md
+:version: v4.0.2
+:release_date: 2022-02-11
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-cipher/blob/v4.0.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -129,13 +129,13 @@ is used. AES Algorithms generally use a 16-byte IV:
 
 The key to use for encryption and decryption operations.
 
-NOTE: If you encounter an error message at runtime containing the following:
+[NOTE]
+============
+Please read the https://github.com/jruby/jruby/wiki/UnlimitedStrengthCrypto[UnlimitedStrengthCrypto topic] in the https://github.com/jruby/jruby[jruby] github repo if you see a runtime error that resembles:
 
-"java.security.InvalidKeyException: Illegal key size: possibly you need to install 
-Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files for your JRE"
-
-Please read the following: https://github.com/jruby/jruby/wiki/UnlimitedStrengthCrypto
-
+`java.security.InvalidKeyException: Illegal key size: possibly you need to install 
+Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files for your JRE`
+============
 
 [id="plugins-{type}s-{plugin}-key_pad"]
 ===== `key_pad` 
