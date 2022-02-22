@@ -62,5 +62,4 @@ jobs:
           git commit -m "updated docs for ${branch_specifier}" -a
           git push origin $BRANCH
       - run: |
-          curl -H "Authorization: token $GITHUB_TOKEN" -X POST -d "{\"title\": \"updated docs for ${branch_specifier}\",\"head\": \"${BRANCH}\",\"base\": \"${branch_specifier}\"}" \
-  https://api.github.com/repos/elastic/logstash-docs/pulls
+          curl -H "Authorization: token $GITHUB_TOKEN" -X POST -d "{\"title\": \"updated docs for ${branch_specifier}\",\"head\": \"${BRANCH}\",\"base\": \"${branch_specifier}\"}" https://api.github.com/repos/elastic/logstash-docs/pulls
