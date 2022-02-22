@@ -51,7 +51,7 @@ jobs:
         working-directory: ./logstash
         env:
           GRADLE_OPTS: "-Dorg.gradle.jvmargs=\"-Xmx4g\""
-        run: echo "temp no-op" # ./gradlew generatePluginsVersion
+        run: ./gradlew generatePluginsVersion
       - name: Generate plugin docs
         working-directory: ./docs-tools
         run: bundle install --path=vendor/bundle && bundle exec ruby plugindocs.rb --output-path ../logstash-docs ../logstash/plugins_version_docs.json
