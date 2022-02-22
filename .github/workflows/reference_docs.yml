@@ -14,26 +14,37 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: jruby
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '11'
       - name: Clone elastic/docs-tools
         uses: actions/checkout@v2
         with:
+          repository: elastic/docs-tools
           path: docs-tools
           fetch-depth: 1
       - name: Clone elastic/logstash-docs
         uses: actions/checkout@v2
         with:
+          repository: elastic/logstash-docs
           path: logstash-docs
           fetch-depth: 1
           ref: ${{ github.event.inputs.branch }}
       - name: Clone elastic/logstash
         uses: actions/checkout@v2
         with:
+          repository: elastic/logstash
           path: logstash
           fetch-depth: 1
           ref: ${{ github.event.inputs.branch }}
       - name: Clone elastic/docs
         uses: actions/checkout@v2
         with:
+          repository: elastic/docs
           path: docs
           fetch-depth: 1
       - name: Generate plugin versions
