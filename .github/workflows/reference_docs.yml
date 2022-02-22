@@ -60,13 +60,11 @@ jobs:
         run: ../docs/build_docs --asciidoctor --respect_edit_url_overrides --doc docs/index.asciidoc --resource=../logstash-docs/docs/ --chunk 1
       - run: echo "T=$(date +%s)" >> $GITHUB_ENV
       - run: echo "BRANCH=update_docs_${T}" >> $GITHUB_ENV
-      - name: Setup github id
-        run: |
-          git config user.email github-actions@github.com
-          git config user.name github-actions
       - name: Build docs
         working-directory: ./logstash-docs
         run: |
+          git config user.email github-actions@github.com
+          git config user.name github-actions
           git checkout -b $BRANCH
           git add .
           git status
