@@ -1,0 +1,66 @@
+name: Reference Documentation generation
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to update plugin docs'
+        required: true
+        default: '8.1' 
+        type: string
+      
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone elastic/docs-tools
+        uses: actions/checkout@v2
+        with:
+          path: docs-tools
+          fetch-depth: 1
+      - name: Clone elastic/logstash-docs
+        uses: actions/checkout@v2
+        with:
+          path: logstash-docs
+          fetch-depth: 1
+          ref: ${{ github.event.inputs.branch }}
+      - name: Clone elastic/logstash
+        uses: actions/checkout@v2
+        with:
+          path: logstash
+          fetch-depth: 1
+          ref: ${{ github.event.inputs.branch }}
+      - name: Clone elastic/docs
+        uses: actions/checkout@v2
+        with:
+          path: docs
+          fetch-depth: 1
+      - name: Generate plugin versions
+        working-directory: ./logstash
+        env:
+          GRADLE_OPTS: "-Dorg.gradle.jvmargs=\"-Xmx4g\""
+        run: ./gradlew generatePluginsVersion
+      - name: Generate plugin docs
+        working-directory: ./docs-tools
+        run: bundle install --path=vendor/bundle && bundle exec ruby plugindocs.rb --output-path ../logstash-docs ../logstash/plugins_version_docs.json
+      - name: Build docs
+        working-directory: ./logstash
+        run: ../docs/build_docs --asciidoctor --respect_edit_url_overrides --doc docs/index.asciidoc --resource=../logstash-docs/docs/ --chunk 1
+      - run: echo "T=$(date +%s)" >> $GITHUB_ENV
+      - run: echo "BRANCH=update_docs_${T}" >> $GITHUB_ENV
+      - name: Setup github id
+        run: |
+          git config user.email github-actions@github.com
+          git config user.name github-actions
+      - name: Build docs
+        working-directory: ./logstash-docs
+        run: |
+          git checkout -b $BRANCH
+          git add .
+          git status
+          git commit -m "updated docs for ${branch_specifier}" -a
+          git push origin $BRANCH
+      - run: |
+          curl -H "Authorization: token $GITHUB_TOKEN" -X POST -d "{\"title\": \"updated docs for ${branch_specifier}\",\"head\": \"${BRANCH}\",\"base\": \"${branch_specifier}\"}" \
+  https://api.github.com/repos/elastic/logstash-docs/pulls
