@@ -24,6 +24,13 @@ jobs:
           repository: elastic/docs-tools
           path: docs-tools
           fetch-depth: 1
+      - name: Clone elastic/logstash-docs
+        uses: actions/checkout@v2
+        with:
+          repository: elastic/logstash-docs
+          path: docs-tools
+          ref: versioned_plugin_docs
+          fetch-depth: 1
       - name: Setup git user
         working-directory: ./docs-tools
         run: |
