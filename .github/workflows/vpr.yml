@@ -30,4 +30,4 @@ jobs:
       - name: Generate plugin versions
         env:
           JRUBY_OPTS: "-J-Xmx4g"
-        run: bundle exec ruby versioned_plugins.rb --repair --skip-existing --output-path=./
+        run: bundle exec ruby versioned_plugins.rb --repair --skip-existing --output-path=../
