@@ -14,14 +14,21 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
-      - name: Clone elastic/logstash-docs
+      - name: Clone elastic/docs-tools
         uses: actions/checkout@v2
+        with:
+          repository: elastic/docs-tools
+          path: docs-tools
+          fetch-depth: 1
       - name: Setup git user
+        working-directory: ./docs-tools
         run: |
           git config user.email github-actions@github.com
           git config user.name github-actions
       - run: bundle install
+        working-directory: ./docs-tools
       - name: Generate plugin versions
+        working-directory: ./docs-tools
         env:
-          GRADLE_OPTS: "-Dorg.gradle.jvmargs=\"-Xmx4g\""
+          JRUBY_OPTS: "-J-Xmx4g"
         run: ./ci/generate_versioned_docs.sh
