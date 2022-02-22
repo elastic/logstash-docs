@@ -3,6 +3,10 @@ name: Version Plugin Reference
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,6 +32,8 @@ jobs:
       - run: bundle install
         working-directory: ./docs-tools
       - name: Generate plugin versions
+        working-directory: ./docs-tools
+        run: bundle exec ruby versioned_plugins.rb --repair --skip-existing --output-path=../
         env:
           JRUBY_OPTS: "-J-Xmx4g"
-        run: bundle exec ruby versioned_plugins.rb --repair --skip-existing --output-path=../
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
