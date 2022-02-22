@@ -28,7 +28,6 @@ jobs:
       - run: bundle install
         working-directory: ./docs-tools
       - name: Generate plugin versions
-        working-directory: ./docs-tools
         env:
           JRUBY_OPTS: "-J-Xmx4g"
-        run: ./ci/generate_versioned_docs.sh
+        run: bundle exec ruby versioned_plugins.rb --repair --skip-existing --output-path=./
