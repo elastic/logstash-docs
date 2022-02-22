@@ -1,0 +1,27 @@
+name: Version Plugin Reference
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: jruby
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+      - name: Clone elastic/logstash-docs
+        uses: actions/checkout@v2
+      - name: Setup git user
+        run: |
+          git config user.email github-actions@github.com
+          git config user.name github-actions
+      - run: bundle install
+      - name: Generate plugin versions
+        env:
+          GRADLE_OPTS: "-Dorg.gradle.jvmargs=\"-Xmx4g\""
+        run: ./ci/generate_versioned_docs.sh
