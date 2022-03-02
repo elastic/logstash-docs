@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.3.0
-:release_date: 2022-02-01
-:changelog_url: https://github.com/logstash-plugins/logstash-output-http/blob/v5.3.0/CHANGELOG.md
+:version: v5.4.0
+:release_date: 2022-02-09
+:changelog_url: https://github.com/logstash-plugins/logstash-output-http/blob/v5.4.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
