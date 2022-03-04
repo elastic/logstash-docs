@@ -54,13 +54,15 @@ jobs:
         run: ./gradlew generatePluginsVersion
       - name: Generate plugin docs
         working-directory: ./docs-tools
-        run: bundle install --path=vendor/bundle && bundle exec ruby plugindocs.rb --output-path ../logstash-docs ../logstash/plugins_version_docs.json
+        run: |
+          bundle install --path=vendor/bundle
+          bundle exec ruby plugindocs.rb --output-path ../logstash-docs ../logstash/plugins_version_docs.json
       - name: Build docs
         working-directory: ./logstash
         run: ../docs/build_docs --asciidoctor --respect_edit_url_overrides --doc docs/index.asciidoc --resource=../logstash-docs/docs/ --chunk 1
       - run: echo "T=$(date +%s)" >> $GITHUB_ENV
       - run: echo "BRANCH=update_docs_${T}" >> $GITHUB_ENV
-      - name: Build docs
+      - name: Commit and Push
         working-directory: ./logstash-docs
         run: |
           git config user.email github-actions@github.com
@@ -70,5 +72,6 @@ jobs:
           git status
           git commit -m "updated docs for ${branch_specifier}" -a
           git push origin $BRANCH
-      - run: |
+      - name: Create Pull Request
+        run: |
           curl -H "Authorization: token $GITHUB_TOKEN" -X POST -d "{\"title\": \"updated docs for ${branch_specifier}\",\"head\": \"${BRANCH}\",\"base\": \"${branch_specifier}\"}" https://api.github.com/repos/elastic/logstash-docs/pulls
