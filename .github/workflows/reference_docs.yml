@@ -77,4 +77,4 @@ jobs:
           git push origin $BRANCH
       - name: Create Pull Request
         run: |
-          curl -H "Authorization: token ${{ github.token }}" -X POST -d "{\"title\": \"updated docs for ${branch_specifier}\",\"head\": \"${BRANCH}\",\"base\": \"${branch_specifier}\"}" https://api.github.com/repos/elastic/logstash-docs/pulls
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -X POST -d "{\"title\": \"updated docs for ${branch_specifier}\",\"head\": \"${BRANCH}\",\"base\": \"${branch_specifier}\"}" https://api.github.com/repos/elastic/logstash-docs/pulls
