@@ -73,6 +73,7 @@ jobs:
           git checkout -b $BRANCH
           git add .
           git status
+          if [[ -z $(git status --porcelain) ]]; then echo "No changes. We're done."; exit 0; fi
           git commit -m "updated docs for ${branch_specifier}" -a
           git push origin $BRANCH
       - name: Create Pull Request
