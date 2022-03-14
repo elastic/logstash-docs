@@ -34,8 +34,8 @@ jobs:
       - name: Setup git user
         working-directory: ./docs-tools
         run: |
-          git config user.email 43502315+logstashmachine@users.noreply.github.com
-          git config user.name logstashmachine
+          git config --global user.email 43502315+logstashmachine@users.noreply.github.com
+          git config --global user.name logstashmachine
       - run: bundle install
         working-directory: ./docs-tools
       - name: Generate plugin versions
