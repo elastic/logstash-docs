@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.6.0
-:release_date: 2022-01-31
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-kv/blob/v4.6.0/CHANGELOG.md
+:version: v4.7.0
+:release_date: 2022-03-04
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-kv/blob/v4.7.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -75,7 +75,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-remove_char_value>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-source>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-target>> |<<string,string>>|No
-| <<plugins-{type}s-{plugin}-tag_on_failure>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-tag_on_failure>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-tag_on_timeout>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-timeout_millis>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-transform_key>> |<<string,string>>, one of `["lowercase", "uppercase", "capitalize"]`|No
@@ -373,12 +373,12 @@ For example, to place all keys into the event field kv:
 [id="plugins-{type}s-{plugin}-tag_on_failure"]
 ===== `tag_on_failure`
 
-  * Value type is <<string,string>>
-  * The default value for this setting is `_kv_filter_error`.
+  * Value type is <<array,array>>
+  * The default value for this setting is [`_kv_filter_error`].
 
 When a kv operation causes a runtime exception to be thrown within the plugin,
 the operation is safely aborted without crashing the plugin, and the event is
-tagged with the provided value.
+tagged with the provided values.
 
 [id="plugins-{type}s-{plugin}-tag_on_timeout"]
 ===== `tag_on_timeout`
