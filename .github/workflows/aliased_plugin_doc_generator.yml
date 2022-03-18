@@ -31,14 +31,14 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
-      - name: Clone elastic/logstash-docs
+      - name: Clone mashhur/logstash-docs
         uses: actions/checkout@v2
         with:
-          repository: elastic/logstash-docs
+          repository: mashhur/logstash-docs
           path: logstash-docs
           fetch-depth: 1
           ref: ${{ github.event.inputs.branch }}
-      - name: Clone elastic/docs-tools
+      - name: Clone mashhur/docs-tools
         uses: actions/checkout@v2
         with:
           repository: mashhur/docs-tools # TODO: change mashhur to elastic
