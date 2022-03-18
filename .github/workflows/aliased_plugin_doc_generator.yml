@@ -9,12 +9,10 @@ on:
         default: 'aliased-plugin-doc-generator-test' # TODO: change this to 8.1
         type: string
       alias:
-        type:
-          description: 'Aliased plugin type.'
-          required: true
-          default: 'beats'
-          type: string
+        description: 'Aliased plugin type.'
         required: true
+        default: 'beats'
+        type: string
 
 permissions:
   contents: write
@@ -31,17 +29,17 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
-      - name: Clone mashhur/logstash-docs
+      - name: Clone mashhurs/logstash-docs
         uses: actions/checkout@v2
         with:
-          repository: mashhur/logstash-docs
+          repository: mashhurs/logstash-docs
           path: logstash-docs
           fetch-depth: 1
           ref: ${{ github.event.inputs.branch }}
-      - name: Clone mashhur/docs-tools
+      - name: Clone mashhurs/docs-tools
         uses: actions/checkout@v2
         with:
-          repository: mashhur/docs-tools # TODO: change mashhur to elastic
+          repository: mashhurs/docs-tools # TODO: change mashhurs to elastic
           path: docs-tools
           fetch-depth: 1
           ref: ${{ github.event.inputs.branch }}
@@ -49,7 +47,7 @@ jobs:
         working-directory: ./docs-tools
         run: |
           bundle install --path=vendor/bundle
-          bundle exec ruby aliased_plugin_doc_generator.rb --path=./logstash-docs --alias-type=${{ github.event.inputs.alias.type }}
+          bundle exec ruby aliased_plugin_doc_generator.rb --path=./logstash-docs --alias-type=${{ github.event.inputs.alias }}
       - run: echo "T=$(date +%s)" >> $GITHUB_ENV
       - run: echo "BRANCH=update_docs_${T}" >> $GITHUB_ENV
       - name: Commit and Push
