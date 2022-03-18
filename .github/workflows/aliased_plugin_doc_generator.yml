@@ -1,0 +1,68 @@
+name: Aliased Plugin Doc Generator
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'The branch to generate the aliased plugin doc.'
+        required: true
+        default: 'aliased-plugin-doc-generator-test' # TODO: change this to 8.1
+        type: string
+      alias:
+        type:
+          description: 'Aliased plugin type.'
+          required: true
+          default: 'beats'
+          type: string
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: jruby
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+      - name: Clone elastic/logstash-docs
+        uses: actions/checkout@v2
+        with:
+          repository: elastic/logstash-docs
+          path: logstash-docs
+          fetch-depth: 1
+          ref: ${{ github.event.inputs.branch }}
+      - name: Clone elastic/docs-tools
+        uses: actions/checkout@v2
+        with:
+          repository: elastic/docs-tools
+          path: docs-tools
+          fetch-depth: 1
+          ref: ${{ github.event.inputs.branch }}
+      - name: Generate plugin docs
+        working-directory: ./docs-tools
+        run: |
+          bundle install --path=vendor/bundle
+          bundle exec ruby aliased_plugin_doc_generator.rb --path=./logstash-docs --alias-type=${{ github.event.inputs.alias.type }}
+      - run: echo "T=$(date +%s)" >> $GITHUB_ENV
+      - run: echo "BRANCH=update_docs_${T}" >> $GITHUB_ENV
+      - name: Commit and Push
+        working-directory: ./logstash-docs
+        run: |
+          git config user.email 43502315+logstashmachine@users.noreply.github.com
+          git config user.name logstashmachine
+          git checkout -b $BRANCH
+          git add .
+          git status
+          if [[ -z $(git status --porcelain) ]]; then echo "No changes. We're done."; exit 0; fi
+          git commit -m "Update aliased plugin docs for ${branch_specifier}" -a
+          git push origin $BRANCH
+      - name: Create Pull Request
+        run: |
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -X POST -d "{\"title\": \"Update aliased plugin docs for ${{ github.event.inputs.branch }}\",\"head\": \"${BRANCH}\",\"base\": \"${{ github.event.inputs.branch }}\"}" https://api.github.com/repos/elastic/logstash-docs/pulls
