@@ -45,11 +45,12 @@ jobs:
           ref: ${{ github.event.inputs.branch }}
       - run: ls /home/runner/work/logstash-docs
       - run: ls /home/runner/work/logstash-docs/logstash-docs
+      - run: ls /home/runner/work/logstash-docs/logstash-docs/logstash-docs
       - name: Generate plugin docs
         working-directory: ./docs-tools
         run: |
           bundle install --path=vendor/bundle
-          bundle exec ruby aliased_plugin_doc_generator.rb --path=/home/runner/work/logstash-docs/logstash-docs/docs/plugins --alias-type=${{ github.event.inputs.alias }}
+          bundle exec ruby aliased_plugin_doc_generator.rb --path=/home/runner/work/logstash-docs/logstash-docs/logstash-docs/docs/plugins --alias-type=${{ github.event.inputs.alias }}
       - run: echo "T=$(date +%s)" >> $GITHUB_ENV
       - run: echo "BRANCH=update_docs_${T}" >> $GITHUB_ENV
       - name: Commit and Push
