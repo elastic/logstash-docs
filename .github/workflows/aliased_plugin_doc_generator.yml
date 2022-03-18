@@ -41,7 +41,7 @@ jobs:
       - name: Clone elastic/docs-tools
         uses: actions/checkout@v2
         with:
-          repository: elastic/docs-tools
+          repository: mashhur/docs-tools # TODO: change mashhur to elastic
           path: docs-tools
           fetch-depth: 1
           ref: ${{ github.event.inputs.branch }}
