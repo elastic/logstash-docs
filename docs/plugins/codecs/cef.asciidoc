@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v6.2.3
-:release_date: 2021-07-29
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v6.2.3/CHANGELOG.md
+:version: v6.2.4
+:release_date: 2022-03-15
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v6.2.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -442,14 +442,19 @@ not include timezone information, this `default_timezone` is used instead.
 If your input puts a delimiter between each CEF event, you'll want to set
 this to be that delimiter.
 
-For example, with the TCP input, you probably want to put this:
+NOTE: Byte stream inputs such as TCP require delimiter to be specified. Otherwise input can be truncated or incorrectly split.
 
+**Example**
+
+[source,ruby]
+-----
     input {
       tcp {
         codec => cef { delimiter => "\r\n" }
         # ...
       }
     }
+-----
 
 This setting allows the following character sequences to have special meaning:
 
