@@ -1,5 +1,7 @@
 :plugin: http
 :type: input
+:branch: %BRANCH%
+:ecs_version: %ECS_VERSION%
 
 include::{include_path}/version-list-intro.asciidoc[]
 
