@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.3.1
-:release_date: 2021-12-07
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-avro/blob/v3.3.1/CHANGELOG.md
+:version: v3.4.0
+:release_date: 2022-04-28
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-avro/blob/v3.4.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -82,6 +82,7 @@ output {
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-encoding>> | <<string,string>>, one of `["binary", "base64"]`|No
 | <<plugins-{type}s-{plugin}-ecs_compatibility>> | <<string,string>>|No
 | <<plugins-{type}s-{plugin}-schema_uri>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-tag_on_failure>> |<<boolean,boolean>>|No
@@ -99,6 +100,17 @@ output {
 ** `v1`,`v8`: Elastic Common Schema compliant behavior (`[event][original]` is also added)
 
 Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
+
+[id="plugins-{type}s-{plugin}-encoding"]
+===== `encoding`
+
+* Value can be any of: `binary`, `base64`
+* Default value is `base64`
+
+Set encoding for Avro's payload. 
+Use `base64` (default) to indicate that this codec sends or expects to receive base64-encoded bytes.
+
+Set this option to `binary` to indicate that this codec sends or expects to receive binary Avro data.
 
 
 [id="plugins-{type}s-{plugin}-schema_uri"]

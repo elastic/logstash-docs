@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.3.2
-:release_date: 2021-07-13
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-fingerprint/blob/v3.3.2/CHANGELOG.md
+:version: v3.4.0
+:release_date: 2022-05-03
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-fingerprint/blob/v3.4.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -61,7 +61,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-concatenate_all_fields>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-ecs_compatibility>> | <<string,string>>|No
 | <<plugins-{type}s-{plugin}-key>> |<<string,string>>|No
-| <<plugins-{type}s-{plugin}-method>> |<<string,string>>, one of `["SHA1", "SHA256", "SHA384", "SHA512", "MD5", "MURMUR3", "IPV4_NETWORK", "UUID", "PUNCTUATION"]`|Yes
+| <<plugins-{type}s-{plugin}-method>> |<<string,string>>, one of `["SHA1", "SHA256", "SHA384", "SHA512", "MD5", "MURMUR3", "MURMUR3_128", IPV4_NETWORK", "UUID", "PUNCTUATION"]`|Yes
 | <<plugins-{type}s-{plugin}-source>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-target>> |<<string,string>>|No
 |=======================================================================
@@ -77,7 +77,7 @@ filter plugins.
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
-When set to `true`, the `SHA1`, `SHA256`, `SHA384`, `SHA512` and `MD5` fingerprint methods will produce
+When set to `true`, the `SHA1`, `SHA256`, `SHA384`, `SHA512`, `MD5` and `MURMUR3_128` fingerprint methods will produce
 base64 encoded rather than hex encoded strings.
 
 [id="plugins-{type}s-{plugin}-concatenate_sources"]
@@ -175,7 +175,7 @@ With other methods, optionally fill in the HMAC key.
 ===== `method` 
 
   * This is a required setting.
-  * Value can be any of: `SHA1`, `SHA256`, `SHA384`, `SHA512`, `MD5`, `MURMUR3`, `IPV4_NETWORK`, `UUID`, `PUNCTUATION`
+  * Value can be any of: `SHA1`, `SHA256`, `SHA384`, `SHA512`, `MD5`, `MURMUR3`, `MURMUR3_128`, `IPV4_NETWORK`, `UUID`, `PUNCTUATION`
   * Default value is `"SHA1"`
 
 The fingerprint method to use.
@@ -184,7 +184,7 @@ If set to `SHA1`, `SHA256`, `SHA384`, `SHA512`, or `MD5` and a key is set, the
 corresponding cryptographic hash function and the keyed-hash (HMAC) digest function
 are used to generate the fingerprint.
 
-If set to `MURMUR3` the non-cryptographic 64 bit MurmurHash function will be used.
+If set to `MURMUR3` or `MURMUR3_128` the non-cryptographic MurmurHash function (either the 32-bit or 128-bit implementation, respectively) will be used.
 
 If set to `IPV4_NETWORK` the input data needs to be a IPv4 address and
 the hash value will be the masked-out address using the number of bits
