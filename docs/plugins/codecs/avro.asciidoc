@@ -82,8 +82,8 @@ output {
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<plugins-{type}s-{plugin}-encoding>> | <<string,string>>, one of `["binary", "base64"]`|No
 | <<plugins-{type}s-{plugin}-ecs_compatibility>> | <<string,string>>|No
+| <<plugins-{type}s-{plugin}-encoding>> | <<string,string>>, one of `["binary", "base64"]`|No
 | <<plugins-{type}s-{plugin}-schema_uri>> |<<string,string>>|Yes
 | <<plugins-{type}s-{plugin}-tag_on_failure>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-target>> |<<string,string>>|No
