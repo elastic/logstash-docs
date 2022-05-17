@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v6.2.4
-:release_date: 2022-03-15
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v6.2.4/CHANGELOG.md
+:version: v6.2.5
+:release_date: 2022-04-20
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v6.2.5/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -21,12 +21,11 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-Implementation of a Logstash codec for the ArcSight Common Event Format (CEF)
-Based on Revision 20 of Implementing ArcSight CEF, dated from June 05, 2013
-https://community.saas.hpe.com/dcvta86296/attachments/dcvta86296/connector-documentation/1116/1/CommonEventFormatv23.pdf
+Implementation of a Logstash codec for the ArcSight Common Event Format (CEF).
+It is based on https://www.microfocus.com/documentation/arcsight/arcsight-smartconnectors/pdfdoc/common-event-format-v25/common-event-format-v25.pdf[Implementing ArcSight CEF Revision 25, September 2017].
 
-If this codec receives a payload from an input that is not a valid CEF message, then it will
-produce an event with the payload as the 'message' field and a '_cefparsefailure' tag.
+If this codec receives a payload from an input that is not a valid CEF message, then it
+produces an event with the payload as the 'message' field and a '_cefparsefailure' tag.
 
 ==== Compatibility with the Elastic Common Schema (ECS)
 
