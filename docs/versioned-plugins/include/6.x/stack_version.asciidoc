@@ -1,0 +1,18 @@
+ifeval::["{versioned_docs}"=="true"]
+:branch: %BRANCH%
+:ecs_version: %ECS_VERSION%
+endif::[]
+
+////
+Logstash plugins are versioned independently of Logstash, the Elastic Stack, and other plugins.
+For the generated plugin docs in the Logstash Reference, stack versioning is handled automatically because the Logstash Reference understands stack versioning. 
+The Versioned Plugin Reference is not stack versioned and has no concept of stack versioning.
+This situation becomes an issue when we link from the Versioned Plugin Reference to stack or solution docs.
+In the past, we've set `{branch}` to `current` as a workaround. 
+This approach isn't ideal because it results in old versions of plugin docs linking to our latest documentation.
+This mismatch between new features/options and old plugins can be confusing. 
+In the 8.2 timeframe, we introduced tooling that looks at https://github.com/elastic/docs/tree/master/shared/versions/stack to approximate a version.
+This file implements the approximated versioning in plugin doc source to populate variables in urls. 
+Note that this content is set up to be conditional only for the Versiong Plugin Reference.
+Why? Because the stack versioning in the Logstash Reference is precise while stack versioning in the Versioned Plugin Reference is only an approximation. 
+////
