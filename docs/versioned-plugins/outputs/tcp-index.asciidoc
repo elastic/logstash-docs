@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v6.1.0-plugins-outputs-tcp,v6.1.0>> | 2022-06-06
 | <<v6.0.2-plugins-outputs-tcp,v6.0.2>> | 2022-03-21
 | <<v6.0.1-plugins-outputs-tcp,v6.0.1>> | 2022-02-07
 | <<v6.0.0-plugins-outputs-tcp,v6.0.0>> | 2019-01-11
@@ -17,6 +18,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v4.0.1-plugins-outputs-tcp,v4.0.1>> | 2017-06-23
 |=======================================================================
 
+include::tcp-v6.1.0.asciidoc[]
 include::tcp-v6.0.2.asciidoc[]
 include::tcp-v6.0.1.asciidoc[]
 include::tcp-v6.0.0.asciidoc[]
