@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.13.0
-:release_date: 2022-05-24
-:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.13.0/CHANGELOG.md
+:version: v4.14.0
+:release_date: 2022-06-08
+:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.14.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
