@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.3.5
-:release_date: 2021-10-06
-:changelog_url: https://github.com/logstash-plugins/logstash-output-s3/blob/v4.3.5/CHANGELOG.md
+:version: v4.3.7
+:release_date: 2022-06-16
+:changelog_url: https://github.com/logstash-plugins/logstash-output-s3/blob/v4.3.7/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -31,8 +31,9 @@ Other S3 compatible storage solutions are not supported.
 S3 outputs create temporary files into the OS' temporary directory. 
 You can specify where to save them using the `temporary_directory` option.
 
-IMPORTANT: For configurations containing multiple s3 outputs with the restore
-option enabled, each output should define its own 'temporary_directory'.
+IMPORTANT: For configurations containing multiple s3 outputs with the `restore`
+option enabled, each output should define its own `temporary_directory`.
+Shared or nested directories can cause data loss upon recovery.
 
 ===== Requirements
 
@@ -256,6 +257,10 @@ The AWS Region
 Used to enable recovery after crash/abnormal termination.
 Temporary log files will be recovered and uploaded.
 
+NOTE: If you're using multiple S3 outputs, always set
+<<plugins-{type}s-{plugin}-temporary_directory>> to a
+unique directory. Otherwise the recovery mechanism won't work correctly.
+
 [id="plugins-{type}s-{plugin}-retry_count"]
 ===== `retry_count`
 
@@ -389,7 +394,12 @@ Defaults to STANDARD.
   * Default value is `"/tmp/logstash"`
 
 Set the directory where logstash will store the tmp files before sending it to S3
-default to the current OS temporary directory in linux /tmp/logstash
+default to the current OS temporary directory in linux `/tmp/logstash`.
+
+WARNING: Using multiple S3 outputs with `restore => true` requires unique directories
+per output. All of the directory's contents are processed and deleted upon recovery, and shared or nested directories can cause data loss.
+For example, an output using `/tmp/s3` and a second configured with `/tmp/s3/sub` would
+cause issues. Having temporary directories `/tmp/s3/sub1` and `/tmp/s3/sub2` is fine.
 
 [id="plugins-{type}s-{plugin}-time_file"]
 ===== `time_file` 
