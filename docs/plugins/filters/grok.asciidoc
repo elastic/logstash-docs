@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.4.1
-:release_date: 2021-11-06
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-grok/blob/v4.4.1/CHANGELOG.md
+:version: v4.4.2
+:release_date: 2022-05-16
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-grok/blob/v4.4.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -282,6 +282,36 @@ If you need to match multiple patterns against a single field, the value can be 
         }
       }
     }
+    
+To perform matches on multiple fields just use multiple entries in the `match` hash:
+
+[source,ruby]
+    filter {
+      grok {
+        match => {
+          "speed" => "Speed: %{NUMBER:speed}"
+          "duration => "Duration: %{NUMBER:duration}"
+        }
+      }
+    }
+
+However, if one pattern depends on a field created by a previous pattern, separate these into two separate grok filters:
+
+
+[source,ruby]
+    filter {
+      grok {
+        match => {
+          "message" => "Hi, the rest of the message is: %{GREEDYDATA:rest}"
+        }
+      }
+      grok {
+        match => {
+          "rest => "a number %{NUMBER"number}, and a word %{WORD:word}"
+        }
+      }
+    }
+
 
 [id="plugins-{type}s-{plugin}-named_captures_only"]
 ===== `named_captures_only` 
