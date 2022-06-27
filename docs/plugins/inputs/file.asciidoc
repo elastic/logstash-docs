@@ -539,9 +539,4 @@ Supported values: `us` `usec` `usecs`, e.g. "600 us", "800 usec", "900 usecs"
 [NOTE]
 `micro` `micros` and `microseconds` are not supported
 
-ifeval::["{versioned_docs}"=="true"]
-:branch: current
-:ecs_version: current
-endif::[]
-
 :default_codec!:
