@@ -13,6 +13,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v2.0.3-plugins-inputs-cloudwatch,v2.0.3>> | 2017-11-07
 | <<v2.0.2-plugins-inputs-cloudwatch,v2.0.2>> | 2017-08-15
 | <<v2.0.1-plugins-inputs-cloudwatch,v2.0.1>> | 2017-06-23
+| <<v0.1.1-plugins-inputs-cloudwatch,v0.1.1>> | 2022-07-22
 |=======================================================================
 
 include::cloudwatch-v2.2.4.asciidoc[]
@@ -23,4 +24,5 @@ include::cloudwatch-v2.1.0.asciidoc[]
 include::cloudwatch-v2.0.3.asciidoc[]
 include::cloudwatch-v2.0.2.asciidoc[]
 include::cloudwatch-v2.0.1.asciidoc[]
+include::cloudwatch-v0.1.1.asciidoc[]
 

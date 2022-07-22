@@ -8,9 +8,11 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.0.3-plugins-codecs-cloudfront,v3.0.3>> | 2017-11-07
 | <<v3.0.2-plugins-codecs-cloudfront,v3.0.2>> | 2017-08-15
 | <<v3.0.1-plugins-codecs-cloudfront,v3.0.1>> | 2017-06-23
+| <<v0.1.1-plugins-codecs-cloudfront,v0.1.1>> | 2022-07-22
 |=======================================================================
 
 include::cloudfront-v3.0.3.asciidoc[]
 include::cloudfront-v3.0.2.asciidoc[]
 include::cloudfront-v3.0.1.asciidoc[]
+include::cloudfront-v0.1.1.asciidoc[]
 

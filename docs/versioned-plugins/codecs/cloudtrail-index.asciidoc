@@ -9,10 +9,12 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.0.4-plugins-codecs-cloudtrail,v3.0.4>> | 2018-03-12
 | <<v3.0.3-plugins-codecs-cloudtrail,v3.0.3>> | 2017-08-15
 | <<v3.0.2-plugins-codecs-cloudtrail,v3.0.2>> | 2017-06-23
+| <<v0.1.1-plugins-codecs-cloudtrail,v0.1.1>> | 2022-07-22
 |=======================================================================
 
 include::cloudtrail-v3.0.5.asciidoc[]
 include::cloudtrail-v3.0.4.asciidoc[]
 include::cloudtrail-v3.0.3.asciidoc[]
 include::cloudtrail-v3.0.2.asciidoc[]
+include::cloudtrail-v0.1.1.asciidoc[]
 
