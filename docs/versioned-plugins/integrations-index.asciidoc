@@ -3,6 +3,8 @@
 
 include::include/plugin-intro.asciidoc[]
 
+include::integrations/aws-index.asciidoc[]
+
 include::integrations/elastic_enterprise_search-index.asciidoc[]
 
 include::integrations/jdbc-index.asciidoc[]
