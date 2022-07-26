@@ -1,0 +1,12 @@
+:plugin: aws
+:type: integration
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v7.0.0-plugins-integrations-aws,v7.0.0>> | 2022-07-25
+|=======================================================================
+
+include::aws-v7.0.0.asciidoc[]
+

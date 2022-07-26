@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v7.0.0-plugins-inputs-sqs,v7.0.0>> | 2022-07-25
 | <<v3.3.2-plugins-inputs-sqs,v3.3.2>> | 2022-03-17
 | <<v3.3.1-plugins-inputs-sqs,v3.3.1>> | 2022-02-16
 | <<v3.3.0-plugins-inputs-sqs,v3.3.0>> | 2022-02-14
@@ -19,6 +20,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.0.3-plugins-inputs-sqs,v3.0.3>> | 2017-05-04
 |=======================================================================
 
+include::sqs-v7.0.0.asciidoc[]
 include::sqs-v3.3.2.asciidoc[]
 include::sqs-v3.3.1.asciidoc[]
 include::sqs-v3.3.0.asciidoc[]
