@@ -1,4 +1,4 @@
-// :integration: aws
+:integration: aws
 :plugin: sqs
 :type: output
 :default_codec: json
@@ -18,7 +18,7 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 === Sqs output plugin {version}
 
-// include::{include_path}/plugin_header-integration.asciidoc[]
+include::{include_path}/plugin_header-integration.asciidoc[]
 
 ==== Description
 

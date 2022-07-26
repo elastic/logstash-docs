@@ -1,4 +1,4 @@
-// :integration: aws
+:integration: aws
 :plugin: sns
 :type: output
 :default_codec: plain
@@ -18,7 +18,7 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 === Sns output plugin {version}
 
-// include::{include_path}/plugin_header-integration.asciidoc[]
+include::{include_path}/plugin_header-integration.asciidoc[]
 
 ==== Description
 

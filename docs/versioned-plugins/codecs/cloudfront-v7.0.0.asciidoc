@@ -1,4 +1,4 @@
-// :integration: aws
+:integration: aws
 :plugin: cloudfront
 :type: codec
 
@@ -17,7 +17,7 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 === Cloudfront codec plugin {version}
 
-// include::{include_path}/plugin_header-integration.asciidoc[]
+include::{include_path}/plugin_header-integration.asciidoc[]
 
 ==== Description
 

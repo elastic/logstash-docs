@@ -17,13 +17,13 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 === AWS Integration Plugin {version}
 
-// include::{include_path}/plugin_header.asciidoc[]
+include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
 The AWS Integration Plugin provides integrated plugins for working with Amazon Web Services:
 
-////
+
  - {logstash-ref}/plugins-codecs-cloudfront.html[Cloudfront Codec Plugin]
  - {logstash-ref}/plugins-codecs-cloudtrail.html[Cloudtrail Codec Plugin]
  - {logstash-ref}/plugins-inputs-cloudwatch.html[Cloudwatch Input Plugin]
@@ -33,6 +33,6 @@ The AWS Integration Plugin provides integrated plugins for working with Amazon W
  - {logstash-ref}/plugins-outputs-s3.html[S3 Output Plugin]
  - {logstash-ref}/plugins-outputs-sns.html[Sns Output Plugin]
  - {logstash-ref}/plugins-outputs-sqs.html[Sqs Output Plugin]
-////
+
 
 :no_codec!:
