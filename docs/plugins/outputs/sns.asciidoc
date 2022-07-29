@@ -1,3 +1,4 @@
+// :integration: aws
 :plugin: sns
 :type: output
 :default_plugin: 1
@@ -6,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.8
-:release_date: 2021-11-30
-:changelog_url: https://github.com/logstash-plugins/logstash-output-sns/blob/v4.0.8/CHANGELOG.md
+:version: v7.0.0
+:release_date: 2022-07-25
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-aws/blob/v7.0.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -18,7 +19,7 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 === Sns output plugin
 
-include::{include_path}/plugin_header.asciidoc[]
+// include::{include_path}/plugin_header-integration.asciidoc[]
 
 ==== Description
 
