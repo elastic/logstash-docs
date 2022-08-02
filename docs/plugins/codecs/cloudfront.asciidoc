@@ -1,13 +1,14 @@
+// :integration: aws
 :plugin: cloudfront
 :type: codec
-:default_plugin: 0
+:default_plugin: 1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.3
-:release_date: 2017-11-07
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-cloudfront/blob/v3.0.3/CHANGELOG.md
+:version: v7.0.0
+:release_date: 2022-07-25
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-aws/blob/v7.0.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -17,7 +18,7 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 === Cloudfront codec plugin
 
-include::{include_path}/plugin_header.asciidoc[]
+// include::{include_path}/plugin_header-integration.asciidoc[]
 
 ==== Description
 
