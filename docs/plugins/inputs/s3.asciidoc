@@ -1,4 +1,4 @@
-// :integration: aws
+:integration: aws
 :plugin: s3
 :type: input
 :default_plugin: 1
@@ -19,7 +19,7 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 === S3 input plugin
 
-// include::{include_path}/plugin_header-integration.asciidoc[]
+include::{include_path}/plugin_header-integration.asciidoc[]
 
 ==== Description
 
