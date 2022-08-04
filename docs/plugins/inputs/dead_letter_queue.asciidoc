@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.1.12
-:release_date: 2022-06-16
-:changelog_url: https://github.com/logstash-plugins/logstash-input-dead_letter_queue/blob/v1.1.12/CHANGELOG.md
+:version: v2.0.0
+:release_date: 2022-08-02
+:changelog_url: https://github.com/logstash-plugins/logstash-input-dead_letter_queue/blob/v2.0.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -46,6 +46,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
+| <<plugins-{type}s-{plugin}-clean_consumed>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-commit_offsets>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-path>> |a valid filesystem path|Yes
 | <<plugins-{type}s-{plugin}-pipeline_id>> |<<string,string>>|No
@@ -57,6 +58,16 @@ Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options suppo
 input plugins.
 
 &nbsp;
+
+[id="plugins-{type}s-{plugin}-clean_consumed"]
+===== `clean_consumed`
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+When set to `true`, this option deletes the DLQ segments that have been read.
+This feature requires that `commit_offsets` is set to `true`. If not, you'll get a configuration error.
+This feature is available in Logstash 8.4.0 and later. If this setting is `true` and and you are using a Logstash version older than 8.4.0, then you'll get a configuration error.
 
 [id="plugins-{type}s-{plugin}-commit_offsets"]
 ===== `commit_offsets` 
