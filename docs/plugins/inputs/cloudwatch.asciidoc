@@ -1,14 +1,15 @@
+// :integration: aws
 :plugin: cloudwatch
 :type: input
-:default_plugin: 0
+:default_plugin: 1
 :default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v2.2.4
-:release_date: 2018-09-17
-:changelog_url: https://github.com/logstash-plugins/logstash-input-cloudwatch/blob/v2.2.4/CHANGELOG.md
+:version: v7.0.0
+:release_date: 2022-07-25
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-aws/blob/v7.0.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -18,7 +19,7 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 === Cloudwatch input plugin
 
-include::{include_path}/plugin_header.asciidoc[]
+// include::{include_path}/plugin_header-integration.asciidoc[]
 
 ==== Description
 
@@ -82,6 +83,21 @@ See http://aws.amazon.com/iam/ for more details on setting up AWS identities.
         metrics => ["CPUUtilization", "CPUCreditUsage"]
         filters => { "EngineName" => "mysql" } # Only supports EngineName, DatabaseClass and DBInstanceIdentifier
         region => "us-east-1"
+      }
+    }
+
+[source, ruby]
+    input {
+      cloudwatch {
+        namespace => "sqlserver_test2"
+        metrics => [ "Memory Available Bytes"]
+        filters =>  {
+            InstanceId => "i-xxxxxxxxxxx"
+            objectname => "Memory"
+        }
+        combined => true
+        interval => 600
+        period => 300
       }
     }
 

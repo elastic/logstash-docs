@@ -1,3 +1,4 @@
+// :integration: aws
 :plugin: cloudwatch
 :type: output
 :default_plugin: 1
@@ -6,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.0
-:release_date: 2022-06-15
-:changelog_url: https://github.com/logstash-plugins/logstash-output-cloudwatch/blob/v3.1.0/CHANGELOG.md
+:version: v7.0.0
+:release_date: 2022-07-25
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-aws/blob/v7.0.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -18,7 +19,7 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 === Cloudwatch output plugin
 
-include::{include_path}/plugin_header.asciidoc[]
+// include::{include_path}/plugin_header-integration.asciidoc[]
 
 ==== Description
 
