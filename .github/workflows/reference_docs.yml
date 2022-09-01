@@ -6,7 +6,7 @@ on:
       branch:
         description: 'Branch to update plugin docs'
         required: true
-        default: '8.1' 
+        default: '8.1'
         type: string
 
 permissions:
@@ -15,6 +15,7 @@ permissions:
 
 jobs:
   build:
+    name: "Update docs for ${{ github.event.inputs.branch }}"
     runs-on: ubuntu-latest
     steps:
       - uses: ruby/setup-ruby@v1
@@ -74,8 +75,9 @@ jobs:
           git add .
           git status
           if [[ -z $(git status --porcelain) ]]; then echo "No changes. We're done."; exit 0; fi
-          git commit -m "updated docs for ${branch_specifier}" -a
+          git commit -m "updated docs for ${{ github.event.inputs.branch }}" -a
           git push origin $BRANCH
       - name: Create Pull Request
         run: |
           curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -X POST -d "{\"title\": \"updated docs for ${{ github.event.inputs.branch }}\",\"head\": \"${BRANCH}\",\"base\": \"${{ github.event.inputs.branch }}\"}" https://api.github.com/repos/elastic/logstash-docs/pulls
+      - run: echo "### Updated docs for ${{ github.event.inputs.branch }} :rocket:" >> $GITHUB_STEP_SUMMARY
