@@ -1,4 +1,4 @@
-name: Reference Documentation generation
+run-name: "Reference Documentation generation for ${{ github.event.inputs.branch }}"
 
 on:
   workflow_dispatch:
