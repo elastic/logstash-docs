@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.9.0
-:release_date: 2022-09-20
-:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v11.9.0/CHANGELOG.md
+:version: v11.9.3
+:release_date: 2022-10-04
+:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v11.9.3/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -277,11 +277,10 @@ not reevaluate its DNS value while the keepalive is in effect.
 
 ==== HTTP Compression
 
-This plugin supports request compression, and handles compressed responses
-from Elasticsearch.
+This plugin always reads compressed responses from {es}.
+It _can be configured_ to send compressed bulk requests to {es}.
 
-To enable request compression, use the <<plugins-{type}s-{plugin}-http_compression>>
-setting on this plugin.
+If you are concerned about bandwidth, you can enable <<plugins-{type}s-{plugin}-http_compression>> to trade a small amount of CPU capacity for a significant reduction in network IO.
 
 ==== Authentication
 
@@ -396,7 +395,9 @@ The Elasticsearch action to perform. Valid actions are:
   document if not already present. See the `doc_as_upsert` option. NOTE: This does not work and is not supported
   in Elasticsearch 1.x. Please upgrade to ES 2.x or greater to use this feature with Logstash!
 - A sprintf style string to change the action based on the content of the event. The value `%{[foo]}`
-  would use the foo field for the action
+  would use the foo field for the action. 
+  If resolved action is not in [`index`, `delete`, `create`, `update`], the event will not be sent to {es}.
+  Instead the event will be sent to the pipeline's {logstash-ref}/dead-letter-queues.html[dead-letter-queue (DLQ)] (if enabled), or it will be logged and dropped.
 
 For more details on actions, check out the {ref}/docs-bulk.html[Elasticsearch bulk API documentation].
 

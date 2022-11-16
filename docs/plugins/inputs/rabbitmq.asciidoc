@@ -7,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v7.3.0
-:release_date: 2021-06-07
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-rabbitmq/blob/v7.3.0/CHANGELOG.md
+:version: v7.3.1
+:release_date: 2022-10-04
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-rabbitmq/blob/v7.3.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -272,7 +272,18 @@ This is only relevant for direct or topic exchanges.
     - `true`: deprecated alias for `basic`
   * Default value is `none`
 
-Enable the storage of message headers and properties in `@metadata`. This may impact performance
+Enable metadata about the RabbitMQ topic to be added to the event's `@metadata` field, for availablity during pipeline processing. In general, most output plugins and codecs do not include `@metadata` fields. This may impact memory usage and performance.
+
+[id="plugins-{type}s-{plugin}-metadata_locations"]
+====== Metadata mapping
+|=====
+| category | location | type
+
+| headers        |`[@metadata][rabbitmq_headers]` | key/value map
+| properties     |`[@metadata][rabbitmq_properties]` | key/value map
+| raw payload    |`[@metadata][rabbitmq_payload]` | byte sequence
+|=====
+
 
 [id="plugins-{type}s-{plugin}-passive"]
 ===== `passive`
