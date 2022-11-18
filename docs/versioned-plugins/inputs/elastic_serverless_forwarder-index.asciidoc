@@ -1,0 +1,12 @@
+:plugin: elastic_serverless_forwarder
+:type: input
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+| <<v0.1.0-plugins-inputs-elastic_serverless_forwarder,v0.1.0>> | 2022-11-18
+|=======================================================================
+
+include::elastic_serverless_forwarder-v0.1.0.asciidoc[]
+
