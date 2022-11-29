@@ -17,6 +17,8 @@ include::inputs/drupal_dblog-index.asciidoc[]
 
 include::inputs/elastic_agent-index.asciidoc[]
 
+include::inputs/elastic_serverless_forwarder-index.asciidoc[]
+
 include::inputs/elasticsearch-index.asciidoc[]
 
 include::inputs/eventlog-index.asciidoc[]
