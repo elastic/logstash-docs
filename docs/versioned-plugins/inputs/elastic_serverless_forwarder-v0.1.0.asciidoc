@@ -36,10 +36,10 @@ Using this input you can receive events from {esf-name} over http(s) connections
 [source,subs="+macros,attributes"]
 ----
 input {
-  {plugin} {
-    <<{version}-plugins-{type}s-{plugin}-port,port>> => 8080
-    <<{version}-plugins-{type}s-{plugin}-ssl_certificate,ssl_certificate>> => "/path/to/logstash.crt"
-    <<{version}-plugins-{type}s-{plugin}-ssl_key,ssl_key>> => "/path/to/logstash.key"
+  elastic_serverless_forwarder {
+    port => 8080
+    ssl_certificate => "/path/to/logstash.crt"
+    ssl_key => "/path/to/logstash.key"
   }
 }
 ----
@@ -50,8 +50,8 @@ input {
 ----
 input {
   elastic_serverless_forwarder {
-    <<{version}-plugins-{type}s-{plugin}-port,port>> => 8080
-    <<{version}-plugins-{type}s-{plugin}-ssl,ssl>> => false
+    port => 8080
+    ssl => false
   }
 }
 ----
