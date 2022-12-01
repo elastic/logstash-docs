@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v0.0.21
-:release_date: 2017-11-07
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-nmap/blob/v0.0.21/CHANGELOG.md
+:version: v0.0.22
+:release_date: 2022-11-16
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-nmap/blob/v0.0.22/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -21,7 +21,7 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-This codec is used to parse https://nmap.org/[namp] output data which is serialized in XML format. Nmap ("Network Mapper") is a free and open source utility for network discovery and security auditing. 
+This codec is used to parse https://nmap.org/[nmap] output data which is serialized in XML format. Nmap ("Network Mapper") is a free and open source utility for network discovery and security auditing. 
 For more information on nmap, see https://nmap.org/.
 
 This codec can only be used for decoding data.
