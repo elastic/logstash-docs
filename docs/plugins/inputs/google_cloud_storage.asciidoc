@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v0.11.1
-:release_date: 2019-04-15
-:changelog_url: https://github.com/logstash-plugins/logstash-input-google_cloud_storage/blob/v0.11.1/CHANGELOG.md
+:version: v0.13.0
+:release_date: 2022-11-22
+:changelog_url: https://github.com/logstash-plugins/logstash-input-google_cloud_storage/blob/v0.13.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -33,6 +33,37 @@ Example use-cases:
  * Extract data from Cloud Storage, transform it with Logstash and load it into BigQuery.
 
 Note: While this project is partially maintained by Google, this is not an official Google product.
+
+.Installation Note
+[NOTE]
+================================================================================
+Attempting to install this plugin may result in an error:
+[source,bash]
+----------------------------------
+Bundler::VersionConflict: Bundler could not find compatible versions for gem "mimemagic":
+  In Gemfile:
+    logstash-input-google_cloud_storage (= 0.11.0) was resolved to 0.11.0, which depends on
+      mimemagic (>= 0.3.7)
+
+Could not find gem 'mimemagic (>= 0.3.7)', which is required by gem 'logstash-input-google_cloud_storage (= 0.11.0)', in any of the sources or in gems cached in vendor/cache
+----------------------------------
+If this error occurs, you can fix it by manually installing the "mimemagic" dependency directly into the
+Logstash's internal Ruby Gems cache, which is present at `vendor/bundle/jruby/<ruby_version>/gems/`. This could be done using
+the bundled Ruby gem's instance inside the Logstash's installation `bin/` folder.
+
+To manually install the "mimemagic" gem into Logstash use:
+[source,bash]
+----------------------------------
+bin/ruby -S gem install mimemagic -v '>= 0.3.7'
+----------------------------------
+
+Then install the plugin as usual with:
+[source,bash]
+----------------------------------
+bin/logstash-plugin install logstash-input-google_cloud_storage
+----------------------------------
+
+================================================================================
 
 [id="plugins-{type}s-{plugin}-metadata-attributes"]
 ==== Metadata Attributes

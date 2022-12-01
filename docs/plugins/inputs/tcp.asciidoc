@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v6.3.0
-:release_date: 2022-06-06
-:changelog_url: https://github.com/logstash-plugins/logstash-input-tcp/blob/v6.3.0/CHANGELOG.md
+:version: v6.3.1
+:release_date: 2022-10-12
+:changelog_url: https://github.com/logstash-plugins/logstash-input-tcp/blob/v6.3.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
