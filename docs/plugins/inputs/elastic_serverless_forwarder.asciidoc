@@ -47,12 +47,12 @@ input {
 
 |
 
-[source,subs="+macros,attributes"]
+[source]
 ----
 input {
   elastic_serverless_forwarder {
-    <<plugins-{type}s-{plugin}-port,port>> => 8080
-    <<plugins-{type}s-{plugin}-ssl,ssl>> => false
+    port => 8080
+    ssl => false
   }
 }
 ----
