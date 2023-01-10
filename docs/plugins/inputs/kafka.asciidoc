@@ -3,15 +3,15 @@
 :type: input
 :default_plugin: 1
 :default_codec: plain
-:kafka_client: 2.8
-:kafka_client_doc: 25
+:kafka_client: 3.3
+:kafka_client_doc: 33
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v10.12.0
-:release_date: 2022-05-09
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v10.12.0/CHANGELOG.md
+:version: v11.0.0
+:release_date: 2022-12-16
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.0.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -144,10 +144,10 @@ See the https://kafka.apache.org/{kafka_client_doc}/documentation for more detai
 | <<plugins-{type}s-{plugin}-ssl_key_password>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-ssl_keystore_location>> |a valid filesystem path|No
 | <<plugins-{type}s-{plugin}-ssl_keystore_password>> |<<password,password>>|No
-| <<plugins-{type}s-{plugin}-ssl_keystore_type>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-ssl_keystore_type>> |<<string,string>>, one of `["jks", "PKCS12"]`|No
 | <<plugins-{type}s-{plugin}-ssl_truststore_location>> |a valid filesystem path|No
 | <<plugins-{type}s-{plugin}-ssl_truststore_password>> |<<password,password>>|No
-| <<plugins-{type}s-{plugin}-ssl_truststore_type>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-ssl_truststore_type>> |<<string,string>>, one of `["jks", "PKCS12"]`|No
 | <<plugins-{type}s-{plugin}-topics>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-topics_pattern>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-value_deserializer_class>> |<<string,string>>|No
@@ -211,6 +211,12 @@ How DNS lookups should be done. If set to `use_all_dns_ips`, when the lookup ret
 IP addresses for a hostname, they will all be attempted to connect to before failing the 
 connection. If the value is `resolve_canonical_bootstrap_servers_only` each entry will be 
 resolved and expanded into a list of canonical names.
+
+[NOTE]
+====
+Starting from Kafka 3 `default` value for `client.dns.lookup` value has been removed.
+If explicitly configured it fallbacks to `use_all_dns_ips`.
+====
 
 [id="plugins-{type}s-{plugin}-client_id"]
 ===== `client_id` 
@@ -660,7 +666,7 @@ If client authentication is required, this setting stores the keystore password
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The keystore type.
+The format of the keystore file. It must be either `jks` or `PKCS12`.
 
 [id="plugins-{type}s-{plugin}-ssl_truststore_location"]
 ===== `ssl_truststore_location` 
@@ -684,7 +690,7 @@ The truststore password.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The truststore type.
+The format of the truststore file. It must be either `jks` or `PKCS12`.
 
 [id="plugins-{type}s-{plugin}-topics"]
 ===== `topics` 
@@ -700,8 +706,13 @@ A list of topics to subscribe to, defaults to ["logstash"].
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-A topic regex pattern to subscribe to. 
-The topics configuration will be ignored when using this configuration.
+A topic regular expression pattern to subscribe to.
+
+Filtering by a regular expression is done by retrieving the full list of topic names from the broker and applying the pattern locally. When used with brokers with a lot of topics this operation could be very slow, especially if there are a lot of consumers.
+
+NOTE:  When the broker has some topics configured with ACL rules and they miss the DESCRIBE permission, then the subscription
+happens but on the broker side it is logged that the subscription of some topics was denied to the configured user.
+
 
 [id="plugins-{type}s-{plugin}-value_deserializer_class"]
 ===== `value_deserializer_class` 
