@@ -5,6 +5,8 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v7.1.0-plugins-codecs-cloudtrail,v7.1.0>> | 2023-01-11
+| <<v7.0.1-plugins-codecs-cloudtrail,v7.0.1>> | 2022-12-23
 | <<v7.0.0-plugins-codecs-cloudtrail,v7.0.0>> | 2022-07-25
 | <<v3.0.5-plugins-codecs-cloudtrail,v3.0.5>> | 2018-06-01
 | <<v3.0.4-plugins-codecs-cloudtrail,v3.0.4>> | 2018-03-12
@@ -12,6 +14,8 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.0.2-plugins-codecs-cloudtrail,v3.0.2>> | 2017-06-23
 |=======================================================================
 
+include::cloudtrail-v7.1.0.asciidoc[]
+include::cloudtrail-v7.0.1.asciidoc[]
 include::cloudtrail-v7.0.0.asciidoc[]
 include::cloudtrail-v3.0.5.asciidoc[]
 include::cloudtrail-v3.0.4.asciidoc[]
