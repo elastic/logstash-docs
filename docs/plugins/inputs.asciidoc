@@ -13,6 +13,7 @@ The following input plugins are available below. For a list of Elastic supported
 | <<plugins-inputs-couchdb_changes,couchdb_changes>> | Streams events from CouchDB's `_changes` URI | https://github.com/logstash-plugins/logstash-input-couchdb_changes[logstash-input-couchdb_changes]
 | <<plugins-inputs-dead_letter_queue,dead_letter_queue>> | read events from Logstash's dead letter queue | https://github.com/logstash-plugins/logstash-input-dead_letter_queue[logstash-input-dead_letter_queue]
 | <<plugins-inputs-elastic_agent,elastic_agent>> | Receives events from the Elastic Agent framework | https://github.com/logstash-plugins/logstash-input-beats[logstash-input-beats] (shared)
+| <<plugins-inputs-elastic_serverless_forwarder,elastic_serverless_forwarder>> | Accepts events from Elastic Serverless Forwarder | https://github.com/logstash-plugins/logstash-input-elastic_serverless_forwarder[logstash-input-elastic_serverless_forwarder]
 | <<plugins-inputs-elasticsearch,elasticsearch>> | Reads query results from an Elasticsearch cluster | https://github.com/logstash-plugins/logstash-input-elasticsearch[logstash-input-elasticsearch]
 | <<plugins-inputs-exec,exec>> | Captures the output of a shell command as an event | https://github.com/logstash-plugins/logstash-input-exec[logstash-input-exec]
 | <<plugins-inputs-file,file>> | Streams events from files | https://github.com/logstash-plugins/logstash-input-file[logstash-input-file]
@@ -81,6 +82,9 @@ include::inputs/dead_letter_queue.asciidoc[]
 
 :edit_url:
 include::inputs/elastic_agent.asciidoc[]
+
+:edit_url: https://github.com/logstash-plugins/logstash-input-elastic_serverless_forwarder/edit/main/docs/index.asciidoc
+include::inputs/elastic_serverless_forwarder.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/edit/main/docs/index.asciidoc
 include::inputs/elasticsearch.asciidoc[]
