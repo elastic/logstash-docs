@@ -27,7 +27,7 @@ include::{include_path}/plugin_header.asciidoc[]
 Using this input you can receive events from {esf-name} over http(s) connections to the configured <<plugins-{type}s-{plugin}-port>>.
 
 [id="plugins-{type}s-{plugin}-ext-field"]
-====== Minimum Configuration
+===== Minimum Configuration
 [cols="3a,2a"]
 |=======================================================================================================================
 |SSL Enabled              |SSL Disabled
