@@ -166,14 +166,6 @@ Forward resolve one or more fields.
 
 Reverse resolve one or more fields.
 
-[id="{version}-plugins-{type}s-{plugin}-timeout"]
-===== `timeout`
-
-  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
-  * Default value is `0.5`
-
-`resolv` calls will be wrapped in a timeout instance
-
 [id="{version}-plugins-{type}s-{plugin}-tag_on_timeout"]
 ===== `tag_on_timeout`
 
@@ -181,7 +173,13 @@ Reverse resolve one or more fields.
 * Defaults to `["_dnstimeout"]`.
 
 Add tag(s) on DNS lookup time out.
+[id="{version}-plugins-{type}s-{plugin}-timeout"]
+===== `timeout`
 
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `0.5`
+
+`resolv` calls will be wrapped in a timeout instance
 
 [id="{version}-plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
