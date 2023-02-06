@@ -173,6 +173,7 @@ Reverse resolve one or more fields.
 * Defaults to `["_dnstimeout"]`.
 
 Add tag(s) on DNS lookup time out.
+
 [id="{version}-plugins-{type}s-{plugin}-timeout"]
 ===== `timeout`
 
