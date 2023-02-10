@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.12.1
-:release_date: 2022-11-15
-:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v11.12.1/CHANGELOG.md
+:version: v11.12.4
+:release_date: 2023-02-01
+:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v11.12.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -791,7 +791,7 @@ Set the keystore password
 ===== `manage_template`
 
   * Value type is <<boolean,boolean>>
-  * Default value is `true`
+  * Default value is `true` for non-time series data, and `false` for data streams.
 
 From Logstash 1.3 onwards, a template is applied to Elasticsearch during
 Logstash's startup if one with the name <<plugins-{type}s-{plugin}-template_name>>
@@ -1186,7 +1186,7 @@ How long to wait before checking for a stale connection to determine if a keepal
 Consider setting this value lower than the default, possibly to 0, if you get connection errors regularly.
 
 This client is based on Apache Commons. Here's how the
-https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/org/apache/http/impl/conn/PoolingHttpClientConnectionManager.html#setValidateAfterInactivity(int)[Apache
+https://hc.apache.org/httpcomponents-client-4.5.x/current/httpclient/apidocs/org/apache/http/impl/conn/PoolingHttpClientConnectionManager.html#setValidateAfterInactivity(int)[Apache
 Commons documentation] describes this option: "Defines period of inactivity in
 milliseconds after which persistent connections must be re-validated prior to
 being leased to the consumer. Non-positive value passed to this method disables
