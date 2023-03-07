@@ -350,7 +350,7 @@ When enabled, retry requests that result in connection errors or an HTTP status 
 [id="{version}-plugins-{type}s-{plugin}-retry_on_status"]
 ===== `retry_on_status`
 
-* Value type is <<number,number list>>
+* Value type is {logstash-ref}/configuration-file-structure.html#number[number]
 * Default value is an empty list `[]`
 
 Which HTTP Status codes to consider for retries (in addition to connection errors) when using <<{version}-plugins-{type}s-{plugin}-retry_on_failure>>,
