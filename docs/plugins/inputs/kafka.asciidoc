@@ -3,15 +3,15 @@
 :type: input
 :default_plugin: 1
 :default_codec: plain
-:kafka_client: 2.8
-:kafka_client_doc: 25
+:kafka_client: 3.3
+:kafka_client_doc: 33
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v10.12.0
-:release_date: 2022-05-09
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v10.12.0/CHANGELOG.md
+:version: v11.2.1
+:release_date: 2023-02-16
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.2.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -114,6 +114,7 @@ See the https://kafka.apache.org/{kafka_client_doc}/documentation for more detai
 | <<plugins-{type}s-{plugin}-fetch_max_wait_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-fetch_min_bytes>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-group_id>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-group_instance_id>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-heartbeat_interval_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-isolation_level>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-jaas_path>> |a valid filesystem path|No
@@ -135,6 +136,12 @@ See the https://kafka.apache.org/{kafka_client_doc}/documentation for more detai
 | <<plugins-{type}s-{plugin}-schema_registry_key>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-schema_registry_proxy>> |<<uri,uri>>|No
 | <<plugins-{type}s-{plugin}-schema_registry_secret>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-schema_registry_ssl_keystore_location>> |a valid filesystem path|No
+| <<plugins-{type}s-{plugin}-schema_registry_ssl_keystore_password>> |<<password,password>>|No
+| <<plugins-{type}s-{plugin}-schema_registry_ssl_keystore_type>> |<<string,string>>, one of `["jks", "PKCS12"]`|No
+| <<plugins-{type}s-{plugin}-schema_registry_ssl_truststore_location>> |a valid filesystem path|No
+| <<plugins-{type}s-{plugin}-schema_registry_ssl_truststore_password>> |<<password,password>>|No
+| <<plugins-{type}s-{plugin}-schema_registry_ssl_truststore_type>> |<<string,string>>, one of `["jks", "PKCS12"]`|No
 | <<plugins-{type}s-{plugin}-schema_registry_url>> |<<uri,uri>>|No
 | <<plugins-{type}s-{plugin}-schema_registry_validation>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-security_protocol>> |<<string,string>>, one of `["PLAINTEXT", "SSL", "SASL_PLAINTEXT", "SASL_SSL"]`|No
@@ -144,10 +151,10 @@ See the https://kafka.apache.org/{kafka_client_doc}/documentation for more detai
 | <<plugins-{type}s-{plugin}-ssl_key_password>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-ssl_keystore_location>> |a valid filesystem path|No
 | <<plugins-{type}s-{plugin}-ssl_keystore_password>> |<<password,password>>|No
-| <<plugins-{type}s-{plugin}-ssl_keystore_type>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-ssl_keystore_type>> |<<string,string>>, one of `["jks", "PKCS12"]`|No
 | <<plugins-{type}s-{plugin}-ssl_truststore_location>> |a valid filesystem path|No
 | <<plugins-{type}s-{plugin}-ssl_truststore_password>> |<<password,password>>|No
-| <<plugins-{type}s-{plugin}-ssl_truststore_type>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-ssl_truststore_type>> |<<string,string>>, one of `["jks", "PKCS12"]`|No
 | <<plugins-{type}s-{plugin}-topics>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-topics_pattern>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-value_deserializer_class>> |<<string,string>>|No
@@ -211,6 +218,12 @@ How DNS lookups should be done. If set to `use_all_dns_ips`, when the lookup ret
 IP addresses for a hostname, they will all be attempted to connect to before failing the 
 connection. If the value is `resolve_canonical_bootstrap_servers_only` each entry will be 
 resolved and expanded into a list of canonical names.
+
+[NOTE]
+====
+Starting from Kafka 3 `default` value for `client.dns.lookup` value has been removed.
+If explicitly configured it fallbacks to `use_all_dns_ips`.
+====
 
 [id="plugins-{type}s-{plugin}-client_id"]
 ===== `client_id` 
@@ -338,6 +351,28 @@ Logstash instances with the same `group_id`.
 NOTE: In cases when multiple inputs are being used in a single pipeline, reading from different topics,
 it's essential to set a different `group_id => ...` for each input. Setting a unique `client_id => ...`
 is also recommended.
+
+[id="plugins-{type}s-{plugin}-group_instance_id"]
+===== `group_instance_id`
+
+* Value type is <<string,string>>
+* There is no default value for this setting.
+
+The static membership identifier for this Logstash Kafka consumer. Static membership feature was introduced in
+https://cwiki.apache.org/confluence/display/KAFKA/KIP-345%3A+Introduce+static+membership+protocol+to+reduce+consumer+rebalances[KIP-345],
+available under Kafka property `group.instance.id`.
+Its purpose is to avoid rebalances in situations in which a lot of data
+has to be forwarded after a consumer goes offline.
+This feature mitigates cases where the service state is heavy and the rebalance of one topic partition from instance
+A to B would cause a huge amount of data to be transferred.
+A client that goes offline/online frequently can avoid frequent and heavy rebalances by using this option.
+
+NOTE: The `group_instance_id` setting must be unique across all the clients belonging to the same <<plugins-{type}s-{plugin}-group_id>>.
+Otherwise, another client connecting with same `group.instance.id` value would cause the oldest instance to be disconnected.
+You can set this value to use information such as a hostname, an IP, or anything that uniquely identifies the client application.
+
+NOTE: In cases when multiple threads are configured and `consumer_threads` is greater than one, a suffix is appended to
+the `group_instance_id` to avoid collisions.
 
 [id="plugins-{type}s-{plugin}-heartbeat_interval_ms"]
 ===== `heartbeat_interval_ms` 
@@ -570,6 +605,54 @@ Set the address of a forward HTTP proxy. An empty string is treated as if proxy 
 
 Set the password for basic authorization to access remote Schema Registry.
 
+[id="plugins-{type}s-{plugin}-schema_registry_ssl_keystore_location"]
+===== `schema_registry_ssl_keystore_location`
+
+* Value type is <<path,path>>
+* There is no default value for this setting.
+
+If schema registry client authentication is required, this setting stores the keystore path.
+
+[id="plugins-{type}s-{plugin}-schema_registry_ssl_keystore_password"]
+===== `schema_registry_ssl_keystore_password`
+
+* Value type is <<password,password>>
+* There is no default value for this setting.
+
+If schema registry authentication is required, this setting stores the keystore password.
+
+[id="plugins-{type}s-{plugin}-schema_registry_ssl_keystore_type"]
+===== `schema_registry_ssl_keystore_type`
+
+* Value type is <<string,string>>
+* There is no default value for this setting.
+
+The format of the keystore file. It must be either `jks` or `PKCS12`.
+
+[id="plugins-{type}s-{plugin}-schema_registry_ssl_truststore_location"]
+===== `schema_registry_ssl_truststore_location`
+
+* Value type is <<path,path>>
+* There is no default value for this setting.
+
+The truststore path to validate the schema registry's certificate.
+
+[id="plugins-{type}s-{plugin}-schema_registry_ssl_truststore_password"]
+===== `schema_registry_ssl_truststore_password`
+
+* Value type is <<password,password>>
+* There is no default value for this setting.
+
+The schema registry truststore password.
+
+[id="plugins-{type}s-{plugin}-schema_registry_ssl_truststore_type"]
+===== `schema_registry_ssl_truststore_type`
+
+* Value type is <<string,string>>
+* There is no default value for this setting.
+
+The format of the schema registry's truststore file. It must be either `jks` or `PKCS12`.
+
 [id="plugins-{type}s-{plugin}-schema_registry_url"]
 ===== `schema_registry_url`
 
@@ -660,7 +743,7 @@ If client authentication is required, this setting stores the keystore password
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The keystore type.
+The format of the keystore file. It must be either `jks` or `PKCS12`.
 
 [id="plugins-{type}s-{plugin}-ssl_truststore_location"]
 ===== `ssl_truststore_location` 
@@ -684,7 +767,7 @@ The truststore password.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The truststore type.
+The format of the truststore file. It must be either `jks` or `PKCS12`.
 
 [id="plugins-{type}s-{plugin}-topics"]
 ===== `topics` 
@@ -700,8 +783,13 @@ A list of topics to subscribe to, defaults to ["logstash"].
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-A topic regex pattern to subscribe to. 
-The topics configuration will be ignored when using this configuration.
+A topic regular expression pattern to subscribe to.
+
+Filtering by a regular expression is done by retrieving the full list of topic names from the broker and applying the pattern locally. When used with brokers with a lot of topics this operation could be very slow, especially if there are a lot of consumers.
+
+NOTE:  When the broker has some topics configured with ACL rules and they miss the DESCRIBE permission, then the subscription
+happens but on the broker side it is logged that the subscription of some topics was denied to the configured user.
+
 
 [id="plugins-{type}s-{plugin}-value_deserializer_class"]
 ===== `value_deserializer_class` 
