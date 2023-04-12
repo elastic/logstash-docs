@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.4.1
-:release_date: 2022-05-04
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-http/blob/v1.4.1/CHANGELOG.md
+:version: v1.4.3
+:release_date: 2023-03-21
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-http/blob/v1.4.3/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -95,13 +95,24 @@ filter plugins.
 
 The body of the HTTP request to be sent.
 
+An example to send `body` as json
+```
+http {
+  body => {
+    "key1" => "constant_value"
+    "key2" => "%{[field][reference]}"
+  }
+  body_format => "json"
+}
+```
+
 [id="plugins-{type}s-{plugin}-body_format"]
 ===== `body_format`
 
   * Value type can be either `"json"` or `"text"`
   * Default value is `"text"`
 
-If set to `"json"` the body will be serialized as JSON. Otherwise it is sent as is.
+If set to `"json"` and the <<plugins-{type}s-{plugin}-body>> is a type of <<array,array>> or <<hash,hash>>, the body will be serialized as JSON. Otherwise it is sent as is.
 
 [id="plugins-{type}s-{plugin}-ecs_compatibility"]
 ===== `ecs_compatibility`
