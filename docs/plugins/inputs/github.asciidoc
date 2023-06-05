@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.10
-:release_date: 2022-12-22
-:changelog_url: https://github.com/logstash-plugins/logstash-input-github/blob/v3.0.10/CHANGELOG.md
+:version: v3.0.11
+:release_date: 2023-05-30
+:changelog_url: https://github.com/logstash-plugins/logstash-input-github/blob/v3.0.11/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -35,7 +35,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-drop_invalid>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-ip>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-port>> |<<number,number>>|Yes
-| <<plugins-{type}s-{plugin}-secret_token>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-secret_token>> |<<password,password>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -72,7 +72,7 @@ The port to listen on
 [id="plugins-{type}s-{plugin}-secret_token"]
 ===== `secret_token` 
 
-  * Value type is <<string,string>>
+  * Value type is <<password,password>>
   * There is no default value for this setting.
 
 Your GitHub Secret Token for the webhook

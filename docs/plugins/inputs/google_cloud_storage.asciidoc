@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v0.13.0
-:release_date: 2022-11-22
-:changelog_url: https://github.com/logstash-plugins/logstash-input-google_cloud_storage/blob/v0.13.0/CHANGELOG.md
+:version: v0.14.0
+:release_date: 2023-05-02
+:changelog_url: https://github.com/logstash-plugins/logstash-input-google_cloud_storage/blob/v0.14.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -56,6 +56,8 @@ To manually install the "mimemagic" gem into Logstash use:
 ----------------------------------
 bin/ruby -S gem install mimemagic -v '>= 0.3.7'
 ----------------------------------
+
+The mimemagic gem also requires the `shared-mime-info` package to be present, it can be installed using `apt-get install shared-mime-info` on Debian/Ubuntu or `yum install shared-mime-info` on Red Hat/RockyOS distributions.
 
 Then install the plugin as usual with:
 [source,bash]
@@ -218,8 +220,9 @@ The bucket containing your log files.
   * There is no default value for this setting.
 
 The path to the key to authenticate your user to the bucket.
-This service user _should_ have the `storage.objects.update` permission so it can
-create metadata on the object preventing it from being scanned multiple times.
+This service user _should_ have the `storage.objects.update` permission so it can create metadata on the object preventing it from being scanned multiple times.
+
+If no key is provided the plugin will try to use the https://cloud.google.com/java/docs/reference/google-auth-library/latest/com.google.auth.oauth2.GoogleCredentials#com_google_auth_oauth2_GoogleCredentials_getApplicationDefault__[default application credentials], and if they don't exist, it falls back to unauthenticated mode. 
 
 [id="plugins-{type}s-{plugin}-interval"]
 ===== `interval`
