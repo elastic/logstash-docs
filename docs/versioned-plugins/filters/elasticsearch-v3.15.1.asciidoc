@@ -1,0 +1,573 @@
+:plugin: elasticsearch
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.15.1
+:release_date: 2023-06-02
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.15.1/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Elasticsearch filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Search Elasticsearch for a previous log event and copy some fields from it
+into the current event. Below are two complete examples of how this filter might
+be used.
+
+The first example uses the legacy 'query' parameter where the user is limited to
+an Elasticsearch query_string.
+Whenever logstash receives an "end" event, it uses this elasticsearch
+filter to find the matching "start" event based on some operation identifier.
+Then it copies the `@timestamp` field from the "start" event into a new field on
+the "end" event.  Finally, using a combination of the "date" filter and the
+"ruby" filter, we calculate the time duration in hours between the two events.
+
+[source,ruby]
+--------------------------------------------------
+if [type] == "end" {
+   elasticsearch {
+      hosts => ["es-server"]
+      query => "type:start AND operation:%{[opid]}"
+      fields => { "@timestamp" => "started" }
+   }
+
+   date {
+      match => ["[started]", "ISO8601"]
+      target => "[started]"
+   }
+
+   ruby {
+      code => "event.set('duration_hrs', (event.get('@timestamp') - event.get('started')) / 3600)"
+   }
+}
+--------------------------------------------------
+
+The example below reproduces the above example but utilises the query_template.
+This query_template represents a full Elasticsearch query DSL and supports the
+standard Logstash field substitution syntax.  The example below issues
+the same query as the first example but uses the template shown.
+
+[source,ruby]
+--------------------------------------------------
+if [type] == "end" {
+      elasticsearch {
+         hosts => ["es-server"]
+         query_template => "template.json"
+         fields => { "@timestamp" => "started" }
+      }
+
+      date {
+         match => ["[started]", "ISO8601"]
+         target => "[started]"
+      }
+
+      ruby {
+         code => "event.set('duration_hrs', (event.get('@timestamp') - event.get('started')) / 3600)"
+      }
+}
+--------------------------------------------------
+
+template.json:
+
+[source,json]
+[source,json]
+--------------------------------------------------
+{
+  "size": 1,
+  "sort" : [ { "@timestamp" : "desc" } ],
+  "query": {
+    "query_string": {
+      "query": "type:start AND operation:%{[opid]}"
+    }
+  },
+  "_source": ["@timestamp"]
+}
+--------------------------------------------------
+
+As illustrated above, through the use of 'opid', fields from the Logstash
+events can be referenced within the template.
+The template will be populated per event prior to being used to query Elasticsearch.
+
+Notice also that when you use `query_template`, the Logstash attributes `result_size`
+and `sort` will be ignored. They should be specified directly in the JSON
+template, as shown in the example above.
+
+[id="{version}-plugins-{type}s-{plugin}-auth"]
+==== Authentication
+
+Authentication to a secure Elasticsearch cluster is possible using _one_ of the following options:
+
+* <<{version}-plugins-{type}s-{plugin}-user>> AND <<{version}-plugins-{type}s-{plugin}-password>>
+* <<{version}-plugins-{type}s-{plugin}-cloud_auth>>
+* <<{version}-plugins-{type}s-{plugin}-api_key>>
+* <<{version}-plugins-{type}s-{plugin}-keystore>> and/or <<{version}-plugins-{type}s-{plugin}-keystore_password>>
+
+[id="{version}-plugins-{type}s-{plugin}-autz"]
+==== Authorization
+
+Authorization to a secure Elasticsearch cluster requires `read` permission at index level and `monitoring` permissions at cluster level.
+The `monitoring` permission at cluster level is necessary to perform periodic connectivity checks.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Elasticsearch Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> and the <<{version}-plugins-{type}s-{plugin}-deprecated-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-aggregation_fields>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-api_key>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-ca_trusted_fingerprint>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-cloud_auth>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-cloud_id>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-docinfo_fields>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-enable_sort>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-fields>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-hosts>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-index>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-proxy>> |{logstash-ref}/configuration-file-structure.html#uri[uri]|No
+| <<{version}-plugins-{type}s-{plugin}-query>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-query_template>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-result_size>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-retry_on_failure>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-retry_on_status>> |{logstash-ref}/configuration-file-structure.html#number[number list]|No
+| <<{version}-plugins-{type}s-{plugin}-sort>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|__Deprecated__
+| <<{version}-plugins-{type}s-{plugin}-ssl_certificate>> |{logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities>> |list of {logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_cipher_suites>> |list of {logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_enabled>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_key>> |{logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_keystore_password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_keystore_path>> |{logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_keystore_type>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_supported_protocols>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_truststore_password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_truststore_path>> |{logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_truststore_type>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_verification_mode>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["full", "none"]`|No
+| <<{version}-plugins-{type}s-{plugin}-tag_on_failure>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-user>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-aggregation_fields"]
+===== `aggregation_fields`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * Default value is `{}`
+
+Hash of aggregation names to copy from elasticsearch response into Logstash event fields
+
+Example:
+[source,ruby]
+    filter {
+      elasticsearch {
+        aggregation_fields => {
+          "my_agg_name" => "my_ls_field"
+        }
+      }
+    }
+
+[id="{version}-plugins-{type}s-{plugin}-api_key"]
+===== `api_key`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Authenticate using Elasticsearch API key. Note that this option also requires
+enabling the <<{version}-plugins-{type}s-{plugin}-ssl_enabled>> option.
+
+Format is `id:api_key` where `id` and `api_key` are as returned by the
+Elasticsearch {ref}/security-api-create-api-key.html[Create API key API].
+
+[id="{version}-plugins-{type}s-{plugin}-ca_trusted_fingerprint"]
+===== `ca_trusted_fingerprint`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string], and must contain exactly 64 hexadecimal characters.
+* There is no default value for this setting.
+* Use of this option _requires_ Logstash 8.3+
+
+The SHA-256 fingerprint of an SSL Certificate Authority to trust, such as the autogenerated self-signed CA for an Elasticsearch cluster.
+
+[id="{version}-plugins-{type}s-{plugin}-cloud_auth"]
+===== `cloud_auth`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Cloud authentication string ("<username>:<password>" format) is an alternative for the `user`/`password` pair.
+
+For more info, check out the
+{logstash-ref}/connecting-to-cloud.html[Logstash-to-Cloud documentation].
+
+[id="{version}-plugins-{type}s-{plugin}-cloud_id"]
+===== `cloud_id`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Cloud ID, from the Elastic Cloud web console. If set `hosts` should not be used.
+
+For more info, check out the
+{logstash-ref}/connecting-to-cloud.html[Logstash-to-Cloud documentation].
+
+[id="{version}-plugins-{type}s-{plugin}-docinfo_fields"]
+===== `docinfo_fields`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * Default value is `{}`
+
+Hash of docinfo fields to copy from old event (found via elasticsearch) into new event
+
+Example:
+[source,ruby]
+    filter {
+      elasticsearch {
+        docinfo_fields => {
+          "_id" => "document_id"
+          "_index" => "document_index"
+        }
+      }
+    }
+
+[id="{version}-plugins-{type}s-{plugin}-enable_sort"]
+===== `enable_sort`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Whether results should be sorted or not
+
+[id="{version}-plugins-{type}s-{plugin}-fields"]
+===== `fields`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `{}`
+
+An array of fields to copy from the old event (found via elasticsearch) into the
+new event, currently being processed.
+
+In the following example, the values of `@timestamp` and `event_id` on the event
+found via elasticsearch are copied to the current event's
+`started` and `start_id` fields, respectively:
+
+[source,ruby]
+--------------------------------------------------
+fields => {
+  "@timestamp" => "started"
+  "event_id" => "start_id"
+}
+--------------------------------------------------
+
+[id="{version}-plugins-{type}s-{plugin}-hosts"]
+===== `hosts`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `["localhost:9200"]`
+
+List of elasticsearch hosts to use for querying.
+
+[id="{version}-plugins-{type}s-{plugin}-index"]
+===== `index`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `""`
+
+Comma-delimited list of index names to search; use `_all` or empty string to perform the operation on all indices.
+Field substitution (e.g. `index-name-%{date_field}`) is available
+
+[id="{version}-plugins-{type}s-{plugin}-password"]
+===== `password`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Basic Auth - password
+
+[id="{version}-plugins-{type}s-{plugin}-proxy"]
+===== `proxy`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#uri[uri]
+* There is no default value for this setting.
+
+Set the address of a forward HTTP proxy.
+An empty string is treated as if proxy was not set, and is useful when using
+environment variables e.g. `proxy => '${LS_PROXY:}'`.
+
+[id="{version}-plugins-{type}s-{plugin}-query"]
+===== `query`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Elasticsearch query string. More information is available in the
+{ref}/query-dsl-query-string-query.html#query-string-syntax[Elasticsearch query
+string documentation].
+
+
+[id="{version}-plugins-{type}s-{plugin}-query_template"]
+===== `query_template`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+File path to elasticsearch query in DSL format. More information is available in
+the {ref}/query-dsl.html[Elasticsearch query documentation].
+
+[id="{version}-plugins-{type}s-{plugin}-result_size"]
+===== `result_size`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+* Default value is `1`
+
+How many results to return
+
+[id="{version}-plugins-{type}s-{plugin}-retry_on_failure"]
+===== `retry_on_failure`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+* Default value is `0` (retries disabled)
+
+How many times to retry an individual failed request.
+
+When enabled, retry requests that result in connection errors or an HTTP status code included in <<{version}-plugins-{type}s-{plugin}-retry_on_status>>
+
+[id="{version}-plugins-{type}s-{plugin}-retry_on_status"]
+===== `retry_on_status`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#number[number list]
+* Default value is an empty list `[]`
+
+Which HTTP Status codes to consider for retries (in addition to connection errors) when using <<{version}-plugins-{type}s-{plugin}-retry_on_failure>>,
+
+
+[id="{version}-plugins-{type}s-{plugin}-sort"]
+===== `sort`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"@timestamp:desc"`
+
+Comma-delimited list of `<field>:<direction>` pairs that define the sort order
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_certificate"]
+===== `ssl_certificate`
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+SSL certificate to use to authenticate the client. This certificate should be an OpenSSL-style X.509 certificate file.
+
+NOTE: This setting can be used only if <<{version}-plugins-{type}s-{plugin}-ssl_key>> is set.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities"]
+===== `ssl_certificate_authorities`
+
+  * Value type is a list of {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting
+
+The .cer or .pem files to validate the server's certificate.
+
+NOTE: You cannot use this setting and <<{version}-plugins-{type}s-{plugin}-ssl_truststore_path>> at the same time.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_cipher_suites"]
+===== `ssl_cipher_suites`
+  * Value type is a list of {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting
+
+The list of cipher suites to use, listed by priorities.
+Supported cipher suites vary depending on the Java and protocol versions.
+
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_enabled"]
+===== `ssl_enabled`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * There is no default value for this setting.
+
+Enable SSL/TLS secured communication to Elasticsearch cluster.
+Leaving this unspecified will use whatever scheme is specified in the URLs listed in <<{version}-plugins-{type}s-{plugin}-hosts>> or extracted from the <<{version}-plugins-{type}s-{plugin}-cloud_id>>.
+If no explicit protocol is specified plain HTTP will be used.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_key"]
+===== `ssl_key`
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+OpenSSL-style RSA private key that corresponds to the <<{version}-plugins-{type}s-{plugin}-ssl_certificate>>.
+
+NOTE: This setting can be used only if <<{version}-plugins-{type}s-{plugin}-ssl_certificate>> is set.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_keystore_password"]
+===== `ssl_keystore_password`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Set the keystore password
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_keystore_path"]
+===== `ssl_keystore_path`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+The keystore used to present a certificate to the server.
+It can be either `.jks` or `.p12`
+
+NOTE: You cannot use this setting and <<{version}-plugins-{type}s-{plugin}-ssl_certificate>> at the same time.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_keystore_type"]
+===== `ssl_keystore_type`
+
+  * Value can be any of: `jks`, `pkcs12`
+  * If not provided, the value will be inferred from the keystore filename.
+
+The format of the keystore file. It must be either `jks` or `pkcs12`.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_supported_protocols"]
+===== `ssl_supported_protocols`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Allowed values are: `'TLSv1.1'`, `'TLSv1.2'`, `'TLSv1.3'`
+  * Default depends on the JDK being used. With up-to-date Logstash, the default is `['TLSv1.2', 'TLSv1.3']`.
+  `'TLSv1.1'` is not considered secure and is only provided for legacy applications.
+
+List of allowed SSL/TLS versions to use when establishing a connection to the Elasticsearch cluster.
+
+For Java 8 `'TLSv1.3'` is supported only since **8u262** (AdoptOpenJDK), but requires that you set the
+`LS_JAVA_OPTS="-Djdk.tls.client.protocols=TLSv1.3"` system property in Logstash.
+
+NOTE: If you configure the plugin to use `'TLSv1.1'` on any recent JVM, such as the one packaged with Logstash,
+the protocol is disabled by default and needs to be enabled manually by changing `jdk.tls.disabledAlgorithms` in
+the *$JDK_HOME/conf/security/java.security* configuration file. That is, `TLSv1.1` needs to be removed from the list.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_truststore_password"]
+===== `ssl_truststore_password`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Set the truststore password
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_truststore_path"]
+===== `ssl_truststore_path`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+The truststore to validate the server's certificate.
+It can be either `.jks` or `.p12`.
+
+NOTE: You cannot use this setting and <<{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities>> at the same time.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_truststore_type"]
+===== `ssl_truststore_type`
+
+  * Value can be any of: `jks`, `pkcs12`
+  * If not provided, the value will be inferred from the truststore filename.
+
+The format of the truststore file. It must be either `jks` or `pkcs12`.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_verification_mode"]
+===== `ssl_verification_mode`
+
+  * Value can be any of: `full`, `none`
+  * Default value is `full`
+
+Defines how to verify the certificates presented by another party in the TLS connection:
+
+`full` validates that the server certificate has an issue date that’s within
+the not_before and not_after dates; chains to a trusted Certificate Authority (CA), and
+has a hostname or IP address that matches the names within the certificate.
+
+`none` performs no certificate validation.
+
+WARNING: Setting certificate verification to `none` disables many security benefits of SSL/TLS, which is very dangerous. For more information on disabling certificate verification please read https://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf
+
+[id="{version}-plugins-{type}s-{plugin}-tag_on_failure"]
+===== `tag_on_failure`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `["_elasticsearch_lookup_failure"]`
+
+Tags the event on failure to look up previous log event information. This can be used in later analysis.
+
+[id="{version}-plugins-{type}s-{plugin}-user"]
+===== `user`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Basic Auth - username
+
+
+[id="{version}-plugins-{type}s-{plugin}-deprecated-options"]
+==== Elasticsearch Filter Deprecated Configuration Options
+
+This plugin supports the following deprecated configurations.
+
+WARNING: Deprecated options are subject to removal in future releases.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting|Input type|Replaced by
+| <<{version}-plugins-{type}s-{plugin}-ca_file>> |a valid filesystem path|<<{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities>>
+| <<{version}-plugins-{type}s-{plugin}-keystore>> |a valid filesystem path|<<{version}-plugins-{type}s-{plugin}-ssl_keystore_path>>
+| <<{version}-plugins-{type}s-{plugin}-keystore_password>> |{logstash-ref}/configuration-file-structure.html#password[password]|<<{version}-plugins-{type}s-{plugin}-ssl_keystore_password>>
+|=======================================================================
+
+[id="{version}-plugins-{type}s-{plugin}-ca_file"]
+===== `ca_file`
+deprecated[3.15.0, Replaced by <<{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities>>]
+
+* Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+* There is no default value for this setting.
+
+SSL Certificate Authority file
+
+[id="{version}-plugins-{type}s-{plugin}-ssl"]
+===== `ssl`
+deprecated[3.15.0, Replaced by <<{version}-plugins-{type}s-{plugin}-ssl_enabled>>]
+
+* Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+* Default value is `false`
+
+SSL
+
+[id="{version}-plugins-{type}s-{plugin}-keystore"]
+===== `keystore`
+deprecated[3.15.0, Replaced by <<{version}-plugins-{type}s-{plugin}-ssl_keystore_path>>]
+
+* Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+* There is no default value for this setting.
+
+The keystore used to present a certificate to the server. It can be either .jks or .p12
+
+[id="{version}-plugins-{type}s-{plugin}-keystore_password"]
+===== `keystore_password`
+deprecated[3.15.0, Replaced by <<{version}-plugins-{type}s-{plugin}-ssl_keystore_password>>]
+
+* Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+* There is no default value for this setting.
+
+Set the keystore password
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
