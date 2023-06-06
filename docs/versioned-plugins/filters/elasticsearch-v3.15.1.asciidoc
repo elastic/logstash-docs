@@ -142,7 +142,7 @@ This plugin supports the following configuration options plus the <<{version}-pl
 | <<{version}-plugins-{type}s-{plugin}-query_template>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
 | <<{version}-plugins-{type}s-{plugin}-result_size>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
 | <<{version}-plugins-{type}s-{plugin}-retry_on_failure>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
-| <<{version}-plugins-{type}s-{plugin}-retry_on_status>> |<<number,number list>>|No
+| <<{version}-plugins-{type}s-{plugin}-retry_on_status>> |{logstash-ref}/configuration-file-structure.html#number[number list]|No
 | <<{version}-plugins-{type}s-{plugin}-sort>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
 | <<{version}-plugins-{type}s-{plugin}-ssl>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|__Deprecated__
 | <<{version}-plugins-{type}s-{plugin}-ssl_certificate>> |{logstash-ref}/configuration-file-structure.html#path[path]|No
@@ -352,7 +352,7 @@ When enabled, retry requests that result in connection errors or an HTTP status 
 [id="{version}-plugins-{type}s-{plugin}-retry_on_status"]
 ===== `retry_on_status`
 
-* Value type is <<number,number list>>
+* Value type is {logstash-ref}/configuration-file-structure.html#number[number list]
 * Default value is an empty list `[]`
 
 Which HTTP Status codes to consider for retries (in addition to connection errors) when using <<{version}-plugins-{type}s-{plugin}-retry_on_failure>>,
