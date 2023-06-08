@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v7.1.2-plugins-inputs-cloudwatch,v7.1.2>> | 2023-06-08
 | <<v7.1.1-plugins-inputs-cloudwatch,v7.1.1>> | 2023-04-11
 | <<v7.1.0-plugins-inputs-cloudwatch,v7.1.0>> | 2023-01-11
 | <<v7.0.1-plugins-inputs-cloudwatch,v7.0.1>> | 2022-12-23
@@ -19,6 +20,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v2.0.1-plugins-inputs-cloudwatch,v2.0.1>> | 2017-06-23
 |=======================================================================
 
+include::cloudwatch-v7.1.2.asciidoc[]
 include::cloudwatch-v7.1.1.asciidoc[]
 include::cloudwatch-v7.1.0.asciidoc[]
 include::cloudwatch-v7.0.1.asciidoc[]
