@@ -1,0 +1,36 @@
+:plugin: aws
+:type: integration
+:no_codec:
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v7.1.3
+:release_date: 2023-06-14
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-aws/blob/v7.1.3/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== AWS Integration Plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+The AWS Integration Plugin provides integrated plugins for working with Amazon Web Services:
+
+ * {logstash-ref}/plugins-codecs-cloudfront.html[Cloudfront Codec Plugin]
+ * {logstash-ref}/plugins-codecs-cloudtrail.html[Cloudtrail Codec Plugin]
+ * {logstash-ref}/plugins-inputs-cloudwatch.html[Cloudwatch Input Plugin]
+ * {logstash-ref}/plugins-inputs-s3.html[S3 Input Plugin]
+ * {logstash-ref}/plugins-inputs-sqs.html[Sqs Input Plugin]
+ * {logstash-ref}/plugins-outputs-cloudwatch.html[Cloudwatch Output Plugin]
+ * {logstash-ref}/plugins-outputs-s3.html[S3 Output Plugin]
+ * {logstash-ref}/plugins-outputs-sns.html[Sns Output Plugin]
+ * {logstash-ref}/plugins-outputs-sqs.html[Sqs Output Plugin]
+
+:no_codec!:
