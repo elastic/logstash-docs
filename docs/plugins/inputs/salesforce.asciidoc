@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.2.0
-:release_date: 2021-12-07
-:changelog_url: https://github.com/logstash-plugins/logstash-input-salesforce/blob/v3.2.0/CHANGELOG.md
+:version: v3.2.1
+:release_date: 2023-05-30
+:changelog_url: https://github.com/logstash-plugins/logstash-input-salesforce/blob/v3.2.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -77,9 +77,9 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-api_version>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-client_id>> |<<string,string>>|Yes
-| <<plugins-{type}s-{plugin}-client_secret>> |<<string,string>>|Yes
-| <<plugins-{type}s-{plugin}-password>> |<<string,string>>|Yes
-| <<plugins-{type}s-{plugin}-security_token>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-client_secret>> |<<password,password>>|Yes
+| <<plugins-{type}s-{plugin}-password>> |<<password,password>>|Yes
+| <<plugins-{type}s-{plugin}-security_token>> |<<password,password>>|Yes
 | <<plugins-{type}s-{plugin}-sfdc_fields>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-sfdc_filters>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-sfdc_instance_url>> |<<string,string>>|No
@@ -120,7 +120,7 @@ https://help.salesforce.com/apex/HTViewHelpDoc?id=connected_app_create.htm
 ===== `client_secret` 
 
   * This is a required setting.
-  * Value type is <<string,string>>
+  * Value type is <<password,password>>
   * There is no default value for this setting.
 
 Consumer Secret from your oauth enabled connected app
@@ -129,7 +129,7 @@ Consumer Secret from your oauth enabled connected app
 ===== `password` 
 
   * This is a required setting.
-  * Value type is <<string,string>>
+  * Value type is <<password,password>>
   * There is no default value for this setting.
 
 The password used to login to sfdc
@@ -138,7 +138,7 @@ The password used to login to sfdc
 ===== `security_token` 
 
   * This is a required setting.
-  * Value type is <<string,string>>
+  * Value type is <<password,password>>
   * There is no default value for this setting.
 
 The security token for this account. For more information about
