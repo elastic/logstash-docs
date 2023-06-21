@@ -7,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v7.1.1
-:release_date: 2023-04-11
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-aws/blob/v7.1.1/CHANGELOG.md
+:version: v7.1.4
+:release_date: 2023-06-15
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-aws/blob/v7.1.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -66,6 +66,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-region>> |<<string,string>>, one of `["us-east-1", "us-east-2", "us-west-1", "us-west-2", "eu-central-1", "eu-west-1", "eu-west-2", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1", "ap-northeast-2", "sa-east-1", "us-gov-west-1", "cn-north-1", "ap-south-1", "ca-central-1"]`|No
 | <<plugins-{type}s-{plugin}-secret_access_key>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-session_token>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-use_aws_bundled_ca>> |<<boolean,boolean>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -159,6 +160,15 @@ The AWS Secret Access Key
 
 The AWS Session token for temporary credential
 
+[id="plugins-{type}s-{plugin}-use_aws_bundled_ca"]
+===== `use_aws_bundled_ca`
+
+* Value type is <<boolean,boolean>>
+* Default value is `false`
+
+Use bundled CA certificates that ship with AWS SDK to verify SSL peer certificates.
+For cases where the default certificates are unavailable, e.g. Windows,
+you can set this to `true`.
 
 
 [id="plugins-{type}s-{plugin}-common-options"]
