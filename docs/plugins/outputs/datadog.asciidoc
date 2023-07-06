@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.5
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-output-datadog/blob/v3.0.5/CHANGELOG.md
+:version: v3.0.6
+:release_date: 2023-05-31
+:changelog_url: https://github.com/logstash-plugins/logstash-output-datadog/blob/v3.0.6/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -37,7 +37,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |=======================================================================
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-alert_type>> |<<string,string>>, one of `["info", "error", "warning", "success"]`|No
-| <<plugins-{type}s-{plugin}-api_key>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-api_key>> |<<password,password>>|Yes
 | <<plugins-{type}s-{plugin}-date_happened>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-dd_tags>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-priority>> |<<string,string>>, one of `["normal", "low"]`|No
@@ -63,7 +63,7 @@ Alert type
 ===== `api_key` 
 
   * This is a required setting.
-  * Value type is <<string,string>>
+  * Value type is <<password,password>>
   * There is no default value for this setting.
 
 Your DatadogHQ API key
