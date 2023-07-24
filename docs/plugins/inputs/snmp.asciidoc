@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.3.1
-:release_date: 2021-12-23
-:changelog_url: https://github.com/logstash-plugins/logstash-input-snmp/blob/v1.3.1/CHANGELOG.md
+:version: v1.3.2
+:release_date: 2023-06-30
+:changelog_url: https://github.com/logstash-plugins/logstash-input-snmp/blob/v1.3.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -63,6 +63,37 @@ $ smidump --level=1 -k -f python RFC1213-MIB > RFC1213-MIB.dic
 -----
 
 Note that the resulting file as output by `smidump` must have the `.dic` extension.
+
+As `smidump` only looks for mib dependencies in its pre-configured path lists as defined in the documentaion in the https://www.ibr.cs.tu-bs.de/projects/libsmi/smi_config.html["MODULES LOCATIONS"] section, you may need to provide the paths to locations of MIBs in your particular environment to avoid a `failed to locate MIB module` error.
+
+Two ways to achieve this are by using an environment variable or a config file to provide the additional path configuration.
+
+Set the `SMIPATH` env var with the path to your mibs ensuring you include a prepended colon `:` for the path, for example:
+
+[source,sh]
+-----
+$ SMIPATH=":/path/to/mibs/" smidump -k -f python CISCO-PROCESS-MIB.mib > CISCO-PROCESS-MIB_my.dic
+-----
+
+NOTE: SMI docs on the prepended colon:
+
+  The ‘path’ command argument and the environment variable either start with a path separator character (‘:’ on UNIX-like systems, ‘;’ on MS-Windows systems) to append to the path, or end with a path separator character to prepend to the path, or otherwise completely replace the path.
+
+
+The other way is to create a configuration file eg `smi.conf` with the `path` option.
+
+[source,sh]
+-----
+path :/path/to/mibs/
+-----
+
+and use that config with smidump:
+
+[source,sh]
+-----
+$ smidump -c smi.conf -k -f python CISCO-PROCESS-MIB.mib > CISCO-PROCESS-MIB_my.dic
+-----
+
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== SNMP Input Configuration Options
