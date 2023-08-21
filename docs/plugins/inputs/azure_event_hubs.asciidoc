@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.4.4
-:release_date: 2022-06-13
-:changelog_url: https://github.com/logstash-plugins/logstash-input-azure_event_hubs/blob/v1.4.4/CHANGELOG.md
+:version: v1.4.5
+:release_date: 2023-07-04
+:changelog_url: https://github.com/logstash-plugins/logstash-input-azure_event_hubs/blob/v1.4.5/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
