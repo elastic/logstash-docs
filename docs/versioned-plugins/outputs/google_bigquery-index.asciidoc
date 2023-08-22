@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v4.4.0-plugins-outputs-google_bigquery,v4.4.0>> | 2023-08-22
 | <<v4.3.0-plugins-outputs-google_bigquery,v4.3.0>> | 2022-11-02
 | <<v4.2.0-plugins-outputs-google_bigquery,v4.2.0>> | 2022-09-23
 | <<v4.1.5-plugins-outputs-google_bigquery,v4.1.5>> | 2021-01-15
@@ -21,6 +22,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.2.1-plugins-outputs-google_bigquery,v3.2.1>> | 2017-06-23
 |=======================================================================
 
+include::google_bigquery-v4.4.0.asciidoc[]
 include::google_bigquery-v4.3.0.asciidoc[]
 include::google_bigquery-v4.2.0.asciidoc[]
 include::google_bigquery-v4.1.5.asciidoc[]
