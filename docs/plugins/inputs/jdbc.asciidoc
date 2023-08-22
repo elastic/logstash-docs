@@ -7,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.4.1
-:release_date: 2022-11-04
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-jdbc/blob/v5.4.1/CHANGELOG.md
+:version: v5.4.4
+:release_date: 2023-06-15
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-jdbc/blob/v5.4.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -492,9 +492,11 @@ How often to validate a connection (in seconds)
 ===== `last_run_metadata_path`
 
   * Value type is <<string,string>>
-  * Default value is `"$HOME/.logstash_jdbc_last_run"`
+  * Default value is `"<path.data>/plugins/inputs/jdbc/logstash_jdbc_last_run"`
 
 Path to file with last run time
+
+In versions prior to 5.2.6 the metadata file was written to `$HOME/.logstash_jdbc_last_run`. If during a Logstash upgrade the file is found in "$HOME" it will be moved to the default location under "path.data". If the path is defined by the user then no automatic move is performed.
 
 [id="plugins-{type}s-{plugin}-lowercase_column_names"]
 ===== `lowercase_column_names`

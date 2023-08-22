@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.1.1
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-output-email/blob/v4.1.1/CHANGELOG.md
+:version: v4.1.2
+:release_date: 2023-05-30
+:changelog_url: https://github.com/logstash-plugins/logstash-output-email/blob/v4.1.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -62,7 +62,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-domain>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-from>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-htmlbody>> |<<string,string>>|No
-| <<plugins-{type}s-{plugin}-password>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-password>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-replyto>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-subject>> |<<string,string>>|No
@@ -177,7 +177,7 @@ HTML Body for the email, which may contain HTML markup.
 [id="plugins-{type}s-{plugin}-password"]
 ===== `password` 
 
-  * Value type is <<string,string>>
+  * Value type is <<password,password>>
   * There is no default value for this setting.
 
 Password to authenticate with the server
