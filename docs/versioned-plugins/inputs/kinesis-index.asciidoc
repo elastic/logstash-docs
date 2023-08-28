@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v2.3.0-plugins-inputs-kinesis,v2.3.0>> | 2023-08-28
 | <<v2.2.2-plugins-inputs-kinesis,v2.2.2>> | 2023-05-30
 | <<v2.2.1-plugins-inputs-kinesis,v2.2.1>> | 2022-06-13
 | <<v2.2.0-plugins-inputs-kinesis,v2.2.0>> | 2021-06-28
@@ -20,6 +21,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v2.0.4-plugins-inputs-kinesis,v2.0.4>> | 2017-06-27
 |=======================================================================
 
+include::kinesis-v2.3.0.asciidoc[]
 include::kinesis-v2.2.2.asciidoc[]
 include::kinesis-v2.2.1.asciidoc[]
 include::kinesis-v2.2.0.asciidoc[]
