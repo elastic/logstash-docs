@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.3.2
-:release_date: 2023-06-30
-:changelog_url: https://github.com/logstash-plugins/logstash-input-snmp/blob/v1.3.2/CHANGELOG.md
+:version: v1.3.3
+:release_date: 2023-08-07
+:changelog_url: https://github.com/logstash-plugins/logstash-input-snmp/blob/v1.3.3/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -55,7 +55,7 @@ libsmi is available and installable on most operating systems.
 
 To import a MIB, you need to first convert the ASN.1 MIB file into a `.dic` file using the libsmi `smidump` command line utility.
 
-Example (using `RFC1213-MIB` file)
+*Example (using `RFC1213-MIB` file)*
 
 [source,sh]
 -----
@@ -64,36 +64,47 @@ $ smidump --level=1 -k -f python RFC1213-MIB > RFC1213-MIB.dic
 
 Note that the resulting file as output by `smidump` must have the `.dic` extension.
 
-As `smidump` only looks for mib dependencies in its pre-configured path lists as defined in the documentaion in the https://www.ibr.cs.tu-bs.de/projects/libsmi/smi_config.html["MODULES LOCATIONS"] section, you may need to provide the paths to locations of MIBs in your particular environment to avoid a `failed to locate MIB module` error.
+[id="plugins-{type}s-{plugin}-locate-mibs"]
+===== Preventing a `failed to locate MIB module` error 
 
-Two ways to achieve this are by using an environment variable or a config file to provide the additional path configuration.
+The `smidump` function looks for mib dependencies in its pre-configured path lists.
+You may need to provide the paths to locations of MIBs in your particular environment.
 
-Set the `SMIPATH` env var with the path to your mibs ensuring you include a prepended colon `:` for the path, for example:
+You can avoid  to avoid a `failed to locate MIB module` error by providing the additional path configuration information with:
+
+* an environment variable, or 
+* a config file to provide the additional path configuration.
+
+See the "MODULE LOCATIONS" section of the https://www.ibr.cs.tu-bs.de/projects/libsmi/smi_config.html[smi_config documentation] for more info. 
+
+[id="plugins-{type}s-{plugin}-env-var"]
+===== Option 1: Use an environment variable 
+
+Set the `SMIPATH` env var with the path to your mibs.
+Be sure to include a prepended colon (`:`) for the path.
 
 [source,sh]
 -----
-$ SMIPATH=":/path/to/mibs/" smidump -k -f python CISCO-PROCESS-MIB.mib > CISCO-PROCESS-MIB_my.dic
+$ SMIPATH=":/path/to/mibs/" smidump -k -f python CISCO-PROCESS-MIB.mib > CISCO-PROCESS-MIB_my.dic <1>
 -----
+<1> Notice the colon that preceeds the path definition. 
 
-NOTE: SMI docs on the prepended colon:
+[id="plugins-{type}s-{plugin}-mib-config"]
+===== Option 2: Provide a coniguration file
 
-  The ‘path’ command argument and the environment variable either start with a path separator character (‘:’ on UNIX-like systems, ‘;’ on MS-Windows systems) to append to the path, or end with a path separator character to prepend to the path, or otherwise completely replace the path.
-
-
-The other way is to create a configuration file eg `smi.conf` with the `path` option.
+The other approach is to create a configuration file with the `path` option. For example, you could create a file called `smi.conf`.
 
 [source,sh]
 -----
 path :/path/to/mibs/
 -----
 
-and use that config with smidump:
+Use the config with smidump:
 
 [source,sh]
 -----
 $ smidump -c smi.conf -k -f python CISCO-PROCESS-MIB.mib > CISCO-PROCESS-MIB_my.dic
 -----
-
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== SNMP Input Configuration Options
