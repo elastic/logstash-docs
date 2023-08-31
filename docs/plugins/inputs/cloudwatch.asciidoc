@@ -7,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v7.1.1
-:release_date: 2023-04-11
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-aws/blob/v7.1.1/CHANGELOG.md
+:version: v7.1.5
+:release_date: 2023-08-04
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-aws/blob/v7.1.5/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -126,6 +126,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-secret_access_key>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-session_token>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-statistics>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-use_aws_bundled_ca>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-use_ssl>> |<<boolean,boolean>>|No
 |=======================================================================
 
@@ -302,6 +303,16 @@ The AWS Session token for temporary credential
 
 Specify the statistics to fetch for each namespace
 
+[id="plugins-{type}s-{plugin}-use_aws_bundled_ca"]
+===== `use_aws_bundled_ca`
+
+* Value type is <<boolean,boolean>>
+* Default value is `false`
+
+Use bundled CA certificates that ship with AWS SDK to verify SSL peer certificates.
+For cases where the default certificates are unavailable, e.g. Windows,
+you can set this to `true`.
+
 [id="plugins-{type}s-{plugin}-use_ssl"]
 ===== `use_ssl` 
 
@@ -312,7 +323,6 @@ Make sure we require the V1 classes when including this module.
 require 'aws-sdk' will load v2 classes.
 Should we require (true) or disable (false) using SSL for communicating with the AWS API
 The AWS SDK for Ruby defaults to SSL so we preserve that
-
 
 
 [id="plugins-{type}s-{plugin}-common-options"]

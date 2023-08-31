@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.17.0
-:release_date: 2023-03-10
-:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.17.0/CHANGELOG.md
+:version: v4.17.2
+:release_date: 2023-06-02
+:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.17.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -354,6 +354,7 @@ documents and/or the <<plugins-{type}s-{plugin}-size>> has been specified as a l
 The number of times to re-run the query after the first failure. If the query fails after all retries, it logs an error message.
 The default is 0 (no retry). This value should be equal to or greater than zero.
 
+NOTE: Partial failures - such as errors in a subset of all slices - can result in the entire query being retried, which can lead to duplication of data. Avoiding this would require Logstash to store the entire result set of a query in memory which is often not possible.
 
 [id="plugins-{type}s-{plugin}-schedule"]
 ===== `schedule` 

@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v6.3.2
-:release_date: 2023-01-19
-:changelog_url: https://github.com/logstash-plugins/logstash-input-tcp/blob/v6.3.2/CHANGELOG.md
+:version: v6.4.0
+:release_date: 2023-07-06
+:changelog_url: https://github.com/logstash-plugins/logstash-input-tcp/blob/v6.4.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -96,8 +96,8 @@ Available when receiving events by proxy and
 l|[@metadata][input][tcp][proxy][port]  l|[proxy_port]
 
 .1+|SSL Subject Metadata from a secured TCP
-connection. Available when `ssl_enable => true`
-AND `ssl_verify => true`                        l|[@metadata][input][tcp][ssl][subject] l|[sslsubject]
+connection. Available when `ssl_enabled => true`
+AND `ssl_client_authentication => 'optional' or 'required'`                        l|[@metadata][input][tcp][ssl][subject] l|[sslsubject]
 |=======================================================================
 
 For example, the Elastic Common Schema reserves the https://www.elastic.co/guide/en/ecs/current/ecs-host.html[top-level `host` field] for information about the host on which the event happened.
@@ -131,15 +131,19 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-mode>> |<<string,string>>, one of `["server", "client"]`|No
 | <<plugins-{type}s-{plugin}-port>> |<<number,number>>|Yes
 | <<plugins-{type}s-{plugin}-proxy_protocol>> |<<boolean,boolean>>|No
-| <<plugins-{type}s-{plugin}-ssl_cert>> |a valid filesystem path|No
+| <<plugins-{type}s-{plugin}-ssl_cert>> |a valid filesystem path|__Deprecated__
+| <<plugins-{type}s-{plugin}-ssl_certificate>> |a valid filesystem path|No
 | <<plugins-{type}s-{plugin}-ssl_certificate_authorities>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-ssl_cipher_suites>> |<<string,string>>|No
-| <<plugins-{type}s-{plugin}-ssl_enable>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-ssl_client_authentication>> |<<string,string>>, one of `["none", "optional", "required"]`|No
+| <<plugins-{type}s-{plugin}-ssl_enable>> |<<boolean,boolean>>|__Deprecated__
+| <<plugins-{type}s-{plugin}-ssl_enabled>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-ssl_extra_chain_certs>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-ssl_key>> |a valid filesystem path|No
 | <<plugins-{type}s-{plugin}-ssl_key_passphrase>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-ssl_supported_protocols>> |<<string,string>>|No
-| <<plugins-{type}s-{plugin}-ssl_verify>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-ssl_verification_mode>> |<<string,string>>, one of `["full", "none"]`|No
+| <<plugins-{type}s-{plugin}-ssl_verify>> |<<boolean,boolean>>|__Deprecated__
 | <<plugins-{type}s-{plugin}-tcp_keep_alive>> |<<boolean,boolean>>|No
 |=======================================================================
 
@@ -211,12 +215,22 @@ http://www.haproxy.org/download/1.5/doc/proxy-protocol.txt
 
 [id="plugins-{type}s-{plugin}-ssl_cert"]
 ===== `ssl_cert` 
+deprecated[6.4.0, Replaced by <<plugins-{type}s-{plugin}-ssl_certificate>>]
 
   * Value type is <<path,path>>
   * There is no default value for this setting.
 
 Path to certificate in PEM format. This certificate will be presented
 to the connecting clients.
+
+[id="plugins-{type}s-{plugin}-ssl_certificate"]
+===== `ssl_certificate`
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+Path to certificate in PEM format. This certificate will be presented
+to the other part of the TLS connection.
 
 [id="plugins-{type}s-{plugin}-ssl_certificate_authorities"]
 ===== `ssl_certificate_authorities`
@@ -239,8 +253,33 @@ the table of supported https://docs.oracle.com/en/java/javase/11/docs/specs/secu
 
 NOTE: To check the supported cipher suites locally run the following script: `$LS_HOME/bin/ruby -e 'p javax.net.ssl.SSLServerSocketFactory.getDefault.getSupportedCipherSuites'`.
 
+[id="plugins-{type}s-{plugin}-ssl_client_authentication"]
+===== `ssl_client_authentication`
+
+  * Value can be any of: `none`, `optional`, `required`
+  * Default value is `required`
+
+Controls the server's behavior in regard to requesting a certificate from client connections:
+`none` disables the client authentication. `required` forces a client to present a certificate, while `optional` requests a client certificate
+but the client is not required to present one.
+
+When mutual TLS is enabled (`optional` or `required`), the certificate presented by the client must be signed by trusted
+<<plugins-{type}s-{plugin}-ssl_certificate_authorities>> (CAs).
+Please note that the server does not validate the client certificate CN (Common Name) or SAN (Subject Alternative Name).
+
+NOTE: This setting can be used only if <<plugins-{type}s-{plugin}-mode>> is `server` and <<plugins-{type}s-{plugin}-ssl_certificate_authorities>> is set.
+
 [id="plugins-{type}s-{plugin}-ssl_enable"]
 ===== `ssl_enable` 
+deprecated[6.4.0, Replaced by <<plugins-{type}s-{plugin}-ssl_enabled>>]
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Enable SSL (must be set for other `ssl_` options to take effect).
+
+[id="plugins-{type}s-{plugin}-ssl_enabled"]
+===== `ssl_enabled`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -287,8 +326,27 @@ NOTE: If you configure the plugin to use `'TLSv1.1'` on any recent JVM, such as 
 the protocol is disabled by default and needs to be enabled manually by changing `jdk.tls.disabledAlgorithms` in
 the *$JDK_HOME/conf/security/java.security* configuration file. That is, `TLSv1.1` needs to be removed from the list.
 
+[id="plugins-{type}s-{plugin}-ssl_verification_mode"]
+===== `ssl_verification_mode`
+
+  * Value can be any of: `full`, `none`
+  * Default value is `full`
+
+Defines how to verify the certificates presented by another party in the TLS connection:
+
+`full` validates that the server certificate has an issue date that's within
+the not_before and not_after dates; chains to a trusted Certificate Authority (CA), and
+has a hostname or IP address that matches the names within the certificate.
+
+`none` performs no certificate validation.
+
+This setting can be used only if <<plugins-{type}s-{plugin}-mode>> is `client`.
+
+WARNING: Setting certificate verification to `none` disables many security benefits of SSL/TLS, which is very dangerous. For more information on disabling certificate verification please read https://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf
+
 [id="plugins-{type}s-{plugin}-ssl_verify"]
-===== `ssl_verify` 
+===== `ssl_verify`
+deprecated[6.4.0, Replaced by <<plugins-{type}s-{plugin}-ssl_client_authentication>> and <<plugins-{type}s-{plugin}-ssl_verification_mode>>]
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`

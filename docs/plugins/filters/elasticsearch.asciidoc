@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.15.0
-:release_date: 2023-03-10
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.15.0/CHANGELOG.md
+:version: v3.15.2
+:release_date: 2023-07-24
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.15.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -321,6 +321,7 @@ environment variables e.g. `proxy => '${LS_PROXY:}'`.
 Elasticsearch query string. More information is available in the
 {ref}/query-dsl-query-string-query.html#query-string-syntax[Elasticsearch query
 string documentation].
+Use either `query` or `query_template`.
 
 
 [id="plugins-{type}s-{plugin}-query_template"]
@@ -331,6 +332,7 @@ string documentation].
 
 File path to elasticsearch query in DSL format. More information is available in
 the {ref}/query-dsl.html[Elasticsearch query documentation].
+Use either `query` or `query_template`.
 
 [id="plugins-{type}s-{plugin}-result_size"]
 ===== `result_size` 

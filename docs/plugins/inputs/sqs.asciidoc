@@ -7,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v7.1.1
-:release_date: 2023-04-11
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-aws/blob/v7.1.1/CHANGELOG.md
+:version: v7.1.5
+:release_date: 2023-08-04
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-aws/blob/v7.1.5/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -103,6 +103,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-sent_timestamp_field>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-session_token>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-threads>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-use_aws_bundled_ca>> |<<boolean,boolean>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -131,7 +132,7 @@ This plugin uses the AWS SDK and supports several ways to get credentials, which
 * Default value is `{}`
 
 Key-value pairs of settings and corresponding values used to parametrize
-the connection to SQS. See full list in https://docs.aws.amazon.com/sdk-for-ruby/v2/api/Aws/SQS/Client.html[the AWS SDK documentation]. Example:
+the connection to SQS. See full list in https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SQS/Client.html[the AWS SDK documentation]. Example:
 
 [source,ruby]
     input {
@@ -279,7 +280,15 @@ The AWS Session token for temporary credential
   * Default value is `1`
 
 
+[id="plugins-{type}s-{plugin}-use_aws_bundled_ca"]
+===== `use_aws_bundled_ca`
 
+* Value type is <<boolean,boolean>>
+* Default value is `false`
+
+Use bundled CA certificates that ship with AWS SDK to verify SSL peer certificates.
+For cases where the default certificates are unavailable, e.g. Windows,
+you can set this to `true`.
 
 
 [id="plugins-{type}s-{plugin}-common-options"]
