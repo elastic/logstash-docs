@@ -1,0 +1,10 @@
+:plugin: test
+:type: integration
+
+include::{include_path}/version-list-intro.asciidoc[]
+
+|=======================================================================
+| Version | Release Date
+|=======================================================================
+
+
