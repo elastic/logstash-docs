@@ -51,7 +51,7 @@ jobs:
         working-directory: ./docs-tools
       - name: Create an empty placeholder
         working-directory: ./docs-tools
-        run: bundle exec ruby create_plugin_placeholder.rb --output-path=../ --plugin-type=${{ github.event.inputs.plugin_type }} --plugin-name=${{ github.event.inputs.plugin_name }}
+        run: bundle exec ruby generate_plugin_placeholder.rb --output-path=../ --plugin-type=${{ github.event.inputs.plugin_type }} --plugin-name=${{ github.event.inputs.plugin_name }}
         env:
           JRUBY_OPTS: "-J-Xmx4g"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
