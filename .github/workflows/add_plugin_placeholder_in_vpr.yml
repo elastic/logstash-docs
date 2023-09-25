@@ -6,7 +6,7 @@ on:
       plugin_type:
         description: 'Type of plugin: input, filter, output or integration'
         required: true
-        default: 'input'
+        default: ''
         type: string
       plugin_name:
         description: 'Name for the plugin being created'
