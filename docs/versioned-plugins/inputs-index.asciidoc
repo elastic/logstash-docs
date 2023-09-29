@@ -69,6 +69,8 @@ include::inputs/kinesis-index.asciidoc[]
 
 include::inputs/log4j-index.asciidoc[]
 
+include::inputs/logstash-index.asciidoc[]
+
 include::inputs/lumberjack-index.asciidoc[]
 
 include::inputs/meetup-index.asciidoc[]
