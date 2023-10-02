@@ -150,7 +150,7 @@ include::outputs/kafka.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-output-librato/edit/main/docs/index.asciidoc
 include::outputs/librato.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-output-logstash/edit/main/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-output-logstash/edit/main/docs/output-logstash.asciidoc
 include::outputs/logstash.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-loggly/edit/main/docs/index.asciidoc
