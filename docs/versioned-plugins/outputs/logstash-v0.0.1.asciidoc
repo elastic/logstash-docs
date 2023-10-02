@@ -92,7 +92,7 @@ If the downstream input plugin is configured to request or require client authen
 [id="{version}-plugins-{type}s-{plugin}-config-credentials"]
 ===== Security: Credentials
 
-If the downstream {logstash-ref}/plugins-inputs-logstash.html[logstash input plugin] is configured to require <<plugins-inputs-logstash-username>> and <<plugins-inputs-logstash-password>>,
+If the downstream {logstash-ref}/plugins-inputs-logstash.html[logstash input plugin] is configured to require <<{version}-plugins-{type}s-{plugin}-username>> and <<{version}-plugins-{type}s-{plugin}-password>>,
 you will need to configure this output with a matching <<{version}-plugins-{type}s-{plugin}-username>> and <<{version}-plugins-{type}s-{plugin}-password>>.
 
 NOTE: when SSL is disabled, data and credentials will be transmitted in clear-text.
