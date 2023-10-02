@@ -1,0 +1,22 @@
+:integration: logstash
+:plugin: logstash
+:type: input
+:default_plugin: 0
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v0.0.3
+:release_date: 2023-11-01
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-logstash/blob/v0.0.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="plugins-{type}s-{plugin}"]
+
+=== Logstash input plugin
+
+include::{include_path}/plugin_header-integration.asciidoc[]
+
