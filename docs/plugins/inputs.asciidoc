@@ -36,6 +36,7 @@ The following input plugins are available below. For a list of Elastic supported
 | <<plugins-inputs-jmx,jmx>> | Retrieves metrics from remote Java applications over JMX | https://github.com/logstash-plugins/logstash-input-jmx[logstash-input-jmx]
 | <<plugins-inputs-kafka,kafka>> | Reads events from a Kafka topic | https://github.com/logstash-plugins/logstash-integration-kafka[logstash-integration-kafka]
 | <<plugins-inputs-kinesis,kinesis>> | Receives events through an AWS Kinesis stream | https://github.com/logstash-plugins/logstash-input-kinesis[logstash-input-kinesis]
+| <<plugins-inputs-logstash,logstash>> | Reads from {ls} output of another {ls} instance | https://github.com/logstash-plugins/logstash-integration-logstash[logstash-integration-logstash]
 | <<plugins-inputs-log4j,log4j>> | Reads events over a TCP socket from a Log4j `SocketAppender` object | https://github.com/logstash-plugins/logstash-input-log4j[logstash-input-log4j]
 | <<plugins-inputs-lumberjack,lumberjack>> | Receives events using the Lumberjack protocl | https://github.com/logstash-plugins/logstash-input-lumberjack[logstash-input-lumberjack]
 | <<plugins-inputs-meetup,meetup>> | Captures the output of command line tools as an event | https://github.com/logstash-plugins/logstash-input-meetup[logstash-input-meetup]
@@ -151,6 +152,9 @@ include::inputs/kafka.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-kinesis/edit/main/docs/index.asciidoc
 include::inputs/kinesis.asciidoc[]
+
+:edit_url: https://github.com/logstash-plugins/logstash-integration-logstash/edit/main/docs/input-logstash.asciidoc
+include::inputs/logstash.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-log4j/edit/main/docs/index.asciidoc
 include::inputs/log4j.asciidoc[]
