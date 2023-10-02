@@ -36,6 +36,7 @@ The following output plugins are available below. For a list of Elastic supporte
 | <<plugins-outputs-kafka,kafka>> | Writes events to a Kafka topic | https://github.com/logstash-plugins/logstash-integration-kafka[logstash-integration-kafka]
 | <<plugins-outputs-librato,librato>> | Sends metrics, annotations, and alerts to Librato based on Logstash events | https://github.com/logstash-plugins/logstash-output-librato[logstash-output-librato]
 | <<plugins-outputs-loggly,loggly>> | Ships logs to Loggly | https://github.com/logstash-plugins/logstash-output-loggly[logstash-output-loggly]
+| <<plugins-outputs-logstash,logstash>> | Ships data to {ls} input on another {ls} instance | https://github.com/logstash-plugins/logstash-integration-logstash[logstash-integration-logstash]
 | <<plugins-outputs-lumberjack,lumberjack>> | Sends events using the `lumberjack` protocol | https://github.com/logstash-plugins/logstash-output-lumberjack[logstash-output-lumberjack]
 | <<plugins-outputs-metriccatcher,metriccatcher>> | Writes metrics to MetricCatcher | https://github.com/logstash-plugins/logstash-output-metriccatcher[logstash-output-metriccatcher]
 | <<plugins-outputs-mongodb,mongodb>> | Writes events to MongoDB | https://github.com/logstash-plugins/logstash-output-mongodb[logstash-output-mongodb]
@@ -148,6 +149,9 @@ include::outputs/kafka.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-librato/edit/main/docs/index.asciidoc
 include::outputs/librato.asciidoc[]
+
+:edit_url: https://github.com/logstash-plugins/logstash-output-logstash/edit/main/docs/output-logstash.asciidoc
+include::outputs/logstash.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-loggly/edit/main/docs/index.asciidoc
 include::outputs/loggly.asciidoc[]
