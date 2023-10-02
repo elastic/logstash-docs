@@ -67,6 +67,8 @@ include::outputs/librato-index.asciidoc[]
 
 include::outputs/loggly-index.asciidoc[]
 
+include::outputs/logstash-index.asciidoc[]
+
 include::outputs/lumberjack-index.asciidoc[]
 
 include::outputs/metriccatcher-index.asciidoc[]

@@ -1,0 +1,20 @@
+:integration: logstash
+:plugin: logstash
+:type: output
+:no_codec:
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v0.0.1
+:release_date: 2023-09-25
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-logstash/blob/v0.0.1/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Logstash output plugin {version}
+
