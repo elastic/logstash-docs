@@ -1,7 +1,18 @@
-name: Version Plugin Reference
+name: Adds an empty plugin placeholder in VPR
 
 on:
   workflow_dispatch:
+    inputs:
+      plugin_type:
+        description: 'Type of plugin: input, filter, output or integration'
+        required: true
+        default: ''
+        type: string
+      plugin_name:
+        description: 'Name for the plugin being created'
+        required: true
+        default: ''
+        type: string
 
 permissions:
   contents: write
@@ -38,9 +49,9 @@ jobs:
           git config --global user.name logstashmachine
       - run: bundle install
         working-directory: ./docs-tools
-      - name: Generate plugin versions
+      - name: Create an empty placeholder
         working-directory: ./docs-tools
-        run: bundle exec ruby versioned_plugins.rb --repair --skip-existing --output-path=../
+        run: bundle exec ruby generate_plugin_placeholder.rb --output-path=../ --plugin-type=${{ github.event.inputs.plugin_type }} --plugin-name=${{ github.event.inputs.plugin_name }}
         env:
           JRUBY_OPTS: "-J-Xmx4g"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
