@@ -5,11 +5,15 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v0.0.5-plugins-integrations-logstash,v0.0.5>> | 2023-10-03
+| <<v0.0.4-plugins-integrations-logstash,v0.0.4>> | 2023-10-03
 | <<v0.0.3-plugins-integrations-logstash,v0.0.3>> | 2023-09-29
 | <<v0.0.2-plugins-integrations-logstash,v0.0.2>> | 2023-09-27
 | <<v0.0.1-plugins-integrations-logstash,v0.0.1>> | 2023-09-25
 |=======================================================================
 
+include::logstash-v0.0.5.asciidoc[]
+include::logstash-v0.0.4.asciidoc[]
 include::logstash-v0.0.3.asciidoc[]
 include::logstash-v0.0.2.asciidoc[]
 include::logstash-v0.0.1.asciidoc[]
