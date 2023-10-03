@@ -1,0 +1,72 @@
+:plugin: logstash
+:type: integration
+:no_codec:
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v0.0.4
+:release_date: 2023-10-03
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-logstash/blob/v0.0.4/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Logstash Integration Plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+The Logstash Integration Plugin provides integrated plugins for sending events from one Logstash to another:
+
+* {logstash-ref}/plugins-outputs-logstash.html[Logstash Output Plugin]
+* {logstash-ref}/plugins-inputs-logstash.html[Logstash Input Plugin]
+
+[id="{version}-plugins-{type}s-{plugin}-concepts"]
+===== High-level concepts
+
+You can configure a `logstash` output to send events to a `logstash` input in another pipeline that is running in a different process or on a different host.
+
+To do so, you should first configure the downstream pipeline with a `logstash` input plugin, bound to an available port so that it can listen for inbound connections.
+Security is enabled by default, so you will need to either provide identity material or disable SSL.
+
+NOTE: You will need a TCP route from the upstream pipeline to the interface that the downstream pipeline is bound to.
+
+[source,shell]
+----
+input {
+  logstash {
+    port => 9800
+
+    # SSL IDENTITY <1>
+    ssl_keystore_path      => "/path/to/identity.p12"
+    ssl_keystore_password  => "${SSL_IDENTITY_PASSWORD}"
+  }
+}
+----
+<1> Identity material typically should include identity claims about the hostnames and ip addresses that will be used by upstream output plugins.
+
+Once the downstream pipeline is configured and running, you may send events from any number of upstream pipelines by adding a `logstash` output plugin that points to the downstream input.
+You may need to configure SSL to trust the certificates presented by the downstream input plugin.
+
+NOTE: Single host endpoint is supported for `hosts`. Multi-host support is coming soon.
+
+[source,shell]
+----
+output {
+  logstash {
+    hosts => "10.0.0.123:9800"
+
+    # SSL TRUST <1>
+    ssl_truststore_path => "/path/to/truststore.p12"
+    ssl_truststore_password => "${SSL_TRUST_PASSWORD}"
+  }
+}
+----
+<1> Unless SSL is disabled or the downstream input is expected to present certificates signed by globally-trusted authorities, you will likely need to provide a source-of-trust.
+
+:no_codec!:
