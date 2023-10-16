@@ -5,12 +5,14 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v11.3.2-plugins-outputs-kafka,v11.3.2>> | 2023-10-16
 | <<v11.3.1-plugins-outputs-kafka,v11.3.1>> | 2023-10-04
 | <<v11.3.0-plugins-outputs-kafka,v11.3.0>> | 2023-07-04
 | <<v11.2.1-plugins-outputs-kafka,v11.2.1>> | 2023-02-16
 | <<v11.2.0-plugins-outputs-kafka,v11.2.0>> | 2023-02-14
 | <<v11.1.0-plugins-outputs-kafka,v11.1.0>> | 2023-01-25
 | <<v11.0.0-plugins-outputs-kafka,v11.0.0>> | 2022-12-16
+| <<v10.12.1-plugins-outputs-kafka,v10.12.1>> | 2023-10-16
 | <<v10.12.0-plugins-outputs-kafka,v10.12.0>> | 2022-05-09
 | <<v10.11.0-plugins-outputs-kafka,v10.11.0>> | 2022-04-25
 | <<v10.10.0-plugins-outputs-kafka,v10.10.0>> | 2022-02-02
@@ -64,12 +66,14 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v6.2.0-plugins-outputs-kafka,v6.2.0>> | 2017-05-11
 |=======================================================================
 
+include::kafka-v11.3.2.asciidoc[]
 include::kafka-v11.3.1.asciidoc[]
 include::kafka-v11.3.0.asciidoc[]
 include::kafka-v11.2.1.asciidoc[]
 include::kafka-v11.2.0.asciidoc[]
 include::kafka-v11.1.0.asciidoc[]
 include::kafka-v11.0.0.asciidoc[]
+include::kafka-v10.12.1.asciidoc[]
 include::kafka-v10.12.0.asciidoc[]
 include::kafka-v10.11.0.asciidoc[]
 include::kafka-v10.10.0.asciidoc[]
