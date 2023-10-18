@@ -2,7 +2,7 @@ name: Version Plugin Reference
 
 on:
   schedule:
-    - cron:  '* */6 * * *'
+    - cron:  '0 */6 * * *'
   workflow_dispatch:
 
 permissions:
