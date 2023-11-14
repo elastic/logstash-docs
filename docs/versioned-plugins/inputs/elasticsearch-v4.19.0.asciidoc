@@ -381,7 +381,7 @@ This parameter controls the keepalive time in seconds of the scrolling
 request and initiates the scrolling process. The timeout applies per
 round trip (i.e. between the previous scroll request, to the next).
 
-[id="{version}-plugins-{type}s-{plugin}-seearch_api"]
+[id="{version}-plugins-{type}s-{plugin}-search_api"]
 ===== `search_api`
 
 * Value can be any of: `auto`, `search_after`, `scroll`
