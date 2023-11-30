@@ -1,0 +1,284 @@
+:integration: logstash
+:plugin: logstash
+:type: output
+:no_codec:
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v1.0.0
+:release_date: 2023-11-06
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-logstash/blob/v1.0.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Logstash output plugin {version}
+
+include::{include_path}/plugin_header-integration.asciidoc[]
+
+==== Description
+
+Send events to a {logstash-ref}/plugins-inputs-logstash.html[Logstash input plugin] in a pipeline that may be in another process or on another host.
+You must have a TCP route to the port (defaults to 9800) on an interface that the downstream input is bound to.
+
+NOTE: Sending events to _any_ destination other than a `logstash-input` plugin is neither advised nor supported.
+      We will maintain cross-compatibility with any two supported versions of output/input pair and reserve the right to change details such as protocol and encoding.
+
+[id="{version}-plugins-{type}s-{plugin}-minimum-config"]
+===== Minimum Configuration
+[cols="2a,2a"]
+|=======================================================================================================================
+|SSL Enabled              |SSL Disabled
+
+|
+
+[source,shell]
+----
+output {
+  logstash {
+    hosts => "10.0.0.123:9801"
+  }
+}
+----
+
+|
+
+[source,shell]
+----
+output {
+  logstash {
+    hosts => "10.0.0.123:9801"
+    ssl_enabled
+         => false
+  }
+}
+----
+
+|=======================================================================================================================
+
+[id="{version}-plugins-{type}s-{plugin}-config-connecting"]
+===== Configuration Concepts
+
+Configure this output plugin to connect to a {logstash-ref}/plugins-inputs-logstash.html[Logstash input plugin] by specifying its `hosts`.
+Depending on the downstream plugin's configuration, you may need to also configure the target port, SSL, and/or credentials.
+
+[id="{version}-plugins-{type}s-{plugin}-config-ssl-trust"]
+===== Security: SSL Trust
+
+When communicating over SSL, this plugin establishes trust of the server it connects to before transmitting credentials or events.
+
+It does so by ensuring that the responding server presents a currently-valid certificate with identity claims matching host it is connecting to, signed by a trusted signing authority, along with proof-of-possession of the associated private key material.
+
+The system trust store is used by default.
+You can provide an _alternate_ source of trust with _ONE OF_:
+
+* A PEM-formatted list of trusted certificate authorities (see <<{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities>>)
+* A PKCS12- or JKS-formatted truststore (see <<{version}-plugins-{type}s-{plugin}-ssl_truststore_path>>)
+
+[id="{version}-plugins-{type}s-{plugin}-config-ssl-identity"]
+===== Security: SSL Identity
+
+If the downstream input plugin is configured to request or require client authentication, you can configure this plugin to provide its proof-of-identity with _ONE OF_:
+
+* JKS- or PKCS12-formatted Keystore (see <<{version}-plugins-{type}s-{plugin}-ssl_keystore_path>>)
+* PKCS8-formatted Certificate/Key pair (see <<{version}-plugins-{type}s-{plugin}-ssl_certificate>>)
+
+[id="{version}-plugins-{type}s-{plugin}-config-credentials"]
+===== Security: Credentials
+
+If the downstream `logstash-input` plugin is configured to require `username` and `password`,
+you will need to configure this output with a matching <<{version}-plugins-{type}s-{plugin}-username>> and <<{version}-plugins-{type}s-{plugin}-password>>.
+
+NOTE: when SSL is disabled, data and credentials will be transmitted in clear-text.
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Logstash Output Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting                            |Input type        |Required
+| <<{version}-plugins-{type}s-{plugin}-hosts>> |list of {logstash-ref}/configuration-file-structure.html#string[string] |Yes
+| <<{version}-plugins-{type}s-{plugin}-password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_enabled>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_certificate>> | {logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities>> |list of {logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_key>> | {logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_keystore_path>> | {logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_keystore_password>> | {logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_truststore_path>> | {logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_truststore_password>> | {logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_verification_mode>> | {logstash-ref}/configuration-file-structure.html#string[string], one of `["full", "none"]`|No
+| <<{version}-plugins-{type}s-{plugin}-username>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+output plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-hosts"]
+===== `hosts`
+
+* Value type is list of {logstash-ref}/configuration-file-structure.html#string[string]
+* There is no default value for this setting.
+* Constraints:
+** When using IPv6, IP address must be in an enclosed in brackets.
+** When a port is not provided, the default `9800` is used.
+
+The addresses of one or more downstream `input`s to connect to.
+
+Host can be any of IPv4, IPv6 (in enclosed bracket) or host name, examples:
+
+* `"127.0.0.1"`
+* `"127.0.0.1:9801"`
+* `"ds.example.com"`
+* `"ds.example.com:9802"`
+* `"[::1]"`
+* `"[::1]:9803"`
+* `"[2001:0db8:85a3:0000:0000:8a2e:0370:7334]"`
+* `"[2001:0db8:85a3:0000:0000:8a2e:0370:7334]:9804"`
+
+Plugin balances incoming load among the `hosts`. For more information, visit {logstash-ref}/plugins-integrations-logstash.html[Logstash integration plugin] _Load Balancing_ section.
+
+When connecting, communication to downstream input {ls} is secured with SSL unless configured otherwise.
+
+[WARNING]
+.Disabling SSL is dangerous
+============
+The security of this plugin relies on SSL to avoid leaking credentials and to avoid running illegitimate ingest pipeline definitions.
+============
+
+NOTE: when using SSL, the server that responds must present a certificated with identity claim matching this host name or ip address.
+
+[id="{version}-plugins-{type}s-{plugin}-password"]
+===== `password`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+* There is no default value for this setting.
+* Required when <<{version}-plugins-{type}s-{plugin}-username>> is configured.
+
+Password for password-based authentication.
+
+When the downstream input plugin is configured with a `username` and `password`, you must also configure upstream outputs with a matching `username`/`password` pair.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_enabled"]
+===== `ssl_enabled`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+* Default value is `true`
+
+Logstash-to-Logstash communication is secured by default.
+When the downstream input plugin disables SSL, it must also be disabled here.
+
+You can disable SSL with `+ssl_enabled => false+`. When disabled, setting any `ssl_*` configuration causes configuration failure.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_certificate"]
+===== `ssl_certificate`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+* There is no default value for this setting.
+* When present, <<{version}-plugins-{type}s-{plugin}-ssl_key>> is also required.
+* Cannot be combined with configurations that disable SSL.
+
+Path to a PEM-encoded certificate or certificate chain with which to identify this plugin to connecting downstream input.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities"]
+===== `ssl_certificate_authorities`
+
+* Value type is a {logstash-ref}/configuration-file-structure.html#path[path]
+* There is no default value for this setting.
+* Cannot be combined with configurations that disable SSL.
+* Cannot be combined with <<{version}-plugins-{type}s-{plugin}-ssl_verification_mode, `+ssl_verification_mode => none+`>>.
+
+One or more PEM-encoded files defining certificate authorities for use in downstream input authentication.
+This setting can be used to _override_ the system trust store for verifying the SSL certificate presented by downstream input.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_key"]
+===== `ssl_key`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+* There is no default value for this setting.
+* Required when connection identity is configured with <<{version}-plugins-{type}s-{plugin}-ssl_certificate>>
+* Cannot be combined with configurations that disable SSL.
+
+A path to an PEM-encoded _unencrypted_ PKCS8 SSL certificate key.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_keystore_path"]
+===== `ssl_keystore_path`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+* There is no default value for this setting.
+* When present, <<{version}-plugins-{type}s-{plugin}-ssl_keystore_password>> is also required.
+* Cannot be combined with configurations that disable SSL.
+
+A path to a JKS- or PKCS12-formatted keystore with which to identify this plugin to the downstream input.
+The provided identity will be used if the downstream input enables <<{version}-plugins-{type}s-{plugin}-config-ssl-trust,SSL client authentication>>.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_keystore_password"]
+===== `ssl_keystore_password`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+* There is no default value for this setting.
+* Required when connection identity is configured with <<{version}-plugins-{type}s-{plugin}-ssl_keystore_path>>
+* Cannot be combined with configurations that disable SSL.
+
+Password for the <<{version}-plugins-{type}s-{plugin}-ssl_keystore_path>>
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_truststore_path"]
+===== `ssl_truststore_path`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+* There is no default value for this setting.
+* When present, <<{version}-plugins-{type}s-{plugin}-ssl_truststore_path>> is also required.
+* Cannot be combined with configurations that disable SSL.
+* Cannot be combined with <<{version}-plugins-{type}s-{plugin}-ssl_verification_mode, `+ssl_verification_mode => none+`>>.
+
+A path to a JKS- or PKCS12-formatted truststore with which to validate the identity claims of the downstream input.
+The provided identity will be used if the downstream input enables <<{version}-plugins-{type}s-{plugin}-config-ssl-trust,SSL client authentication>>.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_truststore_password"]
+===== `ssl_truststore_password`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+* There is no default value for this setting.
+* Required when connection identity is configured with <<{version}-plugins-{type}s-{plugin}-ssl_truststore_path>>
+* Cannot be combined with configurations that disable SSL.
+
+Password for the <<{version}-plugins-{type}s-{plugin}-ssl_truststore_path>>
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_verification_mode"]
+===== `ssl_verification_mode`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* The supported modes are:
+** `full`: verifies that a certificate provided by the client has an identity claim matching <<{version}-plugins-{type}s-{plugin}-hosts>>, is signed by a trusted authority (CA), is within its valid date range, and that the client has possession of the associated key.
+** `none`: performs no validation of the presented certificate
+
+* The default value is `full`.
+* Cannot be combined with configurations that disable SSL.
+
+When communicating over SSL, this setting controls how the downstream input's certificate is verified.
+
+[id="{version}-plugins-{type}s-{plugin}-username"]
+===== `username`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* There is no default value for this setting.
+* When present, <<{version}-plugins-{type}s-{plugin}-password>> is also required.
+
+Username for password-based authentication.
+
+When the downstream input plugin is configured with a `username` and `password`, you must also configure upstream outputs with a matching `username`/`password` pair.
+
+NOTE: when SSL is disabled, credentials will be transmitted in clear-text.
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:
