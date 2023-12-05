@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v0.0.5
-:release_date: 2023-10-03
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-logstash/blob/v0.0.5/CHANGELOG.md
+:version: v1.0.1
+:release_date: 2023-11-16
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-logstash/blob/v1.0.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -22,7 +22,7 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-The Logstash Integration Plugin provides integrated plugins for sending events from one Logstash to another:
+The Logstash Integration Plugin provides integrated plugins for sending events from one Logstash to another instance(s):
 
 * {logstash-ref}/plugins-outputs-logstash.html[Logstash output plugin]
 * {logstash-ref}/plugins-inputs-logstash.html[Logstash input plugin]
@@ -30,7 +30,7 @@ The Logstash Integration Plugin provides integrated plugins for sending events f
 [id="plugins-{type}s-{plugin}-concepts"]
 ===== High-level concepts
 
-You can configure a `logstash` output to send events to a `logstash` input in another pipeline that is running in a different process or on a different host.
+You can configure a `logstash` output to send events to one or more `logstash` inputs, which are each in another pipeline that is running in different processes or on a different host.
 
 To do so, you should first configure the downstream pipeline with a `logstash` input plugin, bound to an available port so that it can listen for inbound connections.
 Security is enabled by default, so you will need to either provide identity material or disable SSL.
@@ -54,13 +54,11 @@ input {
 Once the downstream pipeline is configured and running, you may send events from any number of upstream pipelines by adding a `logstash` output plugin that points to the downstream input.
 You may need to configure SSL to trust the certificates presented by the downstream input plugin.
 
-NOTE: Single host endpoint is supported for `hosts`. Multi-host support is coming soon.
-
 [source]
 ----
 output {
   logstash {
-    hosts => "10.0.0.123:9800"
+    hosts => ["10.0.0.123:9800", "10.0.0.125:9801"]
 
     # SSL TRUST <1>
     ssl_truststore_path => "/path/to/truststore.p12"
@@ -69,5 +67,10 @@ output {
 }
 ----
 <1> Unless SSL is disabled or the downstream input is expected to present certificates signed by globally-trusted authorities, you will likely need to provide a source-of-trust.
+
+[id="plugins-{type}s-{plugin}-load-balancing"]
+==== Load Balancing
+
+When a `logstash` output is configured to send to multiple `hosts`, it distributes events in batches to _all_ of those downstream hosts fairly, favoring those without recent errors. This increases the likelihood of each batch being routed to a downstream that is up and has capacity to receive events.
 
 :no_codec!:
