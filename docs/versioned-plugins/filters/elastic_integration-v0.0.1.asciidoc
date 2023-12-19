@@ -1,0 +1,433 @@
+:plugin: elastic_integration
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v0.0.1
+:release_date: 2023-04-14
+:changelog_url: https://github.com/elastic/logstash-filter-elastic_integration/blob/v0.0.1/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+:elastic-integration-name: Elastic Integration
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== {elastic-integration-name} filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+.Elastic Enterprise License
+****
+Use of this plugin requires an active Enterprise Elastic License.
+****
+
+==== Description
+
+Using this filter you can process Elastic integrations powered by {es} Ingest Node in Logstash.
+
+Once configured to point to an {es} cluster, events processed by this filter will first resolve their effective data-stream, and determine from {es} which ingest pipeline to run.
+The ingest pipeline will be run inside Logstash without transmitting the event to {es}.
+Events that are successfully handled by their ingest pipeline will have `[@metadata][target_ingest_pipeline]` set to `+_none+` so that any downstream {es} output in the Logstash pipeline will avoid running the event's default pipeline _again_ in {es}.
+
+NOTE: Some multi-pipeline configurations such as logstash-to-logstash over http(s) do not maintain the state of `[@metadata]` fields.
+      In these setups, you may need to explicitly configure your downstream pipeline's {es} output with `+pipeline => "_none"+` to avoid re-running the default pipeline.
+
+Events that _fail_ ingest pipeline processing will be tagged with `_ingest_pipeline_failure`, and their `[@metadata][_ingest_pipeline_failure]` will be populated with details as a key/value map.
+
+IMPORTANT: This plugin requires minimum Java 17 and Logstash 8.7.0 versions.
+
+.Technology Preview
+****
+This {elastic-integration-name} filter plugin is part of a _Technology Preview_, which means that both configuration options and implementation details are subject to change in minor releases without being preceded by deprecation warnings.
+
+Before upgrading this plugin or Logstash itself, please pay special attention to the changelogs to avoid being caught by surprise.
+****
+
+[id="{version}-plugins-{type}s-{plugin}-minimum_configuration"]
+==== Minimum Configuration
+
+You will need to configure this plugin to connect to {es}, and may need to also need to provide local GeoIp databases.
+
+[source,shell]
+--------------------------------------------------
+filter {
+  elastic_integration {
+    cloud_id   => "YOUR_CLOUD_ID_HERE"
+    cloud_auth => "YOUR_CLOUD_AUTH_HERE"
+    geoip_database_directory => "/etc/your/geoip-databases"
+  }
+}
+--------------------------------------------------
+
+Read on for a guide to configuration, or jump to the <<{version}-plugins-{type}s-{plugin}-options, complete list of configuration options>>.
+
+[id="{version}-plugins-{type}s-{plugin}-connecting_to_elasticsearch"]
+==== Connecting to {es}
+
+This plugin communicates with {es} to identify which ingest pipeline should be run for a given event, and to retrieve the ingest pipeline definitions themselves.
+You must configure this plugin to point to {es} using exactly one of:
+
+* A Cloud Id (see <<{version}-plugins-{type}s-{plugin}-cloud_id>>)
+* A list of one or more host URLs (see <<{version}-plugins-{type}s-{plugin}-hosts>>)
+
+Communication will be made securely over SSL unless you explicitly configure this plugin otherwise.
+
+You may need to configure how this plugin establishes trust of the server that responds,
+and will likely need to configure how this plugin presents its own identity or credentials.
+
+===== SSL Trust Configuration
+
+When communicating over SSL, this plugin fully-validates the proof-of-identity presented by {es} using the system trust store.
+You can provide an _alternate_ source of trust with one of:
+
+* A PEM-formatted list of trusted certificate authorities (see <<{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities>>)
+* A JKS- or PKCS12-formatted Keystore containing trusted certificates (see <<{version}-plugins-{type}s-{plugin}-ssl_truststore_path>>)
+
+You can also configure which aspects of the proof-of-identity are verified (see <<{version}-plugins-{type}s-{plugin}-ssl_verification_mode>>).
+
+===== SSL Identity Configuration
+
+When communicating over SSL, you can also configure this plugin to present a certificate-based proof-of-identity to the {es} cluster it connects to using one of:
+
+* A PKCS8 Certificate/Key pair (see <<{version}-plugins-{type}s-{plugin}-ssl_certificate>>)
+* A JKS- or PKCS12-formatted Keystore (see <<{version}-plugins-{type}s-{plugin}-ssl_keystore_path>>)
+
+===== Request Identity
+
+You can configure this plugin to present authentication credentials to {es} in one of several ways:
+
+* ApiKey: (see <<{version}-plugins-{type}s-{plugin}-api_key>>)
+* Cloud Auth: (see <<{version}-plugins-{type}s-{plugin}-cloud_auth>>)
+* HTTP Basic Auth: (see <<{version}-plugins-{type}s-{plugin}-auth_basic_username>> and <<{version}-plugins-{type}s-{plugin}-auth_basic_password>>)
+
+NOTE: Your request credentials are only as secure as the connection they are being passed over.
+      They provide neither privacy nor secrecy on their own, and can easily be recovered by an adversary when SSL is disabled.
+
+[id="{version}-plugins-{type}s-{plugin}-supported_ingest_processors"]
+==== Supported Ingest Processors
+
+This filter can run {es} Ingest Node pipelines that are _wholly_ comprised of the supported subset of processors.
+It has access to the Painless and Mustache scripting engines where applicable:
+
+[cols="<1,<1,<4",options="header"]
+|=======================================================================
+|Source | Processor | Caveats
+.34+h|Ingest Common
+
+| `append` | _none_
+| `bytes` | _none_
+| `communityid` | _none_
+| `convert` | _none_
+| `csv` | _none_
+| `date` | _none_
+| `dateindexname` | _none_
+| `dissect` | _none_
+| `dotexpander` | _none_
+| `drop` | _none_
+| `fail` | _none_
+| `fingerprint` | _none_
+| `foreach` | _none_
+| `grok` | _none_
+| `gsub` | _none_
+| `htmlstrip` | _none_
+| `join` | _none_
+| `json` | _none_
+| `keyvalue` | _none_
+| `lowercase` | _none_
+| `networkdirection` | _none_
+| `pipeline` | resolved pipeline _must_ be wholly-composed of supported processors
+| `redact` | _none_
+| `registereddomain` | _none_
+| `remove` | _none_
+| `rename` | _none_
+| `script` | _none_
+| `set` | _none_
+| `sort` | _none_
+| `split` | _none_
+| `trim` | _none_
+| `uppercase` | _none_
+| `uriparts` | _none_
+| `urldecode` | _none_
+
+h| GeoIp
+| `geoip` | Requires local MaxMind GeoIp databases <<{version}-plugins-{type}s-{plugin}-geoip_database_directory>>
+
+|=======================================================================
+
+
+[id="{version}-plugins-{type}s-{plugin}-field_mappings"]
+===== Field Mappings
+
+During execution, the Ingest pipeline works with a temporary mutable _view_ of the Logstash event that re-shapes some {ls}-reserved fields into their expected IngestDocument field names and object-types.
+Changes to the IngestDocument will be reflected in the resulting Logstash Event, including safely mapping these reserved fields _back_ from the IngestDocument reserved field to the {ls} reserved field counterpart.
+
+[cols="<,<,<",options="header"]
+|=======================================================================
+
+| {ls} Field | IngestDocument Field | Conflict Handling
+
+| `@timestamp` | `_ingest.timestamp` |when ingest processing _also_ sets a top-level `@timestamp` field, it will be made available via the Event's `_@timestamp` field
+
+| `@version` | `_version` | when ingest processing _also_ sets a top-level `@version` field in the source, it will be made available via the Event's `_@version` field
+
+| `@metadata` | `@metadata` | when ingest processing replaces the top-level `@metadata` map with an object that is not a string-object map, it will be made available via the Event's `_@metadata` field.
+
+| `tags` | `tags` | when ingest processing produces a top-level `tags` field that is not a collection of strings, it will be made available via the event's `_tags` field.
+
+| _everything else_ | _in-place, as-structured_ | only minimal type conversions are done
+|=======================================================================
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== {elastic-integration-name} Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-api_key>> | {logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-auth_basic_password>> | {logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-auth_basic_username>> | {logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-cloud_auth>> | {logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-cloud_id>> | {logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-hosts>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_certificate>> | {logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_enabled>> | {logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_key>> | {logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_keystore_password>> | {logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_keystore_path>> | {logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_key_passphrase>> | {logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_truststore_path>> | {logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_truststore_password>> | {logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_verification_mode>> | {logstash-ref}/configuration-file-structure.html#string[string], one of `["full", "certificate", "none"]`|No
+|=======================================================================
+
+// Variables for re-use in per-option docs
+:prohibit-ssl-disabled-effective: Cannot be combined with configurations that disable SSL
+:prohibit-ssl-disabled-explicit: Cannot be combined with `<<{version}-plugins-{type}s-{plugin}-ssl_enabled>>=>false`.
+:prohibit-ssl-verify-none: Cannot be combined with `<<{version}-plugins-{type}s-{plugin}-ssl_verification_mode>>=>none`.
+
+[id="{version}-plugins-{type}s-{plugin}-api_key"]
+===== `api_key`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+* There is no default value for this setting.
+
+The encoded form of an API key that is used to authenticate this plugin to {es}
+
+[id="{version}-plugins-{type}s-{plugin}-auth_basic_password"]
+===== `auth_basic_password`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+* There is no default value for this setting.
+* Required when request auth is configured with <<{version}-plugins-{type}s-{plugin}-auth_basic_username>>
+
+A password when using HTTP Basic Authentication to connect to {es}.
+
+[id="{version}-plugins-{type}s-{plugin}-auth_basic_username"]
+===== `auth_basic_username`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* There is no default value for this setting.
+* When present, <<{version}-plugins-{type}s-{plugin}-auth_basic_password>> is also required.
+
+A user name when using HTTP Basic Authentication to connect to {es}.
+
+[id="{version}-plugins-{type}s-{plugin}-cloud_auth"]
+===== `cloud_auth`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+* There is no default value for this setting.
+
+Cloud authentication string ("<username>:<password>" format) is an alternative
+for the `auth_basic_username`/`auth_basic_password` pair and can be obtained from Elastic Cloud web console.
+
+[id="{version}-plugins-{type}s-{plugin}-cloud_id"]
+===== `cloud_id`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* There is no default value for this setting.
+* {prohibit-ssl-disabled-explicit}
+
+Cloud Id, from the Elastic Cloud web console.
+
+When connecting with a Cloud Id, communication to {es} is secured with SSL.
+
+For more details, check out the
+{logstash-ref}/connecting-to-cloud.html[Logstash-to-Cloud documentation].
+
+[id="{version}-plugins-{type}s-{plugin}-hosts"]
+===== `hosts`
+
+* Value type is a list of {logstash-ref}/configuration-file-structure.html#uri[uri]s
+* There is no default value for this setting.
+* Constraints:
+** When any URL contains a protocol component, all URLs must have the same protocol as each other.
+** `https`-protocol hosts use HTTPS and cannot be combined with <<{version}-plugins-{type}s-{plugin}-ssl_enabled, `+ssl_enabled => false+`>>.
+** `http`-protocol hosts use unsecured HTTP and cannot be combined with <<{version}-plugins-{type}s-{plugin}-ssl_enabled, `+ssl_enabled => true+`>>.
+** When any URL omits a port component, the default `9200` is used.
+** When any URL contains a path component, all URLs must have the same path as each other.
+
+A non-empty list of {es} hosts to connect.
+
+Examples:
+
+    `"127.0.0.1"`
+    `["127.0.0.1:9200","127.0.0.2:9200"]`
+    `["http://127.0.0.1"]`
+    `["https://127.0.0.1:9200"]`
+    `["https://127.0.0.1:9200/subpath"]` (If using a proxy on a subpath)
+
+When connecting with a list of hosts, communication to {es} is secured with SSL unless configured otherwise.
+
+[WARNING]
+.Disabling SSL is dangerous
+============
+The security of this plugin relies on SSL to avoid leaking credentials and to avoid running illegitimate ingest pipeline definitions.
+
+There are two ways to disable SSL:
+
+* Provide a list of `http`-protocol hosts
+* Set <<{version}-plugins-{type}s-{plugin}-ssl_enabled, `+ssl_enabled => false+`>>
+
+============
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_certificate"]
+===== `ssl_certificate`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+* There is no default value for this setting.
+* When present, <<{version}-plugins-{type}s-{plugin}-ssl_key>> and <<{version}-plugins-{type}s-{plugin}-ssl_key_passphrase>> are also required.
+* {prohibit-ssl-disabled-effective}
+
+Path to a PEM-encoded certificate or certificate chain with which to identify this plugin to {es}.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities"]
+===== `ssl_certificate_authorities`
+
+* Value type is a list of {logstash-ref}/configuration-file-structure.html#path[path]s
+* There is no default value for this setting.
+* {prohibit-ssl-disabled-effective}
+* {prohibit-ssl-verify-none}
+
+One or more PEM-formatted files defining certificate authorities.
+
+This setting can be used to _override_ the system trust store for verifying the SSL certificate presented by {es}.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_enabled"]
+===== `ssl_enabled`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+* There is no default value for this setting.
+
+Secure SSL communication to {es} is enabled unless:
+
+* it is explicitly disabled with `+ssl_enabled => false+`; OR
+* it is implicitly disabled by providing `http`-protocol <<{version}-plugins-{type}s-{plugin}-hosts>>.
+
+Specifying `+ssl_enabled => true+` can be a helpful redundant safeguard to ensure this plugin cannot be configured to use non-ssl communication.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_key"]
+===== `ssl_key`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+* There is no default value for this setting.
+* Required when connection identity is configured with <<{version}-plugins-{type}s-{plugin}-ssl_certificate>>
+* {prohibit-ssl-disabled-effective}
+
+A path to a PKCS8-formatted SSL certificate key.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_keystore_password"]
+===== `ssl_keystore_password`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+* There is no default value for this setting.
+* Required when connection identity is configured with <<{version}-plugins-{type}s-{plugin}-ssl_keystore_path>>
+* {prohibit-ssl-disabled-effective}
+
+Password for the <<{version}-plugins-{type}s-{plugin}-ssl_keystore_path>>
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_keystore_path"]
+===== `ssl_keystore_path`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+* There is no default value for this setting.
+* When present, <<{version}-plugins-{type}s-{plugin}-ssl_keystore_password>> is also required.
+* {prohibit-ssl-disabled-effective}
+
+A path to a JKS- or PKCS12-formatted keystore with which to identify this plugin to {es}.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_key_passphrase"]
+===== `ssl_key_passphrase`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+* There is no default value for this setting.
+* Required when connection identity is configured with <<{version}-plugins-{type}s-{plugin}-ssl_certificate>>
+* {prohibit-ssl-disabled-effective}
+
+A password or passphrase of the <<{version}-plugins-{type}s-{plugin}-ssl_key>>.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_truststore_path"]
+===== `ssl_truststore_path`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+* There is no default value for this setting.
+* When present, <<{version}-plugins-{type}s-{plugin}-ssl_truststore_password>> is required.
+* {prohibit-ssl-disabled-effective}
+* {prohibit-ssl-verify-none}
+
+A path to JKS- or PKCS12-formatted keystore where trusted certificates are located.
+
+This setting can be used to _override_ the system trust store for verifying the SSL certificate presented by {es}.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_truststore_password"]
+===== `ssl_truststore_password`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+* There is no default value for this setting.
+* Required when connection trust is configured with <<{version}-plugins-{type}s-{plugin}-ssl_truststore_path>>
+* {prohibit-ssl-disabled-effective}
+
+Password for the <<{version}-plugins-{type}s-{plugin}-ssl_truststore_path>>.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_verification_mode"]
+===== `ssl_verification_mode`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* There is no default value for this setting.
+* {prohibit-ssl-disabled-effective}
+
+Level of verification of the certificate provided by {es}.
+
+SSL certificates presented by {es} are fully-validated by default.
+
+* Available modes:
+** `none`: performs no validation, implicitly trusting any server that this plugin connects to (insecure)
+** `certificate`: validates the server-provided certificate is signed by a trusted certificate authority and that the server can prove possession of its associated private key (less secure)
+** `full` (default): performs the same validations as `certificate` and also verifies that the provided certificate has an identity claim matching the server we are attempting to connect to (most secure)
+
+[id="{version}-plugins-{type}s-{plugin}-geoip_database_directory"]
+===== `geoip_database_directory`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+* There is no default value for this setting.
+
+When using the GeoIp processor, this plugin does _not_ have access to the GeoIp databases that are a part of the {es} cluster, and must be configured with locally-available database files.
+
+Databases are registered by file name, and most integrations rely on databases being present named:
+
+ * `GeoLite2-ASN.mmdb`
+ * `GeoLite2-City.mmdb`
+ * `GeoLite2-Country.mmdb`
+
+This plugin will discover any regular file with the `.mmdb` suffix in the provided directory, and expects the files it finds to be in the MaxMind DB format.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]

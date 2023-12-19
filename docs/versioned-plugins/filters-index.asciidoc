@@ -37,6 +37,8 @@ include::filters/drop-index.asciidoc[]
 
 include::filters/elapsed-index.asciidoc[]
 
+include::filters/elastic_integration-index.asciidoc[]
+
 include::filters/elasticsearch-index.asciidoc[]
 
 include::filters/emoji-index.asciidoc[]
