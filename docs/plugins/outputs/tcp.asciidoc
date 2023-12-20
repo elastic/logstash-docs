@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v6.1.2
-:release_date: 2023-06-23
-:changelog_url: https://github.com/logstash-plugins/logstash-output-tcp/blob/v6.1.2/CHANGELOG.md
+:version: v6.2.0
+:release_date: 2023-12-19
+:changelog_url: https://github.com/logstash-plugins/logstash-output-tcp/blob/v6.2.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -41,12 +41,18 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-mode>> |<<string,string>>, one of `["server", "client"]`|No
 | <<plugins-{type}s-{plugin}-port>> |<<number,number>>|Yes
 | <<plugins-{type}s-{plugin}-reconnect_interval>> |<<number,number>>|No
-| <<plugins-{type}s-{plugin}-ssl_cacert>> |a valid filesystem path|No
-| <<plugins-{type}s-{plugin}-ssl_cert>> |a valid filesystem path|No
-| <<plugins-{type}s-{plugin}-ssl_enable>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-ssl_cacert>> |a valid filesystem path|__Deprecated__
+| <<plugins-{type}s-{plugin}-ssl_cert>> |a valid filesystem path|__Deprecated__
+| <<plugins-{type}s-{plugin}-ssl_certificate>> |a valid filesystem path|No
+| <<plugins-{type}s-{plugin}-ssl_certificate_authorities>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-ssl_cipher_suites>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-ssl_client_authentication>> |<<string,string>>, one of `["none", "optional", "required"]`|No
+| <<plugins-{type}s-{plugin}-ssl_enable>> |<<boolean,boolean>>|__Deprecated__
+| <<plugins-{type}s-{plugin}-ssl_enabled>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-ssl_key>> |a valid filesystem path|No
 | <<plugins-{type}s-{plugin}-ssl_key_passphrase>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-ssl_supported_protocols>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-ssl_verification_mode>> |<<string,string>>, one of `["full", "none"]`|No
 | <<plugins-{type}s-{plugin}-ssl_verify>> |<<boolean,boolean>>|No
 |=======================================================================
 
@@ -94,6 +100,7 @@ When connect failed,retry interval in sec.
 
 [id="plugins-{type}s-{plugin}-ssl_cacert"]
 ===== `ssl_cacert` 
+deprecated[6.2.0, Replaced by <<plugins-{type}s-{plugin}-ssl_certificate_authorities>>]
 
   * Value type is <<path,path>>
   * There is no default value for this setting.
@@ -102,14 +109,69 @@ The SSL CA certificate, chainfile or CA path. The system CA path is automaticall
 
 [id="plugins-{type}s-{plugin}-ssl_cert"]
 ===== `ssl_cert` 
+deprecated[6.2.0, Replaced by <<plugins-{type}s-{plugin}-ssl_certificate>>]
 
   * Value type is <<path,path>>
   * There is no default value for this setting.
 
 SSL certificate path
 
+[id="plugins-{type}s-{plugin}-ssl_certificate"]
+===== `ssl_certificate`
+
+  * Value type is <<path,path>>
+  * There is no default value for this setting.
+
+Path to certificate in PEM format. This certificate will be presented
+to the other part of the TLS connection.
+
+[id="plugins-{type}s-{plugin}-ssl_certificate_authorities"]
+===== `ssl_certificate_authorities`
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Validate client certificate or certificate chain against these authorities.
+You can define multiple files. All the certificates will be read and added to the trust store.
+The system CA path is automatically included.
+
+[id="plugins-{type}s-{plugin}-ssl_cipher_suites"]
+===== `ssl_cipher_suites`
+
+  * Value type is a list of <<string,string>>
+  * There is no default value for this setting
+
+The list of cipher suites to use, listed by priorities.
+Supported cipher suites vary depending on the Java and protocol versions.
+
+[id="plugins-{type}s-{plugin}-ssl_client_authentication"]
+===== `ssl_client_authentication`
+
+  * Value can be any of: `none`, `optional`, `required`
+  * Default value is `none`
+
+Controls the server's behavior in regard to requesting a certificate from client connections:
+`none` disables the client authentication. `required` forces a client to present a certificate, while `optional` requests a client certificate
+but the client is not required to present one.
+
+When mutual TLS is enabled (`optional` or `required`), the certificate presented by the client must be signed by trusted
+<<plugins-{type}s-{plugin}-ssl_certificate_authorities>> (CAs).
+Please note that the server does not validate the client certificate CN (Common Name) or SAN (Subject Alternative Name).
+
+NOTE: This setting can be used only if <<plugins-{type}s-{plugin}-mode>> is `server` and <<plugins-{type}s-{plugin}-ssl_certificate_authorities>> is set.
+
+
 [id="plugins-{type}s-{plugin}-ssl_enable"]
 ===== `ssl_enable` 
+deprecated[6.2.0, Replaced by <<plugins-{type}s-{plugin}-ssl_enabled>>]
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Enable SSL (must be set for other `ssl_` options to take effect).
+
+[id="plugins-{type}s-{plugin}-ssl_enabled"]
+===== `ssl_enabled`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -146,16 +208,31 @@ NOTE: If you configure the plugin to use `'TLSv1.1'` on any recent JVM, such as 
 the protocol is disabled by default and needs to be enabled manually by changing `jdk.tls.disabledAlgorithms` in
 the *$JDK_HOME/conf/security/java.security* configuration file. That is, `TLSv1.1` needs to be removed from the list.
 
+[id="plugins-{type}s-{plugin}-ssl_verification_mode"]
+===== `ssl_verification_mode`
+
+  * Value can be any of: `full`, `none`
+  * Default value is `full`
+
+Defines how to verify the certificates presented by another part in the TLS connection:
+
+`full` validates that the server certificate has an issue date that's within
+the not_before and not_after dates; chains to a trusted Certificate Authority (CA), and
+has a hostname or IP address that matches the names within the certificate.
+
+`none` performs no certificate validation.
+
+NOTE: This setting can be used only if <<plugins-{type}s-{plugin}-mode>> is `client`.
+
 [id="plugins-{type}s-{plugin}-ssl_verify"]
 ===== `ssl_verify` 
+deprecated[6.2.0, Replaced by <<plugins-{type}s-{plugin}-ssl_client_authentication>> and <<plugins-{type}s-{plugin}-ssl_verification_mode>>]
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
 Verify the identity of the other end of the SSL connection against the CA.
 For input, sets the field `sslsubject` to that of the client certificate.
-
-
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
