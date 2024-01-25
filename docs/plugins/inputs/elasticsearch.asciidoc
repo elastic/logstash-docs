@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.19.1
-:release_date: 2023-12-04
-:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.19.1/CHANGELOG.md
+:version: v4.20.0
+:release_date: 2024-01-24
+:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.20.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -116,6 +116,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-password>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-proxy>> |<<uri,uri>>|No
 | <<plugins-{type}s-{plugin}-query>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-response_type>> |<<string,string>>, one of `["hits","aggregations"]`|No
 | <<plugins-{type}s-{plugin}-request_timeout_seconds>> | <<number,number>>|No
 | <<plugins-{type}s-{plugin}-schedule>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-scroll>> |<<string,string>>|No
@@ -337,6 +338,20 @@ documentation] for more information.
 
 When <<plugins-{type}s-{plugin}-search_api>> resolves to `search_after` and the query does not specify `sort`,
 the default sort `'{ "sort": { "_shard_doc": "asc" } }'` will be added to the query. Please refer to the {ref}/paginate-search-results.html#search-after[Elasticsearch search_after] parameter to know more.
+
+[id="plugins-{type}s-{plugin}-response_type"]
+===== `response_type`
+
+  * Value can be any of: `hits`, `aggregations`
+  * Default value is `hits`
+
+Which part of the result to transform into Logstash events when processing the
+response from the query.
+The default `hits` will generate one event per returned document (i.e. "hit").
+When set to `aggregations`, a single Logstash event will be generated with the
+contents of the `aggregations` object of the query's response. In this case the
+`hits` object will be ignored. The parameter `size` will be always be set to
+0 regardless of the default or user-defined value set in this plugin.
 
 [id="plugins-{type}s-{plugin}-request_timeout_seconds"]
 ===== `request_timeout_seconds`
