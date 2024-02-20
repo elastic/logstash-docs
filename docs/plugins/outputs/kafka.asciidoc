@@ -9,9 +9,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.3.3
-:release_date: 2024-01-09
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.3.3/CHANGELOG.md
+:version: v11.3.4
+:release_date: 2024-02-06
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.3.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -185,7 +185,7 @@ resolved and expanded into a list of canonical names.
 [NOTE]
 ====
 Starting from Kafka 3 `default` value for `client.dns.lookup` value has been removed.
-If explicitly configured it fallbacks to `use_all_dns_ips`.
+If not explicitly configured it defaults to `use_all_dns_ips`.
 ====
 
 [id="plugins-{type}s-{plugin}-client_id"]
@@ -349,7 +349,7 @@ retries are exhausted.
   * There is no default value for this setting.
 
 The default retry behavior is to retry until successful. To prevent data loss,
-the use of this setting is discouraged.
+changing this setting is discouraged.
 
 If you choose to set `retries`, a value greater than zero will cause the
 client to only retry a fixed number of times. This will result in data loss
