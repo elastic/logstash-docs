@@ -1,13 +1,13 @@
 :plugin: elastic_integration
 :type: filter
-:default_plugin: 0
+:default_plugin: 1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v0.1.3
-:release_date: 2023-12-20
-:changelog_url: https://github.com/elastic/logstash-filter-elastic_integration/blob/v0.1.3/CHANGELOG.md
+:version: v0.1.8
+:release_date: 2024-03-07
+:changelog_url: https://github.com/elastic/logstash-filter-elastic_integration/blob/v0.1.8/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -177,7 +177,7 @@ It has access to the Painless and Mustache scripting engines where applicable:
 | `split` | _none_
 | `trim` | _none_
 | `uppercase` | _none_
-| `uriparts` | _none_
+| `uri_parts` | _none_
 | `urldecode` | _none_
 | `user_agent` | side-loading a custom regex file is not supported; the processor will use the default user agent definitions as specified in https://www.elastic.co/guide/en/elasticsearch/reference/current/user-agent-processor.html[Elasticsearch processor definition]
 
