@@ -49,8 +49,8 @@ The following input plugins are available below. For a list of Elastic supported
 | <<plugins-inputs-s3,s3>> | Streams events from files in a S3 bucket | https://github.com/logstash-plugins/logstash-input-s3[logstash-input-s3]
 | <<plugins-inputs-s3-sns-sqs,s3-sns-sqs>> | Reads logs from AWS S3 buckets using sqs | https://github.com/cherweg/logstash-input-s3-sns-sqs[logstash-input-s3-sns-sqs]
 | <<plugins-inputs-salesforce,salesforce>> | Creates events based on a Salesforce SOQL query | https://github.com/logstash-plugins/logstash-input-salesforce[logstash-input-salesforce]
-| <<plugins-inputs-snmp,snmp>> | Polls network devices using Simple Network Management Protocol (SNMP) | https://github.com/logstash-plugins/logstash-input-snmp[logstash-input-snmp]
-| <<plugins-inputs-snmptrap,snmptrap>> | Creates events based on SNMP trap messages | https://github.com/logstash-plugins/logstash-input-snmptrap[logstash-input-snmptrap]
+| <<plugins-inputs-snmp,snmp>> | Polls network devices using Simple Network Management Protocol (SNMP) | https://github.com/logstash-plugins/logstash-integration-snmp[logstash-integration-snmp]
+| <<plugins-inputs-snmptrap,snmptrap>> | Creates events based on SNMP trap messages | https://github.com/logstash-plugins/logstash-integration-snmp[logstash-integration-snmp]
 | <<plugins-inputs-sqlite,sqlite>> | Creates events based on rows in an SQLite database | https://github.com/logstash-plugins/logstash-input-sqlite[logstash-input-sqlite]
 | <<plugins-inputs-sqs,sqs>> | Pulls events from an Amazon Web Services Simple Queue Service queue | https://github.com/logstash-plugins/logstash-input-sqs[logstash-input-sqs]
 | <<plugins-inputs-stdin,stdin>> | Reads events from standard input | https://github.com/logstash-plugins/logstash-input-stdin[logstash-input-stdin]
@@ -192,10 +192,10 @@ include::inputs/s3-sns-sqs.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-input-salesforce/edit/main/docs/index.asciidoc
 include::inputs/salesforce.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-snmp/edit/main/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-integration-snmp/edit/main/docs/input-snmp.asciidoc
 include::inputs/snmp.asciidoc[]
 
-:edit_url: https://github.com/logstash-plugins/logstash-input-snmptrap/edit/main/docs/index.asciidoc
+:edit_url: https://github.com/logstash-plugins/logstash-integration-snmp/edit/main/docs/input-snmptrap.asciidoc
 include::inputs/snmptrap.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-sqlite/edit/main/docs/index.asciidoc
