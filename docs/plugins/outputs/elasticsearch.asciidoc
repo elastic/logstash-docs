@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.22.2
-:release_date: 2023-12-13
-:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v11.22.2/CHANGELOG.md
+:version: v11.22.3
+:release_date: 2024-03-19
+:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v11.22.3/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -52,7 +52,7 @@ You can use this plugin to send your {ls} data to {es-serverless}.
 Some differences to note between {es-serverless} and self-managed {es}:
 
 * Use *API keys* to access {serverless-full} from {ls}. 
-Any user-based security settings in your in your <<plugins-outputs-elasticsearch,{es} output plugin>> configuration are ignored and may cause errors.
+Any user-based security settings in your <<plugins-outputs-elasticsearch,{es} output plugin>> configuration are ignored and may cause errors.
 * {es-serverless} uses *data streams* and {ref}/data-stream-lifecycle.html[{dlm} ({dlm-init})] instead of {ilm} ({ilm-init}). 
 Any {ilm-init} settings in your <<plugins-outputs-elasticsearch,{es} output plugin>> configuration are ignored and may cause errors.
 * *{ls} monitoring* is available through the https://github.com/elastic/integrations/blob/main/packages/logstash/_dev/build/docs/README.md[{ls} Integration] in {serverless-docs}/observability/what-is-observability-serverless[Elastic Observability] on {serverless-full}.
@@ -317,6 +317,11 @@ index level and `monitoring` permissions at cluster level. The `monitoring`
 permission at cluster level is necessary to perform periodic connectivity
 checks.
 
+[id="plugins-{type}s-{plugin}-handling-non-utf-8"]
+==== Handling non UTF-8 data
+
+This plugin transmits events to Elasticsearch using a JSON API, and therefore requires that all string values in events to be valid UTF-8.
+When a string value on an event contains one or more byte sequences that are not valid in UTF-8, each offending byte sequence is replaced with the UTF-8 replacement character (`\uFFFD`).
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Elasticsearch Output Configuration Options
