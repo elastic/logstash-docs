@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.4.1
-:release_date: 2022-01-19
-:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v11.4.1/CHANGELOG.md
+:version: v11.4.2
+:release_date: 2024-03-20
+:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v11.4.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -294,6 +294,11 @@ index level and `monitoring` permissions at cluster level. The `monitoring`
 permission at cluster level is necessary to perform periodic connectivity
 checks.
 
+[id="plugins-{type}s-{plugin}-handling-non-utf-8"]
+==== Handling non UTF-8 data
+
+This plugin transmits events to Elasticsearch using a JSON API, and therefore requires that all string values in events to be valid UTF-8.
+When a string value on an event contains one or more byte sequences that are not valid in UTF-8, each offending byte sequence is replaced with the UTF-8 replacement character (`\uFFFD`).
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Elasticsearch Output Configuration Options
