@@ -91,7 +91,7 @@ See the https://kafka.apache.org/{kafka_client_doc}/documentation for more detai
 | <<{version}-plugins-{type}s-{plugin}-key_serializer>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
 | <<{version}-plugins-{type}s-{plugin}-linger_ms>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
 | <<{version}-plugins-{type}s-{plugin}-max_request_size>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
-| <<{version}-plugins-{type}s-{plugin}-message_header>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-message_headers>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
 | <<{version}-plugins-{type}s-{plugin}-message_key>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
 | <<{version}-plugins-{type}s-{plugin}-metadata_fetch_timeout_ms>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
 | <<{version}-plugins-{type}s-{plugin}-metadata_max_age_ms>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
@@ -289,7 +289,7 @@ A map of key value pairs, each corresponding to a header name and its value resp
 Example:
 [source,ruby]
 ----------------------------------
-    message_header => { "event_timestamp" => "%{@timestamp}" }
+    message_headers=> { "event_timestamp" => "%{@timestamp}" }
 ----------------------------------
 
 [id="{version}-plugins-{type}s-{plugin}-message_key"]
