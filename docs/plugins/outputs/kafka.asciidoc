@@ -9,9 +9,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.3.4
-:release_date: 2024-02-06
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.3.4/CHANGELOG.md
+:version: v11.4.1
+:release_date: 2024-04-10
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.4.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -92,6 +92,7 @@ See the https://kafka.apache.org/{kafka_client_doc}/documentation for more detai
 | <<plugins-{type}s-{plugin}-key_serializer>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-linger_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-max_request_size>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-message_headers>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-message_key>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-metadata_fetch_timeout_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-metadata_max_age_ms>> |<<number,number>>|No
@@ -275,6 +276,22 @@ to allow other records to be sent so that the sends can be batched together.
   * Default value is `1048576` (1MB).
 
 The maximum size of a request
+
+[id="plugins-{type}s-{plugin}-message_headers"]
+===== `message_headers`
+
+  * Value type is <<hash,hash>>
+  ** Keys are header names, and must be <<string,string>>
+  ** Values are header values, and must be <<string,string>>
+  ** Values support interpolation from event field values
+  * There is no default value for this setting.
+
+A map of key value pairs, each corresponding to a header name and its value respectively.
+Example:
+[source,ruby]
+----------------------------------
+    message_headers => { "event_timestamp" => "%{@timestamp}" }
+----------------------------------
 
 [id="plugins-{type}s-{plugin}-message_key"]
 ===== `message_key` 
