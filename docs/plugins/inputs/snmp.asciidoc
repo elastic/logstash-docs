@@ -399,15 +399,6 @@ Authentication, No Privacy; Authentication, Privacy; or no Authentication, no Pr
 
 The `security_name` option specifies the SNMPv3 security name or user name.
 
-[id="plugins-{type}s-{plugin}-use_provided_mibs"]
-===== `use_provided_mibs`
-
-  * Value type is <<boolean,boolean>>
-  * Default value is `true`
-
-This plugin provides all IETF MIBs (management information bases), publicly available in the https://www.ibr.cs.tu-bs.de/projects/libsmi[libsmi] version `0.5.0`.
-When enabled, it automatically loads the bundled MIBs and provides mapping of the numeric OIDs to MIB field names in the resulting event.
-
 [id="plugins-{type}s-{plugin}-examples"]
 ==== Configuration examples
 
