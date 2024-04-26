@@ -60,7 +60,9 @@ Metadata fields follow a specific naming convention when <<plugins-{type}s-{plug
 
 This plugin already includes the IETF MIBs (management information bases), and you do not need to import them.
 If you need additional MIBs, you need to important them.  
-Check out {logstash-ref}/plugins-integrations-snmp.html[Importing MIBs] for instructions.
+Check out "Importing MIBs" for instructions.
+
+// ToDo: Add link to MIBs content after generated file exists.
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== SNMP Input Configuration Options
@@ -222,7 +224,10 @@ The value can be either a dir path containing the imported MIB (`.dic`, `.yaml`)
 file path to a single MIB file.
 
 This plugin includes the IETF MIBs.
-If you require other MIBs, you need to import them. See <<plugins-{type}s-{plugin}-import-mibs>>.
+If you require other MIBs, you need to import them. 
+Check out "Importing MIBs" for instructions.
+
+// ToDo: Add link to MIBs content after generated file exists.
 
 [id="plugins-{type}s-{plugin}-oid_mapping_format"]
 ===== `oid_mapping_format`

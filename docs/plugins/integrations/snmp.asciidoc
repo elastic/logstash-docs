@@ -31,7 +31,7 @@ The SNMP integration plugin includes:
 -// - {logstash-ref}/plugins-input-snmp.html[SNMP input plugin]
 -// - {logstash-ref}/plugins-input-snmptrap.html[Snmptrap input plugin]
 
-The new the `logstash-integration-snmp` plugin combines the 
+The new `logstash-integration-snmp` plugin combines the 
 `logstash-input-snmp` and `logstash-input-snmptrap` plugins into one integrated plugin that encompasses
 the capabilities of both. 
 This integrated plugin package provides better alignment in snmp processing, better resource managenment, 
@@ -131,8 +131,6 @@ input {
 
 // ToDo: Any considerations that we should point out? 
 
-:no_codec!:
-
 
 [id="plugins-{type}s-{plugin}-import-mibs"]
 ==== Importing MIBs
@@ -199,3 +197,5 @@ $ smidump -c smi.conf -k -f python CISCO-PROCESS-MIB.mib > CISCO-PROCESS-MIB_my.
 -----
 
 :no_codec!:
+
+

@@ -16,7 +16,7 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 [id="plugins-{type}s-{plugin}"]
 
-=== SNMP trap input plugin
+=== SNMPtrap input plugin
 
 //Uncomment after generated the initial versions of the target file
 //include::{include_path}/plugin_header-integration.asciidoc[]
@@ -79,7 +79,9 @@ which variable binding in the list caused the error
 
 This plugin already includes the IETF MIBs (management information bases), and you do not need to import them.
 If you need additional MIBs, you need to important them.  
-Check out {logstash-ref}/plugins-integrations-snmp.html[Importing MIBs] for instructions.
+Check out "Importing MIBs" for instructions.
+
+// ToDo: Add link to MIBs content after generated file exists.
 
 
 [id="plugins-{type}s-{plugin}-options"]
