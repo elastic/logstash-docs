@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.22.2
-:release_date: 2023-12-13
-:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v11.22.2/CHANGELOG.md
+:version: v11.22.6
+:release_date: 2024-04-30
+:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v11.22.6/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -52,7 +52,7 @@ You can use this plugin to send your {ls} data to {es-serverless}.
 Some differences to note between {es-serverless} and self-managed {es}:
 
 * Use *API keys* to access {serverless-full} from {ls}. 
-Any user-based security settings in your in your <<plugins-outputs-elasticsearch,{es} output plugin>> configuration are ignored and may cause errors.
+Any user-based security settings in your <<plugins-outputs-elasticsearch,{es} output plugin>> configuration are ignored and may cause errors.
 * {es-serverless} uses *data streams* and {ref}/data-stream-lifecycle.html[{dlm} ({dlm-init})] instead of {ilm} ({ilm-init}). 
 Any {ilm-init} settings in your <<plugins-outputs-elasticsearch,{es} output plugin>> configuration are ignored and may cause errors.
 * *{ls} monitoring* is available through the https://github.com/elastic/integrations/blob/main/packages/logstash/_dev/build/docs/README.md[{ls} Integration] in {serverless-docs}/observability/what-is-observability-serverless[Elastic Observability] on {serverless-full}.
@@ -100,6 +100,8 @@ as logs, metrics, and events) into {es} and {es-serverless}:
 * <<plugins-{type}s-{plugin}-data_stream_sync_fields>>
 * <<plugins-{type}s-{plugin}-data_stream_type>> 
 
+IMPORTANT: <<plugins-{type}s-{plugin}-ecs_compatibility,ECS compatibility>> must be enabled (set to `v1` or `v8`) for data streams to work properly.
+
 [id="plugins-{type}s-{plugin}-ds-examples"]
 ===== Data stream configuration examples
 
@@ -117,7 +119,7 @@ output {
 
 This example shows the minimal settings for processing data streams. Events
 with `data_stream.*`` fields are routed to the appropriate data streams. If the
-fields are missing, routing defaults to `logs-generic-logstash`.
+fields are missing, routing defaults to `logs-generic-default`.
 
 **Example: Customize data stream name**
 
@@ -133,8 +135,6 @@ output {
     }
 }
 -----
-
-
 
 
 ==== Writing to different indices: best practices
@@ -317,6 +317,11 @@ index level and `monitoring` permissions at cluster level. The `monitoring`
 permission at cluster level is necessary to perform periodic connectivity
 checks.
 
+[id="plugins-{type}s-{plugin}-handling-non-utf-8"]
+==== Handling non UTF-8 data
+
+This plugin transmits events to Elasticsearch using a JSON API, and therefore requires that all string values in events to be valid UTF-8.
+When a string value on an event contains one or more byte sequences that are not valid in UTF-8, each offending byte sequence is replaced with the UTF-8 replacement character (`\uFFFD`).
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Elasticsearch Output Configuration Options
@@ -507,6 +512,7 @@ The other `data_stream_*` settings will be used only if this setting is enabled.
 
 Logstash handles the output as a data stream when the supplied configuration
 is compatible with data streams and this value is set to `auto`.
+Note that <<plugins-{type}s-{plugin}-ecs_compatibility,ECS compatibility>> must be enabled (set to `v1` or `v8`) for data streams to work properly.
 
 [id="plugins-{type}s-{plugin}-data_stream_auto_routing"]
 ===== `data_stream_auto_routing`
@@ -795,7 +801,9 @@ NOTE: `ilm_rollover_alias` does NOT support dynamic variable substitution as
   ** ECS Compatibility disabled: `"logstash-%{+yyyy.MM.dd}"`
   ** ECS Compatibility enabled: `"ecs-logstash-%{+yyyy.MM.dd}"`
 
-The index to write events to. This can be dynamic using the `%{foo}` syntax.
+The indexing target to write events to. 
+Can point to an {ref}/index-mgmt.html[index], {ref}/aliases.html[alias], or {ref}/data-streams.html[data stream]. 
+This can be dynamic using the `%{foo}` syntax.
 The default value will partition your indices by day so you can more easily
 delete old data or only search specific date ranges.
 Indexes may not contain uppercase characters.
