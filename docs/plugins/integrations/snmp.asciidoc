@@ -1,0 +1,21 @@
+:plugin: snmp
+:type: integration
+:default_plugin: 0
+:no_codec:
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: tbd
+:release_date: 2024-01-23
+:changelog_url: tbd
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="plugins-{type}s-{plugin}"]
+
+=== SNMP Integration Plugin
+
+include::{include_path}/plugin_header.asciidoc[]
