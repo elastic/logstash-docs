@@ -18,4 +18,4 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 === SNMP Integration Plugin
 
-include::{include_path}/plugin_header.asciidoc[]
+COMING SOON!
