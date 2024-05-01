@@ -12,6 +12,7 @@ filters and codecs--into one package.
 | <<plugins-integrations-kafka,kafka>> | Plugins for use with the Kafka distributed streaming platform. | https://github.com/logstash-plugins/logstash-integration-kafka[logstash-integration-kafka]
 | <<plugins-integrations-logstash,logstash>> | Plugins to enable {ls}-to-{ls} communication. | https://github.com/logstash-plugins/logstash-integration-logstash[logstash-integration-logstash]
 | <<plugins-integrations-rabbitmq,rabbitmq>> | Plugins for processing events to or from a RabbitMQ broker. | https://github.com/logstash-plugins/logstash-integration-rabbitmq[logstash-integration-rabbitmq]
+| <<plugins-integrations-snmp,snmp>> | Plugins for polling devices using Simple Network Management Protocol (SNMP) or creating events from SNMPtrap messages. | https://github.com/logstash-plugins/logstash-integration-snmp[logstash-integration-snmp]
 |=======================================================================
 
 :edit_url: https://github.com/logstash-plugins/logstash-integration-aws/edit/main/docs/index.asciidoc
@@ -31,5 +32,8 @@ include::integrations/logstash.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-integration-rabbitmq/edit/main/docs/index.asciidoc
 include::integrations/rabbitmq.asciidoc[]
+
+:edit_url: https://github.com/logstash-plugins/logstash-integration-snmp/edit/main/docs/index.asciidoc
+include::integrations/snmp.asciidoc[]
 
 :edit_url: 
