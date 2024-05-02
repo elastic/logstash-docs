@@ -15,4 +15,3 @@ include::integrations/logstash-index.asciidoc[]
 
 include::integrations/rabbitmq-index.asciidoc[]
 
-include::integrations/snmp-index.asciidoc[]
