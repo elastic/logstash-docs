@@ -8,7 +8,5 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v4.0.0-plugins-integrations-snmp,v4.0.0>> | 2024-05-03
 |=======================================================================
 
-experimental[]
-
 include::snmp-v4.0.0.asciidoc[]
 
