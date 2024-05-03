@@ -19,6 +19,8 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 // include::{include_path}/plugin_header.asciidoc[]
 
+experimental[]
+
 ==== Description
 
 The SNMP integration plugin includes:
