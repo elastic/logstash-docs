@@ -7,25 +7,33 @@
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
 :version: tbd
-:release_date: 2024-01-23
+:release_date: tbd
 :changelog_url: tbd
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
 
-// include::{include_path}/plugin_header.asciidoc[]
+[id="plugins-{type}s-{plugin}"]
+
+=== SNMP Integration Plugin
+
+* Plugin version: v4.0.0
+* Released on: 2024-05-03
+* https://github.com/logstash-plugins/logstash-integration-snmp/blob/main/CHANGELOG.md[Changelog]
 
 experimental[]
 
 .Technical Preview
 ****
 The new `integration-snmp` plugin, and its component plugins--`input-snmp` and `input-snmptrap`--are available in _Technical Preview_ at {ls} 8.14.0.
-Current, pre-4.0.0 versions of `input-snmp` and `input-snmptrap` plugins are bundled with {ls} by default, and will not be upgraded to the snmp integration without your deliberate action. 
 
-Be aware of behavioral and mapping differences between current stand-alone plugins and the new versions included in the `integration-snmp`. This topic can help. 
+Pre-4.0.0 versions of the `input-snmp` plugin are bundled with {ls} by default, and will not be upgraded to the snmp integration without your deliberate action. 
+(If you do want to opt into the Technical Preview for the `integration-snmp` plugin, run `bin/logstash-plugin install logstash-integration-snmp`.)
+
+Be aware of behavioral and mapping differences between current stand-alone plugins and the new versions included in the `integration-snmp`. 
+The information in this topic can help. 
 ****
-
 
 ==== Description
 
