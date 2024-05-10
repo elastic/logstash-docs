@@ -26,9 +26,9 @@ experimental[]
 
 .Technical Preview
 ****
-The new `integration-snmp` plugin, and its component plugins--`input-snmp` and `input-snmptrap`--are available in _Technical Preview_ at {ls} 8.14.0.
+The new `integration-snmp` plugin, and its component plugins--`input-snmp` and `input-snmptrap`--are available in _Technical Preview_ and can be installed on the latest Logstash 7.x and 8.x versions.
 
-Pre-4.0.0 versions of the `input-snmp` plugin are bundled with {ls} by default, and will not be upgraded to the snmp integration without your deliberate action. 
+Current 1.x versions of the `input-snmp` plugin are bundled with {ls} by default, and will soon be replaced by the snmp input plugin contained in this integration.
 (If you do want to opt into the Technical Preview for the `integration-snmp` plugin, run `bin/logstash-plugin install logstash-integration-snmp`.)
 
 Be aware of behavioral and mapping differences between current stand-alone plugins and the new versions included in the `integration-snmp`. 
@@ -46,26 +46,18 @@ The SNMP integration plugin includes:
 // - {logstash-ref}/plugins-input-snmp.html[SNMP input plugin]
 // - {logstash-ref}/plugins-input-snmptrap.html[Snmptrap input plugin]
 
-The new the `logstash-integration-snmp` plugin combines the 
-`logstash-input-snmp` and `logstash-input-snmptrap` plugins into one integrated plugin that encompasses
-the capabilities of both. 
-This integrated plugin package provides better alignment in snmp processing, better resource managenment, 
-easier package maintenance, and a smaller installation footprint. 
+The new `logstash-integration-snmp` plugin combines the 
+`logstash-input-snmp` and `logstash-input-snmptrap` plugins into a single Ruby gem.
+This integrated plugin package provides better alignment in behaviour when it comes to SNMP processing, better resource management, easier package maintenance, and a smaller installation footprint. 
+The individual plugins now share the same code base and have been refactored to leverage the latest version of https://www.snmp4j.org/[SNMP4j].
 
 
 [id="plugins-{type}s-{plugin}-migration"]
 ==== Migrating to `logstash-integration-snmp` from individual plugins
 
-You'll retain and expand the functionality of existing stand-alone plugins, but in a more compact, integrated package. 
+You'll retain the functionality of existing stand-alone plugins, but with a more consistent experience and expanded features. 
 In this section, we'll note mapping and behavioral changes, and explain how to preserve current behavior if needed.
 
-[IMPORTANT] 
---
-Uninstall the `logstash-input-snmp` and `logstash-input-snmptrap` plugins _before_ you install the `logstash-integration-snmp` plugin. 
-
-* `bin/logstash-plugin remove logstash-input-snmp` +
-* `bin/logstash-plugin remove logstash-input-snmptrap`
---
 
 // ToDo: Add guidance and set expectations for when snmp integration is installed by default
 
@@ -75,7 +67,7 @@ Uninstall the `logstash-input-snmp` and `logstash-input-snmptrap` plugins _befor
 As a component of the new `logstash-integration-snmp` plugin, the `logstash-input-snmp` plugin offers the same 
 capabilities as the stand-alone https://github.com/logstash-plugins/logstash-input-snmp[logstash-input-snmp]. 
 
-You might need to address some behavior changes depending on the use-case and how the ingested data is being handled through the pipeline.
+Given the underlying code refactor to better align snmp and snmptrap plugin behaviour you might need to address some changes depending on the use-case and how the ingested data is being handled through the pipeline.
 
 [id="plugins-{type}s-{plugin}-input-snmp-mapping"]
 ====== Changes to mapping and error logging: `logstash-input-snmp`
