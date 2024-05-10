@@ -48,7 +48,7 @@ The SNMP integration plugin includes:
 
 The new `logstash-integration-snmp` plugin combines the 
 `logstash-input-snmp` and `logstash-input-snmptrap` plugins into a single Ruby gem.
-This integrated plugin package provides better alignment in behaviour when it comes to SNMP processing, better resource management, easier package maintenance, and a smaller installation footprint. 
+This integrated plugin package provides better alignment in SNMP processing behavior, improved resource management, easier package maintenance, and a smaller installation footprint. 
 The individual plugins now share the same code base and have been refactored to leverage the latest version of https://www.snmp4j.org/[SNMP4j].
 
 
@@ -67,7 +67,7 @@ In this section, we'll note mapping and behavioral changes, and explain how to p
 As a component of the new `logstash-integration-snmp` plugin, the `logstash-input-snmp` plugin offers the same 
 capabilities as the stand-alone https://github.com/logstash-plugins/logstash-input-snmp[logstash-input-snmp]. 
 
-Given the underlying code refactor to better align snmp and snmptrap plugin behaviour you might need to address some changes depending on the use-case and how the ingested data is being handled through the pipeline.
+Given the underlying code refactor to better align snmp and snmptrap plugin behavior, you might need to address some changes depending on your use case and how the ingested data is being handled through the pipeline.
 
 [id="plugins-{type}s-{plugin}-input-snmp-mapping"]
 ====== Changes to mapping and error logging: `logstash-input-snmp`
