@@ -1,0 +1,136 @@
+:plugin: snmp
+:type: integration
+:default_plugin: 0
+:no_codec:
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: tbd
+:release_date: tbd
+:changelog_url: tbd
+:include_path: ../../../../logstash/docs/include
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="plugins-{type}s-{plugin}"]
+
+=== SNMP Integration Plugin
+
+* Plugin version: v4.0.0
+* Released on: 2024-05-03
+* https://github.com/logstash-plugins/logstash-integration-snmp/blob/main/CHANGELOG.md[Changelog]
+
+experimental[]
+
+.Technical Preview
+****
+The new `integration-snmp` plugin, and its component plugins--`input-snmp` and `input-snmptrap`--are available in _Technical Preview_ and can be installed on the latest Logstash 7.x and 8.x versions.
+
+Current 1.x versions of the `input-snmp` plugin are bundled with {ls} by default, and will soon be replaced by the snmp input plugin contained in this integration.
+(If you do want to opt into the Technical Preview for the `integration-snmp` plugin, run `bin/logstash-plugin install logstash-integration-snmp`.)
+
+Be aware of behavioral and mapping differences between current stand-alone plugins and the new versions included in the `integration-snmp`. 
+The information in this topic can help. 
+****
+
+==== Description
+
+The SNMP integration plugin includes:
+
+* SNMP input plugin
+* SNMPtrap input plugin
+
+// Uncomment and replace with above bullets after generated the initial versions of the target files
+// - {logstash-ref}/plugins-input-snmp.html[SNMP input plugin]
+// - {logstash-ref}/plugins-input-snmptrap.html[Snmptrap input plugin]
+
+The new `logstash-integration-snmp` plugin combines the 
+`logstash-input-snmp` and `logstash-input-snmptrap` plugins into a single Ruby gem.
+This integrated plugin package provides better alignment in SNMP processing behavior, improved resource management, easier package maintenance, and a smaller installation footprint. 
+The individual plugins now share the same code base and have been refactored to leverage the latest version of https://www.snmp4j.org/[SNMP4j].
+
+
+[id="plugins-{type}s-{plugin}-migration"]
+==== Migrating to `logstash-integration-snmp` from individual plugins
+
+You'll retain the functionality of existing stand-alone plugins, but with a more consistent experience and expanded features. 
+In this section, we'll note mapping and behavioral changes, and explain how to preserve current behavior if needed.
+
+
+// ToDo: Add guidance and set expectations for when snmp integration is installed by default
+
+[id="plugins-{type}s-{plugin}-migration-input-snmp"]
+===== Migration notes: `logstash-input-snmp` 
+
+As a component of the new `logstash-integration-snmp` plugin, the `logstash-input-snmp` plugin offers the same 
+capabilities as the stand-alone https://github.com/logstash-plugins/logstash-input-snmp[logstash-input-snmp]. 
+
+Given the underlying code refactor to better align snmp and snmptrap plugin behavior, you might need to address some changes depending on your use case and how the ingested data is being handled through the pipeline.
+
+[id="plugins-{type}s-{plugin}-input-snmp-mapping"]
+====== Changes to mapping and error logging: `logstash-input-snmp`
+
+* *No such instance errors* are mapped as `error: no such instance currently exists at this OID string` instead of `noSuchInstance`.
+* *No such object errors* are mapped as `error: no such object currently exists at this OID string` instead of `noSuchObject`.
+* *End of MIB view errors* are mapped as `error: end of MIB view` instead of `endOfMibView`.
+* An *unknown variable type* falls back to the `string` representation instead of logging an error as it did in with the stand-alone `logstash-input-snmp`.
+This change should not affect existing pipelines, unless they have custom error handlers that rely on specific error messages.
+
+[id="plugins-{type}s-{plugin}-migration-input-snmptrap"]
+===== Migration notes: `logstash-input-snmptrap`
+
+As a component of the new `logstash-integration-snmp` plugin, the `logstash-input-snmptrap` plugin offers _almost the same 
+capabilities_ as the stand-alone https://github.com/logstash-plugins/logstash-input-snmp[logstash-input-snmp] plugin. 
+
+You might need to address some behavior changes depending on your use case and how the ingested data is being handled through the pipeline.
+
+[id="plugins-{type}s-{plugin}-input-snmptrap-mapping"]
+====== Changes to mapping and error logging: `logstash-input-snmptrap`
+
+* The *PDU variable bindings* are mapped into the {ls} event using the defined data type. 
+  By default, the stand-alone `logstash-input-snmptrap` plugin converts all of the data to `string`, ignoring the original type. 
+  If this behavior is not what you want, you can use a filter to retain the original type.
+* *SNMP `TimeTicks` variables* are mapped as `Long` timestamps instead of formatted date string (`%d days, %02d:%02d:%02d.%02d`).
+* *`null` variables values* are mapped using the string `null` instead of `Null` (upper-case N).
+* *No such instance errors* are mapped as `error: no such instance currently exists at this OID string` instead of `noSuchInstance`.
+* *No such object errors* are mapped as `error: no such object currently exists at this OID string` instead of `noSuchObject`.
+* *End of MIB view errors* are mapped as `error: end of MIB view` instead of `endOfMibView`.
+* The previous generation (stand-alone) input-snmptrap plugin formatted the *`message` field* as
+a ruby-snmp `SNMP::SNMPv1_Trap` object representation.  
++
+[source,sh]
+----
+<SNMP::SNMPv1_Trap:0x6f1a7a4 @varbind_list=[#<SNMP::VarBind:0x2d7bcd8f @value="teststring", @name=[1.11.12.13.14.15]>], @timestamp=#<SNMP::TimeTicks:0x1af47e9d @value=55>, @generic_trap=6,  @enterprise=[1.2.3.4.5.6], @source_ip="127.0.0.1", @agent_addr=#<SNMP::IpAddress:0x29a4833e @value="test">, @specific_trap=99>
+----
++
+The new integrated `input-snmptrap` plugin uses JSON to format *`message` field*.
++
+[source,json]
+----
+{"error_index":0, "variable_bindings":{"1.3.6.1.6.3.1.1.4.1.0":"SNMPv2-MIB::coldStart", "1.3.6.1.2.1.1.3.0":0}, "error_status":0, "type":"TRAP", "error_status_text":"Success", "community":"public", "version":"2c", "request_id":1436216872}
+----
+
+// ToDo: Add more details wrt PDU variable binding.  Which filter? Add sample config? 
+
+[id="plugins-{type}s-{plugin}-input-snmptrap-compat"]
+====== Maintain maximum compatibility with previous implementation
+
+If needed, you can configure the new `logstash-integration-snmp` plugin to maintain maximum compatibility with the previous (stand-alone) 
+version of the https://github.com/logstash-plugins/logstash-input-snmp[input-snmp] plugin.
+
+[source,ruby]
+----
+input {
+   snmptrap {
+    use_provided_mibs => false
+    oid_mapping_format => 'ruby_snmp'
+    oid_map_field_values => true
+   }
+}
+----
+
+// ToDo: Any considerations that we should point out? 
+
+:no_codec!:
