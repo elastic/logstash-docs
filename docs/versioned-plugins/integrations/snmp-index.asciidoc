@@ -5,8 +5,10 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v4.0.1-plugins-integrations-snmp,v4.0.1>> | 2024-05-17
 | <<v4.0.0-plugins-integrations-snmp,v4.0.0>> | 2024-05-03
 |=======================================================================
 
+include::snmp-v4.0.1.asciidoc[]
 include::snmp-v4.0.0.asciidoc[]
 
