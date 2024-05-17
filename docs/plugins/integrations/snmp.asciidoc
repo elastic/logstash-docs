@@ -18,9 +18,7 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 === SNMP Integration Plugin
 
-* Plugin version: v4.0.0
-* Released on: 2024-05-03
-* https://github.com/logstash-plugins/logstash-integration-snmp/blob/main/CHANGELOG.md[Changelog]
+include::{include_path}/plugin_header.asciidoc[]
 
 experimental[]
 
@@ -29,9 +27,9 @@ experimental[]
 The new `integration-snmp` plugin, and its component plugins--`input-snmp` and `input-snmptrap`--are available in _Technical Preview_ and can be installed on the latest Logstash 7.x and 8.x versions.
 
 Current 1.x versions of the `input-snmp` plugin are bundled with {ls} by default, and will soon be replaced by the snmp input plugin contained in this integration.
-(If you do want to opt into the Technical Preview for the `integration-snmp` plugin, run `bin/logstash-plugin install logstash-integration-snmp`.)
+(If you want to opt into the Technical Preview for the `integration-snmp` plugin, run `bin/logstash-plugin install logstash-integration-snmp`.)
 
-Be aware of behavioral and mapping differences between current stand-alone plugins and the new versions included in the `integration-snmp`. 
+Be aware of <<plugins-{type}s-{plugin}-migration,behavioral and mapping differences>> between current stand-alone plugins and the new versions included in the `integration-snmp`. 
 The information in this topic can help. 
 ****
 
@@ -39,27 +37,25 @@ The information in this topic can help.
 
 The SNMP integration plugin includes:
 
-* SNMP input plugin
-* SNMPtrap input plugin
+* link:{logstash-ref}/plugins-inputs-snmp.html[SNMP input plugin]
+* link:{logstash-ref}/plugins-inputs-snmptrap.html[Snmptrap input plugin]
 
-// Uncomment and replace with above bullets after generated the initial versions of the target files
-// - {logstash-ref}/plugins-input-snmp.html[SNMP input plugin]
-// - {logstash-ref}/plugins-input-snmptrap.html[Snmptrap input plugin]
+The new the `logstash-integration-snmp` plugin combines the 
+`logstash-input-snmp` and `logstash-input-snmptrap` plugins into one integrated plugin that encompasses
+the capabilities of both. 
+This integrated plugin package provides better alignment in snmp processing, better resource managenment, 
+easier package maintenance, and a smaller installation footprint. 
 
-The new `logstash-integration-snmp` plugin combines the 
-`logstash-input-snmp` and `logstash-input-snmptrap` plugins into a single Ruby gem.
-This integrated plugin package provides better alignment in SNMP processing behavior, improved resource management, easier package maintenance, and a smaller installation footprint. 
-The individual plugins now share the same code base and have been refactored to leverage the latest version of https://www.snmp4j.org/[SNMP4j].
+In this section, we'll cover:
 
+* <<plugins-{type}s-{plugin}-migration>>
+* <<plugins-{type}s-{plugin}-import-mibs>>
 
 [id="plugins-{type}s-{plugin}-migration"]
 ==== Migrating to `logstash-integration-snmp` from individual plugins
 
-You'll retain the functionality of existing stand-alone plugins, but with a more consistent experience and expanded features. 
+You'll retain and expand the functionality of existing stand-alone plugins, but in a more compact, integrated package. 
 In this section, we'll note mapping and behavioral changes, and explain how to preserve current behavior if needed.
-
-
-// ToDo: Add guidance and set expectations for when snmp integration is installed by default
 
 [id="plugins-{type}s-{plugin}-migration-input-snmp"]
 ===== Migration notes: `logstash-input-snmp` 
@@ -67,7 +63,8 @@ In this section, we'll note mapping and behavioral changes, and explain how to p
 As a component of the new `logstash-integration-snmp` plugin, the `logstash-input-snmp` plugin offers the same 
 capabilities as the stand-alone https://github.com/logstash-plugins/logstash-input-snmp[logstash-input-snmp]. 
 
-Given the underlying code refactor to better align snmp and snmptrap plugin behavior, you might need to address some changes depending on your use case and how the ingested data is being handled through the pipeline.
+You might need to address some behavior changes depending on the use-case and how the ingested data is being handled through the pipeline.
+
 
 [id="plugins-{type}s-{plugin}-input-snmp-mapping"]
 ====== Changes to mapping and error logging: `logstash-input-snmp`
@@ -132,5 +129,69 @@ input {
 ----
 
 // ToDo: Any considerations that we should point out? 
+
+[id="plugins-{type}s-{plugin}-import-mibs"]
+==== Importing MIBs
+
+The SNMP plugins already include the IETF MIBs (management information bases) and these do not need to be imported.
+To disable the bundled MIBs set the `use_provided_mibs` option to `false`.
+
+Any other MIB will need to be manually imported to provide mapping of the numeric OIDs to MIB field names in the resulting event.
+
+To import a MIB, the OSS https://www.ibr.cs.tu-bs.de/projects/libsmi/[libsmi library] is required.
+libsmi is available and installable on most operating systems.
+
+To import a MIB, you need to first convert the ASN.1 MIB file into a `.dic` file using the libsmi `smidump` command line utility.
+
+*Example (using `RFC1213-MIB` file)*
+
+[source,sh]
+-----
+$ smidump --level=1 -k -f python RFC1213-MIB > RFC1213-MIB.dic
+-----
+
+Note that the resulting file as output by `smidump` must have the `.dic` extension.
+
+[id="plugins-{type}s-{plugin}-locate-mibs"]
+===== Preventing a `failed to locate MIB module` error
+
+The `smidump` function looks for MIB dependencies in its pre-configured paths list.
+To avoid the `failed to locate MIB module` error, you may need to provide the MIBs locations in your particular environment.
+
+The recommended ways to provide the additional path configuration are:
+
+* an environment variable, or
+* a config file to provide the additional path configuration.
+
+See the "MODULE LOCATIONS" section of the https://www.ibr.cs.tu-bs.de/projects/libsmi/smi_config.html#MODULE%20LOCATIONS[smi_config documentation] for more information.
+
+[id="plugins-{type}s-{plugin}-env-var"]
+===== Option 1: Use an environment variable
+
+Set the `SMIPATH` env var with the path to your MIBs.
+Be sure to include a prepended colon (`:`) for the path.
+
+[source,sh]
+-----
+$ SMIPATH=":/path/to/mibs/" smidump -k -f python CISCO-PROCESS-MIB.mib > CISCO-PROCESS-MIB_my.dic <1>
+-----
+<1> Notice the colon that precedes the path definition.
+
+[id="plugins-{type}s-{plugin}-mib-config"]
+===== Option 2: Provide a configuration file
+
+The other approach is to create a configuration file with the `path` option. For example, you could create a file called `smi.conf`:
+
+[source,sh]
+-----
+path :/path/to/mibs/
+-----
+
+And use the config with smidump:
+
+[source,sh]
+-----
+$ smidump -c smi.conf -k -f python CISCO-PROCESS-MIB.mib > CISCO-PROCESS-MIB_my.dic
+-----
 
 :no_codec!:
