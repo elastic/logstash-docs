@@ -9,9 +9,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.4.1
-:release_date: 2024-04-10
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.4.1/CHANGELOG.md
+:version: v11.4.2
+:release_date: 2024-05-17
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.4.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -193,7 +193,7 @@ If not explicitly configured it defaults to `use_all_dns_ips`.
 ===== `client_id` 
 
   * Value type is <<string,string>>
-  * There is no default value for this setting.
+  * Default value is `"logstash"`
 
 The id string to pass to the server when making requests.
 The purpose of this is to be able to track the source of requests beyond just
