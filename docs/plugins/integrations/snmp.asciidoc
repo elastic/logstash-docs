@@ -128,7 +128,70 @@ input {
 }
 ----
 
-// ToDo: Any considerations that we should point out? 
+
+[id="plugins-{type}s-{plugin}-import-mibs"]
+==== Importing MIBs
+
+The SNMP plugins already include the IETF MIBs (management information bases) and these do not need to be imported.
+To disable the bundled MIBs set the `use_provided_mibs` option to `false`.
+
+Any other MIB will need to be manually imported to provide mapping of the numeric OIDs to MIB field names in the resulting event.
+
+To import a MIB, the OSS https://www.ibr.cs.tu-bs.de/projects/libsmi/[libsmi library] is required.
+libsmi is available and installable on most operating systems.
+
+To import a MIB, you need to first convert the ASN.1 MIB file into a `.dic` file using the libsmi `smidump` command line utility.
+
+*Example (using `RFC1213-MIB` file)*
+
+[source,sh]
+-----
+$ smidump --level=1 -k -f python RFC1213-MIB > RFC1213-MIB.dic
+-----
+
+Note that the resulting file as output by `smidump` must have the `.dic` extension.
+
+[id="plugins-{type}s-{plugin}-locate-mibs"]
+===== Preventing a `failed to locate MIB module` error
+
+The `smidump` function looks for MIB dependencies in its pre-configured paths list.
+To avoid the `failed to locate MIB module` error, you may need to provide the MIBs locations in your particular environment.
+
+The recommended ways to provide the additional path configuration are:
+
+* an environment variable, or
+* a config file to provide the additional path configuration.
+
+See the "MODULE LOCATIONS" section of the https://www.ibr.cs.tu-bs.de/projects/libsmi/smi_config.html#MODULE%20LOCATIONS[smi_config documentation] for more information.
+
+[id="plugins-{type}s-{plugin}-env-var"]
+===== Option 1: Use an environment variable
+
+Set the `SMIPATH` env var with the path to your MIBs.
+Be sure to include a prepended colon (`:`) for the path.
+
+[source,sh]
+-----
+$ SMIPATH=":/path/to/mibs/" smidump -k -f python CISCO-PROCESS-MIB.mib > CISCO-PROCESS-MIB_my.dic <1>
+-----
+<1> Notice the colon that precedes the path definition.
+
+[id="plugins-{type}s-{plugin}-mib-config"]
+===== Option 2: Provide a configuration file
+
+The other approach is to create a configuration file with the `path` option. For example, you could create a file called `smi.conf`:
+
+[source,sh]
+-----
+path :/path/to/mibs/
+-----
+
+And use the config with smidump:
+
+[source,sh]
+-----
+$ smidump -c smi.conf -k -f python CISCO-PROCESS-MIB.mib > CISCO-PROCESS-MIB_my.dic
+-----
 
 [id="plugins-{type}s-{plugin}-import-mibs"]
 ==== Importing MIBs
