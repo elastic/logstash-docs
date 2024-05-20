@@ -72,7 +72,7 @@ Metadata fields follow a specific naming convention when <<plugins-{type}s-{plug
 
 This plugin already includes the IETF MIBs (management information bases), and you do not need to import them.
 If you need additional MIBs, you need to import them.  
-Check out link:{logstash-ref}/plugins-input-snmp.html[Importing MIBs] for info.
+Check out link:{logstash-ref}/plugins-integrations-snmp.html#plugins-integrations-snmp-import-mibs[Importing MIBs] for info.
 
 
 [id="plugins-{type}s-{plugin}-options"]
