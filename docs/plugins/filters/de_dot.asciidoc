@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.0.4
-:release_date: 2019-02-04
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-de_dot/blob/v1.0.4/CHANGELOG.md
+:version: v1.1.0
+:release_date: 2024-05-27
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-de_dot/blob/v1.1.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -38,6 +38,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 |Setting |Input type|Required
 | <<plugins-{type}s-{plugin}-fields>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-nested>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-recursive>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-separator>> |<<string,string>>|No
 |=======================================================================
 
@@ -59,7 +60,6 @@ will result in "field_suffix" and nested or sub field ["foo"]["bar_suffix"]
 
 WARNING: This is an expensive operation.
 
-
 [id="plugins-{type}s-{plugin}-nested"]
 ===== `nested` 
 
@@ -68,6 +68,15 @@ WARNING: This is an expensive operation.
 
 If `nested` is _true_, then create sub-fields instead of replacing dots with
 a different separator.
+
+[id="plugins-{type}s-{plugin}-recursive"]
+===== `recursive`
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+If `recursive` is _true_, then recursively check sub-fields. It is recommended you
+only use this when setting specific fields, as this is an expensive operation.
 
 [id="plugins-{type}s-{plugin}-separator"]
 ===== `separator` 
