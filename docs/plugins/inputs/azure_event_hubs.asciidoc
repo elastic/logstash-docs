@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.4.5
-:release_date: 2023-07-04
-:changelog_url: https://github.com/logstash-plugins/logstash-input-azure_event_hubs/blob/v1.4.5/CHANGELOG.md
+:version: v1.4.6
+:release_date: 2024-05-29
+:changelog_url: https://github.com/logstash-plugins/logstash-input-azure_event_hubs/blob/v1.4.6/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -31,6 +31,9 @@ events for use with Logstash.
 Many Azure services integrate with the Azure Event Hubs. 
 https://docs.microsoft.com/en-us/azure/monitoring-and-diagnostics/monitoring-overview-azure-monitor[Azure
 Monitor], for example, integrates with Azure Event Hubs to provide infrastructure metrics. 
+
+IMPORTANT: This plugin requires outbound connections to ports `tcp/443`, `tcp/9093`, `tcp/5671`, and `tcp/5672`, 
+as noted in the https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-faq#what-ports-do-i-need-to-open-on-the-firewall[Microsoft Event Hub documentation].
 
 ===== Event Hub connection string
 
