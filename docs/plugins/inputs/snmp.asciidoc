@@ -1,3 +1,4 @@
+:integration: snmp
 :plugin: snmp
 :type: input
 :default_plugin: 1
@@ -6,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.3.3
-:release_date: 2023-08-07
-:changelog_url: https://github.com/logstash-plugins/logstash-input-snmp/blob/v1.3.3/CHANGELOG.md
+:version: v4.0.2
+:release_date: 2024-05-20
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-snmp/blob/v4.0.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -18,7 +19,21 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 === SNMP input plugin
 
-include::{include_path}/plugin_header.asciidoc[]
+include::{include_path}/plugin_header-integration.asciidoc[]
+
+experimental[]
+
+.Technical Preview
+****
+The new `integration-snmp` plugin, and its component plugins--`input-snmp` and `input-snmptrap`--are available in _Technical Preview_ and can be installed on the latest Logstash 7.x and 8.x versions.
+
+Current 1.x versions of the `input-snmp` plugin are bundled with {ls} by default, and will soon be replaced by the snmp input plugin contained in this integration.
+(If you want to opt into the Technical Preview for the `integration-snmp` plugin, run `bin/logstash-plugin install logstash-integration-snmp`.)
+
+Be aware of behavioral and mapping differences between current stand-alone plugins and the new versions included in the `integration-snmp`. 
+
+Before you install the new integration, be aware of link:{logstash-ref}/plugins-integrations-snmp.html#plugins-integrations-snmp-migration[behavioral and mapping differences] between current stand-alone plugins and the new versions included in `integration-snmp`. 
+****
 
 ==== Description
 
@@ -26,6 +41,18 @@ The SNMP input polls network devices using Simple Network Management Protocol (S
 to gather information related to the current state of the devices operation.
 
 The SNMP input plugin supports SNMP v1, v2c, and v3 over UDP and TCP transport protocols.
+
+.Migrating to `logstash-integration-snmp` from stand-alone `input-snmp`
+**** 
+The `logstash-input-snmp` plugin is now a component of the `logstash-integration-snmp` plugin. 
+This integrated plugin package provides better alignment in snmp processing, better resource management, 
+easier package maintenance, and a smaller installation footprint. 
+
+Before you install the new integration, be aware of link:{logstash-ref}/plugins-integrations-snmp.html#plugins-integrations-snmp-migration[behavioral and mapping differences] between current stand-alone plugins and the new versions included in `integration-snmp`. 
+**** 
+
+// ToDo: link:{logstash-ref}/plugins-input-snmp.html[Importing MIBs]
+
 
 [id="plugins-{type}s-{plugin}-ecs"]
 ==== Compatibility with the Elastic Common Schema (ECS)
@@ -46,65 +73,12 @@ Metadata fields follow a specific naming convention when <<plugins-{type}s-{plug
 [id="plugins-{type}s-{plugin}-import-mibs"]
 ==== Importing MIBs 
 
-This plugin already includes the IETF MIBs (management information bases) and these do not need to be imported.
+This plugin already includes the IETF MIBs (management information bases), and you do not need to import them.
+If you need additional MIBs, you need to import them.  
+Check out "Importing MIBs" for instructions.
 
-Any other MIB will need to be manually imported to provide mapping of the numeric OIDs to MIB field names in the resulting event.
-
-To import a MIB, the OSS https://www.ibr.cs.tu-bs.de/projects/libsmi/[libsmi library] is required.
-libsmi is available and installable on most operating systems.
-
-To import a MIB, you need to first convert the ASN.1 MIB file into a `.dic` file using the libsmi `smidump` command line utility.
-
-*Example (using `RFC1213-MIB` file)*
-
-[source,sh]
------
-$ smidump --level=1 -k -f python RFC1213-MIB > RFC1213-MIB.dic
------
-
-Note that the resulting file as output by `smidump` must have the `.dic` extension.
-
-[id="plugins-{type}s-{plugin}-locate-mibs"]
-===== Preventing a `failed to locate MIB module` error 
-
-The `smidump` function looks for mib dependencies in its pre-configured path lists.
-You may need to provide the paths to locations of MIBs in your particular environment.
-
-You can avoid  to avoid a `failed to locate MIB module` error by providing the additional path configuration information with:
-
-* an environment variable, or 
-* a config file to provide the additional path configuration.
-
-See the "MODULE LOCATIONS" section of the https://www.ibr.cs.tu-bs.de/projects/libsmi/smi_config.html[smi_config documentation] for more info. 
-
-[id="plugins-{type}s-{plugin}-env-var"]
-===== Option 1: Use an environment variable 
-
-Set the `SMIPATH` env var with the path to your mibs.
-Be sure to include a prepended colon (`:`) for the path.
-
-[source,sh]
------
-$ SMIPATH=":/path/to/mibs/" smidump -k -f python CISCO-PROCESS-MIB.mib > CISCO-PROCESS-MIB_my.dic <1>
------
-<1> Notice the colon that preceeds the path definition. 
-
-[id="plugins-{type}s-{plugin}-mib-config"]
-===== Option 2: Provide a coniguration file
-
-The other approach is to create a configuration file with the `path` option. For example, you could create a file called `smi.conf`.
-
-[source,sh]
------
-path :/path/to/mibs/
------
-
-Use the config with smidump:
-
-[source,sh]
------
-$ smidump -c smi.conf -k -f python CISCO-PROCESS-MIB.mib > CISCO-PROCESS-MIB_my.dic
------
+// link:{logstash-ref}/plugins-input-snmp.html[Importing MIBs]
+// ToDo: Add link to MIBs content after generated file exists.
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== SNMP Input Configuration Options
@@ -118,12 +92,18 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-get>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-hosts>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-interval>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-local_engine_id>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-mib_paths>> |<<path,path>>|No
-| <<plugins-{type}s-{plugin}-oid_root_skip>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-oid_mapping_format>> |<<string,string>>, one of `["default", "ruby_snmp", "dotted_string"]`|No
+| <<plugins-{type}s-{plugin}-oid_map_field_values>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-oid_path_length>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-oid_root_skip>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-poll_hosts_timeout>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-walk>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-tables>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-target>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-threads>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-use_provided_mibs>> |<<boolean,boolean>>|No
 |=======================================================================
 
 ==== SNMPv3 Authentication Options
@@ -145,6 +125,19 @@ This plugin supports the following SNMPv3 authentication options.
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
 input plugins.
+
+[id="plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+  * Value type is <<string,string>>
+  * Supported values are:
+    ** `disabled`: does not use ECS-compatible field names (fields might be set at the root of the event)
+    ** `v1`, `v8`: avoids field names that might conflict with Elastic Common Schema (for example, the `host` field)
+  * Default value depends on which version of Logstash is running:
+    ** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
+    ** Otherwise, the default value is `disabled`.
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
 
 [id="plugins-{type}s-{plugin}-get"]
 ===== `get`
@@ -229,6 +222,15 @@ input {
 The `interval` option specifies the polling interval in seconds.
 If polling all configured hosts takes longer than this interval, a warning will be emitted to the logs.
 
+[id="plugins-{type}s-{plugin}-local_engine_id"]
+===== `local_engine_id`
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting
+
+The SNMPv3 local engine ID. Its length must be greater or equal than 5 and less or equal than 32.
+If not provided, a default ID is generated based on the local IP address and additional four random bytes.
+
 [id="plugins-{type}s-{plugin}-mib_paths"]
 ===== `mib_paths`
 
@@ -236,11 +238,35 @@ If polling all configured hosts takes longer than this interval, a warning will 
   * There is no default value for this setting
 
 The `mib_paths` option specifies the location of one or more imported MIB files.
-The value can be either a dir path containing the imported MIB `.dic` files or a
-file path to a single MIB `.dic` file.
+The value can be either a dir path containing the imported MIB (`.dic`, `.yaml`) files, or a
+file path to a single MIB file.
 
 This plugin includes the IETF MIBs.
 If you require other MIBs, you need to import them. See <<plugins-{type}s-{plugin}-import-mibs>>.
+
+[id="plugins-{type}s-{plugin}-oid_mapping_format"]
+===== `oid_mapping_format`
+
+  * Value can be any of: `default`, `ruby_snmp`, `dotted_string`
+  * Default value is `"default"`
+
+Defines the mapping textual representation of an OID in the Logstash event:
+
+* `default` translates every identifier, using the MIBs resolved names, separated by dots. Example:
+`1.3.6.1.2.1.1.2.0` is mapped as `iso.org.dod.internet.mgmt.mib-2.system.sysObjectID.0`
+* `ruby_snmp` produces field names prefixed by the MIBs module name, followed by the latest resolved identifier name and unknowns values. Example:
+`1.3.6.1.2.1.1.2.0` is mapped as `SNMPv2-MIB::sysObjectID.0`.
+* `dotted_string` maps fields using the standard dotted string representation, Example:
+`1.3.6.1.2.1.1.2.0` is mapped as  `1.3.6.1.2.1.1.2.0`
+
+[id="plugins-{type}s-{plugin}-oid_map_field_values"]
+===== `oid_map_field_values`
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+Defines if the Logstash event fields values, which types are `OID`, are mapped using the configured OID textual representation
+set on the <<plugins-{type}s-{plugin}-oid_mapping_format>> option.
 
 [id="plugins-{type}s-{plugin}-oid_root_skip"]
 ===== `oid_root_skip`
@@ -253,6 +279,10 @@ For example, in a numeric OID like "1.3.6.1.2.1.1.1.0" the first 5 digits could 
 which would result in a field name "1.1.1.0". Similarly when a MIB is used an OID such
 "1.3.6.1.2.mib-2.system.sysDescr.0" would become "mib-2.system.sysDescr.0"
 
+[NOTE]
+* You can use this setting or <<plugins-{type}s-{plugin}-oid_path_length>>, but not both at the same time.
+* Use this setting only if <<plugins-{type}s-{plugin}-oid_mapping_format>> is set to `default`.
+
 [id="plugins-{type}s-{plugin}-oid_path_length"]
 ===== `oid_path_length`
 
@@ -263,6 +293,22 @@ The `oid_path_length` option specifies the number of OID root digits to retain i
 For example, in a numeric OID like "1.3.6.1.2.1.1.1.0" the last 2 digits could be retained by setting `oid_path_length => 2`
 which would result in a field name "1.0". Similarly when a MIB is used an OID such
 "1.3.6.1.2.mib-2.system.sysDescr.0" would become "sysDescr.0"
+
+[NOTE]
+* You can use this setting or <<plugins-{type}s-{plugin}-oid_root_skip>>, but not both at the same time.
+* This setting can be used only if <<plugins-{type}s-{plugin}-oid_mapping_format>> is set to `default`.
+
+[id="plugins-{type}s-{plugin}-poll_hosts_timeout"]
+===== `poll_hosts_timeout`
+
+  * Value type is <<number,number>>
+  * There is no default value for this setting
+
+Specifies the maximum amount of time in milliseconds the polling client will wait for all <<plugins-{type}s-{plugin}-hosts>> responses.
+If all responses are not received before the timeout elapses, the client will fail and some hosts might not get polled during the current cycle.
+
+By default, it uses the highest value between `1 hour`, the maximum <<plugins-{type}s-{plugin}-hosts>> configured `timeout`,
+and the <<plugins-{type}s-{plugin}-interval>> value.
 
 [id="plugins-{type}s-{plugin}-walk"]
 ===== `walk`
@@ -320,6 +366,34 @@ input {
 }
 -----
 
+[id="plugins-{type}s-{plugin}-target"]
+===== `target`
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting
+
+The name of the field under which SNMP payloads are assigned.
+If not specified data will be stored in the root of the event.
+
+Setting a target is recommended when <<plugins-{type}s-{plugin}-ecs_compatibility>> is enabled.
+
+[id="plugins-{type}s-{plugin}-threads"]
+===== `threads`
+
+  * Value type is <<number,number>>
+  * Default value is the number of CPU cores
+
+The number of threads to use for executing the hosts SNMP requests.
+
+[id="plugins-{type}s-{plugin}-use_provided_mibs"]
+===== `use_provided_mibs`
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+This plugin provides all IETF MIBs (management information bases), publicly available in the link:https://www.ibr.cs.tu-bs.de/projects/libsmi[libsmi] version `0.5.0`.
+When enabled, it automatically loads the bundled MIBs and provides mapping of the numeric OIDs to MIB field names in the resulting event.
+
 ==== SNMPv3 Authentication Options
 
 A **single user** can be configured and will be used for all defined SNMPv3 hosts.
@@ -340,20 +414,8 @@ The `auth_pass` option specifies the SNMPv3 authentication passphrase or passwor
 The `auth_protocol` option specifies the SNMPv3 authentication protocol or type
 
 * Value can be any of: `md5`, `sha`, `sha2`, `hmac128sha224`, `hmac192sha256`, `hmac256sha384`, `hmac384sha512`
+* Note that `sha2` and `hmac192sha256` are equivalent
 * There is no default value for this setting
-
-[id="plugins-{type}s-{plugin}-ecs_compatibility"]
-===== `ecs_compatibility`
-
-  * Value type is <<string,string>>
-  * Supported values are:
-    ** `disabled`: does not use ECS-compatible field names (fields might be set at the root of the event)
-    ** `v1`, `v8`: avoids field names that might conflict with Elastic Common Schema (for example, the `host` field)
-  * Default value depends on which version of Logstash is running:
-    ** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
-    ** Otherwise, the default value is `disabled`.
-
-Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
 
 [id="plugins-{type}s-{plugin}-priv_pass"]
 ===== `priv_pass`
@@ -372,14 +434,6 @@ The `priv_pass` option specifies the SNMPv3 encryption password.
 
 The `priv_protocol` option specifies the SNMPv3 privacy/encryption protocol.
 
-[id="plugins-{type}s-{plugin}-security_name"]
-===== `security_name`
-
-  * Value type is <<string,string>>
-  * There is no default value for this setting
-
-The `security_name` option specifies the SNMPv3 security name or user name.
-
 [id="plugins-{type}s-{plugin}-security_level"]
 ===== `security_level`
 
@@ -387,18 +441,15 @@ The `security_name` option specifies the SNMPv3 security name or user name.
   * There is no default value for this setting
 
 The `security_level` option specifies the SNMPv3 security level between
-Authentication, No Privacy; Authentication, Privacy; or no Authentication, no Privacy. 
+Authentication, No Privacy; Authentication, Privacy; or no Authentication, no Privacy.
 
-[id="plugins-{type}s-{plugin}-target"]
-===== `target`
+[id="plugins-{type}s-{plugin}-security_name"]
+===== `security_name`
 
   * Value type is <<string,string>>
   * There is no default value for this setting
 
-The name of the field under which SNMP payloads are assigned.
-If not specified data will be stored in the root of the event.
-
-Setting a target is recommended when <<plugins-{type}s-{plugin}-ecs_compatibility>> is enabled.
+The `security_name` option specifies the SNMPv3 security name or user name.
 
 [id="plugins-{type}s-{plugin}-examples"]
 ==== Configuration examples
