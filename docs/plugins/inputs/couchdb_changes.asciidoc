@@ -2,6 +2,7 @@
 :type: input
 :default_plugin: 1
 :default_codec: plain
+:support_level: t2
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
@@ -221,4 +222,5 @@ CouchDB
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
 
+:support_level!:
 :default_codec!:
