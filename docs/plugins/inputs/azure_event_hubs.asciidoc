@@ -2,6 +2,7 @@
 :type: input
 :default_plugin: 1
 :default_codec: plain
+:support_level: t1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
@@ -523,4 +524,5 @@ See <<plugins-{type}s-{plugin}-best-practices>> for more information.
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
 
+:support_level!:
 :default_codec!:
