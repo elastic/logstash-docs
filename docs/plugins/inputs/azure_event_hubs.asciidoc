@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.4.6
-:release_date: 2024-05-29
-:changelog_url: https://github.com/logstash-plugins/logstash-input-azure_event_hubs/blob/v1.4.6/CHANGELOG.md
+:version: v1.4.7
+:release_date: 2024-06-07
+:changelog_url: https://github.com/logstash-plugins/logstash-input-azure_event_hubs/blob/v1.4.7/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -125,13 +125,24 @@ NOTE: Threads are currently available only as a global setting across all event 
 input definition. However if your configuration includes multiple `azure_event_hubs` inputs, the threads setting applies
 independently to each.
 
-**Sample scenarios** 
+**Example: Single event hub**
 
-* Event Hubs = 4. Partitions on each Event Hub = 3.
-Minimum threads is 5 (4 Event Hubs plus one).
-* If you’re collecting activity logs from one event hub instance, 
-then only 2 threads (1 Event Hub plus one) are required.
+If you’re collecting activity logs from one event hub instance, 
+then only 2 threads are required.
 
+* Event hubs = 1
+* Minimum threads = 2 (1 Event Hub + 1)
+
+**Example: Multiple event hubs**
+
+If you are collecting activity logs from more than event hub instance, then at least 1 thread per event hub is required.
+
+* Event hubs = 4 
+* Minimum threads = 5 (4 Event Hubs + 1) 
+
+When you are using multiple partitions per event hub, you may want to assign more threads.
+A good base level is (1 + `number of event hubs * number of partitions`).
+That is, one thread for each partition across all event hubs. 
 
 [id="plugins-{type}s-{plugin}-eh_config_models"]
 ==== Configuration models

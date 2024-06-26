@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.20.2
-:release_date: 2024-03-05
-:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.20.2/CHANGELOG.md
+:version: v4.20.3
+:release_date: 2024-06-11
+:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v4.20.3/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -302,10 +302,10 @@ can be either IP, HOST, IP:port, or HOST:port. The port defaults to
   * Value type is <<string,string>>
   * Default value is `"logstash-*"`
 
-The index or alias to search. See {ref}/multi-index.html[Multi Indices
-documentation] in the Elasticsearch documentation for more information on how to
-reference multiple indices.
-
+The index or alias to search. 
+Check out {ref}/api-conventions.html#api-multi-index[Multi Indices
+documentation] in the Elasticsearch documentation for info on
+referencing multiple indices.
 
 [id="plugins-{type}s-{plugin}-password"]
 ===== `password` 

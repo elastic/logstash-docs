@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.5.1
-:release_date: 2023-11-13
-:changelog_url: https://github.com/logstash-plugins/logstash-input-http_poller/blob/v5.5.1/CHANGELOG.md
+:version: v5.6.0
+:release_date: 2024-06-19
+:changelog_url: https://github.com/logstash-plugins/logstash-input-http_poller/blob/v5.6.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -150,6 +150,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-ssl_certificate>> |<<path,path>>|No
 | <<plugins-{type}s-{plugin}-ssl_certificate_authorities>> |list of <<path,path>>|No
 | <<plugins-{type}s-{plugin}-ssl_cipher_suites>> |list of <<string,string>>|No
+| <<plugins-{type}s-{plugin}-ssl_enabled>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-ssl_keystore_password>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-ssl_keystore_path>> |<<path,path>>|No
 | <<plugins-{type}s-{plugin}-ssl_keystore_type>> |<<string,string>>|No
@@ -455,6 +456,15 @@ The .cer or .pem CA files to validate the server's certificate.
 
 The list of cipher suites to use, listed by priorities.
 Supported cipher suites vary depending on the Java and protocol versions.
+
+[id="plugins-{type}s-{plugin}-ssl_enabled"]
+===== `ssl_enabled`
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `true`
+
+Enable SSL/TLS secured communication. It must be `true` for other `ssl_` options
+to take effect.
 
 [id="plugins-{type}s-{plugin}-ssl_key"]
 ===== `ssl_key`

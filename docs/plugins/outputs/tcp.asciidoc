@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v6.2.0
-:release_date: 2023-12-19
-:changelog_url: https://github.com/logstash-plugins/logstash-output-tcp/blob/v6.2.0/CHANGELOG.md
+:version: v6.2.1
+:release_date: 2024-06-05
+:changelog_url: https://github.com/logstash-plugins/logstash-output-tcp/blob/v6.2.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -24,7 +24,7 @@ include::{include_path}/plugin_header.asciidoc[]
 
 Write events over a TCP socket.
 
-Each event json is separated by a newline.
+By default this plugin uses the `json` codec. In order to have each event json separated by a newline, use the `json_lines` codec.
 
 Can either accept connections from clients or connect to a server,
 depending on `mode`.
