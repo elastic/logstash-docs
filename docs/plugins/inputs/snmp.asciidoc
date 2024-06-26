@@ -7,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.2
-:release_date: 2024-05-20
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-snmp/blob/v4.0.2/CHANGELOG.md
+:version: v4.0.3
+:release_date: 2024-06-11
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-snmp/blob/v4.0.3/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -51,8 +51,6 @@ easier package maintenance, and a smaller installation footprint.
 Before you install the new integration, be aware of link:{logstash-ref}/plugins-integrations-snmp.html#plugins-integrations-snmp-migration[behavioral and mapping differences] between current stand-alone plugins and the new versions included in `integration-snmp`. 
 **** 
 
-// ToDo: link:{logstash-ref}/plugins-input-snmp.html[Importing MIBs]
-
 
 [id="plugins-{type}s-{plugin}-ecs"]
 ==== Compatibility with the Elastic Common Schema (ECS)
@@ -75,10 +73,8 @@ Metadata fields follow a specific naming convention when <<plugins-{type}s-{plug
 
 This plugin already includes the IETF MIBs (management information bases), and you do not need to import them.
 If you need additional MIBs, you need to import them.  
-Check out "Importing MIBs" for instructions.
+Check out link:{logstash-ref}/plugins-integrations-snmp.html#plugins-integrations-snmp-import-mibs[Importing MIBs] for info.
 
-// link:{logstash-ref}/plugins-input-snmp.html[Importing MIBs]
-// ToDo: Add link to MIBs content after generated file exists.
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== SNMP Input Configuration Options
