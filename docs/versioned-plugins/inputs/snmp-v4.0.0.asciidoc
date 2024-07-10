@@ -18,8 +18,7 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 === SNMP input plugin {version}
 
-// Uncomment after generated the initial versions of the target file
-// include::{include_path}/plugin_header-integration.asciidoc[]
+include::{include_path}/plugin_header-integration.asciidoc[]
 
 ==== Description
 
