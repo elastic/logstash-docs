@@ -7,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.3
-:release_date: 2024-06-11
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-snmp/blob/v4.0.3/CHANGELOG.md
+:version: v4.0.4
+:release_date: 2024-07-08
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-snmp/blob/v4.0.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -21,19 +21,17 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 include::{include_path}/plugin_header-integration.asciidoc[]
 
-experimental[]
+.Migrating to `logstash-integration-snmp` from stand-alone `input-snmptrap`
+**** 
+The `logstash-input-snmptrap` plugin is now a component of the `logstash-integration-snmp` plugin which is 
+bundled with {ls} 8.15.0 by default. 
+This integrated plugin package provides better alignment in snmp processing, better resource management, 
+easier package maintenance, and a smaller installation footprint. 
 
-.Technical Preview
-****
-The new `integration-snmp` plugin, and its component plugins--`input-snmp` and `input-snmptrap`--are available in _Technical Preview_ and can be installed on the latest Logstash 7.x and 8.x versions.
-
-Current 1.x versions of the `input-snmp` plugin are bundled with {ls} by default, and will soon be replaced by the snmp input plugin contained in this integration.
-(If you want to opt into the Technical Preview for the `integration-snmp` plugin, run `bin/logstash-plugin install logstash-integration-snmp`.)
-
-Be aware of behavioral and mapping differences between current stand-alone plugins and the new versions included in the `integration-snmp`. 
-
-Before you install the new integration, be aware of link:{logstash-ref}/plugins-integrations-snmp.html#plugins-integrations-snmp-migration[behavioral and mapping differences] between current stand-alone plugins and the new versions included in `integration-snmp`. 
-****
+Before you upgrade to {ls} 8.15.0, be aware of link:{logstash-ref}/plugins-integrations-snmp.html#plugins-integrations-snmp-migration[behavioral and mapping differences] 
+between current stand-alone plugins and the new versions included in `integration-snmp`. 
+If you need to maintain current mappings for the `input-snmptrap` plugin, you have options to {logstash-ref}/plugins-integrations-snmp.html#plugins-integrations-snmp-input-snmptrap-compat[preserve existing behavior].
+**** 
 
 ==== Description
 
@@ -42,15 +40,6 @@ The `logstash-input-snmptrap` plugin reads SNMP trap messages as events.
 Resulting `message` field resembles:
 [source,json]
 {"agent_addr":"192.168.1.40", "generic_trap":6, "specific_trap":15511, "enterprise":"1.3.6.1.2.1.1.1", "variable_bindings":{"1.3.6.1.2.1.1.2.0":"test one", "1.3.6.1.2.1.1.1.0":"test two"}, "type":"V1TRAP", "community":"public", "version":1, "timestamp":1500}
-
-.Migrating to `logstash-integration-snmp` from stand-alone `input-snmptrap`
-**** 
-The `logstash-input-snmptrap` plugin is now a component of the `logstash-integration-snmp` plugin. 
-This integrated plugin package provides better alignment in snmp processing, better resource management, 
-easier package maintenance, and a smaller installation footprint. 
-
-Before you install the new integration, be aware of link:{logstash-ref}/plugins-integrations-snmp.html#plugins-integrations-snmp-migration[behavioral and mapping differences] between current stand-alone plugins and the new versions included in `integration-snmp`. 
-**** 
 
 [id="plugins-{type}s-{plugin}-ecs"]
 ==== Event Metadata and the Elastic Common Schema (ECS)
