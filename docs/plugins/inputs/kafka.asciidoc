@@ -9,9 +9,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.5.0
-:release_date: 2024-07-02
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.5.0/CHANGELOG.md
+:version: v11.5.1
+:release_date: 2024-07-26
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.5.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -273,7 +273,7 @@ balance — more threads than partitions means that some threads will be idl
   * Accepted values are:
     - `none`: no metadata is added
     - `basic`: record's attributes are added
-    - `extended`: record's attributes, headers are added
+    - `extended`: record's attributes, headers are added (limited to headers with values using UTF-8 encoding)
     - `false`: deprecated alias for `none`
     - `true`: deprecated alias for `basic`
   * Default value is `none`
