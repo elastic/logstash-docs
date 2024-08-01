@@ -37,10 +37,10 @@ The SNMP integration plugin includes:
 * link:{logstash-ref}/plugins-inputs-snmp.html[SNMP input plugin]
 * link:{logstash-ref}/plugins-inputs-snmptrap.html[Snmptrap input plugin]
 
-The new the `logstash-integration-snmp` plugin combines the 
+The new `logstash-integration-snmp` plugin combines the 
 `logstash-input-snmp` and `logstash-input-snmptrap` plugins into one integrated plugin that encompasses
 the capabilities of both. 
-This integrated plugin package provides better alignment in snmp processing, better resource managenment, 
+This integrated plugin package provides better alignment in snmp processing, better resource management, 
 easier package maintenance, and a smaller installation footprint. 
 
 In this section, we'll cover:
