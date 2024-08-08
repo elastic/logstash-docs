@@ -21,13 +21,13 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
       - name: Clone elastic/docs-tools
-        uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
         with:
           repository: elastic/docs-tools
           path: docs-tools
           fetch-depth: 1
       - name: Clone elastic/logstash-docs
-        uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
         with:
           repository: elastic/logstash-docs
           path: logstash-docs
