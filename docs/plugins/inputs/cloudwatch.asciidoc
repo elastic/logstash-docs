@@ -7,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v7.1.7
-:release_date: 2024-07-02
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-aws/blob/v7.1.7/CHANGELOG.md
+:version: v7.1.8
+:release_date: 2024-07-26
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-aws/blob/v7.1.8/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
