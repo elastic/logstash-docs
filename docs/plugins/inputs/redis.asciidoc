@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.7.0
-:release_date: 2021-05-04
-:changelog_url: https://github.com/logstash-plugins/logstash-input-redis/blob/v3.7.0/CHANGELOG.md
+:version: v3.7.1
+:release_date: 2024-08-01
+:changelog_url: https://github.com/logstash-plugins/logstash-input-redis/blob/v3.7.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -157,7 +157,10 @@ Enable SSL support.
   * Value type is <<number,number>>
   * Default value is `1`
 
+Number of instances of the input to start, each on its own thread.
+Increase from one to improve concurrency in consuming messages from Redis.
 
+NOTE: Increasing the number of threads when consuming from a channel will result in duplicate messages since a `SUBSCRIBE` delivers each message to all subscribers.
 
 [id="plugins-{type}s-{plugin}-timeout"]
 ===== `timeout`
