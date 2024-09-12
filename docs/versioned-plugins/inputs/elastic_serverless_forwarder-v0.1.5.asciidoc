@@ -1,0 +1,369 @@
+:plugin: elastic_serverless_forwarder
+:type: input
+:no_codec:
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v0.1.5
+:release_date: 2024-09-12
+:changelog_url: https://github.com/logstash-plugins/logstash-input-elastic_serverless_forwarder/blob/v0.1.5/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+:esf-name: Elastic Serverless Forwarder
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== {esf-name} input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Using this input you can receive events from {esf-name} over http(s) connections to the configured <<{version}-plugins-{type}s-{plugin}-port>>.
+
+[id="{version}-plugins-{type}s-{plugin}-ext-field"]
+===== Minimum Configuration
+[cols="3a,2a"]
+|=======================================================================================================================
+|SSL Enabled              |SSL Disabled
+
+|
+
+[source,shell]
+----
+input {
+  elastic_serverless_forwarder {
+    port => 8080
+    ssl_certificate => "/path/to/logstash.crt"
+    ssl_key => "/path/to/logstash.key"
+  }
+}
+----
+
+|
+
+[source,shell]
+----
+input {
+  elastic_serverless_forwarder {
+    port => 8080
+    ssl_enabled => false
+  }
+}
+----
+
+|=======================================================================================================================
+
+.Technical Preview
+****
+This {esf-name} input plugin is part of a _Technical Preview_, which means that both configuration options and implementation details are subject to change in minor releases without being preceded by deprecation warnings.
+
+Before upgrading this plugin or Logstash itself, please pay special attention to this plugin's https://github.com/logstash-plugins/logstash-input-elastic_serverless_forwarder/blob/main/CHANGELOG.md[CHANGELOG.md] to avoid being caught by surprise.
+****
+
+
+[id="{version}-plugins-{type}s-{plugin}-enrichment"]
+==== Enrichment
+
+This input provides _minimal enrichment_ on events, and avoids including information about itself, the client from which it received the data, or about the original event as-decoded from the request.
+
+NOTE: Senders are advised to use care with respect to fields that are {logstash-ref}/processing.html#reserved-fields[reserved in Logstash].
+      ESF sends the Logstash-required `@timestamp` field by default, but if this value is missing it will be populated with the current time.
+
+
+////
+// BEGIN: Elastic-internal implementation details
+//
+
+[id="{version}-plugins-{type}s-{plugin}-blocking"]
+==== Blocking Behavior
+
+When the Logstash pipeline that is receiving events from this input has a full queue, it prevents the pipeline's inputs from putting additional events into the queue until the capacity to do so becomes available.
+This may result in an HTTP request timing out with some or all of its events unprocessed.
+A client that receives an HTTP request timeout is expected to retry the entire request, even though it may cause duplication of data.
+
+When this plugin is blocked, it will reject _new_ requests with HTTP `429 Too Many Requests`.
+Clients that receive `429`-s are expected to wait a moment before retrying the request — exponential back-off is encouraged to ease flood recovery.
+
+//
+// END: Elastic-internal implementation details
+////
+
+[id="{version}-plugins-{type}s-{plugin}-security"]
+==== Security
+
+This plugin has SSL on-by-default.
+
+At a minimum, you will need to either configure the plugin to present its identity, or disable SSL.
+
+Additionally, you may wish to authenticate clients using SSL client authentication, and/or authenticate requests using HTTP Basic authentication as described below.
+
+===== SSL Identity
+
+In order to establish SSL with a client, this input plugin will need to present an SSL certificate that the client trusts, and have access to the associated key.
+These are configurable with <<{version}-plugins-{type}s-{plugin}-ssl_certificate>>, <<{version}-plugins-{type}s-{plugin}-ssl_key>>, and optionally <<{version}-plugins-{type}s-{plugin}-ssl_key_passphrase>>.
+
+===== SSL Client Authentication
+
+By default, this plugin does not request certificates from clients during SSL negotiation.
+
+It can be configured to either request or require client certificates using <<{version}-plugins-{type}s-{plugin}-ssl_client_authentication>>,
+which often also requires configuring it with a list of <<{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities>> to trust.
+When validating a certificate that is presented, <<{version}-plugins-{type}s-{plugin}-ssl_verification_mode>> controls how certificates are verified.
+
+NOTE: ESF does not currently support _presenting_ client certificates, so requesting or requiring clients to present identity is only useful when combined with an SSL-terminating proxy.
+
+===== SSL Advanced Configuration
+
+This plugin exposes several advanced SSL configurations:
+
+* <<{version}-plugins-{type}s-{plugin}-ssl_cipher_suites>>
+* <<{version}-plugins-{type}s-{plugin}-ssl_supported_protocols>>
+* <<{version}-plugins-{type}s-{plugin}-ssl_handshake_timeout>>
+
+===== HTTP Basic Authentication
+
+You can configure this plugin to authenticate requests using HTTP Basic authentication by configuring <<{version}-plugins-{type}s-{plugin}-auth_basic_username>> and <<{version}-plugins-{type}s-{plugin}-auth_basic_password>>.
+
+NOTE: Basic Authentication is not a substitute for SSL, as it provides neither secrecy nor security on its own.
+      When used with SSL disabled, HTTP Basic credentials are transmitted in effectively clear-text and can be easily recovered by an adversary.
+
+[id="{version}-plugins-{type}s-{plugin}-es-output-notes"]
+==== Using {esf-name} with the Elasticsearch output
+Here are some tips for configuring the {esf} input to work with the elasticsearch output:
+
+* Set the `document_id` in the output configuration when you use the {esf}  input with an {logstash-ref}/plugins-outputs-elasticsearch.html#plugins-outputs-elasticsearch[Elasticsearch output plugin].
++
+[source,ruby]
+----
+output {
+  elasticsearch {
+      ...
+      document_id => "%{[@metadata][_id]}"
+      ...
+  }
+}
+----
+* Starting from version 1.10.0 of {esf-name}, configuring `document_id` as shown in the example above is sufficient (the `_id` field is no longer available, and instead, Logstash now receives the `@metadata._id` field).
+
+* For {esf-name} v1.9.0 and earlier, rename the field `_id` to `@metadata._id` with a filter:
++
+[source,ruby]
+----
+filter {
+    # support ESF < 1.10
+    if [_id] and ![@metadata][_id] {
+      mutate { rename => { "_id" => "[@metadata][_id]" } }
+    }
+}
+----
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== {esf-name} Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-auth_basic_username>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-auth_basic_password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-host>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-port>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|__Deprecated__
+| <<{version}-plugins-{type}s-{plugin}-ssl_certificate>> |a valid filesystem path|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_client_authentication>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["none", "optional", "required"]`|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_cipher_suites>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_enabled>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_handshake_timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_key>> |a valid filesystem path|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_key_passphrase>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_supported_protocols>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_verification_mode>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["certificate"]`|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-auth_basic_password"]
+===== `auth_basic_password`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+* There is no default value for this setting.
+
+Password for HTTP basic authorization.
+Requires <<{version}-plugins-{type}s-{plugin}-auth_basic_username>>.
+
+[id="{version}-plugins-{type}s-{plugin}-auth_basic_username"]
+===== `auth_basic_username`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* There is no default value for this setting.
+
+Username for basic authorization.
+Requires <<{version}-plugins-{type}s-{plugin}-auth_basic_password>>.
+
+[id="{version}-plugins-{type}s-{plugin}-host"]
+===== `host`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* Default value is `"0.0.0.0"` (all available interfaces)
+
+The host or ip to bind
+
+[id="{version}-plugins-{type}s-{plugin}-port"]
+===== `port`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+* Default value is `8080`
+
+The TCP port to bind to
+
+[id="{version}-plugins-{type}s-{plugin}-ssl"]
+===== `ssl`
+deprecated[0.1.3, Replaced by <<{version}-plugins-{type}s-{plugin}-ssl_enabled>>]
+
+* Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+* Default value is `true`
+
+Events are by default sent over SSL, which requires configuring this plugin to present an identity certificate using <<{version}-plugins-{type}s-{plugin}-ssl_certificate>> and key using <<{version}-plugins-{type}s-{plugin}-ssl_key>>.
+
+You can disable SSL with `+ssl => false+`.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_certificate"]
+===== `ssl_certificate`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+* There is no default value for this setting.
+
+SSL certificate to use.
+This certificate _MUST_ be PEM-formatted, and _MAY_ contain a chain of certificates starting with the certificate that identifies itself, followed by zero or more ordered intermediates optionally ending with the root signing authority.
+Providing a complete chain allows clients to trust our certificate if their configuration allows them to trust one of our intermediates.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities"]
+===== `ssl_certificate_authorities`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+* Default value is `[]`
+
+Validate client certificates against these authorities.
+You can define multiple files or paths. All the certificates will
+be read and added to the trust store.
+
+If you wish to perform client authentication, you need to set `ssl_client_authentication` to `optional` or `required`.
+
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_cipher_suites"]
+===== `ssl_cipher_suites`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+* Default value is `['TLS_AES_256_GCM_SHA384', 'TLS_AES_128_GCM_SHA256', 'TLS_CHACHA20_POLY1305_SHA256', 'TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384', 'TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384', 'TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256', 'TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256', 'TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256', 'TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256', 'TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384', 'TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384', 'TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256', 'TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256']`
+
+The list of cipher suites to use, listed by priorities.
+
+This is an advanced SSL configuration.
+
+This default list applies for OpenJDK 11.0.14 and higher.
+For older JDK versions, the default list includes only suites supported by that version.
+For example, the ChaCha20 family of ciphers is not supported in older versions.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_client_authentication"]
+===== `ssl_client_authentication`
+
+* Value can be any of:
+** `none`: do not request client's certificate, or validate certificates that are presented
+** `optional`: request client's certificate, and validate it against our trust authorities _if-and-only-if_ it is presented
+** `required`: require a valid certificate from the client that is signed by a trusted certificate authority
+* Default value is `"none"`
+
+By default the server doesn't do any client authentication.
+This means that connections from clients are _private_ when SSL is enabled, but that this input will allow SSL connections from _any_ client.
+If you wish to configure this plugin to reject connections from untrusted hosts, you will need to configure this plugin to authenticate clients, and may also need to configure it with a list of `ssl_certificate_authorities`.
+
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_enabled"]
+===== `ssl_enabled`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+* Default value is `true`
+
+Events are, by default, sent over SSL, which requires configuring this plugin to present an identity certificate using <<{version}-plugins-{type}s-{plugin}-ssl_certificate>> and key using <<{version}-plugins-{type}s-{plugin}-ssl_key>>.
+
+You can disable SSL with `+ssl_enabled => false+`.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_handshake_timeout"]
+===== `ssl_handshake_timeout`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+* Default value is `10000`
+
+Time in milliseconds for an incomplete ssl handshake to timeout
+
+This is an advanced SSL configuration.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_key"]
+===== `ssl_key`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+* There is no default value for this setting.
+
+SSL key to use.
+
+NOTE: This key need to be in the PKCS8 format, you can convert it with https://www.openssl.org/docs/man1.1.1/man1/openssl-pkcs8.html[OpenSSL]
+for more information.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_key_passphrase"]
+===== `ssl_key_passphrase`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+* There is no default value for this setting.
+
+SSL key passphrase to use.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_supported_protocols"]
+===== `ssl_supported_protocols`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+* Allowed values are: `'TLSv1.1'`, `'TLSv1.2'`, `'TLSv1.3'`
+* Default depends on the JDK being used. With up-to-date Logstash, the default is `['TLSv1.2', 'TLSv1.3']`.
+`'TLSv1.1'` is not considered secure and is only provided for legacy applications.
+
+List of allowed SSL/TLS versions to use when establishing a connection to the HTTP endpoint.
+
+This is an advanced SSL configuration.
+
+For Java 8 `'TLSv1.3'` is supported  only since **8u262** (AdoptOpenJDK), but requires that you set the
+`LS_JAVA_OPTS="-Djdk.tls.client.protocols=TLSv1.3"` system property in Logstash.
+
+NOTE: If you configure the plugin to use `'TLSv1.1'` on any recent JVM, such as the one packaged with Logstash,
+the protocol is disabled by default and needs to be enabled manually by changing `jdk.tls.disabledAlgorithms` in
+the *$JDK_HOME/conf/security/java.security* configuration file. That is, `TLSv1.1` needs to be removed from the list.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_verification_mode"]
+===== `ssl_verification_mode`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* There is only one currently-supported mode:
+** `certificate`: verifies that a certificate provided by the client is signed by a trusted authority (CA), is within its valid date range, and that the client has possession of the associated key, but does _not_ perform hostname validation.
+// NOTE: `ssl_verification_mode => full` is pending upstream support, but when it arrives it will look like:
+////
+** `full`: fully validates the certificate as in `certificate` mode, and also validates that the client's outbound IP address is represented in the certificate's identity claims for `subject` and/or `subjectAltName`.
+////
+* The default value is `certificate`.
+
+When <<{version}-plugins-{type}s-{plugin}-ssl_client_authentication>> causes a client to present a certificate, this setting controls how that certificate is verified.
+
+NOTE: Client identity is not typically validated using SSL because the receiving server only has access to the client's outbound-ip, which is not always constant and is frequently not represented in the certificate's subject or subjectAltNames extensions.
+      For more information, see https://www.rfc-editor.org/rfc/rfc2818#section-3.1[RFC2818 § 3.2 (HTTP over TLS -- Client Identity)]
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:no_codec!:
