@@ -304,4 +304,4 @@ NOTE: Client identity is not typically validated using SSL because the receiving
 [id="{version}-plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
 
-:default_codec!:
+:no_codec!:
