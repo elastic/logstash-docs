@@ -248,4 +248,4 @@ NOTE: when SSL is disabled, credentials will be transmitted in clear-text.
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
 
-:default_codec!:
+:no_codec!:
