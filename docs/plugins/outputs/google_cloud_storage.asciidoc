@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.4.0
-:release_date: 2023-08-22
-:changelog_url: https://github.com/logstash-plugins/logstash-output-google_cloud_storage/blob/v4.4.0/CHANGELOG.md
+:version: v4.5.0
+:release_date: 2024-09-16
+:changelog_url: https://github.com/logstash-plugins/logstash-output-google_cloud_storage/blob/v4.5.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -98,7 +98,6 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-include_uuid>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-json_key_file>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-key_password>> |<<string,string>>|__Deprecated__
-| <<plugins-{type}s-{plugin}-key_path>> |<<string,string>>|**Obsolete**
 | <<plugins-{type}s-{plugin}-log_file_prefix>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-max_concurrent_uploads>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-max_file_size_kbytes>> |<<number,number>>|No
@@ -217,22 +216,6 @@ web interface or with the following command:
   * Default value is `"notasecret"`
 
 **Deprecated** this feature is no longer used, the setting is now a part of <<plugins-{type}s-{plugin}-json_key_file>>.
-
-
-[id="plugins-{type}s-{plugin}-key_path"]
-===== `key_path`
-
-  * Value type is <<string,string>>
-
-**Obsolete:** The PKCS12 key file format is no longer supported.
-Please use one of the following mechanisms:
-
-  * https://cloud.google.com/docs/authentication/production[Application Default Credentials (ADC)],
-    configured via environment variables on Compute Engine, Kubernetes Engine, App Engine, or
-    Cloud Functions.
-  * A JSON authentication key file. You can generate them in the console for the service account
-    like you did with the `.P12` file or with the following command:
-    `gcloud iam service-accounts keys create key.json --iam-account my-sa-123@my-project-123.iam.gserviceaccount.com`
 
 [id="plugins-{type}s-{plugin}-log_file_prefix"]
 ===== `log_file_prefix` 
