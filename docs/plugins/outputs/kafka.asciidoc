@@ -9,9 +9,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.5.1
-:release_date: 2024-07-26
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.5.1/CHANGELOG.md
+:version: v11.5.2
+:release_date: 2024-10-04
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.5.2/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -102,6 +102,7 @@ See the https://kafka.apache.org/{kafka_client_doc}/documentation for more detai
 | <<plugins-{type}s-{plugin}-request_timeout_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-retries>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-retry_backoff_ms>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-sasl_client_callback_handler_class>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-sasl_jaas_config>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-sasl_kerberos_service_name>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-sasl_mechanism>> |<<string,string>>|No
@@ -391,6 +392,13 @@ In versions prior to 10.5.0, any exception is retried indefinitely unless the `r
   * Default value is `100` milliseconds.
 
 The amount of time to wait before attempting to retry a failed produce request to a given topic partition.
+
+[id="plugins-{type}s-{plugin}-sasl_client_callback_handler_class""]
+===== `sasl_client_callback_handler_class`
+* Value type is <<string,string>>
+* There is no default value for this setting.
+
+The SASL client callback handler class the specified SASL mechanism should use.
 
 [id="plugins-{type}s-{plugin}-sasl_jaas_config"]
 ===== `sasl_jaas_config` 
