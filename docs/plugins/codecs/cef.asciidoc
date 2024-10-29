@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v6.2.7
-:release_date: 2023-05-12
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v6.2.7/CHANGELOG.md
+:version: v6.2.8
+:release_date: 2024-10-22
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v6.2.8/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -408,6 +408,7 @@ The following is a mapping between these fields.
 | <<plugins-{type}s-{plugin}-locale>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-name>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-product>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-raw_data_field>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-reverse_mapping>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-severity>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-signature>> |<<string,string>>|No
@@ -536,6 +537,13 @@ When this codec is used in an Output Plugin, this option can be used to specify 
 value of the device product field in CEF header. The new value can include `%{foo}` strings
 to help you build a new value from other parts of the event.
 
+[id="plugins-{type}s-{plugin}-raw_data_field"]
+===== `raw_data_field` 
+
+  * Value type is <<string,string>>
+  * There is no default value for this setting
+
+Store the raw data to the field, for example `[event][original]`. Existing target field will be overriden.
 
 [id="plugins-{type}s-{plugin}-reverse_mapping"]
 ===== `reverse_mapping`
