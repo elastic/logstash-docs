@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v5.5.1-plugins-integrations-jdbc,v5.5.1>> | 2024-12-03
 | <<v5.5.0-plugins-integrations-jdbc,v5.5.0>> | 2024-08-09
 | <<v5.4.11-plugins-integrations-jdbc,v5.4.11>> | 2024-05-23
 | <<v5.4.10-plugins-integrations-jdbc,v5.4.10>> | 2024-05-08
@@ -46,6 +47,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v5.0.0-plugins-integrations-jdbc,v5.0.0>> | 2020-01-09
 |=======================================================================
 
+include::jdbc-v5.5.1.asciidoc[]
 include::jdbc-v5.5.0.asciidoc[]
 include::jdbc-v5.4.11.asciidoc[]
 include::jdbc-v5.4.10.asciidoc[]
