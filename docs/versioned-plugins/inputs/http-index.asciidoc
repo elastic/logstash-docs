@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v4.0.0-plugins-inputs-http,v4.0.0>> | 2024-12-18
 | <<v3.9.2-plugins-inputs-http,v3.9.2>> | 2024-11-18
 | <<v3.9.1-plugins-inputs-http,v3.9.1>> | 2024-10-18
 | <<v3.9.0-plugins-inputs-http,v3.9.0>> | 2024-08-28
@@ -46,6 +47,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.0.5-plugins-inputs-http,v3.0.5>> | 2017-06-23
 |=======================================================================
 
+include::http-v4.0.0.asciidoc[]
 include::http-v3.9.2.asciidoc[]
 include::http-v3.9.1.asciidoc[]
 include::http-v3.9.0.asciidoc[]
