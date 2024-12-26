@@ -1,0 +1,474 @@
+:plugin: http
+:type: filter
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v2.0.0
+:release_date: 2024-12-18
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-http/blob/v2.0.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== HTTP filter plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+The HTTP filter provides integration with external web services/REST APIs.
+
+[id="{version}-plugins-{type}s-{plugin}-ecs"]
+==== Compatibility with the Elastic Common Schema (ECS)
+
+The plugin includes sensible defaults that change based on <<{version}-plugins-{type}s-{plugin}-ecs_compatibility,ECS compatibility mode>>.
+When targeting an ECS version, headers are set as `@metadata` and the `target_body` is a required option.
+See <<{version}-plugins-{type}s-{plugin}-target_body>>, and <<{version}-plugins-{type}s-{plugin}-target_headers>>.
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== HTTP Filter Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+NOTE: As of version `2.0.0` of this plugin, a number of previously deprecated settings related to SSL have been removed.
+Please check out <<{version}-plugins-{type}s-{plugin}-obsolete-options>> for details.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-body>> | String, Array or Hash |No
+| <<{version}-plugins-{type}s-{plugin}-body_format>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-headers>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-query>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-target_body>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-target_headers>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-url>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-verb>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+There are also multiple configuration options related to the HTTP connectivity:
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-automatic_retries>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-connect_timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-cookies>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-follow_redirects>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-keepalive>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-pool_max>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-pool_max_per_route>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-proxy>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-request_timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-retry_non_idempotent>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-socket_timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_certificate>> |{logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities>> |list of {logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_cipher_suites>> |list of {logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_enabled>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_keystore_password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_keystore_path>> |{logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_keystore_type>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_supported_protocols>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_truststore_password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_truststore_path>> |{logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_truststore_type>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_verification_mode>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["full", "none"]`|No
+| <<{version}-plugins-{type}s-{plugin}-user>> |{logstash-ref}/configuration-file-structure.html#string[string]|no
+| <<{version}-plugins-{type}s-{plugin}-validate_after_inactivity>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+filter plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-body"]
+===== `body`
+
+  * Value type can be a {logstash-ref}/configuration-file-structure.html#string[string], {logstash-ref}/configuration-file-structure.html#number[number], {logstash-ref}/configuration-file-structure.html#array[array] or {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * There is no default value
+
+The body of the HTTP request to be sent.
+
+An example to send `body` as json
+```
+http {
+  body => {
+    "key1" => "constant_value"
+    "key2" => "%{[field][reference]}"
+  }
+  body_format => "json"
+}
+```
+
+[id="{version}-plugins-{type}s-{plugin}-body_format"]
+===== `body_format`
+
+  * Value type can be either `"json"` or `"text"`
+  * Default value is `"text"`
+
+If set to `"json"` and the <<{version}-plugins-{type}s-{plugin}-body>> is a type of {logstash-ref}/configuration-file-structure.html#array[array] or {logstash-ref}/configuration-file-structure.html#hash[hash], the body will be serialized as JSON. Otherwise it is sent as is.
+
+[id="{version}-plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Supported values are:
+    ** `disabled`: does not use ECS-compatible field names (for example, response headers target `headers` field by default)
+    ** `v1`, `v8`: avoids field names that might conflict with Elastic Common Schema (for example, headers are added as metadata)
+  * Default value depends on which version of Logstash is running:
+    ** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
+    ** Otherwise, the default value is `disabled`.
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
+The value of this setting affects the _default_ value of <<{version}-plugins-{type}s-{plugin}-target_body>> and
+<<{version}-plugins-{type}s-{plugin}-target_headers>>.
+
+
+[id="{version}-plugins-{type}s-{plugin}-headers"]
+===== `headers`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * There is no default value
+
+The HTTP headers to be sent in the request. Both the names of the headers and their
+values can reference values from event fields.
+
+[id="{version}-plugins-{type}s-{plugin}-query"]
+===== `query`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * There is no default value
+
+Define the query string parameters (key-value pairs) to be sent in the HTTP request.
+
+[id="{version}-plugins-{type}s-{plugin}-target_body"]
+===== `target_body`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * Default value depends on whether <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>> is enabled:
+    ** ECS Compatibility disabled: `"[body]"
+    ** ECS Compatibility enabled: no default value, needs to be specified explicitly
+
+Define the target field for placing the body of the HTTP response.
+
+[id="{version}-plugins-{type}s-{plugin}-target_headers"]
+===== `target_headers`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * Default value depends on whether <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>> is enabled:
+    ** ECS Compatibility disabled: `"[headers]"`
+    ** ECS Compatibility enabled: `"[@metadata][filter][http][response][headers]"`
+
+Define the target field for placing the headers of the HTTP response.
+
+[id="{version}-plugins-{type}s-{plugin}-url"]
+===== `url`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value
+
+The URL to send the request to. The value can be fetched from event fields.
+
+[id="{version}-plugins-{type}s-{plugin}-verb"]
+===== `verb`
+
+  * Value type can be either `"GET"`, `"HEAD"`, `"PATCH"`, `"DELETE"`, `"POST"`, `"PUT"`
+  * Default value is `"GET"`
+
+The verb to be used for the HTTP request.
+
+[id="{version}-plugins-{type}s-{plugin}-connectivity-options"]
+==== HTTP Filter Connectivity Options
+
+[id="{version}-plugins-{type}s-{plugin}-automatic_retries"]
+===== `automatic_retries`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `1`
+
+How many times should the client retry a failing URL. We highly recommend NOT setting this value
+to zero if keepalive is enabled. Some servers incorrectly end keepalives early requiring a retry!
+Note: if `retry_non_idempotent` is set only GET, HEAD, PUT, DELETE, OPTIONS, and TRACE requests will be retried.
+
+[id="{version}-plugins-{type}s-{plugin}-connect_timeout"]
+===== `connect_timeout`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `10`
+
+Timeout (in seconds) to wait for a connection to be established. Default is `10s`
+
+[id="{version}-plugins-{type}s-{plugin}-cookies"]
+===== `cookies`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Enable cookie support. With this enabled the client will persist cookies
+across requests as a normal web browser would. Enabled by default
+
+[id="{version}-plugins-{type}s-{plugin}-follow_redirects"]
+===== `follow_redirects`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Should redirects be followed? Defaults to `true`
+
+[id="{version}-plugins-{type}s-{plugin}-keepalive"]
+===== `keepalive`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Turn this on to enable HTTP keepalive support. We highly recommend setting `automatic_retries` to at least
+one with this to fix interactions with broken keepalive implementations.
+
+
+[id="{version}-plugins-{type}s-{plugin}-password"]
+===== `password`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Password to be used in conjunction with the username for HTTP authentication.
+
+[id="{version}-plugins-{type}s-{plugin}-pool_max"]
+===== `pool_max`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `50`
+
+Max number of concurrent connections. Defaults to `50`
+
+[id="{version}-plugins-{type}s-{plugin}-pool_max_per_route"]
+===== `pool_max_per_route`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `25`
+
+Max number of concurrent connections to a single host. Defaults to `25`
+
+[id="{version}-plugins-{type}s-{plugin}-proxy"]
+===== `proxy`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+If you'd like to use an HTTP proxy . This supports multiple configuration syntaxes:
+
+1. Proxy host in form: `http://proxy.org:1234`
+2. Proxy host in form: `{host => "proxy.org", port => 80, scheme => 'http', user => 'username@host', password => 'password'}`
+3. Proxy host in form: `{url =>  'http://proxy.org:1234', user => 'username@host', password => 'password'}`
+
+[id="{version}-plugins-{type}s-{plugin}-request_timeout"]
+===== `request_timeout`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `60`
+
+Timeout (in seconds) for the entire request.
+
+[id="{version}-plugins-{type}s-{plugin}-retry_non_idempotent"]
+===== `retry_non_idempotent`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+If `automatic_retries` is enabled this will cause non-idempotent HTTP verbs (such as POST) to be retried.
+
+[id="{version}-plugins-{type}s-{plugin}-socket_timeout"]
+===== `socket_timeout`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `10`
+
+Timeout (in seconds) to wait for data on the socket. Default is `10s`
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_certificate"]
+===== `ssl_certificate`
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+SSL certificate to use to authenticate the client. This certificate should be an OpenSSL-style X.509 certificate file.
+
+NOTE: This setting can be used only if <<{version}-plugins-{type}s-{plugin}-ssl_key>> is set.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities"]
+===== `ssl_certificate_authorities`
+
+  * Value type is a list of {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting
+
+The .cer or .pem CA files to validate the server's certificate.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_cipher_suites"]
+===== `ssl_cipher_suites`
+
+  * Value type is a list of {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting
+
+The list of cipher suites to use, listed by priorities.
+Supported cipher suites vary depending on the Java and protocol versions.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_enabled"]
+===== `ssl_enabled`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Enable SSL/TLS secured communication. It must be `true` for other `ssl_` options
+to take effect.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_key"]
+===== `ssl_key`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+OpenSSL-style RSA private key that corresponds to the <<{version}-plugins-{type}s-{plugin}-ssl_certificate>>.
+
+NOTE: This setting can be used only if <<{version}-plugins-{type}s-{plugin}-ssl_certificate>> is set.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_keystore_password"]
+===== `ssl_keystore_password`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Set the keystore password
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_keystore_path"]
+===== `ssl_keystore_path`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+The keystore used to present a certificate to the server.
+It can be either `.jks` or `.p12`
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_keystore_type"]
+===== `ssl_keystore_type`
+
+  * Value can be any of: `jks`, `pkcs12`
+  * If not provided, the value will be inferred from the keystore filename.
+
+The format of the keystore file. It must be either `jks` or `pkcs12`.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_supported_protocols"]
+===== `ssl_supported_protocols`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Allowed values are: `'TLSv1.1'`, `'TLSv1.2'`, `'TLSv1.3'`
+  * Default depends on the JDK being used. With up-to-date Logstash, the default is `['TLSv1.2', 'TLSv1.3']`.
+    `'TLSv1.1'` is not considered secure and is only provided for legacy applications.
+
+List of allowed SSL/TLS versions to use when establishing a connection to the HTTP endpoint.
+
+For Java 8 `'TLSv1.3'` is supported  only since **8u262** (AdoptOpenJDK), but requires that you set the
+`LS_JAVA_OPTS="-Djdk.tls.client.protocols=TLSv1.3"` system property in Logstash.
+
+NOTE: If you configure the plugin to use `'TLSv1.1'` on any recent JVM, such as the one packaged with Logstash,
+the protocol is disabled by default and needs to be enabled manually by changing `jdk.tls.disabledAlgorithms` in
+the *$JDK_HOME/conf/security/java.security* configuration file. That is, `TLSv1.1` needs to be removed from the list.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_truststore_password"]
+===== `ssl_truststore_password`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Set the truststore password
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_truststore_path"]
+===== `ssl_truststore_path`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+The truststore to validate the server's certificate.
+It can be either `.jks` or `.p12`.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_truststore_type"]
+===== `ssl_truststore_type`
+
+  * Value can be any of: `jks`, `pkcs12`
+  * If not provided, the value will be inferred from the truststore filename.
+
+The format of the truststore file. It must be either `jks` or `pkcs12`.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_verification_mode"]
+===== `ssl_verification_mode`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Supported values are: `full`, `none`
+  * Default value is `full`
+
+Controls the verification of server certificates.
+The `full` option verifies that the provided certificate is signed by a trusted authority (CA)
+and also that the server’s hostname (or IP address) matches the names identified within the certificate.
+
+The `none` setting performs no verification of the server’s certificate.
+This mode disables many of the security benefits of SSL/TLS and should only be used after cautious consideration.
+It is primarily intended as a temporary diagnostic mechanism when attempting to resolve TLS errors.
+Using `none`  in production environments is strongly discouraged.
+
+[id="{version}-plugins-{type}s-{plugin}-user"]
+===== `user`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Username to use with HTTP authentication for ALL requests. Note that you can also set this per-URL.
+If you set this you must also set the `password` option.
+
+[id="{version}-plugins-{type}s-{plugin}-validate_after_inactivity"]
+===== `validate_after_inactivity`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `200`
+
+How long to wait before checking for a stale connection to determine if a keepalive request is needed.
+Consider setting this value lower than the default, possibly to 0, if you get connection errors regularly.
+
+This client is based on Apache Commons. Here's how the
+https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/org/apache/http/impl/conn/PoolingHttpClientConnectionManager.html#setValidateAfterInactivity(int)[Apache
+Commons documentation] describes this option: "Defines period of inactivity in
+milliseconds after which persistent connections must be re-validated prior to
+being leased to the consumer. Non-positive value passed to this method disables
+connection validation. This check helps detect connections that have become
+stale (half-closed) while kept inactive in the pool."
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-obsolete-options"]
+==== HTTP Filter Obsolete Configuration Options
+
+WARNING: As of version `2.0.0` of this plugin, some configuration options have been replaced.
+The plugin will fail to start if it contains any of these obsolete options.
+
+[cols="<,<",options="header",]
+|=======================================================================
+|Setting|Replaced by
+| cacert |<<{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities>>
+| client_cert |<<{version}-plugins-{type}s-{plugin}-ssl_certificate>>
+| client_key |<<{version}-plugins-{type}s-{plugin}-ssl_key>>
+| keystore |<<{version}-plugins-{type}s-{plugin}-ssl_keystore_path>>
+| keystore_password |<<{version}-plugins-{type}s-{plugin}-ssl_keystore_password>>
+| keystore_type |<<{version}-plugins-{type}s-{plugin}-ssl_keystore_type>>
+| truststore |<<{version}-plugins-{type}s-{plugin}-ssl_truststore_path>>
+| truststore_password |<<{version}-plugins-{type}s-{plugin}-ssl_truststore_password>>
+| truststore_type |<<{version}-plugins-{type}s-{plugin}-ssl_truststore_type>>
+|=======================================================================
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
