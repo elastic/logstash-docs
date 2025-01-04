@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v3.0.1-plugins-outputs-elastic_app_search,v3.0.1>> | 2025-01-03
 | <<v3.0.0-plugins-outputs-elastic_app_search,v3.0.0>> | 2023-11-07
 | <<v2.2.1-plugins-outputs-elastic_app_search,v2.2.1>> | 2022-01-28
 | <<v2.2.0-plugins-outputs-elastic_app_search,v2.2.0>> | 2022-01-24
@@ -18,6 +19,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v1.0.0-plugins-outputs-elastic_app_search,v1.0.0>> | 2019-06-12
 |=======================================================================
 
+include::elastic_app_search-v3.0.1.asciidoc[]
 include::elastic_app_search-v3.0.0.asciidoc[]
 include::elastic_app_search-v2.2.1.asciidoc[]
 include::elastic_app_search-v2.2.0.asciidoc[]
