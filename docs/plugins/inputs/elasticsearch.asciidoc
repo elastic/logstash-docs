@@ -102,9 +102,6 @@ This plugin supports these configuration options plus the <<plugins-{type}s-{plu
 NOTE: As of version `5.0.0` of this plugin, a number of previously deprecated settings related to SSL have been removed.
 Please check out <<plugins-{type}s-{plugin}-obsolete-options>> for details.
 
-NOTE: As of version `5.0.0` of this plugin, a number of previously deprecated settings related to SSL have been removed.
-Please check out <<plugins-{type}s-{plugin}-obsolete-options>> for details.
-
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
