@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v0.1.5
-:release_date: 2024-09-12
-:changelog_url: https://github.com/logstash-plugins/logstash-input-elastic_serverless_forwarder/blob/v0.1.5/CHANGELOG.md
+:version: v2.0.0
+:release_date: 2024-12-23
+:changelog_url: https://github.com/logstash-plugins/logstash-input-elastic_serverless_forwarder/blob/v2.0.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -58,14 +58,6 @@ input {
 ----
 
 |=======================================================================================================================
-
-.Technical Preview
-****
-This {esf-name} input plugin is part of a _Technical Preview_, which means that both configuration options and implementation details are subject to change in minor releases without being preceded by deprecation warnings.
-
-Before upgrading this plugin or Logstash itself, please pay special attention to this plugin's https://github.com/logstash-plugins/logstash-input-elastic_serverless_forwarder/blob/main/CHANGELOG.md[CHANGELOG.md] to avoid being caught by surprise.
-****
-
 
 [id="plugins-{type}s-{plugin}-enrichment"]
 ==== Enrichment
@@ -168,6 +160,9 @@ filter {
 
 This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
+NOTE: As of version `2.0.0` of this plugin, a previously deprecated SSL setting has been removed.
+Please check out <<plugins-{type}s-{plugin}-obsolete-options>> for details.
+
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
@@ -175,7 +170,6 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-auth_basic_password>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-host>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-port>> |<<number,number>>|No
-| <<plugins-{type}s-{plugin}-ssl>> |<<boolean,boolean>>|__Deprecated__
 | <<plugins-{type}s-{plugin}-ssl_certificate>> |a valid filesystem path|No
 | <<plugins-{type}s-{plugin}-ssl_certificate_authorities>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-ssl_client_authentication>> |<<string,string>>, one of `["none", "optional", "required"]`|No
@@ -226,17 +220,6 @@ The host or ip to bind
 * Default value is `8080`
 
 The TCP port to bind to
-
-[id="plugins-{type}s-{plugin}-ssl"]
-===== `ssl`
-deprecated[0.1.3, Replaced by <<plugins-{type}s-{plugin}-ssl_enabled>>]
-
-* Value type is <<boolean,boolean>>
-* Default value is `true`
-
-Events are by default sent over SSL, which requires configuring this plugin to present an identity certificate using <<plugins-{type}s-{plugin}-ssl_certificate>> and key using <<plugins-{type}s-{plugin}-ssl_key>>.
-
-You can disable SSL with `+ssl => false+`.
 
 [id="plugins-{type}s-{plugin}-ssl_certificate"]
 ===== `ssl_certificate`
@@ -363,6 +346,18 @@ When <<plugins-{type}s-{plugin}-ssl_client_authentication>> causes a client to p
 
 NOTE: Client identity is not typically validated using SSL because the receiving server only has access to the client's outbound-ip, which is not always constant and is frequently not represented in the certificate's subject or subjectAltNames extensions.
       For more information, see https://www.rfc-editor.org/rfc/rfc2818#section-3.1[RFC2818 § 3.2 (HTTP over TLS -- Client Identity)]
+
+[id="plugins-{type}s-{plugin}-obsolete-options"]
+==== Elasticsearch Output Obsolete Configuration Options
+
+WARNING: As of version `2.0.0` of this plugin, some configuration options have been replaced.
+The plugin will fail to start if it contains any of these obsolete options.
+
+[cols="<,<",options="header",]
+|=======================================================================
+|Setting|Replaced by
+| ssl | <<plugins-{type}s-{plugin}-ssl_enabled>>
+|=======================================================================
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]

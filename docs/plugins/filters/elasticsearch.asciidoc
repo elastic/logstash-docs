@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.16.2
-:release_date: 2024-12-09
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.16.2/CHANGELOG.md
+:version: v4.0.0
+:release_date: 2025-01-10
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v4.0.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -111,7 +111,7 @@ Authentication to a secure Elasticsearch cluster is possible using _one_ of the 
 * <<plugins-{type}s-{plugin}-user>> AND <<plugins-{type}s-{plugin}-password>>
 * <<plugins-{type}s-{plugin}-cloud_auth>>
 * <<plugins-{type}s-{plugin}-api_key>>
-* <<plugins-{type}s-{plugin}-keystore>> and/or <<plugins-{type}s-{plugin}-keystore_password>>
+* <<plugins-{type}s-{plugin}-ssl_keystore_path>> and/or <<plugins-{type}s-{plugin}-ssl_keystore_password>>
 
 [id="plugins-{type}s-{plugin}-autz"]
 ==== Authorization
@@ -122,7 +122,10 @@ The `monitoring` permission at cluster level is necessary to perform periodic co
 [id="plugins-{type}s-{plugin}-options"]
 ==== Elasticsearch Filter Configuration Options
 
-This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> and the <<plugins-{type}s-{plugin}-deprecated-options>> described later.
+This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
+
+NOTE: As of version `4.0.0` of this plugin, a number of previously deprecated settings related to SSL have been removed. Please see the
+<<plugins-{type}s-{plugin}-obsolete-options>> for more details.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
@@ -145,7 +148,6 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-retry_on_failure>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-retry_on_status>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-sort>> |<<string,string>>|No
-| <<plugins-{type}s-{plugin}-ssl>> |<<boolean,boolean>>|__Deprecated__
 | <<plugins-{type}s-{plugin}-ssl_certificate>> |<<path,path>>|No
 | <<plugins-{type}s-{plugin}-ssl_certificate_authorities>> |list of <<path,path>>|No
 | <<plugins-{type}s-{plugin}-ssl_cipher_suites>> |list of <<string,string>>|No
@@ -520,56 +522,20 @@ Tags the event on failure to look up previous log event information. This can be
 Basic Auth - username
 
 
-[id="plugins-{type}s-{plugin}-deprecated-options"]
-==== Elasticsearch Filter Deprecated Configuration Options
+[id="plugins-{type}s-{plugin}-obsolete-options"]
+==== Elasticsearch Filter Obsolete Configuration Options
 
-This plugin supports the following deprecated configurations.
-
-WARNING: Deprecated options are subject to removal in future releases.
+WARNING: As of version `4.0.0` of this plugin, some configuration options have been replaced.
+The plugin will fail to start if it contains any of these obsolete options.
 
 [cols="<,<,<",options="header",]
 |=======================================================================
-|Setting|Input type|Replaced by
-| <<plugins-{type}s-{plugin}-ca_file>> |a valid filesystem path|<<plugins-{type}s-{plugin}-ssl_certificate_authorities>>
-| <<plugins-{type}s-{plugin}-keystore>> |a valid filesystem path|<<plugins-{type}s-{plugin}-ssl_keystore_path>>
-| <<plugins-{type}s-{plugin}-keystore_password>> |<<password,password>>|<<plugins-{type}s-{plugin}-ssl_keystore_password>>
+|Setting|Replaced by
+| ca_file |<<plugins-{type}s-{plugin}-ssl_certificate_authorities>>
+| keystore |<<plugins-{type}s-{plugin}-ssl_keystore_path>>
+| keystore_password |<<plugins-{type}s-{plugin}-ssl_keystore_password>>
+| ssl |<<plugins-{type}s-{plugin}-ssl_enabled>>
 |=======================================================================
-
-[id="plugins-{type}s-{plugin}-ca_file"]
-===== `ca_file`
-deprecated[3.15.0, Replaced by <<plugins-{type}s-{plugin}-ssl_certificate_authorities>>]
-
-* Value type is <<path,path>>
-* There is no default value for this setting.
-
-SSL Certificate Authority file
-
-[id="plugins-{type}s-{plugin}-ssl"]
-===== `ssl`
-deprecated[3.15.0, Replaced by <<plugins-{type}s-{plugin}-ssl_enabled>>]
-
-* Value type is <<boolean,boolean>>
-* Default value is `false`
-
-SSL
-
-[id="plugins-{type}s-{plugin}-keystore"]
-===== `keystore`
-deprecated[3.15.0, Replaced by <<plugins-{type}s-{plugin}-ssl_keystore_path>>]
-
-* Value type is <<path,path>>
-* There is no default value for this setting.
-
-The keystore used to present a certificate to the server. It can be either .jks or .p12
-
-[id="plugins-{type}s-{plugin}-keystore_password"]
-===== `keystore_password`
-deprecated[3.15.0, Replaced by <<plugins-{type}s-{plugin}-ssl_keystore_password>>]
-
-* Value type is <<password,password>>
-* There is no default value for this setting.
-
-Set the keystore password
 
 
 [id="plugins-{type}s-{plugin}-common-options"]
