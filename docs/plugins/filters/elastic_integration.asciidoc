@@ -55,7 +55,7 @@ Events that _fail_ ingest pipeline processing will be tagged with `_ingest_pipel
 - When you upgrade the {stack}, upgrade {ls} (or this plugin specifically) _before_ you upgrade {kib}.
   (Note that this requirement is a departure from the typical {stack} https://www.elastic.co/guide/en/elastic-stack/current/installing-elastic-stack.html#install-order-elastic-stack[installation order].) 
 +
-The {es}-{ls}-{kib} installation order ensures the best experience with {agent}-managed pipelines, and embeds functionality from a version of {es} Ingest Node that is compatible with the plugin version (`major`.`minor`).   
+The {es}-{ls}-{kib} installation order recommended here ensures the best experience with {agent}-managed pipelines, and embeds functionality from a version of {es} Ingest Node that is compatible with the plugin version (`major`.`minor`).   
 
 [id="plugins-{type}s-{plugin}-es-tips"]
 ===== Using `filter-elastic_integration` with `output-elasticsearch`
@@ -152,7 +152,7 @@ The plugin starts in an unsafe mode with a runtime error indicating that API per
 
 To avoid these issues, set up user authentication and ensure that security in {es} is enabled (default). 
 --
-      
+
 [id="plugins-{type}s-{plugin}-supported_ingest_processors"]
 ==== Supported Ingest Processors
 
@@ -166,27 +166,27 @@ It has access to the Painless and Mustache scripting engines where applicable:
 
 | `append` | _none_
 | `bytes` | _none_
-| `communityid` | _none_
+| `community_id` | _none_
 | `convert` | _none_
 | `csv` | _none_
 | `date` | _none_
-| `dateindexname` | _none_
+| `date_index_name` | _none_
 | `dissect` | _none_
-| `dotexpander` | _none_
+| `dot_expander` | _none_
 | `drop` | _none_
 | `fail` | _none_
 | `fingerprint` | _none_
 | `foreach` | _none_
 | `grok` | _none_
 | `gsub` | _none_
-| `htmlstrip` | _none_
+| `html_strip` | _none_
 | `join` | _none_
 | `json` | _none_
-| `keyvalue` | _none_
+| `kv` | _none_
 | `lowercase` | _none_
-| `networkdirection` | _none_
+| `network_direction` | _none_
 | `pipeline` | resolved pipeline _must_ be wholly-composed of supported processors
-| `registereddomain` | _none_
+| `registered_domain` | _none_
 | `remove` | _none_
 | `rename` | _none_
 | `reroute` | _none_
@@ -206,7 +206,6 @@ h| GeoIp
 | `geoip` | requires MaxMind GeoIP2 databases, which may be provided by Logstash's Geoip Database Management _OR_ configured using <<plugins-{type}s-{plugin}-geoip_database_directory>>
 
 |=======================================================================
-
 
 [id="plugins-{type}s-{plugin}-field_mappings"]
 ===== Field Mappings
@@ -279,6 +278,73 @@ To achieve this, mappings are cached for a maximum of {cached-entry-ttl}, and ca
 * when a reloaded mapping is non-empty and is _different_ from its previously-cached value, the entry is _updated_ so that subsequent events will use the new value
 * when a reloaded mapping is newly _empty_, the previous non-empty mapping is _replaced_ with a new empty entry so that subsequent events will use the empty value
 * when the reload of a mapping _fails_, this plugin emits a log warning but the existing cache entry is unchanged and gets closer to its expiry.
+
+[id="plugins-{type}s-{plugin}-troubleshooting"]
+==== Troubleshooting
+
+Troubleshooting ingest pipelines associated with data streams requires a pragmatic approach, involving thorough analysis and debugging techniques.
+To identify the root cause of issues with pipeline execution, you need to enable debug-level logging.
+The debug logs allow monitoring the plugin's behavior and help to detect issues.
+The plugin operates through following phases: pipeline _resolution_, ingest pipeline _creation_, and pipeline _execution_.
+
+[ingest-pipeline-resolution-errors]
+===== Ingest Pipeline Resolution Errors
+
+*Plugin does not resolve ingest pipeline associated with data stream*
+
+If you encounter `No pipeline resolved for event ...` messages in the debug logs, the error indicates that the plugin is unable to resolve the ingest pipeline from the data stream.
+To further diagnose and resolve the issue, verify whether the data stream's index settings include a `default_pipeline` or `final_pipeline` configuration.
+You can inspect the index settings by running a `POST _index_template/_simulate_index/{type}-{dataset}-{namespace}` query in the {kib} Dev Tools.
+Make sure to replace `{type}-{dataset}-{namespace}` with values corresponding to your data stream.
+For further guidance, we recommend exploring {fleet-guide}/integrations.html[Manage Elastic Agent Integrations], {es} {ref}/ingest.html#pipelines-for-fleet-elastic-agent[Ingest pipelines for fleet] and {integrations-docs}[Elastic {integrations}] resources.
+
+*Ingest pipeline does not exist*
+
+If you notice `pipeline not found: ...` messages in the debug logs or `Pipeline {pipeline-name} could not be loaded` warning messages, it indicates that the plugin has successfully resolved the ingest pipeline from `default_pipeline` or `final_pipeline`, but the specified pipeline does not exist.
+To confirm whether pipeline exists, run a `GET _ingest/pipeline/{ingest-pipeline-name}` query in the {kib} Dev Tools console.
+For further guidance, we recommend exploring {fleet-guide}/integrations.html[Manage Elastic Agent Integrations], {es} {ref}/ingest.html#pipelines-for-fleet-elastic-agent[Ingest pipelines for fleet] and {integrations-docs}[Elastic {integrations}] resources.
+
+[ingest-pipeline-creation-errors]
+===== Ingest Pipeline Creation Errors
+
+If you encounter `failed to create ingest pipeline {pipeline-name} from pipeline configuration` error messages, it indicates that the plugin is unable to create an ingest pipeline from the resolved pipeline configuration.
+This issue typically arises when the pipeline configuration contains unsupported or invalid processor(s) that the plugin cannot execute.
+In such situations, the log output includes information about the issue.
+For example, the following error message indicating `inference` processor in the pipeline configuration which is not supported processor type.
+
+  [source]
+  ----
+  2025-01-21 12:29:13 [2025-01-21T20:29:13,986][ERROR][co.elastic.logstash.filters.elasticintegration.IngestPipelineFactory][main] failed to create ingest pipeline logs-my.custom-1.0.0 from pipeline configuration
+  2025-01-21 12:29:13 org.elasticsearch.ElasticsearchParseException: No processor type exists with name [inference]
+  2025-01-21 12:29:13     at org.elasticsearch.ingest.ConfigurationUtils.newConfigurationException(ConfigurationUtils.java:470) ~[logstash-filter-elastic_integration-0.1.16.jar:?]
+  2025-01-21 12:29:13     at org.elasticsearch.ingest.ConfigurationUtils.readProcessor(ConfigurationUtils.java:635)
+  ----
+
+For further guidance, we recommend exploring {fleet-guide}/integrations.html[Manage Elastic Agent Integrations], {es} {ref}/ingest.html#handling-pipeline-failures[Handling pipeline failures] resources.
+
+[ingest-pipeline-execution-errors]
+===== Ingest Pipeline Execution Errors
+
+These errors typically fall into two main categories, each requiring specific investigation and resolution steps:
+
+*Logstash catches issues while running ingest pipelines*
+
+When errors occur during the execution of ingest pipelines, {ls} attaches the `_ingest_pipeline_failure` tag to the event, making it easier to identify and investigate problematic events.
+The detailed logs are available in the {ls} logs for your investigation.
+The root cause may depend on configuration, environment or integration you are running.
+For further guidance, we recommend exploring {fleet-guide}/integrations.html[Manage Elastic Agent Integrations], {es} {ref}/ingest.html#handling-pipeline-failures[Handling pipeline failures] resources.
+
+*Errors internally occurred in the ingest pipeline*
+
+If an ingest pipeline is configured with `on_failure` conditions, failures during pipeline execution are internally handled by the ingest pipeline itself and not be visible to {ls}.
+This means that errors are captured and processed within the pipeline, rather than being passed to {ls} for logging or tagging.
+To identify and analyze such cases, go to the {kib} -> Stack Management -> Ingest pipelines and find the ingest pipeline you are using.
+Click on it and navigate to the _Failure processors_ section. If processors are configured, they may specify which field contains the failure details.
+For example, the pipeline might store error information in a `error.message` field or a custom field defined in the _Failure processors_ configuration.
+Go to the {kib} Dev Tools and search for the data (`GET {index-ingest-pipeline-is-writing}/_search`) and look for the fields mentioned in the failure processors .
+The fields have error details which help you to analyze the root cause.
+
+For further guidance, we recommend exploring {fleet-guide}/integrations.html[Manage Elastic Agent Integrations], {es} {ref}/ingest.html#handling-pipeline-failures[Handling pipeline failures] resources.
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== {elastic-integration-name} Filter Configuration Options
