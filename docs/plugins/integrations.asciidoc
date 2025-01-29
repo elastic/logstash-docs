@@ -7,7 +7,7 @@ filters and codecs--into one package.
 |=======================================================================
 | Integration Plugin | Description | Github repository
 | <<plugins-integrations-aws,aws>> | Plugins for use with Amazon Web Services (AWS). | https://github.com/logstash-plugins/logstash-integration-aws[logstash-integration-aws]
-| <<plugins-integrations-elastic_enterprise_search,elastic_enterprise_search (deprecated) >>| [deprecated at {stack} version 9.0.0 and plugin version 3.0.1] Plugins for use with Elastic Enterprise Search (deprecated). | https://github.com/logstash-plugins/logstash-integration-elastic_enterprise_search[logstash-integration-elastic_enterprise_search]
+| <<plugins-integrations-elastic_enterprise_search,elastic_enterprise_search (deprecated) >>| [deprecated at {stack} version 9.0.0 and plugin version 3.0.1] Plugins for use with Elastic Enterprise Search. | https://github.com/logstash-plugins/logstash-integration-elastic_enterprise_search[logstash-integration-elastic_enterprise_search]
 | <<plugins-integrations-jdbc,jdbc>> | Plugins for use with databases that provide JDBC drivers. | https://github.com/logstash-plugins/logstash-integration-jdbc[logstash-integration-jdbc]
 | <<plugins-integrations-kafka,kafka>> | Plugins for use with the Kafka distributed streaming platform. | https://github.com/logstash-plugins/logstash-integration-kafka[logstash-integration-kafka]
 | <<plugins-integrations-logstash,logstash>> | Plugins to enable {ls}-to-{ls} communication. | https://github.com/logstash-plugins/logstash-integration-logstash[logstash-integration-logstash]
