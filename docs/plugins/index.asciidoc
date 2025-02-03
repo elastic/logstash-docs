@@ -1,0 +1,38 @@
+[[logstash-reference]]
+= Logstash Reference
+
+include::{docs-root}/shared/versions/stack/{source_branch}.asciidoc[]
+include::{docs-root}/shared/attributes.asciidoc[]
+include::./include/attributes-ls.asciidoc[]
+include::./include/attributes-lsplugins.asciidoc[]
+
+:include-xpack:         true
+:lang:                  en
+:xls-repo-dir:          {docdir}/../x-pack/docs/{lang}
+:log-repo-dir:          {docdir}
+:plugins-repo-dir:      {docdir}/../../logstash-docs/docs
+:docker-repo:           docker.elastic.co/logstash/logstash
+:docker-image:          {docker-repo}:{logstash_version}
+
+:versioned_docs:        false
+
+:jdk:                   1.8.0
+:lsissue:               https://github.com/elastic/logstash/issues
+:lsplugindocs:          https://www.elastic.co/guide/en/logstash-versioned-plugins/current
+:tab-widget-dir:         {docdir}/static/tab-widgets
+
+
+[[introduction]]
+== Logstash Plugins
+
+Some sort of intro goes here.
+
+include::integrations.asciidoc[]
+
+include::inputs.asciidoc[]
+
+include::outputs.asciidoc[]
+
+include::filters.asciidoc[]
+
+include::codecs.asciidoc[]
