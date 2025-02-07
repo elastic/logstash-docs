@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.2.1
 :release_date: 2023-05-30
 :changelog_url: https://github.com/logstash-plugins/logstash-input-salesforce/blob/v3.2.1/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -96,7 +96,7 @@ input plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-api_version"]
-===== `api_version` 
+===== `api_version`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -105,7 +105,7 @@ By default, this uses the default Restforce API version.
 To override this, set this to something like "32.0" for example
 
 [id="plugins-{type}s-{plugin}-client_id"]
-===== `client_id` 
+===== `client_id`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -117,7 +117,7 @@ can be found here:
 https://help.salesforce.com/apex/HTViewHelpDoc?id=connected_app_create.htm
 
 [id="plugins-{type}s-{plugin}-client_secret"]
-===== `client_secret` 
+===== `client_secret`
 
   * This is a required setting.
   * Value type is <<password,password>>
@@ -126,7 +126,7 @@ https://help.salesforce.com/apex/HTViewHelpDoc?id=connected_app_create.htm
 Consumer Secret from your oauth enabled connected app
 
 [id="plugins-{type}s-{plugin}-password"]
-===== `password` 
+===== `password`
 
   * This is a required setting.
   * Value type is <<password,password>>
@@ -135,7 +135,7 @@ Consumer Secret from your oauth enabled connected app
 The password used to login to sfdc
 
 [id="plugins-{type}s-{plugin}-security_token"]
-===== `security_token` 
+===== `security_token`
 
   * This is a required setting.
   * Value type is <<password,password>>
@@ -146,7 +146,7 @@ generting a security token, see:
 https://help.salesforce.com/apex/HTViewHelpDoc?id=user_security_token.htm
 
 [id="plugins-{type}s-{plugin}-sfdc_fields"]
-===== `sfdc_fields` 
+===== `sfdc_fields`
 
   * Value type is <<array,array>>
   * Default value is `[]`
@@ -155,7 +155,7 @@ These are the field names to return in the Salesforce query
 If this is empty, all fields are returned.
 
 [id="plugins-{type}s-{plugin}-sfdc_filters"]
-===== `sfdc_filters` 
+===== `sfdc_filters`
 
   * Value type is <<string,string>>
   * Default value is `""`
@@ -178,7 +178,7 @@ Use either this or the `use_test_sandbox` configuration option
 but not both to configure the url to which the plugin connects to.
 
 [id="plugins-{type}s-{plugin}-sfdc_object_name"]
-===== `sfdc_object_name` 
+===== `sfdc_object_name`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -187,7 +187,7 @@ but not both to configure the url to which the plugin connects to.
 The name of the salesforce object you are creating or updating
 
 [id="plugins-{type}s-{plugin}-to_underscores"]
-===== `to_underscores` 
+===== `to_underscores`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -195,7 +195,7 @@ The name of the salesforce object you are creating or updating
 Setting this to true will convert SFDC's NamedFields__c to named_fields__c
 
 [id="plugins-{type}s-{plugin}-use_test_sandbox"]
-===== `use_test_sandbox` 
+===== `use_test_sandbox`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -220,7 +220,7 @@ include reading apex unit test results, flow coverage results (e.g. coverage
 of elements of sfdc flows) and security health check risks.
 
 [id="plugins-{type}s-{plugin}-username"]
-===== `username` 
+===== `username`
 
   * This is a required setting.
   * Value type is <<string,string>>

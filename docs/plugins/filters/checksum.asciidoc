@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.4
 :release_date: 2017-08-15
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-checksum/blob/v3.0.4/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -46,7 +46,7 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-algorithm"]
-===== `algorithm` 
+===== `algorithm`
 
   * Value can be any of: `md5`, `sha`, `sha1`, `sha256`, `sha384`
   * Default value is `"sha256"`
@@ -54,7 +54,7 @@ filter plugins.
 
 
 [id="plugins-{type}s-{plugin}-keys"]
-===== `keys` 
+===== `keys`
 
   * Value type is <<array,array>>
   * Default value is `["message", "@timestamp", "type"]`

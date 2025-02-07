@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.1.2
 :release_date: 2022-10-03
 :changelog_url: https://github.com/logstash-plugins/logstash-input-unix/blob/v3.1.2/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -32,7 +32,7 @@ depending on `mode`.
 [id="plugins-{type}s-{plugin}-ecs"]
 ==== Compatibility with the Elastic Common Schema (ECS)
 
-This plugin adds extra fields about the event's source. 
+This plugin adds extra fields about the event's source.
 Configure the <<plugins-{type}s-{plugin}-ecs_compatibility>> option if you want
 to ensure that these fields are compatible with {ecs-ref}[ECS].
 
@@ -68,7 +68,7 @@ input plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-data_timeout"]
-===== `data_timeout` 
+===== `data_timeout`
 
   * Value type is <<number,number>>
   * Default value is `-1`
@@ -117,7 +117,7 @@ See <<plugins-{type}s-{plugin}-ecs>> for detailed information.
 -----
 
 [id="plugins-{type}s-{plugin}-force_unlink"]
-===== `force_unlink` 
+===== `force_unlink`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -125,7 +125,7 @@ See <<plugins-{type}s-{plugin}-ecs>> for detailed information.
 Remove socket file in case of EADDRINUSE failure
 
 [id="plugins-{type}s-{plugin}-mode"]
-===== `mode` 
+===== `mode`
 
   * Value can be any of: `server`, `client`
   * Default value is `"server"`
@@ -134,7 +134,7 @@ Mode to operate in. `server` listens for client connections,
 `client` connects to a server.
 
 [id="plugins-{type}s-{plugin}-path"]
-===== `path` 
+===== `path`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -144,7 +144,7 @@ When mode is `server`, the path to listen on.
 When mode is `client`, the path to connect to.
 
 [id="plugins-{type}s-{plugin}-socket_not_present_retry_interval_seconds"]
-===== `socket_not_present_retry_interval_seconds` 
+===== `socket_not_present_retry_interval_seconds`
 
   * This is a required setting.
   * Value type is <<number,number>>

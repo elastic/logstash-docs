@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.1.0
 :release_date: 2021-08-19
 :changelog_url: https://github.com/logstash-plugins/logstash-codec-es_bulk/blob/v3.1.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -27,11 +27,11 @@ into individual events, plus metadata into the `@metadata` field.
 Encoding is not supported at this time as the Elasticsearch
 output submits Logstash events in bulk format.
 
-[id="plugins-{type}s-{plugin}-codec-settings"] 
-==== Codec settings in the `logstash-input-http` plugin 
+[id="plugins-{type}s-{plugin}-codec-settings"]
+==== Codec settings in the `logstash-input-http` plugin
 
 The {logstash-ref}/plugins-inputs-http.html[input-http] plugin has two
-configuration options for codecs: `codec` and `additional_codecs`. 
+configuration options for codecs: `codec` and `additional_codecs`.
 
 Values in `additional_codecs` are prioritized over those specified in the
 `codec` option. That is, the default `codec` is applied only if no codec

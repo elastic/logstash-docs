@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v6.2.8
 :release_date: 2024-10-22
 :changelog_url: https://github.com/logstash-plugins/logstash-codec-cef/blob/v6.2.8/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -434,7 +434,7 @@ from the CEF payload is used to interpret the given time. If the event does
 not include timezone information, this `default_timezone` is used instead.
 
 [id="plugins-{type}s-{plugin}-delimiter"]
-===== `delimiter` 
+===== `delimiter`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -493,7 +493,7 @@ If the codec handles data from a variety of sources, the ECS recommendation is t
 Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
 
 [id="plugins-{type}s-{plugin}-fields"]
-===== `fields` 
+===== `fields`
 
   * Value type is <<array,array>>
   * Default value is `[]`
@@ -516,7 +516,7 @@ a localized format, this `locale` is used to interpret locale-specific strings
 such as month abbreviations.
 
 [id="plugins-{type}s-{plugin}-name"]
-===== `name` 
+===== `name`
 
   * Value type is <<string,string>>
   * Default value is `"Logstash"`
@@ -527,7 +527,7 @@ value of the name field in the CEF header. The new value can include `%{foo}` st
 to help you build a new value from other parts of the event.
 
 [id="plugins-{type}s-{plugin}-product"]
-===== `product` 
+===== `product`
 
   * Value type is <<string,string>>
   * Default value is `"Logstash"`
@@ -538,7 +538,7 @@ value of the device product field in CEF header. The new value can include `%{fo
 to help you build a new value from other parts of the event.
 
 [id="plugins-{type}s-{plugin}-raw_data_field"]
-===== `raw_data_field` 
+===== `raw_data_field`
 
   * Value type is <<string,string>>
   * There is no default value for this setting
@@ -555,7 +555,7 @@ Store the raw data to the field, for example `[event][original]`. Existing targe
 Set to true to adhere to the specifications and encode using the CEF key name (short name) for the CEF field names.
 
 [id="plugins-{type}s-{plugin}-severity"]
-===== `severity` 
+===== `severity`
 
   * Value type is <<string,string>>
   * Default value is `"6"`
@@ -570,7 +570,7 @@ to be an integer in the range from 0 to 10 (including).
 All invalid values will be mapped to the default of 6.
 
 [id="plugins-{type}s-{plugin}-signature"]
-===== `signature` 
+===== `signature`
 
   * Value type is <<string,string>>
   * Default value is `"Logstash"`
@@ -581,7 +581,7 @@ value of the signature ID field in CEF header. The new value can include `%{foo}
 to help you build a new value from other parts of the event.
 
 [id="plugins-{type}s-{plugin}-vendor"]
-===== `vendor` 
+===== `vendor`
 
   * Value type is <<string,string>>
   * Default value is `"Elasticsearch"`
@@ -592,7 +592,7 @@ value of the device vendor field in CEF header. The new value can include `%{foo
 to help you build a new value from other parts of the event.
 
 [id="plugins-{type}s-{plugin}-version"]
-===== `version` 
+===== `version`
 
   * Value type is <<string,string>>
   * Default value is `"1.0"`

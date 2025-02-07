@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v1.0.2
 :release_date: 2017-08-15
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-emoji/blob/v1.0.2/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -54,7 +54,7 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-fallback"]
-===== `fallback` 
+===== `fallback`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -75,7 +75,7 @@ This configuration can be dynamic and include parts of the event using the
 `%{field}` syntax.
 
 [id="plugins-{type}s-{plugin}-field"]
-===== `field` 
+===== `field`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -87,7 +87,7 @@ a match by the emoji filter (e.g. `severity`).
 If this field is an array, only the first value will be used.
 
 [id="plugins-{type}s-{plugin}-override"]
-===== `override` 
+===== `override`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -97,7 +97,7 @@ whether the filter should skip being rewritten as an emoji (default) or
 overwrite the target field value with the emoji value.
 
 [id="plugins-{type}s-{plugin}-sev_alert"]
-===== `sev_alert` 
+===== `sev_alert`
 
   * Value type is <<string,string>>
   * Default value is `"🚨"`
@@ -105,7 +105,7 @@ overwrite the target field value with the emoji value.
 `sev_alert` selects the emoji/unicode character for Alert severity
 
 [id="plugins-{type}s-{plugin}-sev_critical"]
-===== `sev_critical` 
+===== `sev_critical`
 
   * Value type is <<string,string>>
   * Default value is `"🔥"`
@@ -113,7 +113,7 @@ overwrite the target field value with the emoji value.
 `sev_critical` selects the emoji/unicode character for Critical severity
 
 [id="plugins-{type}s-{plugin}-sev_debug"]
-===== `sev_debug` 
+===== `sev_debug`
 
   * Value type is <<string,string>>
   * Default value is `"🐛"`
@@ -121,7 +121,7 @@ overwrite the target field value with the emoji value.
 `sev_debug` selects the emoji/unicode character for Debug severity
 
 [id="plugins-{type}s-{plugin}-sev_emergency"]
-===== `sev_emergency` 
+===== `sev_emergency`
 
   * Value type is <<string,string>>
   * Default value is `"💥"`
@@ -129,7 +129,7 @@ overwrite the target field value with the emoji value.
 `sev_emergency` selects the emoji/unicode character for Emergency severity
 
 [id="plugins-{type}s-{plugin}-sev_error"]
-===== `sev_error` 
+===== `sev_error`
 
   * Value type is <<string,string>>
   * Default value is `"❌"`
@@ -137,7 +137,7 @@ overwrite the target field value with the emoji value.
 `sev_error` selects the emoji/unicode character for Error severity
 
 [id="plugins-{type}s-{plugin}-sev_info"]
-===== `sev_info` 
+===== `sev_info`
 
   * Value type is <<string,string>>
   * Default value is `"ℹ️"`
@@ -145,7 +145,7 @@ overwrite the target field value with the emoji value.
 `sev_info` selects the emoji/unicode character for Informational severity
 
 [id="plugins-{type}s-{plugin}-sev_notice"]
-===== `sev_notice` 
+===== `sev_notice`
 
   * Value type is <<string,string>>
   * Default value is `"👀"`
@@ -153,7 +153,7 @@ overwrite the target field value with the emoji value.
 `sev_notice` selects the emoji/unicode character for Notice severity
 
 [id="plugins-{type}s-{plugin}-sev_warning"]
-===== `sev_warning` 
+===== `sev_warning`
 
   * Value type is <<string,string>>
   * Default value is `"⚠️"`
@@ -161,7 +161,7 @@ overwrite the target field value with the emoji value.
 `sev_warning` selects the emoji/unicode character for Warning severity
 
 [id="plugins-{type}s-{plugin}-target"]
-===== `target` 
+===== `target`
 
   * Value type is <<string,string>>
   * Default value is `"emoji"`

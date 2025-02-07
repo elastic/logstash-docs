@@ -133,10 +133,10 @@ include::inputs/imap.asciidoc[]
 include::inputs/irc.asciidoc[]
 
 :edit_url: https://github.com/elastic/logstash/edit/main/docs/static/core-plugins/inputs/java_generator.asciidoc
-include::../../../logstash/docs/static/core-plugins/inputs/java_generator.asciidoc[]
+include::./static/core-plugins/inputs/java_generator.asciidoc[]
 
 :edit_url: https://github.com/elastic/logstash/edit/main/docs/static/core-plugins/inputs/java_stdin.asciidoc
-include::../../../logstash/docs/static/core-plugins/inputs/java_stdin.asciidoc[]
+include::./static/core-plugins/inputs/java_stdin.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-integration-jdbc/edit/main/docs/input-jdbc.asciidoc
 include::inputs/jdbc.asciidoc[]
@@ -186,7 +186,7 @@ include::inputs/rss.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-input-s3/edit/main/docs/index.asciidoc
 include::inputs/s3.asciidoc[]
 
-:edit_url: 
+:edit_url:
 include::inputs/s3-sns-sqs.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-input-salesforce/edit/main/docs/index.asciidoc
@@ -238,4 +238,4 @@ include::inputs/wmi.asciidoc[]
 include::inputs/xmpp.asciidoc[]
 
 
-:edit_url: 
+:edit_url:

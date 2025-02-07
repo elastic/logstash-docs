@@ -10,7 +10,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v7.1.8
 :release_date: 2024-07-26
 :changelog_url: https://github.com/logstash-plugins/logstash-integration-aws/blob/v7.1.8/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -117,7 +117,7 @@ output plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-access_key_id"]
-===== `access_key_id` 
+===== `access_key_id`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -131,7 +131,7 @@ This plugin uses the AWS SDK and supports several ways to get credentials, which
 5. IAM Instance Profile (available when running inside EC2)
 
 [id="plugins-{type}s-{plugin}-aws_credentials_file"]
-===== `aws_credentials_file` 
+===== `aws_credentials_file`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -149,7 +149,7 @@ file should look like this:
 
 
 [id="plugins-{type}s-{plugin}-batch_size"]
-===== `batch_size` 
+===== `batch_size`
 
   * Value type is <<number,number>>
   * Default value is `20`
@@ -157,7 +157,7 @@ file should look like this:
 How many data points can be given in one call to the CloudWatch API
 
 [id="plugins-{type}s-{plugin}-dimensions"]
-===== `dimensions` 
+===== `dimensions`
 
   * Value type is <<hash,hash>>
   * There is no default value for this setting.
@@ -165,7 +165,7 @@ How many data points can be given in one call to the CloudWatch API
 The default dimensions [ name, value, ... ] to use for events which do not have a `CW_dimensions` field
 
 [id="plugins-{type}s-{plugin}-field_dimensions"]
-===== `field_dimensions` 
+===== `field_dimensions`
 
   * Value type is <<string,string>>
   * Default value is `"CW_dimensions"`
@@ -179,7 +179,7 @@ or, equivalently...
     `add_field => [ "CW_dimensions", "prod" ]`
 
 [id="plugins-{type}s-{plugin}-field_metricname"]
-===== `field_metricname` 
+===== `field_metricname`
 
   * Value type is <<string,string>>
   * Default value is `"CW_metricname"`
@@ -191,7 +191,7 @@ plugin on your logstash indexer can serve all events (which of course had
 fields set on your logstash shippers.)
 
 [id="plugins-{type}s-{plugin}-field_namespace"]
-===== `field_namespace` 
+===== `field_namespace`
 
   * Value type is <<string,string>>
   * Default value is `"CW_namespace"`
@@ -202,7 +202,7 @@ so setting different namespaces will increase the number of API calls
 and those cost money.
 
 [id="plugins-{type}s-{plugin}-field_unit"]
-===== `field_unit` 
+===== `field_unit`
 
   * Value type is <<string,string>>
   * Default value is `"CW_unit"`
@@ -210,7 +210,7 @@ and those cost money.
 The name of the field used to set the unit on an event metric
 
 [id="plugins-{type}s-{plugin}-field_value"]
-===== `field_value` 
+===== `field_value`
 
   * Value type is <<string,string>>
   * Default value is `"CW_value"`
@@ -218,7 +218,7 @@ The name of the field used to set the unit on an event metric
 The name of the field used to set the value (float) on an event metric
 
 [id="plugins-{type}s-{plugin}-metricname"]
-===== `metricname` 
+===== `metricname`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -230,7 +230,7 @@ will probably want to also restrict events from passing through this output usin
 type, tag, and field matching
 
 [id="plugins-{type}s-{plugin}-namespace"]
-===== `namespace` 
+===== `namespace`
 
   * Value type is <<string,string>>
   * Default value is `"Logstash"`
@@ -238,7 +238,7 @@ type, tag, and field matching
 The default namespace to use for events which do not have a `CW_namespace` field
 
 [id="plugins-{type}s-{plugin}-proxy_uri"]
-===== `proxy_uri` 
+===== `proxy_uri`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -246,7 +246,7 @@ The default namespace to use for events which do not have a `CW_namespace` field
 URI to proxy server if required
 
 [id="plugins-{type}s-{plugin}-queue_size"]
-===== `queue_size` 
+===== `queue_size`
 
   * Value type is <<number,number>>
   * Default value is `10000`
@@ -255,7 +255,7 @@ How many events to queue before forcing a call to the CloudWatch API ahead of `t
 Set this to the number of events-per-timeframe you will be sending to CloudWatch to avoid extra API calls
 
 [id="plugins-{type}s-{plugin}-region"]
-===== `region` 
+===== `region`
 
   * Value can be any of: `us-east-1`, `us-east-2`, `us-west-1`, `us-west-2`, `eu-central-1`, `eu-west-1`, `eu-west-2`, `ap-southeast-1`, `ap-southeast-2`, `ap-northeast-1`, `ap-northeast-2`, `sa-east-1`, `us-gov-west-1`, `cn-north-1`, `ap-south-1`, `ca-central-1`
   * Default value is `"us-east-1"`
@@ -263,7 +263,7 @@ Set this to the number of events-per-timeframe you will be sending to CloudWatch
 The AWS Region
 
 [id="plugins-{type}s-{plugin}-secret_access_key"]
-===== `secret_access_key` 
+===== `secret_access_key`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -271,7 +271,7 @@ The AWS Region
 The AWS Secret Access Key
 
 [id="plugins-{type}s-{plugin}-session_token"]
-===== `session_token` 
+===== `session_token`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -279,7 +279,7 @@ The AWS Secret Access Key
 The AWS Session token for temporary credential
 
 [id="plugins-{type}s-{plugin}-timeframe"]
-===== `timeframe` 
+===== `timeframe`
 
   * Value type is <<string,string>>
   * Default value is `"1m"`
@@ -296,7 +296,7 @@ We only call the API if there is data to send.
 See the Rufus Scheduler docs for an https://github.com/jmettraux/rufus-scheduler#the-time-strings-understood-by-rufus-scheduler[explanation of allowed values]
 
 [id="plugins-{type}s-{plugin}-unit"]
-===== `unit` 
+===== `unit`
 
   * Value can be any of: `Seconds`, `Microseconds`, `Milliseconds`, `Bytes`, `Kilobytes`, `Megabytes`, `Gigabytes`, `Terabytes`, `Bits`, `Kilobits`, `Megabits`, `Gigabits`, `Terabits`, `Percent`, `Count`, `Bytes/Second`, `Kilobytes/Second`, `Megabytes/Second`, `Gigabytes/Second`, `Terabytes/Second`, `Bits/Second`, `Kilobits/Second`, `Megabits/Second`, `Gigabits/Second`, `Terabits/Second`, `Count/Second`, `None`
   * Default value is `"Count"`
@@ -315,7 +315,7 @@ For cases where the default certificates are unavailable, e.g. Windows,
 you can set this to `true`.
 
 [id="plugins-{type}s-{plugin}-value"]
-===== `value` 
+===== `value`
 
   * Value type is <<string,string>>
   * Default value is `"1"`

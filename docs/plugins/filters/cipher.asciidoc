@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v4.0.3
 :release_date: 2022-06-21
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-cipher/blob/v4.0.3/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -55,7 +55,7 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-algorithm"]
-===== `algorithm` 
+===== `algorithm`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -69,7 +69,7 @@ A list of supported algorithms depends on the versions of Logstash, JRuby, and J
     bin/ruby -ropenssl -e 'puts OpenSSL::Cipher.ciphers'
 
 [id="plugins-{type}s-{plugin}-base64"]
-===== `base64` 
+===== `base64`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -79,7 +79,7 @@ A list of supported algorithms depends on the versions of Logstash, JRuby, and J
 
 
 [id="plugins-{type}s-{plugin}-cipher_padding"]
-===== `cipher_padding` 
+===== `cipher_padding`
 
   * Value type is <<string,string>>
   ** `0`: means `false`
@@ -99,7 +99,7 @@ fail to encrypt any input plaintext that doesn't strictly adhere to the
     filter { cipher { cipher_padding => 0 }}
 
 [id="plugins-{type}s-{plugin}-iv_random_length"]
-===== `iv_random_length` 
+===== `iv_random_length`
 
   * Value type is <<number,number>>
   * There is no default value for this setting.
@@ -122,7 +122,7 @@ is used. AES Algorithms generally use a 16-byte IV:
     filter { cipher { iv_random_length => 16 }}
 
 [id="plugins-{type}s-{plugin}-key"]
-===== `key` 
+===== `key`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -133,12 +133,12 @@ The key to use for encryption and decryption operations.
 ============
 Please read the https://github.com/jruby/jruby/wiki/UnlimitedStrengthCrypto[UnlimitedStrengthCrypto topic] in the https://github.com/jruby/jruby[jruby] github repo if you see a runtime error that resembles:
 
-`java.security.InvalidKeyException: Illegal key size: possibly you need to install 
+`java.security.InvalidKeyException: Illegal key size: possibly you need to install
 Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files for your JRE`
 ============
 
 [id="plugins-{type}s-{plugin}-key_pad"]
-===== `key_pad` 
+===== `key_pad`
 
   * Value type is <<string,string>>
   * Default value is `"\u0000"`
@@ -146,7 +146,7 @@ Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files f
 The character used to pad the key to the required <<plugins-{type}s-{plugin}-key_size>>.
 
 [id="plugins-{type}s-{plugin}-key_size"]
-===== `key_size` 
+===== `key_size`
 
   * Value type is <<number,number>>
   * Default value is `16`
@@ -155,13 +155,13 @@ The cipher's required key size, which depends on which <<plugins-{type}s-{plugin
 you are using. If a <<plugins-{type}s-{plugin}-key>> is specified with a shorter value,
 it will be padded with <<plugins-{type}s-{plugin}-key_pad>>.
 
-Example, for AES-128, we must have 16 char long key. AES-256 = 32 chars 
+Example, for AES-128, we must have 16 char long key. AES-256 = 32 chars
 [source,ruby]
     filter { cipher { key_size => 16 }
 
 
 [id="plugins-{type}s-{plugin}-max_cipher_reuse"]
-===== `max_cipher_reuse` 
+===== `max_cipher_reuse`
 
   * Value type is <<number,number>>
   * Default value is `1`
@@ -180,7 +180,7 @@ instance and max_cipher_reuse = 1 by default
     filter { cipher { max_cipher_reuse => 1000 }}
 
 [id="plugins-{type}s-{plugin}-mode"]
-===== `mode` 
+===== `mode`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -189,7 +189,7 @@ instance and max_cipher_reuse = 1 by default
   * There is no default value for this setting.
 
 [id="plugins-{type}s-{plugin}-source"]
-===== `source` 
+===== `source`
 
   * Value type is <<string,string>>
   * Default value is `"message"`
@@ -204,7 +204,7 @@ Example, to use the `message` field (default) :
     filter { cipher { source => "message" } }
 
 [id="plugins-{type}s-{plugin}-target"]
-===== `target` 
+===== `target`
 
   * Value type is <<string,string>>
   * Default value is `"message"`

@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.1.7
 :release_date: 2018-04-06
 :changelog_url: https://github.com/logstash-plugins/logstash-input-xmpp/blob/v3.1.7/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -48,7 +48,7 @@ input plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-host"]
-===== `host` 
+===== `host`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -57,7 +57,7 @@ The xmpp server to connect to. This is optional. If you omit this setting,
 the host on the user/identity is used. (`foo.com` for `user@foo.com`)
 
 [id="plugins-{type}s-{plugin}-password"]
-===== `password` 
+===== `password`
 
   * This is a required setting.
   * Value type is <<password,password>>
@@ -66,7 +66,7 @@ the host on the user/identity is used. (`foo.com` for `user@foo.com`)
 The xmpp password for the user/identity.
 
 [id="plugins-{type}s-{plugin}-rooms"]
-===== `rooms` 
+===== `rooms`
 
   * Value type is <<array,array>>
   * There is no default value for this setting.
@@ -75,7 +75,7 @@ if muc/multi-user-chat required, give the name of the room that
 you want to join: `room@conference.domain/nick`
 
 [id="plugins-{type}s-{plugin}-user"]
-===== `user` 
+===== `user`
 
   * This is a required setting.
   * Value type is <<string,string>>

@@ -1,21 +1,23 @@
-logstash-docs
-=============
+THIS BRANCH IS FOR TESTING
 
-Documentation repository for Logstash static asciidoc and generated plugin asciidoc.
+To build:
 
-# GENERATED REPOSITORY
-# DO NOT EDIT
-# HUGS.
+1. Copy the [`docs/include` dir](https://github.com/elastic/logstash/tree/main/docs/include) from elastic/logstash to this repo under `docs/plugins/`. The final dirpath should be `docs/plugins/include`.
 
-## License
+1. Copy the [`docs/static/core-plugins dir`](https://github.com/elastic/logstash/tree/main/docs/static/core-plugins) from elastic/logstash to this repo under `docs/plugins`. The final dirpath should be `docs/plugins/static/core-plugins/`.
 
-Shield: [![CC BY-NC-ND 4.0][cc-by-nc-nd-shield]][cc-by-nc-nd]
+2. Find and replace:
+  Find: `../../../../logstash/docs/include`
+  Replace: `../include`
 
-This work is licensed under a
-[Creative Commons Attribution-NonCommercial-NoDerivs 4.0 International License][cc-by-nc-nd].
+1. Find and replace:
+  Find: `../../../logstash/docs/static/`
+  Replace:`./static/`
 
-[![CC BY-NC-ND 4.0][cc-by-nc-nd-image]][cc-by-nc-nd]
+1. Find and replace:
+  Find: `../../include`
+  Replace: `../../../include`
 
-[cc-by-nc-nd]: http://creativecommons.org/licenses/by-nc-nd/4.0/
-[cc-by-nc-nd-image]: https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png
-[cc-by-nc-nd-shield]: https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg
+```
+$GIT_HOME/docs/build_docs --doc $GIT_HOME/logstash-docs/docs/plugins/index.asciidoc --chunk 1
+```

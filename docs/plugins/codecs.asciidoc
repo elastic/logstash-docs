@@ -1,7 +1,7 @@
 [[codec-plugins]]
 == Codec plugins
 
-A codec plugin changes the data representation of an event. Codecs are essentially stream filters that can operate as part 
+A codec plugin changes the data representation of an event. Codecs are essentially stream filters that can operate as part
 of an input or output.
 
 The following codec plugins are available below. For a list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Support Matrix].
@@ -76,13 +76,13 @@ include::codecs/graphite.asciidoc[]
 include::codecs/gzip_lines.asciidoc[]
 
 :edit_url: https://github.com/elastic/logstash/edit/main/docs/static/core-plugins/codecs/java_dots.asciidoc
-include::../../../logstash/docs/static/core-plugins/codecs/java_dots.asciidoc[]
+include::./static/core-plugins/codecs/java_dots.asciidoc[]
 
 :edit_url: https://github.com/elastic/logstash/edit/main/docs/static/core-plugins/codecs/java_line.asciidoc
-include::../../../logstash/docs/static/core-plugins/codecs/java_line.asciidoc[]
+include::./static/core-plugins/codecs/java_line.asciidoc[]
 
 :edit_url: https://github.com/elastic/logstash/edit/main/docs/static/core-plugins/codecs/java_plain.asciidoc
-include::../../../logstash/docs/static/core-plugins/codecs/java_plain.asciidoc[]
+include::./static/core-plugins/codecs/java_plain.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-codec-json/edit/main/docs/index.asciidoc
 include::codecs/json.asciidoc[]
@@ -115,4 +115,4 @@ include::codecs/protobuf.asciidoc[]
 include::codecs/rubydebug.asciidoc[]
 
 
-:edit_url: 
+:edit_url:
