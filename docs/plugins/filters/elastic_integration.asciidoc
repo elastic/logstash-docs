@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v8.17.0
-:release_date: 2025-01-08
-:changelog_url: https://github.com/elastic/logstash-filter-elastic_integration/blob/v8.17.0/CHANGELOG.md
+:version: v9.0.0.prerelease01
+:release_date: 2025-02-05
+:changelog_url: https://github.com/elastic/logstash-filter-elastic_integration/blob/v9.0.0.prerelease01/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -55,7 +55,7 @@ Events that _fail_ ingest pipeline processing will be tagged with `_ingest_pipel
 - When you upgrade the {stack}, upgrade {ls} (or this plugin specifically) _before_ you upgrade {kib}.
   (Note that this requirement is a departure from the typical {stack} https://www.elastic.co/guide/en/elastic-stack/current/installing-elastic-stack.html#install-order-elastic-stack[installation order].) 
 +
-The {es}-{ls}-{kib} installation order ensures the best experience with {agent}-managed pipelines, and embeds functionality from a version of {es} Ingest Node that is compatible with the plugin version (`major`.`minor`).   
+The {es}-{ls}-{kib} installation order recommended here ensures the best experience with {agent}-managed pipelines, and embeds functionality from a version of {es} Ingest Node that is compatible with the plugin version (`major`.`minor`).   
 
 [id="plugins-{type}s-{plugin}-es-tips"]
 ===== Using `filter-elastic_integration` with `output-elasticsearch`
