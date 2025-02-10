@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v7.2.0-plugins-codecs-cloudfront,v7.2.0>> | 2025-02-10
 | <<v7.1.8-plugins-codecs-cloudfront,v7.1.8>> | 2024-07-26
 | <<v7.1.7-plugins-codecs-cloudfront,v7.1.7>> | 2024-07-02
 | <<v7.1.6-plugins-codecs-cloudfront,v7.1.6>> | 2023-09-12
@@ -21,6 +22,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.0.1-plugins-codecs-cloudfront,v3.0.1>> | 2017-06-23
 |=======================================================================
 
+include::cloudfront-v7.2.0.asciidoc[]
 include::cloudfront-v7.1.8.asciidoc[]
 include::cloudfront-v7.1.7.asciidoc[]
 include::cloudfront-v7.1.6.asciidoc[]
