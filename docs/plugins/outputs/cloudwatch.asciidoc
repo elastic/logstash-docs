@@ -326,7 +326,6 @@ If provided, this must be a string which can be converted to a float, for exampl
 If you set this option you should probably set the `unit` option along with it
 
 
-
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
 
