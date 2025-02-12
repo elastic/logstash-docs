@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.4
-:release_date: 2024-07-08
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-snmp/blob/v4.0.4/CHANGELOG.md
+:version: v4.0.6
+:release_date: 2025-01-23
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-snmp/blob/v4.0.6/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -76,7 +76,7 @@ This change should not affect existing pipelines, unless they have custom error 
 ===== Migration notes: `logstash-input-snmptrap`
 
 As a component of the new `logstash-integration-snmp` plugin, the `logstash-input-snmptrap` plugin offers _almost the same 
-capabilities_ as the stand-alone https://github.com/logstash-plugins/logstash-input-snmp[logstash-input-snmp] plugin. 
+capabilities_ as the stand-alone https://github.com/logstash-plugins/logstash-input-snmptrap[logstash-input-snmptrap] plugin. 
 
 You might need to address some behavior changes depending on your use case and how the ingested data is being handled through the pipeline.
 
