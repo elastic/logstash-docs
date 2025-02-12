@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v0.1.5
-:release_date: 2024-09-12
-:changelog_url: https://github.com/logstash-plugins/logstash-input-elastic_serverless_forwarder/blob/v0.1.5/CHANGELOG.md
+:version: v1.0.0
+:release_date: 2024-12-18
+:changelog_url: https://github.com/logstash-plugins/logstash-input-elastic_serverless_forwarder/blob/v1.0.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -58,14 +58,6 @@ input {
 ----
 
 |=======================================================================================================================
-
-.Technical Preview
-****
-This {esf-name} input plugin is part of a _Technical Preview_, which means that both configuration options and implementation details are subject to change in minor releases without being preceded by deprecation warnings.
-
-Before upgrading this plugin or Logstash itself, please pay special attention to this plugin's https://github.com/logstash-plugins/logstash-input-elastic_serverless_forwarder/blob/main/CHANGELOG.md[CHANGELOG.md] to avoid being caught by surprise.
-****
-
 
 [id="plugins-{type}s-{plugin}-enrichment"]
 ==== Enrichment

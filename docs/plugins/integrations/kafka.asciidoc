@@ -2,14 +2,14 @@
 :type: integration
 :default_plugin: 1
 :no_codec:
-:kafka_client: 3.7.1
+:kafka_client: 3.8.1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.5.3
-:release_date: 2024-11-25
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.5.3/CHANGELOG.md
+:version: v11.6.0
+:release_date: 2025-01-07
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.6.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!

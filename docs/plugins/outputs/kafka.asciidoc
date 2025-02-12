@@ -3,15 +3,15 @@
 :type: output
 :default_plugin: 1
 :default_codec: plain
-:kafka_client: 3.7
-:kafka_client_doc: 37
+:kafka_client: 3.8.1
+:kafka_client_doc: 38
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.5.3
-:release_date: 2024-11-25
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.5.3/CHANGELOG.md
+:version: v11.6.0
+:release_date: 2025-01-07
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.6.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -103,6 +103,13 @@ See the https://kafka.apache.org/{kafka_client_doc}/documentation for more detai
 | <<plugins-{type}s-{plugin}-retries>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-retry_backoff_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-sasl_client_callback_handler_class>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-sasl_oauthbearer_token_endpoint_url>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-sasl_oauthbearer_scope_claim_name>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-sasl_login_callback_handler_class>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-sasl_login_connect_timeout_ms>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-sasl_login_read_timeout_ms>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-sasl_login_retry_backoff_ms>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-sasl_login_retry_backoff_max_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-sasl_jaas_config>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-sasl_kerberos_service_name>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-sasl_mechanism>> |<<string,string>>|No
@@ -393,12 +400,61 @@ In versions prior to 10.5.0, any exception is retried indefinitely unless the `r
 
 The amount of time to wait before attempting to retry a failed produce request to a given topic partition.
 
-[id="plugins-{type}s-{plugin}-sasl_client_callback_handler_class""]
+[id="plugins-{type}s-{plugin}-sasl_client_callback_handler_class"]
 ===== `sasl_client_callback_handler_class`
-* Value type is <<string,string>>
-* There is no default value for this setting.
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
 
 The SASL client callback handler class the specified SASL mechanism should use.
+
+[id="plugins-{type}s-{plugin}-sasl_oauthbearer_token_endpoint_url"]
+===== `sasl_oauthbearer_token_endpoint_url`
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The URL for the OAuth 2.0 issuer token endpoint.
+
+[id="plugins-{type}s-{plugin}-sasl_oauthbearer_scope_claim_name"]
+===== `sasl_oauthbearer_scope_claim_name`
+  * Value type is <<string,string>>
+  * Default value is `"scope"`
+
+(optional) The override name of the scope claim.
+
+[id="plugins-{type}s-{plugin}-sasl_login_callback_handler_class"]
+===== `sasl_login_callback_handler_class`
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The SASL login callback handler class the specified SASL mechanism should use.
+
+[id="plugins-{type}s-{plugin}-sasl_login_connect_timeout_ms"]
+===== `sasl_login_connect_timeout_ms`
+  * Value type is <<number,number>>
+  * There is no default value for this setting.
+
+(optional) The duration, in milliseconds, for HTTPS connect timeout
+
+[id="plugins-{type}s-{plugin}-sasl_login_read_timeout_ms"]
+===== `sasl_login_read_timeout_ms`
+  * Value type is <<number,number>>
+  * There is no default value for this setting.
+
+(optional) The duration, in milliseconds, for HTTPS read timeout.
+
+[id="plugins-{type}s-{plugin}-sasl_login_retry_backoff_ms"]
+===== `sasl_login_retry_backoff_ms`
+  * Value type is <<number,number>>
+  * Default value is `100` milliseconds.
+
+(optional) The duration, in milliseconds, to wait between HTTPS call attempts.
+
+[id="plugins-{type}s-{plugin}-sasl_login_retry_backoff_max_ms"]
+===== `sasl_login_retry_backoff_max_ms`
+  * Value type is <<number,number>>
+  * Default value is `10000` milliseconds.
+
+(optional) The maximum duration, in milliseconds, for HTTPS call attempts.
 
 [id="plugins-{type}s-{plugin}-sasl_jaas_config"]
 ===== `sasl_jaas_config` 
