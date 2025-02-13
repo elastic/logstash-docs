@@ -108,7 +108,6 @@ This plugin supports the following configuration options plus the <<{version}-pl
 | <<{version}-plugins-{type}s-{plugin}-unit>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["Seconds", "Microseconds", "Milliseconds", "Bytes", "Kilobytes", "Megabytes", "Gigabytes", "Terabytes", "Bits", "Kilobits", "Megabits", "Gigabits", "Terabits", "Percent", "Count", "Bytes/Second", "Kilobytes/Second", "Megabytes/Second", "Gigabytes/Second", "Terabytes/Second", "Bits/Second", "Kilobits/Second", "Megabits/Second", "Gigabits/Second", "Terabits/Second", "Count/Second", "None"]`|No
 | <<{version}-plugins-{type}s-{plugin}-use_aws_bundled_ca>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
 | <<{version}-plugins-{type}s-{plugin}-value>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
-| <<{version}-plugins-{type}s-{plugin}-web_identity_token_file>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
 |=======================================================================
 
 Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
