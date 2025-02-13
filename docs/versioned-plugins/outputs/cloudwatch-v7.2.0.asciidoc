@@ -324,17 +324,6 @@ If provided, this must be a string which can be converted to a float, for exampl
     "1", "2.34", ".5", and "0.67"
 If you set this option you should probably set the `unit` option along with it
 
-[id="{version}-plugins-{type}s-{plugin}-web_identity_token_file"]
-===== `web_identity_token_file`
-
-* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
-
-Absolute path to the file on disk containing OIDC token for https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html[IRSA].
-Set the path to `"/var/run/secrets/eks.amazonaws.com/serviceaccount/token"` when using Amazon EKS.
-If specified, <<{version}-plugins-{type}s-{plugin}-role_arn>> must not be empty.
-
-For the details of setting up IAM roles and Kubernetes service accounts, check out https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html[userguide]
-
 
 [id="{version}-plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
