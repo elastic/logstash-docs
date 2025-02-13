@@ -66,7 +66,6 @@ This plugin supports the following configuration options plus the <<{version}-pl
 | <<{version}-plugins-{type}s-{plugin}-secret_access_key>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
 | <<{version}-plugins-{type}s-{plugin}-session_token>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
 | <<{version}-plugins-{type}s-{plugin}-use_aws_bundled_ca>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
-| <<{version}-plugins-{type}s-{plugin}-web_identity_token_file>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
 |=======================================================================
 
 Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
