@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v7.2.1-plugins-outputs-sqs,v7.2.1>> | 2025-02-13
 | <<v7.2.0-plugins-outputs-sqs,v7.2.0>> | 2025-02-10
 | <<v7.1.8-plugins-outputs-sqs,v7.1.8>> | 2024-07-26
 | <<v7.1.7-plugins-outputs-sqs,v7.1.7>> | 2024-07-02
@@ -28,6 +29,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v4.0.2-plugins-outputs-sqs,v4.0.2>> | 2017-06-23
 |=======================================================================
 
+include::sqs-v7.2.1.asciidoc[]
 include::sqs-v7.2.0.asciidoc[]
 include::sqs-v7.1.8.asciidoc[]
 include::sqs-v7.1.7.asciidoc[]
