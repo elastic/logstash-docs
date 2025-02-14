@@ -8,9 +8,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v7.0.0
-:release_date: 2024-12-02
-:changelog_url: https://github.com/logstash-plugins/logstash-input-beats/blob/v7.0.0/CHANGELOG.md
+:version: v7.0.1
+:release_date: 2025-01-30
+:changelog_url: https://github.com/logstash-plugins/logstash-input-beats/blob/v7.0.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
