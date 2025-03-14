@@ -8,6 +8,7 @@ Documentation repository for Logstash static asciidoc and generated plugin ascii
 # HUGS.
 
 ## License
+
 Shield: [![CC BY-NC-ND 4.0][cc-by-nc-nd-shield]][cc-by-nc-nd]
 
 This work is licensed under a
