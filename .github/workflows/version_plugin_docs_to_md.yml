@@ -1,3 +1,6 @@
+---
+# This workflow converts the versioned plugin docs from asciidoc to markdown
+# every time a commit is pushed to the versioned_plugin_docs branch.
 name: Convert versions plugin docs to markdown
 
 on:
