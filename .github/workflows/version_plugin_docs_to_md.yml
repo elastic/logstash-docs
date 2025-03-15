@@ -44,3 +44,10 @@ jobs:
         - name: Migrate
           working-directory: ./asciidocalypse/migration-zone/logstash-versioned-plugins/scripts
           run: ./migrate.sh
+
+        - uses: actions/upload-artifact@v4
+          with:
+            name: migrated-docs
+            if-no-files-found: error
+            retention-days: 1
+            path: asciidocalypse/migration-zone/logstash-versioned-plugins
