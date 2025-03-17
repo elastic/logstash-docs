@@ -1,0 +1,56 @@
+---
+# This workflow converts the versioned plugin docs from asciidoc to markdown
+# every time a commit is pushed to the versioned_plugin_docs branch.
+name: Convert versions plugin docs to markdown
+
+on:
+  workflow_dispatch: ~
+  push:
+    branches:
+      - versioned_plugin_docs
+
+permissions:
+  contents: read
+
+jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+          with:
+            ref: versioned_plugin_docs
+            path: logstash-docs
+            persist-credentials: false
+        - uses: actions/checkout@v4
+          with:
+            repository: elastic/docs
+            path: docs
+            persist-credentials: false
+        - uses: actions/checkout@v4
+          with:
+            repository: elastic/adoc-to-md
+            path: adoc-to-md
+            token: ${{ secrets.ADOC_TO_MD_PAT }}
+            persist-credentials: false
+        - uses: actions/checkout@v4
+          with:
+            repository: elastic/asciidocalypse
+            ref: main-archive
+            path: asciidocalypse
+            token: ${{ secrets.ADOC_TO_MD_PAT }}
+            persist-credentials: false
+
+        - name: Create docker image
+          working-directory: ./adoc-to-md/src/docker
+          run: ./create_image.sh
+
+        - name: Migrate
+          working-directory: ./asciidocalypse/migration-zone/logstash-versioned-plugins/scripts
+          run: ./migrate.sh
+
+        - uses: actions/upload-artifact@v4
+          with:
+            name: migrated-docs
+            if-no-files-found: error
+            retention-days: 1
+            path: asciidocalypse/migration-zone/logstash-versioned-plugins
