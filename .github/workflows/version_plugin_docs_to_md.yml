@@ -52,9 +52,10 @@ jobs:
         - run: |
             docker run -dit --rm --name adoc-to-md \
               -v ./logstash-docs:/doc/logstash-docs \
-              -v ./out:/out \
               -e HISTFILE=/scripts/.bash_history \
               adoc-builder
+            
+            docker cp adoc-to-md:/out ./out
 
         - run: ls out
 
