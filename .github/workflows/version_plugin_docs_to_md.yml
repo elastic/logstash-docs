@@ -41,6 +41,8 @@ jobs:
             token: ${{ secrets.ADOC_TO_MD_PAT }}
             persist-credentials: false
 
+        - run: docker volume create out
+
         - name: Create docker image
           working-directory: ./adoc-to-md/src/docker
           run: ./create_image.sh
