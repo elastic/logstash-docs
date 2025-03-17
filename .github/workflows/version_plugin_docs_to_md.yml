@@ -55,6 +55,8 @@ jobs:
               -e HISTFILE=/scripts/.bash_history \
               adoc-builder
             
+            sleep 30
+            
             docker cp adoc-to-md:/out ./out
 
         - run: ls out
