@@ -45,6 +45,9 @@ jobs:
           working-directory: ./adoc-to-md/src/docker
           run: ./create_image.sh
 
+        - name: Debug
+          run: ls logstash-docs/docs/versioned-plugins
+
         - name: Migrate
           working-directory: ./asciidocalypse/migration-zone/logstash-versioned-plugins/scripts
           run: ./migrate.sh
