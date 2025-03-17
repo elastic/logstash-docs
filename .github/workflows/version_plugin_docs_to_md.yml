@@ -45,13 +45,22 @@ jobs:
           working-directory: ./adoc-to-md/src/docker
           run: ./create_image.sh
 
-        - name: Migrate
-          working-directory: ./asciidocalypse/migration-zone/logstash-versioned-plugins/scripts
-          run: ./migrate.sh
+        # - name: Migrate
+        #   working-directory: ./asciidocalypse/migration-zone/logstash-versioned-plugins/scripts
+        #   run: ./migrate.sh
 
-        - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4
-          with:
-            name: migrated-docs
-            if-no-files-found: error
-            retention-days: 1
-            path: asciidocalypse/migration-zone/logstash-versioned-plugins
+        - run: |
+            docker run -dit --rm --name adoc-to-md \
+              -v ./logstash-docs:/doc/logstash-docs \
+              -v out:/out \
+              -e HISTFILE=/scripts/.bash_history \
+              adoc-builder
+
+        - run: ls out
+
+        # - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4
+        #   with:
+        #     name: migrated-docs
+        #     if-no-files-found: error
+        #     retention-days: 1
+        #     path: asciidocalypse/migration-zone/logstash-versioned-plugins
