@@ -45,21 +45,9 @@ jobs:
           working-directory: ./adoc-to-md/src/docker
           run: ./create_image.sh
 
-        # - name: Migrate
-        #   working-directory: ./asciidocalypse/migration-zone/logstash-versioned-plugins/scripts
-        #   run: ./migrate.sh
-
-        - run: |
-            docker run -dit --rm --name adoc-to-md \
-              -v ./logstash-docs:/doc/logstash-docs \
-              -e HISTFILE=/scripts/.bash_history \
-              adoc-builder
-            
-            sleep 30
-            
-            docker cp adoc-to-md:/out ./out
-
-        - run: ls out
+        - name: Migrate
+          working-directory: ./asciidocalypse/migration-zone/logstash-versioned-plugins/scripts
+          run: ./migrate.sh
 
         # - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4
         #   with:
