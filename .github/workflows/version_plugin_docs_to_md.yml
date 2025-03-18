@@ -24,11 +24,13 @@ jobs:
         - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
           with:
             repository: elastic/docs
+            ref: master
             path: docs
             persist-credentials: false
         - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
           with:
             repository: elastic/adoc-to-md
+            ref: ci-adjustments
             path: adoc-to-md
             token: ${{ secrets.ADOC_TO_MD_PAT }}
             persist-credentials: false
@@ -41,16 +43,22 @@ jobs:
             persist-credentials: false
 
         - name: Create docker image
-          working-directory: ./adoc-to-md/src/docker
-          run: ./create_image.sh
+
+          run: |
+            cd ./adoc-to-md/src/docker
+            ./create_image.sh
+
+        - name: Debug
+          run: ls logstash-docs/docs/versioned-plugins
 
         - name: Migrate
-          working-directory: ./asciidocalypse/migration-zone/logstash-versioned-plugins/scripts
-          run: ./migrate.sh
+          run: |
+            cd ./asciidocalypse/migration-zone/logstash-versioned-plugins/scripts
+            ./migrate.sh
 
-        - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4
-          with:
-            name: migrated-docs
-            if-no-files-found: error
-            retention-days: 1
-            path: asciidocalypse/migration-zone/logstash-versioned-plugins
+        # - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4
+        #   with:
+        #     name: migrated-docs
+        #     if-no-files-found: error
+        #     retention-days: 1
+        #     path: asciidocalypse/migration-zone/logstash-versioned-plugins
