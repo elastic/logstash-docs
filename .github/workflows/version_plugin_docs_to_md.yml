@@ -30,6 +30,7 @@ jobs:
         - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
           with:
             repository: elastic/adoc-to-md
+            ref: ci-adjustments
             path: adoc-to-md
             token: ${{ secrets.ADOC_TO_MD_PAT }}
             persist-credentials: false
