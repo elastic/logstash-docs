@@ -8,7 +8,7 @@ on:
       branch:
         description: 'Branch to update plugin docs'
         required: true
-        default: '8.18'
+        default: '9.0'
         type: string
 
 permissions:
@@ -43,7 +43,7 @@ jobs:
       - name: Clone elastic/logstash
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
-          repository: elastic/logstash
+          repository: elastic/logstash  # This step still needed for generating plugins line 56? 
           path: logstash
           fetch-depth: 1
           ref: ${{ github.event.inputs.branch }}
@@ -65,7 +65,7 @@ jobs:
           bundle exec ruby plugindocs.rb --skip-existing --output-path ../logstash-docs ../logstash/plugins_version_docs.json
       - name: Build docs
         working-directory: ./logstash
-        run: ../docs/build_docs --asciidoctor --respect_edit_url_overrides --doc docs/index.asciidoc --resource=../logstash-docs/docs/ --chunk 1
+        run: ../docs/build_docs --asciidoctor --respect_edit_url_overrides --doc docs/index.asciidoc --resource=../logstash-docs/docs/ --chunk 1  # sub in new V3 build command
       - run: echo "T=$(date +%s)" >> $GITHUB_ENV
       - run: echo "BRANCH=update_docs_${T}" >> $GITHUB_ENV
       - name: Commit and Push
@@ -81,5 +81,5 @@ jobs:
           git push origin $BRANCH
       - name: Create Pull Request
         run: |
-          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -X POST -d "{\"title\": \"updated docs for ${{ github.event.inputs.branch }}\",\"head\": \"${BRANCH}\",\"base\": \"${{ github.event.inputs.branch }}\"}" https://api.github.com/repos/elastic/logstash-docs/pulls
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -X POST -d "{\"title\": \"updated docs for ${{ github.event.inputs.branch }}\",\"head\": \"${BRANCH}\",\"base\": \"${{ github.event.inputs.branch }}\"}" https://api.github.com/repos/elastic/logstash-docs/pulls   # sub in new target repo if different
       - run: echo "### Updated docs for ${{ github.event.inputs.branch }} :rocket:" >> $GITHUB_STEP_SUMMARY
