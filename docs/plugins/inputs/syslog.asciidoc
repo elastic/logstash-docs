@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.7.0
 :release_date: 2023-10-17
 :changelog_url: https://github.com/logstash-plugins/logstash-input-syslog/blob/v3.7.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -89,7 +89,7 @@ Controls this plugin's compatibility with the
 Labels for facility levels defined in RFC3164.
 
 You can use this option to override the integer->label mapping for syslog inputs
-that behave differently than the RFCs. 
+that behave differently than the RFCs.
 
 Provide a zero-indexed array with all of your facility labels _in order_.
 If a log message contains a facility number with no corresponding entry,

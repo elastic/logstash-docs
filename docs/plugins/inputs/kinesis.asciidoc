@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v2.3.0
 :release_date: 2023-08-28
 :changelog_url: https://github.com/logstash-plugins/logstash-input-kinesis/blob/v2.3.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -23,7 +23,7 @@ include::{include_path}/plugin_header.asciidoc[]
 ==== Description
 
 You can use this plugin to receive events through
-http://docs.aws.amazon.com/kinesis/latest/dev/introduction.html[AWS Kinesis]. 
+http://docs.aws.amazon.com/kinesis/latest/dev/introduction.html[AWS Kinesis].
 This plugin uses the http://docs.aws.amazon.com/kinesis/latest/dev/kinesis-record-processor-implementation-app-java.html[Java Kinesis Client
 Library]. The documentation at
 https://github.com/awslabs/amazon-kinesis-client will be useful.
@@ -207,21 +207,21 @@ Session name to use when assuming an IAM role. This is recorded in CloudTrail lo
 
 [id="plugins-{type}s-{plugin}-additional_settings"]
 ===== `additional_settings`
- 
+
 * Value type is <<string,string>>
-* There is no default value for this setting 
+* There is no default value for this setting
 
 The KCL provides several configuration options which can be set in
 https://github.com/awslabs/amazon-kinesis-client/blob/master/amazon-kinesis-client-multilang/src/main/java/software/amazon/kinesis/coordinator/KinesisClientLibConfiguration.java[KinesisClientLibConfiguration].
 These options are configured via various function calls that all begin with
 `with`. Some of these functions take complex types, which are not supported.
 However, you may invoke any one of the `withX()` functions that take a primitive
-by providing key-value pairs in `snake_case`. 
+by providing key-value pairs in `snake_case`.
 
-Example: 
+Example:
 
-To set the dynamodb read and write capacity values, use these functions: 
-`withInitialLeaseTableReadCapacity` and `withInitialLeaseTableWriteCapacity`. 
+To set the dynamodb read and write capacity values, use these functions:
+`withInitialLeaseTableReadCapacity` and `withInitialLeaseTableWriteCapacity`.
 
 [source,text]
 ----

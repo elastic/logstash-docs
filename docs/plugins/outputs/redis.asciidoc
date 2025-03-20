@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v5.2.0
 :release_date: 2024-06-04
 :changelog_url: https://github.com/logstash-plugins/logstash-output-redis/blob/v5.2.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -69,7 +69,7 @@ output plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-batch"]
-===== `batch` 
+===== `batch`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -83,7 +83,7 @@ If true, we send an RPUSH every "batch_events" events or
 Only supported for `data_type` is "list".
 
 [id="plugins-{type}s-{plugin}-batch_events"]
-===== `batch_events` 
+===== `batch_events`
 
   * Value type is <<number,number>>
   * Default value is `50`
@@ -91,7 +91,7 @@ Only supported for `data_type` is "list".
 If batch is set to true, the number of events we queue up for an RPUSH.
 
 [id="plugins-{type}s-{plugin}-batch_timeout"]
-===== `batch_timeout` 
+===== `batch_timeout`
 
   * Value type is <<number,number>>
   * Default value is `5`
@@ -100,7 +100,7 @@ If batch is set to true, the maximum amount of time between RPUSH commands
 when there are pending events to flush.
 
 [id="plugins-{type}s-{plugin}-congestion_interval"]
-===== `congestion_interval` 
+===== `congestion_interval`
 
   * Value type is <<number,number>>
   * Default value is `1`
@@ -109,7 +109,7 @@ How often to check for congestion. Default is one second.
 Zero means to check on every event.
 
 [id="plugins-{type}s-{plugin}-congestion_threshold"]
-===== `congestion_threshold` 
+===== `congestion_threshold`
 
   * Value type is <<number,number>>
   * Default value is `0`
@@ -123,7 +123,7 @@ A default value of 0 means that this limit is disabled.
 Only supported for `list` Redis `data_type`.
 
 [id="plugins-{type}s-{plugin}-data_type"]
-===== `data_type` 
+===== `data_type`
 
   * Value can be any of: `list`, `channel`
   * There is no default value for this setting.
@@ -132,7 +132,7 @@ Either list or channel.  If `data_type` is list, then we will set
 RPUSH to key. If `data_type` is channel, then we will PUBLISH to `key`.
 
 [id="plugins-{type}s-{plugin}-db"]
-===== `db` 
+===== `db`
 
   * Value type is <<number,number>>
   * Default value is `0`
@@ -140,7 +140,7 @@ RPUSH to key. If `data_type` is channel, then we will PUBLISH to `key`.
 The Redis database number.
 
 [id="plugins-{type}s-{plugin}-host"]
-===== `host` 
+===== `host`
 
   * Value type is <<array,array>>
   * Default value is `["127.0.0.1"]`
@@ -157,7 +157,7 @@ For example:
     ["127.0.0.1:6380", "127.0.0.1"]
 
 [id="plugins-{type}s-{plugin}-key"]
-===== `key` 
+===== `key`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -166,7 +166,7 @@ The name of a Redis list or channel. Dynamic names are
 valid here, for example `logstash-%{type}`.
 
 [id="plugins-{type}s-{plugin}-password"]
-===== `password` 
+===== `password`
 
   * Value type is <<password,password>>
   * There is no default value for this setting.
@@ -174,7 +174,7 @@ valid here, for example `logstash-%{type}`.
 Password to authenticate with.  There is no authentication by default.
 
 [id="plugins-{type}s-{plugin}-port"]
-===== `port` 
+===== `port`
 
   * Value type is <<number,number>>
   * Default value is `6379`
@@ -198,7 +198,7 @@ Enable SSL support.
 Interval for reconnecting to failed Redis connections
 
 [id="plugins-{type}s-{plugin}-shuffle_hosts"]
-===== `shuffle_hosts` 
+===== `shuffle_hosts`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -286,7 +286,7 @@ has a hostname or IP address that matches the names within the certificate.
 `none` performs no certificate validation.
 
 [id="plugins-{type}s-{plugin}-timeout"]
-===== `timeout` 
+===== `timeout`
 
   * Value type is <<number,number>>
   * Default value is `5`
