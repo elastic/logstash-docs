@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.1.0
 :release_date: 2020-07-08
 :changelog_url: https://github.com/logstash-plugins/logstash-codec-rubydebug/blob/v3.1.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -37,11 +37,9 @@ the Ruby Amazing Print library.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-metadata"]
-===== `metadata` 
+===== `metadata`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
 Should the event's metadata be included?
-
-

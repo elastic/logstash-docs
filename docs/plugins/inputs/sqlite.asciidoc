@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.4
 :release_date: 2018-04-06
 :changelog_url: https://github.com/logstash-plugins/logstash-input-sqlite/blob/v3.0.4/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -41,7 +41,7 @@ Example
         ip STRING,
         request STRING,
         response INTEGER);
-    sqlite> INSERT INTO weblogs (ip, request, response) 
+    sqlite> INSERT INTO weblogs (ip, request, response)
         VALUES ("1.2.3.4", "/index.html", 200);
 
 Then with this logstash config:
@@ -95,7 +95,7 @@ input plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-batch"]
-===== `batch` 
+===== `batch`
 
   * Value type is <<number,number>>
   * Default value is `5`
@@ -103,7 +103,7 @@ input plugins.
 How many rows to fetch at a time from each `SELECT` call.
 
 [id="plugins-{type}s-{plugin}-exclude_tables"]
-===== `exclude_tables` 
+===== `exclude_tables`
 
   * Value type is <<array,array>>
   * Default value is `[]`
@@ -112,7 +112,7 @@ Any tables to exclude by name.
 By default all tables are followed.
 
 [id="plugins-{type}s-{plugin}-path"]
-===== `path` 
+===== `path`
 
   * This is a required setting.
   * Value type is <<string,string>>

@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v6.0.0
 :release_date: 2024-12-18
 :changelog_url: https://github.com/logstash-plugins/logstash-input-http_poller/blob/v6.0.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -168,7 +168,7 @@ input plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-automatic_retries"]
-===== `automatic_retries` 
+===== `automatic_retries`
 
   * Value type is <<number,number>>
   * Default value is `1`
@@ -178,7 +178,7 @@ to zero if keepalive is enabled. Some servers incorrectly end keepalives early r
 Note: if `retry_non_idempotent` is set only GET, HEAD, PUT, DELETE, OPTIONS, and TRACE requests will be retried.
 
 [id="plugins-{type}s-{plugin}-connect_timeout"]
-===== `connect_timeout` 
+===== `connect_timeout`
 
   * Value type is <<number,number>>
   * Default value is `10`
@@ -186,7 +186,7 @@ Note: if `retry_non_idempotent` is set only GET, HEAD, PUT, DELETE, OPTIONS, and
 Timeout (in seconds) to wait for a connection to be established. Default is `10s`
 
 [id="plugins-{type}s-{plugin}-cookies"]
-===== `cookies` 
+===== `cookies`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -270,7 +270,7 @@ Example output:
 ----
 
 [id="plugins-{type}s-{plugin}-follow_redirects"]
-===== `follow_redirects` 
+===== `follow_redirects`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -278,7 +278,7 @@ Example output:
 Should redirects be followed? Defaults to `true`
 
 [id="plugins-{type}s-{plugin}-keepalive"]
-===== `keepalive` 
+===== `keepalive`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -287,7 +287,7 @@ Turn this on to enable HTTP keepalive support. We highly recommend setting `auto
 one with this to fix interactions with broken keepalive implementations.
 
 [id="plugins-{type}s-{plugin}-metadata_target"]
-===== `metadata_target` 
+===== `metadata_target`
 
   * Value type is <<string,string>>
   * Default value is `"@metadata"`
@@ -297,7 +297,7 @@ Set this value to the name of the field you'd like to store a nested
 hash of metadata.
 
 [id="plugins-{type}s-{plugin}-password"]
-===== `password` 
+===== `password`
 
   * Value type is <<password,password>>
   * There is no default value for this setting.
@@ -305,7 +305,7 @@ hash of metadata.
 Password to be used in conjunction with <<plugins-{type}s-{plugin}-user>> for HTTP authentication.
 
 [id="plugins-{type}s-{plugin}-pool_max"]
-===== `pool_max` 
+===== `pool_max`
 
   * Value type is <<number,number>>
   * Default value is `50`
@@ -313,7 +313,7 @@ Password to be used in conjunction with <<plugins-{type}s-{plugin}-user>> for HT
 Max number of concurrent connections. Defaults to `50`
 
 [id="plugins-{type}s-{plugin}-pool_max_per_route"]
-===== `pool_max_per_route` 
+===== `pool_max_per_route`
 
   * Value type is <<number,number>>
   * Default value is `25`
@@ -321,7 +321,7 @@ Max number of concurrent connections. Defaults to `50`
 Max number of concurrent connections to a single host. Defaults to `25`
 
 [id="plugins-{type}s-{plugin}-proxy"]
-===== `proxy` 
+===== `proxy`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -333,7 +333,7 @@ If you'd like to use an HTTP proxy . This supports multiple configuration syntax
 3. Proxy host in form: `{url =>  'http://proxy.org:1234', user => 'username@host', password => 'password'}`
 
 [id="plugins-{type}s-{plugin}-request_timeout"]
-===== `request_timeout` 
+===== `request_timeout`
 
   * Value type is <<number,number>>
   * Default value is `60`
@@ -341,7 +341,7 @@ If you'd like to use an HTTP proxy . This supports multiple configuration syntax
 Timeout (in seconds) for the entire request.
 
 [id="plugins-{type}s-{plugin}-retry_non_idempotent"]
-===== `retry_non_idempotent` 
+===== `retry_non_idempotent`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -349,7 +349,7 @@ Timeout (in seconds) for the entire request.
 If `automatic_retries` is enabled this will cause non-idempotent HTTP verbs (such as POST) to be retried.
 
 [id="plugins-{type}s-{plugin}-schedule"]
-===== `schedule` 
+===== `schedule`
 
   * Value type is <<hash,hash>>
   * There is no default value for this setting.
@@ -364,7 +364,7 @@ Examples:
 See: rufus/scheduler for details about different schedule options and value string format
 
 [id="plugins-{type}s-{plugin}-socket_timeout"]
-===== `socket_timeout` 
+===== `socket_timeout`
 
   * Value type is <<number,number>>
   * Default value is `10`
@@ -500,7 +500,7 @@ It is primarily intended as a temporary diagnostic mechanism when attempting to 
 Using `none`  in production environments is strongly discouraged.
 
 [id="plugins-{type}s-{plugin}-target"]
-===== `target` 
+===== `target`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -511,7 +511,7 @@ TIP: When ECS is enabled, set `target` in the codec (if the codec has a `target`
 Example: `codec => json { target => "TARGET_FIELD_NAME" }`
 
 [id="plugins-{type}s-{plugin}-urls"]
-===== `urls` 
+===== `urls`
 
   * This is a required setting.
   * Value type is <<hash,hash>>
@@ -526,13 +526,13 @@ The values in urls can be either:
 * a sub-hash containing many useful keys provided by the Manticore backend:
 ** url: the String url
 ** method: (optional) the HTTP method to use (defaults to GET)
-** user: (optional) the HTTP Basic Auth user. The user must be under 
+** user: (optional) the HTTP Basic Auth user. The user must be under
    an auth sub-hash for Manticore, but this plugin also accepts it either way.
-** password: (optional) the HTTP Basic Auth password. The password 
+** password: (optional) the HTTP Basic Auth password. The password
    must be under an auth sub-hash for Manticore, but this plugin accepts it either way.
 ** headers: a hash containing key-value pairs of headers.
 ** body: a string (supported only on POST and PUT requests)
-** possibly other options mentioned in the 
+** possibly other options mentioned in the
    https://www.rubydoc.info/github/cheald/manticore/Manticore/Client#http-instance_method[Manticore docs].
    Note that Manticore options that are not explicitly documented above are not
    thoroughly tested and therefore liable to break in unexpected ways if we
@@ -540,7 +540,7 @@ The values in urls can be either:
 
 *Notes:*
 
-* Passwords specified as a part of `urls` are prone to exposure in plugin log output. 
+* Passwords specified as a part of `urls` are prone to exposure in plugin log output.
 The plugin does not declare them as passwords, and therefore doesn't wrap them in
 leak-reducing wrappers as we do elsewhere.
 * We don't guarantee that boolean-type options like Manticore's `follow_redirects` are supported
@@ -550,7 +550,7 @@ string is "truthy."
 as anything other than true
 
 [id="plugins-{type}s-{plugin}-user"]
-===== `user` 
+===== `user`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -559,7 +559,7 @@ Username to use with HTTP authentication for ALL requests. Note that you can als
 If you set this you must also set the <<plugins-{type}s-{plugin}-password>> option.
 
 [id="plugins-{type}s-{plugin}-validate_after_inactivity"]
-===== `validate_after_inactivity` 
+===== `validate_after_inactivity`
 
   * Value type is <<number,number>>
   * Default value is `200`

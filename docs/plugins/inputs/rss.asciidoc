@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.6
 :release_date: 2023-11-03
 :changelog_url: https://github.com/logstash-plugins/logstash-input-rss/blob/v3.0.6/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -49,7 +49,7 @@ input plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-interval"]
-===== `interval` 
+===== `interval`
 
   * This is a required setting.
   * Value type is <<number,number>>
@@ -58,7 +58,7 @@ input plugins.
 Interval to run the command. Value is in seconds.
 
 [id="plugins-{type}s-{plugin}-url"]
-===== `url` 
+===== `url`
 
   * This is a required setting.
   * Value type is <<string,string>>

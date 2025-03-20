@@ -6,7 +6,7 @@
 REPLACES GENERATED VARIABLES
 ///////////////////////////////////////////
 :changelog_url: https://github.com/WURFL/logstash-filter-wurfl_device_detection/blob/master/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 :gem: https://rubygems.org/gems/logstash-filter-wurfl_device_detection
 ///////////////////////////////////////////
 END - REPLACES GENERATED VARIABLES
@@ -44,11 +44,10 @@ analysis, and device analytics.
 
 Documentation for the {type}-{plugin} plugin is maintained by the creators:
 
-* https://github.com/WURFL/logstash-filter-wurfl_device_detection/blob/master/README.md[README.md] 
+* https://github.com/WURFL/logstash-filter-wurfl_device_detection/blob/master/README.md[README.md]
 * https://github.com/WURFL/logstash-filter-wurfl_device_detection/blob/master/docs/index.asciidoc[plugin documentation]
 
 ==== Getting Help
 
 This is a third-party plugin. For bugs or feature requests, open an issue in the
 https://github.com/WURFL/logstash-filter-wurfl_device_detection[plugins-{type}s-{plugin} Github repo].
-

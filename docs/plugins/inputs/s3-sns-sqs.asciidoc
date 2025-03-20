@@ -6,7 +6,7 @@
 REPLACES GENERATED VARIABLES
 ///////////////////////////////////////////
 :changelog_url: https://github.com/cherweg/logstash-input-s3-sns-sqs/blob/master/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 :gem: https://rubygems.org/gems/logstash-input-s3-sns-sqss
 ///////////////////////////////////////////
 END - REPLACES GENERATED VARIABLES
@@ -36,7 +36,7 @@ This plugin uses sqs to read logs from AWS S3 buckets in high availability
 setups with multiple Logstash instances.
 
 ==== Documentation
- 
+
 https://github.com/cherweg/logstash-input-s3-sns-sqs/blob/master/docs/index.asciidoc[
 Documentation] for the logstash-{type}-{plugin} plugin is maintained by the creator.
 
@@ -44,4 +44,3 @@ Documentation] for the logstash-{type}-{plugin} plugin is maintained by the crea
 
 This is a third-party plugin. For bugs or feature requests, open an issue in the
 https://github.com/cherweg/logstash-input-s3-sns-sqs[plugins-{type}s-{plugin} Github repo].
-

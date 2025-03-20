@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.2.1
 :release_date: 2024-01-17
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-syslog_pri/blob/v3.2.1/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -63,7 +63,7 @@ Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (E
 The value of this setting affects the _default_ value of <<plugins-{type}s-{plugin}-syslog_pri_field_name>>.
 
 [id="plugins-{type}s-{plugin}-facility_labels"]
-===== `facility_labels` 
+===== `facility_labels`
 
   * Value type is <<array,array>>
   * Default value is `["kernel", "user-level", "mail", "daemon", "security/authorization", "syslogd", "line printer", "network news", "uucp", "clock", "security/authorization", "ftp", "ntp", "log audit", "log alert", "clock", "local0", "local1", "local2", "local3", "local4", "local5", "local6", "local7"]`
@@ -73,7 +73,7 @@ If an unrecognized facility code is provided and <<plugins-{type}s-{plugin}-use_
 is tagged with `_syslogpriparsefailure`.
 
 [id="plugins-{type}s-{plugin}-severity_labels"]
-===== `severity_labels` 
+===== `severity_labels`
 
   * Value type is <<array,array>>
   * Default value is `["emergency", "alert", "critical", "error", "warning", "notice", "informational", "debug"]`
@@ -81,7 +81,7 @@ is tagged with `_syslogpriparsefailure`.
 Labels for severity levels. This comes from RFC3164.
 
 [id="plugins-{type}s-{plugin}-syslog_pri_field_name"]
-===== `syslog_pri_field_name` 
+===== `syslog_pri_field_name`
 
   * Value type is <<string,string>>
   * Default value depends on whether <<plugins-{type}s-{plugin}-ecs_compatibility>> is enabled:
@@ -91,7 +91,7 @@ Labels for severity levels. This comes from RFC3164.
 Name of field which passes in the extracted PRI part of the syslog message
 
 [id="plugins-{type}s-{plugin}-use_labels"]
-===== `use_labels` 
+===== `use_labels`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`

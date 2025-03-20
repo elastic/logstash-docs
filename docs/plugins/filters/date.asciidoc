@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.1.15
 :release_date: 2022-06-29
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-date/blob/v3.1.15/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -60,7 +60,7 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-locale"]
-===== `locale` 
+===== `locale`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -75,7 +75,7 @@ If not specified, the platform default will be used but for non-english platform
 an english parser will also be used as a fallback mechanism.
 
 [id="plugins-{type}s-{plugin}-match"]
-===== `match` 
+===== `match`
 
   * Value type is <<array,array>>
   * Default value is `[]`
@@ -178,7 +178,7 @@ Other less common date units, such as era (G), century \(C), am/pm (a), and # mo
 http://www.joda.org/joda-time/key_format.html[joda-time documentation].
 
 [id="plugins-{type}s-{plugin}-tag_on_failure"]
-===== `tag_on_failure` 
+===== `tag_on_failure`
 
   * Value type is <<array,array>>
   * Default value is `["_dateparsefailure"]`
@@ -187,7 +187,7 @@ Append values to the `tags` field when there has been no
 successful match
 
 [id="plugins-{type}s-{plugin}-target"]
-===== `target` 
+===== `target`
 
   * Value type is <<string,string>>
   * Default value is `"@timestamp"`
@@ -196,7 +196,7 @@ Store the matching timestamp into the given target field.  If not provided,
 default to updating the `@timestamp` field of the event.
 
 [id="plugins-{type}s-{plugin}-timezone"]
-===== `timezone` 
+===== `timezone`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.

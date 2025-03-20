@@ -87,7 +87,7 @@ include::outputs/datadog.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-output-datadog_metrics/edit/main/docs/index.asciidoc
 include::outputs/datadog_metrics.asciidoc[]
 
-:edit_url: 
+:edit_url:
 include::outputs/dynatrace.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-integration-elastic_enterprise_search/edit/main/docs/output-elastic_app_search.asciidoc
@@ -139,7 +139,7 @@ include::outputs/influxdb.asciidoc[]
 include::outputs/irc.asciidoc[]
 
 :edit_url: https://github.com/elastic/logstash/edit/main/docs/static/core-plugins/outputs/java_stdout.asciidoc
-include::../../../logstash/docs/static/core-plugins/outputs/java_stdout.asciidoc[]
+include::./static/core-plugins/outputs/java_stdout.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-juggernaut/edit/main/docs/index.asciidoc
 include::outputs/juggernaut.asciidoc[]
@@ -199,7 +199,7 @@ include::outputs/riemann.asciidoc[]
 include::outputs/s3.asciidoc[]
 
 :edit_url: https://github.com/elastic/logstash/edit/main/docs/static/core-plugins/outputs/java_sink.asciidoc
-include::../../../logstash/docs/static/core-plugins/outputs/java_sink.asciidoc[]
+include::./static/core-plugins/outputs/java_sink.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-output-sns/edit/main/docs/index.asciidoc
 include::outputs/sns.asciidoc[]
@@ -244,4 +244,4 @@ include::outputs/xmpp.asciidoc[]
 include::outputs/zabbix.asciidoc[]
 
 
-:edit_url: 
+:edit_url:

@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.3
 :release_date: 2017-11-07
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-json_encode/blob/v3.0.3/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -54,7 +54,7 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-source"]
-===== `source` 
+===== `source`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -63,7 +63,7 @@ filter plugins.
 The field to convert to JSON.
 
 [id="plugins-{type}s-{plugin}-target"]
-===== `target` 
+===== `target`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.

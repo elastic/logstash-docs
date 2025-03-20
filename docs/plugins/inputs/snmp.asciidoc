@@ -10,7 +10,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v4.0.5
 :release_date: 2025-01-06
 :changelog_url: https://github.com/logstash-plugins/logstash-integration-snmp/blob/v4.0.5/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -22,15 +22,15 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 include::{include_path}/plugin_header-integration.asciidoc[]
 
 .Migrating to `logstash-integration-snmp` from stand-alone `input-snmp`
-**** 
-The `logstash-input-snmp` plugin is now a component of the `logstash-integration-snmp` plugin which is 
-bundled with {ls} 8.15.0 by default. 
-This integrated plugin package provides better alignment in snmp processing, better resource management, 
-easier package maintenance, and a smaller installation footprint. 
+****
+The `logstash-input-snmp` plugin is now a component of the `logstash-integration-snmp` plugin which is
+bundled with {ls} 8.15.0 by default.
+This integrated plugin package provides better alignment in snmp processing, better resource management,
+easier package maintenance, and a smaller installation footprint.
 
-Before you upgrade to {ls} 8.15.0, be aware of link:{logstash-ref}/plugins-integrations-snmp.html#plugins-integrations-snmp-migration[behavioral and mapping differences] 
-between current stand-alone plugins and the new versions included in `integration-snmp`. 
-**** 
+Before you upgrade to {ls} 8.15.0, be aware of link:{logstash-ref}/plugins-integrations-snmp.html#plugins-integrations-snmp-migration[behavioral and mapping differences]
+between current stand-alone plugins and the new versions included in `integration-snmp`.
+****
 
 
 ==== Description
@@ -58,10 +58,10 @@ Metadata fields follow a specific naming convention when <<plugins-{type}s-{plug
 |=======================================================================
 
 [id="plugins-{type}s-{plugin}-import-mibs"]
-==== Importing MIBs 
+==== Importing MIBs
 
 This plugin already includes the IETF MIBs (management information bases), and you do not need to import them.
-If you need additional MIBs, you need to import them.  
+If you need additional MIBs, you need to import them.
 Check out link:{logstash-ref}/plugins-integrations-snmp.html#plugins-integrations-snmp-import-mibs[Importing MIBs] for info.
 
 
@@ -471,7 +471,7 @@ input {
 }
 -----
 
-*Specifying all global options* 
+*Specifying all global options*
 
 [source,ruby]
 -----
@@ -479,7 +479,7 @@ input {
   snmp {
     get => ["1.3.6.1.2.1.1.1.0"]
     hosts => [{host => "udp:127.0.0.1/161"}]
-    
+
     mib_paths => ["path/to/converted/mibfile.dic"]
     oid_root_skip => 0
     interval => 30
@@ -504,7 +504,7 @@ By default, a `host` field is added to the event with the `[@metadata][host_addr
 config :add_field, :validate => :hash, :default => { "host" => "%{[@metadata][host_address]}" }
 -----
 
-You can customize the format and content of the `host` field by specifying an alternate `add_field`. 
+You can customize the format and content of the `host` field by specifying an alternate `add_field`.
 
 Example
 [source,ruby]
@@ -513,7 +513,7 @@ input {
   snmp {
     get => ["1.3.6.1.2.1.1.1.0"]
     hosts => [{host => "udp:127.0.0.1/161"}]
-    
+
     add_field => {host => "%{[@metadata][host_protocol]}:%{[@metadata][host_address]}/%{[@metadata][host_port]},%{[@metadata][host_community]}"}
   }
 }

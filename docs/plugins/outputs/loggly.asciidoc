@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v6.0.0
 :release_date: 2018-07-03
 :changelog_url: https://github.com/logstash-plugins/logstash-output-loggly/blob/v6.0.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -94,7 +94,7 @@ See the https://www.loggly.com/docs/http-endpoint/[Loggly HTTP endpoint document
 
 
 [id="plugins-{type}s-{plugin}-key"]
-===== `key` 
+===== `key`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -136,7 +136,7 @@ API limits have changed and you need to override the plugin's behaviour.
 See the https://www.loggly.com/docs/http-bulk-endpoint/[Loggly bulk API documentation]
 
 [id="plugins-{type}s-{plugin}-proto"]
-===== `proto` 
+===== `proto`
 
   * Value type is <<string,string>>
   * Default value is `"http"`
@@ -144,7 +144,7 @@ See the https://www.loggly.com/docs/http-bulk-endpoint/[Loggly bulk API document
 Should the log action be sent over https instead of plain http
 
 [id="plugins-{type}s-{plugin}-proxy_host"]
-===== `proxy_host` 
+===== `proxy_host`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -152,7 +152,7 @@ Should the log action be sent over https instead of plain http
 Proxy Host
 
 [id="plugins-{type}s-{plugin}-proxy_password"]
-===== `proxy_password` 
+===== `proxy_password`
 
   * Value type is <<password,password>>
   * Default value is `""`
@@ -160,7 +160,7 @@ Proxy Host
 Proxy Password
 
 [id="plugins-{type}s-{plugin}-proxy_port"]
-===== `proxy_port` 
+===== `proxy_port`
 
   * Value type is <<number,number>>
   * There is no default value for this setting.
@@ -168,7 +168,7 @@ Proxy Password
 Proxy Port
 
 [id="plugins-{type}s-{plugin}-proxy_user"]
-===== `proxy_user` 
+===== `proxy_user`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -176,18 +176,18 @@ Proxy Port
 Proxy Username
 
 [id="plugins-{type}s-{plugin}-retry_count"]
-===== `retry_count` 
+===== `retry_count`
 
   * Value type is <<number,number>>
   * Default value is `5`
 
-Retry count. 
+Retry count.
 It may be possible that the request may timeout due to slow Internet connection
 if such condition appears, retry_count helps in retrying request for multiple times
 It will try to submit request until retry_count and then halt
 
 [id="plugins-{type}s-{plugin}-tag"]
-===== `tag` 
+===== `tag`
 
   * Value type is <<string,string>>
 
