@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v4.2.0
 :release_date: 2021-11-10
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-clone/blob/v4.2.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -24,8 +24,8 @@ include::{include_path}/plugin_header.asciidoc[]
 The clone filter is for duplicating events.
 A clone will be created for each type in the clone list.
 The original event is left unchanged and a `type` field is added to the clone.
-Created events are inserted into the pipeline 
-as normal events and will be processed by the remaining pipeline configuration 
+Created events are inserted into the pipeline
+as normal events and will be processed by the remaining pipeline configuration
 starting from the filter that generated them (i.e. this plugin).
 
 ==== Event Metadata and the Elastic Common Schema (ECS)
@@ -59,7 +59,7 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-clones"]
-===== `clones` 
+===== `clones`
 
   * This is a required setting.
   * Value type is <<array,array>>

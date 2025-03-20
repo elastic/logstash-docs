@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.5
 :release_date: 2019-10-09
 :changelog_url: https://github.com/logstash-plugins/logstash-output-riak/blob/v3.0.5/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -50,20 +50,20 @@ output plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-bucket"]
-===== `bucket` 
+===== `bucket`
 
   * Value type is <<array,array>>
   * Default value is `["logstash-%{+YYYY.MM.dd}"]`
 
 The bucket name to write events to
-Expansion is supported here as values are 
+Expansion is supported here as values are
 passed through event.sprintf
 Multiple buckets can be specified here
 but any bucket-specific settings defined
 apply to ALL the buckets.
 
 [id="plugins-{type}s-{plugin}-bucket_props"]
-===== `bucket_props` 
+===== `bucket_props`
 
   * Value type is <<hash,hash>>
   * There is no default value for this setting.
@@ -91,7 +91,7 @@ or
 Properties will be passed as-is
 
 [id="plugins-{type}s-{plugin}-enable_search"]
-===== `enable_search` 
+===== `enable_search`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -100,7 +100,7 @@ Search
 Enable search on the bucket defined above
 
 [id="plugins-{type}s-{plugin}-enable_ssl"]
-===== `enable_ssl` 
+===== `enable_ssl`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -109,7 +109,7 @@ SSL
 Enable SSL
 
 [id="plugins-{type}s-{plugin}-indices"]
-===== `indices` 
+===== `indices`
 
   * Value type is <<array,array>>
   * There is no default value for this setting.
@@ -126,7 +126,7 @@ e.g.
 Off by default as not everyone runs eleveldb
 
 [id="plugins-{type}s-{plugin}-key_name"]
-===== `key_name` 
+===== `key_name`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -137,7 +137,7 @@ variables are valid here.
 Choose this carefully. Best to let riak decide.
 
 [id="plugins-{type}s-{plugin}-nodes"]
-===== `nodes` 
+===== `nodes`
 
   * Value type is <<hash,hash>>
   * Default value is `{"localhost"=>"8098"}`
@@ -156,7 +156,7 @@ e.g
 -----
 
 [id="plugins-{type}s-{plugin}-proto"]
-===== `proto` 
+===== `proto`
 
   * Value can be any of: `http`, `pb`
   * Default value is `"http"`
@@ -167,7 +167,7 @@ Applies to ALL backends listed above
 No mix and match
 
 [id="plugins-{type}s-{plugin}-ssl_opts"]
-===== `ssl_opts` 
+===== `ssl_opts`
 
   * Value type is <<hash,hash>>
   * There is no default value for this setting.

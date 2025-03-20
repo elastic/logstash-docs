@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.2.1
 :release_date: 2023-12-18
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-json/blob/v3.2.1/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -77,7 +77,7 @@ Controls this plugin's compatibility with the
 See <<plugins-{type}s-{plugin}-ecs_metadata>> for detailed information.
 
 [id="plugins-{type}s-{plugin}-skip_on_invalid_json"]
-===== `skip_on_invalid_json` 
+===== `skip_on_invalid_json`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -85,7 +85,7 @@ See <<plugins-{type}s-{plugin}-ecs_metadata>> for detailed information.
 Allows for skipping the filter on invalid JSON (this allows you to handle JSON and non-JSON data without warnings)
 
 [id="plugins-{type}s-{plugin}-source"]
-===== `source` 
+===== `source`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -106,7 +106,7 @@ For example, if you have JSON data in the `message` field:
 The above would parse the JSON from the `message` field.
 
 [id="plugins-{type}s-{plugin}-tag_on_failure"]
-===== `tag_on_failure` 
+===== `tag_on_failure`
 
   * Value type is <<array,array>>
   * Default value is `["_jsonparsefailure"]`
@@ -115,7 +115,7 @@ Append values to the `tags` field when there has been no
 successful match
 
 [id="plugins-{type}s-{plugin}-target"]
-===== `target` 
+===== `target`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.

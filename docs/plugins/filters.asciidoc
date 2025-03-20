@@ -1,7 +1,7 @@
 [[filter-plugins]]
 == Filter plugins
 
-A filter plugin performs intermediary processing on an event. Filters are often applied conditionally depending on the 
+A filter plugin performs intermediary processing on an event. Filters are often applied conditionally depending on the
 characteristics of the event.
 
 The following filter plugins are available below. For a list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Support Matrix].
@@ -129,7 +129,7 @@ include::filters/http.asciidoc[]
 include::filters/i18n.asciidoc[]
 
 :edit_url: https://github.com/elastic/logstash/edit/main/docs/static/core-plugins/filters/java_uuid.asciidoc
-include::../../../logstash/docs/static/core-plugins/filters/java_uuid.asciidoc[]
+include::./static/core-plugins/filters/java_uuid.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-integration-jdbc/edit/main/docs/filter-jdbc_static.asciidoc
 include::filters/jdbc_static.asciidoc[]
@@ -176,7 +176,7 @@ include::filters/split.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-syslog_pri/edit/main/docs/index.asciidoc
 include::filters/syslog_pri.asciidoc[]
 
-:edit_url: 
+:edit_url:
 include::filters/threats_classifier.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-filter-throttle/edit/main/docs/index.asciidoc
@@ -200,11 +200,11 @@ include::filters/useragent.asciidoc[]
 :edit_url: https://github.com/logstash-plugins/logstash-filter-uuid/edit/main/docs/index.asciidoc
 include::filters/uuid.asciidoc[]
 
-:edit_url: 
+:edit_url:
 include::filters/wurfl_device_detection.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-filter-xml/edit/main/docs/index.asciidoc
 include::filters/xml.asciidoc[]
 
 
-:edit_url: 
+:edit_url:
