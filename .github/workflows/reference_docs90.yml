@@ -1,6 +1,6 @@
-name: "Reference Doc gen for specified 8.x and earlier"
+name: "Plugin docgen for specified 9.0 and later"
 
-run-name: "Reference Doc gen for ${{ github.event.inputs.branch }}"
+run-name: "Plugin docgen for ${{ github.event.inputs.branch }}"
 
 on:
   workflow_dispatch:
