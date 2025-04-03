@@ -109,33 +109,45 @@ Common causes are:
 
 NOTE: experimental:[] `tracking_field` and related settings are experimental and subject to change in the future
 
-It is sometimes desirable to track the value of a particular field between two jobs:
-* avoid re-processing the entire result set of a long query after an unplanned restart
-* only grab new data from an index instead of processing the entire set on each job
+.Technical Preview: Tracking a field's value
+****
+The feature that allows tracking a field's value across runs is in _Technical Preview_.
+Configuration options and implementation details are subject to change in minor releases without being preceded by deprecation warnings.
+****
 
-For this, the Elasticsearch input plugin provides the <<plugins-{type}s-{plugin}-tracking_field>> and <<plugins-{type}s-{plugin}-tracking_field_seed>> options.
-When <<plugins-{type}s-{plugin}-tracking_field>> is set, the plugin will record the value of that field for the last document retrieved in a run into
-a file (location defaults to <<plugins-{type}s-{plugin}-last_run_metadata_path>>).
+Some uses cases require tracking the value of a particular field between two jobs.
+Examples include:
 
-The user can then inject this value in the query using the placeholder `:last_value`. The value will be injected into the query
-before execution, and the updated after the query completes if new data was found.
+* avoiding the need to re-process the entire result set of a long query after an unplanned restart
+* grabbing only new data from an index instead of processing the entire set on each job.
+
+The Elasticsearch input plugin provides the <<plugins-{type}s-{plugin}-tracking_field>> and <<plugins-{type}s-{plugin}-tracking_field_seed>> options.
+When <<plugins-{type}s-{plugin}-tracking_field>> is set, the plugin records the value of that field for the last document retrieved in a run into
+a file. 
+(The file location defaults to <<plugins-{type}s-{plugin}-last_run_metadata_path>>).
+
+You can then inject this value in the query using the placeholder `:last_value`. 
+The value will be injected into the query before execution, and then updated after the query completes if new data was found.
 
 This feature works best when:
 
-. the query sorts by the tracking field;
-. the timestamp field is added by {es};
-. the field type has enough resolution so that two events are unlikely to have the same value.
+* the query sorts by the tracking field,
+* the timestamp field is added by {es}, and
+* the field type has enough resolution so that two events are unlikely to have the same value.
 
-It is recommended to use a tracking field whose type is https://www.elastic.co/guide/en/elasticsearch/reference/current/date_nanos.html[date nanoseconds].
-If the tracking field is of this data type, an extra placeholder called `:present` can be used to inject the nano-second based value of "now-30s".
+Consider using a tracking field whose type is https://www.elastic.co/guide/en/elasticsearch/reference/current/date_nanos.html[date nanoseconds].
+If the tracking field is of this data type, you can use an extra placeholder called `:present` to inject the nano-second based value of "now-30s".
 This placeholder is useful as the right-hand side of a range filter, allowing the collection of
-new data but leaving partially-searcheable bulk request data to the next scheduled job.
+new data but leaving partially-searchable bulk request data to the next scheduled job.
 
-Below is a series of steps to help set up the "tailing" of data being written to a set of indices, using a date nanosecond field
-added by an Elasticsearch ingest pipeline, and the `tracking_field` capability of this plugin.
+[id="plugins-{type}s-{plugin}-tracking-sample"]
+===== Sample configuration: Track field value across runs
 
-. create ingest pipeline that adds Elasticsearch's `_ingest.timestamp` field to the documents as `event.ingested`:
+This section contains a series of steps to help you set up the "tailing" of data being written to a set of indices, using a date nanosecond field
+added by an Elasticsearch ingest pipeline and the `tracking_field` capability of this plugin.
 
+. Create ingest pipeline that adds Elasticsearch's `_ingest.timestamp` field to the documents as `event.ingested`:
++
 [source, json]
     PUT _ingest/pipeline/my-pipeline
     {
@@ -150,8 +162,7 @@ added by an Elasticsearch ingest pipeline, and the `tracking_field` capability o
     }
 
 [start=2]
-. create an index mapping where the tracking field is of date nanosecond type and invokes the defined pipeline:
-
+. Create an index mapping where the tracking field is of date nanosecond type and invokes the defined pipeline:+
 [source, json]
     PUT /_template/my_template
     {
@@ -174,8 +185,8 @@ added by an Elasticsearch ingest pipeline, and the `tracking_field` capability o
     }
 
 [start=3]
-. define a query that looks at all data of the indices, sorted by the tracking field, and with a range filter since the last value seen until present:
-
+. Define a query that looks at all data of the indices, sorted by the tracking field, and with a range filter since the last value seen until present:
++
 [source,json]
 {
   "query": {
@@ -198,8 +209,8 @@ added by an Elasticsearch ingest pipeline, and the `tracking_field` capability o
 }
 
 [start=4]
-. configure the Elasticsearch input to query the indices with the query defined above, every minute, and track the `event.ingested` field:
-
+. Configure the Elasticsearch input to query the indices with the query defined above, every minute, and track the `event.ingested` field:
++
 [source, ruby]
     input {
       elasticsearch {
@@ -215,11 +226,12 @@ added by an Elasticsearch ingest pipeline, and the `tracking_field` capability o
       }
     }
 
-With this setup, as new documents are indexed an `test-*` index, the next scheduled run will:
+With this sample setup, new documents are indexed into a `test-*` index.
+The next scheduled run:
 
-. select all new documents since the last observed value of the tracking field;
-. use {ref}/point-in-time-api.html#point-in-time-api[Point in time (PIT)] + {ref}/paginate-search-results.html#search-after[Search after] to paginate through all the data;
-. update the value of the field at the end of the pagination.
+* selects all new documents since the last observed value of the tracking field,
+* uses {ref}/point-in-time-api.html#point-in-time-api[Point in time (PIT)] + {ref}/paginate-search-results.html#search-after[Search after] to paginate through all the data, and
+* updates the value of the field at the end of the pagination.
 
 [id="plugins-{type}s-{plugin}-options"]
 ==== Elasticsearch Input configuration options
