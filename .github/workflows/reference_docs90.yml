@@ -1,0 +1,78 @@
+name: "Plugin docgen for specified 9.0 and later"
+
+run-name: "Plugin docgen for ${{ github.event.inputs.branch }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to update plugin docs'
+        required: true
+        default: '9.0'
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  build:
+    name: "Update docs for ${{ github.event.inputs.branch }}"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: jruby
+      - uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 # v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Clone elastic/docs-tools
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          repository: elastic/docs-tools
+          path: docs-tools
+          fetch-depth: 1
+      - name: Clone elastic/logstash-docs
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          repository: elastic/logstash-docs
+          path: logstash-docs
+          fetch-depth: 1
+          ref: ${{ github.event.inputs.branch }}
+      - name: Clone elastic/docs
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          repository: elastic/docs
+          path: docs
+          fetch-depth: 1
+      - name: Generate plugin versions
+        working-directory: ./logstash
+        env:
+          GRADLE_OPTS: "-Dorg.gradle.jvmargs=\"-Xmx4g\""
+        run: ./gradlew generatePluginsVersion
+      - name: Generate plugin docs
+        working-directory: ./docs-tools
+        run: |
+          bundle install --path=vendor/bundle
+          bundle exec ruby plugindocs.rb --skip-existing --output-path ../logstash-docs ../logstash/plugins_version_docs.json
+      - name: Build docs
+        working-directory: ./logstash-docs
+        run: ../docs/build_docs --asciidoctor --respect_edit_url_overrides --doc docs/plugins/index.asciidoc --chunk 1
+      - run: echo "T=$(date +%s)" >> $GITHUB_ENV
+      - run: echo "BRANCH=update_docs_${T}" >> $GITHUB_ENV
+      - name: Commit and Push
+        working-directory: ./logstash-docs
+        run: |
+          git config user.email 43502315+logstashmachine@users.noreply.github.com
+          git config user.name logstashmachine
+          git checkout -b $BRANCH
+          git add .
+          git status
+          if [[ -z $(git status --porcelain) ]]; then echo "No changes. We're done."; exit 0; fi
+          git commit -m "updated docs for ${{ github.event.inputs.branch }}" -a
+          git push origin $BRANCH
+      - name: Create Pull Request
+        run: |
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -X POST -d "{\"title\": \"updated docs for ${{ github.event.inputs.branch }}\",\"head\": \"${BRANCH}\",\"base\": \"${{ github.event.inputs.branch }}\"}" https://api.github.com/repos/elastic/logstash-docs/pulls
+      - run: echo "### Updated docs for ${{ github.event.inputs.branch }} :rocket:" >> $GITHUB_STEP_SUMMARY
