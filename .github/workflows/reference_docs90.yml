@@ -46,6 +46,13 @@ jobs:
           repository: elastic/docs
           path: docs
           fetch-depth: 1
+      - name: Clone elastic/logstash
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+         repository: elastic/logstash
+         path: logstash
+         fetch-depth: 1
+         ref: ${{ github.event.inputs.branch }}
       - name: Generate plugin versions
         working-directory: ./logstash
         env:
