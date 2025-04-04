@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.1.3
 :release_date: 2019-09-18
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-cidr/blob/v3.1.3/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -89,7 +89,7 @@ The full path of the external file containing the networks the filter should che
 Networks are separated by a separator character defined in `separator`.
 [source,ruby]
     192.168.1.0/24
-    192.167.0.0/16	
+    192.167.0.0/16
 NOTE: It is an error to specify both `network` and `network_path`.
 
 [id="plugins-{type}s-{plugin}-refresh_interval"]

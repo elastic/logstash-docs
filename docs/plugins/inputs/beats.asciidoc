@@ -11,7 +11,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v7.0.2
 :release_date: 2025-02-12
 :changelog_url: https://github.com/logstash-plugins/logstash-input-beats/blob/v7.0.2/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -21,7 +21,7 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 === {plugin-uc} input plugin
 
 NOTE: The `input-elastic_agent` plugin is the next generation of the
-`input-beats` plugin. 
+`input-beats` plugin.
 They currently share code and a https://github.com/logstash-plugins/logstash-input-beats[common codebase].
 
 include::{include_path}/plugin_header.asciidoc[]
@@ -94,9 +94,9 @@ endif::[]
 
 This plugin uses "off-heap" direct memory in addition to heap memory.
 By default, a JVM's off-heap direct memory limit is the same as the heap size.
-For example, setting `-Xmx10G` without setting the direct memory limit will allocate `10GB` for heap and an additional `10GB` for direct memory, for a total of `20GB` allocated. 
-You can set the amount of direct memory with `-XX:MaxDirectMemorySize` in {logstash-ref}/jvm-settings.html[Logstash JVM Settings]. 
-Consider setting direct memory to half of the heap size. 
+For example, setting `-Xmx10G` without setting the direct memory limit will allocate `10GB` for heap and an additional `10GB` for direct memory, for a total of `20GB` allocated.
+You can set the amount of direct memory with `-XX:MaxDirectMemorySize` in {logstash-ref}/jvm-settings.html[Logstash JVM Settings].
+Consider setting direct memory to half of the heap size.
 Setting direct memory too low decreases the performance of ingestion.
 
 NOTE: Be sure that heap and direct memory combined does not exceed the total memory available on the server to avoid an OutOfDirectMemoryError
@@ -146,7 +146,7 @@ endif::[]
 [id="plugins-{type}s-{plugin}-ecs_metadata"]
 ==== Event enrichment and the Elastic Common Schema (ECS)
 
-When decoding {plugin-uc} events, this plugin enriches each event with metadata about the event's source, making this information available during further processing. 
+When decoding {plugin-uc} events, this plugin enriches each event with metadata about the event's source, making this information available during further processing.
 You can use the <<plugins-{type}s-{plugin}-enrich>> option to activate or deactivate individual enrichment categories.
 
 The location of these enrichment fields depends on whether <<plugins-{type}s-{plugin}-ecs_compatibility,ECS compatibility mode>> is enabled:
@@ -352,7 +352,7 @@ See <<plugins-{type}s-{plugin}-executor_threads>> configuration if you need to s
 
 The number of threads to be used to process incoming {plugin-uc} requests.
 By default, the {plugin-uc} input creates a number of threads equal to the number of CPU cores.
-These threads handle incoming connections, reading from established sockets, and executing most of the tasks related to network connection management. 
+These threads handle incoming connections, reading from established sockets, and executing most of the tasks related to network connection management.
 Parsing the Lumberjack protocol is offloaded to a dedicated thread pool.
 
 Generally you don't need to touch this setting.
@@ -459,7 +459,7 @@ Time in milliseconds for an incomplete ssl handshake to timeout
   * There is no default value for this setting.
 
 SSL key to use.
-This key must be in the PKCS8 format and PEM encoded. 
+This key must be in the PKCS8 format and PEM encoded.
 You can use the https://www.openssl.org/docs/man1.1.1/man1/openssl-pkcs8.html[openssl pkcs8] command to complete the conversion.
 For example, the command to convert a PEM encoded PKCS1 private key to a PEM encoded, non-encrypted PKCS8 key is:
 

@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v1.0.6
 :release_date: 2023-05-10
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-truncate/blob/v1.0.6/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -45,7 +45,7 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-fields"]
-===== `fields` 
+===== `fields`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -65,7 +65,7 @@ Special behaviors for non-string fields:
 contains other hashes).
 
 [id="plugins-{type}s-{plugin}-length_bytes"]
-===== `length_bytes` 
+===== `length_bytes`
 
   * This is a required setting.
   * Value type is <<number,number>>

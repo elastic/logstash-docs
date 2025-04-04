@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v2.0.0
 :release_date: 2024-12-23
 :changelog_url: https://github.com/logstash-plugins/logstash-input-elastic_serverless_forwarder/blob/v2.0.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

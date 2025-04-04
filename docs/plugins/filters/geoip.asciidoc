@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v7.3.1
 :release_date: 2024-10-11
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-geoip/blob/v7.3.1/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -343,7 +343,7 @@ For a complete list of available fields and how they map to an event's structure
 * Value type is <<string,string>>
 * Supported values are:
 ** `disabled`: unstructured geo data added at root level
-** `v1`, `v8`: use fields that are compatible with Elastic Common Schema. Example: `[client][geo][country_name]`. See <<plugins-{type}s-{plugin}-field-mapping,field mapping>> for more info. 
+** `v1`, `v8`: use fields that are compatible with Elastic Common Schema. Example: `[client][geo][country_name]`. See <<plugins-{type}s-{plugin}-field-mapping,field mapping>> for more info.
 * Default value depends on which version of Logstash is running:
 ** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
 ** Otherwise, the default value is `disabled`.

@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v1.0.3
 :release_date: 2021-10-29
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-age/blob/v1.0.3/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -24,7 +24,7 @@ include::{include_path}/plugin_header.asciidoc[]
 A simple filter for calculating the age of an event.
 
 This filter calculates the age of an event by subtracting the event timestamp
-from the current timestamp. 
+from the current timestamp.
 You can use this plugin with the {logstash-ref}/plugins-filters-drop.html[`drop` filter plugin]
 to drop Logstash events that are older than some threshold.
 
@@ -55,7 +55,7 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-target"]
-===== `target` 
+===== `target`
 
   * Value type is <<string,string>>
   * Default value is `"[@metadata][age]"`

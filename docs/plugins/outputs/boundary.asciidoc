@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.6
 :release_date: 2023-05-30
 :changelog_url: https://github.com/logstash-plugins/logstash-output-boundary/blob/v3.0.6/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -56,7 +56,7 @@ output plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-api_key"]
-===== `api_key` 
+===== `api_key`
 
   * This is a required setting.
   * Value type is <<password,password>>
@@ -65,7 +65,7 @@ output plugins.
 Your Boundary API key
 
 [id="plugins-{type}s-{plugin}-auto"]
-===== `auto` 
+===== `auto`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -77,7 +77,7 @@ override these.
 `['type', 'subtype', 'creation_time', 'end_time', 'links', 'tags', 'loc']`
 
 [id="plugins-{type}s-{plugin}-bsubtype"]
-===== `bsubtype` 
+===== `bsubtype`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -85,7 +85,7 @@ override these.
 Sub-Type
 
 [id="plugins-{type}s-{plugin}-btags"]
-===== `btags` 
+===== `btags`
 
   * Value type is <<array,array>>
   * There is no default value for this setting.
@@ -95,7 +95,7 @@ Set any custom tags for this event
 Default are the Logstash tags if any
 
 [id="plugins-{type}s-{plugin}-btype"]
-===== `btype` 
+===== `btype`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -103,7 +103,7 @@ Default are the Logstash tags if any
 Type
 
 [id="plugins-{type}s-{plugin}-end_time"]
-===== `end_time` 
+===== `end_time`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -115,7 +115,7 @@ If overriding, it is your responsibility to type this correctly
 By default this is set to `event.get("@timestamp").to_i`
 
 [id="plugins-{type}s-{plugin}-org_id"]
-===== `org_id` 
+===== `org_id`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -124,7 +124,7 @@ By default this is set to `event.get("@timestamp").to_i`
 Your Boundary Org ID
 
 [id="plugins-{type}s-{plugin}-start_time"]
-===== `start_time` 
+===== `start_time`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.

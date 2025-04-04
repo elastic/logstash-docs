@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.4.1
 :release_date: 2023-10-16
 :changelog_url: https://github.com/logstash-plugins/logstash-codec-avro/blob/v3.4.1/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -23,8 +23,8 @@ include::{include_path}/plugin_header.asciidoc[]
 
 Read serialized Avro records as Logstash events
 
-This plugin is used to serialize Logstash events as 
-Avro datums, as well as deserializing Avro datums into 
+This plugin is used to serialize Logstash events as
+Avro datums, as well as deserializing Avro datums into
 Logstash events.
 
 [id="plugins-{type}s-{plugin}-ecs_metadata"]
@@ -34,8 +34,8 @@ The plugin behaves the same regardless of ECS compatibility, except adding the o
 
 ==== Encoding
 
-This codec is for serializing individual Logstash events 
-as Avro datums that are Avro binary blobs. It does not encode 
+This codec is for serializing individual Logstash events
+as Avro datums that are Avro binary blobs. It does not encode
 Logstash events into an Avro file.
 
 
@@ -52,7 +52,7 @@ providing a schema containing a subset of the schema which was used to serialize
 the data.
 This codec *doesn't support partial deserialization of arbitrary fields*.
 Partial deserialization _might_ work only when providing a schema which contains
-the first `N` fields of the schema used to serialize the data (and 
+the first `N` fields of the schema used to serialize the data (and
 in the same order).
 ================================================================================
 
@@ -107,14 +107,14 @@ Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (E
 * Value can be any of: `binary`, `base64`
 * Default value is `base64`
 
-Set encoding for Avro's payload. 
+Set encoding for Avro's payload.
 Use `base64` (default) to indicate that this codec sends or expects to receive base64-encoded bytes.
 
 Set this option to `binary` to indicate that this codec sends or expects to receive binary Avro data.
 
 
 [id="plugins-{type}s-{plugin}-schema_uri"]
-===== `schema_uri` 
+===== `schema_uri`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -128,7 +128,7 @@ example:
 * file - `/path/to/schema.avsc`
 
 [id="plugins-{type}s-{plugin}-tag_on_failure"]
-===== `tag_on_failure` 
+===== `tag_on_failure`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`

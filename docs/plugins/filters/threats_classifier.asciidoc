@@ -6,7 +6,7 @@
 REPLACES GENERATED VARIABLES
 ///////////////////////////////////////////
 :changelog_url: https://github.com/empow/logstash-filter-empow-classifier/blob/master/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 :gem: https://rubygems.org/gems/logstash-filter-empowclassifier
 ///////////////////////////////////////////
 END - REPLACES GENERATED VARIABLES
@@ -33,16 +33,15 @@ For plugins not bundled by default, it is easy to install by running +bin/logsta
 This plugin uses the cyber-kill-chain and MITRE representation language to
 enrich security logs with information about the attacker’s intent--what the
 attacker is trying to achieve, who they are targeting, and how they plan to
-carry out the attack.  
+carry out the attack.
 
 ==== Documentation
 
-Documentation for the 
-https://github.com/empow/logstash-filter-empow-classifier/blob/master/README.md[filter-threats_classifier plugin] 
+Documentation for the
+https://github.com/empow/logstash-filter-empow-classifier/blob/master/README.md[filter-threats_classifier plugin]
 is maintained by the creators.
 
 ==== Getting Help
 
 This is a third-party plugin. For bugs or feature requests, open an issue in the
 https://github.com/empow/logstash-filter-empow-classifier[plugins-{type}s-{plugin} Github repo].
-

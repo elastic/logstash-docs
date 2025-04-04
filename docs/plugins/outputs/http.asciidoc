@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v6.0.0
 :release_date: 2024-11-21
 :changelog_url: https://github.com/logstash-plugins/logstash-output-http/blob/v6.0.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -40,29 +40,29 @@ This output has two levels of retry: library and plugin.
 [id="plugins-{type}s-{plugin}-library_retry"]
 ===== Library retry
 
-The library retry applies to IO related failures. 
+The library retry applies to IO related failures.
 Non retriable errors include SSL related problems, unresolvable hosts,
 connection issues, and OS/JVM level interruptions happening during a request.
 
-The options for library retry are: 
+The options for library retry are:
 
-* <<plugins-{type}s-{plugin}-automatic_retries,`automatic_retries`>>. 
+* <<plugins-{type}s-{plugin}-automatic_retries,`automatic_retries`>>.
 Controls the number of times the plugin should retry after failures at the library level.
-* <<plugins-{type}s-{plugin}-retry_non_idempotent,`retry_non_idempotent`>>. 
+* <<plugins-{type}s-{plugin}-retry_non_idempotent,`retry_non_idempotent`>>.
 When set to `false`, GET, HEAD, PUT, DELETE, OPTIONS, and TRACE requests will be
 retried.
 
 [id="plugins-{type}s-{plugin}-plugin_retry"]
 ===== Plugin retry
 
-The options for plugin level retry are: 
+The options for plugin level retry are:
 
-* <<plugins-{type}s-{plugin}-retry_failed,`retry_failed`>>. 
+* <<plugins-{type}s-{plugin}-retry_failed,`retry_failed`>>.
 When set to `true`, the plugin retries indefinitely for HTTP error response codes defined
 in the <<plugins-{type}s-{plugin}-retryable_codes,`retryable_codes`>> option
 (429, 500, 502, 503, 504) and retryable exceptions (socket timeout/ error, DNS resolution failure and client protocol exception).
-* <<plugins-{type}s-{plugin}-retryable_codes,`retryable_codes`>>. 
-Sets http response codes that trigger a retry. 
+* <<plugins-{type}s-{plugin}-retryable_codes,`retryable_codes`>>.
+Sets http response codes that trigger a retry.
 
 NOTE: The `retry_failed` option does not control the library level retry.
 
@@ -71,7 +71,7 @@ NOTE: The `retry_failed` option does not control the library level retry.
 
 This plugin supports the following configuration options plus the <<plugins-{type}s-{plugin}-common-options>> described later.
 
-NOTE: As of version `6.0.0` of this plugin, a number of previously deprecated settings related to SSL have been removed. 
+NOTE: As of version `6.0.0` of this plugin, a number of previously deprecated settings related to SSL have been removed.
 Please check out <<plugins-{type}s-{plugin}-obsolete-options>> for details.
 
 [cols="<,<,<",options="header",]
@@ -120,19 +120,19 @@ output plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-automatic_retries"]
-===== `automatic_retries` 
+===== `automatic_retries`
 
   * Value type is <<number,number>>
   * Default value is `1`
 
 How many times should the client retry a failing URL. We recommend setting this option
-to a value other than zero if the <<plugins-{type}s-{plugin}-keepalive,`keepalive` option>> is enabled. 
+to a value other than zero if the <<plugins-{type}s-{plugin}-keepalive,`keepalive` option>> is enabled.
 Some servers incorrectly end keepalives early, requiring a retry.
 See <<plugins-{type}s-{plugin}-retry_policy,Retry Policy>> for more information.
 
 
 [id="plugins-{type}s-{plugin}-connect_timeout"]
-===== `connect_timeout` 
+===== `connect_timeout`
 
   * Value type is <<number,number>>
   * Default value is `10`
@@ -140,7 +140,7 @@ See <<plugins-{type}s-{plugin}-retry_policy,Retry Policy>> for more information.
 Timeout (in seconds) to wait for a connection to be established. Default is `10s`
 
 [id="plugins-{type}s-{plugin}-content_type"]
-===== `content_type` 
+===== `content_type`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -154,7 +154,7 @@ If not specified, this defaults to the following:
 * if format is "form", "application/x-www-form-urlencoded"
 
 [id="plugins-{type}s-{plugin}-cookies"]
-===== `cookies` 
+===== `cookies`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -163,7 +163,7 @@ Enable cookie support. With this enabled the client will persist cookies
 across requests as a normal web browser would. Enabled by default
 
 [id="plugins-{type}s-{plugin}-follow_redirects"]
-===== `follow_redirects` 
+===== `follow_redirects`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -171,7 +171,7 @@ across requests as a normal web browser would. Enabled by default
 Should redirects be followed? Defaults to `true`
 
 [id="plugins-{type}s-{plugin}-format"]
-===== `format` 
+===== `format`
 
   * Value can be any of: `json`, `json_batch`, `form`, `message`
   * Default value is `"json"`
@@ -190,7 +190,7 @@ If message, then the body will be the result of formatting the event according t
 Otherwise, the event is sent as json.
 
 [id="plugins-{type}s-{plugin}-headers"]
-===== `headers` 
+===== `headers`
 
   * Value type is <<hash,hash>>
   * There is no default value for this setting.
@@ -208,7 +208,7 @@ Enable request compression support. With this enabled the plugin will compress
 http requests using gzip.
 
 [id="plugins-{type}s-{plugin}-http_method"]
-===== `http_method` 
+===== `http_method`
 
   * This is a required setting.
   * Value can be any of: `put`, `post`, `patch`, `delete`, `get`, `head`
@@ -217,16 +217,16 @@ http requests using gzip.
 The HTTP Verb. One of "put", "post", "patch", "delete", "get", "head"
 
 [id="plugins-{type}s-{plugin}-ignorable_codes"]
-===== `ignorable_codes` 
+===== `ignorable_codes`
 
   * Value type is <<number,number>>
   * There is no default value for this setting.
 
-If you would like to consider some non-2xx codes to be successes 
+If you would like to consider some non-2xx codes to be successes
 enumerate them here. Responses returning these codes will be considered successes
 
 [id="plugins-{type}s-{plugin}-keepalive"]
-===== `keepalive` 
+===== `keepalive`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -235,7 +235,7 @@ Turn this on to enable HTTP keepalive support. We highly recommend setting `auto
 one with this to fix interactions with broken keepalive implementations.
 
 [id="plugins-{type}s-{plugin}-mapping"]
-===== `mapping` 
+===== `mapping`
 
   * Value type is <<hash,hash>>
   * There is no default value for this setting.
@@ -249,7 +249,7 @@ For example:
               "bar" => "%{type}"}
 
 [id="plugins-{type}s-{plugin}-message"]
-===== `message` 
+===== `message`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -257,7 +257,7 @@ For example:
 
 
 [id="plugins-{type}s-{plugin}-pool_max"]
-===== `pool_max` 
+===== `pool_max`
 
   * Value type is <<number,number>>
   * Default value is `50`
@@ -265,7 +265,7 @@ For example:
 Max number of concurrent connections. Defaults to `50`
 
 [id="plugins-{type}s-{plugin}-pool_max_per_route"]
-===== `pool_max_per_route` 
+===== `pool_max_per_route`
 
   * Value type is <<number,number>>
   * Default value is `25`
@@ -273,7 +273,7 @@ Max number of concurrent connections. Defaults to `50`
 Max number of concurrent connections to a single host. Defaults to `25`
 
 [id="plugins-{type}s-{plugin}-proxy"]
-===== `proxy` 
+===== `proxy`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -285,7 +285,7 @@ If you'd like to use an HTTP proxy . This supports multiple configuration syntax
 3. Proxy host in form: `{url =>  'http://proxy.org:1234', user => 'username@host', password => 'password'}`
 
 [id="plugins-{type}s-{plugin}-request_timeout"]
-===== `request_timeout` 
+===== `request_timeout`
 
   * Value type is <<number,number>>
   * Default value is `60`
@@ -296,20 +296,20 @@ For an example of its usage see https://github.com/logstash-plugins/logstash-inp
 Timeout (in seconds) for the entire request
 
 [id="plugins-{type}s-{plugin}-retry_failed"]
-===== `retry_failed` 
+===== `retry_failed`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-Note that this option controls plugin-level retries only. 
-It has no affect on library-level retries. 
+Note that this option controls plugin-level retries only.
+It has no affect on library-level retries.
 
-Set this option to `false` if you want to disable infinite retries for HTTP error response codes defined in the <<plugins-{type}s-{plugin}-retryable_codes,`retryable_codes`>> or 
+Set this option to `false` if you want to disable infinite retries for HTTP error response codes defined in the <<plugins-{type}s-{plugin}-retryable_codes,`retryable_codes`>> or
 retryable exceptions (Timeout, SocketException, ClientProtocolException, ResolutionFailure and SocketTimeout).
 See <<plugins-{type}s-{plugin}-retry_policy,Retry policy>> for more information.
 
 [id="plugins-{type}s-{plugin}-retry_non_idempotent"]
-===== `retry_non_idempotent` 
+===== `retry_non_idempotent`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -320,7 +320,7 @@ When set to `true` and `automatic_retries` is enabled, this will cause non-idemp
 See <<plugins-{type}s-{plugin}-retry_policy,Retry Policy>> for more information.
 
 [id="plugins-{type}s-{plugin}-retryable_codes"]
-===== `retryable_codes` 
+===== `retryable_codes`
 
   * Value type is <<number,number>>
   * Default value is `[429, 500, 502, 503, 504]`
@@ -329,7 +329,7 @@ If the plugin encounters these response codes, the plugin will retry indefinitel
 See <<plugins-{type}s-{plugin}-retry_policy,Retry Policy>> for more information.
 
 [id="plugins-{type}s-{plugin}-socket_timeout"]
-===== `socket_timeout` 
+===== `socket_timeout`
 
   * Value type is <<number,number>>
   * Default value is `10`
@@ -465,7 +465,7 @@ It is primarily intended as a temporary diagnostic mechanism when attempting to 
 Using `none`  in production environments is strongly discouraged.
 
 [id="plugins-{type}s-{plugin}-url"]
-===== `url` 
+===== `url`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -474,7 +474,7 @@ Using `none`  in production environments is strongly discouraged.
 URL to use
 
 [id="plugins-{type}s-{plugin}-validate_after_inactivity"]
-===== `validate_after_inactivity` 
+===== `validate_after_inactivity`
 
   * Value type is <<number,number>>
   * Default value is `200`
@@ -490,7 +490,7 @@ See https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs/org/apache
 ==== HTTP Output Obsolete Configuration Options
 
 WARNING: As of version `6.0.0` of this plugin, some configuration options have been replaced.
-The plugin will fail to start if it contains any of these obsolete options. 
+The plugin will fail to start if it contains any of these obsolete options.
 
 
 [cols="<,<",options="header",]

@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v5.5.2
 :release_date: 2024-12-23
 :changelog_url: https://github.com/logstash-plugins/logstash-integration-jdbc/blob/v5.5.2/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -280,7 +280,7 @@ order is in place.
 [id="plugins-{type}s-{plugin}-ecs"]
 ==== Compatibility with the Elastic Common Schema (ECS)
 
-This plugin is compatible with the {ecs-ref}[Elastic Common Schema (ECS)]. 
+This plugin is compatible with the {ecs-ref}[Elastic Common Schema (ECS)].
 It behaves the same regardless of ECS compatibility, except giving a warning when ECS is enabled and `target` isn't set.
 
 TIP: Set the `target` option to avoid potential schema conflicts.

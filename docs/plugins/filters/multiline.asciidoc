@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.4
 :release_date: 2017-08-15
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-multiline/blob/v3.0.4/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -100,7 +100,7 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-allow_duplicates"]
-===== `allow_duplicates` 
+===== `allow_duplicates`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -108,7 +108,7 @@ filter plugins.
 Allow duplcate values on the source field.
 
 [id="plugins-{type}s-{plugin}-max_age"]
-===== `max_age` 
+===== `max_age`
 
   * Value type is <<number,number>>
   * Default value is `5`
@@ -117,7 +117,7 @@ The maximum age an event can be (in seconds) before it is automatically
 flushed.
 
 [id="plugins-{type}s-{plugin}-negate"]
-===== `negate` 
+===== `negate`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -125,7 +125,7 @@ flushed.
 Negate the regexp pattern ('if not matched')
 
 [id="plugins-{type}s-{plugin}-pattern"]
-===== `pattern` 
+===== `pattern`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -136,7 +136,7 @@ The expression to match. The same matching engine as the
 a plain regular expression or one that also contains grok patterns.
 
 [id="plugins-{type}s-{plugin}-patterns_dir"]
-===== `patterns_dir` 
+===== `patterns_dir`
 
   * Value type is <<array,array>>
   * Default value is `[]`
@@ -154,7 +154,7 @@ For example:
     NUMBER \d+
 
 [id="plugins-{type}s-{plugin}-source"]
-===== `source` 
+===== `source`
 
   * Value type is <<string,string>>
   * Default value is `"message"`
@@ -162,7 +162,7 @@ For example:
 The field name to execute the pattern match on.
 
 [id="plugins-{type}s-{plugin}-stream_identity"]
-===== `stream_identity` 
+===== `stream_identity`
 
   * Value type is <<string,string>>
   * Default value is `"%{host}.%{path}.%{type}"`
@@ -181,7 +181,7 @@ may have occurred between the old and new connection. To solve this use
 case, you can use `%{@source_host}.%{@type}` instead.
 
 [id="plugins-{type}s-{plugin}-what"]
-===== `what` 
+===== `what`
 
   * This is a required setting.
   * Value can be any of: `previous`, `next`

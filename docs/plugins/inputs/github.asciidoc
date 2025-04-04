@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.11
 :release_date: 2023-05-30
 :changelog_url: https://github.com/logstash-plugins/logstash-input-github/blob/v3.0.11/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -44,7 +44,7 @@ input plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-drop_invalid"]
-===== `drop_invalid` 
+===== `drop_invalid`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -53,7 +53,7 @@ If Secret is defined, we drop the events that don't match.
 Otherwise, we'll just add an invalid tag
 
 [id="plugins-{type}s-{plugin}-ip"]
-===== `ip` 
+===== `ip`
 
   * Value type is <<string,string>>
   * Default value is `"0.0.0.0"`
@@ -61,7 +61,7 @@ Otherwise, we'll just add an invalid tag
 The ip to listen on
 
 [id="plugins-{type}s-{plugin}-port"]
-===== `port` 
+===== `port`
 
   * This is a required setting.
   * Value type is <<number,number>>
@@ -70,7 +70,7 @@ The ip to listen on
 The port to listen on
 
 [id="plugins-{type}s-{plugin}-secret_token"]
-===== `secret_token` 
+===== `secret_token`
 
   * Value type is <<password,password>>
   * There is no default value for this setting.

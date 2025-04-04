@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v4.1.1
 :release_date: 2023-11-16
 :changelog_url: https://github.com/logstash-plugins/logstash-input-twitter/blob/v4.1.1/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -97,7 +97,7 @@ input plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-consumer_key"]
-===== `consumer_key` 
+===== `consumer_key`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -109,7 +109,7 @@ Don't know what this is? You need to create an "application"
 on Twitter, see this url: <https://dev.twitter.com/apps/new>
 
 [id="plugins-{type}s-{plugin}-consumer_secret"]
-===== `consumer_secret` 
+===== `consumer_secret`
 
   * This is a required setting.
   * Value type is <<password,password>>
@@ -135,7 +135,7 @@ registering a new application with Twitter:
 Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
 
 [id="plugins-{type}s-{plugin}-follows"]
-===== `follows` 
+===== `follows`
 
   * Value type is <<array,array>>
   * There is no default value for this setting.
@@ -146,7 +146,7 @@ See https://developer.twitter.com/en/docs/tweets/filter-realtime/guides/basic-st
 for more details.
 
 [id="plugins-{type}s-{plugin}-full_tweet"]
-===== `full_tweet` 
+===== `full_tweet`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -154,7 +154,7 @@ for more details.
 Record full tweet object as given to us by the Twitter Streaming API.
 
 [id="plugins-{type}s-{plugin}-ignore_retweets"]
-===== `ignore_retweets` 
+===== `ignore_retweets`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -162,33 +162,33 @@ Record full tweet object as given to us by the Twitter Streaming API.
 Lets you ignore the retweets coming out of the Twitter API. Default => false
 
 [id="plugins-{type}s-{plugin}-keywords"]
-===== `keywords` 
+===== `keywords`
 
   * Value type is <<array,array>>
   * There is no default value for this setting.
 
 Any keywords to track in the Twitter stream. For multiple keywords, use
-the syntax ["foo", "bar"]. There's a logical OR between each keyword 
+the syntax ["foo", "bar"]. There's a logical OR between each keyword
 string listed and a logical AND between words separated by spaces per
 keyword string.
-See https://dev.twitter.com/streaming/overview/request-parameters#track 
+See https://dev.twitter.com/streaming/overview/request-parameters#track
 for more details.
 
-The wildcard "*" option is not supported. To ingest a sample stream of 
-all tweets, the use_samples option is recommended. 
+The wildcard "*" option is not supported. To ingest a sample stream of
+all tweets, the use_samples option is recommended.
 
 [id="plugins-{type}s-{plugin}-languages"]
-===== `languages` 
+===== `languages`
 
   * Value type is <<array,array>>
   * There is no default value for this setting.
 
 A list of BCP 47 language identifiers corresponding to any of the languages listed
-on Twitter’s advanced search page will only return tweets that have been detected 
+on Twitter’s advanced search page will only return tweets that have been detected
 as being written in the specified languages.
 
 [id="plugins-{type}s-{plugin}-locations"]
-===== `locations` 
+===== `locations`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -199,7 +199,7 @@ See https://dev.twitter.com/streaming/overview/request-parameters#locations
 for more details.
 
 [id="plugins-{type}s-{plugin}-oauth_token"]
-===== `oauth_token` 
+===== `oauth_token`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -216,7 +216,7 @@ will create an oauth token and secret bound to your account and that
 application.
 
 [id="plugins-{type}s-{plugin}-oauth_token_secret"]
-===== `oauth_token_secret` 
+===== `oauth_token_secret`
 
   * This is a required setting.
   * Value type is <<password,password>>
@@ -233,7 +233,7 @@ will create an oauth token and secret bound to your account and that
 application.
 
 [id="plugins-{type}s-{plugin}-proxy_address"]
-===== `proxy_address` 
+===== `proxy_address`
 
   * Value type is <<string,string>>
   * Default value is `"127.0.0.1"`
@@ -241,7 +241,7 @@ application.
 Location of the proxy, by default the same machine as the one running this LS instance
 
 [id="plugins-{type}s-{plugin}-proxy_port"]
-===== `proxy_port` 
+===== `proxy_port`
 
   * Value type is <<number,number>>
   * Default value is `3128`
@@ -249,7 +249,7 @@ Location of the proxy, by default the same machine as the one running this LS in
 Port where the proxy is listening, by default 3128 (squid)
 
 [id="plugins-{type}s-{plugin}-rate_limit_reset_in"]
-===== `rate_limit_reset_in` 
+===== `rate_limit_reset_in`
 
   * Value type is <<number,number>>
   * Default value is `300`
@@ -259,7 +259,7 @@ In some cases the 'x-rate-limit-reset' header is not set in the response and <er
 is nil. If this occurs then we use the integer specified here. The default is 5 minutes.
 
 [id="plugins-{type}s-{plugin}-use_proxy"]
-===== `use_proxy` 
+===== `use_proxy`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -267,14 +267,14 @@ is nil. If this occurs then we use the integer specified here. The default is 5 
 When to use a proxy to handle the connections
 
 [id="plugins-{type}s-{plugin}-use_samples"]
-===== `use_samples` 
+===== `use_samples`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
 Returns a small random sample of all public statuses. The tweets returned
 by the default access level are the same, so if two different clients connect
-to this endpoint, they will see the same tweets. If set to true, the keywords, 
+to this endpoint, they will see the same tweets. If set to true, the keywords,
 follows, locations, and languages options will be ignored. Default => false
 
 [id="plugins-{type}s-{plugin}-target"]

@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v9.0.0.prerelease01
 :release_date: 2025-02-05
 :changelog_url: https://github.com/elastic/logstash-filter-elastic_integration/blob/v9.0.0.prerelease01/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -53,7 +53,7 @@ Events that _fail_ ingest pipeline processing will be tagged with `_ingest_pipel
 
 - This plugin requires Java 17 minimum with {ls} `8.x` versions and Java 21 minimum with {ls} `9.x` versions.
 - When you upgrade the {stack}, upgrade {ls} (or this plugin specifically) _before_ you upgrade {kib}.
-  (Note that this requirement is a departure from the typical {stack} https://www.elastic.co/guide/en/elastic-stack/current/installing-elastic-stack.html#install-order-elastic-stack[installation order].) 
+  (Note that this requirement is a departure from the typical {stack} https://www.elastic.co/guide/en/elastic-stack/current/installing-elastic-stack.html#install-order-elastic-stack[installation order].)
 +
 The {es}-{ls}-{kib} installation order recommended here ensures the best experience with {agent}-managed pipelines, and embeds functionality from a version of {es} Ingest Node that is compatible with the plugin version (`major`.`minor`).   
 
@@ -61,13 +61,13 @@ The {es}-{ls}-{kib} installation order recommended here ensures the best experie
 ===== Using `filter-elastic_integration` with `output-elasticsearch`
 
 Elastic {integrations} are designed to work with {logstash-ref}/plugins-outputs-elasticsearch.html#plugins-outputs-elasticsearch-data-streams[data streams] and {logstash-ref}/plugins-outputs-elasticsearch.html#_compatibility_with_the_elastic_common_schema_ecs[ECS-compatible] output.
-Be sure that these features are enabled in the {logstash-ref}/plugins-outputs-elasticsearch.html[`output-elasticsearch`] plugin. 
+Be sure that these features are enabled in the {logstash-ref}/plugins-outputs-elasticsearch.html[`output-elasticsearch`] plugin.
 
-* Set {logstash-ref}/plugins-outputs-elasticsearch.html#plugins-outputs-elasticsearch-data_stream[`data-stream`] to `true`. + 
-  (Check out {logstash-ref}/plugins-outputs-elasticsearch.html#plugins-outputs-elasticsearch-data-streams[Data streams] for additional data streams settings.) 
+* Set {logstash-ref}/plugins-outputs-elasticsearch.html#plugins-outputs-elasticsearch-data_stream[`data-stream`] to `true`. +
+  (Check out {logstash-ref}/plugins-outputs-elasticsearch.html#plugins-outputs-elasticsearch-data-streams[Data streams] for additional data streams settings.)
 * Set {logstash-ref}/plugins-outputs-elasticsearch.html#plugins-outputs-elasticsearch-ecs_compatibility[`ecs-compatibility`] to `v1` or `v8`.
 
-Check out the {logstash-ref}/plugins-outputs-elasticsearch.html[`output-elasticsearch` plugin] docs for additional settings. 
+Check out the {logstash-ref}/plugins-outputs-elasticsearch.html[`output-elasticsearch` plugin] docs for additional settings.
 
 [id="plugins-{type}s-{plugin}-minimum_configuration"]
 ==== Minimum configuration
@@ -145,14 +145,14 @@ At the startup phase, this plugin confirms that current user has sufficient priv
 
 |=======================================================================
 
-[NOTE] 
+[NOTE]
 --
 This plugin cannot determine if an anonymous user has the required privileges when it connects to an {es} cluster that has security features disabled or when the user does not provide credentials.
 The plugin starts in an unsafe mode with a runtime error indicating that API permissions are insufficient, and prevents events from being processed by the ingest pipeline.
 
-To avoid these issues, set up user authentication and ensure that security in {es} is enabled (default). 
+To avoid these issues, set up user authentication and ensure that security in {es} is enabled (default).
 --
-      
+
 [id="plugins-{type}s-{plugin}-supported_ingest_processors"]
 ==== Supported Ingest Processors
 

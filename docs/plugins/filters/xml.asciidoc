@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v4.3.0
 :release_date: 2025-02-19
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-xml/blob/v4.3.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -50,16 +50,16 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-force_array"]
-===== `force_array` 
+===== `force_array`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
 
-By default the filter will force single elements to be arrays. Setting this to 
+By default the filter will force single elements to be arrays. Setting this to
 false will prevent storing single elements in arrays.
 
 [id="plugins-{type}s-{plugin}-force_content"]
-===== `force_content` 
+===== `force_content`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -69,7 +69,7 @@ of tags. This option allows you to force text content and attributes to always
 parse to a hash value.
 
 [id="plugins-{type}s-{plugin}-namespaces"]
-===== `namespaces` 
+===== `namespaces`
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
@@ -100,7 +100,7 @@ By default the parser is not strict and thus accepts some invalid content.
 Currently supported options are:
 
  - `strict` - forces the parser to fail early instead of accumulating errors when content is not valid xml.
- 
+
 Control characters such as ASCII 0x0 are not allowed and _always_ result in non-valid XML.
 
 When XML content is not valid, it will be tagged as `_xmlparsefailure`.
@@ -111,10 +111,10 @@ XML specs:
 * XML 1.1 Spec: https://www.w3.org/TR/xml11/#charsets
 
 
- 
+
 
 [id="plugins-{type}s-{plugin}-remove_namespaces"]
-===== `remove_namespaces` 
+===== `remove_namespaces`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -123,7 +123,7 @@ Remove all namespaces from all nodes in the document.
 Of course, if the document had nodes with the same names but different namespaces, they will now be ambiguous.
 
 [id="plugins-{type}s-{plugin}-source"]
-===== `source` 
+===== `source`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -144,7 +144,7 @@ For example, if you have the whole XML document in your `message` field:
 The above would parse the XML from the `message` field.
 
 [id="plugins-{type}s-{plugin}-store_xml"]
-===== `store_xml` 
+===== `store_xml`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -153,7 +153,7 @@ By default the filter will store the whole parsed XML in the destination
 field as described above. Setting this to false will prevent that.
 
 [id="plugins-{type}s-{plugin}-suppress_empty"]
-===== `suppress_empty` 
+===== `suppress_empty`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -162,7 +162,7 @@ By default, output nothing if the element is empty.
 If set to `false`, empty element will result in an empty hash object.
 
 [id="plugins-{type}s-{plugin}-target"]
-===== `target` 
+===== `target`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -183,7 +183,7 @@ Note: if the `target` field already exists, it will be overridden.
 Required if `store_xml` is true (which is the default).
 
 [id="plugins-{type}s-{plugin}-xpath"]
-===== `xpath` 
+===== `xpath`
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
@@ -205,7 +205,7 @@ multiple source fields will produce duplicate entries in the field.
 
 For more information on XPath, see https://www.w3schools.com/xml/xml_xpath.asp.
 
-The https://www.w3schools.com/xml/xsl_functions.asp[XPath functions] are particularly powerful. 
+The https://www.w3schools.com/xml/xsl_functions.asp[XPath functions] are particularly powerful.
 
 
 

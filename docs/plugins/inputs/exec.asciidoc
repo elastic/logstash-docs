@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.6.0
 :release_date: 2022-06-15
 :changelog_url: https://github.com/logstash-plugins/logstash-input-exec/blob/v3.6.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -89,7 +89,7 @@ input plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-command"]
-===== `command` 
+===== `command`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -150,7 +150,7 @@ See <<plugins-{type}s-{plugin}-ecs>> for detailed information.
 -----
 
 [id="plugins-{type}s-{plugin}-interval"]
-===== `interval` 
+===== `interval`
 
   * Value type is <<number,number>>
   * There is no default value for this setting.
@@ -160,7 +160,7 @@ Interval to run the command. Value is in seconds.
 Either `interval` or `schedule` option must be defined.
 
 [id="plugins-{type}s-{plugin}-schedule"]
-===== `schedule` 
+===== `schedule`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.

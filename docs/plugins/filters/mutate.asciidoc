@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.5.8
 :release_date: 2023-11-22
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-mutate/blob/v3.5.8/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -55,7 +55,7 @@ filter {
         add_field => { "shortHostname" => "%{[hostname][0]}" }
     }
 
-    mutate {    
+    mutate {
         rename => {"shortHostname" => "hostname"}
     }
 }
@@ -142,7 +142,7 @@ Example:
 [source,ruby]
     filter {
       mutate {
-        convert => { 
+        convert => {
           "fieldname" => "integer"
           "booleanfield" => "boolean"
         }

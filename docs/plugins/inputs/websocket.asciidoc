@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v4.0.4
 :release_date: 2018-04-06
 :changelog_url: https://github.com/logstash-plugins/logstash-input-websocket/blob/v4.0.4/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -42,7 +42,7 @@ input plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-mode"]
-===== `mode` 
+===== `mode`
 
   * Value can be any of: `client`
   * Default value is `"client"`
@@ -52,7 +52,7 @@ is supported, i.e. this plugin connects to a websocket server and
 receives events from the server as websocket messages.
 
 [id="plugins-{type}s-{plugin}-url"]
-===== `url` 
+===== `url`
 
   * This is a required setting.
   * Value type is <<string,string>>

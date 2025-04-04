@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.1.0
 :release_date: 2021-11-04
 :changelog_url: https://github.com/logstash-plugins/logstash-input-generator/blob/v3.1.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -62,7 +62,7 @@ input plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-count"]
-===== `count` 
+===== `count`
 
   * Value type is <<number,number>>
   * Default value is `0`
@@ -108,7 +108,7 @@ See <<plugins-{type}s-{plugin}-ecs>> for detailed information.
 -----
 
 [id="plugins-{type}s-{plugin}-lines"]
-===== `lines` 
+===== `lines`
 
   * Value type is <<array,array>>
   * There is no default value for this setting.
@@ -133,7 +133,7 @@ Example:
 The above will emit `line 1` then `line 2` then `line 3`, then `line 1`, etc...
 
 [id="plugins-{type}s-{plugin}-message"]
-===== `message` 
+===== `message`
 
   * Value type is <<string,string>>
   * Default value is `"Hello world!"`
@@ -146,7 +146,7 @@ stdin and use that as the message string for every event.
 Otherwise, this value will be used verbatim as the event message.
 
 [id="plugins-{type}s-{plugin}-threads"]
-===== `threads` 
+===== `threads`
 
   * Value type is <<number,number>>
   * Default value is `1`

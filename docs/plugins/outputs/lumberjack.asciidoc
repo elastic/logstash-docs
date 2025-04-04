@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.1.9
 :release_date: 2021-08-30
 :changelog_url: https://github.com/logstash-plugins/logstash-output-lumberjack/blob/v3.1.9/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -46,7 +46,7 @@ output plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-flush_size"]
-===== `flush_size` 
+===== `flush_size`
 
   * Value type is <<number,number>>
   * Default value is `1024`
@@ -56,20 +56,20 @@ if the number of events exceed the number the declared `flush_size` we will
 send them to the logstash server.
 
 [id="plugins-{type}s-{plugin}-hosts"]
-===== `hosts` 
+===== `hosts`
 
   * This is a required setting.
   * Value type is <<array,array>>
   * There is no default value for this setting.
 
 List of addresses lumberjack can send to. When the plugin needs to connect to the remote
-peer, it randomly selects one of the hosts. 
+peer, it randomly selects one of the hosts.
 
 When the plugin is registered, it opens a connection to one of the hosts.
 If the plugin detects a connection error, it selects a different host from the list and opens a new connection.
 
 [id="plugins-{type}s-{plugin}-idle_flush_time"]
-===== `idle_flush_time` 
+===== `idle_flush_time`
 
   * Value type is <<number,number>>
   * Default value is `1`
@@ -85,7 +85,7 @@ This helps keep both fast and slow log streams moving along in
 near-real-time.
 
 [id="plugins-{type}s-{plugin}-port"]
-===== `port` 
+===== `port`
 
   * This is a required setting.
   * Value type is <<number,number>>
@@ -94,7 +94,7 @@ near-real-time.
 the port to connect to
 
 [id="plugins-{type}s-{plugin}-ssl_certificate"]
-===== `ssl_certificate` 
+===== `ssl_certificate`
 
   * This is a required setting.
   * Value type is <<path,path>>

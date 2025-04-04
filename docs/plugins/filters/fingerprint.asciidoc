@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.4.4
 :release_date: 2024-03-19
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-fingerprint/blob/v3.4.4/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -72,7 +72,7 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-base64encode"]
-===== `base64encode` 
+===== `base64encode`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -81,7 +81,7 @@ When set to `true`, the `SHA1`, `SHA256`, `SHA384`, `SHA512`, `MD5` and `MURMUR3
 base64 encoded rather than hex encoded strings.
 
 [id="plugins-{type}s-{plugin}-concatenate_sources"]
-===== `concatenate_sources` 
+===== `concatenate_sources`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -89,7 +89,7 @@ base64 encoded rather than hex encoded strings.
 When set to `true` and `method` isn't `UUID` or `PUNCTUATION`, the
 plugin concatenates the names and values of all fields given in the
 `source` option into one string (like the old checksum filter) before
-doing the fingerprint computation. 
+doing the fingerprint computation.
 
 If `false` and multiple source fields are given, the target field will be single
 fingerprint of the last source field.
@@ -110,12 +110,12 @@ The output is:
 
 [source,ruby]
 -----
-"fingerprint" => "6b6390a4416131f82b6ffb509f6e779e5dd9630f". 
+"fingerprint" => "6b6390a4416131f82b6ffb509f6e779e5dd9630f".
 -----
 
 **Example: `concatenate_sources`=false with array**
 
-If the last source field is an array, you get an array of fingerprints. 
+If the last source field is an array, you get an array of fingerprints.
 
 In this example, "siblings" is an array ["big brother", "little sister", "little brother"].
 
@@ -138,16 +138,16 @@ The output is:
 -----
 
 [id="plugins-{type}s-{plugin}-concatenate_all_fields"]
-===== `concatenate_all_fields` 
+===== `concatenate_all_fields`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
 
 When set to `true` and `method` isn't `UUID` or `PUNCTUATION`, the
-plugin concatenates the names and values of all fields of the event 
-into one string (like the old checksum filter) before doing the 
-fingerprint computation. If `false` and at least one source field is 
-given, the target field will be an array with fingerprints of the 
+plugin concatenates the names and values of all fields of the event
+into one string (like the old checksum filter) before doing the
+fingerprint computation. If `false` and at least one source field is
+given, the target field will be an array with fingerprints of the
 source fields given.
 
 [id="plugins-{type}s-{plugin}-ecs_compatibility"]
@@ -163,7 +163,7 @@ Controls this plugin's compatibility with the
 See <<plugins-{type}s-{plugin}-ecs_metadata>> for detailed information.
 
 [id="plugins-{type}s-{plugin}-key"]
-===== `key` 
+===== `key`
 
   * Value type is <<password,password>>
   * There is no default value for this setting.
@@ -172,7 +172,7 @@ When used with the `IPV4_NETWORK` method fill in the subnet prefix length.
 With other methods, optionally fill in the HMAC key.
 
 [id="plugins-{type}s-{plugin}-method"]
-===== `method` 
+===== `method`
 
   * This is a required setting.
   * Value can be any of: `SHA1`, `SHA256`, `SHA384`, `SHA512`, `MD5`, `MURMUR3`, `MURMUR3_128`, `IPV4_NETWORK`, `UUID`, `PUNCTUATION`
@@ -199,7 +199,7 @@ https://en.wikipedia.org/wiki/Universally_unique_identifier[UUID] will
 be generated. The result will be random and thus not a consistent hash.
 
 [id="plugins-{type}s-{plugin}-source"]
-===== `source` 
+===== `source`
 
   * Value type is <<array,array>>
   * Default value is `"message"`
@@ -209,7 +209,7 @@ to create the fingerprint. If an array is given, see the
 `concatenate_sources` option.
 
 [id="plugins-{type}s-{plugin}-target"]
-===== `target` 
+===== `target`
 
   * Value type is <<string,string>>
   * Default value is `"fingerprint"` when ECS is disabled

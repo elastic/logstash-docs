@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.6
 :release_date: 2023-05-31
 :changelog_url: https://github.com/logstash-plugins/logstash-output-datadog/blob/v3.0.6/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -52,7 +52,7 @@ output plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-alert_type"]
-===== `alert_type` 
+===== `alert_type`
 
   * Value can be any of: `info`, `error`, `warning`, `success`
   * There is no default value for this setting.
@@ -60,7 +60,7 @@ output plugins.
 Alert type
 
 [id="plugins-{type}s-{plugin}-api_key"]
-===== `api_key` 
+===== `api_key`
 
   * This is a required setting.
   * Value type is <<password,password>>
@@ -69,7 +69,7 @@ Alert type
 Your DatadogHQ API key
 
 [id="plugins-{type}s-{plugin}-date_happened"]
-===== `date_happened` 
+===== `date_happened`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -77,7 +77,7 @@ Your DatadogHQ API key
 Date Happened
 
 [id="plugins-{type}s-{plugin}-dd_tags"]
-===== `dd_tags` 
+===== `dd_tags`
 
   * Value type is <<array,array>>
   * There is no default value for this setting.
@@ -87,7 +87,7 @@ Set any custom tags for this event
 Default are the Logstash tags if any
 
 [id="plugins-{type}s-{plugin}-priority"]
-===== `priority` 
+===== `priority`
 
   * Value can be any of: `normal`, `low`
   * There is no default value for this setting.
@@ -95,7 +95,7 @@ Default are the Logstash tags if any
 Priority
 
 [id="plugins-{type}s-{plugin}-source_type_name"]
-===== `source_type_name` 
+===== `source_type_name`
 
   * Value can be any of: `nagios`, `hudson`, `jenkins`, `user`, `my apps`, `feed`, `chef`, `puppet`, `git`, `bitbucket`, `fabric`, `capistrano`
   * Default value is `"my apps"`
@@ -103,7 +103,7 @@ Priority
 Source type name
 
 [id="plugins-{type}s-{plugin}-text"]
-===== `text` 
+===== `text`
 
   * Value type is <<string,string>>
   * Default value is `"%{message}"`
@@ -111,7 +111,7 @@ Source type name
 Text
 
 [id="plugins-{type}s-{plugin}-title"]
-===== `title` 
+===== `title`
 
   * Value type is <<string,string>>
   * Default value is `"Logstash event for %{host}"`

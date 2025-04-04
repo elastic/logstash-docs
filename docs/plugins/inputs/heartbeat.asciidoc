@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.1.1
 :release_date: 2021-08-04
 :changelog_url: https://github.com/logstash-plugins/logstash-input-heartbeat/blob/v3.1.1/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -70,7 +70,7 @@ input plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-count"]
-===== `count` 
+===== `count`
 
   * Value type is <<number,number>>
   * Default value is `-1`
@@ -89,11 +89,11 @@ This is typically used only for testing purposes.
 ** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
 ** Otherwise, the default value is `disabled`.
 
-Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)]. 
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
 Refer to <<plugins-{type}s-{plugin}-ecs>> in this topic for detailed information.
 
 [id="plugins-{type}s-{plugin}-interval"]
-===== `interval` 
+===== `interval`
 
   * Value type is <<number,number>>
   * Default value is `60`
@@ -103,7 +103,7 @@ Set how frequently messages should be sent.
 The default, `60`, means send a message every 60 seconds.
 
 [id="plugins-{type}s-{plugin}-message"]
-===== `message` 
+===== `message`
 
   * Value type is <<string,string>>
   * Default value is `"ok"`
@@ -154,7 +154,7 @@ field.
 
 
 [id="plugins-{type}s-{plugin}-threads"]
-===== `threads` 
+===== `threads`
 
   * Value type is <<number,number>>
   * Default value is `1`

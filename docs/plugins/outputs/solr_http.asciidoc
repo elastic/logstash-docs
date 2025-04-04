@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.5
 :release_date: 2018-04-06
 :changelog_url: https://github.com/logstash-plugins/logstash-output-solr_http/blob/v3.0.5/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -55,7 +55,7 @@ output plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-document_id"]
-===== `document_id` 
+===== `document_id`
 
   * Value type is <<string,string>>
   * Default value is `nil`
@@ -64,7 +64,7 @@ Solr document ID for events. You'd typically have a variable here, like
 '%{foo}' so you can assign your own IDs
 
 [id="plugins-{type}s-{plugin}-flush_size"]
-===== `flush_size` 
+===== `flush_size`
 
   * Value type is <<number,number>>
   * Default value is `100`
@@ -72,7 +72,7 @@ Solr document ID for events. You'd typically have a variable here, like
 Number of events to queue up before writing to Solr
 
 [id="plugins-{type}s-{plugin}-idle_flush_time"]
-===== `idle_flush_time` 
+===== `idle_flush_time`
 
   * Value type is <<number,number>>
   * Default value is `1`
@@ -81,7 +81,7 @@ Amount of time since the last flush before a flush is done even if
 the number of buffered events is smaller than flush_size
 
 [id="plugins-{type}s-{plugin}-solr_url"]
-===== `solr_url` 
+===== `solr_url`
 
   * Value type is <<string,string>>
   * Default value is `"http://localhost:8983/solr"`

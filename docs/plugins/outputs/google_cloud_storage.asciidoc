@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v4.5.0
 :release_date: 2024-09-16
 :changelog_url: https://github.com/logstash-plugins/logstash-output-google_cloud_storage/blob/v4.5.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -113,7 +113,7 @@ output plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-bucket"]
-===== `bucket` 
+===== `bucket`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -122,7 +122,7 @@ output plugins.
 GCS bucket name, without "gs://" or any other prefix.
 
 [id="plugins-{type}s-{plugin}-date_pattern"]
-===== `date_pattern` 
+===== `date_pattern`
 
   * Value type is <<string,string>>
   * Default value is `"%Y-%m-%dT%H:00"`
@@ -131,7 +131,7 @@ Time pattern for log file, defaults to hourly files.
 Must Time.strftime patterns: www.ruby-doc.org/core-2.0/Time.html#method-i-strftime
 
 [id="plugins-{type}s-{plugin}-flush_interval_secs"]
-===== `flush_interval_secs` 
+===== `flush_interval_secs`
 
   * Value type is <<number,number>>
   * Default value is `2`
@@ -140,7 +140,7 @@ Flush interval in seconds for flushing writes to log files. 0 will flush
 on every message.
 
 [id="plugins-{type}s-{plugin}-gzip"]
-===== `gzip` 
+===== `gzip`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -161,12 +161,12 @@ Gzip output stream when writing events to log files and set `Content-Encoding` t
 This will upload your files as `gzip` saving network and storage costs, but they will be
 transparently decompressed when you read them from the storage bucket.
 
-See the Cloud Storage documentation on https://cloud.google.com/storage/docs/metadata#content-encoding[metadata] and 
+See the Cloud Storage documentation on https://cloud.google.com/storage/docs/metadata#content-encoding[metadata] and
 https://cloud.google.com/storage/docs/transcoding#content-type_vs_content-encoding[transcoding]
 for more information.
 
 **Note**: It is not recommended to use both `gzip_content_encoding` and `gzip`.
-This compresses your file _twice_, will increase the work your machine does and makes 
+This compresses your file _twice_, will increase the work your machine does and makes
 the files larger than just compressing once.
 
 [id="plugins-{type}s-{plugin}-include_hostname"]
@@ -210,7 +210,7 @@ web interface or with the following command:
 `gcloud iam service-accounts keys create key.json --iam-account my-sa-123@my-project-123.iam.gserviceaccount.com`
 
 [id="plugins-{type}s-{plugin}-key_password"]
-===== `key_password` 
+===== `key_password`
 
   * Value type is <<string,string>>
   * Default value is `"notasecret"`
@@ -218,7 +218,7 @@ web interface or with the following command:
 **Deprecated** this feature is no longer used, the setting is now a part of <<plugins-{type}s-{plugin}-json_key_file>>.
 
 [id="plugins-{type}s-{plugin}-log_file_prefix"]
-===== `log_file_prefix` 
+===== `log_file_prefix`
 
   * Value type is <<string,string>>
   * Default value is `"logstash_gcs"`
@@ -238,7 +238,7 @@ to the network bandwidth available and the latency between your server and
 Cloud Storage.
 
 [id="plugins-{type}s-{plugin}-max_file_size_kbytes"]
-===== `max_file_size_kbytes` 
+===== `max_file_size_kbytes`
 
   * Value type is <<number,number>>
   * Default value is `10000`
@@ -246,7 +246,7 @@ Cloud Storage.
 Sets max file size in kbytes. 0 disable max file check.
 
 [id="plugins-{type}s-{plugin}-output_format"]
-===== `output_format` 
+===== `output_format`
 
   * Value can be any of: `json`, `plain`, or no value
   * Default value is no value
@@ -261,7 +261,7 @@ The event format you want to store in files. Defaults to plain text.
 Note: if you want to use a codec you MUST not set this value.
 
 [id="plugins-{type}s-{plugin}-service_account"]
-===== `service_account` 
+===== `service_account`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -270,7 +270,7 @@ Note: if you want to use a codec you MUST not set this value.
 **Deprecated** this feature is no longer used, the setting is now a part of <<plugins-{type}s-{plugin}-json_key_file>>.
 
 [id="plugins-{type}s-{plugin}-temp_directory"]
-===== `temp_directory` 
+===== `temp_directory`
 
   * Value type is <<string,string>>
   * Default value is `""`
@@ -279,7 +279,7 @@ Directory where temporary files are stored.
 Defaults to /tmp/logstash-gcs-<random-suffix>
 
 [id="plugins-{type}s-{plugin}-uploader_interval_secs"]
-===== `uploader_interval_secs` 
+===== `uploader_interval_secs`
 
   * Value type is <<number,number>>
   * Default value is `60`

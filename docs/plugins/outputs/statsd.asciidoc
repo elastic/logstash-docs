@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.2.0
 :release_date: 2018-06-05
 :changelog_url: https://github.com/logstash-plugins/logstash-output-statsd/blob/v3.2.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -94,7 +94,7 @@ output plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-count"]
-===== `count` 
+===== `count`
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
@@ -103,7 +103,7 @@ A count metric. `metric_name => count` as hash. `%{fieldname}` substitutions are
 allowed in the metric names.
 
 [id="plugins-{type}s-{plugin}-decrement"]
-===== `decrement` 
+===== `decrement`
 
   * Value type is <<array,array>>
   * Default value is `[]`
@@ -112,7 +112,7 @@ A decrement metric. Metric names as array. `%{fieldname}` substitutions are
 allowed in the metric names.
 
 [id="plugins-{type}s-{plugin}-gauge"]
-===== `gauge` 
+===== `gauge`
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
@@ -121,7 +121,7 @@ A gauge metric. `metric_name => gauge` as hash. `%{fieldname}` substitutions are
 allowed in the metric names.
 
 [id="plugins-{type}s-{plugin}-host"]
-===== `host` 
+===== `host`
 
   * Value type is <<string,string>>
   * Default value is `"localhost"`
@@ -129,7 +129,7 @@ allowed in the metric names.
 The hostname or IP address of the statsd server.
 
 [id="plugins-{type}s-{plugin}-increment"]
-===== `increment` 
+===== `increment`
 
   * Value type is <<array,array>>
   * Default value is `[]`
@@ -138,7 +138,7 @@ An increment metric. Metric names as array. `%{fieldname}` substitutions are
 allowed in the metric names.
 
 [id="plugins-{type}s-{plugin}-namespace"]
-===== `namespace` 
+===== `namespace`
 
   * Value type is <<string,string>>
   * Default value is `"logstash"`
@@ -147,7 +147,7 @@ The statsd namespace to use for this metric. `%{fieldname}` substitutions are
 allowed.
 
 [id="plugins-{type}s-{plugin}-port"]
-===== `port` 
+===== `port`
 
   * Value type is <<number,number>>
   * Default value is `8125`
@@ -156,7 +156,7 @@ The port to connect to on your statsd server.
 
 [id="plugins-{type}s-{plugin}-protocol"]
 
-===== `protocol` 
+===== `protocol`
 
   * Value type is <<string,string>>
   * Default value is `"udp"`
@@ -164,7 +164,7 @@ The port to connect to on your statsd server.
 The protocol to connect to on your statsd server.
 
 [id="plugins-{type}s-{plugin}-sample_rate"]
-===== `sample_rate` 
+===== `sample_rate`
 
   * Value type is <<number,number>>
   * Default value is `1`
@@ -172,7 +172,7 @@ The protocol to connect to on your statsd server.
 The sample rate for the metric.
 
 [id="plugins-{type}s-{plugin}-sender"]
-===== `sender` 
+===== `sender`
 
   * Value type is <<string,string>>
   * Default value is `"%{host}"`
@@ -181,7 +181,7 @@ The name of the sender. Dots will be replaced with underscores. `%{fieldname}`
 substitutions are allowed.
 
 [id="plugins-{type}s-{plugin}-set"]
-===== `set` 
+===== `set`
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
@@ -190,7 +190,7 @@ A set metric. `metric_name => "string"` to append as hash. `%{fieldname}`
 substitutions are allowed in the metric names.
 
 [id="plugins-{type}s-{plugin}-timing"]
-===== `timing` 
+===== `timing`
 
   * Value type is <<hash,hash>>
   * Default value is `{}`

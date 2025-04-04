@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v4.4.6
 :release_date: 2023-12-13
 :changelog_url: https://github.com/logstash-plugins/logstash-input-file/blob/v4.4.6/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -296,7 +296,7 @@ In Tail mode, you might want to exclude gzipped files:
 
 This option can be used in `read` mode to enforce closing all watchers when file gets read.
 Can be used in situation when content of the file is static and won't change during execution.
-When set to `true` it also disables active discovery of the files - only files that were in 
+When set to `true` it also disables active discovery of the files - only files that were in
 the directories when process was started will be read.
 It supports `sincedb` entries. When file was processed once, then modified - next run will only
 read newly added entries.

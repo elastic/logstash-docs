@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.1.0
 :release_date: 2021-11-18
 :changelog_url: https://github.com/logstash-plugins/logstash-input-pipe/blob/v3.1.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -31,7 +31,7 @@ want to join lines, you'll want to use the multiline codec.
 [id="plugins-{type}s-{plugin}-ecs"]
 ==== Compatibility with the Elastic Common Schema (ECS)
 
-This plugin adds extra fields about the event's source. 
+This plugin adds extra fields about the event's source.
 Configure the <<plugins-{type}s-{plugin}-ecs_compatibility>> option if you want
 to ensure that these fields are compatible with {ecs-ref}[ECS].
 
@@ -63,7 +63,7 @@ input plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-command"]
-===== `command` 
+===== `command`
 
   * This is a required setting.
   * Value type is <<string,string>>

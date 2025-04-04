@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.7
 :release_date: 2023-05-30
 :changelog_url: https://github.com/logstash-plugins/logstash-output-circonus/blob/v3.0.7/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -44,7 +44,7 @@ output plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-annotation"]
-===== `annotation` 
+===== `annotation`
 
   * This is a required setting.
   * Value type is <<hash,hash>>
@@ -71,7 +71,7 @@ or
 -----
 
 [id="plugins-{type}s-{plugin}-api_token"]
-===== `api_token` 
+===== `api_token`
 
   * This is a required setting.
   * Value type is <<password,password>>
@@ -80,7 +80,7 @@ or
 Your Circonus API Token
 
 [id="plugins-{type}s-{plugin}-app_name"]
-===== `app_name` 
+===== `app_name`
 
   * This is a required setting.
   * Value type is <<string,string>>

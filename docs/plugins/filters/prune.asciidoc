@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.4
 :release_date: 2019-09-12
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-prune/blob/v3.0.4/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -78,7 +78,7 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-blacklist_names"]
-===== `blacklist_names` 
+===== `blacklist_names`
 
   * Value type is <<array,array>>
   * Default value is `["%{[^}]+}"]`
@@ -92,7 +92,7 @@ Exclude fields whose names match specified regexps, by default exclude unresolve
     }
 
 [id="plugins-{type}s-{plugin}-blacklist_values"]
-===== `blacklist_values` 
+===== `blacklist_values`
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
@@ -109,7 +109,7 @@ In case field values are arrays, each array item is matched against the regular 
     }
 
 [id="plugins-{type}s-{plugin}-interpolate"]
-===== `interpolate` 
+===== `interpolate`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -119,7 +119,7 @@ dynamic values (when resolving `%{some_field}`).
 Probably adds some performance overhead. Defaults to false.
 
 [id="plugins-{type}s-{plugin}-whitelist_names"]
-===== `whitelist_names` 
+===== `whitelist_names`
 
   * Value type is <<array,array>>
   * Default value is `[]`
@@ -133,7 +133,7 @@ Include only fields only if their names match specified regexps, default to empt
     }
 
 [id="plugins-{type}s-{plugin}-whitelist_values"]
-===== `whitelist_values` 
+===== `whitelist_values`
 
   * Value type is <<hash,hash>>
   * Default value is `{}`

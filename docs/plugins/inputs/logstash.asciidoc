@@ -10,7 +10,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v1.0.4
 :release_date: 2024-12-10
 :changelog_url: https://github.com/logstash-plugins/logstash-integration-logstash/blob/v1.0.4/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -92,7 +92,7 @@ NOTE: Client-certificate verification does _not_ verify identity claims on the p
 ===== Security: Credentials
 
 You can also configure this plugin to require a specific username/password be provided by configuring <<plugins-{type}s-{plugin}-username>> and <<plugins-{type}s-{plugin}-password>>.
-Doing so requires connecting `logstash-output` plugin clients to provide matching `username` and `password`. 
+Doing so requires connecting `logstash-output` plugin clients to provide matching `username` and `password`.
 
 NOTE: when SSL is disabled, data and credentials will be received in clear-text.
 

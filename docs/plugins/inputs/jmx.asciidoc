@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.7
 :release_date: 2018-08-13
 :changelog_url: https://github.com/logstash-plugins/logstash-input-jmx/blob/v3.0.7/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -23,7 +23,7 @@ include::{include_path}/plugin_header.asciidoc[]
 ==== Description
 
 This input plugin permits to retrieve metrics from remote Java applications using JMX.
-Every `polling_frequency`, it scans a folder containing json configuration 
+Every `polling_frequency`, it scans a folder containing json configuration
 files describing JVMs to monitor with metrics to retrieve.
 Then a pool of threads will retrieve metrics and create events.
 
@@ -83,7 +83,7 @@ Json JMX configuration example:
       } ]
     }
 
-Here are examples of generated events. When returned metrics value type is 
+Here are examples of generated events. When returned metrics value type is
 number/boolean it is stored in `metric_value_number` event field
 otherwise it is stored in `metric_value_string` event field.
 [source,ruby]
@@ -128,7 +128,7 @@ input plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-nb_thread"]
-===== `nb_thread` 
+===== `nb_thread`
 
   * Value type is <<number,number>>
   * Default value is `4`
@@ -136,7 +136,7 @@ input plugins.
 Indicate number of thread launched to retrieve metrics
 
 [id="plugins-{type}s-{plugin}-path"]
-===== `path` 
+===== `path`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -145,7 +145,7 @@ Indicate number of thread launched to retrieve metrics
 Path where json conf files are stored
 
 [id="plugins-{type}s-{plugin}-polling_frequency"]
-===== `polling_frequency` 
+===== `polling_frequency`
 
   * Value type is <<number,number>>
   * Default value is `60`

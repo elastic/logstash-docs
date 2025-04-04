@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.1.8
 :release_date: 2025-01-02
 :changelog_url: https://github.com/logstash-plugins/logstash-output-mongodb/blob/v3.1.8/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -49,7 +49,7 @@ output plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-bulk"]
-===== `bulk` 
+===== `bulk`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -57,7 +57,7 @@ output plugins.
 Bulk insert flag, set to true to allow bulk insertion, else it will insert events one by one.
 
 [id="plugins-{type}s-{plugin}-bulk_interval"]
-===== `bulk_interval` 
+===== `bulk_interval`
 
   * Value type is <<number,number>>
   * Default value is `2`
@@ -65,7 +65,7 @@ Bulk insert flag, set to true to allow bulk insertion, else it will insert event
 Bulk interval, Used to insert events periodically if the "bulk" flag is activated.
 
 [id="plugins-{type}s-{plugin}-bulk_size"]
-===== `bulk_size` 
+===== `bulk_size`
 
   * Value type is <<number,number>>
   * Default value is `900`
@@ -74,7 +74,7 @@ Bulk events number, if the number of events to insert into a collection raise th
 whatever the bulk interval value (mongodb hard limit is 1000).
 
 [id="plugins-{type}s-{plugin}-collection"]
-===== `collection` 
+===== `collection`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -84,7 +84,7 @@ The collection to use. This value can use `%{foo}` values to dynamically
 select a collection based on data in the event.
 
 [id="plugins-{type}s-{plugin}-database"]
-===== `database` 
+===== `database`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -93,7 +93,7 @@ select a collection based on data in the event.
 The database to use.
 
 [id="plugins-{type}s-{plugin}-generateId"]
-===== `generateId` 
+===== `generateId`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -103,7 +103,7 @@ The "_id" field will use the timestamp of the event and overwrite an existing
 "_id" field in the event.
 
 [id="plugins-{type}s-{plugin}-isodate"]
-===== `isodate` 
+===== `isodate`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -113,7 +113,7 @@ of an ISO8601 string.  For more information about this, see
 http://www.mongodb.org/display/DOCS/Dates.
 
 [id="plugins-{type}s-{plugin}-retry_delay"]
-===== `retry_delay` 
+===== `retry_delay`
 
   * Value type is <<number,number>>
   * Default value is `3`
@@ -121,7 +121,7 @@ http://www.mongodb.org/display/DOCS/Dates.
 The number of seconds to wait after failure before retrying.
 
 [id="plugins-{type}s-{plugin}-uri"]
-===== `uri` 
+===== `uri`
 
   * This is a required setting.
   * Value type is <<string,string>>

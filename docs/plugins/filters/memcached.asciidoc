@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v1.2.0
 :release_date: 2023-01-18
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-memcached/blob/v1.2.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -27,11 +27,11 @@ It currently provides the following facilities:
 
  * `get`: get values for one or more memcached keys and inject them into the event at the
  provided paths
- 
+
  * `set`: set values from the event to the corresponding memcached keys
- 
+
 ==== Examples
- 
+
 This plugin enables key/value lookup enrichment against a Memcached object
 caching system. You can use this plugin to query for a value, and set it if not
 found.
@@ -64,7 +64,7 @@ memcached {
     id => "memcached-set"
   }
 -----
- 
+
 [id="plugins-{type}s-{plugin}-options"]
 ==== Memcached Filter Configuration Options
 
