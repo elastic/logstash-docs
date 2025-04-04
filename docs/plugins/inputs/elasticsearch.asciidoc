@@ -107,8 +107,6 @@ Common causes are:
 [id="plugins-{type}s-{plugin}-cursor"]
 ==== Tracking a field's value across runs
 
-NOTE: experimental:[] `tracking_field` and related settings are experimental and subject to change in the future
-
 .Technical Preview: Tracking a field's value
 ****
 The feature that allows tracking a field's value across runs is in _Technical Preview_.
@@ -124,7 +122,7 @@ Examples include:
 The Elasticsearch input plugin provides the <<plugins-{type}s-{plugin}-tracking_field>> and <<plugins-{type}s-{plugin}-tracking_field_seed>> options.
 When <<plugins-{type}s-{plugin}-tracking_field>> is set, the plugin records the value of that field for the last document retrieved in a run into
 a file. 
-(The file location defaults to <<plugins-{type}s-{plugin}-last_run_metadata_path>>).
+(The file location defaults to <<plugins-{type}s-{plugin}-last_run_metadata_path>>.)
 
 You can then inject this value in the query using the placeholder `:last_value`. 
 The value will be injected into the query before execution, and then updated after the query completes if new data was found.
@@ -140,11 +138,10 @@ If the tracking field is of this data type, you can use an extra placeholder cal
 This placeholder is useful as the right-hand side of a range filter, allowing the collection of
 new data but leaving partially-searchable bulk request data to the next scheduled job.
 
-[id="plugins-{type}s-{plugin}-tracking-sample"]
+id="plugins-{type}s-{plugin}-tracking-sample"]
 ===== Sample configuration: Track field value across runs
 
-This section contains a series of steps to help you set up the "tailing" of data being written to a set of indices, using a date nanosecond field
-added by an Elasticsearch ingest pipeline and the `tracking_field` capability of this plugin.
+This section contains a series of steps to help you set up the "tailing" of data being written to a set of indices, using a date nanosecond field added by an Elasticsearch ingest pipeline and the `tracking_field` capability of this plugin.
 
 . Create ingest pipeline that adds Elasticsearch's `_ingest.timestamp` field to the documents as `event.ingested`:
 +
@@ -162,7 +159,8 @@ added by an Elasticsearch ingest pipeline and the `tracking_field` capability of
     }
 
 [start=2]
-. Create an index mapping where the tracking field is of date nanosecond type and invokes the defined pipeline:+
+. Create an index mapping where the tracking field is of date nanosecond type and invokes the defined pipeline:
++
 [source, json]
     PUT /_template/my_template
     {
