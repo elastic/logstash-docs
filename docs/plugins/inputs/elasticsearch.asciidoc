@@ -138,7 +138,7 @@ If the tracking field is of this data type, you can use an extra placeholder cal
 This placeholder is useful as the right-hand side of a range filter, allowing the collection of
 new data but leaving partially-searchable bulk request data to the next scheduled job.
 
-id="plugins-{type}s-{plugin}-tracking-sample"]
+[id="plugins-{type}s-{plugin}-tracking-sample"]
 ===== Sample configuration: Track field value across runs
 
 This section contains a series of steps to help you set up the "tailing" of data being written to a set of indices, using a date nanosecond field added by an Elasticsearch ingest pipeline and the `tracking_field` capability of this plugin.
