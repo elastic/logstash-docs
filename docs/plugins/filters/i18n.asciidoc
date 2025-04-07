@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.3
 :release_date: 2017-11-07
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-i18n/blob/v3.0.3/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -41,7 +41,7 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-transliterate"]
-===== `transliterate` 
+===== `transliterate`
 
   * Value type is <<array,array>>
   * There is no default value for this setting.

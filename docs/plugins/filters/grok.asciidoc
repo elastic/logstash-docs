@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v4.4.3
 :release_date: 2022-10-28
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-grok/blob/v4.4.3/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -41,7 +41,7 @@ If you need help building patterns to match your logs, you will find the
 The {logstash-ref}/plugins-filters-dissect.html[`dissect`] filter plugin
 is another way to extract unstructured event data into fields using delimiters.
 
-Dissect differs from Grok in that it does not use regular expressions and is faster. 
+Dissect differs from Grok in that it does not use regular expressions and is faster.
 Dissect works well when data is reliably repeated.
 Grok is a better choice when the structure of your text varies from line to line.
 
@@ -173,7 +173,7 @@ The `timestamp`, `logsource`, `program`, and `pid` fields come from the
 `SYSLOGBASE` pattern which itself is defined by other patterns.
 
 Another option is to define patterns _inline_ in the filter using `pattern_definitions`.
-This is mostly for convenience and allows user to define a pattern which can be used just in that 
+This is mostly for convenience and allows user to define a pattern which can be used just in that
 filter. This newly defined patterns in `pattern_definitions` will not be available outside of that particular `grok` filter.
 
 [id="plugins-{type}s-{plugin}-ecs"]
@@ -186,7 +186,7 @@ compliant with the schema.
 
 The ECS pattern set has all of the pattern definitions from the legacy set, and is
 a drop-in replacement. Use the <<plugins-{type}s-{plugin}-ecs_compatibility>>
-setting to switch modes. 
+setting to switch modes.
 
 New features and enhancements will be added to the ECS-compliant files. The
 legacy patterns may still receive bug fixes which are backwards compatible.
@@ -221,7 +221,7 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-break_on_match"]
-===== `break_on_match` 
+===== `break_on_match`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -245,7 +245,7 @@ Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (E
 The value of this setting affects extracted event field names when a composite pattern (such as `HTTPD_COMMONLOG`) is matched.
 
 [id="plugins-{type}s-{plugin}-keep_empty_captures"]
-===== `keep_empty_captures` 
+===== `keep_empty_captures`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -253,7 +253,7 @@ The value of this setting affects extracted event field names when a composite p
 If `true`, keep empty captures as event fields.
 
 [id="plugins-{type}s-{plugin}-match"]
-===== `match` 
+===== `match`
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
@@ -282,7 +282,7 @@ If you need to match multiple patterns against a single field, the value can be 
         }
       }
     }
-    
+
 To perform matches on multiple fields just use multiple entries in the `match` hash:
 
 [source,ruby]
@@ -314,7 +314,7 @@ However, if one pattern depends on a field created by a previous pattern, separa
 
 
 [id="plugins-{type}s-{plugin}-named_captures_only"]
-===== `named_captures_only` 
+===== `named_captures_only`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -322,7 +322,7 @@ However, if one pattern depends on a field created by a previous pattern, separa
 If `true`, only store named captures from grok.
 
 [id="plugins-{type}s-{plugin}-overwrite"]
-===== `overwrite` 
+===== `overwrite`
 
   * Value type is <<array,array>>
   * Default value is `[]`
@@ -344,7 +344,7 @@ overwrite the `message` field with part of the match like so:
 In this case, a line like `May 29 16:37:11 sadness logger: hello world`
 will be parsed and `hello world` will overwrite the original message.
 
-If you are using a field reference in `overwrite`, you must use the field 
+If you are using a field reference in `overwrite`, you must use the field
 reference in the pattern. Example:
 [source,ruby]
     filter {
@@ -356,18 +356,18 @@ reference in the pattern. Example:
 
 
 [id="plugins-{type}s-{plugin}-pattern_definitions"]
-===== `pattern_definitions` 
+===== `pattern_definitions`
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
 
-A hash of pattern-name and pattern tuples defining custom patterns to be used by 
-the current filter. Patterns matching existing names will override the pre-existing 
-definition. Think of this as inline patterns available just for this definition of 
+A hash of pattern-name and pattern tuples defining custom patterns to be used by
+the current filter. Patterns matching existing names will override the pre-existing
+definition. Think of this as inline patterns available just for this definition of
 grok
 
 [id="plugins-{type}s-{plugin}-patterns_dir"]
-===== `patterns_dir` 
+===== `patterns_dir`
 
   * Value type is <<array,array>>
   * Default value is `[]`
@@ -377,7 +377,7 @@ Logstash ships by default with a bunch of patterns, so you don't
 necessarily need to define this yourself unless you are adding additional
 patterns. You can point to multiple pattern directories using this setting.
 Note that Grok will read all files in the directory matching the patterns_files_glob
-and assume it's a pattern file (including any tilde backup files). 
+and assume it's a pattern file (including any tilde backup files).
 [source,ruby]
     patterns_dir => ["/opt/logstash/patterns", "/opt/logstash/extra_patterns"]
 
@@ -392,7 +392,7 @@ For example:
 The patterns are loaded when the pipeline is created.
 
 [id="plugins-{type}s-{plugin}-patterns_files_glob"]
-===== `patterns_files_glob` 
+===== `patterns_files_glob`
 
   * Value type is <<string,string>>
   * Default value is `"*"`
@@ -401,7 +401,7 @@ Glob pattern, used to select the pattern files in the directories
 specified by patterns_dir
 
 [id="plugins-{type}s-{plugin}-tag_on_failure"]
-===== `tag_on_failure` 
+===== `tag_on_failure`
 
   * Value type is <<array,array>>
   * Default value is `["_grokparsefailure"]`
@@ -410,7 +410,7 @@ Append values to the `tags` field when there has been no
 successful match
 
 [id="plugins-{type}s-{plugin}-tag_on_timeout"]
-===== `tag_on_timeout` 
+===== `tag_on_timeout`
 
   * Value type is <<string,string>>
   * Default value is `"_groktimeout"`
@@ -426,7 +426,7 @@ Tag to apply if a grok regexp times out.
 Define target namespace for placing matches.
 
 [id="plugins-{type}s-{plugin}-timeout_millis"]
-===== `timeout_millis` 
+===== `timeout_millis`
 
   * Value type is <<number,number>>
   * Default value is `30000`

@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.8
 :release_date: 2018-04-06
 :changelog_url: https://github.com/logstash-plugins/logstash-input-stomp/blob/v3.0.8/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -48,7 +48,7 @@ input plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-destination"]
-===== `destination` 
+===== `destination`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -59,7 +59,7 @@ The destination to read events from.
 Example: `/topic/logstash`
 
 [id="plugins-{type}s-{plugin}-host"]
-===== `host` 
+===== `host`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -68,7 +68,7 @@ Example: `/topic/logstash`
 The address of the STOMP server.
 
 [id="plugins-{type}s-{plugin}-password"]
-===== `password` 
+===== `password`
 
   * Value type is <<password,password>>
   * Default value is `""`
@@ -76,7 +76,7 @@ The address of the STOMP server.
 The password to authenticate with.
 
 [id="plugins-{type}s-{plugin}-port"]
-===== `port` 
+===== `port`
 
   * Value type is <<number,number>>
   * Default value is `61613`
@@ -84,7 +84,7 @@ The password to authenticate with.
 The port to connet to on your STOMP server.
 
 [id="plugins-{type}s-{plugin}-reconnect"]
-===== `reconnect` 
+===== `reconnect`
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -92,7 +92,7 @@ The port to connet to on your STOMP server.
 Auto reconnect
 
 [id="plugins-{type}s-{plugin}-reconnect_interval"]
-===== `reconnect_interval` 
+===== `reconnect_interval`
 
   * Value type is <<number,number>>
   * Default value is `30`
@@ -100,7 +100,7 @@ Auto reconnect
 
 
 [id="plugins-{type}s-{plugin}-user"]
-===== `user` 
+===== `user`
 
   * Value type is <<string,string>>
   * Default value is `""`
@@ -108,7 +108,7 @@ Auto reconnect
 The username to authenticate with.
 
 [id="plugins-{type}s-{plugin}-vhost"]
-===== `vhost` 
+===== `vhost`
 
   * Value type is <<string,string>>
   * Default value is `nil`

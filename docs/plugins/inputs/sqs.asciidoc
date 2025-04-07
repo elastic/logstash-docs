@@ -10,7 +10,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v7.2.1
 :release_date: 2025-02-13
 :changelog_url: https://github.com/logstash-plugins/logstash-integration-aws/blob/v7.2.1/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -113,7 +113,7 @@ input plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-access_key_id"]
-===== `access_key_id` 
+===== `access_key_id`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -149,7 +149,7 @@ the connection to SQS. See full list in https://docs.aws.amazon.com/sdk-for-ruby
     }
 
 [id="plugins-{type}s-{plugin}-aws_credentials_file"]
-===== `aws_credentials_file` 
+===== `aws_credentials_file`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -176,7 +176,7 @@ This is useful when connecting to S3 compatible services, but beware that these 
 guaranteed to work correctly with the AWS SDK.
 
 [id="plugins-{type}s-{plugin}-id_field"]
-===== `id_field` 
+===== `id_field`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -184,7 +184,7 @@ guaranteed to work correctly with the AWS SDK.
 Name of the event field in which to store the SQS message ID
 
 [id="plugins-{type}s-{plugin}-md5_field"]
-===== `md5_field` 
+===== `md5_field`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -192,7 +192,7 @@ Name of the event field in which to store the SQS message ID
 Name of the event field in which to store the SQS message MD5 checksum
 
 [id="plugins-{type}s-{plugin}-polling_frequency"]
-===== `polling_frequency` 
+===== `polling_frequency`
 
   * Value type is <<number,number>>
   * Default value is `20`
@@ -200,7 +200,7 @@ Name of the event field in which to store the SQS message MD5 checksum
 Polling frequency, default is 20 seconds
 
 [id="plugins-{type}s-{plugin}-proxy_uri"]
-===== `proxy_uri` 
+===== `proxy_uri`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -208,7 +208,7 @@ Polling frequency, default is 20 seconds
 URI to proxy server if required
 
 [id="plugins-{type}s-{plugin}-queue"]
-===== `queue` 
+===== `queue`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -217,7 +217,7 @@ URI to proxy server if required
 Name of the SQS Queue name to pull messages from. Note that this is just the name of the queue, not the URL or ARN.
 
 [id="plugins-{type}s-{plugin}-queue_owner_aws_account_id"]
-===== `queue_owner_aws_account_id` 
+===== `queue_owner_aws_account_id`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -225,7 +225,7 @@ Name of the SQS Queue name to pull messages from. Note that this is just the nam
 ID of the AWS account owning the queue if you want to use a https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-basic-examples-of-sqs-policies.html#grant-two-permissions-to-one-account[cross-account queue] with embedded policy. Note that AWS SDK only support numerical account ID and not account aliases.
 
 [id="plugins-{type}s-{plugin}-region"]
-===== `region` 
+===== `region`
 
   * Value type is <<string,string>>
   * Default value is `"us-east-1"`
@@ -251,7 +251,7 @@ See the https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html[
 Session name to use when assuming an IAM role.
 
 [id="plugins-{type}s-{plugin}-secret_access_key"]
-===== `secret_access_key` 
+===== `secret_access_key`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -259,7 +259,7 @@ Session name to use when assuming an IAM role.
 The AWS Secret Access Key
 
 [id="plugins-{type}s-{plugin}-sent_timestamp_field"]
-===== `sent_timestamp_field` 
+===== `sent_timestamp_field`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -267,7 +267,7 @@ The AWS Secret Access Key
 Name of the event field in which to store the SQS message Sent Timestamp
 
 [id="plugins-{type}s-{plugin}-session_token"]
-===== `session_token` 
+===== `session_token`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -275,7 +275,7 @@ Name of the event field in which to store the SQS message Sent Timestamp
 The AWS Session token for temporary credential
 
 [id="plugins-{type}s-{plugin}-threads"]
-===== `threads` 
+===== `threads`
 
   * Value type is <<number,number>>
   * Default value is `1`

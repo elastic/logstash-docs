@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v4.1.2
 :release_date: 2025-02-12
 :changelog_url: https://github.com/logstash-plugins/logstash-input-http/blob/v4.1.2/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -24,7 +24,7 @@ include::{include_path}/plugin_header.asciidoc[]
 
 Using this input you can receive single or multiline events over http(s).
 Applications can send an HTTP request to the endpoint started by this input and
-Logstash will convert it into an event for subsequent processing. Users 
+Logstash will convert it into an event for subsequent processing. Users
 can pass plain text, JSON, or any formatted data and use a corresponding codec with this
 input. For Content-Type `application/json` the `json` codec is used, but for all other
 data formats, `plain` codec is used.
@@ -57,16 +57,16 @@ Here’s how ECS compatibility mode affects output.
 
 ==== Blocking Behavior
 
-The HTTP protocol doesn't deal well with long running requests. This plugin will either return 
-a 429 (busy) error when Logstash is backlogged, or it will time out the request. 
+The HTTP protocol doesn't deal well with long running requests. This plugin will either return
+a 429 (busy) error when Logstash is backlogged, or it will time out the request.
 
-If a 429 error is encountered clients should sleep, backing off exponentially with some random 
+If a 429 error is encountered clients should sleep, backing off exponentially with some random
 jitter, then retry their request.
 
 This plugin will block if the Logstash queue is blocked and there are available HTTP input threads.
 This will cause most HTTP clients to time out. Sent events will still be processed in this case. This
-behavior is not optimal and will be changed in a future release. In the future, this plugin will always 
-return a 429 if the queue is busy, and will not time out in the event of a busy queue. 
+behavior is not optimal and will be changed in a future release. In the future, this plugin will always
+return a 429 if the queue is busy, and will not time out in the event of a busy queue.
 
 ==== Security
 This plugin supports standard HTTP basic authentication headers to identify the requester.
@@ -77,7 +77,7 @@ validating the client's certificate.
 
 [id="plugins-{type}s-{plugin}-codec-settings"]
 ==== Codec settings
-This plugin has two configuration options for codecs: `codec` and `additional_codecs`. 
+This plugin has two configuration options for codecs: `codec` and `additional_codecs`.
 
 Values in `additional_codecs` are prioritized over those specified in the
 `codec` option. That is, the default `codec` is applied only if no codec
@@ -128,7 +128,7 @@ input plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-additional_codecs"]
-===== `additional_codecs` 
+===== `additional_codecs`
 
   * Value type is <<hash,hash>>
   * Default value is `{"application/json"=>"json"}`
@@ -203,7 +203,7 @@ See <<plugins-{type}s-{plugin}-ecs_metadata>> for detailed information.
 -----
 
 [id="plugins-{type}s-{plugin}-host"]
-===== `host` 
+===== `host`
 
   * Value type is <<string,string>>
   * Default value is `"0.0.0.0"`
@@ -212,7 +212,7 @@ The host or ip to bind
 
 
 [id="plugins-{type}s-{plugin}-password"]
-===== `password` 
+===== `password`
 
   * Value type is <<password,password>>
   * There is no default value for this setting.
@@ -220,7 +220,7 @@ The host or ip to bind
 Password for basic authorization
 
 [id="plugins-{type}s-{plugin}-port"]
-===== `port` 
+===== `port`
 
   * Value type is <<number,number>>
   * Default value is `8080`
@@ -262,7 +262,7 @@ invalid credentials (401), internal errors (503) or backpressure (429).
 If 204 (No Content) is set, the response body will not be sent in the response.
 
 [id="plugins-{type}s-{plugin}-response_headers"]
-===== `response_headers` 
+===== `response_headers`
 
   * Value type is <<hash,hash>>
   * Default value is `{"Content-Type"=>"text/plain"}`
@@ -270,7 +270,7 @@ If 204 (No Content) is set, the response body will not be sent in the response.
 specify a custom set of response headers
 
 [id="plugins-{type}s-{plugin}-remote_host_target_field"]
-===== `remote_host_target_field` 
+===== `remote_host_target_field`
 
   * Value type is <<string,string>>
   * Default value is `"host"` when ECS is disabled
@@ -279,7 +279,7 @@ specify a custom set of response headers
 specify a target field for the client host of the http request
 
 [id="plugins-{type}s-{plugin}-request_headers_target_field"]
-===== `request_headers_target_field` 
+===== `request_headers_target_field`
 
   * Value type is <<string,string>>
   * Default value is `"headers"` when ECS is disabled
@@ -289,7 +289,7 @@ specify target field for the client host of the http request
 
 
 [id="plugins-{type}s-{plugin}-ssl_certificate"]
-===== `ssl_certificate` 
+===== `ssl_certificate`
 
   * Value type is <<path,path>>
   * There is no default value for this setting.
@@ -297,12 +297,12 @@ specify target field for the client host of the http request
 SSL certificate to use.
 
 [id="plugins-{type}s-{plugin}-ssl_certificate_authorities"]
-===== `ssl_certificate_authorities` 
+===== `ssl_certificate_authorities`
 
   * Value type is <<array,array>>
   * Default value is `[]`
 
-Validate client certificates against these authorities. 
+Validate client certificates against these authorities.
 You can define multiple files or paths. All the certificates will
 be read and added to the trust store. You need to configure the <<plugins-{type}s-{plugin}-ssl_client_authentication>>
 to `optional` or `required` to enable the verification.
@@ -341,7 +341,7 @@ Events are, by default, sent in plain text. You can enable encryption by setting
 the <<plugins-{type}s-{plugin}-ssl_certificate>> and <<plugins-{type}s-{plugin}-ssl_key>> options.
 
 [id="plugins-{type}s-{plugin}-ssl_handshake_timeout"]
-===== `ssl_handshake_timeout` 
+===== `ssl_handshake_timeout`
 
   * Value type is <<number,number>>
   * Default value is `10000`
@@ -349,7 +349,7 @@ the <<plugins-{type}s-{plugin}-ssl_certificate>> and <<plugins-{type}s-{plugin}-
 Time in milliseconds for an incomplete ssl handshake to timeout
 
 [id="plugins-{type}s-{plugin}-ssl_key"]
-===== `ssl_key` 
+===== `ssl_key`
 
   * Value type is <<path,path>>
   * There is no default value for this setting.
@@ -359,7 +359,7 @@ NOTE: This key need to be in the PKCS8 format, you can convert it with https://w
 for more information.
 
 [id="plugins-{type}s-{plugin}-ssl_key_passphrase"]
-===== `ssl_key_passphrase` 
+===== `ssl_key_passphrase`
 
   * Value type is <<password,password>>
   * There is no default value for this setting.
@@ -438,7 +438,7 @@ The format of the truststore file. It must be either `jks` or `pkcs12`.
 
 
 [id="plugins-{type}s-{plugin}-threads"]
-===== `threads` 
+===== `threads`
 
   * Value type is <<number,number>>
   * Default value is number of processors
@@ -447,7 +447,7 @@ Number of threads to use for both accepting connections and handling requests
 
 
 [id="plugins-{type}s-{plugin}-user"]
-===== `user` 
+===== `user`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.

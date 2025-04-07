@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.7
 :release_date: 2020-09-04
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-sleep/blob/v3.0.7/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -45,7 +45,7 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-every"]
-===== `every` 
+===== `every`
 
   * Value type is <<string,string>>
   * Default value is `1`
@@ -62,7 +62,7 @@ Example:
     }
 
 [id="plugins-{type}s-{plugin}-replay"]
-===== `replay` 
+===== `replay`
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -93,7 +93,7 @@ The above will sleep in such a way that it will perform
 replay 2-times faster than the original time speed.
 
 [id="plugins-{type}s-{plugin}-time"]
-===== `time` 
+===== `time`
 
   * Value type is <<string,string>>
   * There is no default value for this setting.

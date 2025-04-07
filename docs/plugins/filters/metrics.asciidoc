@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v4.0.7
 :release_date: 2021-01-20
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-metrics/blob/v4.0.7/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -151,7 +151,7 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-clear_interval"]
-===== `clear_interval` 
+===== `clear_interval`
 
   * Value type is <<number,number>>
   * Default value is `-1`
@@ -162,7 +162,7 @@ If set to -1, the default value, the metrics will never be cleared.
 Otherwise, should be a multiple of 5s.
 
 [id="plugins-{type}s-{plugin}-flush_interval"]
-===== `flush_interval` 
+===== `flush_interval`
 
   * Value type is <<number,number>>
   * Default value is `5`
@@ -170,7 +170,7 @@ Otherwise, should be a multiple of 5s.
 The flush interval, when the metrics event is created. Must be a multiple of 5s.
 
 [id="plugins-{type}s-{plugin}-ignore_older_than"]
-===== `ignore_older_than` 
+===== `ignore_older_than`
 
   * Value type is <<number,number>>
   * Default value is `0`
@@ -191,7 +191,7 @@ would do this:
     }
 
 [id="plugins-{type}s-{plugin}-meter"]
-===== `meter` 
+===== `meter`
 
   * Value type is <<array,array>>
   * Default value is `[]`
@@ -199,7 +199,7 @@ would do this:
 syntax: `meter => [ "name of metric", "name of metric" ]`
 
 [id="plugins-{type}s-{plugin}-percentiles"]
-===== `percentiles` 
+===== `percentiles`
 
   * Value type is <<array,array>>
   * Default value is `[1, 5, 10, 90, 95, 99, 100]`
@@ -207,7 +207,7 @@ syntax: `meter => [ "name of metric", "name of metric" ]`
 The percentiles that should be measured and emitted for timer values.
 
 [id="plugins-{type}s-{plugin}-rates"]
-===== `rates` 
+===== `rates`
 
   * Value type is <<array,array>>
   * Default value is `[1, 5, 15]`
@@ -216,7 +216,7 @@ The rates that should be measured, in minutes.
 Possible values are 1, 5, and 15.
 
 [id="plugins-{type}s-{plugin}-timer"]
-===== `timer` 
+===== `timer`
 
   * Value type is <<hash,hash>>
   * Default value is `{}`

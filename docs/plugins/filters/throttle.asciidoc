@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v4.0.4
 :release_date: 2017-11-07
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-throttle/blob/v4.0.4/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -184,7 +184,7 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-after_count"]
-===== `after_count` 
+===== `after_count`
 
   * Value type is <<number,number>>
   * Default value is `-1`
@@ -193,7 +193,7 @@ Events greater than this count will be throttled.  Setting this value to -1, the
 default, will cause no events to be throttled based on the upper bound.
 
 [id="plugins-{type}s-{plugin}-before_count"]
-===== `before_count` 
+===== `before_count`
 
   * Value type is <<number,number>>
   * Default value is `-1`
@@ -202,7 +202,7 @@ Events less than this count will be throttled.  Setting this value to -1, the
 default, will cause no events to be throttled based on the lower bound.
 
 [id="plugins-{type}s-{plugin}-key"]
-===== `key` 
+===== `key`
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -212,7 +212,7 @@ The key used to identify events.  Events with the same key are grouped together.
 Field substitutions are allowed, so you can combine multiple fields.
 
 [id="plugins-{type}s-{plugin}-max_age"]
-===== `max_age` 
+===== `max_age`
 
   * Value type is <<number,number>>
   * Default value is `3600`
@@ -224,7 +224,7 @@ between unordered events with the same key.  Values below the specified period g
 unexpected results if unordered events are processed simultaneously.
 
 [id="plugins-{type}s-{plugin}-max_counters"]
-===== `max_counters` 
+===== `max_counters`
 
   * Value type is <<number,number>>
   * Default value is `100000`
@@ -237,7 +237,7 @@ It is recommended to leave the default value and ensure that your key is selecte
 such that it limits the number of counters required (i.e. don't use UUID as the key).
 
 [id="plugins-{type}s-{plugin}-period"]
-===== `period` 
+===== `period`
 
   * Value type is <<string,string>>
   * Default value is `"60"`

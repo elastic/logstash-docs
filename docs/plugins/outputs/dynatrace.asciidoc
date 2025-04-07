@@ -6,7 +6,7 @@
 REPLACES GENERATED VARIABLES
 ///////////////////////////////////////////
 :changelog_url: https://github.com/dynatrace-oss/logstash-output-dynatrace/blob/master/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 :gem: https://rubygems.org/gems/logstash-output-dynatrace
 ///////////////////////////////////////////
 END - REPLACES GENERATED VARIABLES
@@ -32,10 +32,10 @@ For plugins not bundled by default, it is easy to install by running
 
 ==== Description
 
-This plugin sends Logstash events to the Dynatrace Generic log ingest API v2. 
+This plugin sends Logstash events to the Dynatrace Generic log ingest API v2.
 
 ==== Documentation
- 
+
 https://github.com/dynatrace-oss/logstash-output-dynatrace/blob/main/docs/index.asciidoc[
 Documentation] for the logstash-{type}-{plugin} plugin is maintained by the creator.
 
@@ -43,4 +43,3 @@ Documentation] for the logstash-{type}-{plugin} plugin is maintained by the crea
 
 This is a third-party plugin. For bugs or feature requests, open an issue in the
 https://github.com/dynatrace-oss/logstash-output-dynatrace[plugins-{type}s-{plugin} Github repo].
-

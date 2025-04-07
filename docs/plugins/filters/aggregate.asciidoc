@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v2.10.0
 :release_date: 2021-10-11
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-aggregate/blob/v2.10.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -409,7 +409,7 @@ Available variables are:
 
 `map`: aggregated map associated to `task_id`, containing key/value pairs. Data structure is a ruby http://ruby-doc.org/core-1.9.1/Hash.html[Hash]
 
-`map_meta`: meta informations associated to aggregate map. It allows to set a custom `timeout` or `inactivity_timeout`. 
+`map_meta`: meta informations associated to aggregate map. It allows to set a custom `timeout` or `inactivity_timeout`.
 It allows also to get `creation_timestamp`, `lastevent_timestamp` and `task_id`.
 
 `new_event_block`: block used to emit new Logstash events. See the second example on how to use it.
@@ -440,8 +440,8 @@ To create additional events during the code execution, to be emitted immediately
       }
     }
 
-The parameter of the function `new_event_block.call` must be of type `LogStash::Event`.  
-To create such an object, the constructor of the same class can be used: `LogStash::Event.new()`.  
+The parameter of the function `new_event_block.call` must be of type `LogStash::Event`.
+To create such an object, the constructor of the same class can be used: `LogStash::Event.new()`.
 `LogStash::Event.new()` can receive a parameter of type ruby http://ruby-doc.org/core-1.9.1/Hash.html[Hash] to initialize the new event fields.
 
 
@@ -598,11 +598,11 @@ Example:
 
 By default, timeout is computed using system time, where Logstash is running.
 
-When this option is set, timeout is computed using event timestamp field indicated in this option. 
-It means that when a first event arrives on aggregate filter and induces a map creation, map creation time will be equal to this event timestamp. 
+When this option is set, timeout is computed using event timestamp field indicated in this option.
+It means that when a first event arrives on aggregate filter and induces a map creation, map creation time will be equal to this event timestamp.
 Then, each time a new event arrives on aggregate filter, event timestamp is compared to map creation time to check if timeout happened.
 
-This option is particularly useful when processing old logs with option `push_map_as_event_on_timeout => true`. 
+This option is particularly useful when processing old logs with option `push_map_as_event_on_timeout => true`.
 It lets to generate aggregated events based on timeout on old logs, where system time is inappropriate.
 
 Warning : so that this option works fine, it must be set on first aggregate filter.

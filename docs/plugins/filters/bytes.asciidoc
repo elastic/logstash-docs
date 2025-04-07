@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v1.0.3
 :release_date: 2020-08-18
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-bytes/blob/v1.0.3/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -24,7 +24,7 @@ include::{include_path}/plugin_header.asciidoc[]
 Parse string representations of computer storage sizes, such as "123 MB" or "5.6gb", into
 their numeric value in bytes.
 
-This plugin understands: 
+This plugin understands:
 
 - bytes ("B")
 - kilobytes ("KB" or "kB")
@@ -83,7 +83,7 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-source"]
-===== `source` 
+===== `source`
 
   * Value type is <<string,string>>
   * Default value is `message`
@@ -91,14 +91,14 @@ filter plugins.
 Name of the source field that contains the storage size
 
 [id="plugins-{type}s-{plugin}-target"]
-===== `target` 
+===== `target`
 
   * Value type is <<string,string>>
 
 Name of the target field that will contain the storage size in bytes
 
 [id="plugins-{type}s-{plugin}-conversion_method"]
-===== `conversion_method` 
+===== `conversion_method`
 
   * Value type is <<string,string>>
   * Value can be any of: `binary`, `metric`
@@ -107,7 +107,7 @@ Name of the target field that will contain the storage size in bytes
 Which conversion method to use when converting to bytes. `binary` uses `1K = 1024B`. `metric` uses `1K = 1000B`.
 
 [id="plugins-{type}s-{plugin}-decimal_separator"]
-===== `source` 
+===== `source`
 
   * Value type is <<string,string>>
   * Default value is `.`

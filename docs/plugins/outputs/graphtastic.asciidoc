@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.4
 :release_date: 2018-04-06
 :changelog_url: https://github.com/logstash-plugins/logstash-output-graphtastic/blob/v3.0.4/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -58,7 +58,7 @@ output plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-batch_number"]
-===== `batch_number` 
+===== `batch_number`
 
   * Value type is <<number,number>>
   * Default value is `60`
@@ -67,7 +67,7 @@ the number of metrics to send to GraphTastic at one time. 60 seems to be the per
 amount for UDP, with default packet size.
 
 [id="plugins-{type}s-{plugin}-context"]
-===== `context` 
+===== `context`
 
   * Value type is <<string,string>>
   * Default value is `"graphtastic"`
@@ -80,7 +80,7 @@ Please consult your application server documentation for more on application
 contexts.
 
 [id="plugins-{type}s-{plugin}-error_file"]
-===== `error_file` 
+===== `error_file`
 
   * Value type is <<string,string>>
   * Default value is `""`
@@ -91,7 +91,7 @@ on how we reintegrate these error metrics
 NOT IMPLEMENTED!
 
 [id="plugins-{type}s-{plugin}-host"]
-===== `host` 
+===== `host`
 
   * Value type is <<string,string>>
   * Default value is `"127.0.0.1"`
@@ -99,7 +99,7 @@ NOT IMPLEMENTED!
 host for the graphtastic server - defaults to 127.0.0.1
 
 [id="plugins-{type}s-{plugin}-integration"]
-===== `integration` 
+===== `integration`
 
   * Value can be any of: `udp`, `tcp`, `rmi`, `rest`
   * Default value is `"udp"`
@@ -107,7 +107,7 @@ host for the graphtastic server - defaults to 127.0.0.1
 options are udp(fastest - default) - rmi(faster) - rest(fast) - tcp(don't use TCP yet - some problems - errors out on linux)
 
 [id="plugins-{type}s-{plugin}-metrics"]
-===== `metrics` 
+===== `metrics`
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
@@ -126,7 +126,7 @@ metrics => [ "Response", "%{response}" ]
 NOTE: you can also use the dynamic fields for the key value as well as the actual value
 
 [id="plugins-{type}s-{plugin}-port"]
-===== `port` 
+===== `port`
 
   * Value type is <<number,number>>
   * There is no default value for this setting.
@@ -134,7 +134,7 @@ NOTE: you can also use the dynamic fields for the key value as well as the actua
 port for the graphtastic instance - defaults to 1199 for RMI, 1299 for TCP, 1399 for UDP, and 8080 for REST
 
 [id="plugins-{type}s-{plugin}-retries"]
-===== `retries` 
+===== `retries`
 
   * Value type is <<number,number>>
   * Default value is `1`

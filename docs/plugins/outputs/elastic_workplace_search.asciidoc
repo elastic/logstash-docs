@@ -10,7 +10,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.0
 :release_date: 2023-11-07
 :changelog_url: https://github.com/logstash-plugins/logstash-integration-elastic_enterprise_search/blob/v3.0.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -228,7 +228,7 @@ To keep the timestamp field, set this value to the name of the field where you w
 * Value type is <<string,string>>
 * Default value is `http://localhost:3002`
 
-The value of the API endpoint in the form of a URL. 
+The value of the API endpoint in the form of a URL.
 
 **Examples**
 
@@ -236,7 +236,7 @@ On premise instance:
 
 `http://workplace.company.com:3002`
 
-Elastic Cloud instance:  
+Elastic Cloud instance:
 
 `https://7c455f508468426cb53912be65548117.ent-search.eu-west-1.aws.cloud.es.io`
 
