@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.4.2
 :release_date: 2023-06-14
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-translate/blob/v3.4.2/CHANGELOG.md
-:include_path: ../include
+:include_path: ../../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v1.0.0.beta1
 :release_date: 2018-10-23
 :changelog_url: https://github.com/logstash-plugins/logstash-output-appsearch/blob/v1.0.0.beta1/CHANGELOG.md
-:include_path: ../include
+:include_path: ../../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

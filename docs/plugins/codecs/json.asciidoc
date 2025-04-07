@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.1.1
 :release_date: 2022-10-03
 :changelog_url: https://github.com/logstash-plugins/logstash-codec-json/blob/v3.1.1/CHANGELOG.md
-:include_path: ../include
+:include_path: ../../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

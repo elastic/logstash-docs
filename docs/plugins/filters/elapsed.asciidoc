@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v4.1.0
 :release_date: 2018-07-31
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-elapsed/blob/v4.1.0/CHANGELOG.md
-:include_path: ../include
+:include_path: ../../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

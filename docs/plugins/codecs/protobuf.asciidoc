@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v1.3.0
 :release_date: 2023-09-20
 :changelog_url: https://github.com/logstash-plugins/logstash-codec-protobuf/blob/v1.3.0/CHANGELOG.md
-:include_path: ../include
+:include_path: ../../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

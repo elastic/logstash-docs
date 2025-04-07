@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v7.0.0
 :release_date: 2025-01-10
 :changelog_url: https://github.com/logstash-plugins/logstash-input-tcp/blob/v7.0.0/CHANGELOG.md
-:include_path: ../include
+:include_path: ../../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

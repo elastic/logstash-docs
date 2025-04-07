@@ -10,7 +10,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.0
 :release_date: 2023-11-07
 :changelog_url: https://github.com/logstash-plugins/logstash-integration-elastic_enterprise_search/blob/v3.0.0/CHANGELOG.md
-:include_path: ../include
+:include_path: ../../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

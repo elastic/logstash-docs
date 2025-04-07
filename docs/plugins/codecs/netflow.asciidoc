@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v4.3.2
 :release_date: 2023-12-22
 :changelog_url: https://github.com/logstash-plugins/logstash-codec-netflow/blob/v4.3.2/CHANGELOG.md
-:include_path: ../include
+:include_path: ../../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
