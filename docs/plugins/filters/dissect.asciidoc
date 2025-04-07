@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v1.2.5
 :release_date: 2022-02-14
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-dissect/blob/v1.2.5/CHANGELOG.md
-:include_path: ../../include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

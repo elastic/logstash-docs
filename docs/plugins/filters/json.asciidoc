@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.2.1
 :release_date: 2023-12-18
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-json/blob/v3.2.1/CHANGELOG.md
-:include_path: ../../include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

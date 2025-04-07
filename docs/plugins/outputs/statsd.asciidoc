@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.2.0
 :release_date: 2018-06-05
 :changelog_url: https://github.com/logstash-plugins/logstash-output-statsd/blob/v3.2.0/CHANGELOG.md
-:include_path: ../../include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

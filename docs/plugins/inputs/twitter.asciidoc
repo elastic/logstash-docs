@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v4.1.1
 :release_date: 2023-11-16
 :changelog_url: https://github.com/logstash-plugins/logstash-input-twitter/blob/v4.1.1/CHANGELOG.md
-:include_path: ../../include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

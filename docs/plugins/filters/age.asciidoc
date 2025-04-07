@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v1.0.3
 :release_date: 2021-10-29
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-age/blob/v1.0.3/CHANGELOG.md
-:include_path: ../../include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
