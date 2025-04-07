@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v1.1.0
 :release_date: 2024-05-27
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-de_dot/blob/v1.1.0/CHANGELOG.md
-:include_path: ../../include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

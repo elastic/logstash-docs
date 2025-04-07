@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v1.4.0
 :release_date: 2024-10-15
 :changelog_url: https://github.com/logstash-plugins/logstash-input-google_pubsub/blob/v1.4.0/CHANGELOG.md
-:include_path: ../../include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

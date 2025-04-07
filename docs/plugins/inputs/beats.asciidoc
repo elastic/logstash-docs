@@ -11,7 +11,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v7.0.0
 :release_date: 2024-12-02
 :changelog_url: https://github.com/logstash-plugins/logstash-input-beats/blob/v7.0.0/CHANGELOG.md
-:include_path: ../../include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

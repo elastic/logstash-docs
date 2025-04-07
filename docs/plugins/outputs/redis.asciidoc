@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v5.2.0
 :release_date: 2024-06-04
 :changelog_url: https://github.com/logstash-plugins/logstash-output-redis/blob/v5.2.0/CHANGELOG.md
-:include_path: ../../include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

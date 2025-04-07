@@ -12,7 +12,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v11.6.0
 :release_date: 2025-01-07
 :changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.6.0/CHANGELOG.md
-:include_path: ../../include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

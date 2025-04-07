@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.9
 :release_date: 2020-01-27
 :changelog_url: https://github.com/logstash-plugins/logstash-output-pagerduty/blob/v3.0.9/CHANGELOG.md
-:include_path: ../../include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
