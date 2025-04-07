@@ -6,7 +6,7 @@
 REPLACES GENERATED VARIABLES
 ///////////////////////////////////////////
 :changelog_url: https://github.com/WURFL/logstash-filter-wurfl_device_detection/blob/master/CHANGELOG.md
-:include_path: ../include
+:include_path: ../../include
 :gem: https://rubygems.org/gems/logstash-filter-wurfl_device_detection
 ///////////////////////////////////////////
 END - REPLACES GENERATED VARIABLES

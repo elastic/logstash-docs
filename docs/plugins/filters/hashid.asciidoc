@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v0.1.4
 :release_date: 2023-05-30
 :changelog_url: https://github.com/logstash-plugins/logstash-filter-hashid/blob/v0.1.4/CHANGELOG.md
-:include_path: ../include
+:include_path: ../../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

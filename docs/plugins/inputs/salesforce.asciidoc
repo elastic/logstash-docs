@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.2.1
 :release_date: 2023-05-30
 :changelog_url: https://github.com/logstash-plugins/logstash-input-salesforce/blob/v3.2.1/CHANGELOG.md
-:include_path: ../include
+:include_path: ../../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

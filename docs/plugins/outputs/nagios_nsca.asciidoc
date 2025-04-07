@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.0.7
 :release_date: 2021-09-20
 :changelog_url: https://github.com/logstash-plugins/logstash-output-nagios_nsca/blob/v3.0.7/CHANGELOG.md
-:include_path: ../include
+:include_path: ../../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
