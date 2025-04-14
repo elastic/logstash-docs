@@ -63,11 +63,6 @@ jobs:
         run: |
           bundle install --path=vendor/bundle
           bundle exec ruby plugindocs.rb --skip-existing --output-path ../logstash-docs ../logstash/plugins_version_docs.json
-      - name: Build docs
-        working-directory: ./logstash-docs
-        run: ../docs/build_docs --asciidoctor --respect_edit_url_overrides --doc docs/plugins/index.asciidoc --chunk 1
-      - run: echo "T=$(date +%s)" >> $GITHUB_ENV
-      - run: echo "BRANCH=update_docs_${T}" >> $GITHUB_ENV
       - name: Commit and Push
         working-directory: ./logstash-docs
         run: |
