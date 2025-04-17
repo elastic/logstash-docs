@@ -64,8 +64,8 @@ jobs:
           bundle install --path=vendor/bundle
           bundle exec ruby plugindocs.rb --skip-existing --output-path ../logstash-docs ../logstash/plugins_version_docs.json
       - name: Prepare doc updates 
-        - run: echo "T=$(date +%s)" >> $GITHUB_ENV
-        - run: echo "BRANCH=update_docs_${T}" >> $GITHUB_ENV
+        run: echo "T=$(date +%s)" >> $GITHUB_ENV
+        run: echo "BRANCH=update_docs_${T}" >> $GITHUB_ENV
       - name: Commit and Push
         working-directory: ./logstash-docs
         run: |
