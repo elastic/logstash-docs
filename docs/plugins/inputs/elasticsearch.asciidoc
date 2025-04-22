@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v5.0.2
 :release_date: 2025-03-17
 :changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v5.0.2/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
