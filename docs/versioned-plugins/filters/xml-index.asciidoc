@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v4.3.1-plugins-filters-xml,v4.3.1>> | 2025-04-22
 | <<v4.3.0-plugins-filters-xml,v4.3.0>> | 2025-02-19
 | <<v4.2.1-plugins-filters-xml,v4.2.1>> | 2024-10-29
 | <<v4.2.0-plugins-filters-xml,v4.2.0>> | 2022-08-17
@@ -19,6 +20,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v4.0.3-plugins-filters-xml,v4.0.3>> | 2017-06-23
 |=======================================================================
 
+include::xml-v4.3.1.asciidoc[]
 include::xml-v4.3.0.asciidoc[]
 include::xml-v4.2.1.asciidoc[]
 include::xml-v4.2.0.asciidoc[]
