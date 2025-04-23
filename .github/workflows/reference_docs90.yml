@@ -26,7 +26,7 @@ jobs:
       - uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 # v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
       - name: Clone elastic/docs-tools
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
@@ -63,9 +63,6 @@ jobs:
         run: |
           bundle install --path=vendor/bundle
           bundle exec ruby plugindocs.rb --skip-existing --output-path ../logstash-docs ../logstash/plugins_version_docs.json
-      - name: Build docs
-        working-directory: ./logstash-docs
-        run: ../docs/build_docs --asciidoctor --respect_edit_url_overrides --doc docs/plugins/index.asciidoc --chunk 1
       - run: echo "T=$(date +%s)" >> $GITHUB_ENV
       - run: echo "BRANCH=update_docs_${T}" >> $GITHUB_ENV
       - name: Commit and Push
