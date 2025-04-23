@@ -17,6 +17,9 @@ filters and codecs--into one package.
 :edit_url: https://github.com/logstash-plugins/logstash-integration-aws/edit/main/docs/index.asciidoc
 include::integrations/aws.asciidoc[]
 
+include::integrations/elastic_enterprise_search.asciidoc[]
+:edit_url:
+
 :edit_url: https://github.com/logstash-plugins/logstash-integration-jdbc/edit/main/docs/index.asciidoc
 include::integrations/jdbc.asciidoc[]
 
