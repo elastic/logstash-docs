@@ -18,7 +18,7 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 === {elastic-integration-name} filter plugin {version}
 
-include::{include_path}/plugin_header.asciidoc[]
+include::{include_path}/plugin_header-nonstandard.asciidoc[]
 
 .Elastic Enterprise License
 ****
