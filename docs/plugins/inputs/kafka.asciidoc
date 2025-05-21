@@ -9,9 +9,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.6.0
-:release_date: 2025-01-07
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.6.0/CHANGELOG.md
+:version: v11.6.1
+:release_date: 2025-05-08
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.6.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -65,6 +65,23 @@ more threads than partitions means that some threads will be idle
 For more information see https://kafka.apache.org/{kafka_client_doc}/documentation.html#theconsumer
 
 Kafka consumer configuration: https://kafka.apache.org/{kafka_client_doc}/documentation.html#consumerconfigs
+
+[id="plugins-{type}s-{plugin}-aws_msk_iam_auth"]
+==== AWS MSK IAM authentication
+If you use AWS MSK, the AWS MSK IAM access control enables you to handle both authentication and authorization for your MSK cluster with AWS IAM.
+For more information on this AWS MSK feature see the https://docs.aws.amazon.com/msk/latest/developerguide/iam-access-control.html[AWS documentation].
+
+To use this Kafka input with AWS MSK IAM authentication, download the uber jar which contains the client library for
+this specific cloud vendor and all the transitive dependencies from this https://github.com/elastic/logstash-kafka-iams-packages/releases[repository].
+Configure the following setting:
+```
+security_protocol => "SASL_SSL"
+sasl_mechanism => "AWS_MSK_IAM"
+sasl_iam_jar_paths => ["/path/to/aws_iam_uber.jar"]
+sasl_jaas_config => "software.amazon.msk.auth.iam.IAMLoginModule required;"
+sasl_client_callback_handler_class => "software.amazon.msk.auth.iam.IAMClientCallbackHandler"
+```
+For more IAM authentication configurations, see the https://github.com/aws/aws-msk-iam-auth[AWS MSK IAM authentication library documentation].
 
 ==== Metadata fields
 
@@ -134,6 +151,7 @@ See the https://kafka.apache.org/{kafka_client_doc}/documentation for more detai
 | <<plugins-{type}s-{plugin}-sasl_client_callback_handler_class>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-sasl_oauthbearer_token_endpoint_url>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-sasl_oauthbearer_scope_claim_name>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-sasl_iam_jar_paths>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-sasl_login_callback_handler_class>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-sasl_login_connect_timeout_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-sasl_login_read_timeout_ms>> |<<number,number>>|No
@@ -585,6 +603,14 @@ The URL for the OAuth 2.0 issuer token endpoint.
 
 (optional) The override name of the scope claim.
 
+[id="plugins-{type}s-{plugin}-sasl_iam_jar_paths"]
+===== `sasl_iam_jar_paths`
+* Value type is <<array,array>>
+* There is no default value for this setting.
+
+Contains the list of paths to jar libraries that contains cloud providers MSK IAM's clients.
+There is one jar per provider and can be retrieved as described in <<"plugins-{type}s-{plugin}-aws_msk_iam_auth">>.
+
 [id="plugins-{type}s-{plugin}-sasl_login_callback_handler_class"]
 ===== `sasl_login_callback_handler_class`
   * Value type is <<string,string>>
@@ -655,6 +681,7 @@ This can be defined either in Kafka's JAAS config or in Kafka's config.
 
 http://kafka.apache.org/documentation.html#security_sasl[SASL mechanism] used for client connections. 
 This may be any mechanism for which a security provider is available.
+For AWS MSK IAM authentication use `AWS_MSK_IAM`.
 GSSAPI is the default mechanism.
 
 [id="plugins-{type}s-{plugin}-schema_registry_key"]
