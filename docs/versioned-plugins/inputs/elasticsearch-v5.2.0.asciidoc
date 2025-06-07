@@ -1,0 +1,950 @@
+:plugin: elasticsearch
+:type: input
+:default_codec: json
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v5.2.0
+:release_date: 2025-06-06
+:changelog_url: https://github.com/logstash-plugins/logstash-input-elasticsearch/blob/v5.2.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Elasticsearch input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Read from an Elasticsearch cluster, based on search query results.
+This is useful for replaying test logs, reindexing, etc.
+You can periodically schedule ingestion using a cron syntax
+(see `schedule` setting) or run the query one time to load
+data into Logstash.
+
+Example:
+[source,ruby]
+    input {
+      # Read all documents from Elasticsearch matching the given query
+      elasticsearch {
+        hosts => "localhost"
+        query => '{ "query": { "match": { "statuscode": 200 } }, "sort": [ "_doc" ] }'
+      }
+    }
+
+This would create an Elasticsearch query with the following format:
+[source,json]
+    curl 'http://localhost:9200/logstash-*/_search?&scroll=1m&size=1000' -d '{
+      "query": {
+        "match": {
+          "statuscode": 200
+        }
+      },
+      "sort": [ "_doc" ]
+    }'
+
+[id="{version}-plugins-{type}s-{plugin}-scheduling"]
+==== Scheduling
+
+Input from this plugin can be scheduled to run periodically according to a specific
+schedule. This scheduling syntax is powered by https://github.com/jmettraux/rufus-scheduler[rufus-scheduler].
+The syntax is cron-like with some extensions specific to Rufus (e.g. timezone support ).
+
+Examples:
+
+|==========================================================
+| `* 5 * 1-3 *`               | will execute every minute of 5am every day of January through March.
+| `0 * * * *`                 | will execute on the 0th minute of every hour every day.
+| `0 6 * * * America/Chicago` | will execute at 6:00am (UTC/GMT -5) every day.
+|==========================================================
+
+
+Further documentation describing this syntax can be found
+https://github.com/jmettraux/rufus-scheduler#parsing-cronlines-and-time-strings[here].
+
+
+[id="{version}-plugins-{type}s-{plugin}-auth"]
+==== Authentication
+
+Authentication to a secure Elasticsearch cluster is possible using _one_ of the following options:
+
+* <<{version}-plugins-{type}s-{plugin}-user>> AND <<{version}-plugins-{type}s-{plugin}-password>>
+* <<{version}-plugins-{type}s-{plugin}-cloud_auth>>
+* <<{version}-plugins-{type}s-{plugin}-api_key>>
+
+[id="{version}-plugins-{type}s-{plugin}-autz"]
+==== Authorization
+
+Authorization to a secure Elasticsearch cluster requires `read` permission at index level and `monitoring` permissions at cluster level.
+The `monitoring` permission at cluster level is necessary to perform periodic connectivity checks.
+
+[id="{version}-plugins-{type}s-{plugin}-ecs"]
+==== Compatibility with the Elastic Common Schema (ECS)
+
+When ECS compatibility is disabled, `docinfo_target` uses the `"@metadata"` field as a default, with ECS enabled the plugin
+uses a naming convention `"[@metadata][input][elasticsearch]"` as a default target for placing document information.
+
+The plugin logs a warning when ECS is enabled and `target` isn't set.
+
+TIP: Set the `target` option to avoid potential schema conflicts.
+
+[id="{version}-plugins-{type}s-{plugin}-failure-handling"]
+==== Failure handling
+
+When this input plugin cannot create a structured `Event` from a hit result, it will instead create an `Event` that is tagged with `_elasticsearch_input_failure` whose `[event][original]` is a JSON-encoded string representation of the entire hit.
+
+Common causes are:
+
+ - When the hit result contains top-level fields that are {logstash-ref}/processing.html#reserved-fields[reserved in Logstash] but do not have the expected shape. Use the <<{version}-plugins-{type}s-{plugin}-target>> directive to avoid conflicts with the top-level namespace.
+ - When <<{version}-plugins-{type}s-{plugin}-docinfo>> is enabled and the docinfo fields cannot be merged into the hit result. Combine <<{version}-plugins-{type}s-{plugin}-target>> and <<{version}-plugins-{type}s-{plugin}-docinfo_target>> to avoid conflict.
+
+[id="{version}-plugins-{type}s-{plugin}-cursor"]
+==== Tracking a field's value across runs
+
+.Technical Preview: Tracking a field's value
+****
+The feature that allows tracking a field's value across runs is in _Technical Preview_.
+Configuration options and implementation details are subject to change in minor releases without being preceded by deprecation warnings.
+****
+
+Some uses cases require tracking the value of a particular field between two jobs.
+Examples include:
+
+* avoiding the need to re-process the entire result set of a long query after an unplanned restart
+* grabbing only new data from an index instead of processing the entire set on each job.
+
+The Elasticsearch input plugin provides the <<{version}-plugins-{type}s-{plugin}-tracking_field>> and <<{version}-plugins-{type}s-{plugin}-tracking_field_seed>> options.
+When <<{version}-plugins-{type}s-{plugin}-tracking_field>> is set, the plugin records the value of that field for the last document retrieved in a run into
+a file.
+(The file location defaults to <<{version}-plugins-{type}s-{plugin}-last_run_metadata_path>>.)
+
+You can then inject this value in the query using the placeholder `:last_value`.
+The value will be injected into the query before execution, and then updated after the query completes if new data was found.
+
+This feature works best when:
+
+* the query sorts by the tracking field,
+* the timestamp field is added by {es}, and
+* the field type has enough resolution so that two events are unlikely to have the same value.
+
+Consider using a tracking field whose type is https://www.elastic.co/guide/en/elasticsearch/reference/current/date_nanos.html[date nanoseconds].
+If the tracking field is of this data type, you can use an extra placeholder called `:present` to inject the nano-second based value of "now-30s".
+This placeholder is useful as the right-hand side of a range filter, allowing the collection of
+new data but leaving partially-searchable bulk request data to the next scheduled job.
+
+[id="{version}-plugins-{type}s-{plugin}-tracking-sample"]
+===== Sample configuration: Track field value across runs
+
+This section contains a series of steps to help you set up the "tailing" of data being written to a set of indices, using a date nanosecond field added by an Elasticsearch ingest pipeline and the `tracking_field` capability of this plugin.
+
+. Create ingest pipeline that adds Elasticsearch's `_ingest.timestamp` field to the documents as `event.ingested`:
++
+[source, json]
+    PUT _ingest/pipeline/my-pipeline
+    {
+      "processors": [
+              {
+            "script": {
+              "lang": "painless",
+              "source": "ctx.putIfAbsent(\"event\", [:]); ctx.event.ingested = metadata().now.format(DateTimeFormatter.ISO_INSTANT);"
+            }
+          }
+      ]
+    }
+
+[start=2]
+. Create an index mapping where the tracking field is of date nanosecond type and invokes the defined pipeline:
++
+[source, json]
+    PUT /_template/my_template
+    {
+      "index_patterns": ["test-*"],
+      "settings": {
+        "index.default_pipeline": "my-pipeline",
+      },
+      "mappings": {
+        "properties": {
+          "event": {
+            "properties": {
+              "ingested": {
+                "type": "date_nanos",
+                "format": "strict_date_optional_time_nanos"
+              }
+            }
+          }
+        }
+      }
+    }
+
+[start=3]
+. Define a query that looks at all data of the indices, sorted by the tracking field, and with a range filter since the last value seen until present:
++
+[source,json]
+{
+  "query": {
+    "range": {
+      "event.ingested": {
+        "gt": ":last_value",
+        "lt": ":present"
+      }
+    }
+  },
+  "sort": [
+    {
+      "event.ingested": {
+        "order": "asc",
+        "format": "strict_date_optional_time_nanos",
+        "numeric_type": "date_nanos"
+      }
+    }
+  ]
+}
+
+[start=4]
+. Configure the Elasticsearch input to query the indices with the query defined above, every minute, and track the `event.ingested` field:
++
+[source, ruby]
+    input {
+      elasticsearch {
+        id => tail_test_index
+        hosts => [ 'https://..']
+        api_key => '....'
+        index => 'test-*'
+        query => '{ "query": { "range": { "event.ingested": { "gt": ":last_value", "lt": ":present"}}}, "sort": [ { "event.ingested": {"order": "asc", "format": "strict_date_optional_time_nanos", "numeric_type" : "date_nanos" } } ] }'
+        tracking_field => "[event][ingested]"
+        slices => 5 # optional use of slices to speed data processing, should be equal to or less than number of primary shards
+        schedule => '* * * * *' # every minute
+        schedule_overlap => false # don't accumulate jobs if one takes longer than 1 minute
+      }
+    }
+
+With this sample setup, new documents are indexed into a `test-*` index.
+The next scheduled run:
+
+* selects all new documents since the last observed value of the tracking field,
+* uses {ref}/point-in-time-api.html#point-in-time-api[Point in time (PIT)] + {ref}/paginate-search-results.html#search-after[Search after] to paginate through all the data, and
+* updates the value of the field at the end of the pagination.
+
+[id="{version}-plugins-{type}s-{plugin}-esql"]
+==== {esql} support
+
+.Technical Preview
+****
+The {esql} feature that allows using ES|QL queries with this plugin is in Technical Preview.
+Configuration options and implementation details are subject to change in minor releases without being preceded by deprecation warnings.
+****
+
+{es} Query Language ({esql}) provides a SQL-like interface for querying your {es} data.
+
+To use {esql}, this plugin needs to be installed in {ls} 8.17.4 or newer, and must be connected to {es} 8.11 or newer.
+
+To configure {esql} query in the plugin, set the `query_type` to `esql` and provide your {esql} query in the `query` parameter.
+
+IMPORTANT: {esql} is evolving and may still have limitations with regard to result size or supported field types. We recommend understanding https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-limitations.html[ES|QL current limitations] before using it in production environments.
+
+The following is a basic scheduled {esql} query that runs hourly:
+[source, ruby]
+    input {
+      elasticsearch {
+        id => hourly_cron_job
+        hosts => [ 'https://..']
+        api_key => '....'
+        query_type => 'esql'
+        query => '
+          FROM food-index
+            | WHERE spicy_level = "hot" AND @timestamp > NOW() - 1 hour
+            | LIMIT 500
+        '
+        schedule => '0 * * * *' # every hour at min 0
+      }
+    }
+
+Set `config.support_escapes: true` in `logstash.yml` if you need to escape special chars in the query.
+
+NOTE: With {esql} query, {ls} doesn't generate `event.original`.
+
+[id="{version}-plugins-{type}s-{plugin}-esql-event-mapping"]
+===== Mapping {esql} result to {ls} event
+{esql} returns query results in a structured tabular format, where data is organized into _columns_ (fields) and _values_ (entries).
+The plugin maps each value entry to an event, populating corresponding fields.
+For example, a query might produce a table like:
+
+[cols="2,1,1,1,2",options="header"]
+|===
+|`timestamp` |`user_id` | `action` | `status.code` | `status.desc`
+
+|2025-04-10T12:00:00 |123 |login |200 | Success
+|2025-04-10T12:05:00 |456 |purchase |403 | Forbidden (unauthorized user)
+|===
+
+For this case, the plugin emits two events look like
+[source, json]
+[
+  {
+    "timestamp": "2025-04-10T12:00:00",
+    "user_id": 123,
+    "action": "login",
+    "status": {
+        "code": 200,
+        "desc": "Success"
+    }
+  },
+  {
+    "timestamp": "2025-04-10T12:05:00",
+    "user_id": 456,
+    "action": "purchase",
+    "status": {
+        "code": 403,
+        "desc": "Forbidden (unauthorized user)"
+    }
+  }
+]
+
+NOTE: If your index has a mapping with sub-objects where `status.code` and `status.desc` actually dotted fields, they appear in {ls} events as a nested structure.
+
+[id="{version}-plugins-{type}s-{plugin}-esql-multifields"]
+===== Conflict on multi-fields
+
+{esql} query fetches all parent and sub-fields fields if your {es} index has https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/multi-fields[multi-fields] or https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/subobjects[subobjects].
+Since {ls} events cannot contain parent field's concrete value and sub-field values together, the plugin ignores sub-fields with warning and includes parent.
+We recommend using the `RENAME` (or `DROP` to avoid warnings) keyword in your {esql} query explicitly rename the fields to include sub-fields into the event.
+
+This a common occurrence if your template or mapping follows the pattern of always indexing strings as "text" (`field`) + " keyword" (`field.keyword`) multi-field.
+In this case it's recommended to do `KEEP field` if the string is identical and there is only one subfield as the engine will optimize and retrieve the keyword, otherwise you can do `KEEP field.keyword | RENAME field.keyword as field`.
+
+To illustrate the situation with example, assuming your mapping has a time `time` field with `time.min` and `time.max` sub-fields as following:
+[source, ruby]
+    "properties": {
+        "time": { "type": "long" },
+        "time.min": { "type": "long" },
+        "time.max": { "type": "long" }
+    }
+
+The {esql} result will contain all three fields but the plugin cannot map them into {ls} event.
+To avoid this, you can use the `RENAME` keyword to rename the `time` parent field to get all three fields with unique fields.
+[source, ruby]
+    ...
+    query => 'FROM my-index | RENAME time AS time.current'
+    ...
+
+For comprehensive {esql} syntax reference and best practices, see the https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-syntax.html[{esql} documentation].
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Elasticsearch Input configuration options
+
+This plugin supports these configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+NOTE: As of version `5.0.0` of this plugin, a number of previously deprecated settings related to SSL have been removed.
+Please check out <<{version}-plugins-{type}s-{plugin}-obsolete-options>> for details.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-api_key>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-ca_trusted_fingerprint>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-cloud_auth>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-cloud_id>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-connect_timeout_seconds>> | {logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-custom_headers>> |{logstash-ref}/configuration-file-structure.html#hash[hash]|No
+| <<{version}-plugins-{type}s-{plugin}-docinfo>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-docinfo_fields>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-docinfo_target>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-hosts>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-index>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-last_run_metadata_path>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-proxy>> |{logstash-ref}/configuration-file-structure.html#uri[uri]|No
+| <<{version}-plugins-{type}s-{plugin}-query>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-query_type>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["dsl","esql"]`|No
+| <<{version}-plugins-{type}s-{plugin}-response_type>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["hits","aggregations"]`|No
+| <<{version}-plugins-{type}s-{plugin}-request_timeout_seconds>> | {logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-schedule>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-schedule_overlap>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-scroll>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-search_api>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["auto", "search_after", "scroll"]`|No
+| <<{version}-plugins-{type}s-{plugin}-size>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-slices>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_certificate>> |{logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities>> |list of {logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_cipher_suites>> |list of {logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_enabled>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_key>> |{logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_keystore_password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_keystore_path>> |{logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_keystore_type>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_supported_protocols>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_truststore_password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_truststore_path>> |{logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_truststore_type>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_verification_mode>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["full", "none"]`|No
+| <<{version}-plugins-{type}s-{plugin}-socket_timeout_seconds>> | {logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-target>> | {logstash-ref}/field-references-deepdive.html[field reference] | No
+| <<{version}-plugins-{type}s-{plugin}-tracking_field>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-tracking_field_seed>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-retries>> | {logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-user>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-api_key"]
+===== `api_key`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Authenticate using Elasticsearch API key. Note that this option also requires enabling the <<{version}-plugins-{type}s-{plugin}-ssl_enabled>> option.
+
+Format is `id:api_key` where `id` and `api_key` are as returned by the
+Elasticsearch
+{ref}/security-api-create-api-key.html[Create
+API key API].
+
+[id="{version}-plugins-{type}s-{plugin}-ca_trusted_fingerprint"]
+===== `ca_trusted_fingerprint`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string], and must contain exactly 64 hexadecimal characters.
+* There is no default value for this setting.
+* Use of this option _requires_ Logstash 8.3+
+
+The SHA-256 fingerprint of an SSL Certificate Authority to trust, such as the autogenerated self-signed CA for an Elasticsearch cluster.
+
+[id="{version}-plugins-{type}s-{plugin}-cloud_auth"]
+===== `cloud_auth`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Cloud authentication string ("<username>:<password>" format) is an alternative for the `user`/`password` pair.
+
+For more info, check out the
+{logstash-ref}/connecting-to-cloud.html[Logstash-to-Cloud documentation].
+
+[id="{version}-plugins-{type}s-{plugin}-cloud_id"]
+===== `cloud_id`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Cloud ID, from the Elastic Cloud web console. If set `hosts` should not be used.
+
+For more info, check out the
+{logstash-ref}/connecting-to-cloud.html[Logstash-to-Cloud documentation].
+
+[id="{version}-plugins-{type}s-{plugin}-connect_timeout_seconds"]
+===== `connect_timeout_seconds`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `10`
+
+The maximum amount of time, in seconds, to wait while establishing a connection to Elasticsearch.
+Connect timeouts tend to occur when Elasticsearch or an intermediate proxy is overloaded with requests and has exhausted its connection pool.
+
+[id="{version}-plugins-{type}s-{plugin}-custom_headers"]
+===== `custom_headers`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#hash[hash]
+  * Default value is empty
+
+Pass a set of key value pairs as the headers sent in each request to an elasticsearch node.
+The headers will be used for any kind of request.
+These custom headers will override any headers previously set by the plugin such as the User Agent or Authorization headers.
+
+[id="{version}-plugins-{type}s-{plugin}-docinfo"]
+===== `docinfo`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+If set, include Elasticsearch document information such as index, type, and
+the id in the event.
+
+It might be important to note, with regards to metadata, that if you're
+ingesting documents with the intent to re-index them (or just update them)
+that the `action` option in the elasticsearch output wants to know how to
+handle those things. It can be dynamically assigned with a field
+added to the metadata.
+
+Example
+[source, ruby]
+    input {
+      elasticsearch {
+        hosts => "es.production.mysite.org"
+        index => "mydata-2018.09.*"
+        query => '{ "query": { "query_string": { "query": "*" } } }'
+        size => 500
+        scroll => "5m"
+        docinfo => true
+        docinfo_target => "[@metadata][doc]"
+      }
+    }
+    output {
+      elasticsearch {
+        index => "copy-of-production.%{[@metadata][doc][_index]}"
+        document_type => "%{[@metadata][doc][_type]}"
+        document_id => "%{[@metadata][doc][_id]}"
+      }
+    }
+
+If set, you can use metadata information in the <<{version}-plugins-{type}s-{plugin}-add_field>> common option.
+
+Example
+[source, ruby]
+    input {
+      elasticsearch {
+        docinfo => true
+        docinfo_target => "[@metadata][doc]"
+        add_field => {
+          identifier => "%{[@metadata][doc][_index]}:%{[@metadata][doc][_type]}:%{[@metadata][doc][_id]}"
+        }
+      }
+    }
+
+
+[id="{version}-plugins-{type}s-{plugin}-docinfo_fields"]
+===== `docinfo_fields`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `["_index", "_type", "_id"]`
+
+If document metadata storage is requested by enabling the `docinfo` option, this
+option lists the metadata fields to save in the current event. See
+{ref}/mapping-fields.html[Meta-Fields] in the Elasticsearch documentation for
+more information.
+
+[id="{version}-plugins-{type}s-{plugin}-docinfo_target"]
+===== `docinfo_target`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value depends on whether <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>> is enabled:
+    ** ECS Compatibility disabled: `"@metadata"`
+    ** ECS Compatibility enabled: `"[@metadata][input][elasticsearch]"`
+
+If document metadata storage is requested by enabling the `docinfo` option,
+this option names the field under which to store the metadata fields as subfields.
+
+[id="{version}-plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Supported values are:
+    ** `disabled`: CSV data added at root level
+    ** `v1`,`v8`: Elastic Common Schema compliant behavior
+  * Default value depends on which version of Logstash is running:
+    ** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
+    ** Otherwise, the default value is `disabled`
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
+
+[id="{version}-plugins-{type}s-{plugin}-hosts"]
+===== `hosts`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * There is no default value for this setting.
+
+List of one or more Elasticsearch hosts to use for querying. Each host
+can be either IP, HOST, IP:port, or HOST:port. The port defaults to
+9200.
+
+[id="{version}-plugins-{type}s-{plugin}-index"]
+===== `index`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"logstash-*"`
+
+The index or alias to search.
+Check out {ref}/api-conventions.html#api-multi-index[Multi Indices
+documentation] in the Elasticsearch documentation for info on
+referencing multiple indices.
+
+[id="{version}-plugins-{type}s-{plugin}-last_run_metadata_path"]
+===== `last_run_metadata_path`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The path to store the last observed value of the tracking field, when used.
+By default this file is stored as `<path.data>/plugins/inputs/elasticsearch/<pipeline_id>/last_run_value`.
+
+This setting should point to file, not a directory, and Logstash must have read+write access to this file.
+
+[id="{version}-plugins-{type}s-{plugin}-password"]
+===== `password`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+The password to use together with the username in the `user` option
+when authenticating to the Elasticsearch server. If set to an empty
+string authentication will be disabled.
+
+[id="{version}-plugins-{type}s-{plugin}-proxy"]
+===== `proxy`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#uri[uri]
+* There is no default value for this setting.
+
+Set the address of a forward HTTP proxy.
+An empty string is treated as if proxy was not set, this is useful when using
+environment variables e.g. `proxy => '${LS_PROXY:}'`.
+
+[id="{version}-plugins-{type}s-{plugin}-query"]
+===== `query`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `'{ "sort": [ "_doc" ] }'`
+
+The query to be executed.
+Accepted query shape is DSL or {esql} (when `query_type => 'esql'`).
+Read the {ref}/query-dsl.html[{es} query DSL documentation] or {ref}/esql.html[{esql} documentation] for more information.
+
+When <<{version}-plugins-{type}s-{plugin}-search_api>> resolves to `search_after` and the query does not specify `sort`,
+the default sort `'{ "sort": { "_shard_doc": "asc" } }'` will be added to the query. Please refer to the {ref}/paginate-search-results.html#search-after[Elasticsearch search_after] parameter to know more.
+
+[id="{version}-plugins-{type}s-{plugin}-query_type"]
+===== `query_type`
+
+* Value can be `dsl` or `esql`
+* Default value is `dsl`
+
+Defines the <<{version}-plugins-{type}s-{plugin}-query>> shape.
+When `dsl`, the query shape must be valid {es} JSON-style string.
+When `esql`, the query shape must be a valid {esql} string and `index`, `size`, `slices`, `search_api`, `docinfo`, `docinfo_target`, `docinfo_fields`, `response_type` and `tracking_field` parameters are not allowed.
+
+[id="{version}-plugins-{type}s-{plugin}-response_type"]
+===== `response_type`
+
+  * Value can be any of: `hits`, `aggregations`, `esql`
+  * Default value is `hits`
+
+Which part of the result to transform into Logstash events when processing the
+response from the query.
+
+The default `hits` will generate one event per returned document (i.e. "hit").
+
+When set to `aggregations`, a single {ls} event will be generated with the
+contents of the `aggregations` object of the query's response. In this case the
+`hits` object will be ignored. The parameter `size` will be always be set to
+0 regardless of the default or user-defined value set in this plugin.
+
+[id="{version}-plugins-{type}s-{plugin}-request_timeout_seconds"]
+===== `request_timeout_seconds`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `60`
+
+The maximum amount of time, in seconds, for a single request to Elasticsearch.
+Request timeouts tend to occur when an individual page of data is very large, such as when it contains large-payload
+documents and/or the <<{version}-plugins-{type}s-{plugin}-size>> has been specified as a large value.
+
+
+[id="{version}-plugins-{type}s-{plugin}-retries"]
+===== `retries`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+* Default value is `0`
+
+The number of times to re-run the query after the first failure. If the query fails after all retries, it logs an error message.
+The default is 0 (no retry). This value should be equal to or greater than zero.
+
+NOTE: Partial failures - such as errors in a subset of all slices - can result in the entire query being retried, which can lead to duplication of data. Avoiding this would require Logstash to store the entire result set of a query in memory which is often not possible.
+
+[id="{version}-plugins-{type}s-{plugin}-schedule"]
+===== `schedule`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Schedule of when to periodically run statement, in Cron format
+for example: "* * * * *" (execute query every minute, on the minute)
+
+There is no schedule by default. If no schedule is given, then the statement is run
+exactly once.
+
+[id="{version}-plugins-{type}s-{plugin}-schedule_overlap"]
+===== `schedule_overlap`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+Whether to allow queuing of a scheduled run if a run is occurring.
+While this is ideal for ensuring a new run happens immediately after the previous on finishes if there
+is a lot of work to do, but given the queue is unbounded it may lead to an out of memory over long periods of time
+if the queue grows continuously.
+
+When in doubt, set `schedule_overlap` to false (it may become the default value in the future).
+
+[id="{version}-plugins-{type}s-{plugin}-scroll"]
+===== `scroll`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `"1m"`
+
+This parameter controls the keepalive time in seconds of the scrolling
+request and initiates the scrolling process. The timeout applies per
+round trip (i.e. between the previous scroll request, to the next).
+
+[id="{version}-plugins-{type}s-{plugin}-search_api"]
+===== `search_api`
+
+* Value can be any of: `auto`, `search_after`, `scroll`
+* Default value is `auto`
+
+With `auto` the plugin uses the `search_after` parameter for Elasticsearch version `8.0.0` or higher, otherwise the `scroll` API is used instead.
+
+`search_after` uses {ref}/point-in-time-api.html#point-in-time-api[point in time] and sort value to search.
+The query requires at least one `sort` field, as described in the <<{version}-plugins-{type}s-{plugin}-query>> parameter.
+
+`scroll` uses {ref}/paginate-search-results.html#scroll-search-results[scroll] API to search, which is no longer recommended.
+
+[id="{version}-plugins-{type}s-{plugin}-size"]
+===== `size`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `1000`
+
+This allows you to set the maximum number of hits returned per scroll.
+
+[id="{version}-plugins-{type}s-{plugin}-slices"]
+===== `slices`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * There is no default value.
+  * Sensible values range from 2 to about 8.
+
+In some cases, it is possible to improve overall throughput by consuming multiple
+distinct slices of a query simultaneously using
+{ref}/paginate-search-results.html#slice-scroll[sliced scrolls],
+especially if the pipeline is spending significant time waiting on Elasticsearch
+to provide results.
+
+If set, the `slices` parameter tells the plugin how many slices to divide the work
+into, and will produce events from the slices in parallel until all of them are done
+scrolling.
+
+NOTE: The Elasticsearch manual indicates that there can be _negative_ performance
+      implications to both the query and the Elasticsearch cluster when a scrolling
+      query uses more slices than shards in the index.
+
+If the `slices` parameter is left unset, the plugin will _not_ inject slice
+instructions into the query.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_certificate"]
+===== `ssl_certificate`
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+SSL certificate to use to authenticate the client. This certificate should be an OpenSSL-style X.509 certificate file.
+
+NOTE: This setting can be used only if <<{version}-plugins-{type}s-{plugin}-ssl_key>> is set.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities"]
+===== `ssl_certificate_authorities`
+
+  * Value type is a list of {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting
+
+The `.cer` or `.pem` files to validate the server's certificate.
+
+NOTE: You cannot use this setting and <<{version}-plugins-{type}s-{plugin}-ssl_truststore_path>> at the same time.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_cipher_suites"]
+===== `ssl_cipher_suites`
+  * Value type is a list of {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting
+
+The list of cipher suites to use, listed by priorities.
+Supported cipher suites vary depending on the Java and protocol versions.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_enabled"]
+===== `ssl_enabled`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * There is no default value for this setting.
+
+Enable SSL/TLS secured communication to Elasticsearch cluster.
+Leaving this unspecified will use whatever scheme is specified in the URLs listed in <<{version}-plugins-{type}s-{plugin}-hosts>> or extracted from the <<{version}-plugins-{type}s-{plugin}-cloud_id>>.
+If no explicit protocol is specified plain HTTP will be used.
+
+When not explicitly set, SSL will be automatically enabled if any of the specified hosts use HTTPS.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_key"]
+===== `ssl_key`
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+OpenSSL-style RSA private key that corresponds to the <<{version}-plugins-{type}s-{plugin}-ssl_certificate>>.
+
+NOTE: This setting can be used only if <<{version}-plugins-{type}s-{plugin}-ssl_certificate>> is set.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_keystore_password"]
+===== `ssl_keystore_password`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Set the keystore password
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_keystore_path"]
+===== `ssl_keystore_path`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+The keystore used to present a certificate to the server.
+It can be either `.jks` or `.p12`
+
+NOTE: You cannot use this setting and <<{version}-plugins-{type}s-{plugin}-ssl_certificate>> at the same time.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_keystore_type"]
+===== `ssl_keystore_type`
+
+  * Value can be any of: `jks`, `pkcs12`
+  * If not provided, the value will be inferred from the keystore filename.
+
+The format of the keystore file. It must be either `jks` or `pkcs12`.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_supported_protocols"]
+===== `ssl_supported_protocols`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Allowed values are: `'TLSv1.1'`, `'TLSv1.2'`, `'TLSv1.3'`
+  * Default depends on the JDK being used. With up-to-date Logstash, the default is `['TLSv1.2', 'TLSv1.3']`.
+  `'TLSv1.1'` is not considered secure and is only provided for legacy applications.
+
+List of allowed SSL/TLS versions to use when establishing a connection to the Elasticsearch cluster.
+
+For Java 8 `'TLSv1.3'` is supported only since **8u262** (AdoptOpenJDK), but requires that you set the
+`LS_JAVA_OPTS="-Djdk.tls.client.protocols=TLSv1.3"` system property in Logstash.
+
+NOTE: If you configure the plugin to use `'TLSv1.1'` on any recent JVM, such as the one packaged with Logstash,
+the protocol is disabled by default and needs to be enabled manually by changing `jdk.tls.disabledAlgorithms` in
+the *$JDK_HOME/conf/security/java.security* configuration file. That is, `TLSv1.1` needs to be removed from the list.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_truststore_password"]
+===== `ssl_truststore_password`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Set the truststore password.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_truststore_path"]
+===== `ssl_truststore_path`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting.
+
+The truststore to validate the server's certificate.
+It can be either .jks or .p12.
+
+NOTE: You cannot use this setting and <<{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities>> at the same time.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_truststore_type"]
+===== `ssl_truststore_type`
+
+  * Value can be any of: `jks`, `pkcs12`
+  * If not provided, the value will be inferred from the truststore filename.
+
+The format of the truststore file. It must be either `jks` or `pkcs12`.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_verification_mode"]
+===== `ssl_verification_mode`
+
+  * Value can be any of: `full`, `none`
+  * Default value is `full`
+
+Defines how to verify the certificates presented by another party in the TLS connection:
+
+`full` validates that the server certificate has an issue date that’s within
+the not_before and not_after dates; chains to a trusted Certificate Authority (CA), and
+has a hostname or IP address that matches the names within the certificate.
+
+`none` performs no certificate validation.
+
+WARNING: Setting certificate verification to `none` disables many security benefits of SSL/TLS, which is very dangerous. For more information on disabling certificate verification please read https://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf
+
+[id="{version}-plugins-{type}s-{plugin}-socket_timeout_seconds"]
+===== `socket_timeout_seconds`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `60`
+
+The maximum amount of time, in seconds, to wait on an incomplete response from Elasticsearch while no additional data has been appended.
+Socket timeouts usually occur while waiting for the first byte of a response, such as when executing a particularly complex query.
+
+
+[id="{version}-plugins-{type}s-{plugin}-target"]
+===== `target`
+
+* Value type is {logstash-ref}/field-references-deepdive.html[field reference]
+* There is no default value for this setting.
+
+Without a `target`, events are created from each hit's `_source` at the root level.
+When the `target` is set to a field reference, the `_source` of the hit is placed in the target field instead.
+
+This option can be useful to avoid populating unknown fields when a downstream schema such as ECS is enforced.
+It is also possible to target an entry in the event's metadata, which will be available during event processing but not exported to your outputs (e.g., `target \=> "[@metadata][_source]"`).
+
+[id="{version}-plugins-{type}s-{plugin}-tracking_field"]
+===== `tracking_field`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* There is no default value for this setting.
+
+Which field from the last event of a previous run will be used a cursor value for the following run.
+The value of this field is injected into each query if the query uses the placeholder `:last_value`.
+For the first query after a pipeline is started, the value used is either read from <<{version}-plugins-{type}s-{plugin}-last_run_metadata_path>> file,
+or taken from <<{version}-plugins-{type}s-{plugin}-tracking_field_seed>> setting.
+
+Note: The tracking value is updated after each page is read and at the end of each Point in Time. In case of a crash the last saved value will be used so some duplication of data can occur. For this reason the use of unique document IDs for each event is recommended in the downstream destination.
+
+[id="{version}-plugins-{type}s-{plugin}-tracking_field_seed"]
+===== `tracking_field_seed`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* Default value is `"1970-01-01T00:00:00.000000000Z"`
+
+The starting value for the <<{version}-plugins-{type}s-{plugin}-tracking_field>> if there is no <<{version}-plugins-{type}s-{plugin}-last_run_metadata_path>> already.
+This field defaults to the nanosecond precision ISO8601 representation of `epoch`, or "1970-01-01T00:00:00.000000000Z", given nano-second precision timestamps are the
+most reliable data format to use for this feature.
+
+[id="{version}-plugins-{type}s-{plugin}-user"]
+===== `user`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The username to use together with the password in the `password`
+option when authenticating to the Elasticsearch server. If set to an
+empty string authentication will be disabled.
+
+
+[id="{version}-plugins-{type}s-{plugin}-obsolete-options"]
+==== Elasticsearch Input Obsolete Configuration Options
+
+WARNING: As of version `5.0.0` of this plugin, some configuration options have been replaced.
+The plugin will fail to start if it contains any of these obsolete options.
+
+
+[cols="<,<",options="header",]
+|=======================================================================
+|Setting|Replaced by
+| ca_file | <<{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities>>
+| ssl | <<{version}-plugins-{type}s-{plugin}-ssl_enabled>>
+| ssl_certificate_verification | <<{version}-plugins-{type}s-{plugin}-ssl_verification_mode>>
+|=======================================================================
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:no_codec!:
