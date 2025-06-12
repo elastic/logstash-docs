@@ -5,6 +5,8 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v11.6.3-plugins-outputs-kafka,v11.6.3>> | 2025-06-12
+| <<v11.6.2-plugins-outputs-kafka,v11.6.2>> | 2025-05-21
 | <<v11.6.1-plugins-outputs-kafka,v11.6.1>> | 2025-05-08
 | <<v11.6.0-plugins-outputs-kafka,v11.6.0>> | 2025-01-07
 | <<v11.5.4-plugins-outputs-kafka,v11.5.4>> | 2024-12-18
@@ -79,6 +81,8 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v6.2.0-plugins-outputs-kafka,v6.2.0>> | 2017-05-11
 |=======================================================================
 
+include::kafka-v11.6.3.asciidoc[]
+include::kafka-v11.6.2.asciidoc[]
 include::kafka-v11.6.1.asciidoc[]
 include::kafka-v11.6.0.asciidoc[]
 include::kafka-v11.5.4.asciidoc[]
