@@ -2,15 +2,15 @@
 :type: integration
 :default_plugin: 1
 :no_codec:
-:kafka_client: 3.8.1
+:kafka_client: 3.9.1
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.6.0
-:release_date: 2025-01-07
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.6.0/CHANGELOG.md
-:include_path: ../include
+:version: v11.6.3
+:release_date: 2025-06-12
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.6.3/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -28,7 +28,7 @@ https://kafka.apache.org/[Kafka] distributed streaming platform.
 
  - {logstash-ref}/plugins-inputs-kafka.html[Kafka Input Plugin]
  - {logstash-ref}/plugins-outputs-kafka.html[Kafka Output Plugin]
-
+ 
 This plugin uses Kafka Client {kafka_client}. For broker compatibility, see the official
 https://cwiki.apache.org/confluence/display/KAFKA/Compatibility+Matrix[Kafka
 compatibility reference]. If the linked compatibility wiki is not up-to-date,
