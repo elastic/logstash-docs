@@ -7,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.5
-:release_date: 2025-01-06
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-snmp/blob/v4.0.5/CHANGELOG.md
+:version: v4.0.6
+:release_date: 2025-01-23
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-snmp/blob/v4.0.6/CHANGELOG.md
 :include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -22,16 +22,16 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 include::{include_path}/plugin_header-integration.asciidoc[]
 
 .Migrating to `logstash-integration-snmp` from stand-alone `input-snmptrap`
-****
-The `logstash-input-snmptrap` plugin is now a component of the `logstash-integration-snmp` plugin which is
-bundled with {ls} 8.15.0 by default.
-This integrated plugin package provides better alignment in snmp processing, better resource management,
-easier package maintenance, and a smaller installation footprint.
+**** 
+The `logstash-input-snmptrap` plugin is now a component of the `logstash-integration-snmp` plugin which is 
+bundled with {ls} 8.15.0 by default. 
+This integrated plugin package provides better alignment in snmp processing, better resource management, 
+easier package maintenance, and a smaller installation footprint. 
 
-Before you upgrade to {ls} 8.15.0, be aware of link:{logstash-ref}/plugins-integrations-snmp.html#plugins-integrations-snmp-migration[behavioral and mapping differences]
-between current stand-alone plugins and the new versions included in `integration-snmp`.
+Before you upgrade to {ls} 8.15.0, be aware of link:{logstash-ref}/plugins-integrations-snmp.html#plugins-integrations-snmp-migration[behavioral and mapping differences] 
+between current stand-alone plugins and the new versions included in `integration-snmp`. 
 If you need to maintain current mappings for the `input-snmptrap` plugin, you have options to {logstash-ref}/plugins-integrations-snmp.html#plugins-integrations-snmp-input-snmptrap-compat[preserve existing behavior].
-****
+**** 
 
 ==== Description
 
@@ -79,7 +79,7 @@ which variable binding in the list caused the error
 ==== Importing MIBs
 
 This plugin already includes the IETF MIBs (management information bases), and you do not need to import them.
-If you need additional MIBs, you need to import them.
+If you need additional MIBs, you need to import them.  
 Check out link:{logstash-ref}/plugins-integrations-snmp.html#plugins-integrations-snmp-import-mibs[Importing MIBs] for info.
 
 [id="plugins-{type}s-{plugin}-options"]
@@ -128,7 +128,7 @@ Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options suppo
 input plugins.
 
 [id="plugins-{type}s-{plugin}-community"]
-===== `community`
+===== `community` 
 
   * Value type is <<array,array>>
   * Default value is `["public"]`
@@ -172,7 +172,7 @@ input {
 Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
 
 [id="plugins-{type}s-{plugin}-host"]
-===== `host`
+===== `host` 
 
   * Value type is <<string,string>>
   * Default value is `"0.0.0.0"`
@@ -243,7 +243,7 @@ which would result in a field name "1.0". Similarly when a MIB is used an OID su
 * Use this setting only if <<plugins-{type}s-{plugin}-oid_mapping_format>> is set to `default`.
 
 [id="plugins-{type}s-{plugin}-port"]
-===== `port`
+===== `port` 
 
   * Value type is <<number,number>>
   * Default value is `1062`
@@ -301,7 +301,7 @@ This plugin provides all IETF MIBs (management information bases), publicly avai
 When enabled, it automatically loads the bundled MIBs and provides mapping of the numeric OIDs to MIB field names in the resulting event.
 
 [id="plugins-{type}s-{plugin}-yamlmibdir"]
-===== `yamlmibdir`
+===== `yamlmibdir` 
 deprecated[4.0.0, Replaced by <<plugins-{type}s-{plugin}-mib_paths>>]
 
   * Value type is <<string,string>>
