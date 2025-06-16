@@ -10,7 +10,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v5.6.0
 :release_date: 2025-05-30
 :changelog_url: https://github.com/logstash-plugins/logstash-integration-jdbc/blob/v5.6.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

@@ -8,7 +8,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v9.0.0
 :release_date: 2025-04-28
 :changelog_url: https://github.com/elastic/logstash-filter-elastic_integration/blob/v9.0.0/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
