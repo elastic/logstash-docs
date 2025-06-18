@@ -3,16 +3,16 @@
 :type: input
 :default_plugin: 1
 :default_codec: plain
-:kafka_client: 3.8.1
-:kafka_client_doc: 38
+:kafka_client: 3.9.1
+:kafka_client_doc: 39
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.6.1
-:release_date: 2025-05-08
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.6.1/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:version: v11.6.3
+:release_date: 2025-06-12
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.6.3/CHANGELOG.md
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -605,7 +605,7 @@ The URL for the OAuth 2.0 issuer token endpoint.
 
 [id="plugins-{type}s-{plugin}-sasl_iam_jar_paths"]
 ===== `sasl_iam_jar_paths`
-* Value type is <<arrays,array>>
+* Value type is <<array,array>>
 * There is no default value for this setting.
 
 Contains the list of paths to jar libraries that contains cloud providers MSK IAM's clients.
