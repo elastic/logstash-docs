@@ -1,0 +1,4 @@
+[id="dead-letter-queues",role="exclude"]
+== Dead letter queues (DLQ)
+
+Refer to {logstash-ref}/dead-letter-queues.html[Dead Letter Queues].

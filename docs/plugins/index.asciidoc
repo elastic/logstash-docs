@@ -112,3 +112,7 @@ include::outputs.asciidoc[]
 include::filters.asciidoc[]
 
 include::codecs.asciidoc[]
+
+// AsciiDoc "redirects"
+
+include::static/other/dead-letter-queues.asciidoc[]
