@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v12.0.5-plugins-outputs-elasticsearch,v12.0.5>> | 2025-07-09
 | <<v12.0.4-plugins-outputs-elasticsearch,v12.0.4>> | 2025-07-07
 | <<v12.0.3-plugins-outputs-elasticsearch,v12.0.3>> | 2025-04-17
 | <<v12.0.2-plugins-outputs-elasticsearch,v12.0.2>> | 2025-01-23
@@ -136,6 +137,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v7.3.2-plugins-outputs-elasticsearch,v7.3.2>> | 2017-05-26
 |=======================================================================
 
+include::elasticsearch-v12.0.5.asciidoc[]
 include::elasticsearch-v12.0.4.asciidoc[]
 include::elasticsearch-v12.0.3.asciidoc[]
 include::elasticsearch-v12.0.2.asciidoc[]
