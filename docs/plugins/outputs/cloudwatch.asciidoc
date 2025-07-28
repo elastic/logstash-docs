@@ -7,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v7.1.8
-:release_date: 2024-07-26
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-aws/blob/v7.1.8/CHANGELOG.md
+:version: v7.2.1
+:release_date: 2025-02-13
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-aws/blob/v7.2.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -324,7 +324,6 @@ The default value to use for events which do not have a `CW_value` field
 If provided, this must be a string which can be converted to a float, for example...
     "1", "2.34", ".5", and "0.67"
 If you set this option you should probably set the `unit` option along with it
-
 
 
 [id="plugins-{type}s-{plugin}-common-options"]

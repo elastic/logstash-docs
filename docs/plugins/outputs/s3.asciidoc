@@ -7,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v7.1.8
-:release_date: 2024-07-26
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-aws/blob/v7.1.8/CHANGELOG.md
+:version: v7.2.1
+:release_date: 2025-02-13
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-aws/blob/v7.2.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -116,6 +116,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-upload_workers_count>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-use_aws_bundled_ca>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-validate_credentials_on_root_bucket>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-web_identity_token_file>> |<<string,string>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -447,6 +448,18 @@ The common use case is to define permissions on the root bucket and give Logstas
 full access to write logs. 
 In some circumstances, you need more granular permissions on the subfolder. This
 allows you to disable the check at startup.
+
+[id="plugins-{type}s-{plugin}-web_identity_token_file"]
+===== `web_identity_token_file`
+
+* Value type is <<string,string>>
+
+Absolute path to the file on disk containing OIDC token for https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html[IRSA].
+Set the path to `"/var/run/secrets/eks.amazonaws.com/serviceaccount/token"` when using Amazon EKS.
+If specified, <<plugins-{type}s-{plugin}-role_arn>> must not be empty.
+
+For the details of setting up IAM roles and Kubernetes service accounts, check out https://docs.aws.amazon.com/eks/latest/userguide/associate-service-account-role.html[https://docs.aws.amazon.com/eks/latest/userguide/pod-configuration.html[userguide]
+
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
