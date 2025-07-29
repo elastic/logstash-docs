@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v12.0.3
-:release_date: 2025-04-17
-:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v12.0.3/CHANGELOG.md
+:version: v12.0.4
+:release_date: 2025-07-07
+:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v12.0.4/CHANGELOG.md
 :include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -66,9 +66,10 @@ Set the value to port :443 instead.
 For more info on sending data from {ls} to {es-serverless}, check out the {serverless-docs}/elasticsearch/what-is-elasticsearch-serverless[{es-serverless} docs].
 
 [id="plugins-{type}s-{plugin}-ess"]
-==== Hosted {es} Service on Elastic Cloud
+==== {ls} to {ech}
 
-{ess-leadin}
+You can run Elasticsearch on your own hardware or use Elastic Cloud Hosted, available on AWS, GCP, and Azure.
+Try Elastic Cloud Hosted for free: https://cloud.elastic.co/registration.
 
 ==== Compatibility with the Elastic Common Schema (ECS)
 
