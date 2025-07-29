@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.16.2
-:release_date: 2024-12-09
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.16.2/CHANGELOG.md
+:version: v3.18.0
+:release_date: 2025-05-07
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v3.18.0/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -132,6 +132,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-ca_trusted_fingerprint>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-cloud_auth>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-cloud_id>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-custom_headers>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-docinfo_fields>> |<<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-enable_sort>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-fields>> |<<array,array>>|No
@@ -160,6 +161,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-ssl_truststore_type>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-ssl_verification_mode>> |<<string,string>>, one of `["full", "none"]`|No
 | <<plugins-{type}s-{plugin}-tag_on_failure>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-target>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-user>> |<<string,string>>|No
 |=======================================================================
 
@@ -173,8 +175,11 @@ filter plugins.
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
+  * Format: `"aggregation_name" => "[path][on][event]"`:
+  ** `aggregation_name`: aggregation name in result from {es}
+  ** `[path][on][event]`: path for where to place the value on the current event, using field-reference notation
 
-Hash of aggregation names to copy from elasticsearch response into Logstash event fields
+A mapping of aggregations to copy into the <<plugins-{type}s-{plugin}-target>> of the current event.
 
 Example:
 [source,ruby]
@@ -229,13 +234,26 @@ Cloud ID, from the Elastic Cloud web console. If set `hosts` should not be used.
 For more info, check out the
 {logstash-ref}/connecting-to-cloud.html[Logstash-to-Cloud documentation].
 
+
+[id="plugins-{type}s-{plugin}-custom_headers"]
+===== `custom_headers`
+
+  * Value type is <<hash,hash>>
+  * Default value is empty
+
+Pass a set of key value pairs as the headers sent in each request to Elasticsearch.
+These custom headers will override any headers previously set by the plugin such as the User Agent or Authorization headers.
+
 [id="plugins-{type}s-{plugin}-docinfo_fields"]
 ===== `docinfo_fields` 
 
   * Value type is <<hash,hash>>
   * Default value is `{}`
+  * Format: `"path.in.source" => "[path][on][event]"`:
+  ** `path.in.source`: field path in document source of result from {es}, using dot-notation
+  ** `[path][on][event]`: path for where to place the value on the current event, using field-reference notation
 
-Hash of docinfo fields to copy from old event (found via elasticsearch) into new event
+A mapping of docinfo (`_source`) fields to copy into the <<plugins-{type}s-{plugin}-target>> of the current event.
 
 Example:
 [source,ruby]
@@ -261,9 +279,11 @@ Whether results should be sorted or not
 
   * Value type is <<array,array>>
   * Default value is `{}`
+  * Format: `"path.in.result" => "[path][on][event]"`:
+  ** `path.in.result`: field path in indexed result from {es}, using dot-notation
+  ** `[path][on][event]`: path for where to place the value on the current event, using field-reference notation
 
-An array of fields to copy from the old event (found via elasticsearch) into the
-new event, currently being processed.
+A mapping of indexed fields to copy into the <<plugins-{type}s-{plugin}-target>> of the current event.
 
 In the following example, the values of `@timestamp` and `event_id` on the event
 found via elasticsearch are copied to the current event's
@@ -510,6 +530,43 @@ WARNING: Setting certificate verification to `none` disables many security benef
   * Default value is `["_elasticsearch_lookup_failure"]`
 
 Tags the event on failure to look up previous log event information. This can be used in later analysis.
+
+[id="plugins-{type}s-{plugin}-target"]
+===== `target`
+
+* Value type is <<string,string>>
+* There is no default value for this setting.
+
+Define the target field for placing the result data.
+If this setting is omitted, the target will be the root (top level) of the event.
+
+The destination fields specified in <<plugins-{type}s-{plugin}-fields>>, <<plugins-{type}s-{plugin}-aggregation_fields>>, and <<plugins-{type}s-{plugin}-docinfo_fields>> are relative to this target.
+
+For example, if you want the data to be put in the `operation` field:
+[source,ruby]
+if [type] == "end" {
+    filter {
+      query => "type:start AND transaction:%{[transactionId]}"
+      elasticsearch {
+        target => "transaction"
+        fields => {
+          "@timestamp" => "started"
+          "transaction_id" => "id"
+        }
+      }
+    }
+}
+
+`fields` fields will be expanded into a data structure in the `target` field, overall shape looks like this:
+[source,ruby]
+    {
+      "transaction" => {
+        "started" => "2025-04-29T12:01:46.263Z"
+        "id" => "1234567890"
+      }
+    }
+
+NOTE: when writing to a field that already exists on the event, the previous value will be overwritten.
 
 [id="plugins-{type}s-{plugin}-user"]
 ===== `user` 
