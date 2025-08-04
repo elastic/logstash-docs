@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v1.5.2
 :release_date: 2025-07-11
 :changelog_url: https://github.com/logstash-plugins/logstash-input-azure_event_hubs/blob/v1.5.2/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
