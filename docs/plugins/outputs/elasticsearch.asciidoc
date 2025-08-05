@@ -6,10 +6,10 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v12.0.5
-:release_date: 2025-07-09
-:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v12.0.5/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:version: v12.0.6
+:release_date: 2025-07-29
+:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v12.0.6/CHANGELOG.md
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
