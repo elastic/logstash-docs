@@ -28,26 +28,26 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
       - name: Clone elastic/docs-tools
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
         with:
           repository: elastic/docs-tools
           path: docs-tools
           fetch-depth: 1
       - name: Clone elastic/logstash-docs
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
         with:
           repository: elastic/logstash-docs
           path: logstash-docs
           fetch-depth: 1
           ref: ${{ github.event.inputs.branch }}
       - name: Clone elastic/docs
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
         with:
           repository: elastic/docs
           path: docs
           fetch-depth: 1
       - name: Clone elastic/logstash
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
         with:
          repository: elastic/logstash
          path: logstash
