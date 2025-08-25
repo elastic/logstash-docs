@@ -7,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.6
-:release_date: 2025-01-23
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-snmp/blob/v4.0.6/CHANGELOG.md
+:version: v4.0.7
+:release_date: 2025-07-17
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-snmp/blob/v4.0.7/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -351,8 +351,11 @@ The `priv_protocol` option specifies the SNMPv3 privacy/encryption protocol.
 [id="plugins-{type}s-{plugin}-security_level"]
 ===== `security_level`
 
-  * Value can be any of: `noAuthNoPriv`, `authNoPriv`, `authPriv`
-  * There is no default value for this setting
+  * Value can be any of:
+    - `noAuthNoPriv`: allows receiving traps messages without authentication or encryption.
+    - `authNoPriv`: trap messages must be authenticated according to <<plugins-{type}s-{plugin}-security_name>>/<<plugins-{type}s-{plugin}-auth_protocol>>/<<plugins-{type}s-{plugin}-auth_pass>>. Encrypted messages are allowed but not required.
+    - `authPriv`: trap messages must be both authenticated according to <<plugins-{type}s-{plugin}-security_name>>/<<plugins-{type}s-{plugin}-auth_protocol>>/<<plugins-{type}s-{plugin}-auth_pass>> and encrypted according to <<plugins-{type}s-{plugin}-priv_protocol>>/<<plugins-{type}s-{plugin}-priv_pass>>.
+  * The default value is `noAuthNoPriv`.
 
 The `security_level` option specifies the SNMPv3 security level between
 Authentication, No Privacy; Authentication, Privacy; or no Authentication, no Privacy.
