@@ -5,6 +5,8 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v3.5.0-plugins-filters-translate,v3.5.0>> | 2025-08-04
+| <<v3.4.3-plugins-filters-translate,v3.4.3>> | 2025-07-24
 | <<v3.4.2-plugins-filters-translate,v3.4.2>> | 2023-06-14
 | <<v3.4.1-plugins-filters-translate,v3.4.1>> | 2023-05-12
 | <<v3.4.0-plugins-filters-translate,v3.4.0>> | 2022-06-08
@@ -20,6 +22,8 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.0.2-plugins-filters-translate,v3.0.2>> | 2017-06-23
 |=======================================================================
 
+include::translate-v3.5.0.asciidoc[]
+include::translate-v3.4.3.asciidoc[]
 include::translate-v3.4.2.asciidoc[]
 include::translate-v3.4.1.asciidoc[]
 include::translate-v3.4.0.asciidoc[]

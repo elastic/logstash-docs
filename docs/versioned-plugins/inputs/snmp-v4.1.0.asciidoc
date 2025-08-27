@@ -1,0 +1,524 @@
+:integration: snmp
+:plugin: snmp
+:type: input
+:no_codec:
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v4.1.0
+:release_date: 2025-08-18
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-snmp/blob/v4.1.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== SNMP input plugin {version}
+
+include::{include_path}/plugin_header-integration.asciidoc[]
+
+.Migrating to `logstash-integration-snmp` from stand-alone `input-snmp`
+****
+The `logstash-input-snmp` plugin is now a component of the `logstash-integration-snmp` plugin which is
+bundled with {ls} 8.15.0 by default.
+This integrated plugin package provides better alignment in snmp processing, better resource management,
+easier package maintenance, and a smaller installation footprint.
+
+Before you upgrade to {ls} 8.15.0, be aware of link:{logstash-ref}/plugins-integrations-snmp.html#plugins-integrations-snmp-migration[behavioral and mapping differences]
+between current stand-alone plugins and the new versions included in `integration-snmp`.
+****
+
+
+==== Description
+
+The SNMP input polls network devices using Simple Network Management Protocol (SNMP)
+to gather information related to the current state of the devices operation.
+
+The SNMP input plugin supports SNMP v1, v2c, and v3 over UDP and TCP transport protocols.
+
+
+[id="{version}-plugins-{type}s-{plugin}-ecs"]
+==== Compatibility with the Elastic Common Schema (ECS)
+
+Because SNMP data has specific field names based on OIDs, we recommend setting a <<{version}-plugins-{type}s-{plugin}-target>>.
+Metadata fields follow a specific naming convention when <<{version}-plugins-{type}s-{plugin}-ecs_compatibility,ECS compatibility mode>> is enabled.
+
+[cols="<l,<l,e,<e"]
+|=======================================================================
+|ECS disabled |ECS v1, v8 |Description
+|[@metadata][host_protocol]    |[@metadata][input][snmp][host][protocol]    |The protocol used to retrieve data e.g. "udp"
+|[@metadata][host_address]     |[@metadata][input][snmp][host][address]     |The host IP e.g. "192.168.1.1"
+|[@metadata][host_port]        |[@metadata][input][snmp][host][port]        |The host's port e.g. "161"
+|[@metadata][host_community]   |[@metadata][input][snmp][host][community]   |The configured community e.g. "public"
+|[host]                        |[host][ip]                                  |Same as `[@metadata][host_address]`, host's IP address
+|=======================================================================
+
+[id="{version}-plugins-{type}s-{plugin}-import-mibs"]
+==== Importing MIBs
+
+This plugin already includes the IETF MIBs (management information bases), and you do not need to import them.
+If you need additional MIBs, you need to import them.
+Check out link:{logstash-ref}/plugins-integrations-snmp.html#plugins-integrations-snmp-import-mibs[Importing MIBs] for info.
+
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== SNMP Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-get>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-hosts>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-interval>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-local_engine_id>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-mib_paths>> |{logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-oid_mapping_format>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["default", "ruby_snmp", "dotted_string"]`|No
+| <<{version}-plugins-{type}s-{plugin}-oid_map_field_values>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-oid_path_length>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-oid_root_skip>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-poll_hosts_timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-walk>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-tables>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-target>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-threads>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-use_provided_mibs>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+|=======================================================================
+
+==== SNMPv3 Authentication Options
+
+This plugin supports the following SNMPv3 authentication options.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-auth_pass>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-auth_protocol>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["md5", "sha", "sha2", "hmac128sha224", "hmac192sha256", "hmac256sha384", "hmac384sha512"]`|No
+| <<{version}-plugins-{type}s-{plugin}-priv_pass>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-priv_protocol>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["des", "3des", "aes", "aes128", "aes192", "aes256"]`|No
+| <<{version}-plugins-{type}s-{plugin}-security_level>> |{logstash-ref}/configuration-file-structure.html#string[string], one of `["noAuthNoPriv", "authNoPriv", "authPriv"]`|No
+| <<{version}-plugins-{type}s-{plugin}-security_name>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+==== SNMP Input Configuration Options
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+[id="{version}-plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Supported values are:
+    ** `disabled`: does not use ECS-compatible field names (fields might be set at the root of the event)
+    ** `v1`, `v8`: avoids field names that might conflict with Elastic Common Schema (for example, the `host` field)
+  * Default value depends on which version of Logstash is running:
+    ** When Logstash provides a `pipeline.ecs_compatibility` setting, its value is used as the default
+    ** Otherwise, the default value is `disabled`.
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
+
+[id="{version}-plugins-{type}s-{plugin}-get"]
+===== `get`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * There is no default value for this setting
+
+Use the `get` option to query for scalar values for the given OID(s).
+One or more OID(s) are specified as an array of strings of OID(s).
+
+Example
+[source,ruby]
+-----
+input {
+  snmp {
+    get => ["1.3.6.1.2.1.1.1.0", "1.3.6.1.2.1.1.3.0", "1.3.6.1.2.1.1.5.0"]
+    hosts => [{host => "udp:127.0.0.1/161" community => "public"}]
+  }
+}
+-----
+
+[id="{version}-plugins-{type}s-{plugin}-hosts"]
+===== `hosts`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * There is no default value for this setting
+
+The `hosts` option specifies the list of hosts to query the configured `get` and `walk` options.
+
+Each host definition is a hash and must define the `host` key and value.
+`host` must use the format `{tcp|udp}:{ip address}/{port}`, for example `host => "udp:127.0.0.1/161"`
+
+Each host definition can optionally include the following keys and values:
+
+* `community` the community string, default is `public`.
+* `version` `1`, `2c` or `3`, default is `2c`.
+* `retries` is the number of retries in case of failure, default is `2`.
+* `timeout` is the timeout in milliseconds with a default value of `1000`.
+
+*Specifying all hosts options*
+
+[source,ruby]
+-----
+input {
+  snmp {
+    get => ["1.3.6.1.2.1.1.1.0"]
+    hosts => [{host => "udp:127.0.0.1/161" community => "public" version => "2c"  retries => 2  timeout => 1000}]
+  }
+}
+-----
+
+*Specifying multiple hosts*
+
+[source,ruby]
+-----
+input {
+  snmp {
+    get => ["1.3.6.1.2.1.1.1.0"]
+    hosts => [{host => "udp:127.0.0.1/161" community => "public"}, {host => "udp:192.168.0.1/161" community => "private"}]
+  }
+}
+-----
+
+*Specifying IPv6 hosts*
+
+[source,ruby]
+-----
+input {
+  snmp {
+    get => ["1.3.6.1.2.1.1.1.0"]
+    hosts => [{host => "udp:[::1]/161" community => "public"}, {host => "udp:[2001:db8::2:1]/161" community => "private"}]
+  }
+}
+-----
+
+[id="{version}-plugins-{type}s-{plugin}-interval"]
+===== `interval`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `30`
+
+The `interval` option specifies the polling interval in seconds.
+If polling all configured hosts takes longer than this interval, a warning will be emitted to the logs.
+
+[id="{version}-plugins-{type}s-{plugin}-local_engine_id"]
+===== `local_engine_id`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting
+
+The SNMPv3 local engine ID. Its length must be greater or equal than 5 and less or equal than 32.
+If not provided, a default ID is generated based on the local IP address and additional four random bytes.
+
+[id="{version}-plugins-{type}s-{plugin}-mib_paths"]
+===== `mib_paths`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+  * There is no default value for this setting
+
+The `mib_paths` option specifies the location of one or more imported MIB files.
+The value can be either a dir path containing the imported MIB (`.dic`, `.yaml`) files, or a
+file path to a single MIB file.
+
+This plugin includes the IETF MIBs.
+If you require other MIBs, you need to import them. See <<{version}-plugins-{type}s-{plugin}-import-mibs>>.
+
+[id="{version}-plugins-{type}s-{plugin}-oid_mapping_format"]
+===== `oid_mapping_format`
+
+  * Value can be any of: `default`, `ruby_snmp`, `dotted_string`
+  * Default value is `"default"`
+
+Defines the mapping textual representation of an OID in the Logstash event:
+
+* `default` translates every identifier, using the MIBs resolved names, separated by dots. Example:
+`1.3.6.1.2.1.1.2.0` is mapped as `iso.org.dod.internet.mgmt.mib-2.system.sysObjectID.0`
+* `ruby_snmp` produces field names prefixed by the MIBs module name, followed by the latest resolved identifier name and unknowns values. Example:
+`1.3.6.1.2.1.1.2.0` is mapped as `SNMPv2-MIB::sysObjectID.0`.
+* `dotted_string` maps fields using the standard dotted string representation, Example:
+`1.3.6.1.2.1.1.2.0` is mapped as  `1.3.6.1.2.1.1.2.0`
+
+[id="{version}-plugins-{type}s-{plugin}-oid_map_field_values"]
+===== `oid_map_field_values`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Defines if the Logstash event fields values, which types are `OID`, are mapped using the configured OID textual representation
+set on the <<{version}-plugins-{type}s-{plugin}-oid_mapping_format>> option.
+
+[id="{version}-plugins-{type}s-{plugin}-oid_root_skip"]
+===== `oid_root_skip`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `0`
+
+The `oid_root_skip` option specifies the number of OID root digits to ignore in the event field name.
+For example, in a numeric OID like "1.3.6.1.2.1.1.1.0" the first 5 digits could be ignored by setting `oid_root_skip => 5`
+which would result in a field name "1.1.1.0". Similarly when a MIB is used an OID such
+"1.3.6.1.2.mib-2.system.sysDescr.0" would become "mib-2.system.sysDescr.0"
+
+[NOTE]
+* You can use this setting or <<{version}-plugins-{type}s-{plugin}-oid_path_length>>, but not both at the same time.
+* Use this setting only if <<{version}-plugins-{type}s-{plugin}-oid_mapping_format>> is set to `default`.
+
+[id="{version}-plugins-{type}s-{plugin}-oid_path_length"]
+===== `oid_path_length`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is `0`
+
+The `oid_path_length` option specifies the number of OID root digits to retain in the event field name.
+For example, in a numeric OID like "1.3.6.1.2.1.1.1.0" the last 2 digits could be retained by setting `oid_path_length => 2`
+which would result in a field name "1.0". Similarly when a MIB is used an OID such
+"1.3.6.1.2.mib-2.system.sysDescr.0" would become "sysDescr.0"
+
+[NOTE]
+* You can use this setting or <<{version}-plugins-{type}s-{plugin}-oid_root_skip>>, but not both at the same time.
+* This setting can be used only if <<{version}-plugins-{type}s-{plugin}-oid_mapping_format>> is set to `default`.
+
+[id="{version}-plugins-{type}s-{plugin}-poll_hosts_timeout"]
+===== `poll_hosts_timeout`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * There is no default value for this setting
+
+Specifies the maximum amount of time in milliseconds the polling client will wait for all <<{version}-plugins-{type}s-{plugin}-hosts>> responses.
+If all responses are not received before the timeout elapses, the client will fail and some hosts might not get polled during the current cycle.
+
+By default, it uses the highest value between `1 hour`, the maximum <<{version}-plugins-{type}s-{plugin}-hosts>> configured `timeout`,
+and the <<{version}-plugins-{type}s-{plugin}-interval>> value.
+
+[id="{version}-plugins-{type}s-{plugin}-walk"]
+===== `walk`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * There is no default value for this setting
+
+Use the `walk` option to retrieve the subtree of information for the given OID(s).
+One or more OID(s) are specified as an array of strings of OID(s).
+
+Queries the subtree of information starting at the given OID(s).
+
+Example
+[source,ruby]
+-----
+  snmp {
+    walk => ["1.3.6.1.2.1.1"]
+    hosts => [{host => "udp:127.0.0.1/161" community => "public"}]
+  }
+}
+-----
+
+[id="{version}-plugins-{type}s-{plugin}-tables"]
+===== `tables`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * There is no default value for this setting
+  * Results are returned under a field using the table name
+
+The `tables` option is used to query for tabular values for the given column OID(s).
+
+Each table definition is a hash and must define the name key and value and the columns to return.
+
+*Specifying a single table*
+
+[source,ruby]
+-----
+input {
+  snmp {
+    hosts => [{host => "udp:127.0.0.1/161" community => "public" version => "2c"  retries => 2  timeout => 1000}]
+    tables => [ {"name" => "interfaces" "columns" => ["1.3.6.1.2.1.2.2.1.1", "1.3.6.1.2.1.2.2.1.2", "1.3.6.1.2.1.2.2.1.5"]} ]
+  }
+}
+-----
+
+*Specifying multiple tables*
+
+[source,ruby]
+-----
+input {
+  snmp {
+    get => ["1.3.6.1.2.1.1.1.0"]
+    tables => [ {"name" => "interfaces" "columns" => ["1.3.6.1.2.1.2.2.1.1", "1.3.6.1.2.1.2.2.1.2", "1.3.6.1.2.1.2.2.1.5"]}, {"name" => "ltmPoolStatTable" "columns" => ["1.3.6.1.4.1.3375.2.2.5.2.3.1.1", "1.3.6.1.4.1.3375.2.2.5.2.3.1.6"]} ]
+  }
+}
+-----
+
+[id="{version}-plugins-{type}s-{plugin}-target"]
+===== `target`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting
+
+The name of the field under which SNMP payloads are assigned.
+If not specified data will be stored in the root of the event.
+
+Setting a target is recommended when <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>> is enabled.
+
+[id="{version}-plugins-{type}s-{plugin}-threads"]
+===== `threads`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * Default value is the number of CPU cores
+
+The number of threads to use for executing the hosts SNMP requests.
+
+[id="{version}-plugins-{type}s-{plugin}-use_provided_mibs"]
+===== `use_provided_mibs`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `true`
+
+This plugin provides all IETF MIBs (management information bases), publicly available in the link:https://www.ibr.cs.tu-bs.de/projects/libsmi[libsmi] version `0.5.0`.
+When enabled, it automatically loads the bundled MIBs and provides mapping of the numeric OIDs to MIB field names in the resulting event.
+
+==== SNMPv3 Authentication Options
+
+A **single user** can be configured and will be used for all defined SNMPv3 hosts.
+Multiple snmp input declarations will be needed if multiple SNMPv3 users are required.
+These options are required only if you are using SNMPv3.
+
+[id="{version}-plugins-{type}s-{plugin}-auth_pass"]
+===== `auth_pass`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting
+
+The `auth_pass` option specifies the SNMPv3 authentication passphrase or password.
+
+[id="{version}-plugins-{type}s-{plugin}-auth_protocol"]
+===== `auth_protocol`
+
+The `auth_protocol` option specifies the SNMPv3 authentication protocol or type
+
+* Value can be any of: `md5`, `sha`, `sha2`, `hmac128sha224`, `hmac192sha256`, `hmac256sha384`, `hmac384sha512`
+* Note that `sha2` and `hmac192sha256` are equivalent
+* There is no default value for this setting
+
+[id="{version}-plugins-{type}s-{plugin}-priv_pass"]
+===== `priv_pass`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting
+
+The `priv_pass` option specifies the SNMPv3 encryption password.
+
+[id="{version}-plugins-{type}s-{plugin}-priv_protocol"]
+===== `priv_protocol`
+
+  * Value can be any of: `des`, `3des`, `aes`, `aes128`, `aes192`, `aes256`
+  * Note that `aes` and `aes128` are equivalent
+  * There is no default value for this setting
+
+The `priv_protocol` option specifies the SNMPv3 privacy/encryption protocol.
+
+[id="{version}-plugins-{type}s-{plugin}-security_level"]
+===== `security_level`
+
+  * Value can be any of: `noAuthNoPriv`, `authNoPriv`, `authPriv`
+  * There is no default value for this setting
+
+The `security_level` option specifies the SNMPv3 security level between
+Authentication, No Privacy; Authentication, Privacy; or no Authentication, no Privacy.
+
+[id="{version}-plugins-{type}s-{plugin}-security_name"]
+===== `security_name`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting
+
+The `security_name` option specifies the SNMPv3 security name or user name.
+
+[id="{version}-plugins-{type}s-{plugin}-examples"]
+==== Configuration examples
+
+*Specifying SNMPv3 settings*
+
+[source,ruby]
+-----
+input {
+  snmp {
+    hosts => [{host => "udp:127.0.0.1/161" version => "3"}]
+    get => ["1.3.6.1.2.1.1.1.0"]
+    security_name => "mySecurityName"
+    auth_protocol => "sha"
+    auth_pass => "ShaPassword"
+    priv_protocol => "aes"
+    priv_pass => "AesPasword"
+    security_level => "authPriv"
+  }
+}
+
+-----
+
+*Using both `get` and `walk` in the same poll cycle for each host(s)*
+
+[source,ruby]
+-----
+input {
+  snmp {
+    get => ["1.3.6.1.2.1.1.1.0", "1.3.6.1.2.1.1.3.0", "1.3.6.1.2.1.1.5.0"]
+    walk => ["1.3.6.1.2.1.1"]
+    hosts => [{host => "udp:127.0.0.1/161" community => "public"}]
+  }
+}
+-----
+
+*Specifying all global options*
+
+[source,ruby]
+-----
+input {
+  snmp {
+    get => ["1.3.6.1.2.1.1.1.0"]
+    hosts => [{host => "udp:127.0.0.1/161"}]
+
+    mib_paths => ["path/to/converted/mibfile.dic"]
+    oid_root_skip => 0
+    interval => 30
+  }
+}
+-----
+
+==== Polled host information
+
+All the polled host information is stored in the event `@metadata`:
+
+* `[@metadata][host_protocol]` : `udp` or `tcp`
+* `[@metadata][host_address]` : host address for example `127.0.0.1`
+* `[@metadata][host_port]` : host port (for example `161`)
+* `[@metadata][host_community]` : community string for example `public`
+
+
+By default, a `host` field is added to the event with the `[@metadata][host_address]` value.
+
+[source,ruby]
+-----
+config :add_field, :validate => :hash, :default => { "host" => "%{[@metadata][host_address]}" }
+-----
+
+You can customize the format and content of the `host` field by specifying an alternate `add_field`.
+
+Example
+[source,ruby]
+-----
+input {
+  snmp {
+    get => ["1.3.6.1.2.1.1.1.0"]
+    hosts => [{host => "udp:127.0.0.1/161"}]
+
+    add_field => {host => "%{[@metadata][host_protocol]}:%{[@metadata][host_address]}/%{[@metadata][host_port]},%{[@metadata][host_community]}"}
+  }
+}
+-----
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:no_codec!:
