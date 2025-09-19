@@ -149,17 +149,17 @@ See the https://kafka.apache.org/{kafka_client_doc}/documentation for more detai
 | <<plugins-{type}s-{plugin}-request_timeout_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-retry_backoff_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-sasl_client_callback_handler_class>> |<<string,string>>|No
-| <<plugins-{type}s-{plugin}-sasl_oauthbearer_token_endpoint_url>> |<<string,string>>|No
-| <<plugins-{type}s-{plugin}-sasl_oauthbearer_scope_claim_name>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-sasl_iam_jar_paths>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-sasl_jaas_config>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-sasl_kerberos_service_name>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-sasl_login_callback_handler_class>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-sasl_login_connect_timeout_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-sasl_login_read_timeout_ms>> |<<number,number>>|No
-| <<plugins-{type}s-{plugin}-sasl_login_retry_backoff_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-sasl_login_retry_backoff_max_ms>> |<<number,number>>|No
-| <<plugins-{type}s-{plugin}-sasl_jaas_config>> |<<string,string>>|No
-| <<plugins-{type}s-{plugin}-sasl_kerberos_service_name>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-sasl_login_retry_backoff_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-sasl_mechanism>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-sasl_oauthbearer_scope_claim_name>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-sasl_oauthbearer_token_endpoint_url>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-schema_registry_key>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-schema_registry_proxy>> |<<uri,uri>>|No
 | <<plugins-{type}s-{plugin}-schema_registry_secret>> |<<string,string>>|No
@@ -589,20 +589,6 @@ to a given topic partition. This avoids repeated fetching-and-failing in a tight
 
 The SASL client callback handler class the specified SASL mechanism should use.
 
-[id="plugins-{type}s-{plugin}-sasl_oauthbearer_token_endpoint_url"]
-===== `sasl_oauthbearer_token_endpoint_url`
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-The URL for the OAuth 2.0 issuer token endpoint.
-
-[id="plugins-{type}s-{plugin}-sasl_oauthbearer_scope_claim_name"]
-===== `sasl_oauthbearer_scope_claim_name`
-  * Value type is <<string,string>>
-  * Default value is `"scope"`
-
-(optional) The override name of the scope claim.
-
 [id="plugins-{type}s-{plugin}-sasl_iam_jar_paths"]
 ===== `sasl_iam_jar_paths`
 * Value type is <<array,array>>
@@ -610,41 +596,6 @@ The URL for the OAuth 2.0 issuer token endpoint.
 
 Contains the list of paths to jar libraries that contains cloud providers MSK IAM's clients.
 There is one jar per provider and can be retrieved as described in <<"plugins-{type}s-{plugin}-aws_msk_iam_auth">>.
-
-[id="plugins-{type}s-{plugin}-sasl_login_callback_handler_class"]
-===== `sasl_login_callback_handler_class`
-  * Value type is <<string,string>>
-  * There is no default value for this setting.
-
-The SASL login callback handler class the specified SASL mechanism should use.
-
-[id="plugins-{type}s-{plugin}-sasl_login_connect_timeout_ms"]
-===== `sasl_login_connect_timeout_ms`
-  * Value type is <<number,number>>
-  * There is no default value for this setting.
-
-(optional) The duration, in milliseconds, for HTTPS connect timeout
-
-[id="plugins-{type}s-{plugin}-sasl_login_read_timeout_ms"]
-===== `sasl_login_read_timeout_ms`
-  * Value type is <<number,number>>
-  * There is no default value for this setting.
-
-(optional) The duration, in milliseconds, for HTTPS read timeout.
-
-[id="plugins-{type}s-{plugin}-sasl_login_retry_backoff_ms"]
-===== `sasl_login_retry_backoff_ms`
-  * Value type is <<number,number>>
-  * Default value is `100` milliseconds.
-
-(optional) The duration, in milliseconds, to wait between HTTPS call attempts.
-
-[id="plugins-{type}s-{plugin}-sasl_login_retry_backoff_max_ms"]
-===== `sasl_login_retry_backoff_max_ms`
-  * Value type is <<number,number>>
-  * Default value is `10000` milliseconds.
-
-(optional) The maximum duration, in milliseconds, for HTTPS call attempts.
 
 [id="plugins-{type}s-{plugin}-sasl_jaas_config"]
 ===== `sasl_jaas_config` 
@@ -673,6 +624,41 @@ Example (setting for Azure Event Hub):
 The Kerberos principal name that Kafka broker runs as. 
 This can be defined either in Kafka's JAAS config or in Kafka's config.
 
+[id="plugins-{type}s-{plugin}-sasl_login_callback_handler_class"]
+===== `sasl_login_callback_handler_class`
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The SASL login callback handler class the specified SASL mechanism should use.
+
+[id="plugins-{type}s-{plugin}-sasl_login_connect_timeout_ms"]
+===== `sasl_login_connect_timeout_ms`
+  * Value type is <<number,number>>
+  * There is no default value for this setting.
+
+(optional) The duration, in milliseconds, for HTTPS connect timeout
+
+[id="plugins-{type}s-{plugin}-sasl_login_read_timeout_ms"]
+===== `sasl_login_read_timeout_ms`
+  * Value type is <<number,number>>
+  * There is no default value for this setting.
+
+(optional) The duration, in milliseconds, for HTTPS read timeout.
+
+[id="plugins-{type}s-{plugin}-sasl_login_retry_backoff_max_ms"]
+===== `sasl_login_retry_backoff_max_ms`
+  * Value type is <<number,number>>
+  * Default value is `10000` milliseconds.
+
+(optional) The maximum duration, in milliseconds, for HTTPS call attempts.
+
+[id="plugins-{type}s-{plugin}-sasl_login_retry_backoff_ms"]
+===== `sasl_login_retry_backoff_ms`
+  * Value type is <<number,number>>
+  * Default value is `100` milliseconds.
+
+(optional) The duration, in milliseconds, to wait between HTTPS call attempts.
+
 [id="plugins-{type}s-{plugin}-sasl_mechanism"]
 ===== `sasl_mechanism` 
 
@@ -683,6 +669,20 @@ http://kafka.apache.org/documentation.html#security_sasl[SASL mechanism] used fo
 This may be any mechanism for which a security provider is available.
 For AWS MSK IAM authentication use `AWS_MSK_IAM`.
 GSSAPI is the default mechanism.
+
+[id="plugins-{type}s-{plugin}-sasl_oauthbearer_token_endpoint_url"]
+===== `sasl_oauthbearer_token_endpoint_url`
+  * Value type is <<string,string>>
+  * There is no default value for this setting.
+
+The URL for the OAuth 2.0 issuer token endpoint.
+
+[id="plugins-{type}s-{plugin}-sasl_oauthbearer_scope_claim_name"]
+===== `sasl_oauthbearer_scope_claim_name`
+  * Value type is <<string,string>>
+  * Default value is `"scope"`
+
+(optional) The override name of the scope claim.
 
 [id="plugins-{type}s-{plugin}-schema_registry_key"]
 ===== `schema_registry_key`
