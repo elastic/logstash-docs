@@ -9,7 +9,7 @@ START - GENERATED VARIABLES, DO NOT EDIT!
 :version: v3.3.1
 :release_date: 2025-09-08
 :changelog_url: https://github.com/logstash-plugins/logstash-input-jms/blob/v3.3.1/CHANGELOG.md
-:include_path: ../../../../logstash/docs/include
+:include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
