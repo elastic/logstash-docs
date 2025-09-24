@@ -105,39 +105,6 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v10.2.1-plugins-outputs-elasticsearch,v10.2.1>> | 2019-10-09
 | <<v10.2.0-plugins-outputs-elasticsearch,v10.2.0>> | 2019-10-08
 | <<v10.1.0-plugins-outputs-elasticsearch,v10.1.0>> | 2019-05-06
-| <<v10.0.2-plugins-outputs-elasticsearch,v10.0.2>> | 2019-04-18
-| <<v10.0.1-plugins-outputs-elasticsearch,v10.0.1>> | 2019-02-06
-| <<v9.4.0-plugins-outputs-elasticsearch,v9.4.0>> | 2019-02-06
-| <<v9.3.2-plugins-outputs-elasticsearch,v9.3.2>> | 2019-02-05
-| <<v9.3.1-plugins-outputs-elasticsearch,v9.3.1>> | 2019-01-29
-| <<v9.3.0-plugins-outputs-elasticsearch,v9.3.0>> | 2018-12-18
-| <<v9.2.4-plugins-outputs-elasticsearch,v9.2.4>> | 2018-11-14
-| <<v9.2.3-plugins-outputs-elasticsearch,v9.2.3>> | 2018-11-05
-| <<v9.2.1-plugins-outputs-elasticsearch,v9.2.1>> | 2018-08-17
-| <<v9.2.0-plugins-outputs-elasticsearch,v9.2.0>> | 2018-06-09
-| <<v9.1.4-plugins-outputs-elasticsearch,v9.1.4>> | 2018-05-23
-| <<v9.1.3-plugins-outputs-elasticsearch,v9.1.3>> | 2018-05-15
-| <<v9.1.2-plugins-outputs-elasticsearch,v9.1.2>> | 2018-05-01
-| <<v9.1.1-plugins-outputs-elasticsearch,v9.1.1>> | 2018-04-06
-| <<v9.0.3-plugins-outputs-elasticsearch,v9.0.3>> | 2018-02-08
-| <<v9.0.2-plugins-outputs-elasticsearch,v9.0.2>> | 2017-11-30
-| <<v9.0.0-plugins-outputs-elasticsearch,v9.0.0>> | 2017-09-29
-| <<v8.2.2-plugins-outputs-elasticsearch,v8.2.2>> | 2017-09-21
-| <<v8.2.0-plugins-outputs-elasticsearch,v8.2.0>> | 2017-09-21
-| <<v8.1.1-plugins-outputs-elasticsearch,v8.1.1>> | 2017-08-21
-| <<v8.0.1-plugins-outputs-elasticsearch,v8.0.1>> | 2017-08-16
-| <<v8.0.0-plugins-outputs-elasticsearch,v8.0.0>> | 2017-08-01
-| <<v7.4.3-plugins-outputs-elasticsearch,v7.4.3>> | 2018-05-11
-| <<v7.4.2-plugins-outputs-elasticsearch,v7.4.2>> | 2017-09-22
-| <<v7.4.1-plugins-outputs-elasticsearch,v7.4.1>> | 2017-09-21
-| <<v7.4.0-plugins-outputs-elasticsearch,v7.4.0>> | 2017-08-21
-| <<v7.3.8-plugins-outputs-elasticsearch,v7.3.8>> | 2017-07-20
-| <<v7.3.7-plugins-outputs-elasticsearch,v7.3.7>> | 2017-07-18
-| <<v7.3.6-plugins-outputs-elasticsearch,v7.3.6>> | 2017-06-23
-| <<v7.3.5-plugins-outputs-elasticsearch,v7.3.5>> | 2017-06-09
-| <<v7.3.4-plugins-outputs-elasticsearch,v7.3.4>> | 2017-06-06
-| <<v7.3.3-plugins-outputs-elasticsearch,v7.3.3>> | 2017-06-05
-| <<v7.3.2-plugins-outputs-elasticsearch,v7.3.2>> | 2017-05-26
 |=======================================================================
 
 include::elasticsearch-v12.0.7.asciidoc[]
@@ -240,37 +207,4 @@ include::elasticsearch-v10.2.2.asciidoc[]
 include::elasticsearch-v10.2.1.asciidoc[]
 include::elasticsearch-v10.2.0.asciidoc[]
 include::elasticsearch-v10.1.0.asciidoc[]
-include::elasticsearch-v10.0.2.asciidoc[]
-include::elasticsearch-v10.0.1.asciidoc[]
-include::elasticsearch-v9.4.0.asciidoc[]
-include::elasticsearch-v9.3.2.asciidoc[]
-include::elasticsearch-v9.3.1.asciidoc[]
-include::elasticsearch-v9.3.0.asciidoc[]
-include::elasticsearch-v9.2.4.asciidoc[]
-include::elasticsearch-v9.2.3.asciidoc[]
-include::elasticsearch-v9.2.1.asciidoc[]
-include::elasticsearch-v9.2.0.asciidoc[]
-include::elasticsearch-v9.1.4.asciidoc[]
-include::elasticsearch-v9.1.3.asciidoc[]
-include::elasticsearch-v9.1.2.asciidoc[]
-include::elasticsearch-v9.1.1.asciidoc[]
-include::elasticsearch-v9.0.3.asciidoc[]
-include::elasticsearch-v9.0.2.asciidoc[]
-include::elasticsearch-v9.0.0.asciidoc[]
-include::elasticsearch-v8.2.2.asciidoc[]
-include::elasticsearch-v8.2.0.asciidoc[]
-include::elasticsearch-v8.1.1.asciidoc[]
-include::elasticsearch-v8.0.1.asciidoc[]
-include::elasticsearch-v8.0.0.asciidoc[]
-include::elasticsearch-v7.4.3.asciidoc[]
-include::elasticsearch-v7.4.2.asciidoc[]
-include::elasticsearch-v7.4.1.asciidoc[]
-include::elasticsearch-v7.4.0.asciidoc[]
-include::elasticsearch-v7.3.8.asciidoc[]
-include::elasticsearch-v7.3.7.asciidoc[]
-include::elasticsearch-v7.3.6.asciidoc[]
-include::elasticsearch-v7.3.5.asciidoc[]
-include::elasticsearch-v7.3.4.asciidoc[]
-include::elasticsearch-v7.3.3.asciidoc[]
-include::elasticsearch-v7.3.2.asciidoc[]
 
