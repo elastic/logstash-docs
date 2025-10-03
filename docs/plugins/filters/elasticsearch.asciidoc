@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.3.0
-:release_date: 2025-07-21
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v4.3.0/CHANGELOG.md
+:version: v4.3.1
+:release_date: 2025-09-23
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-elasticsearch/blob/v4.3.1/CHANGELOG.md
 :include_path: ../include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -248,8 +248,8 @@ NOTE: As of version `4.0.0` of this plugin, a number of previously deprecated se
 | <<plugins-{type}s-{plugin}-password>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-proxy>> |<<uri,uri>>|No
 | <<plugins-{type}s-{plugin}-query>> |<<string,string>>|No
-| <<plugins-{type}s-{plugin}-query_params>> |<<hash,hash>> or <<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-query_type>> |<<string,string>>, one of `["dsl", "esql"]`|No
+| <<plugins-{type}s-{plugin}-query_params>> |<<hash,hash>> or <<hash,hash>>|No
 | <<plugins-{type}s-{plugin}-query_template>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-result_size>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-retry_on_failure>> |<<number,number>>|No
