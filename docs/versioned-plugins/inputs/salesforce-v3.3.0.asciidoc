@@ -1,0 +1,348 @@
+:plugin: salesforce
+:type: input
+:default_codec: plain
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.3.0
+:release_date: 2025-05-14
+:changelog_url: https://github.com/logstash-plugins/logstash-input-salesforce/blob/v3.3.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Salesforce input plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+This Logstash input plugin allows you to query Salesforce using SOQL and puts the results
+into Logstash, one row per event. You can configure it to pull entire sObjects or only
+specific fields.
+
+NOTE: By default, this input plugin will stop after all the results of the query are processed and will
+need to be re-run to fetch new results. It does not utilize the streaming API. However, by setting the `interval`
+configuration option you can configure the plugin to automatically run at a set frequency.
+
+In order to use this plugin, you will need to create a new Salesforce Connected App with OAuth enabled.
+More details can be found here:
+https://help.salesforce.com/apex/HTViewHelpDoc?id=connected_app_create.htm
+
+You will also need a username, password, and security token for your Salesforce instance.
+More details for generating a token can be found here:
+https://help.salesforce.com/apex/HTViewHelpDoc?id=user_security_token.htm
+
+In addition to specifying an sObject, you can also supply a list of API fields
+that will be used in the SOQL query.
+
+==== HTTP proxy
+
+If your infrastructure uses an HTTP proxy, you can set the `SALESFORCE_PROXY_URI` environment variable with the desired URI value (e.g `export SALESFORCE_PROXY_URI="http://proxy.example.com:123"`).
+
+==== Example
+This example prints all the Salesforce Opportunities to standard out
+
+[source,ruby]
+----------------------------------
+input {
+  salesforce {
+    client_id => 'OAUTH CLIENT ID FROM YOUR SFDC APP'
+    client_secret => 'OAUTH CLIENT SECRET FROM YOUR SFDC APP'
+    username => 'email@example.com'
+    password => 'super-secret'
+    security_token => 'SECURITY TOKEN FOR THIS USER'
+    sfdc_object_name => 'Opportunity'
+  }
+}
+
+output {
+  stdout {
+    codec => rubydebug
+  }
+}
+----------------------------------
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Salesforce Input Configuration Options
+
+This plugin supports the following configuration options plus the <<{version}-plugins-{type}s-{plugin}-common-options>> described later.
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-api_version>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-changed_data_filter>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-client_id>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-client_secret>> |{logstash-ref}/configuration-file-structure.html#password[password]|Yes
+| <<{version}-plugins-{type}s-{plugin}-interval>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-password>> |{logstash-ref}/configuration-file-structure.html#password[password]|Yes
+| <<{version}-plugins-{type}s-{plugin}-security_token>> |{logstash-ref}/configuration-file-structure.html#password[password]|Yes
+| <<{version}-plugins-{type}s-{plugin}-sfdc_fields>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-sfdc_filters>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-sfdc_instance_url>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-sfdc_object_name>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-timeout>> |{logstash-ref}/configuration-file-structure.html#number[number]|No
+| <<{version}-plugins-{type}s-{plugin}-to_underscores>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-tracking_field>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-tracking_field_value_file>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-use_test_sandbox>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-use_tooling_api>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-username>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+|=======================================================================
+
+Also see <<{version}-plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
+input plugins.
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-api_version"]
+===== `api_version`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+By default, this uses the default Restforce API version.
+To override this, set this to something like "32.0" for example.
+
+[id="{version}-plugins-{type}s-{plugin}-changed_data_filter"]
+===== `changed_data_filter`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The filter to add to the Salesforce query when a previous tracking field value
+was read from the <<{version}-plugins-{type}s-{plugin}-tracking_field_value_file>>.
+The string can (and should) contain a placeholder `%+{last_tracking_field_value}+` that
+will be substituted with the actual value read from the <<{version}-plugins-{type}s-{plugin}-tracking_field_value_file>>.
+
+This clause is combined with any <<{version}-plugins-{type}s-{plugin}-sfdc_filters>>
+clause that is configured using the `AND` operator.
+
+The value should be properly quoted according to the SOQL rules for the field
+type.
+
+**Examples:**
+
+[source,ruby]
+"changed_data_filter" => "Number > '%{last_tracking_field_value}'"
+
+[source,ruby]
+"changed_data_filter" => "LastModifiedDate >= %{last_tracking_field_value}"
+
+[id="{version}-plugins-{type}s-{plugin}-client_id"]
+===== `client_id`
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+Consumer Key for authentication. You must set up a new Salesforce
+connected app with OAuth enabled to use this plugin. More information
+can be found here:
+https://help.salesforce.com/apex/HTViewHelpDoc?id=connected_app_create.htm.
+
+[id="{version}-plugins-{type}s-{plugin}-client_secret"]
+===== `client_secret`
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+Consumer secret from your OAuth enabled connected app.
+
+[id="{version}-plugins-{type}s-{plugin}-interval"]
+===== `interval`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+  * There is no default value for this setting.
+
+The interval in seconds between each run of the plugin.
+
+If specified, the plugin only terminates when it receives the stop
+signal from Logstash, e.g. when you press Ctrl-C when running interactively,
+or when the process receives a TERM signal. It will query and publish
+events for all results, then sleep until `interval` seconds from the start
+of the previous run of the plugin have passed. If the plugin ran for longer
+than `interval` seconds, it will run again immediately.
+
+If this property is not specified or is set to -1, the plugin will run once and then exit.
+
+[id="{version}-plugins-{type}s-{plugin}-password"]
+===== `password`
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+  * There is no default value for this setting.
+
+The password used to log in to Salesforce.
+
+[id="{version}-plugins-{type}s-{plugin}-security_token"]
+===== `security_token`
+
+* This is a required setting.
+* Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+* There is no default value for this setting.
+
+The security token for this account. For more information about
+generating a security token, see:
+https://help.salesforce.com/apex/HTViewHelpDoc?id=user_security_token.htm.
+
+[id="{version}-plugins-{type}s-{plugin}-sfdc_fields"]
+===== `sfdc_fields`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+  * Default value is `[]`
+
+These are the field names to return in the Salesforce query
+If this is empty, all fields are returned.
+
+[id="{version}-plugins-{type}s-{plugin}-sfdc_filters"]
+===== `sfdc_filters`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * Default value is `""`
+
+These options will be added to the `WHERE` clause in the
+SOQL statement. Additional fields can be filtered on by
+adding `field1 = value1 AND field2 = value2 AND...`.
+
+[id="{version}-plugins-{type}s-{plugin}-sfdc_instance_url"]
+===== `sfdc_instance_url`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The url of a Salesforce instance. Provide the url if you want to connect
+to your Salesforce instance instead of
+`login.salesforce.com` or `test.salesforce.com` at login.
+
+Use either this or the `use_test_sandbox` configuration option
+but not both to configure the url to which the plugin connects to.
+
+[id="{version}-plugins-{type}s-{plugin}-sfdc_object_name"]
+===== `sfdc_object_name`
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The name of the Salesforce object you are creating or updating.
+
+[id="{version}-plugins-{type}s-{plugin}-timeout"]
+===== `timeout`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#number[number]
+* Default value is `60`
+
+The timeout to apply to REST API calls to Salesforce, in seconds. If
+a connection to Salesforce cannot be made in this time, an error occurs.
+If it takes longer than the timeout for a block of data (e.g. query results) to be
+read, an error occurs.
+
+[id="{version}-plugins-{type}s-{plugin}-to_underscores"]
+===== `to_underscores`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Setting this to true will convert Salesforce's `++NamedFields__c++` to `++named_fields__c++`.
+
+[id="{version}-plugins-{type}s-{plugin}-tracking_field"]
+===== `tracking_field`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+The field to track for incremental data loads. This field will
+be used in an `ORDER BY ... ASC` clause that is added to the Salesforce query.
+This field _should_ also be used in the <<{version}-plugins-{type}s-{plugin}-changed_data_filter>> clause
+to actually achieve incremental loading of data.
+
+The last value (which is the highest value if the query sorts by this field ascending)
+value for this field will be saved to the file at the path configured by
+<<{version}-plugins-{type}s-{plugin}-tracking_field_value_file>>, if specified.
+
+This field should ideally be strictly ascending for new records. An
+autonumber field is ideal for this.
+
+The standard `LastModifiedDate` field can be used, but since it is not _strictly_
+ascending (multiple records can have the same `LastModifiedDate`, the
+<<{version}-plugins-{type}s-{plugin}-changed_data_filter>> should account for this by using the `>=`
+operator, and duplicates should be expected.
+
+Note that Salesforce does not guarantee that the standard `Id` field has ascending
+values for new records (https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_testing_best_practices.htm).
+Therefore, using `Id` as tracking field risks missing records and is not recommended.
+
+If this field is not already included in the <<{version}-plugins-{type}s-{plugin}-sfdc_fields>>,
+it is added.
+
+[id="{version}-plugins-{type}s-{plugin}-tracking_field_value_file"]
+===== `tracking_field_value_file`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* There is no default value for this setting.
+
+The full path to the file from which the latest tracking field value from the previous
+plugin invocation will be read, and to which the new latest tracking field value will be
+written after the current plugin invocation.
+
+This keeps persistent track of the last seen value of the tracking field used for incremental
+loading of data.
+
+The file should be readable and writable by the Logstash process.
+
+If the file exists and a <<{version}-plugins-{type}s-{plugin}-changed_data_filter>> is configured,
+a changed data filter clause is added to the query (and combined with any <<{version}-plugins-{type}s-{plugin}-sfdc_filters>>
+clause that is configured using the `AND` operator).
+
+If the result set is not empty, the value for `tracking_field` from the last row is
+written to the file.
+
+[id="{version}-plugins-{type}s-{plugin}-use_test_sandbox"]
+===== `use_test_sandbox`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Set this to true to connect to a sandbox sfdc instance
+logging in through test.salesforce.com.
+
+Use either this or the `sfdc_instance_url` configuration option
+but not both to configure the url to which the plugin connects to.
+
+[id="{version}-plugins-{type}s-{plugin}-use_tooling_api"]
+===== `use_tooling_api`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+Set this to true to connect to the sfdc tooling api instead of the regular
+sfdc rest api. See
+https://developer.salesforce.com/docs/atlas.en-us.api_tooling.meta/api_tooling
+for details about the sfdc tooling api. Use cases for the sfdc tooling api
+include reading apex unit test results, flow coverage results (e.g. coverage
+of elements of sfdc flows) and security health check risks.
+
+[id="{version}-plugins-{type}s-{plugin}-username"]
+===== `username`
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+A valid Salesforce username, usually your email address.
+Used for authentication and will be the user all objects
+are created or modified by.
+
+
+
+[id="{version}-plugins-{type}s-{plugin}-common-options"]
+include::{include_path}/{type}.asciidoc[]
+
+:default_codec!:

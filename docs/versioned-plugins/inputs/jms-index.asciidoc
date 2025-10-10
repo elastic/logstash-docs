@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v3.3.1-plugins-inputs-jms,v3.3.1>> | 2025-09-08
 | <<v3.3.0-plugins-inputs-jms,v3.3.0>> | 2025-03-07
 | <<v3.2.2-plugins-inputs-jms,v3.2.2>> | 2022-06-13
 | <<v3.2.1-plugins-inputs-jms,v3.2.1>> | 2022-01-25
@@ -19,6 +20,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.0.2-plugins-inputs-jms,v3.0.2>> | 2017-06-23
 |=======================================================================
 
+include::jms-v3.3.1.asciidoc[]
 include::jms-v3.3.0.asciidoc[]
 include::jms-v3.2.2.asciidoc[]
 include::jms-v3.2.1.asciidoc[]
