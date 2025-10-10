@@ -49,6 +49,8 @@ include::codecs/oldlogstashjson-index.asciidoc[]
 
 include::codecs/plain-index.asciidoc[]
 
+include::codecs/pretty-index.asciidoc[]
+
 include::codecs/protobuf-index.asciidoc[]
 
 include::codecs/rubydebug-index.asciidoc[]
