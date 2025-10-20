@@ -5,10 +5,10 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.4.2
-:release_date: 2023-06-14
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-translate/blob/v3.4.2/CHANGELOG.md
-:include_path: ../include
+:version: v3.5.0
+:release_date: 2025-08-04
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-translate/blob/v3.5.0/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -25,12 +25,12 @@ A general search and replace tool that uses a configured hash
 and/or a file to determine replacement values. Currently supported are
 YAML, JSON, and CSV files. Each dictionary item is a key value pair.
 
-You can specify dictionary entries in one of two ways:
+You can specify dictionary entries in one of two ways: 
 
 * The `dictionary` configuration item can contain a hash representing
-the mapping.
+the mapping. 
 * An external file (readable by logstash) may be specified in the
-`dictionary_path` configuration item.
+`dictionary_path` configuration item. 
 
 These two methods may not be used in conjunction; it will produce an error.
 
@@ -110,6 +110,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-refresh_behaviour>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-target>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-yaml_dictionary_code_point_limit>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-yaml_load_strategy>> |<<string,string>>, one of `["one_shot", "streaming"]`|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -158,7 +159,7 @@ NOTE: It is an error to specify both `dictionary` and `dictionary_path`.
   * There is no default value for this setting.
 
 The full path of the external dictionary file. The format of the table should be
-a standard YAML, JSON, or CSV.
+a standard YAML, JSON, or CSV. 
 
 Specify any integer-based keys in quotes. The value taken from the event's
 `source` setting is converted to a string. The lookup dictionary keys must also
@@ -432,6 +433,22 @@ the filter will succeed. This will clobber the old value of the source field!
 
 The max amount of code points in the YAML file in `dictionary_path`. Please be aware that byte limit depends on the encoding.
 This setting is effective for YAML file only. YAML over the limit throws exception.
+
+[id="plugins-{type}s-{plugin}-yaml_load_strategy"]
+===== `yaml_load_strategy`
+
+* Value can be any of: `one_shot`, `streaming`
+* Default value is `one_shot`
+
+How to load and parse the YAML file. This setting defaults to `one_shot`, which loads the entire
+YAML file into the parser in one go, emitting the final dictionary from the fully parsed YAML document.
+
+Setting to `streaming` will instead instruct the parser to emit one "YAML element" at a time, constructing the dictionary
+during parsing. This mode drastically reduces the amount of memory required to load or refresh the dictionary and it is also faster.
+
+Due to underlying implementation differences this mode only supports basic types such as Arrays, Objects, Strings, numbers and booleans, and does not support tags.
+
+If you have a lot of translate filters with large YAML documents consider changing this setting to `streaming` instead.
 
 [id="plugins-{type}s-{plugin}-common-options"]
 include::{include_path}/{type}.asciidoc[]
