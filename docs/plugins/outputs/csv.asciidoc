@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.10
-:release_date: 2023-12-19
-:changelog_url: https://github.com/logstash-plugins/logstash-output-csv/blob/v3.0.10/CHANGELOG.md
+:version: v3.0.11
+:release_date: 2025-10-10
+:changelog_url: https://github.com/logstash-plugins/logstash-output-csv/blob/v3.0.11/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -148,7 +148,7 @@ You can customise the line format using the `line` codec like:
 [source,ruby]
 -----
 output {
- file {
+ csv {
    path => ...
    codec => line { format => "custom format: %{message}"}
  }
