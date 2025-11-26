@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.8
-:release_date: 2020-01-21
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-split/blob/v3.1.8/CHANGELOG.md
+:version: v3.1.10
+:release_date: 2025-11-19
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-split/blob/v3.1.10/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -21,7 +21,10 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-The split filter clones an event by splitting one of its fields and
+The split filter splits multi-line messages, strings, or arrays into distinct
+events.
+
+It clones an event by splitting one of its fields and
 placing each value resulting from the split into a clone of the original
 event. The field being split can either be a string or an array.
 
