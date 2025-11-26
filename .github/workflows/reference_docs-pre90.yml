@@ -8,7 +8,7 @@ on:
       branch:
         description: 'Branch to update plugin docs'
         required: true
-        default: '8.1'
+        default: '8.19'
         type: string
 
 permissions:
