@@ -1,0 +1,380 @@
+:plugin: avro
+:type: codec
+
+///////////////////////////////////////////
+START - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+:version: v3.5.0
+:release_date: 2025-11-26
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-avro/blob/v3.5.0/CHANGELOG.md
+:include_path: ../include/6.x
+///////////////////////////////////////////
+END - GENERATED VARIABLES, DO NOT EDIT!
+///////////////////////////////////////////
+
+[id="{version}-plugins-{type}s-{plugin}"]
+
+=== Avro codec plugin {version}
+
+include::{include_path}/plugin_header.asciidoc[]
+
+==== Description
+
+Read serialized Avro records as Logstash events
+
+This plugin is used to serialize Logstash events as
+Avro datums, as well as deserializing Avro datums into
+Logstash events.
+
+[id="{version}-plugins-{type}s-{plugin}-ecs_metadata"]
+==== Event Metadata and the Elastic Common Schema (ECS)
+
+The plugin behaves the same regardless of ECS compatibility, except adding the original message to `[event][original]`.
+
+==== Encoding
+
+This codec is for serializing individual Logstash events
+as Avro datums that are Avro binary blobs. It does not encode
+Logstash events into an Avro file.
+
+
+==== Decoding
+
+This codec is for deserializing individual Avro records. It is not for reading
+Avro files. Avro files have a unique format that must be handled upon input.
+
+.Partial deserialization
+[NOTE]
+================================================================================
+Avro format is known to support partial deserialization of arbitrary fields,
+providing a schema containing a subset of the schema which was used to serialize
+the data.
+This codec *doesn't support partial deserialization of arbitrary fields*.
+Partial deserialization _might_ work only when providing a schema which contains
+the first `N` fields of the schema used to serialize the data (and
+in the same order).
+================================================================================
+
+==== Usage
+Example usage with Kafka input.
+
+[source,ruby]
+----------------------------------
+input {
+  kafka {
+    codec => avro {
+        schema_uri => "/tmp/schema.avsc"
+    }
+  }
+}
+filter {
+  ...
+}
+output {
+  ...
+}
+----------------------------------
+
+[id="{version}-plugins-{type}s-{plugin}-options"]
+==== Avro Codec Configuration Options
+
+[cols="<,<,<",options="header",]
+|=======================================================================
+|Setting |Input type|Required
+| <<{version}-plugins-{type}s-{plugin}-ecs_compatibility>> | {logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-encoding>> | {logstash-ref}/configuration-file-structure.html#string[string], one of `["binary", "base64"]`|No
+| <<{version}-plugins-{type}s-{plugin}-password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-proxy>> |{logstash-ref}/configuration-file-structure.html#uri[uri]|No
+| <<{version}-plugins-{type}s-{plugin}-schema_uri>> |{logstash-ref}/configuration-file-structure.html#string[string]|Yes
+| <<{version}-plugins-{type}s-{plugin}-ssl_certificate>> |{logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities>> |list of {logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_cipher_suites>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_enabled>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_key>> |{logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_keystore_password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_keystore_path>> |{logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_keystore_type>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_supported_protocols>> |{logstash-ref}/configuration-file-structure.html#array[array]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_truststore_password>> |{logstash-ref}/configuration-file-structure.html#password[password]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_truststore_path>> |{logstash-ref}/configuration-file-structure.html#path[path]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_truststore_type>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-ssl_verification_mode>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-tag_on_failure>> |{logstash-ref}/configuration-file-structure.html#boolean[boolean]|No
+| <<{version}-plugins-{type}s-{plugin}-target>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+| <<{version}-plugins-{type}s-{plugin}-username>> |{logstash-ref}/configuration-file-structure.html#string[string]|No
+|=======================================================================
+
+&nbsp;
+
+[id="{version}-plugins-{type}s-{plugin}-ecs_compatibility"]
+===== `ecs_compatibility`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* Supported values are:
+** `disabled`: Avro data added at root level
+** `v1`,`v8`: Elastic Common Schema compliant behavior (`[event][original]` is also added)
+
+Controls this plugin's compatibility with the {ecs-ref}[Elastic Common Schema (ECS)].
+
+[id="{version}-plugins-{type}s-{plugin}-encoding"]
+===== `encoding`
+
+* Value can be any of: `binary`, `base64`
+* Default value is `base64`
+
+Set encoding for Avro's payload.
+Use `base64` (default) to indicate that this codec sends or expects to receive base64-encoded bytes.
+
+Set this option to `binary` to indicate that this codec sends or expects to receive binary Avro data.
+
+
+[id="{version}-plugins-{type}s-{plugin}-password"]
+===== `password`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+* There is no default value for this setting.
+
+Password for HTTP basic authentication when fetching remote schemas.
+Used together with `username`.
+
+[id="{version}-plugins-{type}s-{plugin}-proxy"]
+===== `proxy`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#uri[uri]
+* There is no default value for this setting.
+
+The address of a forward HTTP proxy to use when contacting a remote schema registry.
+
+[id="{version}-plugins-{type}s-{plugin}-schema_uri"]
+===== `schema_uri`
+
+  * This is a required setting.
+  * Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+  * There is no default value for this setting.
+
+schema path to fetch the schema from.
+This can be a 'http' or 'file' scheme URI
+example:
+
+* http - `http://example.com/schema.avsc`
+* file - `/path/to/schema.avsc`
+
+[id="{version}-plugins-{type}s-{plugin}-tag_on_failure"]
+===== `tag_on_failure`
+
+  * Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+  * Default value is `false`
+
+tag events with `_avroparsefailure` when decode fails
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_certificate"]
+===== `ssl_certificate`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+* There is no default value for this setting.
+
+Path to PEM encoded certificate file for client authentication (mutual TLS).
+You may use this setting or <<{version}-plugins-{type}s-{plugin}-ssl_keystore_path>>, but not both simultaneously.
+
+*Example*
+[source,ruby]
+----------------------------------
+ssl_certificate => "/path/to/client.crt"
+----------------------------------
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_certificate_authorities"]
+===== `ssl_certificate_authorities`
+
+* Value type is a list of {logstash-ref}/configuration-file-structure.html#path[path]
+* There is no default value for this setting.
+
+Path to PEM encoded CA certificate file(s) for server verification.
+This is an alternative to using <<{version}-plugins-{type}s-{plugin}-ssl_truststore_path>>.
+You may use this setting or <<{version}-plugins-{type}s-{plugin}-ssl_truststore_path>>, but not both simultaneously.
+
+*Example*
+[source,ruby]
+----------------------------------
+ssl_certificate_authorities => ["/path/to/ca.crt"]
+----------------------------------
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_cipher_suites"]
+===== `ssl_cipher_suites`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+* There is no default value for this setting.
+
+The list of cipher suites to use, listed by priorities.
+Supported cipher suites vary depending on which version of Java is used.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_key"]
+===== `ssl_key`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+* There is no default value for this setting.
+
+Path to PEM encoded private key file for client authentication.
+Must be used together with <<{version}-plugins-{type}s-{plugin}-ssl_certificate>>.
+The private key must be unencrypted (passphrase-protected keys are not supported).
+
+*Example*
+[source,ruby]
+----------------------------------
+ssl_key => "/path/to/client.key"
+----------------------------------
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_enabled"]
+===== `ssl_enabled`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#boolean[boolean]
+* There is no default value for this setting.
+
+Enable SSL/TLS secured communication to remote schema registry.
+When using HTTPS schema URIs, SSL is automatically enabled.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_keystore_path"]
+===== `ssl_keystore_path`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+* There is no default value for this setting.
+
+The path to the JKS or PKCS12 keystore file for client certificate authentication.
+Use this when the schema registry requires mutual TLS (mTLS) authentication.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_keystore_password"]
+===== `ssl_keystore_password`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+* There is no default value for this setting.
+
+The password for the keystore file specified in <<{version}-plugins-{type}s-{plugin}-ssl_keystore_path>>.
+
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_keystore_type"]
+===== `ssl_keystore_type`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* There is no default value for this setting.
+
+The format of the keystore file. It must be either `jks` or `pkcs12`.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_supported_protocols"]
+===== `ssl_supported_protocols`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#array[array]
+* Default value is `[]` (uses Java defaults)
+* Valid values are: `TLSv1.1`, `TLSv1.2`, `TLSv1.3`
+
+List of allowed SSL/TLS protocol versions.
+When not specified, the JVM defaults are used.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_truststore_path"]
+===== `ssl_truststore_path`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#path[path]
+* There is no default value for this setting.
+
+The path to the JKS or PKCS12 truststore file containing certificates to verify
+the schema registry server's certificate.
+
+*Example*
+[source,ruby]
+----------------------------------
+input {
+  kafka {
+    codec => avro {
+        schema_uri => "https://schema-registry.example.com:8081/schemas/ids/1"
+        ssl_truststore_path => "/path/to/truststore.jks"
+        ssl_truststore_password => "${TRUSTSTORE_PASSWORD}"
+    }
+  }
+}
+----------------------------------
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_truststore_password"]
+===== `ssl_truststore_password`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#password[password]
+* There is no default value for this setting.
+
+The password for the truststore file specified in <<{version}-plugins-{type}s-{plugin}-ssl_truststore_path>>.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_truststore_type"]
+===== `ssl_truststore_type`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* There is no default value for this setting.
+
+The format of the truststore file. It must be either `jks` or `pkcs12`.
+
+[id="{version}-plugins-{type}s-{plugin}-ssl_verification_mode"]
+===== `ssl_verification_mode`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* Default value is `"full"`
+* Valid options are: `full`, `none`
+
+Options to verify the server's certificate:
+
+* `full`: Validates that the provided certificate has an issue date that's within the not_before and not_after dates; chains to a trusted Certificate Authority (CA); has a hostname or IP address that matches the names within the certificate. (recommended)
+* `none`: Performs no certificate validation. **Warning:** Disabling this severely compromises security (https://www.cs.utexas.edu/~shmat/shmat_ccs12.pdf)
+
+*Example*
+[source,ruby]
+----------------------------------
+input {
+  kafka {
+    codec => avro {
+        schema_uri => "https://schema-registry.example.com:8081/schemas/ids/1"
+        ssl_certificate_authorities => ["/path/to/ca.crt"]
+        ssl_verification_mode => "full"
+    }
+  }
+}
+----------------------------------
+
+[id="{version}-plugins-{type}s-{plugin}-target"]
+===== `target`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* There is no default value for this setting.
+* This is only relevant when decode data into an event
+
+Define the target field for placing the values. If this setting is not
+set, the Avro data will be stored at the root (top level) of the event.
+
+*Example*
+[source,ruby]
+----------------------------------
+input {
+  kafka {
+    codec => avro {
+        schema_uri => "/tmp/schema.avsc"
+        target => "[document]"
+    }
+  }
+}
+----------------------------------
+
+[id="{version}-plugins-{type}s-{plugin}-username"]
+===== `username`
+
+* Value type is {logstash-ref}/configuration-file-structure.html#string[string]
+* There is no default value for this setting.
+
+Username for HTTP basic authentication when fetching remote schemas.
+Used together with `password`.
+
+*Example*
+[source,ruby]
+----------------------------------
+input {
+  kafka {
+    codec => avro {
+        schema_uri => "https://schema-registry.example.com:8081/schemas/ids/1"
+        username => "registry_user"
+        password => "${REGISTRY_PASSWORD}"
+    }
+  }
+}
+----------------------------------
