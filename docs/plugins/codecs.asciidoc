@@ -4,7 +4,7 @@
 A codec plugin changes the data representation of an event. Codecs are essentially stream filters that can operate as part
 of an input or output.
 
-The following codec plugins are available below. For a list of Elastic supported plugins, please consult the https://www.elastic.co/support/matrix#show_logstash_plugins[Support Matrix].
+For a list of Elastic supported plugins, check out the https://www.elastic.co/support/matrix#show_logstash_plugins[Support Matrix].
 
 |=======================================================================
 | Plugin | Description | Github repository
@@ -32,6 +32,7 @@ The following codec plugins are available below. For a list of Elastic supported
 | <<plugins-codecs-netflow,netflow>> | Reads Netflow v5 and Netflow v9 data | https://github.com/logstash-plugins/logstash-codec-netflow[logstash-codec-netflow]
 | <<plugins-codecs-nmap,nmap>> | Reads Nmap data in XML format | https://github.com/logstash-plugins/logstash-codec-nmap[logstash-codec-nmap]
 | <<plugins-codecs-plain,plain>> | Reads plaintext with no delimiting between events | https://github.com/logstash-plugins/logstash-codec-plain[logstash-codec-plain]
+| <<plugins-codecs-pretty,pretty>> | Prints your event data using the Ruby Awesome Print library | https://github.com/logstash-plugins/logstash-codec-pretty[logstash-codec-pretty]
 | <<plugins-codecs-protobuf,protobuf>> | Reads protobuf messages and converts to Logstash Events | https://github.com/logstash-plugins/logstash-codec-protobuf[logstash-codec-protobuf]
 | <<plugins-codecs-rubydebug,rubydebug>> | Applies the Ruby Awesome Print library to Logstash events | https://github.com/logstash-plugins/logstash-codec-rubydebug[logstash-codec-rubydebug]
 |=======================================================================
@@ -107,6 +108,9 @@ include::codecs/nmap.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-codec-plain/edit/main/docs/index.asciidoc
 include::codecs/plain.asciidoc[]
+
+:edit_url: https://github.com/logstash-plugins/logstash-codec-pretty/edit/main/docs/index.asciidoc
+include::codecs/pretty.asciidoc[]
 
 :edit_url: https://github.com/logstash-plugins/logstash-codec-protobuf/edit/main/docs/index.asciidoc
 include::codecs/protobuf.asciidoc[]
