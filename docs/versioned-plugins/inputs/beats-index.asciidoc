@@ -5,11 +5,13 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v7.0.5-plugins-inputs-beats,v7.0.5>> | 2025-12-17
 | <<v7.0.4-plugins-inputs-beats,v7.0.4>> | 2025-10-27
 | <<v7.0.3-plugins-inputs-beats,v7.0.3>> | 2025-09-04
 | <<v7.0.2-plugins-inputs-beats,v7.0.2>> | 2025-02-12
 | <<v7.0.1-plugins-inputs-beats,v7.0.1>> | 2025-01-30
 | <<v7.0.0-plugins-inputs-beats,v7.0.0>> | 2024-12-02
+| <<v6.9.5-plugins-inputs-beats,v6.9.5>> | 2025-12-17
 | <<v6.9.4-plugins-inputs-beats,v6.9.4>> | 2025-09-04
 | <<v6.9.3-plugins-inputs-beats,v6.9.3>> | 2025-02-12
 | <<v6.9.2-plugins-inputs-beats,v6.9.2>> | 2025-02-04
@@ -101,22 +103,15 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.1.28-plugins-inputs-beats,v3.1.28>> | 2018-02-21
 | <<v3.1.27-plugins-inputs-beats,v3.1.27>> | 2018-02-12
 | <<v3.1.26-plugins-inputs-beats,v3.1.26>> | 2018-01-05
-| <<v3.1.25-plugins-inputs-beats,v3.1.25>> | 2017-12-15
-| <<v3.1.24-plugins-inputs-beats,v3.1.24>> | 2017-08-18
-| <<v3.1.23-plugins-inputs-beats,v3.1.23>> | 2017-07-12
-| <<v3.1.22-plugins-inputs-beats,v3.1.22>> | 2017-07-12
-| <<v3.1.21-plugins-inputs-beats,v3.1.21>> | 2017-06-23
-| <<v3.1.20-plugins-inputs-beats,v3.1.20>> | 2017-06-23
-| <<v3.1.19-plugins-inputs-beats,v3.1.19>> | 2017-06-22
-| <<v3.1.18-plugins-inputs-beats,v3.1.18>> | 2017-06-07
-| <<v3.1.17-plugins-inputs-beats,v3.1.17>> | 2017-06-05
 |=======================================================================
 
+include::beats-v7.0.5.asciidoc[]
 include::beats-v7.0.4.asciidoc[]
 include::beats-v7.0.3.asciidoc[]
 include::beats-v7.0.2.asciidoc[]
 include::beats-v7.0.1.asciidoc[]
 include::beats-v7.0.0.asciidoc[]
+include::beats-v6.9.5.asciidoc[]
 include::beats-v6.9.4.asciidoc[]
 include::beats-v6.9.3.asciidoc[]
 include::beats-v6.9.2.asciidoc[]
@@ -208,13 +203,4 @@ include::beats-v3.1.29.asciidoc[]
 include::beats-v3.1.28.asciidoc[]
 include::beats-v3.1.27.asciidoc[]
 include::beats-v3.1.26.asciidoc[]
-include::beats-v3.1.25.asciidoc[]
-include::beats-v3.1.24.asciidoc[]
-include::beats-v3.1.23.asciidoc[]
-include::beats-v3.1.22.asciidoc[]
-include::beats-v3.1.21.asciidoc[]
-include::beats-v3.1.20.asciidoc[]
-include::beats-v3.1.19.asciidoc[]
-include::beats-v3.1.18.asciidoc[]
-include::beats-v3.1.17.asciidoc[]
 
