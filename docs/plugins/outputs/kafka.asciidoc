@@ -9,9 +9,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.6.4
-:release_date: 2025-08-28
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.6.4/CHANGELOG.md
+:version: v11.8.1
+:release_date: 2025-12-22
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.8.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -116,6 +116,7 @@ See the https://kafka.apache.org/{kafka_client_doc}/documentation for more detai
 | <<plugins-{type}s-{plugin}-partitioner>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-receive_buffer_bytes>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-reconnect_backoff_ms>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-reconnect_backoff_max_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-request_timeout_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-retries>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-retry_backoff_ms>> |<<number,number>>|No
@@ -349,14 +350,15 @@ The max time in milliseconds before a metadata refresh is forced.
 * Value type is <<string,string>>
 * There is no default value for this setting.
 
-The default behavior is to hash the `message_key` of an event to get the partition.
-When no message key is present, the plugin picks a partition in a round-robin fashion.
+By not setting this value, the plugin uses the built-in partitioning strategy provided by the Kafka client. Read more about the "partitioner.class" on the Kafka documentation.
 
-Available options for choosing a partitioning strategy are as follows:
+Available options are as follows:
 
-* `default` use the default partitioner as described above
+* `default` hashes the `message_key` of an event to get the partition. When no message key is present, the plugin picks a partition in a round-robin fashion. Please note that this is a different strategy than the one used when `partitioner` is left unset.
 * `round_robin` distributes writes to all partitions equally, regardless of `message_key`
-* `uniform_sticky` sticks to a partition for the duration of a batch than randomly picks a new one
+* `uniform_sticky` hashes the `message_key` of an event to get the partition. When no message key is present, the plugin sticks to a partition for the duration of a batch than randomly picks a new one.
+
+NOTE: `default` and `uniform_sticky` are deprecated and will be removed in `12.0.0`.
 
 [id="plugins-{type}s-{plugin}-receive_buffer_bytes"]
 ===== `receive_buffer_bytes` 
@@ -373,6 +375,15 @@ The size of the TCP receive buffer to use when reading data
   * Default value is `50`.
 
 The amount of time to wait before attempting to reconnect to a given host when a connection fails.
+
+[id="plugins-{type}s-{plugin}-reconnect_backoff_max_ms"]
+===== `reconnect_backoff_max_ms`
+
+* Value type is <<number,number>>
+* Default value is `1000`.
+
+The maximum amount of time in milliseconds to wait when reconnecting to a broker that has repeatedly failed to connect.
+If provided, the backoff per host will increase exponentially for each consecutive connection failure, up to this maximum.
 
 [id="plugins-{type}s-{plugin}-request_timeout_ms"]
 ===== `request_timeout_ms` 
