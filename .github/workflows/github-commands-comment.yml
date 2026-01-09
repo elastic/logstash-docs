@@ -15,4 +15,4 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: elastic/oblt-actions/elastic/github-commands@91d3d272832b2ca07060f110804badc66f738c08 # v1
+      - uses: elastic/oblt-actions/elastic/github-commands@45041d3e0b65acffa44f2e0f39e15aafc024d940 # v1
