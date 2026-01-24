@@ -6,10 +6,10 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v12.0.3
-:release_date: 2025-04-17
-:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v12.0.3/CHANGELOG.md
-:include_path: ../include
+:version: v12.1.1
+:release_date: 2025-10-29
+:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v12.1.1/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -66,9 +66,10 @@ Set the value to port :443 instead.
 For more info on sending data from {ls} to {es-serverless}, check out the {serverless-docs}/elasticsearch/what-is-elasticsearch-serverless[{es-serverless} docs].
 
 [id="plugins-{type}s-{plugin}-ess"]
-==== Hosted {es} Service on Elastic Cloud
+==== {ls} to {ech}
 
-{ess-leadin}
+You can run Elasticsearch on your own hardware or use Elastic Cloud Hosted, available on AWS, GCP, and Azure.
+Try Elastic Cloud Hosted for free: https://cloud.elastic.co/registration.
 
 ==== Compatibility with the Elastic Common Schema (ECS)
 
@@ -190,7 +191,7 @@ Example:
     }
 
 
-==== Retry Policy
+==== Retry policy
 
 The retry policy has changed significantly in the 8.1.1 release.
 This plugin uses the Elasticsearch bulk API to optimize its imports into Elasticsearch. These requests may experience
@@ -223,7 +224,7 @@ Note that 409 exceptions are no longer retried. Please set a higher `retry_on_co
 It is more performant for Elasticsearch to retry these exceptions than this plugin.
 
 [id="plugins-{type}s-{plugin}-dlq-policy"]
-==== DLQ Policy
+==== DLQ policy
 
 Mapping (404) errors from Elasticsearch can lead to data loss. Unfortunately
 mapping errors cannot be handled without human intervention and without looking
@@ -231,8 +232,8 @@ at the field that caused the mapping mismatch. If the DLQ is enabled, the
 original events causing the mapping errors are stored in a file that can be
 processed at a later time. Often times, the offending field can be removed and
 re-indexed to Elasticsearch. If the DLQ is not enabled, and a mapping error
-happens, the problem is logged as a warning, and the event is dropped. See
-<<dead-letter-queues>> for more information about processing events in the DLQ.
+happens, the problem is logged as a warning, and the event is dropped. 
+Check out https://www.elastic.co/guide/en/logstash/current/dead-letter-queues.html[Dead letter queues (DLQ)] for more information about processing events in the DLQ.
 The list of error codes accepted for DLQ could be customized with <<plugins-{type}s-{plugin}-dlq_custom_codes>>
 but should be used only in motivated cases.
 
@@ -303,11 +304,16 @@ single request.
 ==== DNS Caching
 
 This plugin uses the JVM to lookup DNS entries and is subject to the value of
-https://docs.oracle.com/javase/7/docs/technotes/guides/net/properties.html[networkaddress.cache.ttl],
-a global setting for the JVM.
+https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/doc-files/net-properties.html#address-cache-heading[Address Cache settings]
+such as `networkaddress.cache.ttl` and `networkaddress.cache.negative.ttl`, global settings for the JVM.
 
 As an example, to set your DNS TTL to 1 second you would set
 the `LS_JAVA_OPTS` environment variable to `-Dnetworkaddress.cache.ttl=1`.
+
+The default value for `networkaddress.cache.ttl` depends on the JVM implementation,
+which is 30 seconds for the JDK bundled with Logstash. 
+The `networkaddress.cache.negative.ttl` setting, that controls how long Java caches
+the result of failed DNS lookups, defaults to 10 seconds.
 
 Keep in mind that a connection with keepalive enabled will
 not reevaluate its DNS value while the keepalive is in effect.
@@ -368,6 +374,7 @@ Please check out <<plugins-{type}s-{plugin}-obsolete-options>> for details.
 | <<plugins-{type}s-{plugin}-doc_as_upsert>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-document_id>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-document_type>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-drop_error_types>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-ecs_compatibility>> | <<string,string>>|No
 | <<plugins-{type}s-{plugin}-failure_type_logging_whitelist>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-healthcheck_path>> |<<string,string>>|No
@@ -638,6 +645,24 @@ If you don't set a value for this option:
 
 - for elasticsearch clusters 8.x: no value will be used;
 - for elasticsearch clusters 7.x: the value of '_doc' will be used.
+
+[id="plugins-{type}s-{plugin}-drop_error_types"]
+===== `drop_error_types`
+
+  * Value type is <<array,array>>
+  * Default value is `[]`
+
+Lists the set of error types for which individual bulk request actions will not be retried. Unless an individual - document level - action returns 409 or an error from this list, failures will be retried indefinitely.
+A warning message will be logged indicating that the action failed, unless the error type is
+listed in the <<plugins-{type}s-{plugin}-silence_errors_in_log>> config option.
+Note that the events are not added to the Dead Letter Queue (DLQ), regardless of whether it is enabled.
+
+[source,ruby]
+    output {
+      elasticsearch {
+        drop_error_types => ["index_closed_exception"]
+      }
+    }
 
 [id="plugins-{type}s-{plugin}-ecs_compatibility"]
 ===== `ecs_compatibility`
