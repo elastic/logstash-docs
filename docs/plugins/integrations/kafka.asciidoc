@@ -7,10 +7,10 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.6.3
-:release_date: 2025-06-12
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.6.3/CHANGELOG.md
-:include_path: ../include
+:version: v11.8.2
+:release_date: 2026-01-17
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.8.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

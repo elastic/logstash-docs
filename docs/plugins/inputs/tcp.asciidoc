@@ -6,10 +6,10 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v7.0.2
-:release_date: 2025-02-12
-:changelog_url: https://github.com/logstash-plugins/logstash-input-tcp/blob/v7.0.2/CHANGELOG.md
-:include_path: ../include
+:version: v7.0.4
+:release_date: 2025-12-17
+:changelog_url: https://github.com/logstash-plugins/logstash-input-tcp/blob/v7.0.4/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////

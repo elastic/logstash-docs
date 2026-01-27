@@ -6,10 +6,10 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.6
-:release_date: 2025-01-23
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-snmp/blob/v4.0.6/CHANGELOG.md
-:include_path: ../include
+:version: v4.2.1
+:release_date: 2026-01-16
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-snmp/blob/v4.2.1/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -148,6 +148,11 @@ $ smidump --level=1 -k -f python RFC1213-MIB > RFC1213-MIB.dic
 -----
 
 Note that the resulting file as output by `smidump` must have the `.dic` extension.
+
+When `mib_paths` is configured, note that the complete set of all MIBs required must be included here. Any conflicting MIBs with defaults will
+prefer the default, not the MIB configured on the `mib_paths`. The tightest control and maximal compatability can be acheived by ensuring that
+`use_provided_mibs` is set to `false` and the complete set of MIBs are included in files listed in `mib_paths`. The defaults from the old implementation
+can be found in the https://github.com/ruby-snmp/ruby-snmp/tree/master/data/ruby/snmp/mibs[ruby-snmp github repository].
 
 [id="plugins-{type}s-{plugin}-locate-mibs"]
 ===== Preventing a `failed to locate MIB module` error
