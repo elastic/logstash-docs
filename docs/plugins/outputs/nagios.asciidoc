@@ -6,10 +6,10 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.6
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-output-nagios/blob/v3.0.6/CHANGELOG.md
-:include_path: ../include
+:version: v3.0.7
+:release_date: 2026-02-11
+:changelog_url: https://github.com/logstash-plugins/logstash-output-nagios/blob/v3.0.7/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -70,7 +70,7 @@ output plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-commandfile"]
-===== `commandfile`
+===== `commandfile` 
 
   * Value type is <<string,string>>
   * Default value is `"/var/lib/nagios3/rw/nagios.cmd"`
@@ -78,7 +78,7 @@ output plugins.
 The full path to your Nagios command file.
 
 [id="plugins-{type}s-{plugin}-nagios_level"]
-===== `nagios_level`
+===== `nagios_level` 
 
   * Value can be any of: `0`, `1`, `2`, `3`
   * Default value is `"2"`
