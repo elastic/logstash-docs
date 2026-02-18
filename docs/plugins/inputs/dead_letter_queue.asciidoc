@@ -6,10 +6,10 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v2.0.1
-:release_date: 2024-09-04
-:changelog_url: https://github.com/logstash-plugins/logstash-input-dead_letter_queue/blob/v2.0.1/CHANGELOG.md
-:include_path: ../include
+:version: v2.0.2
+:release_date: 2026-01-31
+:changelog_url: https://github.com/logstash-plugins/logstash-input-dead_letter_queue/blob/v2.0.2/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -70,7 +70,7 @@ This feature requires that `commit_offsets` is set to `true`. If not, you'll get
 This feature is available in Logstash 8.4.0 and later. If this setting is `true` and and you are using a Logstash version older than 8.4.0, then you'll get a configuration error.
 
 [id="plugins-{type}s-{plugin}-commit_offsets"]
-===== `commit_offsets`
+===== `commit_offsets` 
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -78,21 +78,21 @@ This feature is available in Logstash 8.4.0 and later. If this setting is `true`
 Specifies whether this input should commit offsets as it processes the events.
 Typically you specify `false` when you want to iterate multiple times over the
 events in the dead letter queue, but don't want to save state. This is when you
-are exploring the events in the dead letter queue.
+are exploring the events in the dead letter queue. 
 
 [id="plugins-{type}s-{plugin}-path"]
-===== `path`
+===== `path` 
 
   * This is a required setting.
   * Value type is <<path,path>>
   * There is no default value for this setting.
 
 Path to the dead letter queue directory that was created by a Logstash instance.
-This is the path from which "dead" events are read and is typically configured
+This is the path from which "dead" events are read and is typically configured 
 in the original Logstash instance with the setting `path.dead_letter_queue`.
 
 [id="plugins-{type}s-{plugin}-pipeline_id"]
-===== `pipeline_id`
+===== `pipeline_id` 
 
   * Value type is <<string,string>>
   * Default value is `"main"`
@@ -100,23 +100,23 @@ in the original Logstash instance with the setting `path.dead_letter_queue`.
 ID of the pipeline whose events you want to read from.
 
 [id="plugins-{type}s-{plugin}-sincedb_path"]
-===== `sincedb_path`
+===== `sincedb_path` 
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Path of the sincedb database file (keeps track of the current position of dead letter queue) that
+Path of the sincedb database file (keeps track of the current position of dead letter queue) that 
 will be written to disk. The default will write sincedb files to `<path.data>/plugins/inputs/dead_letter_queue`.
 
 NOTE: This value must be a file path and not a directory path.
 
 [id="plugins-{type}s-{plugin}-start_timestamp"]
-===== `start_timestamp`
+===== `start_timestamp` 
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-Timestamp in ISO8601 format from when you want to start processing the events from.
+Timestamp in ISO8601 format from when you want to start processing the events from. 
 For example, `2017-04-04T23:40:37`.
 
 
