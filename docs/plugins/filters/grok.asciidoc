@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.4.3
-:release_date: 2022-10-28
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-grok/blob/v4.4.3/CHANGELOG.md
+:version: v4.4.4
+:release_date: 2026-02-11
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-grok/blob/v4.4.4/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -33,8 +33,7 @@ Logstash ships with about 120 patterns by default. You can find them here:
 <https://github.com/logstash-plugins/logstash-patterns-core/tree/master/patterns>. You can add
 your own trivially. (See the `patterns_dir` setting)
 
-If you need help building patterns to match your logs, you will find the
-<http://grokdebug.herokuapp.com> and <http://grokconstructor.appspot.com/> applications quite useful!
+If you need help building patterns to match your logs, try the {kibana-ref}/xpack-grokdebugger.html[Grok debugger] in {kib}.
 
 ===== Grok or Dissect? Or both?
 
