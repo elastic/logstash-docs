@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.2.0
-:release_date: 2023-08-22
-:changelog_url: https://github.com/logstash-plugins/logstash-output-google_pubsub/blob/v1.2.0/CHANGELOG.md
+:version: v1.2.1
+:release_date: 2026-01-31
+:changelog_url: https://github.com/logstash-plugins/logstash-output-google_pubsub/blob/v1.2.1/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
