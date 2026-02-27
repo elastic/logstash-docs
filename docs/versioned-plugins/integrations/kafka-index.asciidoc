@@ -5,10 +5,13 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v12.0.4-plugins-integrations-kafka,v12.0.4>> | 2026-01-31
 | <<v12.0.3-plugins-integrations-kafka,v12.0.3>> | 2026-01-17
 | <<v12.0.2-plugins-integrations-kafka,v12.0.2>> | 2025-12-22
 | <<v12.0.1-plugins-integrations-kafka,v12.0.1>> | 2025-10-29
 | <<v12.0.0-plugins-integrations-kafka,v12.0.0>> | 2025-10-16
+| <<v11.8.4-plugins-integrations-kafka,v11.8.4>> | 2026-02-19
+| <<v11.8.3-plugins-integrations-kafka,v11.8.3>> | 2026-02-03
 | <<v11.8.2-plugins-integrations-kafka,v11.8.2>> | 2026-01-17
 | <<v11.8.1-plugins-integrations-kafka,v11.8.1>> | 2025-12-22
 | <<v11.8.0-plugins-integrations-kafka,v11.8.0>> | 2025-10-16
@@ -65,10 +68,13 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v10.0.0-plugins-integrations-kafka,v10.0.0>> | 2019-10-15
 |=======================================================================
 
+include::kafka-v12.0.4.asciidoc[]
 include::kafka-v12.0.3.asciidoc[]
 include::kafka-v12.0.2.asciidoc[]
 include::kafka-v12.0.1.asciidoc[]
 include::kafka-v12.0.0.asciidoc[]
+include::kafka-v11.8.4.asciidoc[]
+include::kafka-v11.8.3.asciidoc[]
 include::kafka-v11.8.2.asciidoc[]
 include::kafka-v11.8.1.asciidoc[]
 include::kafka-v11.8.0.asciidoc[]
