@@ -67,6 +67,24 @@ https://kafka.apache.org/{kafka_client_doc}/documentation.html#producerconfigs
 
 NOTE:  This plugin does not support using a proxy when communicating to the Kafka broker.
 
+.Kafka timestamps and Logstash
+****
+* Kafka 3.6+ introduces stricter timestamp validation with the introduction of two new broker/topic-level properties: [log.message.timestamp.before.max.ms](https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html#message-timestamp-before-max-ms) and 
+[log.message.timestamp.after.max.ms](https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html#message-timestamp-after-max-ms).
+
+  These properties limit the time difference between the message timestamp (from Logstash) and the Kafka broker receive time. 
+  Messages can be rejected if the values are exceeded and `log.message.timestamp.type=CreateTime` is set. 
+
+  These checks are ignored if `log.message.timestamp.type=LogAppendTime` is set. 
+
+* For Kafka version 0.10.0.0+ the message creation timestamp is set by Logstash and equals the initial timestamp of the event. 
+  This behavior affects Kafka’s retention policy. 
+  For example, if a Logstash event was created two weeks ago and Kafka retention is set to seven days, then when the message arrives in Kafka today it may be discarded immediately, because its timestamp is older than seven days.
+
+  You can change this behavior by setting timestamps on message arrival instead.
+  The message is not discarded but kept for 7 more days. Set `log.message.timestamp.type` to `LogAppendTime` (default `CreateTime`) in the Kafka configuration.
+****
+
 [id="plugins-{type}s-{plugin}-aws_msk_iam_auth"]
 ==== AWS MSK IAM authentication
 If you use AWS MSK, the AWS MSK IAM access control enables you to handle both authentication and authorization for your MSK cluster with AWS IAM.
@@ -286,7 +304,7 @@ Serializer class for the key of the message
 ===== `linger_ms` 
 
   * Value type is <<number,number>>
-  * Default value is `0`
+  * Default value is `5`
 
 The producer groups together any records that arrive in between request
 transmissions into a single batched request. Normally this occurs only under
@@ -352,13 +370,9 @@ The max time in milliseconds before a metadata refresh is forced.
 
 By not setting this value, the plugin uses the built-in partitioning strategy provided by the Kafka client. Read more about the "partitioner.class" on the Kafka documentation.
 
-Available options are as follows:
+Available option is as follows:
 
-* `default` hashes the `message_key` of an event to get the partition. When no message key is present, the plugin picks a partition in a round-robin fashion. Please note that this is a different strategy than the one used when `partitioner` is left unset.
 * `round_robin` distributes writes to all partitions equally, regardless of `message_key`
-* `uniform_sticky` hashes the `message_key` of an event to get the partition. When no message key is present, the plugin sticks to a partition for the duration of a batch than randomly picks a new one.
-
-NOTE: `default` and `uniform_sticky` are deprecated and will be removed in `12.0.0`.
 
 [id="plugins-{type}s-{plugin}-receive_buffer_bytes"]
 ===== `receive_buffer_bytes` 
