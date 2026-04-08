@@ -5,10 +5,10 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.8
-:release_date: 2020-01-21
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-split/blob/v3.1.8/CHANGELOG.md
-:include_path: ../include
+:version: v3.1.10
+:release_date: 2025-11-19
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-split/blob/v3.1.10/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -21,7 +21,10 @@ include::{include_path}/plugin_header.asciidoc[]
 
 ==== Description
 
-The split filter clones an event by splitting one of its fields and
+The split filter splits multi-line messages, strings, or arrays into distinct
+events.
+
+It clones an event by splitting one of its fields and
 placing each value resulting from the split into a clone of the original
 event. The field being split can either be a string or an array.
 
@@ -79,17 +82,17 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-field"]
-===== `field`
+===== `field` 
 
   * Value type is <<string,string>>
   * Default value is `"message"`
 
-The field which value is split by the terminator.
-Can be a multiline message or the ID of an array.
+The field which value is split by the terminator.  
+Can be a multiline message or the ID of an array.  
 Nested arrays are referenced like: "[object_id][array_id]"
 
 [id="plugins-{type}s-{plugin}-target"]
-===== `target`
+===== `target` 
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -98,7 +101,7 @@ The field within the new event which the value is split into.
 If not set, the target field defaults to split field name.
 
 [id="plugins-{type}s-{plugin}-terminator"]
-===== `terminator`
+===== `terminator` 
 
   * Value type is <<string,string>>
   * Default value is `"\n"`
