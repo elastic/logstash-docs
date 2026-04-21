@@ -3,15 +3,15 @@
 :type: input
 :default_plugin: 1
 :default_codec: plain
-:kafka_client: 3.9.1
+:kafka_client: 3.9.2
 :kafka_client_doc: 39
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.8.4
-:release_date: 2026-02-19
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.8.4/CHANGELOG.md
+:version: v11.8.8
+:release_date: 2026-04-13
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.8.8/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
