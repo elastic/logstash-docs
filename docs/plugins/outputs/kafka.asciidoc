@@ -3,15 +3,15 @@
 :type: output
 :default_plugin: 1
 :default_codec: plain
-:kafka_client: 3.9.1
+:kafka_client: 3.9.2
 :kafka_client_doc: 39
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.8.4
-:release_date: 2026-02-19
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.8.4/CHANGELOG.md
+:version: v11.8.8
+:release_date: 2026-04-13
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.8.8/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -66,6 +66,24 @@ Kafka producer configuration:
 https://kafka.apache.org/{kafka_client_doc}/documentation.html#producerconfigs
 
 NOTE:  This plugin does not support using a proxy when communicating to the Kafka broker.
+
+.Kafka timestamps and Logstash
+****
+* Kafka 3.6+ introduces stricter timestamp validation with the introduction of two new broker/topic-level properties: https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html#message-timestamp-before-max-ms[log.message.timestamp.before.max.ms] and 
+https://docs.confluent.io/platform/current/installation/configuration/topic-configs.html#message-timestamp-after-max-ms[log.message.timestamp.after.max.ms].
++
+These properties limit the time difference between the message timestamp (from Logstash) and the Kafka broker receive time. 
+Messages can be rejected if the values are exceeded and `log.message.timestamp.type=CreateTime` is set. 
++
+These checks are ignored if `log.message.timestamp.type=LogAppendTime` is set. 
+
+* For Kafka version 0.10.0.0+ the message creation timestamp is set by Logstash and equals the initial timestamp of the event. 
+This behavior affects Kafka’s retention policy. 
+For example, if a Logstash event was created two weeks ago and Kafka retention is set to seven days, then when the message arrives in Kafka today it may be discarded immediately, because its timestamp is older than seven days.
++
+You can change this behavior by setting timestamps on message arrival instead.
+  The message is not discarded but kept for 7 more days. Set `log.message.timestamp.type` to `LogAppendTime` (default `CreateTime`) in your Kafka configuration.
+****
 
 [id="plugins-{type}s-{plugin}-aws_msk_iam_auth"]
 ==== AWS MSK IAM authentication
