@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v1.4.3-plugins-inputs-google_pubsub,v1.4.3>> | 2026-04-14
 | <<v1.4.2-plugins-inputs-google_pubsub,v1.4.2>> | 2026-02-06
 | <<v1.4.1-plugins-inputs-google_pubsub,v1.4.1>> | 2026-01-31
 | <<v1.4.0-plugins-inputs-google_pubsub,v1.4.0>> | 2024-10-15
@@ -20,6 +21,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v1.0.1-plugins-inputs-google_pubsub,v1.0.1>> | 2017-06-23
 |=======================================================================
 
+include::google_pubsub-v1.4.3.asciidoc[]
 include::google_pubsub-v1.4.2.asciidoc[]
 include::google_pubsub-v1.4.1.asciidoc[]
 include::google_pubsub-v1.4.0.asciidoc[]
