@@ -5,7 +5,9 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v9.4.3-plugins-filters-elastic_integration,v9.4.3>> | 2026-05-15
 | <<v9.4.2-plugins-filters-elastic_integration,v9.4.2>> | 2026-05-11
+| <<v9.3.5-plugins-filters-elastic_integration,v9.3.5>> | 2026-05-15
 | <<v9.3.4-plugins-filters-elastic_integration,v9.3.4>> | 2026-05-11
 | <<v9.3.0-plugins-filters-elastic_integration,v9.3.0>> | 2025-12-29
 | <<v9.2.0-plugins-filters-elastic_integration,v9.2.0>> | 2025-10-02
@@ -14,6 +16,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v9.0.2-plugins-filters-elastic_integration,v9.0.2>> | 2025-07-16
 | <<v9.0.1-plugins-filters-elastic_integration,v9.0.1>> | 2025-06-28
 | <<v9.0.0-plugins-filters-elastic_integration,v9.0.0>> | 2025-04-28
+| <<v8.19.6-plugins-filters-elastic_integration,v8.19.6>> | 2026-05-15
 | <<v8.19.1-plugins-filters-elastic_integration,v8.19.1>> | 2025-07-16
 | <<v8.19.0-plugins-filters-elastic_integration,v8.19.0>> | 2025-07-10
 | <<v8.18.2-plugins-filters-elastic_integration,v8.18.2>> | 2025-07-16
@@ -47,7 +50,9 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v0.0.1-plugins-filters-elastic_integration,v0.0.1>> | 2023-04-14
 |=======================================================================
 
+include::elastic_integration-v9.4.3.asciidoc[]
 include::elastic_integration-v9.4.2.asciidoc[]
+include::elastic_integration-v9.3.5.asciidoc[]
 include::elastic_integration-v9.3.4.asciidoc[]
 include::elastic_integration-v9.3.0.asciidoc[]
 include::elastic_integration-v9.2.0.asciidoc[]
@@ -56,6 +61,7 @@ include::elastic_integration-v9.1.0.asciidoc[]
 include::elastic_integration-v9.0.2.asciidoc[]
 include::elastic_integration-v9.0.1.asciidoc[]
 include::elastic_integration-v9.0.0.asciidoc[]
+include::elastic_integration-v8.19.6.asciidoc[]
 include::elastic_integration-v8.19.1.asciidoc[]
 include::elastic_integration-v8.19.0.asciidoc[]
 include::elastic_integration-v8.18.2.asciidoc[]
