@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v4.3.1-plugins-integrations-snmp,v4.3.1>> | 2026-05-20
 | <<v4.3.0-plugins-integrations-snmp,v4.3.0>> | 2026-05-19
 | <<v4.2.2-plugins-integrations-snmp,v4.2.2>> | 2026-01-31
 | <<v4.2.1-plugins-integrations-snmp,v4.2.1>> | 2026-01-16
@@ -20,6 +21,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v4.0.0-plugins-integrations-snmp,v4.0.0>> | 2024-05-03
 |=======================================================================
 
+include::snmp-v4.3.1.asciidoc[]
 include::snmp-v4.3.0.asciidoc[]
 include::snmp-v4.2.2.asciidoc[]
 include::snmp-v4.2.1.asciidoc[]
