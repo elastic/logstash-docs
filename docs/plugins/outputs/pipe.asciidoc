@@ -6,10 +6,10 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.6
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-output-pipe/blob/v3.0.6/CHANGELOG.md
-:include_path: ../include
+:version: v3.0.7
+:release_date: 2026-05-22
+:changelog_url: https://github.com/logstash-plugins/logstash-output-pipe/blob/v3.0.7/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -47,7 +47,7 @@ output plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-command"]
-===== `command`
+===== `command` 
 
   * This is a required setting.
   * Value type is <<string,string>>
@@ -55,8 +55,13 @@ output plugins.
 
 Command line to launch and pipe to
 
+NOTE: `command` is passed to `/bin/sh`, so any metacharacters
+(`;`, `|`, `>`, `&`, etc.) in field substitutions will be interpreted by the shell.
+If `command` contains such character(s), it is recommended
+to upgrade to plugin version 4.0.0 or later, which accepts `command`
+as an array and invokes the program directly bypassing shell interpretation.
 [id="plugins-{type}s-{plugin}-message_format"]
-===== `message_format`
+===== `message_format` 
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -69,7 +74,7 @@ If this setting is omitted, the full json representation of the
 event will be written as a single line.
 
 [id="plugins-{type}s-{plugin}-ttl"]
-===== `ttl`
+===== `ttl` 
 
   * Value type is <<number,number>>
   * Default value is `10`
