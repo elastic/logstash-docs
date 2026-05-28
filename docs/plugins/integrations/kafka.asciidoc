@@ -7,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.8.8
-:release_date: 2026-04-13
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.8.8/CHANGELOG.md
+:version: v11.8.9
+:release_date: 2026-05-13
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.8.9/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
