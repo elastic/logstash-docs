@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v3.3.0-plugins-outputs-udp,v3.3.0>> | 2026-05-29
 | <<v3.2.0-plugins-outputs-udp,v3.2.0>> | 2021-07-14
 | <<v3.1.0-plugins-outputs-udp,v3.1.0>> | 2019-12-17
 | <<v3.0.6-plugins-outputs-udp,v3.0.6>> | 2018-04-06
@@ -13,6 +14,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.0.3-plugins-outputs-udp,v3.0.3>> | 2017-06-23
 |=======================================================================
 
+include::udp-v3.3.0.asciidoc[]
 include::udp-v3.2.0.asciidoc[]
 include::udp-v3.1.0.asciidoc[]
 include::udp-v3.0.6.asciidoc[]
