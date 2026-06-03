@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v3.0.3-plugins-integrations-elastic_enterprise_search,v3.0.3>> | 2026-06-02
 | <<v3.0.2-plugins-integrations-elastic_enterprise_search,v3.0.2>> | 2026-03-31
 | <<v3.0.1-plugins-integrations-elastic_enterprise_search,v3.0.1>> | 2025-01-03
 | <<v3.0.0-plugins-integrations-elastic_enterprise_search,v3.0.0>> | 2023-11-07
@@ -16,6 +17,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v2.0.0-plugins-integrations-elastic_enterprise_search,v2.0.0>> | 2021-05-05
 |=======================================================================
 
+include::elastic_enterprise_search-v3.0.3.asciidoc[]
 include::elastic_enterprise_search-v3.0.2.asciidoc[]
 include::elastic_enterprise_search-v3.0.1.asciidoc[]
 include::elastic_enterprise_search-v3.0.0.asciidoc[]
