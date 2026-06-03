@@ -16,23 +16,23 @@ jobs:
     build:
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
           with:
             ref: versioned_plugin_docs
             path: logstash-docs
             persist-credentials: false
-        - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
           with:
             repository: elastic/docs
             path: docs
             persist-credentials: false
-        - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
           with:
             repository: elastic/adoc-to-md
             path: adoc-to-md
             token: ${{ secrets.ADOC_TO_MD_PAT }}
             persist-credentials: false
-        - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
           with:
             repository: elastic/asciidocalypse
             ref: main-archive
