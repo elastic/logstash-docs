@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v1.5.8-plugins-inputs-azure_event_hubs,v1.5.8>> | 2026-06-30
 | <<v1.5.7-plugins-inputs-azure_event_hubs,v1.5.7>> | 2026-05-26
 | <<v1.5.5-plugins-inputs-azure_event_hubs,v1.5.5>> | 2026-03-26
 | <<v1.5.4-plugins-inputs-azure_event_hubs,v1.5.4>> | 2026-01-21
@@ -38,6 +39,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v1.0.0-plugins-inputs-azure_event_hubs,v1.0.0>> | 2018-06-26
 |=======================================================================
 
+include::azure_event_hubs-v1.5.8.asciidoc[]
 include::azure_event_hubs-v1.5.7.asciidoc[]
 include::azure_event_hubs-v1.5.5.asciidoc[]
 include::azure_event_hubs-v1.5.4.asciidoc[]
