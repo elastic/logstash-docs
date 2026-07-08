@@ -23,6 +23,8 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.1.1-plugins-filters-fingerprint,v3.1.1>> | 2017-08-15
 | <<v3.1.0-plugins-filters-fingerprint,v3.1.0>> | 2017-08-14
 | <<v3.0.4-plugins-filters-fingerprint,v3.0.4>> | 2017-06-23
+| <<v3.0.3-plugins-filters-fingerprint,v3.0.3>> | 2017-04-28
+| <<v3.0.2-plugins-filters-fingerprint,v3.0.2>> | 2016-07-14
 |=======================================================================
 
 include::fingerprint-v3.5.0.asciidoc[]
@@ -43,4 +45,6 @@ include::fingerprint-v3.1.2.asciidoc[]
 include::fingerprint-v3.1.1.asciidoc[]
 include::fingerprint-v3.1.0.asciidoc[]
 include::fingerprint-v3.0.4.asciidoc[]
+include::fingerprint-v3.0.3.asciidoc[]
+include::fingerprint-v3.0.2.asciidoc[]
 

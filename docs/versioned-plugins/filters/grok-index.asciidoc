@@ -23,6 +23,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v3.4.3-plugins-filters-grok,v3.4.3>> | 2017-08-15
 | <<v3.4.2-plugins-filters-grok,v3.4.2>> | 2017-06-23
 | <<v3.4.1-plugins-filters-grok,v3.4.1>> | 2017-05-10
+| <<v3.4.0-plugins-filters-grok,v3.4.0>> | 2017-03-01
 |=======================================================================
 
 include::grok-v4.4.4.asciidoc[]
@@ -43,4 +44,5 @@ include::grok-v3.4.4.asciidoc[]
 include::grok-v3.4.3.asciidoc[]
 include::grok-v3.4.2.asciidoc[]
 include::grok-v3.4.1.asciidoc[]
+include::grok-v3.4.0.asciidoc[]
 
