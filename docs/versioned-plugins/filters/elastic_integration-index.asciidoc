@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v9.5.0-plugins-filters-elastic_integration,v9.5.0>> | 2026-07-09
 | <<v9.4.4-plugins-filters-elastic_integration,v9.4.4>> | 2026-06-30
 | <<v9.4.3-plugins-filters-elastic_integration,v9.4.3>> | 2026-05-15
 | <<v9.4.2-plugins-filters-elastic_integration,v9.4.2>> | 2026-05-11
@@ -53,6 +54,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v0.0.1-plugins-filters-elastic_integration,v0.0.1>> | 2023-04-14
 |=======================================================================
 
+include::elastic_integration-v9.5.0.asciidoc[]
 include::elastic_integration-v9.4.4.asciidoc[]
 include::elastic_integration-v9.4.3.asciidoc[]
 include::elastic_integration-v9.4.2.asciidoc[]
