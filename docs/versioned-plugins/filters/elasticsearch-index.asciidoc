@@ -13,6 +13,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v4.1.1-plugins-filters-elasticsearch,v4.1.1>> | 2025-03-17
 | <<v4.1.0-plugins-filters-elasticsearch,v4.1.0>> | 2025-01-23
 | <<v4.0.0-plugins-filters-elasticsearch,v4.0.0>> | 2025-01-10
+| <<v3.19.1-plugins-filters-elasticsearch,v3.19.1>> | 2026-07-17
 | <<v3.19.0-plugins-filters-elasticsearch,v3.19.0>> | 2025-07-21
 | <<v3.18.0-plugins-filters-elasticsearch,v3.18.0>> | 2025-05-07
 | <<v3.17.1-plugins-filters-elasticsearch,v3.17.1>> | 2025-03-17
@@ -59,6 +60,7 @@ include::elasticsearch-v4.2.0.asciidoc[]
 include::elasticsearch-v4.1.1.asciidoc[]
 include::elasticsearch-v4.1.0.asciidoc[]
 include::elasticsearch-v4.0.0.asciidoc[]
+include::elasticsearch-v3.19.1.asciidoc[]
 include::elasticsearch-v3.19.0.asciidoc[]
 include::elasticsearch-v3.18.0.asciidoc[]
 include::elasticsearch-v3.17.1.asciidoc[]
