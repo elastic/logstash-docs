@@ -5,9 +5,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v9.3.5
-:release_date: 2026-05-15
-:changelog_url: https://github.com/elastic/logstash-filter-elastic_integration/blob/v9.3.5/CHANGELOG.md
+:version: v9.3.7
+:release_date: 2026-07-14
+:changelog_url: https://github.com/elastic/logstash-filter-elastic_integration/blob/v9.3.7/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
