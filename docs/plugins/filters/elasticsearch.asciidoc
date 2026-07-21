@@ -142,6 +142,7 @@ The following is a basic {esql} query that sets the food name to transaction eve
       elasticsearch {
         hosts => [ 'https://..']
         api_key => '....'
+        query_type => "esql"
         query => '
           FROM food-index
             | WHERE id == ?food_id
