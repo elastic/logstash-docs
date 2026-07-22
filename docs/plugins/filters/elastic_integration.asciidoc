@@ -5,10 +5,10 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v9.0.0
-:release_date: 2025-04-28
-:changelog_url: https://github.com/elastic/logstash-filter-elastic_integration/blob/v9.0.0/CHANGELOG.md
-include_path: ../include
+:version: v9.5.1
+:release_date: 2026-07-13
+:changelog_url: https://github.com/elastic/logstash-filter-elastic_integration/blob/v9.5.1/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -19,7 +19,7 @@ END - GENERATED VARIABLES, DO NOT EDIT!
 
 === {elastic-integration-name} filter plugin
 
-include::{include_path}/plugin_header.asciidoc[]
+include::{include_path}/plugin_header-nonstandard.asciidoc[]
 
 .Elastic Enterprise License
 ****
@@ -307,6 +307,8 @@ For further guidance, we recommend exploring {fleet-guide}/integrations.html[Man
 [ingest-pipeline-creation-errors]
 ===== Ingest Pipeline Creation Errors
 
+- unsupported processor
+
 If you encounter `failed to create ingest pipeline {pipeline-name} from pipeline configuration` error messages, it indicates that the plugin is unable to create an ingest pipeline from the resolved pipeline configuration.
 This issue typically arises when the pipeline configuration contains unsupported or invalid processor(s) that the plugin cannot execute.
 In such situations, the log output includes information about the issue.
@@ -321,6 +323,25 @@ For example, the following error message indicating `inference` processor in the
   ----
 
 For further guidance, we recommend exploring {fleet-guide}/integrations.html[Manage Elastic Agent Integrations], {es} {ref}/ingest.html#handling-pipeline-failures[Handling pipeline failures] resources.
+
+- version compatibility
+
+Since {plugin} plugin embeds {es} ingest node components, there are situations where {es} introduces breaking changes that affect older plugin versions.
+A notable example is {es} 9.2, which added new fields (`created_date_millis`, `modified_date_millis`) to the ingest pipeline model.
+When a plugin version built for {es} <9.2 (e.g. v8.19.1 or v9.1.0) connects to {es} 9.2 or later, pipelines fetched from {es} may include these new parameters that the embedded ingest components do not recognize, causing pipeline creation to fail.
+
+  [source]
+  ----
+  [2026-02-25T07:56:20,091][ERROR][co.elastic.logstash.filters.elasticintegration.IngestPipelineFactory][main][es_integ_filter] failed to create ingest pipeline `logs-panw.panos-5.4.1` from pipeline configuration
+  org.elasticsearch.ElasticsearchParseException: pipeline [logs-panw.panos-5.4.1] doesn't support one or more provided configuration parameters [created_date_millis, modified_date_millis]
+  	at org.elasticsearch.ingest.Pipeline.create(Pipeline.java:111) ~[logstash-filter-elastic_integration-8.19.1.jar:?]
+  	at co.elastic.logstash.filters.elasticintegration.IngestPipelineFactory.create(IngestPipelineFactory.java:49) ~[logstash-filter-elastic_integration-8.19.1.jar:?]
+  	at co.elastic.logstash.filters.elasticintegration.SimpleIngestPipelineResolver.lambda$resolve$0(SimpleIngestPipelineResolver.java:60) ~[logstash-filter-elastic_integration-8.19.1.jar:?]
+  	at java.util.Optional.flatMap(Optional.java:289) ~[?:?]
+  ----
+
+*Resolution:* When connecting to {es} 9.2 or newer, update {plugin} plugin to at least v9.2 to ensure compatibility with the updated ingest pipeline model.
+For more details, see https://github.com/elastic/logstash-filter-elastic_integration/issues/409[GitHub issue #409] and the related {es} change in https://github.com/elastic/elasticsearch/pull/130847[elastic/elasticsearch#130847].
 
 [ingest-pipeline-execution-errors]
 ===== Ingest Pipeline Execution Errors
@@ -361,6 +382,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-hosts>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-password>> | <<password,password>>|No
 | <<plugins-{type}s-{plugin}-pipeline_name>> | <<string,string>>|No
+| <<plugins-{type}s-{plugin}-proxy>> | <<uri,uri>>|No
 | <<plugins-{type}s-{plugin}-ssl_certificate>> | <<path,path>>|No
 | <<plugins-{type}s-{plugin}-ssl_certificate_authorities>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-ssl_enabled>> | <<boolean,boolean>>|No
@@ -494,6 +516,16 @@ A password when using HTTP Basic Authentication to connect to {es}.
 * There is no default value for this setting.
 * When present, the event's initial pipeline will _not_ be auto-detected from the event's data stream fields.
 * Value may be a {logstash-ref}/event-dependent-configuration.html#sprintf[sprintf-style] template; if any referenced fields cannot be resolved the event will not be routed to an ingest pipeline.
+
+[id="plugins-{type}s-{plugin}-proxy"]
+===== `proxy`
+
+* Value type is <<uri,uri>>
+* There is no default value for this setting.
+
+Address of the HTTP forward proxy used to connect to the {es} cluster.
+An empty string is treated as if proxy was not set.
+Environment variables may be used to set this value, e.g. `proxy => '${LS_PROXY:}'`.
 
 [id="plugins-{type}s-{plugin}-ssl_certificate"]
 ===== `ssl_certificate`

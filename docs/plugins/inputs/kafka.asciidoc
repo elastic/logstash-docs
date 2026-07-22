@@ -3,16 +3,16 @@
 :type: input
 :default_plugin: 1
 :default_codec: plain
-:kafka_client: 3.9.1
-:kafka_client_doc: 39
+:kafka_client: 4.2.0
+:kafka_client_doc: 42
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.6.3
-:release_date: 2025-06-12
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v11.6.3/CHANGELOG.md
-:include_path: ../include
+:version: v12.1.5
+:release_date: 2026-07-06
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-kafka/blob/v12.1.5/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -133,6 +133,7 @@ See the https://kafka.apache.org/{kafka_client_doc}/documentation for more detai
 | <<plugins-{type}s-{plugin}-fetch_min_bytes>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-group_id>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-group_instance_id>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-group_protocol>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-heartbeat_interval_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-isolation_level>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-jaas_path>> |a valid filesystem path|No
@@ -146,6 +147,7 @@ See the https://kafka.apache.org/{kafka_client_doc}/documentation for more detai
 | <<plugins-{type}s-{plugin}-poll_timeout_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-receive_buffer_bytes>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-reconnect_backoff_ms>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-reconnect_backoff_max_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-request_timeout_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-retry_backoff_ms>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-sasl_client_callback_handler_class>> |<<string,string>>|No
@@ -210,6 +212,7 @@ What to do when there is no initial offset in Kafka or if an offset is out of ra
 
 * earliest: automatically reset the offset to the earliest offset
 * latest: automatically reset the offset to the latest offset
+* by_duration:<duration>: automatically reset the offset to a configured duration from the current timestamp. The duration must be specified in ISO 8601 format (PnDTnHnMn.nS). Negative durations are not allowed. For example, `by_duration:PT1H` resets to 1 hour ago. Available since Apache Kafka 4.0.0.
 * none: throw exception to the consumer if no previous offset is found for the consumer's group
 * anything else: throw exception to the consumer.
 
@@ -412,6 +415,21 @@ You can set this value to use information such as a hostname, an IP, or anything
 NOTE: In cases when multiple threads are configured and `consumer_threads` is greater than one, a suffix is appended to
 the `group_instance_id` to avoid collisions.
 
+[id="plugins-{type}s-{plugin}-group_protocol"]
+===== `group_protocol`
+
+* Value can be either of: `classic`, `consumer`
+* Default value is `classic`.
+
+Specifies the consumer group rebalance protocol used by the Kafka client.
+
+`classic` is the default protocol. During a rebalance, all consumer instances pause message processing until partition assignments are complete.
+
+`consumer` is an incremental rebalance protocol introduced in Kafka 4. It avoids global synchronization barriers by only pausing partitions that are reassigned.
+When using `consumer`, the following settings **cannot be configured**:
+`partition_assignment_strategy`, `heartbeat_interval_ms`, and `session_timeout_ms`.
+
+
 [id="plugins-{type}s-{plugin}-heartbeat_interval_ms"]
 ===== `heartbeat_interval_ms` 
 
@@ -561,6 +579,15 @@ The size of the TCP receive buffer (SO_RCVBUF) to use when reading data.
 The amount of time to wait before attempting to reconnect to a given host.
 This avoids repeatedly connecting to a host in a tight loop.
 This backoff applies to all requests sent by the consumer to the broker.
+
+[id="plugins-{type}s-{plugin}-reconnect_backoff_max_ms"]
+===== `reconnect_backoff_max_ms`
+
+* Value type is <<number,number>>
+* Default value is `1000` milliseconds.
+
+The maximum amount of time in milliseconds to wait when reconnecting to a broker that has repeatedly failed to connect.
+If provided, the backoff per host will increase exponentially for each consecutive connection failure, up to this maximum.
 
 [id="plugins-{type}s-{plugin}-request_timeout_ms"]
 ===== `request_timeout_ms` 

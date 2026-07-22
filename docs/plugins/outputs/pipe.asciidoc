@@ -1,15 +1,15 @@
 :plugin: pipe
 :type: output
-:default_plugin: 1
+:default_plugin: 0
 :default_codec: plain
 
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.0.6
-:release_date: 2018-04-06
-:changelog_url: https://github.com/logstash-plugins/logstash-output-pipe/blob/v3.0.6/CHANGELOG.md
-:include_path: ../include
+:version: v4.0.0
+:release_date: 2026-05-22
+:changelog_url: https://github.com/logstash-plugins/logstash-output-pipe/blob/v4.0.0/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -36,7 +36,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 [cols="<,<,<",options="header",]
 |=======================================================================
 |Setting |Input type|Required
-| <<plugins-{type}s-{plugin}-command>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-command>> |<<array,array>>|Yes
 | <<plugins-{type}s-{plugin}-message_format>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-ttl>> |<<number,number>>|No
 |=======================================================================
@@ -50,10 +50,21 @@ output plugins.
 ===== `command`
 
   * This is a required setting.
-  * Value type is <<string,string>>
+  * Value type is <<array,array>>
   * There is no default value for this setting.
 
-Command line to launch and pipe to
+Command line to launch and pipe to.
+
+Example:
+
+[source,ruby]
+----
+output {
+  pipe {
+    command => ["tee", "-a", "/tmp/logstash-%{host}.log"]
+  }
+}
+----
 
 [id="plugins-{type}s-{plugin}-message_format"]
 ===== `message_format`
