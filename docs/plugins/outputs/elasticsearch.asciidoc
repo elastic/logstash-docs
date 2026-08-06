@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v11.22.16
-:release_date: 2026-07-06
-:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v11.22.16/CHANGELOG.md
+:version: v11.22.17
+:release_date: 2026-07-17
+:changelog_url: https://github.com/logstash-plugins/logstash-output-elasticsearch/blob/v11.22.17/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -459,8 +459,12 @@ For more details on actions, check out the {ref}/docs-bulk.html[Elasticsearch bu
 Authenticate using Elasticsearch API key.
 Note that this option also requires SSL/TLS, which can be enabled by supplying a <<plugins-{type}s-{plugin}-cloud_id>>, a list of HTTPS <<plugins-{type}s-{plugin}-hosts>>, or by setting <<plugins-{type}s-{plugin}-ssl,`ssl_enabled => true`>>.
 
-Format is `id:api_key` where `id` and `api_key` are as returned by the
-Elasticsearch {ref}/security-api-create-api-key.html[Create API key API].
+The format is `id:api_key`, where `id` and `api_key` are as returned by the
+Elasticsearch
+{ref}/security-api-create-api-key.html[Create
+API key API]. The base64-encoded form of that pair is also accepted, as is an
+https://www.elastic.co/docs/deploy-manage/api-keys/elastic-cloud-api-keys[Elastic Cloud API key]
+(prefixed with `essu_`), which is used as-is.
 
 [id="plugins-{type}s-{plugin}-bulk_path"]
 ===== `bulk_path`

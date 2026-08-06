@@ -6,9 +6,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.10.9
-:release_date: 2026-06-15
-:changelog_url: https://github.com/logstash-plugins/logstash-input-http/blob/v3.10.9/CHANGELOG.md
+:version: v3.10.11
+:release_date: 2026-07-29
+:changelog_url: https://github.com/logstash-plugins/logstash-input-http/blob/v3.10.11/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -28,6 +28,14 @@ Logstash will convert it into an event for subsequent processing. Users
 can pass plain text, JSON, or any formatted data and use a corresponding codec with this
 input. For Content-Type `application/json` the `json` codec is used, but for all other
 data formats, `plain` codec is used.
+If the `Content-type` header also defines a charset like in:
+
+[source,text]
+-----
+curl -X POST -H 'Content-Type: application/json; charset=ISO-8859-1'
+-----
+
+then that charset is used to decode the request body. Else UTF-8 is applied.
 
 This input can also be used to receive webhook requests to integrate with other services
 and applications. By taking advantage of the vast plugin ecosystem available in Logstash
