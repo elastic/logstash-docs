@@ -7,9 +7,9 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v5.6.4
-:release_date: 2026-07-21
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-jdbc/blob/v5.6.4/CHANGELOG.md
+:version: v5.6.6
+:release_date: 2026-08-27
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-jdbc/blob/v5.6.6/CHANGELOG.md
 :include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
@@ -84,6 +84,10 @@ before retrieving more results from the result-set. This is configured in
 this plugin using the `jdbc_fetch_size` configuration option. No fetch size
 is set by default in this plugin, so the specific driver's default size will
 be used.
+NOTE: 
+Each driver JDBC driver and backend has its own requirements for using server-side cursors.
+Before using `jdbc_fetch_size`, check your driver's manual.
+For example, the MySQL driver requires explicit opt-in via `useCursorFetch=true`, while the PostgreSQL driver simply requires that the fetch size is a positive integer.
 
 ==== Usage:
 
