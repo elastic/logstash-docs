@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v7.4.4-plugins-outputs-rabbitmq,v7.4.4>> | 2026-09-29
 | <<v7.4.3-plugins-outputs-rabbitmq,v7.4.3>> | 2026-09-21
 | <<v7.4.2-plugins-outputs-rabbitmq,v7.4.2>> | 2026-09-21
 | <<v7.4.1-plugins-outputs-rabbitmq,v7.4.1>> | 2025-11-04
@@ -32,6 +33,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v4.0.8-plugins-outputs-rabbitmq,v4.0.8>> | 2017-06-23
 |=======================================================================
 
+include::rabbitmq-v7.4.4.asciidoc[]
 include::rabbitmq-v7.4.3.asciidoc[]
 include::rabbitmq-v7.4.2.asciidoc[]
 include::rabbitmq-v7.4.1.asciidoc[]
