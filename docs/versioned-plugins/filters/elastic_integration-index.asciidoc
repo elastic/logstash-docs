@@ -5,6 +5,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 
 |=======================================================================
 | Version | Release Date
+| <<v9.5.7-plugins-filters-elastic_integration,v9.5.7>> | 2026-10-20
 | <<v9.5.6-plugins-filters-elastic_integration,v9.5.6>> | 2026-10-19
 | <<v9.5.5-plugins-filters-elastic_integration,v9.5.5>> | 2026-10-06
 | <<v9.5.4-plugins-filters-elastic_integration,v9.5.4>> | 2026-08-31
@@ -12,6 +13,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v9.5.2-plugins-filters-elastic_integration,v9.5.2>> | 2026-07-21
 | <<v9.5.1-plugins-filters-elastic_integration,v9.5.1>> | 2026-07-13
 | <<v9.5.0-plugins-filters-elastic_integration,v9.5.0>> | 2026-07-09
+| <<v9.4.11-plugins-filters-elastic_integration,v9.4.11>> | 2026-10-20
 | <<v9.4.10-plugins-filters-elastic_integration,v9.4.10>> | 2026-10-19
 | <<v9.4.9-plugins-filters-elastic_integration,v9.4.9>> | 2026-10-06
 | <<v9.4.8-plugins-filters-elastic_integration,v9.4.8>> | 2026-08-31
@@ -33,6 +35,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v9.0.2-plugins-filters-elastic_integration,v9.0.2>> | 2025-07-16
 | <<v9.0.1-plugins-filters-elastic_integration,v9.0.1>> | 2025-06-28
 | <<v9.0.0-plugins-filters-elastic_integration,v9.0.0>> | 2025-04-28
+| <<v8.19.13-plugins-filters-elastic_integration,v8.19.13>> | 2026-10-20
 | <<v8.19.12-plugins-filters-elastic_integration,v8.19.12>> | 2026-10-19
 | <<v8.19.11-plugins-filters-elastic_integration,v8.19.11>> | 2026-10-06
 | <<v8.19.10-plugins-filters-elastic_integration,v8.19.10>> | 2026-08-27
@@ -73,6 +76,7 @@ include::{include_path}/version-list-intro.asciidoc[]
 | <<v0.0.1-plugins-filters-elastic_integration,v0.0.1>> | 2023-04-14
 |=======================================================================
 
+include::elastic_integration-v9.5.7.asciidoc[]
 include::elastic_integration-v9.5.6.asciidoc[]
 include::elastic_integration-v9.5.5.asciidoc[]
 include::elastic_integration-v9.5.4.asciidoc[]
@@ -80,6 +84,7 @@ include::elastic_integration-v9.5.3.asciidoc[]
 include::elastic_integration-v9.5.2.asciidoc[]
 include::elastic_integration-v9.5.1.asciidoc[]
 include::elastic_integration-v9.5.0.asciidoc[]
+include::elastic_integration-v9.4.11.asciidoc[]
 include::elastic_integration-v9.4.10.asciidoc[]
 include::elastic_integration-v9.4.9.asciidoc[]
 include::elastic_integration-v9.4.8.asciidoc[]
@@ -101,6 +106,7 @@ include::elastic_integration-v9.1.0.asciidoc[]
 include::elastic_integration-v9.0.2.asciidoc[]
 include::elastic_integration-v9.0.1.asciidoc[]
 include::elastic_integration-v9.0.0.asciidoc[]
+include::elastic_integration-v8.19.13.asciidoc[]
 include::elastic_integration-v8.19.12.asciidoc[]
 include::elastic_integration-v8.19.11.asciidoc[]
 include::elastic_integration-v8.19.10.asciidoc[]
