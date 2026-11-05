@@ -6,10 +6,10 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.2.0
-:release_date: 2021-07-14
-:changelog_url: https://github.com/logstash-plugins/logstash-output-udp/blob/v3.2.0/CHANGELOG.md
-:include_path: ../include
+:version: v3.3.0
+:release_date: 2026-05-29
+:changelog_url: https://github.com/logstash-plugins/logstash-output-udp/blob/v3.3.0/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -53,16 +53,17 @@ output plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-host"]
-===== `host`
+===== `host` 
 
   * This is a required setting.
   * Value type is <<string,string>>
   * There is no default value for this setting.
 
-The address to send messages to
+The address to send messages to.
+The address should be either a literal IPv4 or IPv6 address, or a hostname that resolves to one.
 
 [id="plugins-{type}s-{plugin}-port"]
-===== `port`
+===== `port` 
 
   * This is a required setting.
   * Value type is <<string,string>>

@@ -7,10 +7,10 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v7.2.1
-:release_date: 2025-02-13
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-aws/blob/v7.2.1/CHANGELOG.md
-:include_path: ../include
+:version: v7.3.4
+:release_date: 2026-03-13
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-aws/blob/v7.3.4/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -63,6 +63,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-backup_to_bucket>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-backup_to_dir>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-bucket>> |<<string,string>>|Yes
+| <<plugins-{type}s-{plugin}-cutoff_second>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-delete>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-ecs_compatibility>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-endpoint>> |<<string,string>>|No
@@ -178,6 +179,16 @@ Path of a local directory to backup processed files to.
   * There is no default value for this setting.
 
 The name of the S3 bucket.
+
+[id="plugins-{type}s-{plugin}-cutoff_second"]
+===== `cutoff_second` 
+
+  * Value type is <<number,number>>
+  * Default value is `3`
+
+The time window used to detect recently modified S3 objects. 
+Objects modified within this cutoff period will be processed the next time the file list is checked (relates to <<plugins-{type}s-{plugin}-interval>>).
+Value is in seconds.
 
 [id="plugins-{type}s-{plugin}-delete"]
 ===== `delete` 

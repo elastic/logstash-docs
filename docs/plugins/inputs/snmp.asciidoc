@@ -7,10 +7,10 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v4.0.6
-:release_date: 2025-01-23
-:changelog_url: https://github.com/logstash-plugins/logstash-integration-snmp/blob/v4.0.6/CHANGELOG.md
-:include_path: ../include
+:version: v4.5.0
+:release_date: 2026-10-08
+:changelog_url: https://github.com/logstash-plugins/logstash-integration-snmp/blob/v4.5.0/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -76,15 +76,20 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-ecs_compatibility>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-get>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-hosts>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-allow_partial_response>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-interval>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-local_engine_id>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-map_enum_values>> |<<boolean,boolean>>|No
+| <<plugins-{type}s-{plugin}-max_repetitions>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-mib_paths>> |<<path,path>>|No
 | <<plugins-{type}s-{plugin}-oid_mapping_format>> |<<string,string>>, one of `["default", "ruby_snmp", "dotted_string"]`|No
 | <<plugins-{type}s-{plugin}-oid_map_field_values>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-oid_path_length>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-oid_root_skip>> |<<number,number>>|No
 | <<plugins-{type}s-{plugin}-poll_hosts_timeout>> |<<number,number>>|No
+| <<plugins-{type}s-{plugin}-tag_on_failure>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-walk>> |<<array,array>>|No
+| <<plugins-{type}s-{plugin}-split_tables>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-tables>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-target>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-threads>> |<<number,number>>|No
@@ -101,7 +106,7 @@ This plugin supports the following SNMPv3 authentication options.
 | <<plugins-{type}s-{plugin}-auth_pass>> |<<password,password>>|No
 | <<plugins-{type}s-{plugin}-auth_protocol>> |<<string,string>>, one of `["md5", "sha", "sha2", "hmac128sha224", "hmac192sha256", "hmac256sha384", "hmac384sha512"]`|No
 | <<plugins-{type}s-{plugin}-priv_pass>> |<<password,password>>|No
-| <<plugins-{type}s-{plugin}-priv_protocol>> |<<string,string>>, one of `["des", "3des", "aes", "aes128", "aes192", "aes256"]`|No
+| <<plugins-{type}s-{plugin}-priv_protocol>> |<<string,string>>, one of `["des", "3des", "aes", "aes128", "aes192", "aes256", "aes256with3desKey"]`|No
 | <<plugins-{type}s-{plugin}-security_level>> |<<string,string>>, one of `["noAuthNoPriv", "authNoPriv", "authPriv"]`|No
 | <<plugins-{type}s-{plugin}-security_name>> |<<string,string>>|No
 |=======================================================================
@@ -216,6 +221,41 @@ If polling all configured hosts takes longer than this interval, a warning will 
 The SNMPv3 local engine ID. Its length must be greater or equal than 5 and less or equal than 32.
 If not provided, a default ID is generated based on the local IP address and additional four random bytes.
 
+[id="plugins-{type}s-{plugin}-max_repetitions"]
+===== `max_repetitions`
+
+  * Value type is <<number,number>>
+  * Default value is `10`
+
+The `max_repetitions` option sets the max-repetitions field in GETBULK PDUs used by `walk` and `table` operations.
+This value controls how many OID rows are returned in each GETBULK response from the SNMP agent.
+
+A smaller value may help avoid timeouts when polling devices with large tables or limited resources.
+A larger value can improve performance by reducing the number of round trips needed to retrieve a full table.
+
+If not set, the SNMP4J library default of `10` is used.
+
+Example
+[source,ruby]
+-----
+input {
+  snmp {
+    walk => ["1.3.6.1.2.1.2.2"]
+    hosts => [{host => "udp:127.0.0.1/161" community => "public"}]
+    max_repetitions => 5
+  }
+}
+-----
+
+[id="plugins-{type}s-{plugin}-map_enum_values"]
+===== `map_enum_values`
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+When enabled, integer values that have a named-number (enum) definition in the loaded MIBs
+are replaced with their textual name (for example, `ifOperStatus` `1` becomes `"up"`).
+
 [id="plugins-{type}s-{plugin}-mib_paths"]
 ===== `mib_paths`
 
@@ -309,12 +349,79 @@ Queries the subtree of information starting at the given OID(s).
 Example
 [source,ruby]
 -----
+input {
   snmp {
     walk => ["1.3.6.1.2.1.1"]
     hosts => [{host => "udp:127.0.0.1/161" community => "public"}]
   }
 }
 -----
+
+[id="plugins-{type}s-{plugin}-allow_partial_response"]
+===== `allow_partial_response`
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+When enabled, the event keeps data from partially failed `walk` or `table` operations. By default, it only includes data from fully successful operations.
+
+When a `walk` or `table` traversal encounters an error mid-way through, the SNMP agent may have already returned
+some valid data before the failure. With `allow_partial_response => true`, this data is included in the event.
+The event will still be tagged with <<plugins-{type}s-{plugin}-tag_on_failure>> to indicate that an error occurred.
+
+Example
+[source,ruby]
+-----
+input {
+  snmp {
+    walk => ["1.3.6.1.2.1.2.2"]
+    hosts => [{host => "udp:127.0.0.1/161" community => "public"}]
+    allow_partial_response => true
+  }
+}
+-----
+
+[id="plugins-{type}s-{plugin}-tag_on_failure"]
+===== `tag_on_failure`
+
+  * Value type is <<array,array>>
+  * Default value is `["_snmpfailure"]`
+
+Tags the event when one or more SNMP operations fail for a host.
+This can happen due to timeouts, unreachable hosts, or errors during `get`, `walk`, or `table` operations.
+Detailed error information is logged at ERROR level.
+
+Example
+[source,ruby]
+-----
+input {
+  snmp {
+    get => ["1.3.6.1.2.1.1.1.0"]
+    hosts => [{host => "udp:127.0.0.1/161" community => "public"}]
+    tag_on_failure => ["_snmpfailure"]
+  }
+}
+
+filter {
+  if "_snmpfailure" in [tags] {
+    # handle failed or partial SNMP responses
+  }
+}
+-----
+
+[id="plugins-{type}s-{plugin}-split_tables"]
+===== `split_tables`
+
+  * Value type is <<boolean,boolean>>
+  * Default value is `false`
+
+When enabled, each <<plugins-{type}s-{plugin}-tables>> row is emitted as its own event
+instead of a single aggregated event. This is equivalent to using a `split` filter on the table
+field.
+
+The `get` and `walk` fields from the same poll are copied onto every row event. Keep them to
+device-level values, such as the `system` group. Walking table data (for example `ifTable`)
+alongside `split_tables` copies every row's walked values onto every row event.
 
 [id="plugins-{type}s-{plugin}-tables"]
 ===== `tables`
@@ -413,11 +520,17 @@ The `priv_pass` option specifies the SNMPv3 encryption password.
 [id="plugins-{type}s-{plugin}-priv_protocol"]
 ===== `priv_protocol`
 
-  * Value can be any of: `des`, `3des`, `aes`, `aes128`, `aes192`, `aes256`
+  * Value can be any of: `des`, `3des`, `aes`, `aes128`, `aes192`, `aes256`, `aes256with3desKey`
   * Note that `aes` and `aes128` are equivalent
   * There is no default value for this setting
 
 The `priv_protocol` option specifies the SNMPv3 privacy/encryption protocol.
+
+.Technical Preview
+****
+The `aes256with3desKey` feature that allows using AES256 with 3DES key extension for `priv_protocol` is in Technical Preview.
+Configuration option and implementation details are subject to change in minor releases without being preceded by deprecation warnings.
+****
 
 [id="plugins-{type}s-{plugin}-security_level"]
 ===== `security_level`
