@@ -5,10 +5,10 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.0
-:release_date: 2021-08-04
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-edn/blob/v3.1.0/CHANGELOG.md
-:include_path: ../include
+:version: v3.1.1
+:release_date: 2026-08-12
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-edn/blob/v3.1.1/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -54,3 +54,5 @@ For example, if you want data to be put under the `document` field:
         }
       }
     }
+
+

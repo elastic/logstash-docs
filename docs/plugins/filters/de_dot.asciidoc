@@ -5,10 +5,10 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v1.1.0
-:release_date: 2024-05-27
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-de_dot/blob/v1.1.0/CHANGELOG.md
-:include_path: ../include
+:version: v1.2.0
+:release_date: 2026-04-28
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-de_dot/blob/v1.2.0/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -40,6 +40,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-nested>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-recursive>> |<<boolean,boolean>>|No
 | <<plugins-{type}s-{plugin}-separator>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-tag_on_failure>> |<<string,string>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -48,7 +49,7 @@ filter plugins.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-fields"]
-===== `fields`
+===== `fields` 
 
   * Value type is <<array,array>>
   * There is no default value for this setting.
@@ -61,7 +62,7 @@ will result in "field_suffix" and nested or sub field ["foo"]["bar_suffix"]
 WARNING: This is an expensive operation.
 
 [id="plugins-{type}s-{plugin}-nested"]
-===== `nested`
+===== `nested` 
 
   * Value type is <<boolean,boolean>>
   * Default value is `false`
@@ -79,12 +80,20 @@ If `recursive` is _true_, then recursively check sub-fields. It is recommended y
 only use this when setting specific fields, as this is an expensive operation.
 
 [id="plugins-{type}s-{plugin}-separator"]
-===== `separator`
+===== `separator` 
 
   * Value type is <<string,string>>
   * Default value is `"_"`
 
 Replace dots with this value.
+
+[id="plugins-{type}s-{plugin}-tag_on_failure"]
+===== `tag_on_failure`
+
+  * Value type is <<string,string>>
+  * The default value for this setting is `_de_dot_error`
+
+If a failure occurs during the application of this de_dot filter, the provided tag is added to the event.
 
 
 

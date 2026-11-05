@@ -5,10 +5,10 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v3.1.0
-:release_date: 2021-08-04
-:changelog_url: https://github.com/logstash-plugins/logstash-codec-collectd/blob/v3.1.0/CHANGELOG.md
-:include_path: ../include
+:version: v3.1.1
+:release_date: 2026-02-11
+:changelog_url: https://github.com/logstash-plugins/logstash-codec-collectd/blob/v3.1.1/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -71,7 +71,7 @@ Be sure to replace `10.0.0.1` with the IP of your Logstash instance.
 &nbsp;
 
 [id="plugins-{type}s-{plugin}-authfile"]
-===== `authfile`
+===== `authfile` 
 
   * Value type is <<string,string>>
   * There is no default value for this setting.
@@ -82,7 +82,7 @@ in collectd. You only need to set this option if the `security_level` is set to
 `Sign` or `Encrypt`
 
 [id="plugins-{type}s-{plugin}-nan_handling"]
-===== `nan_handling`
+===== `nan_handling` 
 
   * Value can be any of: `change_value`, `warn`, `drop`
   * Default value is `"change_value"`
@@ -94,7 +94,7 @@ What to do when a value in the event is `NaN` (Not a Number)
 - drop: Drop the event containing the `NaN` (this only drops the single event, not the whole packet)
 
 [id="plugins-{type}s-{plugin}-nan_tag"]
-===== `nan_tag`
+===== `nan_tag` 
 
   * Value type is <<string,string>>
   * Default value is `"_collectdNaN"`
@@ -103,7 +103,7 @@ The tag to add to the event if a `NaN` value was found
 Set this to an empty string ('') if you don't want to tag
 
 [id="plugins-{type}s-{plugin}-nan_value"]
-===== `nan_value`
+===== `nan_value` 
 
   * Value type is <<number,number>>
   * Default value is `0`
@@ -112,7 +112,7 @@ Only relevant when `nan_handeling` is set to `change_value`
 Change NaN to this configured value
 
 [id="plugins-{type}s-{plugin}-prune_intervals"]
-===== `prune_intervals`
+===== `prune_intervals` 
 
   * Value type is <<boolean,boolean>>
   * Default value is `true`
@@ -120,7 +120,7 @@ Change NaN to this configured value
 Prune interval records.  Defaults to `true`.
 
 [id="plugins-{type}s-{plugin}-security_level"]
-===== `security_level`
+===== `security_level` 
 
   * Value can be any of: `None`, `Sign`, `Encrypt`
   * Default value is `"None"`
@@ -149,7 +149,7 @@ For example, if you want data to be put under the `document` field:
     }
 
 [id="plugins-{type}s-{plugin}-typesdb"]
-===== `typesdb`
+===== `typesdb` 
 
   * Value type is <<array,array>>
   * There is no default value for this setting.
@@ -157,3 +157,5 @@ For example, if you want data to be put under the `document` field:
 File path(s) to collectd `types.db` to use.
 The last matching pattern wins if you have identical pattern names in multiple files.
 If no types.db is provided the included `types.db` will be used (currently 5.4.0).
+
+

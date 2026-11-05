@@ -5,10 +5,10 @@
 ///////////////////////////////////////////
 START - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
-:version: v2.10.0
-:release_date: 2021-10-11
-:changelog_url: https://github.com/logstash-plugins/logstash-filter-aggregate/blob/v2.10.0/CHANGELOG.md
-:include_path: ../include
+:version: v2.11.0
+:release_date: 2026-02-06
+:changelog_url: https://github.com/logstash-plugins/logstash-filter-aggregate/blob/v2.11.0/CHANGELOG.md
+:include_path: ../../../../logstash/docs/include
 ///////////////////////////////////////////
 END - GENERATED VARIABLES, DO NOT EDIT!
 ///////////////////////////////////////////
@@ -27,7 +27,7 @@ include::{include_path}/plugin_header.asciidoc[]
 The aim of this filter is to aggregate information available among several events (typically log lines) belonging to a same task,
 and finally push aggregated information into final task event.
 
-You should be very careful to set Logstash filter workers to 1 (`-w 1` flag) for this filter to work correctly
+You should be very careful to set Logstash filter workers to 1 (`-w 1` in [command-line flag](https://www.elastic.co/guide/en/logstash/current/running-logstash-command-line.html#command-line-flags)) for this filter to work correctly
 otherwise events may be processed out of sequence and unexpected results will occur.
 
 
@@ -365,6 +365,7 @@ This plugin supports the following configuration options plus the <<plugins-{typ
 | <<plugins-{type}s-{plugin}-timeout_tags>> |<<array,array>>|No
 | <<plugins-{type}s-{plugin}-timeout_task_id_field>> |<<string,string>>|No
 | <<plugins-{type}s-{plugin}-timeout_timestamp_field>> |<<string,string>>|No
+| <<plugins-{type}s-{plugin}-map_count_warning_threshold>> |<<number,number>>|No
 |=======================================================================
 
 Also see <<plugins-{type}s-{plugin}-common-options>> for a list of options supported by all
@@ -409,7 +410,7 @@ Available variables are:
 
 `map`: aggregated map associated to `task_id`, containing key/value pairs. Data structure is a ruby http://ruby-doc.org/core-1.9.1/Hash.html[Hash]
 
-`map_meta`: meta informations associated to aggregate map. It allows to set a custom `timeout` or `inactivity_timeout`.
+`map_meta`: meta informations associated to aggregate map. It allows to set a custom `timeout` or `inactivity_timeout`. 
 It allows also to get `creation_timestamp`, `lastevent_timestamp` and `task_id`.
 
 `new_event_block`: block used to emit new Logstash events. See the second example on how to use it.
@@ -440,8 +441,8 @@ To create additional events during the code execution, to be emitted immediately
       }
     }
 
-The parameter of the function `new_event_block.call` must be of type `LogStash::Event`.
-To create such an object, the constructor of the same class can be used: `LogStash::Event.new()`.
+The parameter of the function `new_event_block.call` must be of type `LogStash::Event`.  
+To create such an object, the constructor of the same class can be used: `LogStash::Event.new()`.  
 `LogStash::Event.new()` can receive a parameter of type ruby http://ruby-doc.org/core-1.9.1/Hash.html[Hash] to initialize the new event fields.
 
 
@@ -598,11 +599,11 @@ Example:
 
 By default, timeout is computed using system time, where Logstash is running.
 
-When this option is set, timeout is computed using event timestamp field indicated in this option.
-It means that when a first event arrives on aggregate filter and induces a map creation, map creation time will be equal to this event timestamp.
+When this option is set, timeout is computed using event timestamp field indicated in this option. 
+It means that when a first event arrives on aggregate filter and induces a map creation, map creation time will be equal to this event timestamp. 
 Then, each time a new event arrives on aggregate filter, event timestamp is compared to map creation time to check if timeout happened.
 
-This option is particularly useful when processing old logs with option `push_map_as_event_on_timeout => true`.
+This option is particularly useful when processing old logs with option `push_map_as_event_on_timeout => true`. 
 It lets to generate aggregated events based on timeout on old logs, where system time is inappropriate.
 
 Warning : so that this option works fine, it must be set on first aggregate filter.
@@ -612,6 +613,29 @@ Example:
     filter {
       aggregate {
         timeout_timestamp_field => "@timestamp"
+      }
+    }
+
+[id="plugins-{type}s-{plugin}-map_count_warning_threshold"]
+===== `map_count_warning_threshold`
+
+  * Value type is <<number,number>>
+  * Default value is `5000`
+
+Defines the threshold for the number of tasks in memory before a warning is logged.
+When the number of maps for a task_id pattern exceeds this threshold, a warning message is logged to help identify potential memory issues caused by unterminated tasks.
+
+The warning is repeated every 20% of the threshold events (e.g., with threshold 5000, warnings appear every 1000 events while above threshold).
+
+Set to `0` to disable memory warnings.
+
+Example:
+[source,ruby]
+    filter {
+      aggregate {
+        task_id => "%{taskid}"
+        code => "map['count'] ||= 0; map['count'] += 1"
+        map_count_warning_threshold => 10000
       }
     }
 
